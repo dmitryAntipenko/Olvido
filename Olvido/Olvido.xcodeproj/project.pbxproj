@@ -8,29 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
-		EA976C841D9AAEE2003B77FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* AppDelegate.m */; };
-		EA976C871D9AAEE2003B77FC /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* GameScene.m */; };
-		EA976C891D9AAEE2003B77FC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA976C881D9AAEE2003B77FC /* GameScene.sks */; };
-		EA976C8C1D9AAEE2003B77FC /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C8B1D9AAEE2003B77FC /* GameViewController.m */; };
-		EA976C8F1D9AAEE2003B77FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976C8D1D9AAEE2003B77FC /* Main.storyboard */; };
+		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
+		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
+		EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */; };
 		EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA976C901D9AAEE2003B77FC /* Assets.xcassets */; };
-		EA976C941D9AAEE3003B77FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976C921D9AAEE3003B77FC /* LaunchScreen.storyboard */; };
+		EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */; };
+		EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976CCD1D9C253B003B77FC /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EA976C821D9AAEE2003B77FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EA976C831D9AAEE2003B77FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EA976C851D9AAEE2003B77FC /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
-		EA976C861D9AAEE2003B77FC /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
-		EA976C881D9AAEE2003B77FC /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		EA976C8A1D9AAEE2003B77FC /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		EA976C8B1D9AAEE2003B77FC /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		EA976C8E1D9AAEE2003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
+		EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OGAppDelegate.m; sourceTree = "<group>"; };
+		EA976C851D9AAEE2003B77FC /* OGGameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
+		EA976C861D9AAEE2003B77FC /* OGGameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
+		EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameViewController.h; sourceTree = "<group>"; };
+		EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OGGameViewController.m; sourceTree = "<group>"; };
 		EA976C901D9AAEE2003B77FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EA976C931D9AAEE3003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA976C951D9AAEE3003B77FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA976CCC1D9C253B003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EA976CCE1D9C253B003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,16 +61,15 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				EA976C821D9AAEE2003B77FC /* AppDelegate.h */,
-				EA976C831D9AAEE2003B77FC /* AppDelegate.m */,
-				EA976C851D9AAEE2003B77FC /* GameScene.h */,
-				EA976C861D9AAEE2003B77FC /* GameScene.m */,
-				EA976C881D9AAEE2003B77FC /* GameScene.sks */,
-				EA976C8A1D9AAEE2003B77FC /* GameViewController.h */,
-				EA976C8B1D9AAEE2003B77FC /* GameViewController.m */,
-				EA976C8D1D9AAEE2003B77FC /* Main.storyboard */,
+				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
+				EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */,
+				EA976C851D9AAEE2003B77FC /* OGGameScene.h */,
+				EA976C861D9AAEE2003B77FC /* OGGameScene.m */,
+				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
+				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
+				EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */,
+				EA976CCD1D9C253B003B77FC /* Main.storyboard */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
-				EA976C921D9AAEE3003B77FC /* LaunchScreen.storyboard */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
 			);
@@ -113,6 +110,7 @@
 		EA976C741D9AAEE2003B77FC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = OG;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Дмитрий Антипенко";
 				TargetAttributes = {
@@ -144,10 +142,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA976C891D9AAEE2003B77FC /* GameScene.sks in Resources */,
-				EA976C941D9AAEE3003B77FC /* LaunchScreen.storyboard in Resources */,
+				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
-				EA976C8F1D9AAEE2003B77FC /* Main.storyboard in Resources */,
+				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,9 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA976C8C1D9AAEE2003B77FC /* GameViewController.m in Sources */,
-				EA976C841D9AAEE2003B77FC /* AppDelegate.m in Sources */,
-				EA976C871D9AAEE2003B77FC /* GameScene.m in Sources */,
+				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
+				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
+				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,20 +165,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EA976C8D1D9AAEE2003B77FC /* Main.storyboard */ = {
+		EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				EA976C8E1D9AAEE2003B77FC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		EA976C921D9AAEE3003B77FC /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EA976C931D9AAEE3003B77FC /* Base */,
+				EA976CCC1D9C253B003B77FC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		EA976CCD1D9C253B003B77FC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA976CCE1D9C253B003B77FC /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -275,6 +272,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ZEO-University.Olvido";
@@ -286,6 +284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ZEO-University.Olvido";
