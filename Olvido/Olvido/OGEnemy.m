@@ -9,9 +9,9 @@
 #import "OGEnemy.h"
 
 NSString *const kOGEnemyNodeName = @"Enemy Node";
-NSString *const kOGEnemyTextureName = @"EnemyTexture";
-NSString *const kOGEnemyTextureInvulnerableName = @"EnemyTexture_invulnerable";
-CGFloat const kOGenemySize = 64;
+NSString *const kOGEnemyTextureName = @"EnemyBall";
+NSString *const kOGEnemyTextureInvulnerableName = @"PlayerBall";
+CGFloat const kOGEnemySize = 64;
 CGFloat const kOGInvulnerabilityRepeatCount = 4;
 CGFloat const kOGInvulnerabilityBlinkingTimeDuration = 0.5;
 CGFloat const kOGEnemyVelocity = 20;
@@ -28,7 +28,7 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
     
     if (enemyTexture && enemyInvulnerableTexture)
     {
-        CGSize size = CGSizeMake(kOGenemySize, kOGenemySize);
+        CGSize size = CGSizeMake(kOGEnemySize, kOGEnemySize);
         enemy = [self spriteNodeWithTexture:enemyInvulnerableTexture size:size];
         
         if (enemy)
