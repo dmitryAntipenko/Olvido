@@ -40,6 +40,9 @@ NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
     
     self.background = [self createBackground];
     [self addChild:self.background];
+    
+    self.foreground = [self createForeground];
+    [self addChild:self.foreground];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

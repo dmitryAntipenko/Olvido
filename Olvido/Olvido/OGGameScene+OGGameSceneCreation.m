@@ -17,15 +17,21 @@ NSUInteger const kOGGameSceneTimerCircleRadius = 100;
 - (SKNode *)createBackground
 {
     SKNode *background = [SKNode node];
-    
     SKColor *accentColor = [SKColor backgroundGrayColor];
-    
-    CGPoint frameCenter = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    
     [background addChild:[self createBackgroundBorderWithColor:accentColor]];
-    [background addChild:[self createTimerCircleWithColor:accentColor inPoint:frameCenter]];
     
     return background;
+}
+
+- (SKNode *)createForeground
+{
+    SKNode *foreground = [SKNode node];
+    
+    SKColor *accentColor = [SKColor backgroundGrayColor];
+    CGPoint frameCenter = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    [foreground addChild:[self createTimerCircleWithColor:accentColor inPoint:frameCenter]];
+    
+    return foreground;
 }
 
 - (SKShapeNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
@@ -37,7 +43,7 @@ NSUInteger const kOGGameSceneTimerCircleRadius = 100;
                                                                 kOGGameSceneTimerCircleRadius * 2,
                                                                 kOGGameSceneTimerCircleRadius * 2), nil);
     timerCircle.strokeColor = color;
-    timerCircle.lineWidth = 5;
+    timerCircle.lineWidth = 5.0;
     timerCircle.antialiased = YES;
     
     return timerCircle;

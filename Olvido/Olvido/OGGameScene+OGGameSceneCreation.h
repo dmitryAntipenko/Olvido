@@ -13,5 +13,6 @@ extern NSUInteger const kOGGameSceneBorderSize;
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;
+- (SKNode *)createForeground;
 
 @end
