@@ -24,6 +24,22 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
     return background;
 }
 
+- (SKNode *)createMiddleGround
+{
+    SKNode *middleground = [SKNode node];
+    
+    SKLabelNode *timerOutput = [SKLabelNode node];
+    timerOutput.text = @"Test";
+    timerOutput.fontColor = [SKColor backgroundGrayColor];
+    timerOutput.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    timerOutput.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    timerOutput.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    [middleground addChild:timerOutput];
+    
+    return middleground;
+}
+
 - (SKNode *)createForeground
 {
     SKNode *foreground = [SKNode node];

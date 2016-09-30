@@ -37,9 +37,13 @@ NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
                                         self.frame.size.height - kOGGameSceneBorderSize);
     
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:borderEdgesRect];
+    self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     
     self.background = [self createBackground];
     [self addChild:self.background];
+    
+    self.middleground = [self createMiddleGround];
+    [self addChild:self.middleground];
     
     self.foreground = [self createForeground];
     [self addChild:self.foreground];
