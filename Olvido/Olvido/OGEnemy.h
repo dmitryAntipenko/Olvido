@@ -18,14 +18,14 @@ static inline CGPoint ogRanomPoint(CGFloat minX, CGFloat maxX, CGFloat minY, CGF
 
 static inline CGFloat ogRand()
 {
-    return rand() / (CGFloat) RAND_MAX;
+    return arc4random() / (CGFloat) RAND_MAX;
 }
 
 static inline CGVector ogRanomVector(CGFloat length)
 {
     CGFloat angle = ogRand() * 2 * M_PI;
     
-    return CGVectorMake(length * cos(angle), length * sin(angle));
+    return CGVectorMake(length * cosf(angle), length * sinf(angle));
 }
 
 extern NSString * __nonnull const kOGEnemyNodeName;

@@ -9,8 +9,8 @@
 #import "OGEnemy.h"
 
 NSString *const kOGEnemyNodeName = @"Enemy Node";
-NSString *const kOGEnemyTextureName = @"EnemyTexture.png";
-NSString *const kOGEnemyTextureInvulnerableName = @"EnemyTexture_invulnerable.png";
+NSString *const kOGEnemyTextureName = @"EnemyTexture";
+NSString *const kOGEnemyTextureInvulnerableName = @"EnemyTexture_invulnerable";
 CGFloat const kOGenemySize = 64;
 CGFloat const kOGInvulnerabilityRepeatCount = 4;
 CGFloat const kOGInvulnerabilityBlinkingTimeDuration = 0.5;
@@ -41,6 +41,7 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
             
             enemy.physicsBody.categoryBitMask = kOGEnemyCategoryBitMask;
             enemy.physicsBody.collisionBitMask = 0x0;
+            enemy.physicsBody.contactTestBitMask = 0x0;
             
             SKAction *blink = [SKAction animateWithTextures:@[
                                                               enemyInvulnerableTexture,
@@ -55,9 +56,7 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
                                                              [SKAction setTexture:enemyTexture]
                                                              ]];
             
-            [enemy runAction:invulnerability completion:^{
-                
-            }];
+            [enemy runAction:invulnerability];
         }
     }
     return enemy;
