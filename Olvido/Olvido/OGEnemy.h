@@ -24,11 +24,13 @@ static inline CGFloat ogRand()
 static inline CGVector ogRanomVector(CGFloat length)
 {
     CGFloat angle = ogRand() * 2 * M_PI;
-    return CGVectorMake(length * cosf(angle), length * sinf(angle));
+    
+    return CGVectorMake(length * cos(angle), length * sin(angle));
 }
 
 extern NSString * __nonnull const kOGEnemyNodeName;
 extern CGFloat const kOGEnemyVelocity;
+extern uint32_t const kOGEnemyCategoryBitMask;
 
 @interface OGEnemy : SKSpriteNode
 

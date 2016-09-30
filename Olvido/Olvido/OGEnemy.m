@@ -9,12 +9,13 @@
 #import "OGEnemy.h"
 
 NSString *const kOGEnemyNodeName = @"Enemy Node";
-NSString *const kOGEnemyTextureName = @"EnemyTexture.jpg";
-NSString *const kOGEnemyTextureInvulnerableName = @"EnemyTexture_invulnerable.jpg";
+NSString *const kOGEnemyTextureName = @"EnemyTexture.png";
+NSString *const kOGEnemyTextureInvulnerableName = @"EnemyTexture_invulnerable.png";
 CGFloat const kOGenemySize = 64;
 CGFloat const kOGInvulnerabilityRepeatCount = 4;
 CGFloat const kOGInvulnerabilityBlinkingTimeDuration = 0.5;
 CGFloat const kOGEnemyVelocity = 20;
+uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
 
 @implementation OGEnemy
 
@@ -34,10 +35,12 @@ CGFloat const kOGEnemyVelocity = 20;
         {
             enemy.name = kOGEnemyNodeName;
             enemy.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(enemy.size.width / 2.0)];
-//            enemy.physicsBody.linearDamping = 0.0;
-//            enemy.physicsBody.angularDamping = 0.0;
-            enemy.physicsBody.dynamic = YES;
+            enemy.physicsBody.linearDamping = 0.0;
+            enemy.physicsBody.angularDamping = 0.0;
             enemy.physicsBody.affectedByGravity = NO;
+            
+            enemy.physicsBody.categoryBitMask = kOGEnemyCategoryBitMask;
+            enemy.physicsBody.collisionBitMask = 0x0;
             
             SKAction *blink = [SKAction animateWithTextures:@[
                                                               enemyInvulnerableTexture,

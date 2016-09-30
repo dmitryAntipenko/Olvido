@@ -28,22 +28,21 @@
     
     [self addChild:self.background];
     
-    [self createEnemies];
+    [self createEnemiesWithStartPoint:CGPointMake(200, 400)];
     
 }
 
-- (void)createEnemies
+- (void)createEnemiesWithStartPoint:(CGPoint)point
 {
     for (int i = 0; i < 5; i++)
     {
         OGEnemy *enemy = [OGEnemy enemy];
-        enemy.position = ogRanomPoint(enemy.size.width,
-                                      self.size.width - enemy.size.width,
-                                      enemy.size.width,
-                                      self.size.height - enemy.size.width);
+        enemy.position = point;
         [self addChild:enemy];
         
-        [enemy.physicsBody applyImpulse:ogRanomVector(kOGEnemyVelocity)];
+        CGVector vector = ogRanomVector(kOGEnemyVelocity);
+        
+        [enemy.physicsBody applyImpulse:vector];
     }
 }
 

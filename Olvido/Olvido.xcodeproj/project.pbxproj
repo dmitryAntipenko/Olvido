@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B56A5CB1D9EC607005D2639 /* EnemyTexture_invulnerable.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1B56A5C91D9EC607005D2639 /* EnemyTexture_invulnerable.jpg */; };
-		1B56A5CC1D9EC607005D2639 /* EnemyTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1B56A5CA1D9EC607005D2639 /* EnemyTexture.jpg */; };
 		1BDFBC431D9EB23200253866 /* OGEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDFBC421D9EB23200253866 /* OGEnemy.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
@@ -20,8 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1B56A5C91D9EC607005D2639 /* EnemyTexture_invulnerable.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EnemyTexture_invulnerable.jpg; path = ../../../Downloads/EnemyTexture_invulnerable.jpg; sourceTree = "<group>"; };
-		1B56A5CA1D9EC607005D2639 /* EnemyTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EnemyTexture.jpg; path = ../../../Downloads/EnemyTexture.jpg; sourceTree = "<group>"; };
 		1BDFBC411D9EB23200253866 /* OGEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemy.h; sourceTree = "<group>"; };
 		1BDFBC421D9EB23200253866 /* OGEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemy.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,8 +64,6 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				1B56A5C91D9EC607005D2639 /* EnemyTexture_invulnerable.jpg */,
-				1B56A5CA1D9EC607005D2639 /* EnemyTexture.jpg */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
 				EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */,
 				EA976C851D9AAEE2003B77FC /* OGGameScene.h */,
@@ -154,8 +148,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
-				1B56A5CB1D9EC607005D2639 /* EnemyTexture_invulnerable.jpg in Resources */,
-				1B56A5CC1D9EC607005D2639 /* EnemyTexture.jpg in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 			);
