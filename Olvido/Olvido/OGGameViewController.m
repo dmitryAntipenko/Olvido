@@ -17,6 +17,11 @@
 
     SKView *view = (SKView *) self.view;
     
+    /* DEBUG OPTIONS */
+    view.showsFPS = YES;
+    view.showsPhysics = YES;
+    view.showsNodeCount = YES;
+    
     OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
