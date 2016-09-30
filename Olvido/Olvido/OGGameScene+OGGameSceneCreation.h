@@ -8,7 +8,7 @@
 
 #import "OGGameScene.h"
 
-extern NSUInteger const kOGGameSceneBorderSize;
+extern CGFloat const kOGGameSceneBorderSize;
 
 @interface OGGameScene (OGGameSceneCreation)
 

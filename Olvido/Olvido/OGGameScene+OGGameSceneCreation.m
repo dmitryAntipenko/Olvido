@@ -9,8 +9,9 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
-NSUInteger const kOGGameSceneBorderSize = 3;
-NSUInteger const kOGGameSceneTimerCircleRadius = 100;
+CGFloat const kOGGameSceneBorderSize = 3.0;
+CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
+CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 
 @implementation OGGameScene (OGGameSceneCreation)
 
@@ -40,10 +41,10 @@ NSUInteger const kOGGameSceneTimerCircleRadius = 100;
     
     timerCircle.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - kOGGameSceneTimerCircleRadius,
                                                                 point.y - kOGGameSceneTimerCircleRadius,
-                                                                kOGGameSceneTimerCircleRadius * 2,
-                                                                kOGGameSceneTimerCircleRadius * 2), nil);
+                                                                kOGGameSceneTimerCircleRadius * 2.0,
+                                                                kOGGameSceneTimerCircleRadius * 2.0), nil);
     timerCircle.strokeColor = color;
-    timerCircle.lineWidth = 5.0;
+    timerCircle.lineWidth = kOGGameSceneTimerCircleLineWidth;
     timerCircle.antialiased = YES;
     
     return timerCircle;
