@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BDFBC431D9EB23200253866 /* OGEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDFBC421D9EB23200253866 /* OGEnemy.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BDFBC411D9EB23200253866 /* OGEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemy.h; sourceTree = "<group>"; };
+		1BDFBC421D9EB23200253866 /* OGEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemy.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -74,6 +77,8 @@
 				EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */,
 				EA976CFF1D9ED6BF003B77FC /* SKColor+OGConstantColors.h */,
 				EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */,
+				1BDFBC411D9EB23200253866 /* OGEnemy.h */,
+				1BDFBC421D9EB23200253866 /* OGEnemy.m */,
 				EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */,
 				EA976CCD1D9C253B003B77FC /* Main.storyboard */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
@@ -177,6 +182,7 @@
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
+				1BDFBC431D9EB23200253866 /* OGEnemy.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 			);

@@ -9,6 +9,7 @@
 #import "OGGameScene.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGGameScene+OGGameSceneCreation.h"
+#import "OGEnemy.h"
 
 NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
 
