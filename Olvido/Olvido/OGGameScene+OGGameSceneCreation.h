@@ -13,6 +13,7 @@ extern CGFloat const kOGGameSceneBorderSize;
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;
+- (SKNode *)createMiddleGround;
 - (SKNode *)createForeground;
 
 @end
