@@ -7,10 +7,14 @@
 //
 
 #import "OGGameScene.h"
+#import "SKColor+OGConstantColors.h"
+#import "OGGameScene+OGGameSceneCreation.h"
+
+NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
 
 @interface OGGameScene ()
 
-@property (nonatomic, retain) SKSpriteNode *background;
+@property (nonatomic, retain) SKNode *background;
 @property (nonatomic, retain) SKNode *middleground;
 @property (nonatomic, retain) SKNode *foreground;
 
@@ -20,12 +24,25 @@
 
 - (void)didMoveToView:(SKView *)view
 {
-    self.background = [SKSpriteNode spriteNodeWithImageNamed:@"background"];
+    self.backgroundColor = [SKColor backgroundLightGrayColor];
     
-    self.background.size = self.frame.size;
-    self.background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    [self createSceneContents];
+}
+
+- (void)createSceneContents
+{
+    CGRect borderEdgesRect = CGRectMake(self.frame.origin.x + kOGGameSceneBorderSize,
+                                        self.frame.origin.y + kOGGameSceneBorderSize,
+                                        self.frame.size.width - kOGGameSceneBorderSize,
+                                        self.frame.size.height - kOGGameSceneBorderSize);
     
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:borderEdgesRect];
+    
+    self.background = [self createBackground];
     [self addChild:self.background];
+    
+    self.foreground = [self createForeground];
+    [self addChild:self.foreground];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
