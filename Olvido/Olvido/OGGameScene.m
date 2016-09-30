@@ -7,6 +7,7 @@
 //
 
 #import "OGGameScene.h"
+#import "OGEnemy.h"
 
 @interface OGGameScene ()
 
@@ -26,6 +27,24 @@
     self.background.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
     [self addChild:self.background];
+    
+    [self createEnemies];
+    
+}
+
+- (void)createEnemies
+{
+    for (int i = 0; i < 5; i++)
+    {
+        OGEnemy *enemy = [OGEnemy enemy];
+        enemy.position = ogRanomPoint(enemy.size.width,
+                                      self.size.width - enemy.size.width,
+                                      enemy.size.width,
+                                      self.size.height - enemy.size.width);
+        [self addChild:enemy];
+        
+        [enemy.physicsBody applyImpulse:ogRanomVector(kOGEnemyVelocity)];
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
