@@ -41,8 +41,8 @@
 {
     CGRect borderEdgesRect = CGRectMake(self.frame.origin.x + kOGGameSceneBorderSize,
                                         self.frame.origin.y + kOGGameSceneBorderSize,
-                                        self.frame.size.width - kOGGameSceneBorderSize,
-                                        self.frame.size.height - kOGGameSceneBorderSize);
+                                        self.frame.size.width - kOGGameSceneBorderSize * 2.0,
+                                        self.frame.size.height - kOGGameSceneBorderSize * 2.0);
     
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:borderEdgesRect];
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
@@ -67,8 +67,6 @@
     {
         [self addChild:self.player];
     }
-    
-    [self addChild:[OGEnemy enemy]];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
