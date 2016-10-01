@@ -10,7 +10,9 @@
 
 @interface SKColor (OGConstantColors)
 
++ (SKColor *)gameRed;
 + (SKColor *)backgroundLightGrayColor;
 + (SKColor *)backgroundGrayColor;
++ (SKColor *)gameBlue;
 
 @end
