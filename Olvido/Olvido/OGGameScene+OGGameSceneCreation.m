@@ -29,9 +29,12 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKNode *middleground = [SKNode node];
     
-    OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
+    OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame),
+                                                                            CGRectGetMidY(self.frame))];
     
     [middleground addChild:timerNode];
+    
+    [timerNode release];
     
     return middleground;
 }
@@ -51,13 +54,17 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKShapeNode *timerCircle = [SKShapeNode node];
     
-    timerCircle.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - kOGGameSceneTimerCircleRadius,
-                                                                point.y - kOGGameSceneTimerCircleRadius,
-                                                                kOGGameSceneTimerCircleRadius * 2.0,
-                                                                kOGGameSceneTimerCircleRadius * 2.0), nil);
+    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - kOGGameSceneTimerCircleRadius,
+                                                              point.y - kOGGameSceneTimerCircleRadius,
+                                                              kOGGameSceneTimerCircleRadius * 2.0,
+                                                              kOGGameSceneTimerCircleRadius * 2.0), nil);
+    
+    timerCircle.path = path;
     timerCircle.strokeColor = color;
     timerCircle.lineWidth = kOGGameSceneTimerCircleLineWidth;
     timerCircle.antialiased = YES;
+    
+    CGPathRelease(path);
     
     return timerCircle;
 }
@@ -66,9 +73,13 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKShapeNode *border = [SKShapeNode node];
     
-    border.path = CGPathCreateWithRect(self.frame, nil);
+    CGPathRef path = CGPathCreateWithRect(self.frame, nil);
+    
+    border.path = path;
     border.strokeColor = color;
     border.lineWidth = pow(kOGGameSceneBorderSize, 2);
+    
+    CGPathRelease(path);
     
     return border;
 }

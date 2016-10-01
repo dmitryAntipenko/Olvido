@@ -22,7 +22,7 @@
     
     if (self)
     {
-        _ticks = @(0);
+        _ticks = [[NSNumber alloc] initWithInt:0];
     }
     else
     {
@@ -57,6 +57,7 @@
 - (void)dealloc
 {
     [_timer release];
+    [_ticks release];
     
     [super dealloc];
 }

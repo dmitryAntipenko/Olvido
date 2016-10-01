@@ -71,6 +71,7 @@ NSString *const kOGSettingsSceneSwipeButton = @"swipeButton";
         
         OGGameScene *nextScene = [[OGGameScene alloc] initWithSize:self.frame.size];
         [self.view presentScene:nextScene];
+        [nextScene release];
     }
 }
 

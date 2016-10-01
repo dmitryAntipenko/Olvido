@@ -10,7 +10,7 @@
 
 @interface OGTimer : SKNode
 
-@property (nonatomic, assign) NSNumber *ticks;
+@property (nonatomic, retain) NSNumber *ticks;
 
 - (void)start;
 - (void)startWithSelector:(SEL)selector sender:(id)sender;
