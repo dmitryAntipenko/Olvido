@@ -12,6 +12,8 @@
 #import "OGEnemy.h"
 #import "OGPlayer.h"
 
+BOOL const kOGGameSceneControllSwipe = NO;
+
 @interface OGGameScene ()
 
 @property (nonatomic, retain) SKNode *background;
@@ -74,13 +76,20 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    
-    SKNode *touchedNode = [self nodeAtPoint:location];
-    
-    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
-        && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
+
+    if (kOGGameSceneControllSwipe)
     {
-        self.playerTouched = YES;
+        SKNode *touchedNode = [self nodeAtPoint:location];
+        
+        if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
+            && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
+        {
+            self.playerTouched = YES;
+        }
+    }
+    else
+    {
+        [self.player changePlayerVelocityWithPoint:location];
     }
 }
 
@@ -89,7 +98,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    if (self.isPlayerTouched)
+    if (self.isPlayerTouched && kOGGameSceneControllSwipe)
     {
         self.player.position = location;
     }

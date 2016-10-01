@@ -19,5 +19,7 @@ extern CGFloat const kOGPlayerPlayerRadius;
 
 - (void)changePlayerTextureWithImageName:(NSString *)imageName;
 - (BOOL)isPointInPlayerWithPoint:(CGPoint)point;
+- (void)changePlayerVelocityWithPoint:(CGPoint)point;
 
++ (CGVector)randomVelocityWithSpeed:(CGFloat)speed;
 @end
