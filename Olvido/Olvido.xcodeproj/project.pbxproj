@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		215DD2971D9EB52800058666 /* OGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 215DD2961D9EB52800058666 /* OGPlayer.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		215DD2951D9EB52800058666 /* OGPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayer.h; sourceTree = "<group>"; };
+		215DD2961D9EB52800058666 /* OGPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayer.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
+				215DD2951D9EB52800058666 /* OGPlayer.h */,
+				215DD2961D9EB52800058666 /* OGPlayer.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
+				215DD2971D9EB52800058666 /* OGPlayer.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
@@ -311,6 +317,7 @@
 				EA976C9A1D9AAEE3003B77FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
