@@ -86,6 +86,8 @@
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
+				215DD2951D9EB52800058666 /* OGPlayer.h */,
+				215DD2961D9EB52800058666 /* OGPlayer.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
@@ -195,6 +197,7 @@
 				EA976D041D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
+				215DD2971D9EB52800058666 /* OGPlayer.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1BDFBC431D9EB23200253866 /* OGEnemy.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,

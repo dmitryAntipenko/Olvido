@@ -60,13 +60,14 @@
     CGPoint playerStartPosition = CGPointMake(CGRectGetMidX(self.frame) - kOGPlayerPlayerRadius,
                                               CGRectGetMidY(self.frame) - kOGPlayerPlayerRadius);
     
-    self.player = [OGPlayer playerWithTexture:[SKTexture textureWithImageNamed:kOGGameScenePlayerImageName]
-                                      inPoint:playerStartPosition];
+    self.player = [OGPlayer playerWithPoint:playerStartPosition];
     
     if (self.player)
     {
         [self addChild:self.player];
     }
+    
+    [self addChild:[OGEnemy enemy]];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -76,8 +77,8 @@
     
     SKNode *touchedNode = [self nodeAtPoint:location];
     
-    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName] &&
-        (powf((location.x - touchedNode.position.x), 2) + powf((location.y - touchedNode.position.y), 2) < powf(kOGPlayerPlayerRadius, 2)))
+    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
+        && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
     {
         self.playerTouched = YES;
     }
@@ -102,7 +103,7 @@
     }
 }
 
--(void)update:(CFTimeInterval)currentTime
+- (void)update:(CFTimeInterval)currentTime
 {
     
 }
