@@ -10,8 +10,7 @@
 #import "SKColor+OGConstantColors.h"
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "OGEnemy.h"
-
-NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
+#import "OGPlayer.h"
 
 @interface OGGameScene ()
 
@@ -19,15 +18,23 @@ NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
 @property (nonatomic, retain) SKNode *middleground;
 @property (nonatomic, retain) SKNode *foreground;
 
+@property (nonatomic, assign) OGPlayer *player;
+@property (nonatomic, getter=isPlayerTouched) BOOL playerTouched;
+@property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
+
 @end
 
 @implementation OGGameScene
 
 - (void)didMoveToView:(SKView *)view
 {
-    self.backgroundColor = [SKColor backgroundLightGrayColor];
-    
-    [self createSceneContents];
+    if (!self.isSceneCreated)
+    {
+        self.backgroundColor = [SKColor backgroundLightGrayColor];
+        
+        [self createSceneContents];
+        self.sceneCreated = YES;
+    }
 }
 
 - (void)createSceneContents
@@ -48,11 +55,53 @@ NSString *const kOGGameSceneBackgroundSpriteName = @"Background";
     
     self.foreground = [self createForeground];
     [self addChild:self.foreground];
+    
+    
+    CGPoint playerStartPosition = CGPointMake(CGRectGetMidX(self.frame) - kOGPlayerPlayerRadius,
+                                              CGRectGetMidY(self.frame) - kOGPlayerPlayerRadius);
+    
+    self.player = [OGPlayer playerWithTexture:[SKTexture textureWithImageNamed:kOGGameScenePlayerImageName]
+                                      inPoint:playerStartPosition];
+    
+    if (self.player)
+    {
+        [self addChild:self.player];
+    }
+    
+    [self addChild:[OGEnemy enemy]];
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"Touched");
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    
+    SKNode *touchedNode = [self nodeAtPoint:location];
+    
+    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName] &&
+        (powf((location.x - touchedNode.position.x), 2) + powf((location.y - touchedNode.position.y), 2) < powf(kOGPlayerPlayerRadius, 2)))
+    {
+        self.playerTouched = YES;
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    
+    if (self.isPlayerTouched)
+    {
+        self.player.position = location;
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (self.isPlayerTouched)
+    {
+        self.playerTouched = NO;
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime

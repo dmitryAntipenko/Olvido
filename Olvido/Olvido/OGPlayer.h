@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern NSString *const kOGGameScenePlayerImageName;
 extern NSString *const kOGPlayerPlayerName;
 extern CGFloat const kOGPlayerPlayerRadius;
 

@@ -8,6 +8,7 @@
 
 #import "OGPlayer.h"
 
+NSString *const kOGGameScenePlayerImageName = @"PlayerBall";
 NSString *const kOGPlayerPlayerName = @"player";
 CGFloat const kOGPlayerPlayerRadius = 32.0;
 
