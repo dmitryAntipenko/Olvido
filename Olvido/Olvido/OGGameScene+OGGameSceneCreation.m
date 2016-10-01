@@ -8,6 +8,7 @@
 
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
+#import "OGTimerNode.h"
 
 CGFloat const kOGGameSceneBorderSize = 3.0;
 CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
@@ -28,14 +29,9 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKNode *middleground = [SKNode node];
     
-    SKLabelNode *timerOutput = [SKLabelNode node];
-    timerOutput.text = @"Test";
-    timerOutput.fontColor = [SKColor backgroundGrayColor];
-    timerOutput.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    timerOutput.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    timerOutput.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
     
-    [middleground addChild:timerOutput];
+    [middleground addChild:timerNode];
     
     return middleground;
 }
