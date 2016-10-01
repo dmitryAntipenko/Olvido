@@ -14,9 +14,9 @@ CGFloat const kOGPlayerPlayerRadius = 32.0;
 
 @implementation OGPlayer
 
-+ (instancetype)playerWithTexture:(SKTexture *)texture inPoint:(CGPoint)point
++ (instancetype)playerWithImageName:(NSString *)imageName point:(CGPoint)point
 {
-    OGPlayer *player = [[OGPlayer alloc] initWithTexture:texture];
+    OGPlayer *player = [[OGPlayer alloc] initWithImageNamed:imageName];
     
     if (player)
     {
@@ -31,6 +31,33 @@ CGFloat const kOGPlayerPlayerRadius = 32.0;
     }
 
     return [player autorelease];
+}
+
++ (instancetype)playerWithPoint:(CGPoint)point
+{
+    return [OGPlayer playerWithImageName:kOGGameScenePlayerImageName point:point];
+}
+
+- (void)changePlayerTextureWithImageName:(NSString *)imageName
+{
+    SKTexture *texture = [SKTexture textureWithImageNamed:imageName];
+    
+    if (texture)
+    {
+        self.texture = texture;
+    }
+}
+
+- (BOOL)isPointInPlayerWithPoint:(CGPoint)point
+{
+    BOOL result = NO;
+    
+    if (powf((point.x - self.position.x), 2) + powf((point.y - self.position.y), 2) < powf(kOGPlayerPlayerRadius, 2))
+    {
+        result = YES;
+    }
+    
+    return result;
 }
 
 @end

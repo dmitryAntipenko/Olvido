@@ -14,6 +14,10 @@ extern CGFloat const kOGPlayerPlayerRadius;
 
 @interface OGPlayer : SKSpriteNode
 
-+ (instancetype)playerWithTexture:(SKTexture *)texture inPoint:(CGPoint)point;
++ (instancetype)playerWithImageName:(NSString *)imageName point:(CGPoint)point;
++ (instancetype)playerWithPoint:(CGPoint)point;
+
+- (void)changePlayerTextureWithImageName:(NSString *)imageName;
+- (BOOL)isPointInPlayerWithPoint:(CGPoint)point;
 
 @end
