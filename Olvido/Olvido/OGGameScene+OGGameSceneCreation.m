@@ -31,13 +31,6 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
     
     OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
     
-//    SKLabelNode *timerOutput = [SKLabelNode node];
-//    timerOutput.text = timer.ticks.stringValue;
-//    timerOutput.fontColor = [SKColor backgroundGrayColor];
-//    timerOutput.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-//    timerOutput.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-//    timerOutput.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    
     [middleground addChild:timerNode];
     
     return middleground;

@@ -10,6 +10,10 @@
 #import "OGTimer.h"
 #import "SKColor+OGConstantColors.h"
 
+NSString *const kOGTimerNodeKeyPathTicks = @"ticks";
+NSString *const kOGTimerNodeFontName = @"Helvetica";
+CGFloat const kOGTimerNodeFontSize= 64;
+
 @interface OGTimerNode ()
 
 @property (nonatomic, retain) OGTimer *timer;
@@ -17,6 +21,8 @@
 @end
 
 @implementation OGTimerNode
+
+static NSInteger kTimerContext;
 
 - (instancetype)initWithPoint:(CGPoint)point
 {
@@ -26,22 +32,44 @@
     {
         _timer = [[OGTimer alloc] init];
         
-        super.text = _timer.ticks.stringValue;
-        super.fontColor = [SKColor backgroundGrayColor];
-        super.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-        super.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-        super.position = point;
+        self.text = _timer.ticks.stringValue;
+        self.fontColor = [SKColor backgroundGrayColor];
+        self.fontSize = kOGTimerNodeFontSize;
+        self.fontName = kOGTimerNodeFontName;
+        self.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+        self.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+        self.position = point;
         
-        [_timer startWithSelector:@selector(timerTick) sender:self];
+        [_timer start];
+        
+        [_timer addObserver:self
+                 forKeyPath:kOGTimerNodeKeyPathTicks
+                    options:NSKeyValueObservingOptionPrior
+                    context:&kTimerContext];
     }
     
     return self;
 }
 
-- (void)timerTick
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    self.timer.ticks = @(self.timer.ticks.integerValue + 1);
-    self.text = self.timer.ticks.stringValue;
+    if (context == &kTimerContext)
+    {
+        self.text = self.timer.ticks.stringValue;
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)dealloc
+{
+    [_timer removeObserver:self forKeyPath:kOGTimerNodeKeyPathTicks];
+    
+    [_timer release];
+    
+    [super dealloc];
 }
 
 @end

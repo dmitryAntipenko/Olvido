@@ -14,6 +14,7 @@
 
 - (void)start;
 - (void)startWithSelector:(SEL)selector sender:(id)sender;
+- (void)tick;
 - (void)stop;
 
 @end

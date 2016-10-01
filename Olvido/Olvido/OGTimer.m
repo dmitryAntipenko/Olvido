@@ -54,4 +54,11 @@
     self.ticks = @(0);
 }
 
+- (void)dealloc
+{
+    [_timer release];
+    
+    [super dealloc];
+}
+
 @end
