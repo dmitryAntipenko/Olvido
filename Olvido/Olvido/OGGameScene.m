@@ -89,13 +89,7 @@ BOOL const kOGGameSceneControllSwipe = NO;
     }
     else
     {
-        self.player.touchPoint = location;
-        
-        [self.player calculateAngle];
-        self.player.touch = YES;
-        
-     //   [self.player changePlayerVelocityWithPoint:location];
-        //[self.player changePlayerArcVelocityWithPoint:location];
+        [self.player changePlayerVelocityWithPoint:location];
     }
 }
 
@@ -104,10 +98,10 @@ BOOL const kOGGameSceneControllSwipe = NO;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-//    if (self.isPlayerTouched && kOGGameSceneControllSwipe)
-//    {
-//        self.player.position = location;
-//    }
+    if (self.isPlayerTouched && kOGGameSceneControllSwipe)
+    {
+        self.player.position = location;
+    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -120,10 +114,7 @@ BOOL const kOGGameSceneControllSwipe = NO;
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    if (self.player.isTouched)
-    {
-        [self.player changePlayerArcVelocity];
-    }
+
 }
 
 @end

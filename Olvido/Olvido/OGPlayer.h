@@ -21,15 +21,8 @@ extern CGFloat const kOGPlayerPlayerRadius;
 - (BOOL)isPointInPlayerWithPoint:(CGPoint)point;
 
 - (void)changePlayerVelocityWithPoint:(CGPoint)point;
-- (void)changePlayerArcVelocity;
 
 + (CGVector)randomVelocityWithSpeed:(CGFloat)speed;
 
 @property (nonatomic, getter=isTouched) BOOL touch;
-@property CGPoint touchPoint;
-
-@property CGFloat anglePlayer;
-
-
-- (void)calculateAngle;
 @end
