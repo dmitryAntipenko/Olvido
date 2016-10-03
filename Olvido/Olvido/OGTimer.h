@@ -8,9 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface OGTimer : SKNode
+@interface OGTimer : NSObject
 
-@property (nonatomic, retain) NSNumber *ticks;
+@property (nonatomic, retain, readonly) NSNumber *ticks;
 
 - (void)start;
 - (void)startWithSelector:(SEL)selector sender:(id)sender;

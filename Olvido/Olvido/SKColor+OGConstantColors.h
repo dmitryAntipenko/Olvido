@@ -14,5 +14,6 @@
 + (SKColor *)backgroundLightGrayColor;
 + (SKColor *)backgroundGrayColor;
 + (SKColor *)gameBlue;
++ (SKColor *)gameBlack;
 
 @end

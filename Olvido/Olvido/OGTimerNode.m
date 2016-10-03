@@ -7,9 +7,9 @@
 //
 
 #import "OGTimerNode.h"
-#import "OGTimer.h"
 #import "SKColor+OGConstantColors.h"
 
+NSString *const kOGTimerNodeName = @"timerNode";
 NSString *const kOGTimerNodeKeyPathTicks = @"ticks";
 NSString *const kOGTimerNodeFontName = @"Helvetica-Thin";
 CGFloat const kOGTimerNodeFontDefaultSize = 64.0;
@@ -32,6 +32,7 @@ static NSInteger kTimerContext;
     {
         _timer = [[OGTimer alloc] init];
         
+        self.name = kOGTimerNodeName;
         self.text = _timer.ticks.stringValue;
         self.fontColor = [SKColor backgroundGrayColor];
         self.fontSize = kOGTimerNodeFontDefaultSize;

@@ -8,8 +8,11 @@
 
 #import "OGTimer.h"
 
+CGFloat const kOGTimerInterval = 1.0;
+
 @interface OGTimer ()
 
+@property (nonatomic, retain, readwrite) NSNumber *ticks;
 @property (nonatomic, retain) NSTimer *timer;
 
 @end
@@ -35,12 +38,14 @@
 
 - (void)start
 {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+    self.ticks = @(0);
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:self selector:@selector(tick) userInfo:nil repeats:YES];
 }
 
 - (void)startWithSelector:(SEL)selector sender:(id)sender
 {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:sender selector:selector userInfo:nil repeats:YES];
+    self.ticks = @(0);
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:sender selector:selector userInfo:nil repeats:YES];
 }
 
 - (void)tick
@@ -51,7 +56,6 @@
 - (void)stop
 {
     [self.timer invalidate];
-    self.ticks = @(0);
 }
 
 - (void)dealloc

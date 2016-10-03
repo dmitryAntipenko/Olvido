@@ -7,10 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGTimer.h"
 
+extern NSString *const kOGTimerNodeName;
 extern CGFloat const kOGTimerNodeFontDefaultSize;
 
 @interface OGTimerNode : SKLabelNode
+
+@property (nonatomic, readonly, retain) OGTimer *timer;
 
 - (instancetype)initWithPoint:(CGPoint)point;
 
