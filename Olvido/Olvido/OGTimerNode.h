@@ -8,6 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern CGFloat const kOGTimerNodeFontDefaultSize;
+
 @interface OGTimerNode : SKLabelNode
 
 - (instancetype)initWithPoint:(CGPoint)point;

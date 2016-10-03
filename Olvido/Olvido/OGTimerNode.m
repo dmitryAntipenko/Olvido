@@ -11,8 +11,8 @@
 #import "SKColor+OGConstantColors.h"
 
 NSString *const kOGTimerNodeKeyPathTicks = @"ticks";
-NSString *const kOGTimerNodeFontName = @"Helvetica";
-CGFloat const kOGTimerNodeFontSize= 64;
+NSString *const kOGTimerNodeFontName = @"Helvetica-Thin";
+CGFloat const kOGTimerNodeFontDefaultSize = 64.0;
 
 @interface OGTimerNode ()
 
@@ -34,7 +34,7 @@ static NSInteger kTimerContext;
         
         self.text = _timer.ticks.stringValue;
         self.fontColor = [SKColor backgroundGrayColor];
-        self.fontSize = kOGTimerNodeFontSize;
+        self.fontSize = kOGTimerNodeFontDefaultSize;
         self.fontName = kOGTimerNodeFontName;
         self.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
         self.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;

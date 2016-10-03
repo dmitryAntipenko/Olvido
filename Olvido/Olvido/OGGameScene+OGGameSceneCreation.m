@@ -11,8 +11,10 @@
 #import "OGTimerNode.h"
 
 CGFloat const kOGGameSceneBorderSize = 3.0;
+CGFloat const kOGGameSceneTimerCircleRadiusCoefficient = 5.0;
 CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
 CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
+CGFloat const kOGGameSceneTimerLabelScaleCoefficient = 500.0;
 
 @implementation OGGameScene (OGGameSceneCreation)
 
@@ -31,6 +33,8 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
     
     OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame),
                                                                             CGRectGetMidY(self.frame))];
+    
+    timerNode.fontSize = kOGTimerNodeFontDefaultSize * (self.frame.size.width / kOGGameSceneTimerLabelScaleCoefficient);
     
     [middleground addChild:timerNode];
     
@@ -54,10 +58,12 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKShapeNode *timerCircle = [SKShapeNode node];
     
-    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - kOGGameSceneTimerCircleRadius,
-                                                              point.y - kOGGameSceneTimerCircleRadius,
-                                                              kOGGameSceneTimerCircleRadius * 2.0,
-                                                              kOGGameSceneTimerCircleRadius * 2.0), nil);
+    CGFloat timerCircleRadius = self.frame.size.width / kOGGameSceneTimerCircleRadiusCoefficient;
+    
+    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - timerCircleRadius,
+                                                              point.y - timerCircleRadius,
+                                                              timerCircleRadius * 2.0,
+                                                              timerCircleRadius * 2.0), nil);
     
     timerCircle.path = path;
     timerCircle.strokeColor = color;

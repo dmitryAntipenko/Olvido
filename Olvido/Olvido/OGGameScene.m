@@ -44,7 +44,7 @@
                                         self.frame.size.width - kOGGameSceneBorderSize * 2.0,
                                         self.frame.size.height - kOGGameSceneBorderSize * 2.0);
     
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:borderEdgesRect];
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     
     self.background = [self createBackground];
