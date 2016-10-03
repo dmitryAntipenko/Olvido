@@ -65,12 +65,12 @@
         [self addChild:self.player];
     }
     
-    for (int i = 0; i < 10; i++)
-    {
-        OGEnemy *enemy = [OGEnemy enemy];
-        [self addChild:enemy];
-        [enemy startWithPoint:playerStartPosition];
-    }
+    //    for (int i = 0; i < 10; i++)
+    //    {
+    //        OGEnemy *enemy = [OGEnemy enemy];
+    //        [self addChild:enemy];
+    //        [enemy startWithPoint:playerStartPosition];
+    //    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -78,12 +78,57 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    SKNode *touchedNode = [self nodeAtPoint:location];
+    CGFloat speed = 400;
     
-    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
-        && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
+    CGFloat dx = self.player.position.x - self.player.lastPosition2th.x;
+    CGFloat dy = self.player.position.y - self.player.lastPosition2th.y;
+    
+    if (dx == 0.0 && dy == 0.0)
     {
-        self.playerTouched = YES;
+        CGVector direction = CGVectorMake(location.x - self.player.position.x,
+                                          location.y - self.player.position.y);
+        
+        CGFloat l = pow(pow(direction.dx, 2) + pow(direction.dy, 2), 0.5);
+        
+        CGFloat x = direction.dx * speed / l * self.player.physicsBody.mass;
+        CGFloat y = direction.dy * speed / l * self.player.physicsBody.mass;
+        
+        [self.player.physicsBody applyImpulse:CGVectorMake(x, y)];
+    }
+    else
+    {
+        CGFloat v = pow(pow(dx, 2) + pow(dy, 2), 0.5);
+        
+        CGFloat bX = dx / v * 100;
+        CGFloat bY = dy / v * 100;
+        
+        CGFloat cX = location.x - self.player.position.x;
+        CGFloat cY = location.y - self.player.position.y;
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathMoveToPoint(path, NULL, 0, 0);
+        
+        //        CGPathAddCurveToPoint(path, NULL, bX, bY, dX, dY, cX, cY);
+        CGPathAddQuadCurveToPoint(path, NULL, bX, bY, cX, cY);
+        
+        
+        SKAction *moveToPoint = [SKAction followPath:path speed:speed];
+        
+        self.player.physicsBody.velocity = CGVectorMake(0, 0);
+        [self.player removeAllActions];
+        
+        [self.player runAction:moveToPoint completion:^{
+            CGVector direction = CGVectorMake(self.player.position.x - self.player.lastPosition2th.x,
+                                              self.player.position.y - self.player.lastPosition2th.y);
+            
+            CGFloat l = pow(pow(direction.dx, 2) + pow(direction.dy, 2), 0.5);
+            
+            CGFloat x = direction.dx * speed / l * self.player.physicsBody.mass;
+            CGFloat y = direction.dy * speed / l * self.player.physicsBody.mass;
+            
+            [self.player.physicsBody applyImpulse:CGVectorMake(x, y)];
+        }];
+        
     }
 }
 
@@ -113,7 +158,8 @@
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    
+    self.player.lastPosition2th = self.player.lastPosition1th;
+    self.player.lastPosition1th = self.player.position;
 }
 
 @end

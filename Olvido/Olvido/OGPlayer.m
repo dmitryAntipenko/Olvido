@@ -23,11 +23,17 @@ CGFloat const kOGPlayerPlayerRadius = 16.0;
         player.name = kOGPlayerPlayerName;
         player.size = CGSizeMake(kOGPlayerPlayerRadius * 2.0, kOGPlayerPlayerRadius * 2.0);
         player.position = point;
+        player.lastPosition1th = point;
+        player.lastPosition2th = point;
         
         player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(kOGPlayerPlayerRadius)];
         player.physicsBody.dynamic = YES;
         player.physicsBody.linearDamping = 0.0;
         player.physicsBody.angularDamping = 0.0;
+        
+        player.physicsBody.friction = 0.0;
+        player.physicsBody.restitution = 1.0;
+        
         player.physicsBody.categoryBitMask = 0x1 << 1;
         player.physicsBody.collisionBitMask = 0x1 << 0;
         
