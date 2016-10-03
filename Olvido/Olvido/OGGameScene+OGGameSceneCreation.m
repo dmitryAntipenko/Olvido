@@ -76,6 +76,7 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     
     NSString *scoreString = [[NSString alloc] initWithFormat:@"Your Score %@", score];
     SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithText:scoreString];
+    [scoreString release];
 
     scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
