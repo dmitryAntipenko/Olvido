@@ -12,7 +12,7 @@
 #import "OGEnemy.h"
 #import "OGPlayer.h"
 
-@interface OGGameScene ()
+@interface OGGameScene () <SKPhysicsContactDelegate>
 
 @property (nonatomic, retain) SKNode *background;
 @property (nonatomic, retain) SKNode *middleground;
@@ -45,7 +45,11 @@
                                         self.frame.size.height - kOGGameSceneBorderSize * 2.0);
     
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:borderEdgesRect];
+    self.physicsBody.categoryBitMask = 0x1 << 0;
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
+    self.physicsWorld.contactDelegate = self;
     
     self.background = [self createBackground];
     [self addChild:self.background];
@@ -67,7 +71,12 @@
         [self addChild:self.player];
     }
     
-    [self addChild:[OGEnemy enemy]];
+    for (int i = 0; i < 10; i++)
+    {
+        OGEnemy *enemy = [OGEnemy enemy];
+        [self addChild:enemy];
+        [enemy startWithPoint:playerStartPosition];
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -101,6 +110,11 @@
     {
         self.playerTouched = NO;
     }
+}
+
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
+    NSLog(@"PROGRAV");
 }
 
 - (void)update:(CFTimeInterval)currentTime
