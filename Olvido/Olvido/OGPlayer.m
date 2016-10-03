@@ -10,7 +10,7 @@
 
 NSString *const kOGGameScenePlayerImageName = @"PlayerBall";
 NSString *const kOGPlayerPlayerName = @"player";
-CGFloat const kOGPlayerPlayerRadius = 32.0;
+CGFloat const kOGPlayerPlayerRadius = 16.0;
 
 @implementation OGPlayer
 
@@ -28,6 +28,15 @@ CGFloat const kOGPlayerPlayerRadius = 32.0;
         player.physicsBody.dynamic = YES;
         player.physicsBody.linearDamping = 0.0;
         player.physicsBody.angularDamping = 0.0;
+        player.physicsBody.categoryBitMask = 0x1 << 1;
+        player.physicsBody.collisionBitMask = 0x1 << 0;
+        
+        player.physicsBody.usesPreciseCollisionDetection = YES;
+        
+        SKAction *invulnerability = [SKAction waitForDuration:3.0];
+        [player runAction:invulnerability completion:^{
+            player.physicsBody.contactTestBitMask = 0x1 << 2;
+        }];
     }
 
     return [player autorelease];

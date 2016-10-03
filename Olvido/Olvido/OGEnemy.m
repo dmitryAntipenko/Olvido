@@ -11,10 +11,10 @@
 NSString *const kOGEnemyNodeName = @"Enemy Node";
 NSString *const kOGEnemyTextureName = @"EnemyBall";
 NSString *const kOGEnemyTextureInvulnerableName = @"PlayerBall";
-CGFloat const kOGEnemySize = 64;
+CGFloat const kOGEnemySize = 32;
 CGFloat const kOGInvulnerabilityRepeatCount = 4;
 CGFloat const kOGInvulnerabilityBlinkingTimeDuration = 0.5;
-CGFloat const kOGEnemyVelocity = 20;
+CGFloat const kOGEnemyVelocity = 10;
 uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
 
 @implementation OGEnemy
@@ -37,11 +37,11 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
             enemy.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(enemy.size.width / 2.0)];
             enemy.physicsBody.linearDamping = 0.0;
             enemy.physicsBody.angularDamping = 0.0;
-            enemy.physicsBody.affectedByGravity = NO;
+            enemy.physicsBody.friction = 0.0;
+            enemy.physicsBody.restitution = 1.0;
             
             enemy.physicsBody.categoryBitMask = kOGEnemyCategoryBitMask;
-            enemy.physicsBody.collisionBitMask = 0x0;
-            enemy.physicsBody.contactTestBitMask = 0x0;
+            enemy.physicsBody.collisionBitMask = 0x1 << 0;
             
             SKAction *blink = [SKAction animateWithTextures:@[
                                                               enemyInvulnerableTexture,
@@ -60,6 +60,16 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
         }
     }
     return enemy;
+}
+
+- (void)startWithPoint:(CGPoint)point
+{
+    if (self.parent)
+    {
+        self.position = point;
+        CGVector vector = ogRanomVector(kOGEnemyVelocity);
+        [self.physicsBody applyImpulse:vector];
+    }
 }
 
 @end
