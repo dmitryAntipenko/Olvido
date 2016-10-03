@@ -14,6 +14,8 @@
 #import "OGPlayer.h"
 #import "OGTimerNode.h"
 
+BOOL const kOGGameSceneControllSwipe = NO;
+
 @interface OGGameScene () <SKPhysicsContactDelegate>
 
 @property (nonatomic, retain) SKNode *background;
@@ -25,7 +27,7 @@
 
 @property (nonatomic, retain) OGPlayer *player;
 @property (nonatomic, retain) OGTimerNode *timerNode;
-@property (nonatomic, getter=isPlayerTouched) BOOL playerTouched;
+@property (nonatomic, getter=isPlayerDragStarted) BOOL playerDragStart;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
 
 @end
@@ -96,15 +98,22 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    
     SKNode *touchedNode = [self nodeAtPoint:location];
     
-    if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
-        && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
+    if ([self.controlType isEqualToString:kOGSettingsSceneSwipeButton])
     {
-        self.playerTouched = YES;
+        if ([touchedNode.name isEqualToString:kOGPlayerPlayerName]
+            && [((OGPlayer *)touchedNode) isPointInPlayerWithPoint:location])
+        {
+            self.playerDragStart = YES;
+        }
     }
-    else if ([touchedNode.name isEqualToString:kOGGameSceneMenuButtonSpriteName])
+    else if ([self.controlType isEqualToString:kOGSettingsSceneTapButton])
+    {
+        [self.player changePlayerVelocityWithPoint:location];
+    }
+    
+    if ([touchedNode.name isEqualToString:kOGGameSceneMenuButtonSpriteName])
     {
         OGSettingsScene *menuScene = [[OGSettingsScene alloc] initWithSize:self.frame.size];
         [self.view presentScene:menuScene];
@@ -112,9 +121,10 @@
     }
     else if ([touchedNode.name isEqualToString:kOGGameSceneRestartButtonSpriteName])
     {
-        OGGameScene *menuScene = [[OGGameScene alloc] initWithSize:self.frame.size];
-        [self.view presentScene:menuScene];
-        [menuScene release];
+        OGGameScene *gameScene = [[OGGameScene alloc] initWithSize:self.frame.size];
+        gameScene.controlType = self.controlType;
+        [self.view presentScene:gameScene];
+        [gameScene release];
     }
 }
 
@@ -123,7 +133,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    if (self.player && self.isPlayerTouched)
+    if (self.isPlayerDragStarted && [self.controlType isEqualToString:kOGSettingsSceneSwipeButton])
     {
         self.player.position = location;
     }
@@ -131,9 +141,9 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    if (self.player && self.isPlayerTouched)
+    if (self.isPlayerDragStarted)
     {
-        self.playerTouched = NO;
+        self.playerDragStart = NO;
     }
 }
 
@@ -155,7 +165,7 @@
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    
+
 }
 
 @end

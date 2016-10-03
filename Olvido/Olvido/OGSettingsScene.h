@@ -8,6 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern NSString *const kOGSettingsSceneTapButton;
+extern NSString *const kOGSettingsSceneSwipeButton;
+
 @interface OGSettingsScene : SKScene
 
 @end

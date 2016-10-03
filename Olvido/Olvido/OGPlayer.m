@@ -11,6 +11,7 @@
 NSString *const kOGGameScenePlayerImageName = @"PlayerBall";
 NSString *const kOGPlayerPlayerName = @"player";
 CGFloat const kOGPlayerPlayerRadius = 16.0;
+CGFloat const kOGPlayerPlayerSpeed = 300.0;
 
 @implementation OGPlayer
 
@@ -37,6 +38,11 @@ CGFloat const kOGPlayerPlayerRadius = 16.0;
         [player runAction:invulnerability completion:^{
             player.physicsBody.contactTestBitMask = 0x1 << 2;
         }];
+        
+        player.physicsBody.restitution = 1.0;
+        player.physicsBody.friction = 0.0;
+        
+        player.physicsBody.velocity = [OGPlayer randomVelocityWithSpeed:kOGPlayerPlayerSpeed];
     }
 
     return [player autorelease];
@@ -68,5 +74,25 @@ CGFloat const kOGPlayerPlayerRadius = 16.0;
     
     return result;
 }
+
+- (void)changePlayerVelocityWithPoint:(CGPoint)point
+{
+    CGFloat speedVec = powf(powf(point.x - self.position.x, 2.0) + powf(point.y - self.position.y, 2.0), 0.5);
+    CGFloat coef = kOGPlayerPlayerSpeed / speedVec;
+    
+    self.physicsBody.velocity = CGVectorMake((point.x - self.position.x) * coef, (point.y - self.position.y) * coef);
+}
+
++ (CGVector)randomVelocityWithSpeed:(CGFloat)speed
+{
+    CGFloat x = ((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * speed;
+    CGFloat y = powf((powf(speed, 2.0) - powf(x, 2.0)), 0.5);
+    
+    x = (arc4random() % 2 == 0) ? (x * (-1.0)) : x;
+    y = (arc4random() % 2 == 0) ? (y * (-1.0)) : y;
+    
+    return CGVectorMake(x, y);
+}
+
 
 @end

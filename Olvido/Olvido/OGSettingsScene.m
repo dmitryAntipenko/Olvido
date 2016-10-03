@@ -70,6 +70,7 @@ NSString *const kOGSettingsSceneSwipeButton = @"swipeButton";
         [plistdict writeToFile:filePath atomically:YES];
         
         OGGameScene *nextScene = [[OGGameScene alloc] initWithSize:self.frame.size];
+        nextScene.controlType = node.name;
         [self.view presentScene:nextScene];
         [nextScene release];
     }
