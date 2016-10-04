@@ -50,7 +50,7 @@ CGFloat const kOGPlayerPlayerSpeed = 300.0;
         player.physicsBody.restitution = 1.0;
         player.physicsBody.friction = 0.0;
         
-        player.physicsBody.velocity = [OGPlayer randomVelocityWithSpeed:kOGPlayerPlayerSpeed];
+//        player.physicsBody.velocity = [OGPlayer randomVelocityWithSpeed:kOGPlayerPlayerSpeed]; //this needs for swipe control
     }
 
     return [player autorelease];
