@@ -8,7 +8,7 @@
 
 #import "OGGameViewController.h"
 //#import "OGGameScene.h"
-#import "OGSettingsScene.h"
+#import "OGGameScene.h"
 
 @implementation OGGameViewController
 
@@ -22,8 +22,7 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-//    OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
-    OGSettingsScene *scene = [[OGSettingsScene alloc] initWithSize:view.frame.size];
+    OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     [view presentScene:scene];
