@@ -32,6 +32,9 @@ extern NSString * __nonnull const kOGEnemyNodeName;
 extern CGFloat const kOGEnemyVelocity;
 extern uint32_t const kOGEnemyCategoryBitMask;
 
+extern CGFloat const kOGInvulnerabilityRepeatCount;
+extern CGFloat const kOGInvulnerabilityBlinkingTimeDuration;
+
 @interface OGEnemy : SKSpriteNode
 
 + (nullable instancetype)enemy;
