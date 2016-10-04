@@ -12,14 +12,18 @@
 
 CGFloat const kOGGameSceneScoreDefaultFontSize = 36.0;
 CGFloat const kOGGameSceneBorderSize = 3.0;
+
 CGFloat const kOGGameSceneTimerCircleRadiusCoefficient = 5.0;
 CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
 CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
-CGFloat const kOGGameSceneTimerLabelScaleCoefficient = 500.0;
+CGFloat const kOGGameSceneTimerLabelScaleFactor = 500.0;
+
 CGFloat const kOGGameSceneButtonsMargin = 20.0;
 CGFloat const kOGGameSceneButtonsVerticalMargin = 40.0;
 CGFloat const kOGGameSceneButtonWidth = 80.0;
+
 CGFloat const kOGGameSceneGameOverScreenHeightFactor = 2.5;
+CGFloat const kOGGameSceneGameOverButtonPositionFactor = 4.0;
 
 NSString *const kOGGameSceneGameOverBackgroundSpriteName = @"GameOverBackground";
 NSString *const kOGGameSceneMenuButtonSpriteName = @"MenuButton";
@@ -74,24 +78,14 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     gameOverScreen.size = CGSizeMake(self.frame.size.width,
                                      self.frame.size.height / kOGGameSceneGameOverScreenHeightFactor);
     
-    NSString *scoreString = [[NSString alloc] initWithFormat:@"Your Score %@", score];
-    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithText:scoreString];
-    [scoreString release];
+    SKLabelNode *scoreNode = [self createScoreLaberWithScore:score];
+    [gameOverScreen addChild:scoreNode];
 
-    scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    CGPoint menuButtonPosition = CGPointMake(-gameOverScreen.size.width / kOGGameSceneGameOverButtonPositionFactor,
+                                             -gameOverScreen.size.height / kOGGameSceneGameOverButtonPositionFactor);
     
-    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * [self scaleFactor];
-    scoreLabel.fontColor = [SKColor gameBlack];
-    
-    [gameOverScreen addChild:scoreLabel];
-    
-    
-    CGPoint menuButtonPosition = CGPointMake((-kOGGameSceneButtonsMargin - kOGGameSceneButtonWidth),
-                                             -kOGGameSceneButtonsVerticalMargin);
-    
-    CGPoint restartButtonPosition = CGPointMake((kOGGameSceneButtonsMargin + kOGGameSceneButtonWidth),
-                                                -kOGGameSceneButtonsVerticalMargin);
+    CGPoint restartButtonPosition = CGPointMake(gameOverScreen.size.width / kOGGameSceneGameOverButtonPositionFactor,
+                                                -gameOverScreen.size.height / kOGGameSceneGameOverButtonPositionFactor);
     
     [gameOverScreen addChild:[self createButtonWithImageNamed:kOGGameSceneMenuButtonSpriteName
                                                       atPoint:menuButtonPosition]];
@@ -103,6 +97,21 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 }
 
 #pragma - mark Subitems
+
+- (SKLabelNode *)createScoreLaberWithScore:(NSNumber *)score
+{
+    NSString *scoreString = [[NSString alloc] initWithFormat:@"Your Score %@", score];
+    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithText:scoreString];
+    [scoreString release];
+    
+    scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    
+    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * [self scaleFactor];
+    scoreLabel.fontColor = [SKColor gameBlack];
+    
+    return scoreLabel;
+}
 
 - (SKShapeNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
 {
@@ -165,7 +174,7 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 
 - (CGFloat)scaleFactor
 {
-    return self.frame.size.width / kOGGameSceneTimerLabelScaleCoefficient;
+    return self.frame.size.width / kOGGameSceneTimerLabelScaleFactor;
 }
 
 @end

@@ -22,9 +22,6 @@ BOOL const kOGGameSceneControllSwipe = NO;
 @property (nonatomic, retain) SKNode *middleground;
 @property (nonatomic, retain) SKNode *foreground;
 
-@property (nonatomic, retain) SKEffectNode *gameOverBlur;
-@property (nonatomic, retain) SKNode *gameOverScreen;
-
 @property (nonatomic, retain) OGPlayer *player;
 @property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isPlayerDragStarted) BOOL playerDragStart;
@@ -75,13 +72,6 @@ BOOL const kOGGameSceneControllSwipe = NO;
 
 - (void)createLayers
 {
-    SKEffectNode *gameOverBlur = [SKEffectNode node];
-    gameOverBlur.shouldEnableEffects = NO;
-    
-    CIFilter *blur = [CIFilter filterWithName:@"CIGaussianBlur" keysAndValues:@"inputRadius", @1.0f, nil];
-    gameOverBlur.filter = blur;
-    self.gameOverBlur = gameOverBlur;
-    
     self.background = [self createBackground];
     [self addChild:self.background];
     
@@ -113,6 +103,11 @@ BOOL const kOGGameSceneControllSwipe = NO;
         [self.player changePlayerVelocityWithPoint:location];
     }
     
+    [self handleGameOverEventsWithNode:touchedNode];
+}
+
+- (void)handleGameOverEventsWithNode:(SKNode *)touchedNode
+{
     if ([touchedNode.name isEqualToString:kOGGameSceneMenuButtonSpriteName])
     {
         OGSettingsScene *menuScene = [[OGSettingsScene alloc] initWithSize:self.frame.size];
