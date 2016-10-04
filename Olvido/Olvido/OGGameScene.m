@@ -68,12 +68,12 @@ CGFloat const kOGPlayerSpeed = 400;
         [self addChild:self.player];
     }
     
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        OGEnemy *enemy = [OGEnemy enemy];
-    //        [self addChild:enemy];
-    //        [enemy startWithPoint:playerStartPosition];
-    //    }
+    for (int i = 0; i < 4; i++)
+    {
+        OGEnemy *enemy = [OGEnemy enemy];
+        [self addChild:enemy];
+        [enemy startWithPoint:playerStartPosition];
+    }
 }
 
 - (void)createLayers
@@ -172,8 +172,8 @@ CGFloat const kOGPlayerSpeed = 400;
         
         SKAction *performComplitionHandler = [SKAction runBlock:^{
             [self performSelector:@selector(movePlayerToPointCompletionHandlerWithOuterVectorStartPointAsArray:)
-                       withObject:@[[NSNumber numberWithDouble:(displacementVector.dx - bX)],
-                                    [NSNumber numberWithDouble:(displacementVector.dy - bY)]]];
+                       withObject:@[@(displacementVector.dx - bX),
+                                    @(displacementVector.dy - bY)]];
         }];
         
         [self.player runAction:[SKAction sequence:@[
@@ -197,8 +197,6 @@ CGFloat const kOGPlayerSpeed = 400;
     
     CGFloat x = outerVector.dx * kOGPlayerSpeed * self.player.physicsBody.mass / l;
     CGFloat y = outerVector.dy * kOGPlayerSpeed * self.player.physicsBody.mass / l;
-    
-    //    NSLog(@"%f, %f", x, y);
     
     [self.player.physicsBody applyImpulse:CGVectorMake(x, y)];
 }
@@ -237,8 +235,6 @@ CGFloat const kOGPlayerSpeed = 400;
             
             pointForImpulse = CGPointMake(2 * self.player.position.x - self.player.lastPosition.x,
                                           2 * self.player.position.y - self.player.lastPosition.y);
-            
-            //            self.player.lastPosition = self.player.position;
             
             [self.player removeActionForKey:kOGMovePlayerToPointActionKey];
             
