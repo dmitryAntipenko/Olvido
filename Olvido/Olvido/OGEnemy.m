@@ -8,7 +8,7 @@
 
 #import "OGEnemy.h"
 
-NSString *const kOGEnemyNodeName = @"Enemy Node";
+NSString *const kOGEnemyNodeName = @"enemy";
 NSString *const kOGEnemyTextureName = @"EnemyBall";
 NSString *const kOGEnemyTextureInvulnerableName = @"PlayerBall";
 CGFloat const kOGEnemySize = 32;
@@ -42,6 +42,7 @@ uint32_t const kOGEnemyCategoryBitMask = 0x1 << 2;
             
             enemy.physicsBody.categoryBitMask = kOGEnemyCategoryBitMask;
             enemy.physicsBody.collisionBitMask = 0x1 << 0;
+            enemy.physicsBody.contactTestBitMask = 0x0;
             
             SKAction *blink = [SKAction animateWithTextures:@[
                                                               enemyInvulnerableTexture,

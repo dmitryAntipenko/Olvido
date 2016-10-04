@@ -14,6 +14,8 @@ extern CGFloat const kOGPlayerPlayerRadius;
 
 @interface OGPlayer : SKSpriteNode
 
+@property (nonatomic, assign) CGPoint lastPosition;
+
 + (instancetype)playerWithImageName:(NSString *)imageName point:(CGPoint)point;
 + (instancetype)playerWithPoint:(CGPoint)point;
 

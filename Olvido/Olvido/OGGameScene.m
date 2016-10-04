@@ -16,6 +16,10 @@
 
 BOOL const kOGGameSceneControllSwipe = NO;
 
+NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
+NSString *const kOGBorderNodeName = @"border";
+CGFloat const kOGPlayerSpeed = 400;
+
 @interface OGGameScene () <SKPhysicsContactDelegate>
 
 @property (nonatomic, retain) SKNode *background;
@@ -46,6 +50,8 @@ BOOL const kOGGameSceneControllSwipe = NO;
 {
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     self.physicsBody.categoryBitMask = 0x1 << 0;
+    self.physicsBody.contactTestBitMask = 0x0;
+    
     self.physicsBody.usesPreciseCollisionDetection = YES;
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
@@ -72,6 +78,8 @@ BOOL const kOGGameSceneControllSwipe = NO;
 
 - (void)createLayers
 {
+    self.name = kOGBorderNodeName;
+    
     self.background = [self createBackground];
     [self addChild:self.background];
     
@@ -104,6 +112,7 @@ BOOL const kOGGameSceneControllSwipe = NO;
     }
     
     [self handleGameOverEventsWithNode:touchedNode];
+    [self movePlayerToPoint:location];
 }
 
 - (void)handleGameOverEventsWithNode:(SKNode *)touchedNode
@@ -121,6 +130,65 @@ BOOL const kOGGameSceneControllSwipe = NO;
         [self.view presentScene:gameScene];
         [gameScene release];
     }
+}
+
+- (void)movePlayerToPoint:(CGPoint)point
+{
+    self.player.physicsBody.velocity = CGVectorMake(0, 0);
+    [self.player actionForKey:kOGMovePlayerToPointActionKey];
+    
+    CGVector displacementVector = CGVectorMake(point.x - self.player.position.x,
+                                               point.y - self.player.position.y);
+    
+    if (self.player.position.x - self.player.lastPosition.x == 0.0
+        && self.player.position.y - self.player.lastPosition.y == 0.0)
+    {
+        
+        CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
+        
+        CGFloat x = displacementVector.dx * kOGPlayerSpeed / l * self.player.physicsBody.mass;
+        CGFloat y = displacementVector.dy * kOGPlayerSpeed / l * self.player.physicsBody.mass;
+        
+        [self.player.physicsBody applyImpulse:CGVectorMake(x, y)];
+    }
+    else
+    {
+        CGVector movementVector = CGVectorMake(self.player.position.x - self.player.lastPosition.x,
+                                               self.player.position.y - self.player.lastPosition.y);
+        
+        CGFloat v = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+        
+        CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5) / 3;
+        
+        CGFloat bX = movementVector.dx / v * l;
+        CGFloat bY = movementVector.dy / v * l;
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathMoveToPoint(path, NULL, 0, 0);
+        
+        CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
+        
+        SKAction *moveToPoint = [SKAction followPath:path speed:kOGPlayerSpeed];
+        
+        [self.player runAction:[SKAction sequence:@[
+                                                    moveToPoint,
+                                                    [SKAction performSelector:@selector(movePlayerToPointCompletionHandler)
+                                                                     onTarget:self]
+                                                    ]] withKey:kOGMovePlayerToPointActionKey];
+    }
+}
+
+- (void)movePlayerToPointCompletionHandler
+{
+    CGVector direction = CGVectorMake(self.player.position.x - self.player.lastPosition.x,
+                                      self.player.position.y - self.player.lastPosition.y);
+    
+    CGFloat l = pow(pow(direction.dx, 2) + pow(direction.dy, 2), 0.5);
+    
+    CGFloat x = direction.dx * kOGPlayerSpeed / l * self.player.physicsBody.mass;
+    CGFloat y = direction.dy * kOGPlayerSpeed / l * self.player.physicsBody.mass;
+    
+    [self.player.physicsBody applyImpulse:CGVectorMake(x, y)];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -144,10 +212,41 @@ BOOL const kOGGameSceneControllSwipe = NO;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
+    NSString *nameA = contact.bodyA.node.name;
+    NSString *nameB = contact.bodyB.node.name;
+    
+    if (([nameA isEqualToString:self.name] && [nameB isEqualToString:self.player.name])
+        || ([nameB isEqualToString:self.name] && [nameA isEqualToString:self.player.name]))
+    {
+        SKAction *moveAction = [self.player actionForKey:kOGMovePlayerToPointActionKey];
+        if (moveAction)
+        {
+            CGPoint pointForImpulse = CGPointZero;
+            
+            pointForImpulse = CGPointMake(2 * self.player.position.x - self.player.lastPosition.x,
+                                          2 * self.player.position.y - self.player.lastPosition.y);
+            
+            self.player.lastPosition = self.player.position;
+            
+            [self.player removeActionForKey:kOGMovePlayerToPointActionKey];
+            
+            [self movePlayerToPoint:pointForImpulse];
+        }
+    }
+    
+    if (([nameA isEqualToString:kOGEnemyNodeName] && [nameB isEqualToString:self.player.name])
+        || ([nameB isEqualToString:kOGEnemyNodeName] && [nameA isEqualToString:self.player.name]))
+    {
+        [self showGameOverScreen];
+    }
+}
+
+- (void)showGameOverScreen
+{
     self.physicsWorld.speed = 0.0;
     [self.timerNode.timer stop];
     [self.player removeFromParent];
-
+    
     SKNode *dimPanel = [self createDimPanel];
     [self addChild:dimPanel];
     
@@ -160,7 +259,7 @@ BOOL const kOGGameSceneControllSwipe = NO;
 
 - (void)update:(CFTimeInterval)currentTime
 {
-
+    self.player.lastPosition = self.player.position;
 }
 
 @end
