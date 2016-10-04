@@ -68,12 +68,12 @@ CGFloat const kOGPlayerSpeed = 400;
         [self addChild:self.player];
     }
     
-    for (int i = 0; i < 4; i++)
-    {
-        OGEnemy *enemy = [OGEnemy enemy];
-        [self addChild:enemy];
-        [enemy startWithPoint:playerStartPosition];
-    }
+//    for (int i = 0; i < 4; i++)
+//    {
+//        OGEnemy *enemy = [OGEnemy enemy];
+//        [self addChild:enemy];
+//        [enemy startWithPoint:playerStartPosition];
+//    }
 }
 
 - (void)createLayers
@@ -180,6 +180,7 @@ CGFloat const kOGPlayerSpeed = 400;
 
 - (void)movePlayerToPointCompletionHandler
 {
+    NSLog(@"%@, %@", NSStringFromCGPoint(self.player.position), NSStringFromCGPoint(self.player.lastPosition));
     CGVector direction = CGVectorMake(self.player.position.x - self.player.lastPosition.x,
                                       self.player.position.y - self.player.lastPosition.y);
     
