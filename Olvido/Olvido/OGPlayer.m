@@ -36,12 +36,13 @@ CGFloat const kOGPlayerPlayerRadius = 16.0;
         
         player.physicsBody.categoryBitMask = 0x1 << 1;
         player.physicsBody.collisionBitMask = 0x1 << 0;
+        player.physicsBody.contactTestBitMask = 0x1 << 0;
         
         player.physicsBody.usesPreciseCollisionDetection = YES;
         
         SKAction *invulnerability = [SKAction waitForDuration:3.0];
         [player runAction:invulnerability completion:^{
-            player.physicsBody.contactTestBitMask = 0x1 << 2;
+            player.physicsBody.contactTestBitMask = player.physicsBody.contactTestBitMask | 0x1 << 2;
         }];
     }
 
