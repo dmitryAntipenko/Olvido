@@ -7,7 +7,6 @@
 //
 
 #import "OGGameViewController.h"
-//#import "OGGameScene.h"
 #import "OGGameScene.h"
 
 @implementation OGGameViewController

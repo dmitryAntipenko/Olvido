@@ -44,10 +44,10 @@ NSUInteger const kOGConstantColorsBlack = 0x11181f;
 
 + (SKColor *)colorWithHex:(NSUInteger)hex
 {
-    return [SKColor colorWithRed:((float)((hex & 0xFF0000) >> 16))/255.0
-                    green:((float)((hex & 0x00FF00) >>  8))/255.0
-                     blue:((float)((hex & 0x0000FF) >>  0))/255.0
-                    alpha:1.0];
+    return [SKColor colorWithRed:((float) ((hex & 0xFF0000) >> 16)) / 255.0
+                           green:((float) ((hex & 0x00FF00) >>  8)) / 255.0
+                            blue:((float) ((hex & 0x0000FF) >>  0)) / 255.0
+                           alpha:1.0];
 }
 
 @end
