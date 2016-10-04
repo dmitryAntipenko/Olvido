@@ -7,6 +7,7 @@
 //
 
 #import "OGPlayer.h"
+#import "OGEnemy.h"
 
 NSString *const kOGGameScenePlayerImageName = @"PlayerBall";
 NSString *const kOGPlayerPlayerName = @"player";
@@ -26,7 +27,7 @@ CGFloat const kOGPlayerPlayerSpeed = 300.0;
         player.position = point;
         player.lastPosition = point;
         
-        player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(kOGPlayerPlayerRadius)];
+        player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kOGPlayerPlayerRadius];
         player.physicsBody.dynamic = YES;
         player.physicsBody.linearDamping = 0.0;
         player.physicsBody.angularDamping = 0.0;
@@ -40,15 +41,17 @@ CGFloat const kOGPlayerPlayerSpeed = 300.0;
         
         player.physicsBody.usesPreciseCollisionDetection = YES;
         
-        SKAction *invulnerability = [SKAction waitForDuration:3.0];
-        [player runAction:invulnerability completion:^{
+        SKAction *invulnerability = [SKAction waitForDuration:kOGInvulnerabilityRepeatCount * kOGInvulnerabilityBlinkingTimeDuration * 2.0];
+        [player runAction:invulnerability completion:^
+        {
             player.physicsBody.contactTestBitMask = player.physicsBody.contactTestBitMask | 0x1 << 2;
         }];
         
         player.physicsBody.restitution = 1.0;
         player.physicsBody.friction = 0.0;
         
-        player.physicsBody.velocity = [OGPlayer randomVelocityWithSpeed:kOGPlayerPlayerSpeed];
+        
+        //player.physicsBody.velocity = [OGPlayer randomVelocityWithSpeed:kOGPlayerPlayerSpeed];
     }
 
     return [player autorelease];

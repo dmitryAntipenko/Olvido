@@ -109,10 +109,10 @@ CGFloat const kOGPlayerSpeed = 400;
     else if ([self.controlType isEqualToString:kOGSettingsSceneTapButton])
     {
         [self.player changePlayerVelocityWithPoint:location];
+        [self movePlayerToPoint:location];
     }
     
     [self handleGameOverEventsWithNode:touchedNode];
-    [self movePlayerToPoint:location];
 }
 
 - (void)handleGameOverEventsWithNode:(SKNode *)touchedNode
