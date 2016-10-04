@@ -9,11 +9,16 @@
 #import "OGGameScene.h"
 
 extern CGFloat const kOGGameSceneBorderSize;
+extern NSString *const kOGGameSceneMenuButtonSpriteName;
+extern NSString *const kOGGameSceneRestartButtonSpriteName;
 
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;
 - (SKNode *)createMiddleGround;
 - (SKNode *)createForeground;
+
+- (SKNode *)createGameOverScreenWithScore:(NSNumber *)score;
+- (SKNode *)createDimPanel;
 
 @end

@@ -8,12 +8,30 @@
 
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
+#import "OGTimerNode.h"
 
+CGFloat const kOGGameSceneScoreDefaultFontSize = 36.0;
 CGFloat const kOGGameSceneBorderSize = 3.0;
+
+CGFloat const kOGGameSceneTimerCircleRadiusCoefficient = 5.0;
 CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
 CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
+CGFloat const kOGGameSceneTimerLabelScaleFactor = 500.0;
+
+CGFloat const kOGGameSceneButtonsMargin = 20.0;
+CGFloat const kOGGameSceneButtonsVerticalMargin = 40.0;
+CGFloat const kOGGameSceneButtonWidth = 80.0;
+
+CGFloat const kOGGameSceneGameOverScreenHeightFactor = 2.5;
+CGFloat const kOGGameSceneGameOverButtonPositionFactor = 4.0;
+
+NSString *const kOGGameSceneGameOverBackgroundSpriteName = @"GameOverBackground";
+NSString *const kOGGameSceneMenuButtonSpriteName = @"MenuButton";
+NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 
 @implementation OGGameScene (OGGameSceneCreation)
+
+#pragma - mark Top Game Scene Nodes
 
 - (SKNode *)createBackground
 {
@@ -28,14 +46,14 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKNode *middleground = [SKNode node];
     
-    SKLabelNode *timerOutput = [SKLabelNode node];
-    timerOutput.text = @"Test";
-    timerOutput.fontColor = [SKColor backgroundGrayColor];
-    timerOutput.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    timerOutput.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    timerOutput.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame),
+                                                                            CGRectGetMidY(self.frame))];
     
-    [middleground addChild:timerOutput];
+    timerNode.fontSize = kOGTimerNodeFontDefaultSize * [self scaleFactor];
+    
+    [middleground addChild:timerNode];
+    
+    [timerNode release];
     
     return middleground;
 }
@@ -51,17 +69,67 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
     return foreground;
 }
 
+- (SKNode *)createGameOverScreenWithScore:(NSNumber *)score
+{
+    SKTexture *gameOverBackground = [SKTexture textureWithImageNamed:kOGGameSceneGameOverBackgroundSpriteName];
+    SKSpriteNode *gameOverScreen = [SKSpriteNode spriteNodeWithTexture:gameOverBackground];
+    
+    gameOverScreen.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    gameOverScreen.size = CGSizeMake(self.frame.size.width,
+                                     self.frame.size.height / kOGGameSceneGameOverScreenHeightFactor);
+    
+    SKLabelNode *scoreNode = [self createScoreLaberWithScore:score];
+    [gameOverScreen addChild:scoreNode];
+
+    CGPoint menuButtonPosition = CGPointMake(-gameOverScreen.size.width / kOGGameSceneGameOverButtonPositionFactor,
+                                             -gameOverScreen.size.height / kOGGameSceneGameOverButtonPositionFactor);
+    
+    CGPoint restartButtonPosition = CGPointMake(gameOverScreen.size.width / kOGGameSceneGameOverButtonPositionFactor,
+                                                -gameOverScreen.size.height / kOGGameSceneGameOverButtonPositionFactor);
+    
+    [gameOverScreen addChild:[self createButtonWithImageNamed:kOGGameSceneMenuButtonSpriteName
+                                                      atPoint:menuButtonPosition]];
+    
+    [gameOverScreen addChild:[self createButtonWithImageNamed:kOGGameSceneRestartButtonSpriteName
+                                                      atPoint:restartButtonPosition]];
+    
+    return gameOverScreen;
+}
+
+#pragma - mark Subitems
+
+- (SKLabelNode *)createScoreLaberWithScore:(NSNumber *)score
+{
+    NSString *scoreString = [[NSString alloc] initWithFormat:@"Your Score %@", score];
+    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithText:scoreString];
+    [scoreString release];
+    
+    scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+    scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    
+    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * [self scaleFactor];
+    scoreLabel.fontColor = [SKColor gameBlack];
+    
+    return scoreLabel;
+}
+
 - (SKShapeNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
 {
     SKShapeNode *timerCircle = [SKShapeNode node];
     
-    timerCircle.path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - kOGGameSceneTimerCircleRadius,
-                                                                point.y - kOGGameSceneTimerCircleRadius,
-                                                                kOGGameSceneTimerCircleRadius * 2.0,
-                                                                kOGGameSceneTimerCircleRadius * 2.0), nil);
+    CGFloat timerCircleRadius = self.frame.size.width / kOGGameSceneTimerCircleRadiusCoefficient;
+    
+    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - timerCircleRadius,
+                                                              point.y - timerCircleRadius,
+                                                              timerCircleRadius * 2.0,
+                                                              timerCircleRadius * 2.0), nil);
+    
+    timerCircle.path = path;
     timerCircle.strokeColor = color;
     timerCircle.lineWidth = kOGGameSceneTimerCircleLineWidth;
     timerCircle.antialiased = YES;
+    
+    CGPathRelease(path);
     
     return timerCircle;
 }
@@ -70,11 +138,43 @@ CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 {
     SKShapeNode *border = [SKShapeNode node];
     
-    border.path = CGPathCreateWithRect(self.frame, nil);
+    CGPathRef path = CGPathCreateWithRect(self.frame, nil);
+    
+    border.path = path;
     border.strokeColor = color;
     border.lineWidth = pow(kOGGameSceneBorderSize, 2);
     
+    CGPathRelease(path);
+    
     return border;
+}
+
+- (SKNode *)createDimPanel
+{
+    SKSpriteNode *dimPanel = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:self.frame.size];
+    
+    dimPanel.alpha = 0.0;
+    
+    CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    dimPanel.position = position;
+    
+    return dimPanel;
+}
+
+- (SKSpriteNode *)createButtonWithImageNamed:(NSString *)name atPoint:(CGPoint)point
+{
+    SKSpriteNode *button = [SKSpriteNode spriteNodeWithImageNamed:name];
+    
+    button.name = name;
+    button.position = point;
+    button.size = CGSizeMake(kOGGameSceneButtonWidth, kOGGameSceneButtonWidth);
+    
+    return button;
+}
+
+- (CGFloat)scaleFactor
+{
+    return self.frame.size.width / kOGGameSceneTimerLabelScaleFactor;
 }
 
 @end

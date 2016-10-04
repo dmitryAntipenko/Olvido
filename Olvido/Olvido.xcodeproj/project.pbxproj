@@ -18,6 +18,9 @@
 		EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */; };
 		EA976D041D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D031D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m */; };
 		EA976D081D9EFB79003B77FC /* OGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D071D9EFB79003B77FC /* OGPlayer.m */; };
+		EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D0B1D9FDF76003B77FC /* OGTimer.m */; };
+		EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D0E1D9FE940003B77FC /* OGTimerNode.m */; };
+		EA976D121D9FFEAF003B77FC /* OGSettingsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D111D9FFEAF003B77FC /* OGSettingsScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,12 @@
 		EA976D031D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OGGameScene+OGGameSceneCreation.m"; sourceTree = "<group>"; };
 		EA976D061D9EFB79003B77FC /* OGPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayer.h; sourceTree = "<group>"; };
 		EA976D071D9EFB79003B77FC /* OGPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayer.m; sourceTree = "<group>"; };
+		EA976D0A1D9FDF76003B77FC /* OGTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTimer.h; sourceTree = "<group>"; };
+		EA976D0B1D9FDF76003B77FC /* OGTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTimer.m; sourceTree = "<group>"; };
+		EA976D0D1D9FE940003B77FC /* OGTimerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTimerNode.h; sourceTree = "<group>"; };
+		EA976D0E1D9FE940003B77FC /* OGTimerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTimerNode.m; sourceTree = "<group>"; };
+		EA976D101D9FFEAF003B77FC /* OGSettingsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSettingsScene.h; sourceTree = "<group>"; };
+		EA976D111D9FFEAF003B77FC /* OGSettingsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSettingsScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,11 +90,15 @@
 				EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */,
 				EA976CFF1D9ED6BF003B77FC /* SKColor+OGConstantColors.h */,
 				EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */,
+				EA976D0A1D9FDF76003B77FC /* OGTimer.h */,
+				EA976D0B1D9FDF76003B77FC /* OGTimer.m */,
 				EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */,
 				EA976CCD1D9C253B003B77FC /* Main.storyboard */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
+				EA976D101D9FFEAF003B77FC /* OGSettingsScene.h */,
+				EA976D111D9FFEAF003B77FC /* OGSettingsScene.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
@@ -116,6 +129,8 @@
 				1BDFBC421D9EB23200253866 /* OGEnemy.m */,
 				EA976D061D9EFB79003B77FC /* OGPlayer.h */,
 				EA976D071D9EFB79003B77FC /* OGPlayer.m */,
+				EA976D0D1D9FE940003B77FC /* OGTimerNode.h */,
+				EA976D0E1D9FE940003B77FC /* OGTimerNode.m */,
 			);
 			name = SceneItems;
 			sourceTree = "<group>";
@@ -192,12 +207,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA976D121D9FFEAF003B77FC /* OGSettingsScene.m in Sources */,
 				EA976D081D9EFB79003B77FC /* OGPlayer.m in Sources */,
 				EA976D041D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m in Sources */,
+				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1BDFBC431D9EB23200253866 /* OGEnemy.m in Sources */,
+				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 			);

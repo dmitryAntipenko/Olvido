@@ -14,6 +14,17 @@ extern CGFloat const kOGPlayerPlayerRadius;
 
 @interface OGPlayer : SKSpriteNode
 
-+ (instancetype)playerWithTexture:(SKTexture *)texture inPoint:(CGPoint)point;
+@property (nonatomic, assign) CGPoint lastPosition;
 
++ (instancetype)playerWithImageName:(NSString *)imageName point:(CGPoint)point;
++ (instancetype)playerWithPoint:(CGPoint)point;
+
+- (void)changePlayerTextureWithImageName:(NSString *)imageName;
+- (BOOL)isPointInPlayerWithPoint:(CGPoint)point;
+
+- (void)changePlayerVelocityWithPoint:(CGPoint)point;
+
++ (CGVector)randomVelocityWithSpeed:(CGFloat)speed;
+
+@property (nonatomic, getter=isTouched) BOOL touch;
 @end

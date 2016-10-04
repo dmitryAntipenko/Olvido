@@ -36,4 +36,6 @@ extern uint32_t const kOGEnemyCategoryBitMask;
 
 + (nullable instancetype)enemy;
 
+- (void)startWithPoint:(CGPoint)point;
+
 @end

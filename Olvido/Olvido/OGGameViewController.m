@@ -7,7 +7,8 @@
 //
 
 #import "OGGameViewController.h"
-#import "OGGameScene.h"
+//#import "OGGameScene.h"
+#import "OGSettingsScene.h"
 
 @implementation OGGameViewController
 
@@ -19,13 +20,14 @@
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
-    view.showsPhysics = YES;
     view.showsNodeCount = YES;
     
-    OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
+//    OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
+    OGSettingsScene *scene = [[OGSettingsScene alloc] initWithSize:view.frame.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     [view presentScene:scene];
+    [scene release];
 }
 
 - (BOOL)shouldAutorotate
