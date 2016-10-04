@@ -78,12 +78,13 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    CGFloat speed = 400;
+    CGFloat speed = 100;
     
-    CGFloat dx = self.player.position.x - self.player.lastPosition2th.x;
-    CGFloat dy = self.player.position.y - self.player.lastPosition2th.y;
+    CGVector displacementVector = CGVectorMake(location.x - self.player.position.x,
+                                               location.y - self.player.position.y);
     
-    if (dx == 0.0 && dy == 0.0)
+    if (self.player.position.x - self.player.lastPosition2th.x == 0.0
+        && self.player.position.y - self.player.lastPosition2th.y == 0.0)
     {
         CGVector direction = CGVectorMake(location.x - self.player.position.x,
                                           location.y - self.player.position.y);
@@ -97,25 +98,55 @@
     }
     else
     {
-        CGFloat v = pow(pow(dx, 2) + pow(dy, 2), 0.5);
+        CGVector displacementVector = CGVectorMake(location.x - self.player.position.x,
+                                                   location.y - self.player.position.y);
+        CGVector movementVector = CGVectorMake(self.player.position.x - self.player.lastPosition2th.x,
+                                               self.player.position.y - self.player.lastPosition2th.y);
         
-        CGFloat bX = dx / v * 100;
-        CGFloat bY = dy / v * 100;
+        CGFloat v = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
         
-        CGFloat cX = location.x - self.player.position.x;
-        CGFloat cY = location.y - self.player.position.y;
+//        CGFloat scalarMult = displacementVector.dx * movementVector.dx + displacementVector.dy * movementVector.dy;
+        
+        CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5) / 3;
+        
+        CGFloat bX = movementVector.dx / v * l;
+        CGFloat bY = movementVector.dy / v * l;
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathMoveToPoint(path, NULL, 0, 0);
         
-        //        CGPathAddCurveToPoint(path, NULL, bX, bY, dX, dY, cX, cY);
-        CGPathAddQuadCurveToPoint(path, NULL, bX, bY, cX, cY);
-        
+//        if (scalarMult < 0)
+//        {
+//            CGFloat dX = pow(10000 / (pow(displacementVector.dx / displacementVector.dy, 2) + 1), 0.5);
+//            
+//            if (displacementVector.dx / displacementVector.dy >= movementVector.dx / movementVector.dy)
+//            {
+//                dX *= -1;
+//            }
+//            
+//            CGFloat dY = (-1) * displacementVector.dx * dX / displacementVector.dy;
+//            
+//            CGPathAddCurveToPoint(path, NULL, bX, bY, dX, dY, displacementVector.dx, displacementVector.dy);
+//        }
+//        else
+//        {
+            CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
+//        }
         
         SKAction *moveToPoint = [SKAction followPath:path speed:speed];
         
         self.player.physicsBody.velocity = CGVectorMake(0, 0);
         [self.player removeAllActions];
+        
+        //debug
+        SKNode *node = [self childNodeWithName:@"pathNode"];
+        [node removeFromParent];
+        SKShapeNode *pathNode = [SKShapeNode shapeNodeWithPath:path];
+        pathNode.strokeColor = [SKColor blackColor];
+        pathNode.position = self.player.position;
+        pathNode.name = @"pathNode";
+        [self addChild:pathNode];
+        //
         
         [self.player runAction:moveToPoint completion:^{
             CGVector direction = CGVectorMake(self.player.position.x - self.player.lastPosition2th.x,
@@ -130,6 +161,7 @@
         }];
         
     }
+    
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
