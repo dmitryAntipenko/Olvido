@@ -11,6 +11,7 @@
 extern NSString *const kOGGameScenePlayerImageName;
 extern NSString *const kOGPlayerPlayerName;
 extern CGFloat const kOGPlayerPlayerRadius;
+extern CGFloat const kOGPlayerPlayerSpeed;
 
 @interface OGPlayer : SKSpriteNode
 
