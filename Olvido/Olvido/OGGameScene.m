@@ -11,7 +11,6 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "OGTimerNode.h"
 #import "OGTimer.h"
-#import "OGScoreController.h"
 
 @interface OGGameScene () <SKPhysicsContactDelegate>
 
@@ -20,8 +19,6 @@
 @property (nonatomic, retain) SKNode *foreground;
 
 @property (nonatomic, retain) NSTimer *timer;
-@property (nonatomic, retain) OGScoreController *scoreController;
-@property (nonatomic, retain) OGLevelController *levelController;
 
 @property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
@@ -57,18 +54,12 @@
                                                 userInfo:nil
                                                  repeats:YES];
     
-    self.levelController = [[OGLevelController alloc] init];
-    
-    self.scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
-    
     [self createLayers];
 }
 
 - (void)timerTick
 {
-    [self.scoreController incrementScore];
-    
-    self.timerNode.text = self.scoreController.score.stringValue;
+
 }
 
 - (void)createLayers
