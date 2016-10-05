@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D6361DA54C1300EF1681 /* OGLevelController.m */; };
+		1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D63A1DA54E4F00EF1681 /* OGLevel.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -22,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B48D6351DA54C1300EF1681 /* OGLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelController.h; sourceTree = "<group>"; };
+		1B48D6361DA54C1300EF1681 /* OGLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelController.m; sourceTree = "<group>"; };
+		1B48D6391DA54E4F00EF1681 /* OGLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevel.h; sourceTree = "<group>"; };
+		1B48D63A1DA54E4F00EF1681 /* OGLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevel.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -57,6 +63,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B48D6381DA54E0300EF1681 /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				1B48D6351DA54C1300EF1681 /* OGLevelController.h */,
+				1B48D6361DA54C1300EF1681 /* OGLevelController.m */,
+				1B48D6391DA54E4F00EF1681 /* OGLevel.h */,
+				1B48D63A1DA54E4F00EF1681 /* OGLevel.m */,
+			);
+			name = Levels;
+			sourceTree = "<group>";
+		};
 		EA976C731D9AAEE2003B77FC = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +93,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				1B48D6381DA54E0300EF1681 /* Levels */,
 				EA976D051D9EDBF8003B77FC /* GameScene */,
 				EA976D091D9F03A9003B77FC /* SceneItems */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
@@ -199,8 +217,10 @@
 			files = (
 				EA976D041D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
+				1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
+				1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
