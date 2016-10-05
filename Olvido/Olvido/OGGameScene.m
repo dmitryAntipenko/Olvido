@@ -10,12 +10,15 @@
 #import "SKColor+OGConstantColors.h"
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "OGTimerNode.h"
+#import "OGTimer.h"
 
 @interface OGGameScene () <SKPhysicsContactDelegate>
 
 @property (nonatomic, retain) SKNode *background;
 @property (nonatomic, retain) SKNode *middleground;
 @property (nonatomic, retain) SKNode *foreground;
+
+@property (nonatomic, retain) NSTimer *timer;
 
 @property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
@@ -45,7 +48,18 @@
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
     
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                  target:self
+                                                selector:@selector(timerTick)
+                                                userInfo:nil
+                                                 repeats:YES];
+    
     [self createLayers];
+}
+
+- (void)timerTick
+{
+
 }
 
 - (void)createLayers
@@ -85,16 +99,16 @@
 - (void)showGameOverScreen
 {
     self.physicsWorld.speed = 0.0;
-    [self.timerNode.timer stop];
+    [self.timer invalidate];
     
     SKNode *dimPanel = [self createDimPanel];
     [self addChild:dimPanel];
     
-    SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.timerNode.timer.ticks];
-    [self addChild:gameOverScreen];
+//    SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.timer.ticks];
+//    [self addChild:gameOverScreen];
     
     [dimPanel runAction:[SKAction fadeAlphaTo:0.3 duration:1.0]];
-    [gameOverScreen runAction:[SKAction fadeInWithDuration:1.0]];
+//    [gameOverScreen runAction:[SKAction fadeInWithDuration:1.0]];
 }
 
 - (void)update:(CFTimeInterval)currentTime
