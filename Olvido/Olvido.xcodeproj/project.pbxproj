@@ -78,6 +78,8 @@
 			children = (
 				EA976D051D9EDBF8003B77FC /* GameScene */,
 				EA976D091D9F03A9003B77FC /* SceneItems */,
+				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
+				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
 				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
@@ -91,8 +93,6 @@
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
-				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
-				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
