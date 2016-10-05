@@ -59,6 +59,8 @@
     
     self.levelController = [[OGLevelController alloc] init];
     
+    [self.levelController loadLevels];
+    
     self.scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
     
     [self createLayers];
