@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class OGLevelController;
+
 @interface OGScoreController : NSObject
 
+@property (nonatomic, retain, readonly) NSNumber *score;
 
+- (instancetype)initWithLevelController:(OGLevelController *)levelController;
+- (void)incrementScore;
 
 @end

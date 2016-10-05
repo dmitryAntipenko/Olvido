@@ -11,6 +11,10 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "OGTimerNode.h"
 #import "OGTimer.h"
+#import "OGScoreController.h"
+#import "OGLevelController.h"
+
+NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
 @interface OGGameScene () <SKPhysicsContactDelegate>
 
@@ -19,6 +23,8 @@
 @property (nonatomic, retain) SKNode *foreground;
 
 @property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, retain) OGScoreController *scoreController;
+@property (nonatomic, retain) OGLevelController *levelController;
 
 @property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
@@ -48,16 +54,13 @@
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneTimerInterval
                                                   target:self
                                                 selector:@selector(timerTick)
                                                 userInfo:nil
                                                  repeats:YES];
     
     self.levelController = [[OGLevelController alloc] init];
-    
-    [self.levelController loadLevels];
-    
     self.scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
 
     [self createLayers];
@@ -65,7 +68,9 @@
 
 - (void)timerTick
 {
-
+    [self.scoreController incrementScore];
+    
+    self.timerNode.text = self.scoreController.score.stringValue;
 }
 
 - (void)createLayers
@@ -110,11 +115,11 @@
     SKNode *dimPanel = [self createDimPanel];
     [self addChild:dimPanel];
     
-//    SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.timer.ticks];
-//    [self addChild:gameOverScreen];
+    SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.scoreController.score];
+    [self addChild:gameOverScreen];
     
     [dimPanel runAction:[SKAction fadeAlphaTo:0.3 duration:1.0]];
-//    [gameOverScreen runAction:[SKAction fadeInWithDuration:1.0]];
+    [gameOverScreen runAction:[SKAction fadeInWithDuration:1.0]];
 }
 
 - (void)update:(CFTimeInterval)currentTime
