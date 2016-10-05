@@ -18,7 +18,6 @@
 @property (nonatomic, retain) SKNode *foreground;
 
 @property (nonatomic, retain) OGTimerNode *timerNode;
-@property (nonatomic, getter=isPlayerDragStarted) BOOL playerDragStart;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
 
 @end
