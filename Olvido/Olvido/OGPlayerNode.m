@@ -21,30 +21,10 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
     
     if (playerNode)
     {
-        CGSize size = CGSizeMake(playerNode.radius * 2.0, playerNode.radius * 2.0);
-        
-        SKSpriteNode *border = [SKSpriteNode spriteNodeWithColor:playerNode.color
-                                                            size:size];
-        
-        
-        CGRect pathRect = CGRectMake(-playerNode.radius + kOGPlayerNodeBorderLineWidth,
-                                     -playerNode.radius + kOGPlayerNodeBorderLineWidth,
-                                     size.width - 2.0 * kOGPlayerNodeBorderLineWidth,
-                                     size.height - 2.0 * kOGPlayerNodeBorderLineWidth);
-        
-        CGPathRef path = CGPathCreateWithEllipseInRect(pathRect, nil);
-        
-        SKShapeNode *mask = [SKShapeNode shapeNodeWithPath:path];
-        mask.lineWidth = kOGPlayerNodeBorderLineWidth;
-        
-        SKCropNode *crop = [SKCropNode node];
-        crop.maskNode = mask;
-        [crop addChild:border];
-        
-        CGPathRelease(path);
-        
-        playerNode.appearance = crop;
-        
+        playerNode.appearance = [SKSpriteNode spriteNodeWithImageNamed:@"PlayerBall"];
+        playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0, playerNode.radius * 2.0);
+        playerNode.appearance.color = [SKColor blackColor];
+        playerNode.appearance.colorBlendFactor = 1.0;
         [playerNode addChild:playerNode.appearance];
         
         playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kOGBasicGameNodeRadius];
@@ -74,7 +54,7 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
 
 - (void)setColor:(SKColor *)color
 {
-    ((SKShapeNode *) self.appearance.maskNode).strokeColor = color;
+    self.appearance.color = color;
 }
 
 

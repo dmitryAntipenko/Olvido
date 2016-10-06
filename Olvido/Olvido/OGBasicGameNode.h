@@ -15,13 +15,13 @@ extern CGFloat const kOGBasicGameNodeRadius;
 @property (nonatomic, assign) CGFloat radius;
 @property (nonatomic, assign) CGVector velocity;
 @property (nonatomic, retain) SKColor *color;
-@property (nonatomic, retain) SKCropNode *appearance;
+@property (nonatomic, retain) SKSpriteNode *appearance;
 
 - (instancetype)initWithColor:(SKColor *)color
                        radius:(CGFloat)radius
                      velocity:(CGVector)velocity
-                   appearance:(SKCropNode *)appearence
-                         skin:(SKCropNode *)skin;
+                   appearance:(SKSpriteNode *)appearence
+                         skin:(SKSpriteNode *)skin;
 - (instancetype)initWithColor:(SKColor *)color;
 
 - (void)moveToPoint:(CGPoint)point;
