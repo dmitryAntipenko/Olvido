@@ -13,6 +13,7 @@
 #import "OGTimer.h"
 #import "OGScoreController.h"
 #import "OGLevelController.h"
+#import "OGPlayerNode.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
@@ -29,6 +30,7 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 @property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
 
+@property (nonatomic, retain) OGPlayerNode *playerNode;
 @end
 
 @implementation OGGameScene
@@ -64,6 +66,12 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     self.scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
 
     [self createLayers];
+    
+    self.playerNode = [OGPlayerNode playerNodeWithColor:[SKColor blackColor]];
+    self.playerNode.position = CGPointMake(100, 100);
+    self.playerNode.zPosition = 10000;
+    
+    [self addChild:self.playerNode];
 }
 
 - (void)timerTick

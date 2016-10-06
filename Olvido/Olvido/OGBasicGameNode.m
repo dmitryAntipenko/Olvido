@@ -8,7 +8,53 @@
 
 #import "OGBasicGameNode.h"
 
+CGFloat const kOGBasicGameNodeRadius = 100.0;
+
+@interface OGBasicGameNode()
+
+@property (nonatomic, retain) SKCropNode *skin;
+
+@end
+
 @implementation OGBasicGameNode
 
+- (instancetype)initWithColor:(SKColor *)color
+                       radius:(CGFloat)radius
+                     velocity:(CGVector)velocity
+                   appearance:(SKCropNode *)appearence
+                         skin:(SKCropNode *)skin
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _color = [color retain];
+        _radius = radius;
+        _velocity = velocity;
+        _appearance = [appearence retain];
+        _skin = [skin retain];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithColor:(SKColor *)color
+{
+    return [self initWithColor:color radius:kOGBasicGameNodeRadius velocity:CGVectorMake(0, 0) appearance:nil skin:nil];
+}
+
+- (void)dealloc
+{
+    [_color release];
+    [_appearance release];
+    [_skin release];
+    
+    [super dealloc];
+}
+
+- (void)moveToPoint:(CGPoint)point
+{
+    
+}
 
 @end

@@ -8,12 +8,22 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+extern CGFloat const kOGBasicGameNodeRadius;
+
 @interface OGBasicGameNode : SKNode
 
 @property (nonatomic, assign) CGFloat radius;
 @property (nonatomic, assign) CGVector velocity;
+@property (nonatomic, retain) SKColor *color;
+@property (nonatomic, retain) SKCropNode *appearance;
 
-- (void)changeNodeWithColor:(SKColor *)color;
+- (instancetype)initWithColor:(SKColor *)color
+                       radius:(CGFloat)radius
+                     velocity:(CGVector)velocity
+                   appearance:(SKCropNode *)appearence
+                         skin:(SKCropNode *)skin;
+- (instancetype)initWithColor:(SKColor *)color;
+
 - (void)moveToPoint:(CGPoint)point;
 
 @end
