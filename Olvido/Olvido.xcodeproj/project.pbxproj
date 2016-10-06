@@ -11,6 +11,8 @@
 		1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D63A1DA54E4F00EF1681 /* OGLevel.m */; };
 		1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */; };
 		1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */; };
+		1B9458B51DA6DD6C00C0C951 /* OGObstacleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */; };
+		1B9458B61DA6DD6C00C0C951 /* OGPlayerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -34,6 +36,10 @@
 		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
 		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
 		1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBonusNode.m; sourceTree = "<group>"; };
+		1B9458B11DA6DD6C00C0C951 /* OGObstacleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacleNode.h; sourceTree = "<group>"; };
+		1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacleNode.m; sourceTree = "<group>"; };
+		1B9458B31DA6DD6C00C0C951 /* OGPlayerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerNode.h; sourceTree = "<group>"; };
+		1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerNode.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -143,6 +149,10 @@
 		EA976D091D9F03A9003B77FC /* SceneItems */ = {
 			isa = PBXGroup;
 			children = (
+				1B9458B11DA6DD6C00C0C951 /* OGObstacleNode.h */,
+				1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */,
+				1B9458B31DA6DD6C00C0C951 /* OGPlayerNode.h */,
+				1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */,
 				1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */,
 				1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */,
 				EA976D0D1D9FE940003B77FC /* OGTimerNode.h */,
@@ -231,10 +241,12 @@
 				1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
+				1B9458B61DA6DD6C00C0C951 /* OGPlayerNode.m in Sources */,
 				1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */,
+				1B9458B51DA6DD6C00C0C951 /* OGObstacleNode.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,

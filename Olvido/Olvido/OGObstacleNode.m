@@ -10,4 +10,16 @@
 
 @implementation OGObstacleNode
 
+- (instancetype)obstacleWithColor:(SKColor *)color size:(CGSize)size
+{
+    OGObstacleNode *obstacle = [[OGObstacleNode alloc] init];
+    
+    if (obstacle)
+    {
+        
+    }
+    
+    return [obstacle autorelease];
+}
+
 @end
