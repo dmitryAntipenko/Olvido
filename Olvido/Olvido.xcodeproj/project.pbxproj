@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D6361DA54C1300EF1681 /* OGLevelController.m */; };
 		1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D63A1DA54E4F00EF1681 /* OGLevel.m */; };
+		1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */; };
+		1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -28,6 +30,10 @@
 		1B48D6361DA54C1300EF1681 /* OGLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelController.m; sourceTree = "<group>"; };
 		1B48D6391DA54E4F00EF1681 /* OGLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevel.h; sourceTree = "<group>"; };
 		1B48D63A1DA54E4F00EF1681 /* OGLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevel.m; sourceTree = "<group>"; };
+		1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBasicGameNode.h; sourceTree = "<group>"; };
+		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
+		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
+		1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBonusNode.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -137,8 +143,12 @@
 		EA976D091D9F03A9003B77FC /* SceneItems */ = {
 			isa = PBXGroup;
 			children = (
+				1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */,
+				1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */,
 				EA976D0D1D9FE940003B77FC /* OGTimerNode.h */,
 				EA976D0E1D9FE940003B77FC /* OGTimerNode.m */,
+				1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */,
+				1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */,
 			);
 			name = SceneItems;
 			sourceTree = "<group>";
@@ -215,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */,
 				EA976D041D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */,
@@ -223,6 +234,7 @@
 				1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
+				1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
