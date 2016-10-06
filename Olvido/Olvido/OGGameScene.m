@@ -68,7 +68,7 @@ CGFloat const kOGPlayerSpeed = 400;
         [self addChild:self.player];
     }
     
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 14; i++)
     {
         OGEnemy *enemy = [OGEnemy enemy];
         [self addChild:enemy];
