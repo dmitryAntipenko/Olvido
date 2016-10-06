@@ -13,7 +13,7 @@
 CGFloat const kOGGameSceneScoreDefaultFontSize = 36.0;
 CGFloat const kOGGameSceneBorderSize = 3.0;
 
-CGFloat const kOGGameSceneTimerCircleRadiusCoefficient = 5.0;
+CGFloat const kOGGameSceneTimerCircleRadiusFactor = 4.0;
 CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
 CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
 CGFloat const kOGGameSceneTimerLabelScaleFactor = 500.0;
@@ -113,40 +113,52 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     return scoreLabel;
 }
 
-- (SKShapeNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
+- (SKCropNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
 {
-    SKShapeNode *timerCircle = [SKShapeNode node];
+    CGFloat timerCircleRadius = self.frame.size.width / kOGGameSceneTimerCircleRadiusFactor;
+    SKSpriteNode *timerCircle = [SKSpriteNode spriteNodeWithColor:color
+                                                             size:CGSizeMake(timerCircleRadius * 2.0, timerCircleRadius * 2.0)];
     
-    CGFloat timerCircleRadius = self.frame.size.width / kOGGameSceneTimerCircleRadiusCoefficient;
+    timerCircle.position = point;
     
-    CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(point.x - timerCircleRadius,
-                                                              point.y - timerCircleRadius,
-                                                              timerCircleRadius * 2.0,
-                                                              timerCircleRadius * 2.0), nil);
+    CGRect maskRect = CGRectMake(point.x - timerCircleRadius + kOGGameSceneTimerCircleLineWidth,
+                                 point.y - timerCircleRadius + kOGGameSceneTimerCircleLineWidth,
+                                 2.0 * (timerCircleRadius - kOGGameSceneTimerCircleLineWidth),
+                                 2.0 * (timerCircleRadius - kOGGameSceneTimerCircleLineWidth));
     
-    timerCircle.path = path;
-    timerCircle.strokeColor = color;
-    timerCircle.lineWidth = kOGGameSceneTimerCircleLineWidth;
-    timerCircle.antialiased = YES;
+    CGPathRef path = CGPathCreateWithEllipseInRect(maskRect, nil);
+    SKShapeNode *mask = [SKShapeNode shapeNodeWithPath:path];
+    mask.lineWidth = kOGGameSceneTimerCircleLineWidth;
+    mask.strokeColor = color;
+    
+    SKCropNode *crop = [SKCropNode node];
+    crop.maskNode = mask;
+    [crop addChild:timerCircle];
     
     CGPathRelease(path);
-    
-    return timerCircle;
+
+    return crop;
 }
 
-- (SKShapeNode *)createBackgroundBorderWithColor:(SKColor *)color
+- (SKCropNode *)createBackgroundBorderWithColor:(SKColor *)color
 {
-    SKShapeNode *border = [SKShapeNode node];
+    SKSpriteNode *border = [SKSpriteNode spriteNodeWithColor:color
+                                                        size:self.frame.size];
+    
+    border.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
     CGPathRef path = CGPathCreateWithRect(self.frame, nil);
+    SKShapeNode *mask = [SKShapeNode shapeNodeWithPath:path];
+    mask.lineWidth = pow(kOGGameSceneBorderSize, 2);
+    mask.strokeColor = color;
     
-    border.path = path;
-    border.strokeColor = color;
-    border.lineWidth = pow(kOGGameSceneBorderSize, 2);
+    SKCropNode *crop = [SKCropNode node];
+    crop.maskNode = mask;
+    [crop addChild:border];
     
     CGPathRelease(path);
     
-    return border;
+    return crop;
 }
 
 - (SKNode *)createDimPanel
