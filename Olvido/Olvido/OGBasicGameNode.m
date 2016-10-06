@@ -34,13 +34,22 @@ CGFloat const kOGBasicGameNodeRadius = 16.0;
         _appearance = [appearence retain];
         _skin = [skin retain];
     }
+    else
+    {
+        [self release];
+        self = nil;
+    }
     
     return self;
 }
 
 - (instancetype)initWithColor:(SKColor *)color
 {
-    return [self initWithColor:color radius:kOGBasicGameNodeRadius velocity:CGVectorMake(0, 0) appearance:nil skin:nil];
+    return [self initWithColor:color
+                        radius:kOGBasicGameNodeRadius
+                      velocity:CGVectorMake(0, 0)
+                    appearance:nil
+                          skin:nil];
 }
 
 - (void)dealloc

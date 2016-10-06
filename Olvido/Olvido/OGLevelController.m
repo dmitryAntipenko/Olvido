@@ -80,17 +80,17 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
         level.playerColor = [SKColor colorWithString:levelColors[kOGLevelControllerPlayerColorKey]];
         level.enemyColor = [SKColor colorWithString:levelColors[kOGLevelControllerEnemyColorKey]];
         
-        for (NSDictionary *dict in levelObstacles)
+        for (NSDictionary *obstacleDictionary in levelObstacles)
         {
-            NSDictionary *originDictionary = dict[kOGLevelControllerOriginKey];
+            NSDictionary *originDictionary = obstacleDictionary[kOGLevelControllerOriginKey];
             CGPoint origin = CGPointMake(((NSNumber *) originDictionary[kOGLevelControllerOriginXKey]).floatValue,
                                          ((NSNumber *) originDictionary[kOGLevelControllerOriginYKey]).floatValue);
             
-            NSDictionary *sizeDictionary = dict[kOGLevelControllerSizeKey];
+            NSDictionary *sizeDictionary = obstacleDictionary[kOGLevelControllerSizeKey];
             CGSize size = CGSizeMake(((NSNumber *) sizeDictionary[kOGLevelControllerSizeWidthKey]).floatValue,
                                      ((NSNumber *) sizeDictionary[kOGLevelControllerSizeHeightKey]).floatValue);
             
-            SKColor *obstacleColor = [SKColor colorWithString:dict[kOGLevelControllerObstacleColorKey]];
+            SKColor *obstacleColor = [SKColor colorWithString:obstacleDictionary[kOGLevelControllerObstacleColorKey]];
             
             OGObstacleNode *obstacle = [OGObstacleNode obstacleWithColor:obstacleColor size:size];
             obstacle.position = origin;
@@ -117,6 +117,13 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
     [self.gameScene changePlayerWithColor:self.currentLevel.playerColor];
     [self.gameScene changeEnemiesWithColor:self.currentLevel.enemyColor enemyCount:self.currentLevel.enemyCount];
     [self.gameScene changeObstacles:self.currentLevel.obstacles];
+}
+
+- (void)dealloc
+{
+    [_levels release];
+    
+    [super dealloc];
 }
 
 @end

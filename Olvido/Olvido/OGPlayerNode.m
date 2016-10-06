@@ -12,6 +12,7 @@
 CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
+NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
 
 @implementation OGPlayerNode
 
@@ -21,7 +22,7 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
     
     if (playerNode)
     {
-        playerNode.appearance = [SKSpriteNode spriteNodeWithImageNamed:@"PlayerBall"];
+        playerNode.appearance = [SKSpriteNode spriteNodeWithImageNamed:kOGPlayerNodeSpriteImageName];
         playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0, playerNode.radius * 2.0);
         playerNode.appearance.color = [SKColor blackColor];
         playerNode.appearance.colorBlendFactor = 1.0;

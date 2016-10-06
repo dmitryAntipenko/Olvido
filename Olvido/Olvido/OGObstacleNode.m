@@ -15,10 +15,11 @@
     
     if (obstacle)
     {
-        CGRect physicsBodyRect = CGRectMake(-size.width / 2,
-                                            -size.height / 2,
+        CGRect physicsBodyRect = CGRectMake(-size.width / 2.0,
+                                            -size.height / 2.0,
                                             size.width,
                                             size.height);
+        
         obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:physicsBodyRect];
         obstacle.physicsBody.categoryBitMask = 0x0 << 6;//make constant!!
         obstacle.physicsBody.contactTestBitMask = 0x0;
