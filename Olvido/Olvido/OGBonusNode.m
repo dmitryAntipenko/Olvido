@@ -26,7 +26,6 @@
         bonus.physicsBody.categoryBitMask = 0x0 << 5;//make constant!!
         bonus.physicsBody.contactTestBitMask = 0x0;
         bonus.physicsBody.collisionBitMask = 0x0;
-        bonus.physicsBody.usesPreciseCollisionDetection = YES;
     }
     
     return [bonus autorelease];
