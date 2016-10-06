@@ -19,7 +19,7 @@
 @property (nonatomic, copy) SKColor *playerColor;
 @property (nonatomic, copy) SKColor *enemyColor;
 
-@property (nonatomic, retain, readonly) NSArray<OGObstacleNode *> *obstacles;
+@property (nonatomic, copy, readonly) NSArray<OGObstacleNode *> *obstacles;
 
 @property (nonatomic, retain) NSNumber *enemyCount;
 

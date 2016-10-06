@@ -95,7 +95,6 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
             OGObstacleNode *obstacle = [OGObstacleNode obstacleWithColor:obstacleColor size:size];
             obstacle.position = origin;
             [level addObstacle:obstacle];
-            [obstacle release];
         }
         
         [self.levels setObject:level forKey:number];
