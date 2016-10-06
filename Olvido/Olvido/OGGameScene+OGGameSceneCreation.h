@@ -12,6 +12,12 @@ extern CGFloat const kOGGameSceneBorderSize;
 extern NSString *const kOGGameSceneMenuButtonSpriteName;
 extern NSString *const kOGGameSceneRestartButtonSpriteName;
 
+extern NSString *const kOGGameSceneTimerCircleNodeName;
+extern NSString *const kOGGameSceneBorderNodeName;
+
+extern NSString *const kOGGameSceneTimerCircleCropNodeName;
+extern NSString *const kOGGameSceneBorderCropNodeName;
+
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;

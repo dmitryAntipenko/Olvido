@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGLevelChanging.h"
+
+extern NSUInteger const kOGLevelControllerLevelChangeInterval;
 
 @interface OGLevelController : NSObject
 
-- (void)updateGameScene;
+@property (nonatomic, assign) id <OGLevelChanging> gameScene;
+
+- (void)loadLevelWithNumber:(NSNumber *)number;
 
 @end

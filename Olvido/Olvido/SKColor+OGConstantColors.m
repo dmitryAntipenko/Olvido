@@ -50,4 +50,14 @@ NSUInteger const kOGConstantColorsBlack = 0x11181f;
                            alpha:1.0];
 }
 
++ (SKColor *)colorWithString:(NSString *)string
+{
+    unsigned result = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:string];
+    
+    [scanner scanHexInt:&result];
+    
+    return [self colorWithHex:result];
+}
+
 @end

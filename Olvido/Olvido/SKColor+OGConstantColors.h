@@ -10,6 +10,7 @@
 
 @interface SKColor (OGConstantColors)
 
++ (SKColor *)colorWithString:(NSString *)string;
 + (SKColor *)gameRed;
 + (SKColor *)backgroundLightGrayColor;
 + (SKColor *)backgroundGrayColor;

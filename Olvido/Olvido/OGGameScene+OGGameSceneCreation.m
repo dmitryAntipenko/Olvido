@@ -29,6 +29,11 @@ NSString *const kOGGameSceneGameOverBackgroundSpriteName = @"GameOverBackground"
 NSString *const kOGGameSceneMenuButtonSpriteName = @"MenuButton";
 NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 
+NSString *const kOGGameSceneTimerCircleNodeName = @"timerCircleNode";
+NSString *const kOGGameSceneBorderNodeName = @"borderNode";
+NSString *const kOGGameSceneTimerCircleCropNodeName = @"timerCircleCropNode";
+NSString *const kOGGameSceneBorderCropNodeName = @"borderCropNode";
+
 @implementation OGGameScene (OGGameSceneCreation)
 
 #pragma - mark Top Game Scene Nodes
@@ -37,7 +42,12 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 {
     SKNode *background = [SKNode node];
     SKColor *accentColor = [SKColor backgroundGrayColor];
+    CGPoint frameCenter = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
     [background addChild:[self createBackgroundBorderWithColor:accentColor]];
+    [background addChild:[self createTimerCircleWithColor:accentColor inPoint:frameCenter]];
+    
+    background.zPosition = -2;
     
     return background;
 }
@@ -55,6 +65,8 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     
     [timerNode release];
     
+    middleground.zPosition = -1;
+    
     return middleground;
 }
 
@@ -62,9 +74,6 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 {
     SKNode *foreground = [SKNode node];
     
-    SKColor *accentColor = [SKColor backgroundGrayColor];
-    CGPoint frameCenter = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    [foreground addChild:[self createTimerCircleWithColor:accentColor inPoint:frameCenter]];
     
     return foreground;
 }
@@ -119,6 +128,7 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     SKSpriteNode *timerCircle = [SKSpriteNode spriteNodeWithColor:color
                                                              size:CGSizeMake(timerCircleRadius * 2.0, timerCircleRadius * 2.0)];
     
+    timerCircle.name = kOGGameSceneTimerCircleNodeName;
     timerCircle.position = point;
     
     CGRect maskRect = CGRectMake(point.x - timerCircleRadius + kOGGameSceneTimerCircleLineWidth,
@@ -129,9 +139,9 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     CGPathRef path = CGPathCreateWithEllipseInRect(maskRect, nil);
     SKShapeNode *mask = [SKShapeNode shapeNodeWithPath:path];
     mask.lineWidth = kOGGameSceneTimerCircleLineWidth;
-    mask.strokeColor = color;
     
     SKCropNode *crop = [SKCropNode node];
+    crop.name = kOGGameSceneTimerCircleCropNodeName;
     crop.maskNode = mask;
     [crop addChild:timerCircle];
     
@@ -145,14 +155,15 @@ NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
     SKSpriteNode *border = [SKSpriteNode spriteNodeWithColor:color
                                                         size:self.frame.size];
     
+    border.name = kOGGameSceneBorderNodeName;
     border.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
     CGPathRef path = CGPathCreateWithRect(self.frame, nil);
     SKShapeNode *mask = [SKShapeNode shapeNodeWithPath:path];
     mask.lineWidth = pow(kOGGameSceneBorderSize, 2);
-    mask.strokeColor = color;
     
     SKCropNode *crop = [SKCropNode node];
+    crop.name = kOGGameSceneBorderCropNodeName;
     crop.maskNode = mask;
     [crop addChild:border];
     

@@ -12,7 +12,7 @@
 @interface OGScoreController ()
 
 @property (nonatomic, retain, readwrite) NSNumber *score;
-@property (nonatomic, assign) OGLevelController *levelController;
+@property (nonatomic, retain) OGLevelController *levelController;
 
 @end
 
@@ -20,10 +20,12 @@
 
 - (instancetype)initWithLevelController:(OGLevelController *)levelController
 {
-    if (self = [super init])
+    self = [super init];
+    
+    if (self)
     {
         _score = @(0);
-        _levelController = levelController;
+        _levelController = [levelController retain];
     }
     else
     {
@@ -33,9 +35,23 @@
     
     return self;
 }
+
 - (void)incrementScore
 {
     self.score = @(self.score.integerValue + 1);
+    
+    if (self.score.integerValue % kOGLevelControllerLevelChangeInterval == 0)
+    {
+        [self.levelController loadLevelWithNumber:@(1)];
+    }
+}
+
+- (void)dealloc
+{
+    [_score release];
+    [_levelController release];
+    
+    [super dealloc];
 }
 
 @end

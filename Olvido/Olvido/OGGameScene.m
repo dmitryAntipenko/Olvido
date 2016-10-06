@@ -13,20 +13,21 @@
 #import "OGTimer.h"
 #import "OGScoreController.h"
 #import "OGLevelController.h"
+#import "OGLevelChanging.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
-@interface OGGameScene () <SKPhysicsContactDelegate>
+@interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
 
 @property (nonatomic, retain) SKNode *background;
 @property (nonatomic, retain) SKNode *middleground;
 @property (nonatomic, retain) SKNode *foreground;
+@property (nonatomic, retain) OGTimerNode *timerNode;
 
 @property (nonatomic, retain) NSTimer *timer;
 @property (nonatomic, retain) OGScoreController *scoreController;
 @property (nonatomic, retain) OGLevelController *levelController;
 
-@property (nonatomic, retain) OGTimerNode *timerNode;
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
 
 @end
@@ -60,8 +61,15 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
                                                 userInfo:nil
                                                  repeats:YES];
     
-    self.levelController = [[OGLevelController alloc] init];
-    self.scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
+    OGLevelController *levelController = [[OGLevelController alloc] init];
+    self.levelController = levelController;
+    self.levelController.gameScene = self;
+    
+    OGScoreController *scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
+    self.scoreController = scoreController;
+    
+    [levelController release];
+    [scoreController release];
 
     [self createLayers];
 }
@@ -125,6 +133,39 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 - (void)update:(CFTimeInterval)currentTime
 {
     //...
+}
+
+- (void)changeBackgroundWithColor:(UIColor *)color
+{
+    self.backgroundColor = color;
+}
+
+-(void)changeAccentWithColor:(UIColor *)color
+{
+    self.timerNode.fontColor = color;
+    
+    SKNode *borderCropNode = [self.background childNodeWithName:kOGGameSceneBorderCropNodeName];
+    SKSpriteNode *borderNode = (SKSpriteNode *) [borderCropNode childNodeWithName:kOGGameSceneBorderNodeName];
+    borderNode.color = color;
+    
+    SKNode *timerCircleCropNode = [self.background childNodeWithName:kOGGameSceneTimerCircleCropNodeName];
+    SKSpriteNode *timerCircleNode = (SKSpriteNode *) [timerCircleCropNode childNodeWithName:kOGGameSceneTimerCircleNodeName];
+    timerCircleNode.color = color;
+}
+
+- (void)changePlayerWithColor:(SKColor *)color
+{
+    NSLog(@"%@", color);
+}
+
+- (void)changeEnemiesWithColor:(SKColor *)color enemyCount:(NSNumber *)count
+{
+    NSLog(@"%@", color);
+}
+
+- (void)changeObstacles:(NSArray *)obstacles
+{
+    NSLog(@"%@", obstacles);
 }
 
 @end

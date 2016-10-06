@@ -10,6 +10,4 @@
 
 @interface OGGameScene : SKScene
 
-@property (nonatomic, copy) NSString *controlType;
-
 @end
