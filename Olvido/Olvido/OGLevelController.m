@@ -9,9 +9,9 @@
 #import "OGLevelController.h"
 #import "OGLevel.h"
 #import "OGTimerNode.h"
-#import "OGObstacleNode.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGLevelChanging.h"
+#import "OGObstacleNode.h"
 
 NSUInteger const kOGLevelControllerLevelChangeInterval = 10;
 
@@ -92,7 +92,7 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
             
             SKColor *obstacleColor = [SKColor colorWithString:dict[kOGLevelControllerObstacleColorKey]];
             
-            OGObstacleNode *obstacle = [[OGObstacleNode alloc] init]; //[OGObstacle obstacleWithColor:obstacleColor size:size];
+            OGObstacleNode *obstacle = [OGObstacleNode obstacleWithColor:obstacleColor size:size];
             obstacle.position = origin;
             [level addObstacle:obstacle];
             [obstacle release];

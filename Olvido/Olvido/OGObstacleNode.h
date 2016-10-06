@@ -2,7 +2,7 @@
 //  OGObstacleNode.h
 //  Olvido
 //
-//  Created by Дмитрий Антипенко on 10/6/16.
+//  Created by Алексей Подолян on 10/6/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
@@ -10,8 +10,6 @@
 
 @interface OGObstacleNode : SKNode
 
-@property (nonatomic, assign) CGPoint origin;
-@property (nonatomic, assign) CGSize size;
-@property (nonatomic, retain) SKColor *color;
++ (instancetype)obstacleWithColor:(SKColor *)color size:(CGSize)size;
 
 @end

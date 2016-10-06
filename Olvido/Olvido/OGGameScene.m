@@ -77,7 +77,6 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 - (void)timerTick
 {
     [self.scoreController incrementScore];
-    
     self.timerNode.text = self.scoreController.score.stringValue;
 }
 
