@@ -12,7 +12,24 @@
 
 + (instancetype)bonusNodeWithColor:(SKColor *)color Type:(OGBonusType)type;
 {
-    return [[[OGBonusNode alloc] initWithColor:color type:type] autorelease];
+    OGBonusNode *bonus = [[OGBonusNode alloc] initWithColor:color type:type];
+    
+    if (bonus)
+    {
+        CGRect physicsBodyPathRect = CGRectMake(-bonus.radius,
+                                                -bonus.radius,
+                                                bonus.radius * 2,
+                                                bonus.radius * 2);
+        CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
+        
+        bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
+        bonus.physicsBody.categoryBitMask = 0x0 << 5;//make constant!!
+        bonus.physicsBody.contactTestBitMask = 0x0;
+        bonus.physicsBody.collisionBitMask = 0x0;
+        bonus.physicsBody.usesPreciseCollisionDetection = YES;
+    }
+    
+    return [bonus autorelease];
 }
 
 - (instancetype)initWithColor:(SKColor *)color type:(OGBonusType)type
@@ -23,6 +40,7 @@
     {
         _type = type;
     }
+    
     return self;
 }
 
