@@ -16,6 +16,7 @@
 #import "OGLevelChanging.h"
 #import "OGPlayerNode.h"
 #import "OGConstants.h"
+#import "OGCollisionBitMask.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
@@ -52,8 +53,9 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 - (void)createSceneContents
 {
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
-    self.physicsBody.categoryBitMask = 0x1 << 0;
-    self.physicsBody.contactTestBitMask = 0x0;
+    self.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
+    self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
+    self.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
     
     self.physicsBody.usesPreciseCollisionDetection = YES;
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);

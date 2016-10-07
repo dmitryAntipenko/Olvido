@@ -52,3 +52,13 @@ NSString *const kOGLevelControllerOriginYKey = @"Y";
 NSString *const kOGLevelControllerSizeWidthKey = @"Width";
 NSString *const kOGLevelControllerSizeHeightKey = @"Height";
 NSString *const kOGLevelControllerObstacleColorKey = @"Color";
+
+/* Player */
+
+CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
+CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
+CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
+NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
+CGFloat const kOGPlayerNodeSpeed = 300.0;
+NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
+NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";

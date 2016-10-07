@@ -58,4 +58,14 @@ extern NSString *const kOGLevelControllerSizeWidthKey;
 extern NSString *const kOGLevelControllerSizeHeightKey;
 extern NSString *const kOGLevelControllerObstacleColorKey;
 
+/* Player */
+
+extern CGFloat const kOGPlayerNodeBorderLineWidth;
+extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
+extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
+extern NSString *const kOGPlayerNodeSpriteImageName;
+extern CGFloat const kOGPlayerNodeSpeed;
+extern NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize;
+extern NSString *const kOGPlayerNodeMoveToPointActionKey;
+
 #endif /* OGConstants_h */
