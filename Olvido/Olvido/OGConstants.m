@@ -62,7 +62,3 @@ NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
 CGFloat const kOGPlayerNodeSpeed = 300.0;
 NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
 NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
-
-/* Obstacle */
-
-NSString *const kOGObstacleNodeName = @"obstacle";

@@ -69,8 +69,4 @@ extern CGFloat const kOGPlayerNodeSpeed;
 extern NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize;
 extern NSString *const kOGPlayerNodeMoveToPointActionKey;
 
-/* Obstacle */
-
-extern NSString *const kOGObstacleNodeName;
-
 #endif /* OGConstants_h */

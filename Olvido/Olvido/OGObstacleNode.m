@@ -9,6 +9,8 @@
 #import "OGCollisionBitMask.h"
 #import "OGConstants.h"
 
+NSString *const kOGObstacleNodeName = @"obstacle";
+
 @implementation OGObstacleNode
 
 + (instancetype)obstacleNodeWithColor:(SKColor *)color path:(CGPathRef)path;
