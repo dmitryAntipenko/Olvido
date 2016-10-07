@@ -20,4 +20,7 @@ extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
 - (void)positionDidUpdate;
 
+//whe contact with obstacle;
+- (void)moveByInertia;
+
 @end
