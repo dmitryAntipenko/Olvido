@@ -34,31 +34,36 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     if (playerNode)
     {
         playerNode.appearance = [SKSpriteNode spriteNodeWithImageNamed:kOGPlayerNodeSpriteImageName];
-        playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0, playerNode.radius * 2.0);
-        playerNode.appearance.color = [SKColor gameBlack];
-        playerNode.appearance.colorBlendFactor = 1.0;
-        [playerNode addChild:playerNode.appearance];
         
-        playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kOGBasicGameNodeRadius];
-        playerNode.physicsBody.dynamic = YES;
-        playerNode.physicsBody.linearDamping = 0.0;
-        playerNode.physicsBody.angularDamping = 0.0;
-        
-        playerNode.physicsBody.friction = 0.0;
-        playerNode.physicsBody.restitution = 1.0;
-        
-        playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
-        playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
-        playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
-        
-        playerNode.physicsBody.usesPreciseCollisionDetection = YES;
-        
-        SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
-        
-        [playerNode runAction:invulnerability completion:^
-         {
-             playerNode.physicsBody.contactTestBitMask = playerNode.physicsBody.contactTestBitMask | 0x1 << 2;
-         }];
+        if (playerNode.appearance)
+        {
+            playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0,
+                                                    playerNode.radius * 2.0);
+            playerNode.appearance.color = [SKColor blackColor];
+            playerNode.appearance.colorBlendFactor = 1.0;
+            [playerNode addChild:playerNode.appearance];
+            
+            playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kOGBasicGameNodeRadius];
+            playerNode.physicsBody.dynamic = YES;
+            playerNode.physicsBody.linearDamping = 0.0;
+            playerNode.physicsBody.angularDamping = 0.0;
+            
+            playerNode.physicsBody.friction = 0.0;
+            playerNode.physicsBody.restitution = 1.0;
+            
+            playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
+            playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
+            playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
+            
+            playerNode.physicsBody.usesPreciseCollisionDetection = YES;
+            
+            SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
+            
+            [playerNode runAction:invulnerability completion:^
+             {
+                 playerNode.physicsBody.contactTestBitMask = playerNode.physicsBody.contactTestBitMask | 0x1 << 2;
+             }];
+        }
     }
     
     return  [playerNode autorelease];
@@ -90,6 +95,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     }
     
     CGVector result = CGVectorMake(0.0, 0.0);
+
     if (self.previousPositionsBuffer.count > 1)
     {
         NSInteger i = 0;
@@ -181,6 +187,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 - (void)dealloc
 {
     [_previousPositionsBuffer release];
+    
     [super dealloc];
 }
 

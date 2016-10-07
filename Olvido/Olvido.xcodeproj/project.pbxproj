@@ -27,6 +27,7 @@
 		EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490AF1DA54B72007734F0 /* OGScoreController.m */; };
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAA490C81DA7C6C6007734F0 /* Level1.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA490B51DA6D2B0007734F0 /* Level1.plist */; };
+		EAA490CB1DA7E087007734F0 /* OGEnemyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,8 @@
 		EAA490C41DA7BE0C007734F0 /* OGCollisionBitMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGCollisionBitMask.h; sourceTree = "<group>"; };
 		EAA490C51DA7BE52007734F0 /* OGConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConstants.h; sourceTree = "<group>"; };
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
+		EAA490C91DA7E087007734F0 /* OGEnemyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyNode.h; sourceTree = "<group>"; };
+		EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,8 @@
 		EA976D091D9F03A9003B77FC /* SceneNodes */ = {
 			isa = PBXGroup;
 			children = (
+				EAA490C91DA7E087007734F0 /* OGEnemyNode.h */,
+				EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */,
 				1BDD762D1DA7C26500C522DE /* OGLevelChanging.h */,
 				1BDD762E1DA7C26500C522DE /* OGObstacleNode.h */,
 				1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */,
@@ -271,6 +276,7 @@
 				1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */,
+				EAA490CB1DA7E087007734F0 /* OGEnemyNode.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
