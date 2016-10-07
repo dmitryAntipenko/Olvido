@@ -60,6 +60,7 @@ CGFloat const kOGTimerInterval = 1.0;
 
 - (void)dealloc
 {
+    [_timer invalidate];
     [_timer release];
     [_ticks release];
     

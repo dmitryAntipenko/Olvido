@@ -8,6 +8,10 @@
 
 #import "OGGameScene.h"
 
+extern NSString *const kOGGameSceneTimerCircleNodeName;
+extern NSString *const kOGGameSceneBorderNodeName;
+extern NSString *const kOGGameSceneBorderCropNodeName;
+
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;

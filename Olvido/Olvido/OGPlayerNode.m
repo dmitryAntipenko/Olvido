@@ -9,12 +9,19 @@
 #import "OGPlayerNode.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGCollisionBitMask.h"
-#import "OGConstants.h"
+
+CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
+CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
+CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
+NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
+CGFloat const kOGPlayerNodeSpeed = 300.0;
+NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
+NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
 
 @interface OGPlayerNode ()
 
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
-@property (nonatomic, readonly) CGVector movementVector;
+@property (nonatomic, assign, readonly) CGVector movementVector;
 
 @end
 
@@ -28,7 +35,7 @@
     {
         playerNode.appearance = [SKSpriteNode spriteNodeWithImageNamed:kOGPlayerNodeSpriteImageName];
         playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0, playerNode.radius * 2.0);
-        playerNode.appearance.color = [SKColor blackColor];
+        playerNode.appearance.color = [SKColor gameBlack];
         playerNode.appearance.colorBlendFactor = 1.0;
         [playerNode addChild:playerNode.appearance];
         
@@ -82,7 +89,7 @@
         [self createPreviousPositionsBuffer];
     }
     
-    CGVector result;
+    CGVector result = CGVectorMake(0.0, 0.0);
     if (self.previousPositionsBuffer.count > 1)
     {
         NSInteger i = 0;
@@ -92,8 +99,10 @@
         CGPoint point1 = self.previousPositionsBuffer[0].CGPointValue;
         CGPoint point2 = self.previousPositionsBuffer[i].CGPointValue;
         
-        result = CGVectorMake(point1.x - point2.x, point1.y - point2.y);
+        result.dx = point1.x - point2.x;
+        result.dy = point1.y - point2.y;
     }
+    
     return result;
 }
 
@@ -137,6 +146,8 @@
                                              [SKAction performSelector:@selector(moveByInertia) onTarget:self]
                                              ]]
                 withKey:kOGPlayerNodeMoveToPointActionKey];
+        
+        CGPathRelease(path);
     }
 }
 
@@ -162,6 +173,7 @@
         {
             self.previousPositionsBuffer[i] = self.previousPositionsBuffer[i - 1];
         }
+        
         self.previousPositionsBuffer[0] = [NSValue valueWithCGPoint:self.position];
     }
 }
