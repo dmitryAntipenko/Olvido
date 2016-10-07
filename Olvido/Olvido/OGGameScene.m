@@ -127,6 +127,7 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
+    //if player && obstacle -> [player moveByInertia] !
     //...
 }
 

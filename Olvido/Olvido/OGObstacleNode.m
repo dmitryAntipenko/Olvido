@@ -7,36 +7,32 @@
 //
 #import "OGObstacleNode.h"
 #import "OGCollisionBitMask.h"
+#import "OGConstants.h"
 
 @implementation OGObstacleNode
 
-+ (instancetype)obstacleWithColor:(SKColor *)color size:(CGSize)size
++ (instancetype)obstacleNodeWithColor:(SKColor *)color path:(CGPathRef)path;
 {
     OGObstacleNode *obstacle = [[OGObstacleNode alloc] init];
     
     if (obstacle)
     {
-        CGRect physicsBodyRect = CGRectMake(-size.width / 2.0,
-                                            -size.height / 2.0,
-                                            size.width,
-                                            size.height);
-        
-        obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:physicsBodyRect];
+        obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:path];
         obstacle.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
         obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
         obstacle.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
         obstacle.physicsBody.usesPreciseCollisionDetection = YES;
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:color size:size];
-        [obstacle addChild:sprite];
+        obstacle.name = kOGObstacleNodeName;
+        
+        SKShapeNode* shape = [SKShapeNode shapeNodeWithPath:path];
+        shape.fillColor = color;
+        shape.strokeColor = color;
+        
+        [obstacle addChild:shape];
     }
     
     return [obstacle autorelease];
-}
-
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 @end

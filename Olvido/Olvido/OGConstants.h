@@ -51,10 +51,11 @@ extern NSString *const kOGLevelControllerPlayerColorKey;
 extern NSString *const kOGLevelControllerEnemyColorKey;
 
 extern NSString *const kOGLevelControllerOriginKey;
-extern NSString *const kOGLevelControllerSizeKey;
 extern NSString *const kOGLevelControllerOriginXKey;
 extern NSString *const kOGLevelControllerOriginYKey;
-extern NSString *const kOGLevelControllerSizeWidthKey;
+extern NSString *const kOGLevelControllerPointsKey;
+extern NSString *const kOGLevelControllerPointXKey;
+extern NSString *const kOGLevelControllerPointYKey;
 extern NSString *const kOGLevelControllerSizeHeightKey;
 extern NSString *const kOGLevelControllerObstacleColorKey;
 
@@ -67,5 +68,9 @@ extern NSString *const kOGPlayerNodeSpriteImageName;
 extern CGFloat const kOGPlayerNodeSpeed;
 extern NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize;
 extern NSString *const kOGPlayerNodeMoveToPointActionKey;
+
+/* Obstacle */
+
+extern NSString *const kOGObstacleNodeName;
 
 #endif /* OGConstants_h */

@@ -46,11 +46,11 @@ NSString *const kOGLevelControllerPlayerColorKey = @"Player Color";
 NSString *const kOGLevelControllerEnemyColorKey = @"Enemy Color";
 
 NSString *const kOGLevelControllerOriginKey = @"Origin";
-NSString *const kOGLevelControllerSizeKey = @"Size";
 NSString *const kOGLevelControllerOriginXKey = @"X";
 NSString *const kOGLevelControllerOriginYKey = @"Y";
-NSString *const kOGLevelControllerSizeWidthKey = @"Width";
-NSString *const kOGLevelControllerSizeHeightKey = @"Height";
+NSString *const kOGLevelControllerPointsKey = @"Points";
+NSString *const kOGLevelControllerPointXKey = @"PointX";
+NSString *const kOGLevelControllerPointYKey = @"PointY";
 NSString *const kOGLevelControllerObstacleColorKey = @"Color";
 
 /* Player */
@@ -62,3 +62,7 @@ NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
 CGFloat const kOGPlayerNodeSpeed = 300.0;
 NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
 NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
+
+/* Obstacle */
+
+NSString *const kOGObstacleNodeName = @"obstacle";

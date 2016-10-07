@@ -10,6 +10,6 @@
 
 @interface OGObstacleNode : SKNode
 
-+ (instancetype)obstacleWithColor:(SKColor *)color size:(CGSize)size;
++ (instancetype)obstacleNodeWithColor:(SKColor *)color path:(CGPathRef)path;
 
 @end

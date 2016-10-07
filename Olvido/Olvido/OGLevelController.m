@@ -65,16 +65,25 @@
             NSDictionary *originDictionary = obstacleDictionary[kOGLevelControllerOriginKey];
             CGPoint origin = CGPointMake(((NSNumber *) originDictionary[kOGLevelControllerOriginXKey]).floatValue,
                                          ((NSNumber *) originDictionary[kOGLevelControllerOriginYKey]).floatValue);
+        
+            NSArray *pathPointsDictionaries = obstacleDictionary[kOGLevelControllerPointsKey];
+        
+            CGMutablePathRef obstaclePath = CGPathCreateMutable();
             
-            NSDictionary *sizeDictionary = obstacleDictionary[kOGLevelControllerSizeKey];
-            CGSize size = CGSizeMake(((NSNumber *) sizeDictionary[kOGLevelControllerSizeWidthKey]).floatValue,
-                                     ((NSNumber *) sizeDictionary[kOGLevelControllerSizeHeightKey]).floatValue);
+            for (NSDictionary *pointDictionary in pathPointsDictionaries)
+            {
+                CGFloat x = ((NSNumber *)pointDictionary[kOGLevelControllerPointXKey]).floatValue;
+                CGFloat y = ((NSNumber *)pointDictionary[kOGLevelControllerPointYKey]).floatValue;
+                CGPathAddLineToPoint(obstaclePath, NULL, x, y);
+            }
             
             SKColor *obstacleColor = [SKColor colorWithString:obstacleDictionary[kOGLevelControllerObstacleColorKey]];
-            
-            OGObstacleNode *obstacle = [OGObstacleNode obstacleWithColor:obstacleColor size:size];
+
+            OGObstacleNode *obstacle = [OGObstacleNode obstacleNodeWithColor:obstacleColor path:obstaclePath];
             obstacle.position = origin;
             [level addObstacle:obstacle];
+            
+            CGPathRelease(obstaclePath);
         }
         
         [self.levels setObject:level forKey:number];
