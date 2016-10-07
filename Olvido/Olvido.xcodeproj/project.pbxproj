@@ -11,8 +11,8 @@
 		1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B48D63A1DA54E4F00EF1681 /* OGLevel.m */; };
 		1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */; };
 		1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */; };
-		1B9458B51DA6DD6C00C0C951 /* OGObstacleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */; };
-		1B9458B61DA6DD6C00C0C951 /* OGPlayerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */; };
+		1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */; };
+		1BDD76331DA7C26500C522DE /* OGPlayerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD76311DA7C26500C522DE /* OGPlayerNode.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C861D9AAEE2003B77FC /* OGGameScene.m */; };
@@ -38,10 +38,11 @@
 		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
 		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
 		1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBonusNode.m; sourceTree = "<group>"; };
-		1B9458B11DA6DD6C00C0C951 /* OGObstacleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacleNode.h; sourceTree = "<group>"; };
-		1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacleNode.m; sourceTree = "<group>"; };
-		1B9458B31DA6DD6C00C0C951 /* OGPlayerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerNode.h; sourceTree = "<group>"; };
-		1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerNode.m; sourceTree = "<group>"; };
+		1BDD762D1DA7C26500C522DE /* OGLevelChanging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelChanging.h; sourceTree = "<group>"; };
+		1BDD762E1DA7C26500C522DE /* OGObstacleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacleNode.h; sourceTree = "<group>"; };
+		1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacleNode.m; sourceTree = "<group>"; };
+		1BDD76301DA7C26500C522DE /* OGPlayerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerNode.h; sourceTree = "<group>"; };
+		1BDD76311DA7C26500C522DE /* OGPlayerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerNode.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 				1B48D6381DA54E0300EF1681 /* LevelController */,
 				EA976D051D9EDBF8003B77FC /* GameScene */,
 				EA976D091D9F03A9003B77FC /* SceneNodes */,
+				EA976D091D9F03A9003B77FC /* SceneItems */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
 				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
@@ -131,6 +133,8 @@
 				EAA490BF1DA6EE4B007734F0 /* Levels */,
 				EAA490C51DA7BE52007734F0 /* OGConstants.h */,
 				EAA490C61DA7BE64007734F0 /* OGConstants.m */,
+				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
+				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
@@ -160,10 +164,11 @@
 		EA976D091D9F03A9003B77FC /* SceneNodes */ = {
 			isa = PBXGroup;
 			children = (
-				1B9458B11DA6DD6C00C0C951 /* OGObstacleNode.h */,
-				1B9458B21DA6DD6C00C0C951 /* OGObstacleNode.m */,
-				1B9458B31DA6DD6C00C0C951 /* OGPlayerNode.h */,
-				1B9458B41DA6DD6C00C0C951 /* OGPlayerNode.m */,
+				1BDD762D1DA7C26500C522DE /* OGLevelChanging.h */,
+				1BDD762E1DA7C26500C522DE /* OGObstacleNode.h */,
+				1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */,
+				1BDD76301DA7C26500C522DE /* OGPlayerNode.h */,
+				1BDD76311DA7C26500C522DE /* OGPlayerNode.m */,
 				1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */,
 				1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */,
 				EA976D0D1D9FE940003B77FC /* OGTimerNode.h */,
@@ -215,7 +220,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -245,7 +250,6 @@
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
-				EAA490B61DA6D2B0007734F0 /* Level1.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,13 +266,14 @@
 				1B48D63B1DA54E4F00EF1681 /* OGLevel.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
-				1B9458B61DA6DD6C00C0C951 /* OGPlayerNode.m in Sources */,
+				1BDD76331DA7C26500C522DE /* OGPlayerNode.m in Sources */,
 				1B48D6371DA54C1300EF1681 /* OGLevelController.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				1B9458B51DA6DD6C00C0C951 /* OGObstacleNode.m in Sources */,
+				1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,
 				EA976C871D9AAEE2003B77FC /* OGGameScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
@@ -391,7 +396,7 @@
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -407,7 +412,7 @@
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

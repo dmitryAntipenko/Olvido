@@ -16,4 +16,11 @@ extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
 + (instancetype)playerNodeWithColor:(SKColor *)color;
 
+- (void)moveToPoint:(CGPoint)point;
+
+- (void)positionDidUpdate;
+
+//whe contact with obstacle;
+- (void)moveByInertia;
+
 @end

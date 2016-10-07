@@ -74,7 +74,7 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     
     [levelController release];
     [scoreController release];
-
+    
     [self createLayers];
     
     self.playerNode = [OGPlayerNode playerNodeWithColor:[SKColor blackColor]];
@@ -106,6 +106,11 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //...
+    for (UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:self];
+        [self.playerNode moveToPoint:location];
+    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -140,7 +145,7 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    //...
+    [self.playerNode positionDidUpdate];
 }
 
 - (void)changeBackgroundWithColor:(UIColor *)color
