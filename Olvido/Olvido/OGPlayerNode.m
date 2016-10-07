@@ -150,12 +150,14 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 {
     CGVector movementVector = self.movementVector;
     
-    CGPoint pointForImpulse = CGPointMake((self.position.x + movementVector.dx) * kOGPlayerNodeSpeed * self.physicsBody.mass,
-                                          (self.position.y + movementVector.dy) * kOGPlayerNodeSpeed * self.physicsBody.mass);
+    CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+    
+    CGVector impulse = CGVectorMake(movementVector.dx * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule,
+                                    movementVector.dy * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule);
     
     [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
     
-    [self moveToPoint:pointForImpulse];
+    [self.physicsBody applyImpulse:impulse];
 }
 
 - (void)positionDidUpdate
