@@ -16,6 +16,7 @@
 #import "OGLevelChanging.h"
 #import "OGPlayerNode.h"
 #import "OGConstants.h"
+#import "OGEnemyNode.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
@@ -78,9 +79,26 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     [self createLayers];
     
     self.playerNode = [OGPlayerNode playerNodeWithColor:[SKColor blackColor]];
-    self.playerNode.position = CGPointMake(100, 100);
     
-    [self.foreground addChild:self.playerNode];
+    if (self.playerNode)
+    {
+        self.playerNode.position = CGPointMake(100, 100);
+        
+        [self.foreground addChild:self.playerNode];
+    }
+    
+    for (unsigned i = 0; i < 10; i++)
+    {
+        OGEnemyNode *enemyNode = [OGEnemyNode enemyNode];
+
+        if (enemyNode)
+        {
+            [self.foreground addChild:enemyNode];
+            [enemyNode startWithPoint:CGPointMake(100, 100)];
+        }
+    }
+    
+    
 }
 
 - (void)timerTick
