@@ -144,7 +144,6 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    NSLog(@"%f", [[NSDate date] timeIntervalSince1970]);
     [self.playerNode positionDidUpdate];
 }
 

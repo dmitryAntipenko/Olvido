@@ -13,9 +13,9 @@ CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
 NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
-CGFloat const kOGPlayerPlayerSpeed = 300.0;
-NSUInteger const kOGPlayerDefaultPreviousPositionsBufferSize = 5;
-NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
+CGFloat const kOGPlayerNodeSpeed = 300.0;
+NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
+NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
 
 @interface OGPlayerNode ()
 
@@ -68,13 +68,13 @@ NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
     self.appearance.color = color;
 }
 
-- (void)createPreviousPositionsBuffferWithStartPoint:(CGPoint)startPoint
+- (void)createPreviousPositionsBuffer
 {
     NSMutableArray *result = [NSMutableArray array];
     
-    for (int i = 0; i < kOGPlayerDefaultPreviousPositionsBufferSize; i++)
+    for (int i = 0; i < kOGPlayerNodeDefaultPreviousPositionsBufferSize; i++)
     {
-        NSValue *value = [NSValue valueWithCGPoint:startPoint];
+        NSValue *value = [NSValue valueWithCGPoint:self.position];
         [result addObject:value];
     }
     
@@ -85,11 +85,11 @@ NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
 {
     if (!self.previousPositionsBuffer)
     {
-        [self createPreviousPositionsBuffferWithStartPoint:self.position];
+        [self createPreviousPositionsBuffer];
     }
     
     CGVector result;
-    if (self.previousPositionsBuffer && self.previousPositionsBuffer.count > 1)
+    if (self.previousPositionsBuffer.count > 1)
     {
         NSInteger i = 0;
         while ((i < self.previousPositionsBuffer.count - 1)
@@ -106,7 +106,7 @@ NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
 - (void)moveToPoint:(CGPoint)point
 {
     self.physicsBody.velocity = CGVectorMake(0, 0);
-    [self removeActionForKey:kOGMovePlayerToPointActionKey];
+    [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
     
     CGVector displacementVector = CGVectorMake(point.x - self.position.x,
                                                point.y - self.position.y);
@@ -115,58 +115,45 @@ NSString *const kOGMovePlayerToPointActionKey = @"movePlayerToPointActionKey";
     
     if (movementVector.dx == 0.0 && movementVector.dy == 0.0)
     {
-        
         CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
         
-        CGFloat x = displacementVector.dx * kOGPlayerPlayerSpeed / l * self.physicsBody.mass;
-        CGFloat y = displacementVector.dy * kOGPlayerPlayerSpeed / l * self.physicsBody.mass;
+        CGFloat x = displacementVector.dx * kOGPlayerNodeSpeed / l * self.physicsBody.mass;
+        CGFloat y = displacementVector.dy * kOGPlayerNodeSpeed / l * self.physicsBody.mass;
         
         [self.physicsBody applyImpulse:CGVectorMake(x, y)];
     }
     else
     {
-        CGFloat v = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+        CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
         
         CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5) / 3;
         
-        CGFloat bX = movementVector.dx / v * l;
-        CGFloat bY = movementVector.dy / v * l;
+        CGFloat bX = movementVector.dx / movementVectorModule * l;
+        CGFloat bY = movementVector.dy / movementVectorModule * l;
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathMoveToPoint(path, NULL, 0, 0);
         
         CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
         
-        SKAction *moveToPoint = [SKAction followPath:path speed:kOGPlayerPlayerSpeed];
+        SKAction *moveToPoint = [SKAction followPath:path speed:kOGPlayerNodeSpeed];
         
         [self runAction:[SKAction sequence:@[
                                              moveToPoint,
-                                             [SKAction performSelector:@selector(movePlayerToPointCompletion) onTarget:self]
+                                             [SKAction performSelector:@selector(moveByInertia) onTarget:self]
                                              ]]
-                withKey:kOGMovePlayerToPointActionKey];
+                withKey:kOGPlayerNodeMoveToPointActionKey];
     }
-}
-
-- (void)movePlayerToPointCompletion
-{
-    CGVector outerVector = self.movementVector;
-    
-    CGFloat l = pow(pow(outerVector.dx, 2) + pow(outerVector.dy, 2), 0.5);
-    
-    CGFloat x = outerVector.dx * kOGPlayerPlayerSpeed * self.physicsBody.mass / l;
-    CGFloat y = outerVector.dy * kOGPlayerPlayerSpeed * self.physicsBody.mass / l;
-    
-    [self.physicsBody applyImpulse:CGVectorMake(x, y)];
 }
 
 - (void)moveByInertia
 {
     CGVector movementVector = self.movementVector;
     
-    CGPoint pointForImpulse = CGPointMake(self.position.x + movementVector.dx,
-                                          self.position.y + movementVector.dy);
+    CGPoint pointForImpulse = CGPointMake((self.position.x + movementVector.dx) * kOGPlayerNodeSpeed * self.physicsBody.mass,
+                                          (self.position.y + movementVector.dy) * kOGPlayerNodeSpeed * self.physicsBody.mass);
     
-    [self removeActionForKey:kOGMovePlayerToPointActionKey];
+    [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
     
     [self moveToPoint:pointForImpulse];
 }
