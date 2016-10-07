@@ -7,6 +7,8 @@
 //
 
 #import "OGBonusNode.h"
+#import "OGCollisionBitMask.h"
+#import "OGBasicGameNode.h"
 
 @implementation OGBonusNode
 
@@ -18,14 +20,17 @@
     {
         CGRect physicsBodyPathRect = CGRectMake(-bonus.radius,
                                                 -bonus.radius,
-                                                bonus.radius * 2,
-                                                bonus.radius * 2);
+                                                bonus.radius * 2.0,
+                                                bonus.radius * 2.0);
+        
         CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
         
         bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
-        bonus.physicsBody.categoryBitMask = 0x0 << 5;//make constant!!
-        bonus.physicsBody.contactTestBitMask = 0x0;
-        bonus.physicsBody.collisionBitMask = 0x0;
+        bonus.physicsBody.categoryBitMask = kOGCollisionBitMaskBonus;
+        bonus.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
+        bonus.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer;
+        
+        CGPathRelease(physicsBodyPath);
     }
     
     return [bonus autorelease];
@@ -43,5 +48,9 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [super dealloc];
+}
 
 @end

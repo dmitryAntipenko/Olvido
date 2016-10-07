@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, OGBonusType)
 
 @interface OGBonusNode : OGBasicGameNode
 
-@property (nonatomic, readonly) OGBonusType type;
+@property (nonatomic, assign, readonly) OGBonusType type;
 
 + (instancetype)bonusNodeWithColor:(SKColor *)color Type:(OGBonusType)type;
     

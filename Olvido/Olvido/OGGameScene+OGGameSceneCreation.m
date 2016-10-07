@@ -9,30 +9,7 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGTimerNode.h"
-
-CGFloat const kOGGameSceneScoreDefaultFontSize = 36.0;
-CGFloat const kOGGameSceneBorderSize = 3.0;
-
-CGFloat const kOGGameSceneTimerCircleRadiusFactor = 4.0;
-CGFloat const kOGGameSceneTimerCircleLineWidth = 5.0;
-CGFloat const kOGGameSceneTimerCircleRadius = 100.0;
-CGFloat const kOGGameSceneTimerLabelScaleFactor = 500.0;
-
-CGFloat const kOGGameSceneButtonsMargin = 20.0;
-CGFloat const kOGGameSceneButtonsVerticalMargin = 40.0;
-CGFloat const kOGGameSceneButtonWidth = 80.0;
-
-CGFloat const kOGGameSceneGameOverScreenHeightFactor = 2.5;
-CGFloat const kOGGameSceneGameOverButtonPositionFactor = 4.0;
-
-NSString *const kOGGameSceneGameOverBackgroundSpriteName = @"GameOverBackground";
-NSString *const kOGGameSceneMenuButtonSpriteName = @"MenuButton";
-NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
-
-NSString *const kOGGameSceneTimerCircleNodeName = @"timerCircleNode";
-NSString *const kOGGameSceneBorderNodeName = @"borderNode";
-NSString *const kOGGameSceneTimerCircleCropNodeName = @"timerCircleCropNode";
-NSString *const kOGGameSceneBorderCropNodeName = @"borderCropNode";
+#import "OGConstants.h"
 
 @implementation OGGameScene (OGGameSceneCreation)
 

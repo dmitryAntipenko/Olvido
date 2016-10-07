@@ -6,6 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 #import "OGObstacleNode.h"
+#import "OGCollisionBitMask.h"
 
 @implementation OGObstacleNode
 
@@ -21,9 +22,9 @@
                                             size.height);
         
         obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:physicsBodyRect];
-        obstacle.physicsBody.categoryBitMask = 0x0 << 6;//make constant!!
-        obstacle.physicsBody.contactTestBitMask = 0x0;
-        obstacle.physicsBody.collisionBitMask = 0x0;
+        obstacle.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
+        obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
+        obstacle.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
         obstacle.physicsBody.usesPreciseCollisionDetection = YES;
         
         SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithColor:color size:size];
@@ -32,4 +33,10 @@
     
     return [obstacle autorelease];
 }
+
+- (void)dealloc
+{
+    [super dealloc];
+}
+
 @end

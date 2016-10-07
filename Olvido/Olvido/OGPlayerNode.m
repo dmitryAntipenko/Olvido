@@ -8,6 +8,7 @@
 
 #import "OGPlayerNode.h"
 #import "SKColor+OGConstantColors.h"
+#import "OGCollisionBitMask.h"
 
 CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
@@ -36,9 +37,9 @@ NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
         playerNode.physicsBody.friction = 0.0;
         playerNode.physicsBody.restitution = 1.0;
         
-        playerNode.physicsBody.categoryBitMask = 0x1 << 1;
-        playerNode.physicsBody.collisionBitMask = 0x1 << 0;
-        playerNode.physicsBody.contactTestBitMask = 0x1 << 0;
+        playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
+        playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
+        playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
         
         playerNode.physicsBody.usesPreciseCollisionDetection = YES;
         
@@ -58,5 +59,9 @@ NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
     self.appearance.color = color;
 }
 
+- (void)dealloc
+{
+    [super dealloc];
+}
 
 @end

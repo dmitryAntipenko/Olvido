@@ -15,6 +15,7 @@
 #import "OGLevelController.h"
 #import "OGLevelChanging.h"
 #import "OGPlayerNode.h"
+#import "OGConstants.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 

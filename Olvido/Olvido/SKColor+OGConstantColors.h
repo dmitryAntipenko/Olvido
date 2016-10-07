@@ -6,8 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-
-
 @interface SKColor (OGConstantColors)
 
 + (SKColor *)colorWithString:(NSString *)string;
