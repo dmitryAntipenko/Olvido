@@ -8,5 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+NSString *const kOGPlayerNodeName = @"player";
+NSString *const kOGEnemyNodeName = @"enemy";
+NSString *const kOGObstacleNodeName = @"obstacle";
+NSString *const kOGBonusNodeName = @"bonus";
+
+NSUInteger const kOGLevelsCount = 3;
+
 /* Player */
 

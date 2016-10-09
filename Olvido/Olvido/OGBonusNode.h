@@ -11,13 +11,13 @@
 
 typedef NS_ENUM(NSUInteger, OGBonusType)
 {
-    type
+    kOGBonusTypeSlowMo = 0
 };
 
 @interface OGBonusNode : OGBasicGameNode
 
-@property (nonatomic, assign, readonly) OGBonusType type;
+@property (nonatomic, assign, readonly) OGBonusType bonusType;
 
-+ (instancetype)bonusNodeWithColor:(SKColor *)color Type:(OGBonusType)type;
++ (instancetype)bonusNodeWithColor:(SKColor *)color type:(OGBonusType)type;
     
 @end

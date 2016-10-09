@@ -36,6 +36,8 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
 
 @interface OGLevelController ()
 
+@property (nonatomic, assign) BOOL shouldAddBonus;
+
 @property (nonatomic, assign) OGLevel *currentLevel;
 @property (nonatomic, retain) NSMutableDictionary<NSNumber *, OGLevel *> *levels;
 
@@ -116,6 +118,11 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
         self.currentLevel = [self.levels objectForKey:number];
     }
     
+    if (rand() % number.integerValue == 0)
+    {
+        self.shouldAddBonus = YES;
+    }
+    
     [self updateGameScene];
 }
 
@@ -126,6 +133,12 @@ NSString *const kOGLevelControllerObstacleColorKey = @"Color";
     [self.gameScene changePlayerWithColor:self.currentLevel.playerColor];
     [self.gameScene changeEnemiesWithColor:self.currentLevel.enemyColor enemyCount:self.currentLevel.enemyCount];
     [self.gameScene changeObstacles:self.currentLevel.obstacles];
+    
+    if (self.shouldAddBonus)
+    {
+        [self.gameScene addRandomBonus];
+        self.shouldAddBonus = NO;
+    }
 }
 
 - (void)dealloc

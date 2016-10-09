@@ -15,5 +15,6 @@
 - (void)changePlayerWithColor:(SKColor *)color;
 - (void)changeEnemiesWithColor:(SKColor *)color enemyCount:(NSNumber *)count;
 - (void)changeObstacles:(NSArray *)obstacles;
+- (void)addRandomBonus;
 
 @end

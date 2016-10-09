@@ -9,12 +9,13 @@
 #import "OGPlayerNode.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGCollisionBitMask.h"
+#import "OGConstants.h"
 
 CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
 NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
-CGFloat const kOGPlayerNodeSpeed = 300.0;
+CGFloat const kOGPlayerNodeSpeed = 250.0;
 NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
 NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
 
@@ -37,6 +38,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         
         if (playerNode.appearance)
         {
+            playerNode.name = kOGPlayerNodeName;
             playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0,
                                                     playerNode.radius * 2.0);
             playerNode.appearance.color = [SKColor blackColor];

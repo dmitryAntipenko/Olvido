@@ -8,14 +8,15 @@
 
 #import "OGEnemyNode.h"
 #import "OGCollisionBitMask.h"
+#import "OGConstants.h"
 #import "SKColor+OGConstantColors.h"
 
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
-NSString *const kOGEnemyNodeTextureInvulnerableName = @"PlayerBall";
+//NSString *const kOGEnemyNodeTextureInvulnerableName = @"PlayerBall";
 
 CGFloat const kOGEnemyNodeInvulnerabilityRepeatCount = 4;
 CGFloat const kOGEnemyNodeInvulnerabilityBlinkingTimeDuration = 0.5;
-CGFloat const kOGEnemyNodeVelocity = 10;
+CGFloat const kOGEnemyNodeVelocity = 8;
 
 @implementation OGEnemyNode
 
@@ -24,9 +25,9 @@ CGFloat const kOGEnemyNodeVelocity = 10;
     OGEnemyNode *enemyNode = [[OGEnemyNode alloc] initWithColor:[SKColor blackColor]];
     
     SKTexture *enemyNodeTexture = [SKTexture textureWithImageNamed:kOGEnemyNodeTextureName];
-    SKTexture *enemyNodeInvulnerableTexture = [SKTexture textureWithImageNamed:kOGEnemyNodeTextureInvulnerableName];
+//    SKTexture *enemyNodeInvulnerableTexture = [SKTexture textureWithImageNamed:kOGEnemyNodeTextureInvulnerableName];
     
-    if (enemyNodeTexture && enemyNodeInvulnerableTexture)
+    if (enemyNodeTexture)
     {
         CGSize size = CGSizeMake(enemyNode.radius * 2.0,
                                  enemyNode.radius * 2.0);
@@ -35,6 +36,8 @@ CGFloat const kOGEnemyNodeVelocity = 10;
         
         if (enemyNode.appearance)
         {
+            enemyNode.name = kOGEnemyNodeName;
+            
             [enemyNode addChild:enemyNode.appearance];
             
             enemyNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyNode.radius];
@@ -47,7 +50,7 @@ CGFloat const kOGEnemyNodeVelocity = 10;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
             enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
             
-            SKAction *colorisingAction = [SKAction sequence:@[
+            SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                               [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
                                                                          colorBlendFactor:1.0
                                                                                  duration:kOGEnemyNodeInvulnerabilityBlinkingTimeDuration / 2.0],
@@ -56,7 +59,7 @@ CGFloat const kOGEnemyNodeVelocity = 10;
                                                                                 duration:kOGEnemyNodeInvulnerabilityBlinkingTimeDuration / 2.0]
                                                              ]];
             
-            SKAction *repeatAction = [SKAction repeatAction:colorisingAction count:kOGEnemyNodeInvulnerabilityRepeatCount];
+            SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGEnemyNodeInvulnerabilityRepeatCount];
             
             [enemyNode.appearance runAction:repeatAction];
         }

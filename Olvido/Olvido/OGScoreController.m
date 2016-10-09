@@ -8,11 +8,13 @@
 
 #import "OGScoreController.h"
 #import "OGLevelController.h"
+#import "OGConstants.h"
 
 @interface OGScoreController ()
 
 @property (nonatomic, retain, readwrite) NSNumber *score;
 @property (nonatomic, retain) OGLevelController *levelController;
+@property (nonatomic, readonly) NSNumber *randomLevelNumber;
 
 @end
 
@@ -42,8 +44,13 @@
     
     if (self.score.integerValue % kOGLevelControllerLevelChangeInterval == 0)
     {
-        [self.levelController loadLevelWithNumber:@(1)];
+        [self.levelController loadLevelWithNumber:self.randomLevelNumber];
     }
+}
+
+- (NSNumber *)randomLevelNumber
+{
+    return @(rand() % kOGLevelsCount + 1);
 }
 
 - (void)dealloc

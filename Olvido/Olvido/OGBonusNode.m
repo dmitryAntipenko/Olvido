@@ -9,28 +9,48 @@
 #import "OGBonusNode.h"
 #import "OGCollisionBitMask.h"
 #import "OGBasicGameNode.h"
+#import "OGConstants.h"
+
+NSString *const kOGBonusNodeTextureName = @"EnemyBall";
 
 @implementation OGBonusNode
 
-+ (instancetype)bonusNodeWithColor:(SKColor *)color Type:(OGBonusType)type;
++ (instancetype)bonusNodeWithColor:(SKColor *)color type:(OGBonusType)type;
 {
     OGBonusNode *bonus = [[OGBonusNode alloc] initWithColor:color type:type];
     
     if (bonus)
     {
-        CGRect physicsBodyPathRect = CGRectMake(-bonus.radius,
-                                                -bonus.radius,
-                                                bonus.radius * 2.0,
-                                                bonus.radius * 2.0);
+        bonus.name = kOGBonusNodeName;
         
-        CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
+        SKTexture *bonusTexture = [SKTexture textureWithImageNamed:kOGBonusNodeTextureName];
         
-        bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
-        bonus.physicsBody.categoryBitMask = kOGCollisionBitMaskBonus;
-        bonus.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
-        bonus.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+        CGSize size = CGSizeMake(bonus.radius * 2.0,
+                                 bonus.radius * 2.0);
         
-        CGPathRelease(physicsBodyPath);
+        bonus.appearance = [SKSpriteNode spriteNodeWithTexture:bonusTexture size:size];
+        
+        if (bonus.appearance)
+        {
+            bonus.appearance.color = color;
+            bonus.appearance.colorBlendFactor = 1.0;
+            
+            [bonus addChild:bonus.appearance];
+            
+            CGRect physicsBodyPathRect = CGRectMake(-bonus.radius,
+                                                    -bonus.radius,
+                                                    bonus.radius * 2.0,
+                                                    bonus.radius * 2.0);
+            
+            CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
+            
+            bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
+            bonus.physicsBody.categoryBitMask = kOGCollisionBitMaskBonus;
+            bonus.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
+            bonus.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+            
+            CGPathRelease(physicsBodyPath);
+        }
     }
     
     return [bonus autorelease];
@@ -42,7 +62,7 @@
     
     if (self)
     {
-        _type = type;
+        _bonusType = type;
     }
     
     return self;

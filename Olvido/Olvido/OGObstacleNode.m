@@ -7,8 +7,7 @@
 //
 #import "OGObstacleNode.h"
 #import "OGCollisionBitMask.h"
-
-NSString *const kOGObstacleNodeName = @"obstacle";
+#import "OGConstants.h"
 
 @implementation OGObstacleNode
 
@@ -18,13 +17,13 @@ NSString *const kOGObstacleNodeName = @"obstacle";
     
     if (obstacle)
     {
+        obstacle.name = kOGObstacleNodeName;
+        
         obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:path];
         obstacle.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
         obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
         obstacle.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
         obstacle.physicsBody.usesPreciseCollisionDetection = YES;
-        
-        obstacle.name = kOGObstacleNodeName;
         
         SKShapeNode* shape = [SKShapeNode shapeNodeWithPath:path];
         shape.fillColor = color;

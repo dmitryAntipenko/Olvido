@@ -28,6 +28,8 @@
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAA490C81DA7C6C6007734F0 /* Level1.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA490B51DA6D2B0007734F0 /* Level1.plist */; };
 		EAA490CB1DA7E087007734F0 /* OGEnemyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */; };
+		EAA490CF1DAAAA12007734F0 /* Level2.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA490CD1DAAAA12007734F0 /* Level2.plist */; };
+		EAA490D01DAAAA12007734F0 /* Level3.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA490CE1DAAAA12007734F0 /* Level3.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,9 @@
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
 		EAA490C91DA7E087007734F0 /* OGEnemyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyNode.h; sourceTree = "<group>"; };
 		EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyNode.m; sourceTree = "<group>"; };
+		EAA490CC1DAAA0B6007734F0 /* OGContactType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactType.h; sourceTree = "<group>"; };
+		EAA490CD1DAAAA12007734F0 /* Level2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level2.plist; sourceTree = "<group>"; };
+		EAA490CE1DAAAA12007734F0 /* Level3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level3.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +161,7 @@
 				EAA490B41DA6C714007734F0 /* OGLevelChanging.h */,
 				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
 				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
+				EAA490CC1DAAA0B6007734F0 /* OGContactType.h */,
 			);
 			name = GameScene;
 			sourceTree = "<group>";
@@ -184,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				EAA490B51DA6D2B0007734F0 /* Level1.plist */,
+				EAA490CD1DAAAA12007734F0 /* Level2.plist */,
+				EAA490CE1DAAAA12007734F0 /* Level3.plist */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -248,9 +256,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
+				EAA490CF1DAAAA12007734F0 /* Level2.plist in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 				EAA490C81DA7C6C6007734F0 /* Level1.plist in Resources */,
+				EAA490D01DAAAA12007734F0 /* Level3.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,7 +408,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -415,7 +425,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
