@@ -20,8 +20,8 @@ NSString *const kOGObstacleNodeName = @"obstacle";
     {
         obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:path];
         obstacle.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
-        obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
-        obstacle.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
+        obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
+        obstacle.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
         obstacle.physicsBody.usesPreciseCollisionDetection = YES;
         
         obstacle.name = kOGObstacleNodeName;

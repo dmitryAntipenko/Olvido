@@ -44,8 +44,8 @@ CGFloat const kOGEnemyNodeVelocity = 10;
             enemyNode.physicsBody.restitution = 1.0;
             
             enemyNode.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
-            enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskObstacle;
-            enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskObstacle;
+            enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
+            enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
             
             SKAction *colorisingAction = [SKAction sequence:@[
                                                               [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]

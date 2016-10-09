@@ -202,4 +202,18 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     NSLog(@"%@", obstacles);
 }
 
+- (void)dealloc
+{
+    [_background release];
+    [_foreground release];
+    [_middleground release];
+    [_timer release];
+    [_timerNode release];
+    [_levelController release];
+    [_scoreController release];
+    [_playerNode release];
+    
+    [super dealloc];
+}
+
 @end

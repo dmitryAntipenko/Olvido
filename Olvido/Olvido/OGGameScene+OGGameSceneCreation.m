@@ -35,6 +35,12 @@ NSString *const kOGGameSceneBorderCropNodeName = @"borderCropNode";
 
 NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
 
+@interface OGGameScene ()
+
+@property (nonatomic, assign, readonly) CGFloat scaleFactor;
+
+@end
+
 @implementation OGGameScene (OGGameSceneCreation)
 
 #pragma - mark Top Game Scene Nodes
@@ -60,7 +66,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
     OGTimerNode *timerNode = [[OGTimerNode alloc] initWithPoint:CGPointMake(CGRectGetMidX(self.frame),
                                                                             CGRectGetMidY(self.frame))];
     
-    timerNode.fontSize = kOGTimerNodeFontDefaultSize * [self scaleFactor];
+    timerNode.fontSize = kOGTimerNodeFontDefaultSize * self.scaleFactor;
     
     [middleground addChild:timerNode];
     
@@ -117,7 +123,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
     scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     
-    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * [self scaleFactor];
+    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * self.scaleFactor;
     scoreLabel.fontColor = [SKColor gameBlack];
     
     return scoreLabel;

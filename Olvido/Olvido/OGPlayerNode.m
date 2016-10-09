@@ -52,7 +52,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
             playerNode.physicsBody.restitution = 1.0;
             
             playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
-            playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
+            playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
             playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
@@ -61,7 +61,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
             
             [playerNode runAction:invulnerability completion:^
              {
-                 playerNode.physicsBody.contactTestBitMask = playerNode.physicsBody.contactTestBitMask | 0x1 << 2;
+                 playerNode.physicsBody.contactTestBitMask = playerNode.physicsBody.contactTestBitMask | kOGCollisionBitMaskEnemy;
              }];
         }
     }

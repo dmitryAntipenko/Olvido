@@ -27,8 +27,8 @@
         
         bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
         bonus.physicsBody.categoryBitMask = kOGCollisionBitMaskBonus;
-        bonus.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
-        bonus.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer;
+        bonus.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
+        bonus.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
         
         CGPathRelease(physicsBodyPath);
     }
