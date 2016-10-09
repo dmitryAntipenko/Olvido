@@ -12,7 +12,27 @@
 #import "SKColor+OGConstantColors.h"
 #import "OGLevelChanging.h"
 #import "OGObstacleNode.h"
-#import "OGConstants.h"
+
+NSUInteger const kOGLevelControllerLevelChangeInterval = 10;
+
+NSString *const kOGLevelControllerLevelNameFormat = @"Level%2@";
+NSString *const kOGLevelControllerLevelExtension = @"plist";
+
+NSString *const kOGLevelControllerColorsKey = @"Colors";
+NSString *const kOGLevelControllerObstaclesKey = @"Obstacles";
+NSString *const kOGLevelControllerEnemyCountKey = @"Enemy Count";
+NSString *const kOGLevelControllerBackgroundColorKey = @"Background Color";
+NSString *const kOGLevelControllerAccentColorKey = @"Accent Color";
+NSString *const kOGLevelControllerPlayerColorKey = @"Player Color";
+NSString *const kOGLevelControllerEnemyColorKey = @"Enemy Color";
+
+NSString *const kOGLevelControllerOriginKey = @"Origin";
+NSString *const kOGLevelControllerOriginXKey = @"X";
+NSString *const kOGLevelControllerOriginYKey = @"Y";
+NSString *const kOGLevelControllerPointsKey = @"Points";
+NSString *const kOGLevelControllerPointXKey = @"PointX";
+NSString *const kOGLevelControllerPointYKey = @"PointY";
+NSString *const kOGLevelControllerObstacleColorKey = @"Color";
 
 @interface OGLevelController ()
 

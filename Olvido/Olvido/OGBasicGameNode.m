@@ -47,7 +47,7 @@ CGFloat const kOGBasicGameNodeRadius = 16.0;
 {
     return [self initWithColor:color
                         radius:kOGBasicGameNodeRadius
-                      velocity:CGVectorMake(0, 0)
+                      velocity:CGVectorMake(0.0, 0.0)
                     appearance:nil
                           skin:nil];
 }

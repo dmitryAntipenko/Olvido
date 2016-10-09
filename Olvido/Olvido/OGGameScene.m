@@ -15,8 +15,9 @@
 #import "OGLevelController.h"
 #import "OGLevelChanging.h"
 #import "OGPlayerNode.h"
-#import "OGConstants.h"
 #import "OGCollisionBitMask.h"
+#import "OGConstants.h"
+#import "OGEnemyNode.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
@@ -80,9 +81,24 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     [self createLayers];
     
     self.playerNode = [OGPlayerNode playerNodeWithColor:[SKColor blackColor]];
-    self.playerNode.position = CGPointMake(100, 100);
     
-    [self.foreground addChild:self.playerNode];
+    if (self.playerNode)
+    {
+        self.playerNode.position = CGPointMake(100, 100);
+        
+        [self.foreground addChild:self.playerNode];
+    }
+    
+    for (unsigned i = 0; i < 10; i++)
+    {
+        OGEnemyNode *enemyNode = [OGEnemyNode enemyNode];
+
+        if (enemyNode)
+        {
+            [self.foreground addChild:enemyNode];
+            [enemyNode startWithPoint:CGPointMake(100, 100)];
+        }
+    }    
 }
 
 - (void)timerTick
@@ -151,12 +167,12 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     [self.playerNode positionDidUpdate];
 }
 
-- (void)changeBackgroundWithColor:(UIColor *)color
+- (void)changeBackgroundWithColor:(SKColor *)color
 {
     self.backgroundColor = color;
 }
 
--(void)changeAccentWithColor:(UIColor *)color
+-(void)changeAccentWithColor:(SKColor *)color
 {
     self.timerNode.fontColor = color;
     
@@ -164,14 +180,15 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
     SKSpriteNode *borderNode = (SKSpriteNode *) [borderCropNode childNodeWithName:kOGGameSceneBorderNodeName];
     borderNode.color = color;
     
-    SKNode *timerCircleCropNode = [self.background childNodeWithName:kOGGameSceneTimerCircleCropNodeName];
-    SKSpriteNode *timerCircleNode = (SKSpriteNode *) [timerCircleCropNode childNodeWithName:kOGGameSceneTimerCircleNodeName];
+    SKSpriteNode *timerCircleNode = (SKSpriteNode *) [self.background childNodeWithName:kOGGameSceneTimerCircleNodeName];
     timerCircleNode.color = color;
+    timerCircleNode.colorBlendFactor = 1.0;
 }
 
 - (void)changePlayerWithColor:(SKColor *)color
 {
-    NSLog(@"%@", color);
+    self.playerNode.appearance.color = color;
+    self.playerNode.appearance.colorBlendFactor = 1.0;
 }
 
 - (void)changeEnemiesWithColor:(SKColor *)color enemyCount:(NSNumber *)count
