@@ -7,7 +7,6 @@
 //
 #import "OGObstacleNode.h"
 #import "OGCollisionBitMask.h"
-#import "OGConstants.h"
 
 NSString *const kOGObstacleNodeName = @"obstacle";
 

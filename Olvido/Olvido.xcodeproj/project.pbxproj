@@ -39,7 +39,6 @@
 		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
 		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
 		1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBonusNode.m; sourceTree = "<group>"; };
-		1BDD762D1DA7C26500C522DE /* OGLevelChanging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelChanging.h; sourceTree = "<group>"; };
 		1BDD762E1DA7C26500C522DE /* OGObstacleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacleNode.h; sourceTree = "<group>"; };
 		1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacleNode.m; sourceTree = "<group>"; };
 		1BDD76301DA7C26500C522DE /* OGPlayerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerNode.h; sourceTree = "<group>"; };
@@ -135,8 +134,6 @@
 				EAA490BF1DA6EE4B007734F0 /* Levels */,
 				EAA490C51DA7BE52007734F0 /* OGConstants.h */,
 				EAA490C61DA7BE64007734F0 /* OGConstants.m */,
-				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
-				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
 			);
 			path = Olvido;
 			sourceTree = "<group>";
@@ -157,6 +154,8 @@
 				EA976D021D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.h */,
 				EA976D031D9EDAB8003B77FC /* OGGameScene+OGGameSceneCreation.m */,
 				EAA490B41DA6C714007734F0 /* OGLevelChanging.h */,
+				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
+				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
 			);
 			name = GameScene;
 			sourceTree = "<group>";
@@ -166,7 +165,6 @@
 			children = (
 				EAA490C91DA7E087007734F0 /* OGEnemyNode.h */,
 				EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */,
-				1BDD762D1DA7C26500C522DE /* OGLevelChanging.h */,
 				1BDD762E1DA7C26500C522DE /* OGObstacleNode.h */,
 				1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */,
 				1BDD76301DA7C26500C522DE /* OGPlayerNode.h */,

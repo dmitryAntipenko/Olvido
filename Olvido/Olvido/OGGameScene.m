@@ -18,6 +18,7 @@
 #import "OGCollisionBitMask.h"
 #import "OGConstants.h"
 #import "OGEnemyNode.h"
+#import "OGObstacleNode.h"
 
 NSUInteger const kOGGameSceneTimerInterval = 1.0;
 
