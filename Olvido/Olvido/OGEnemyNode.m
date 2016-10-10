@@ -15,7 +15,7 @@ NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
 
 CGFloat const kOGEnemyNodeInvulnerabilityRepeatCount = 4;
 CGFloat const kOGEnemyNodeInvulnerabilityBlinkingTimeDuration = 0.5;
-CGFloat const kOGEnemyNodeVelocity = 8;
+CGFloat const kOGEnemyNodeVelocity = 10;
 
 @implementation OGEnemyNode
 

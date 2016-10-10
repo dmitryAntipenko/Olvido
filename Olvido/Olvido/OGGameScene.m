@@ -310,6 +310,13 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
         
         [self.bonusNodes addObject:bonus];
         [self.foreground addChild:bonus];
+        
+        SKAction *blinkAction = [SKAction sequence:@[
+                                                    [SKAction scaleTo:1.2 duration:2.0],
+                                                    [SKAction scaleTo:1.0 duration:2.0]
+                                                    ]];
+        
+        [bonus runAction:[SKAction repeatActionForever:blinkAction]];
     }
 }
 

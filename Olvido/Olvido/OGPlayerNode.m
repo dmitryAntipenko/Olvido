@@ -15,7 +15,7 @@ CGFloat const kOGPlayerNodeBorderLineWidth = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 4.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.2;
 NSString *const kOGPlayerNodeSpriteImageName = @"PlayerBall";
-CGFloat const kOGPlayerNodeSpeed = 250.0;
+CGFloat const kOGPlayerNodeSpeed = 300.0;
 NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
 NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
 
