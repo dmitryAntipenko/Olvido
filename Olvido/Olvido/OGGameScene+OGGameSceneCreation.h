@@ -12,6 +12,8 @@ extern NSString *const kOGGameSceneTimerCircleNodeName;
 extern NSString *const kOGGameSceneBorderNodeName;
 extern NSString *const kOGGameSceneBorderCropNodeName;
 
+extern NSString *const kOGGameSceneRestartButtonSpriteName;
+
 @interface OGGameScene (OGGameSceneCreation)
 
 - (SKNode *)createBackground;

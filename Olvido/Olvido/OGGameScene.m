@@ -165,11 +165,26 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //...
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *touchedNode = [self nodeAtPoint:location];
+    
     for (UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:self];
         [self.playerNode moveToPoint:location];
+    }
+    
+    [self handleGameOverEventsWithNode:touchedNode];
+}
+
+- (void)handleGameOverEventsWithNode:(SKNode *)touchedNode
+{
+    if ([touchedNode.name isEqualToString:kOGGameSceneRestartButtonSpriteName])
+    {
+        OGGameScene *gameScene = [[OGGameScene alloc] initWithSize:self.frame.size];
+        [self.view presentScene:gameScene];
+        [gameScene release];
     }
 }
 

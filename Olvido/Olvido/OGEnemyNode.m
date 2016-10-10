@@ -12,7 +12,6 @@
 #import "SKColor+OGConstantColors.h"
 
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
-//NSString *const kOGEnemyNodeTextureInvulnerableName = @"PlayerBall";
 
 CGFloat const kOGEnemyNodeInvulnerabilityRepeatCount = 4;
 CGFloat const kOGEnemyNodeInvulnerabilityBlinkingTimeDuration = 0.5;
@@ -25,7 +24,6 @@ CGFloat const kOGEnemyNodeVelocity = 8;
     OGEnemyNode *enemyNode = [[OGEnemyNode alloc] initWithColor:[SKColor blackColor]];
     
     SKTexture *enemyNodeTexture = [SKTexture textureWithImageNamed:kOGEnemyNodeTextureName];
-//    SKTexture *enemyNodeInvulnerableTexture = [SKTexture textureWithImageNamed:kOGEnemyNodeTextureInvulnerableName];
     
     if (enemyNodeTexture)
     {
