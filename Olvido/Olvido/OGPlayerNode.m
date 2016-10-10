@@ -97,7 +97,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     }
     
     CGVector result = CGVectorMake(0.0, 0.0);
-
+    
     if (self.previousPositionsBuffer.count > 1)
     {
         NSInteger i = 0;
@@ -168,9 +168,11 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     CGVector impulse = CGVectorMake(movementVector.dx * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule,
                                     movementVector.dy * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule);
     
-    [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
-    
-    [self.physicsBody applyImpulse:impulse];
+    if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
+    {
+        [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
+        [self.physicsBody applyImpulse:impulse];
+    }
 }
 
 - (void)positionDidUpdate

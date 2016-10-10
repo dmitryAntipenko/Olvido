@@ -213,6 +213,10 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
         [contact.bodyA.node removeFromParent];
         [self.bonusNodes removeObject:(OGBonusNode*) contact.bodyA.node];
     }
+    else if (contactType == kOGContactTypePlayerDidTouchObstacle)
+    {
+        [self.playerNode moveByInertia];
+    }
 }
 
 - (OGContactType)contactType:(SKPhysicsContact *)contact
@@ -229,6 +233,7 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
     {
         return kOGContactTypePlayerDidGetBonus;
     }
+    else return kOGContactTypePlayerDidTouchObstacle;
     
     return kOGContactTypeNone;
 }
