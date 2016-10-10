@@ -12,6 +12,7 @@
 NSString *const kOGTimerNodeName = @"timerNode";
 NSString *const kOGTimerNodeKeyPathTicks = @"ticks";
 NSString *const kOGTimerNodeFontName = @"Helvetica-Thin";
+NSString *const kOGTimerNodeDefaultText = @"0";
 CGFloat const kOGTimerNodeFontDefaultSize = 64.0;
 
 @implementation OGTimerNode
@@ -23,6 +24,7 @@ CGFloat const kOGTimerNodeFontDefaultSize = 64.0;
     if (self)
     {
         self.name = kOGTimerNodeName;
+        self.text = kOGTimerNodeDefaultText;
         self.fontColor = [SKColor backgroundGrayColor];
         self.fontSize = kOGTimerNodeFontDefaultSize;
         self.fontName = kOGTimerNodeFontName;

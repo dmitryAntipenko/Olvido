@@ -29,6 +29,8 @@ NSUInteger const kOGGameSceneTimerInterval = 1.0;
 NSUInteger const kOGGameSceneDefaultEnemyCount = 4;
 NSUInteger const kOGGameSceneNodesPositionOffset = 50;
 NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
+NSUInteger const kOGGameSceneBonusTypesCount = 4;
+NSUInteger const kOGGameSceneBonusDuration = 5;
 
 @interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
 
@@ -210,6 +212,7 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
     }
     else if (contactType == kOGContactTypePlayerDidGetBonus)
     {
+        [self applyBonusWithType:((OGBonusNode *) contact.bodyA.node).bonusType];
         [contact.bodyA.node removeFromParent];
         [self.bonusNodes removeObject:(OGBonusNode*) contact.bodyA.node];
     }
@@ -289,7 +292,7 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
 
 - (void)changeObstacles:(NSArray *)obstacles
 {
-    NSLog(@"%@", obstacles);
+    //NSLog(@"%@", obstacles);
 }
 
 - (void)runActionWithColor:(SKColor *)color target:(SKNode *)target
@@ -301,7 +304,7 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
 {
     if (self.bonusNodes.count < kOGGameSceneBonusNodesMaximumCount)
     {
-        OGBonusNode *bonus = [OGBonusNode bonusNodeWithColor:[SKColor yellowColor] type:kOGBonusTypeSlowMo];
+        OGBonusNode *bonus = [OGBonusNode bonusNodeWithColor:[SKColor yellowColor] type:rand() % kOGGameSceneBonusTypesCount];
         
         bonus.position = ogRanomPoint(kOGGameSceneNodesPositionOffset,
                                       self.frame.size.width - kOGGameSceneNodesPositionOffset,
@@ -317,6 +320,28 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
                                                     ]];
         
         [bonus runAction:[SKAction repeatActionForever:blinkAction]];
+    }
+}
+
+- (void)applyBonusWithType:(OGBonusType)type
+{
+    if (type == kOGBonusTypeSlowMo)
+    {
+        self.physicsWorld.speed = 0.6;
+        
+        [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
+        {
+            self.physicsWorld.speed = 1.0;
+        }];
+    }
+    else if (type == kOGBonusTypeSpeedUp)
+    {
+        self.physicsWorld.speed = 1.4;
+        
+        [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
+         {
+             self.physicsWorld.speed = 1.0;
+         }];
     }
 }
 

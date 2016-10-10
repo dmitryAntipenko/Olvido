@@ -11,7 +11,10 @@
 
 typedef NS_ENUM(NSUInteger, OGBonusType)
 {
-    kOGBonusTypeSlowMo = 0
+    kOGBonusTypeSlowMo = 0,
+    kOGBonusTypeSpeedUp = 1,
+    kOGBonusTypeSlowMoEnemies = 2,
+    kOGBonusTypeEnemyEnlarge = 3
 };
 
 @interface OGBonusNode : OGBasicGameNode
