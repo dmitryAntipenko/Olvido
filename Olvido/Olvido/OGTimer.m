@@ -9,6 +9,8 @@
 #import "OGTimer.h"
 
 CGFloat const kOGTimerInterval = 1.0;
+NSNumber *const kOGTimerTicksStartValue = 0;
+NSInteger const kOGTimerTicksIncrement = 1;
 
 @interface OGTimer ()
 
@@ -38,19 +40,19 @@ CGFloat const kOGTimerInterval = 1.0;
 
 - (void)start
 {
-    self.ticks = @(0);
+    self.ticks = kOGTimerTicksStartValue;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:self selector:@selector(tick) userInfo:nil repeats:YES];
 }
 
 - (void)startWithSelector:(SEL)selector sender:(id)sender
 {
-    self.ticks = @(0);
+    self.ticks = kOGTimerTicksStartValue;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:sender selector:selector userInfo:nil repeats:YES];
 }
 
 - (void)tick
 {
-    self.ticks = @(self.ticks.integerValue + 1);
+    self.ticks = @(self.ticks.integerValue + kOGTimerTicksIncrement);
 }
 
 - (void)stop

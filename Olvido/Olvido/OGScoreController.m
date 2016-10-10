@@ -11,7 +11,7 @@
 #import "OGConstants.h"
 
 NSNumber *const kOGScoreControllerDefaultScore = 0;
-NSInteger const kOGScoreControllerScoreIncrease = 1;
+NSInteger const kOGScoreControllerScoreIncrement = 1;
 
 @interface OGScoreController ()
 
@@ -43,7 +43,7 @@ NSInteger const kOGScoreControllerScoreIncrease = 1;
 
 - (void)incrementScore
 {
-    self.score = @(self.score.integerValue + kOGScoreControllerScoreIncrease);
+    self.score = @(self.score.integerValue + kOGScoreControllerScoreIncrement);
     
     if (self.score.integerValue % kOGLevelControllerLevelChangeInterval == 0)
     {
