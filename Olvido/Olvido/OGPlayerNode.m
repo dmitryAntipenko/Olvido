@@ -138,8 +138,8 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     {
         CGFloat movementVectorModule = self.movementVectorModule;
         
-        CGFloat bX = movementVector.dx * displacementVectorModule * 3 / movementVectorModule;
-        CGFloat bY = movementVector.dy * displacementVectorModule * 3 / movementVectorModule;
+        CGFloat bX = movementVector.dx * displacementVectorModule / 3 / movementVectorModule;
+        CGFloat bY = movementVector.dy * displacementVectorModule / 3 / movementVectorModule;
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathMoveToPoint(path, NULL, 0, 0);
