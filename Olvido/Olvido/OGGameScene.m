@@ -216,6 +216,10 @@ NSUInteger const kOGGameSceneBonusDuration = 5;
         [contact.bodyA.node removeFromParent];
         [self.bonusNodes removeObject:(OGBonusNode*) contact.bodyA.node];
     }
+    else if (contactType == kOGContactTypePlayerDidTouchObstacle)
+    {
+        [self.playerNode moveByInertia];
+    }
 }
 
 - (OGContactType)contactType:(SKPhysicsContact *)contact
@@ -231,6 +235,10 @@ NSUInteger const kOGGameSceneBonusDuration = 5;
              || ([nodeB.name isEqualToString:kOGPlayerNodeName] && [nodeA.name isEqualToString:kOGBonusNodeName]))
     {
         return kOGContactTypePlayerDidGetBonus;
+    }
+    else if ([nodeA.name isEqualToString:kOGObstacleNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
+    {
+        return kOGContactTypePlayerDidTouchObstacle;
     }
     
     return kOGContactTypeNone;

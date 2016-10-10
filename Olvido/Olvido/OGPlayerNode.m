@@ -23,6 +23,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
 @property (nonatomic, assign, readonly) CGVector movementVector;
+@property (nonatomic, assign, readonly) CGFloat movementVectorModule;
 
 @end
 
@@ -97,7 +98,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     }
     
     CGVector result = CGVectorMake(0.0, 0.0);
-
+    
     if (self.previousPositionsBuffer.count > 1)
     {
         NSInteger i = 0;
@@ -124,23 +125,21 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     
     CGVector movementVector = self.movementVector;
     
+    CGFloat displacementVectorModule = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
+    
     if (movementVector.dx == 0.0 && movementVector.dy == 0.0)
     {
-        CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
-        
-        CGFloat x = displacementVector.dx * kOGPlayerNodeSpeed / l * self.physicsBody.mass;
-        CGFloat y = displacementVector.dy * kOGPlayerNodeSpeed / l * self.physicsBody.mass;
+        CGFloat x = displacementVector.dx * kOGPlayerNodeSpeed / displacementVectorModule * self.physicsBody.mass;
+        CGFloat y = displacementVector.dy * kOGPlayerNodeSpeed / displacementVectorModule * self.physicsBody.mass;
         
         [self.physicsBody applyImpulse:CGVectorMake(x, y)];
     }
     else
     {
-        CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+        CGFloat movementVectorModule = self.movementVectorModule;
         
-        CGFloat l = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5) / 3;
-        
-        CGFloat bX = movementVector.dx / movementVectorModule * l;
-        CGFloat bY = movementVector.dy / movementVectorModule * l;
+        CGFloat bX = movementVector.dx * displacementVectorModule * 3 / movementVectorModule;
+        CGFloat bY = movementVector.dy * displacementVectorModule * 3 / movementVectorModule;
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathMoveToPoint(path, NULL, 0, 0);
@@ -163,14 +162,16 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 {
     CGVector movementVector = self.movementVector;
     
-    CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+    CGFloat movementVectorModule = self.movementVectorModule;
     
     CGVector impulse = CGVectorMake(movementVector.dx * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule,
                                     movementVector.dy * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule);
     
-    [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
-    
-    [self.physicsBody applyImpulse:impulse];
+    if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
+    {
+        [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
+        [self.physicsBody applyImpulse:impulse];
+    }
 }
 
 - (void)positionDidUpdate
@@ -184,6 +185,12 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         
         self.previousPositionsBuffer[0] = [NSValue valueWithCGPoint:self.position];
     }
+}
+
+- (CGFloat)movementVectorModule
+{
+    CGVector movementVector = self.movementVector;
+    return pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);;
 }
 
 - (void)dealloc
