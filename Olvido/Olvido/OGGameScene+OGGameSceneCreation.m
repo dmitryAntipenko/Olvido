@@ -138,6 +138,8 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
                                                                size:CGSizeMake(timerCircleRadius * 2.0,
                                                                                timerCircleRadius * 2.0)];
     timerCircle.name = kOGGameSceneTimerCircleNodeName;
+    timerCircle.color = color;
+    timerCircle.colorBlendFactor = 1.0;
     timerCircle.position = point;
     
     return timerCircle;
