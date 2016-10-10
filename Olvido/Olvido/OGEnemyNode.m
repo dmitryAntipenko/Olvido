@@ -14,6 +14,12 @@
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
 
 CGFloat const kOGEnemyNodeVelocity = 10;
+CGFloat const kOGEnemyNodeLinearDamping = 0.0;
+CGFloat const kOGEnemyNodeAngularDamping = 0.0;
+CGFloat const kOGEnemyNodeFriction = 0.0;
+CGFloat const kOGEnemyNodeRestitution = 1.0;
+
+CGFloat const kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor = 1.0;
 
 @implementation OGEnemyNode
 
@@ -25,8 +31,8 @@ CGFloat const kOGEnemyNodeVelocity = 10;
     
     if (enemyNodeTexture)
     {
-        CGSize size = CGSizeMake(enemyNode.radius * 2.0,
-                                 enemyNode.radius * 2.0);
+        CGSize size = CGSizeMake(enemyNode.diameter,
+                                 enemyNode.diameter);
         
         enemyNode.appearance = [SKSpriteNode spriteNodeWithTexture:enemyNodeTexture size:size];
         
@@ -37,10 +43,10 @@ CGFloat const kOGEnemyNodeVelocity = 10;
             [enemyNode addChild:enemyNode.appearance];
             
             enemyNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyNode.radius];
-            enemyNode.physicsBody.linearDamping = 0.0;
-            enemyNode.physicsBody.angularDamping = 0.0;
-            enemyNode.physicsBody.friction = 0.0;
-            enemyNode.physicsBody.restitution = 1.0;
+            enemyNode.physicsBody.linearDamping = kOGEnemyNodeLinearDamping;
+            enemyNode.physicsBody.angularDamping = kOGEnemyNodeAngularDamping;
+            enemyNode.physicsBody.friction = kOGEnemyNodeFriction;
+            enemyNode.physicsBody.restitution = kOGEnemyNodeRestitution;
             
             enemyNode.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
@@ -48,10 +54,10 @@ CGFloat const kOGEnemyNodeVelocity = 10;
             
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
-                                                                              colorBlendFactor:1.0
+                                                                              colorBlendFactor:kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor
                                                                                       duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration],
                                                                    [SKAction colorizeWithColor:[SKColor gameBlack]
-                                                                        colorBlendFactor:1.0
+                                                                        colorBlendFactor:kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor
                                                                                 duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
                                                              ]];
             

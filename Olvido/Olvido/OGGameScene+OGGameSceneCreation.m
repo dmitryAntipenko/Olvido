@@ -30,10 +30,18 @@ NSString *const kOGGameSceneMenuButtonSpriteName = @"MenuButton";
 NSString *const kOGGameSceneRestartButtonSpriteName = @"RestartButton";
 
 NSString *const kOGGameSceneTimerCircleNodeName = @"timerCircleNode";
+NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
+CGFloat const kOGGameSceneTimerCircleColorBlendFactor = 1.0;
+
 NSString *const kOGGameSceneBorderNodeName = @"borderNode";
 NSString *const kOGGameSceneBorderCropNodeName = @"borderCropNode";
 
-NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
+CGFloat const kOGGameSceneBackgroundZPosition = -2.0;
+CGFloat const kOGGameSceneMiddlegroundZPosition = -1.0;
+
+NSString *const kOGGameSceneScoreString = @"Your Score";
+
+CGFloat const kOGGameSceneDimPanelAlpha = 0.0;
 
 @interface OGGameScene ()
 
@@ -54,7 +62,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
     [background addChild:[self createBackgroundBorderWithColor:accentColor]];
     [background addChild:[self createTimerCircleWithColor:accentColor inPoint:frameCenter]];
     
-    background.zPosition = -2;
+    background.zPosition = kOGGameSceneBackgroundZPosition;
     
     return background;
 }
@@ -72,7 +80,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
     
     [timerNode release];
     
-    middleground.zPosition = -1;
+    middleground.zPosition = kOGGameSceneMiddlegroundZPosition;
     
     return middleground;
 }
@@ -116,7 +124,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
 
 - (SKLabelNode *)createScoreLaberWithScore:(NSNumber *)score
 {
-    NSString *scoreString = [[NSString alloc] initWithFormat:@"Your Score %@", score];
+    NSString *scoreString = [[NSString alloc] initWithFormat:@"%@ %@", kOGGameSceneScoreString, score];
     SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithText:scoreString];
     [scoreString release];
     
@@ -132,14 +140,14 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
 - (SKSpriteNode *)createTimerCircleWithColor:(SKColor *)color inPoint:(CGPoint)point
 {
     SKTexture *timerCircleTexture = [SKTexture textureWithImageNamed:kOGGameSceneTimerCircleTextureName];
-    CGFloat timerCircleRadius = self.frame.size.width / kOGGameSceneTimerCircleRadiusFactor;
+    CGFloat timerCircleDiameter = (self.frame.size.width / kOGGameSceneTimerCircleRadiusFactor) * 2.0;
     
     SKSpriteNode *timerCircle = [SKSpriteNode spriteNodeWithTexture:timerCircleTexture
-                                                               size:CGSizeMake(timerCircleRadius * 2.0,
-                                                                               timerCircleRadius * 2.0)];
+                                                               size:CGSizeMake(timerCircleDiameter,
+                                                                               timerCircleDiameter)];
     timerCircle.name = kOGGameSceneTimerCircleNodeName;
     timerCircle.color = color;
-    timerCircle.colorBlendFactor = 1.0;
+    timerCircle.colorBlendFactor = kOGGameSceneTimerCircleColorBlendFactor;
     timerCircle.position = point;
     
     return timerCircle;
@@ -171,7 +179,7 @@ NSString *const kOGGameSceneTimerCircleTextureName = @"TimerCircle";
 {
     SKSpriteNode *dimPanel = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:self.frame.size];
     
-    dimPanel.alpha = 0.0;
+    dimPanel.alpha = kOGGameSceneDimPanelAlpha;
     
     CGPoint position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     dimPanel.position = position;
