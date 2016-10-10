@@ -9,8 +9,6 @@
 #import "OGBasicGameNode.h"
 
 extern CGFloat const kOGPlayerNodeBorderLineWidth;
-extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
-extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
 @interface OGPlayerNode : OGBasicGameNode
 

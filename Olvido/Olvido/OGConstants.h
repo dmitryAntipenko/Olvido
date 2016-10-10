@@ -18,4 +18,7 @@ extern NSString *const kOGEnemyNodeTextureName;
 
 extern NSUInteger const kOGLevelsCount;
 
+extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
+extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
+
 #endif /* OGConstants_h */

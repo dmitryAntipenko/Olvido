@@ -13,8 +13,6 @@
 
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
 
-CGFloat const kOGEnemyNodeInvulnerabilityRepeatCount = 4;
-CGFloat const kOGEnemyNodeInvulnerabilityBlinkingTimeDuration = 0.5;
 CGFloat const kOGEnemyNodeVelocity = 10;
 
 @implementation OGEnemyNode
@@ -51,13 +49,13 @@ CGFloat const kOGEnemyNodeVelocity = 10;
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
                                                                               colorBlendFactor:1.0
-                                                                                      duration:kOGEnemyNodeInvulnerabilityBlinkingTimeDuration / 2.0],
+                                                                                      duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration],
                                                                    [SKAction colorizeWithColor:[SKColor gameBlack]
                                                                         colorBlendFactor:1.0
-                                                                                duration:kOGEnemyNodeInvulnerabilityBlinkingTimeDuration / 2.0]
+                                                                                duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
                                                              ]];
             
-            SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGEnemyNodeInvulnerabilityRepeatCount];
+            SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGPlayerNodeInvulnerabilityRepeatCount];
             
             [enemyNode.appearance runAction:repeatAction];
         }
