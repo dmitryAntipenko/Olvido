@@ -12,6 +12,7 @@
 #import "OGConstants.h"
 
 NSString *const kOGBonusNodeTextureName = @"EnemyBall";
+CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
 
 @implementation OGBonusNode
 
@@ -25,22 +26,22 @@ NSString *const kOGBonusNodeTextureName = @"EnemyBall";
         
         SKTexture *bonusTexture = [SKTexture textureWithImageNamed:kOGBonusNodeTextureName];
         
-        CGSize size = CGSizeMake(bonus.radius * 2.0,
-                                 bonus.radius * 2.0);
+        CGSize size = CGSizeMake(bonus.diameter,
+                                 bonus.diameter);
         
         bonus.appearance = [SKSpriteNode spriteNodeWithTexture:bonusTexture size:size];
         
         if (bonus.appearance)
         {
             bonus.appearance.color = color;
-            bonus.appearance.colorBlendFactor = 1.0;
+            bonus.appearance.colorBlendFactor = kOGBonusNodeAppearanceColorBlendFactor;
             
             [bonus addChild:bonus.appearance];
             
             CGRect physicsBodyPathRect = CGRectMake(-bonus.radius,
                                                     -bonus.radius,
-                                                    bonus.radius * 2.0,
-                                                    bonus.radius * 2.0);
+                                                    bonus.diameter,
+                                                    bonus.diameter);
             
             CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
             
