@@ -233,7 +233,10 @@ NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
     {
         return kOGContactTypePlayerDidGetBonus;
     }
-    else return kOGContactTypePlayerDidTouchObstacle;
+    else if ([nodeA.name isEqualToString:kOGObstacleNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
+    {
+        return kOGContactTypePlayerDidTouchObstacle;
+    }
     
     return kOGContactTypeNone;
 }
