@@ -31,6 +31,7 @@ NSUInteger const kOGGameSceneNodesPositionOffset = 50;
 NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
 NSUInteger const kOGGameSceneBonusTypesCount = 4;
 NSUInteger const kOGGameSceneBonusDuration = 5;
+CGFloat const kOGGameSceneBlurDuration = 1.0;
 
 CGFloat const kOGGameScenePhysicsWorldGameOverSpeed = 0.0;
 
@@ -79,8 +80,15 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
     if (!self.isSceneCreated)
     {
         self.backgroundColor = [SKColor backgroundLightGrayColor];
-        self.enemyNodes = [[NSMutableArray alloc] init];
-        self.bonusNodes = [[NSMutableArray alloc] init];
+        
+        NSMutableArray *enemyNodes = [[NSMutableArray alloc] init];
+        self.enemyNodes = enemyNodes;
+        
+        NSMutableArray *bonusNodes = [[NSMutableArray alloc] init];
+        self.bonusNodes = bonusNodes;
+        
+        [enemyNodes release];
+        [bonusNodes release];
         
         [self createDefaultValues];
         [self createSceneContents];
@@ -95,12 +103,15 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     
-    self.defaultEnemyPositions = [[NSArray alloc] initWithObjects:
-                                  [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
-                                  [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
-                                  [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
-                                  [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
-                                  nil];
+    NSArray *defaultEnemyPositions = [[NSArray alloc] initWithObjects:
+                                      [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
+                                      [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
+                                      [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
+                                      [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
+                                      nil];
+    
+    self.defaultEnemyPositions = defaultEnemyPositions;
+    [defaultEnemyPositions release];
 }
 
 - (void)createSceneContents
@@ -267,12 +278,11 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 {
     self.physicsWorld.speed = kOGGameScenePhysicsWorldGameOverSpeed;
     [self.timer invalidate];
-    
     [self.playerNode removeFromParent];
-    
+
     SKNode *dimPanel = [self createDimPanel];
     [self addChild:dimPanel];
-    
+
     SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.scoreController.score];
     [self addChild:gameOverScreen];
     
@@ -384,6 +394,7 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
     [_playerNode release];
     [_enemyNodes release];
     [_bonusNodes release];
+    [_defaultEnemyPositions release];
     
     [super dealloc];
 }
