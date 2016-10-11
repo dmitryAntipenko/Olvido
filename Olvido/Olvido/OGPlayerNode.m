@@ -22,7 +22,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
 @property (nonatomic, assign, readonly) CGVector movementVector;
 @property (nonatomic, assign, readonly) CGFloat movementVectorModule;
-@property (nonatomic, assign) CGFloat speedWithCoefficient;
+@property (nonatomic, assign) CGFloat speedForPathFollowing;
 @property (nonatomic, assign) CGPoint targetPoint;
 
 @end
@@ -150,7 +150,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         
         CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
         
-        SKAction *moveToPoint = [SKAction followPath:path speed:self.speedWithCoefficient];
+        SKAction *moveToPoint = [SKAction followPath:path speed:self.speedForPathFollowing];
         
         [self runAction:[SKAction sequence:@[
                                              moveToPoint,
@@ -199,7 +199,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 
 - (void)changeSpeedCoefficient:(CGFloat)speedCoefficient
 {
-    self.speedWithCoefficient = kOGPlayerNodeSpeed * speedCoefficient;
+    self.speedForPathFollowing = kOGPlayerNodeSpeed * speedCoefficient;
     
     if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
     {
