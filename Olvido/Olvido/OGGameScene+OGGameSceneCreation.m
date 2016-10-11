@@ -98,6 +98,8 @@ CGFloat const kOGGameSceneDimPanelAlpha = 0.0;
     SKTexture *gameOverBackground = [SKTexture textureWithImageNamed:kOGGameSceneGameOverBackgroundSpriteName];
     SKSpriteNode *gameOverScreen = [SKSpriteNode spriteNodeWithTexture:gameOverBackground];
     
+    gameOverScreen.alpha = 0.0;
+    
     gameOverScreen.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     gameOverScreen.size = CGSizeMake(self.frame.size.width,
                                      self.frame.size.height / kOGGameSceneGameOverScreenHeightFactor);
