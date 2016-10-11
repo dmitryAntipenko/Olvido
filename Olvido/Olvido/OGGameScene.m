@@ -219,7 +219,7 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-        [self showGameOverScreen];
+//        [self showGameOverScreen];
     }
     else if (contactType == kOGContactTypePlayerDidGetBonus)
     {
@@ -345,24 +345,39 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
 {
     if (type == kOGBonusTypeSlowMo)
     {
-        self.physicsWorld.speed = 0.3;
-        [self.playerNode changeSpeedCoefficient:0.3];
+        [self.playerNode changeSpeedWithCoefficient:0.3];
+        
+        for (OGEnemyNode *enemyNode in self.enemyNodes)
+        {
+            [enemyNode changeSpeedWithCoefficient:0.3];
+        }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
         {
-            self.physicsWorld.speed = 1.0;
-            [self.playerNode changeSpeedCoefficient:1.0];
+            for (OGEnemyNode *enemyNode in self.enemyNodes)
+            {
+                [enemyNode changeSpeedWithCoefficient:1.0];
+            }
+            [self.playerNode changeSpeedWithCoefficient:1.0];
         }];
     }
     else if (type == kOGBonusTypeSpeedUp)
     {
-        self.physicsWorld.speed = 1.8;
-        [self.playerNode changeSpeedCoefficient:1.8];
+        [self.playerNode changeSpeedWithCoefficient:3.0];
+        
+        for (OGEnemyNode *enemyNode in self.enemyNodes)
+        {
+            [enemyNode changeSpeedWithCoefficient:3.0];
+        }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
          {
-             self.physicsWorld.speed = 1.0;
-             [self.playerNode changeSpeedCoefficient:1.0];
+             for (OGEnemyNode *enemyNode in self.enemyNodes)
+             {
+                 [enemyNode changeSpeedWithCoefficient:1.0];
+             }
+             
+             [self.playerNode changeSpeedWithCoefficient:1.0];
          }];
     }
 }

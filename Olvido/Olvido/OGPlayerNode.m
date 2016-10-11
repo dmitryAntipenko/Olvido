@@ -22,8 +22,10 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
 @property (nonatomic, assign, readonly) CGVector movementVector;
 @property (nonatomic, assign, readonly) CGFloat movementVectorModule;
-@property (nonatomic, assign) CGFloat speedForPathFollowing;
+//@property (nonatomic, assign) CGFloat speedForPathFollowing;
 @property (nonatomic, assign) CGPoint targetPoint;
+@property (nonatomic, assign) CGFloat currentSpeed;
+@property (nonatomic, assign) BOOL currentSpeedDidChanged;
 
 @end
 
@@ -60,7 +62,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
             
-            [playerNode changeSpeedCoefficient:1.0];
+            [playerNode changeSpeedWithCoefficient:1.0];
             
             SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
             
@@ -133,8 +135,8 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     
     if (movementVector.dx == 0.0 && movementVector.dy == 0.0)
     {
-        CGFloat x = displacementVector.dx * kOGPlayerNodeSpeed / displacementVectorModule * self.physicsBody.mass;
-        CGFloat y = displacementVector.dy * kOGPlayerNodeSpeed / displacementVectorModule * self.physicsBody.mass;
+        CGFloat x = displacementVector.dx * self.currentSpeed / displacementVectorModule * self.physicsBody.mass;
+        CGFloat y = displacementVector.dy * self.currentSpeed / displacementVectorModule * self.physicsBody.mass;
         
         [self.physicsBody applyImpulse:CGVectorMake(x, y)];
     }
@@ -150,7 +152,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         
         CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
         
-        SKAction *moveToPoint = [SKAction followPath:path speed:self.speedForPathFollowing];
+        SKAction *moveToPoint = [SKAction followPath:path speed:self.currentSpeed];
         
         [self runAction:[SKAction sequence:@[
                                              moveToPoint,
@@ -168,14 +170,21 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     
     CGFloat movementVectorModule = self.movementVectorModule;
     
-    CGVector impulse = CGVectorMake(movementVector.dx * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule,
-                                    movementVector.dy * kOGPlayerNodeSpeed * self.physicsBody.mass / movementVectorModule);
+    CGVector impulse = CGVectorMake(movementVector.dx * self.currentSpeed * self.physicsBody.mass / movementVectorModule,
+                                    movementVector.dy * self.currentSpeed * self.physicsBody.mass / movementVectorModule);
     
     if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
     {
         [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
         [self.physicsBody applyImpulse:impulse];
     }
+    else if (self.currentSpeedDidChanged)
+    {
+        self.physicsBody.velocity = CGVectorMake(0.0, 0.0);
+        [self.physicsBody applyImpulse:impulse];
+    }
+    
+    self.currentSpeedDidChanged = NO;
 }
 
 - (void)positionDidUpdate
@@ -194,16 +203,21 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 - (CGFloat)movementVectorModule
 {
     CGVector movementVector = self.movementVector;
-    return pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);;
+    return pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
 }
 
-- (void)changeSpeedCoefficient:(CGFloat)speedCoefficient
+- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
 {
-    self.speedForPathFollowing = kOGPlayerNodeSpeed * speedCoefficient;
+    self.currentSpeed = kOGPlayerNodeSpeed * speedCoefficient;
+    self.currentSpeedDidChanged = YES;
     
     if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
     {
         [self moveToPoint:self.targetPoint];
+    }
+    else
+    {
+        [self moveByInertia];
     }
 }
 

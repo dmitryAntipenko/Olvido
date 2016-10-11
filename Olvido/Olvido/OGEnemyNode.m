@@ -12,8 +12,13 @@
 #import "SKColor+OGConstantColors.h"
 
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
+CGFloat const kOGEnemyNodeSpeed = 300;
 
-CGFloat const kOGEnemyNodeVelocity = 10;
+@interface OGEnemyNode ()
+
+@property (nonatomic, assign) CGFloat currentSpeed;
+
+@end
 
 @implementation OGEnemyNode
 
@@ -69,9 +74,24 @@ CGFloat const kOGEnemyNodeVelocity = 10;
     if (self.parent)
     {
         self.position = point;
-        CGVector vector = ogRanomVector(kOGEnemyNodeVelocity);
+        CGVector vector = ogRanomVector(kOGEnemyNodeSpeed * self.physicsBody.mass);
+        
         [self.physicsBody applyImpulse:vector];
     }
+}
+
+- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
+{
+    self.currentSpeed = kOGEnemyNodeSpeed * speedCoefficient;
+    
+    CGVector movementVector = self.physicsBody.velocity;
+    CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
+    
+    CGVector impulse = CGVectorMake(movementVector.dx / movementVectorModule * self.currentSpeed * self.physicsBody.mass,
+                                    movementVector.dy / movementVectorModule * self.currentSpeed * self.physicsBody.mass);
+    
+    self.physicsBody.velocity = CGVectorMake(0.0, 0.0);
+    [self.physicsBody applyImpulse:impulse];
 }
 
 @end
