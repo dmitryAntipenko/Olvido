@@ -58,7 +58,7 @@ CGFloat const kOGPlayerNodeColorBlendFactor = 1.0;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
             enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
             
-            [enemyNode changeSpeedWithFactor:1.0];
+            [enemyNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
             
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]

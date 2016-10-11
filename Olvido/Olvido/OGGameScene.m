@@ -52,6 +52,9 @@ CGFloat const kOGGameSceneBonusSlowMoPhysicsWorldSpeed = 0.6;
 CGFloat const kOGGameSceneBonusSpeedUpPhysicsWorldSpeed = 1.4;
 CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 
+CGFloat const kOGGameSceneSpeedUpFactor = 3.0;
+CGFloat const kOGGameSceneSlowDownFactor = 0.3;
+
 @interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
 
 @property (nonatomic, retain) SKNode *background;
@@ -364,40 +367,40 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 {
     if (type == kOGBonusTypeSlowMo)
     {
-        [self.playerNode changeSpeedWithFactor:0.3];
+        [self.playerNode changeSpeedWithFactor:kOGGameSceneSlowDownFactor];
         
         for (OGEnemyNode *enemyNode in self.enemyNodes)
         {
-            [enemyNode changeSpeedWithFactor:0.3];
+            [enemyNode changeSpeedWithFactor:kOGGameSceneSlowDownFactor];
         }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
          {
              for (OGEnemyNode *enemyNode in self.enemyNodes)
              {
-                 [enemyNode changeSpeedWithFactor:1.0];
+                 [enemyNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
              }
              
-             [self.playerNode changeSpeedWithFactor:1.0];
+             [self.playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
          }];
     }
     else if (type == kOGBonusTypeSpeedUp)
     {
-        [self.playerNode changeSpeedWithFactor:3.0];
+        [self.playerNode changeSpeedWithFactor:kOGGameSceneSpeedUpFactor];
         
         for (OGEnemyNode *enemyNode in self.enemyNodes)
         {
-            [enemyNode changeSpeedWithFactor:3.0];
+            [enemyNode changeSpeedWithFactor:kOGGameSceneSpeedUpFactor];
         }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
          {
              for (OGEnemyNode *enemyNode in self.enemyNodes)
              {
-                 [enemyNode changeSpeedWithFactor:1.0];
+                 [enemyNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
              }
              
-             [self.playerNode changeSpeedWithFactor:1.0];
+             [self.playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
          }];
     }
 }

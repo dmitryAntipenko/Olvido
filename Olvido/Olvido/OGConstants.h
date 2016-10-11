@@ -21,4 +21,6 @@ extern NSUInteger const kOGLevelsCount;
 extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
 extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
+extern CGFloat const kOGGameNodeDefaultSpeed;
+
 #endif /* OGConstants_h */

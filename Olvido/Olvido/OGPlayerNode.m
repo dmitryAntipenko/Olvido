@@ -29,7 +29,6 @@ CGFloat const kOGPlayerNodeAppearanceColorBlendFactor = 1.0;
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
 @property (nonatomic, assign, readonly) CGVector movementVector;
 @property (nonatomic, assign, readonly) CGFloat movementVectorModule;
-//@property (nonatomic, assign) CGFloat speedForPathFollowing;
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) CGFloat currentSpeed;
 @property (nonatomic, assign) BOOL currentSpeedDidChanged;
@@ -69,7 +68,7 @@ CGFloat const kOGPlayerNodeAppearanceColorBlendFactor = 1.0;
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
             
-            [playerNode changeSpeedWithFactor:1.0];
+            [playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
             
             SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
             

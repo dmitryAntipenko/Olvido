@@ -18,5 +18,7 @@ NSUInteger const kOGLevelsCount = 3;
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 3.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.5;
 
+CGFloat const kOGGameNodeDefaultSpeed = 1.0;
+
 /* Player */
 
