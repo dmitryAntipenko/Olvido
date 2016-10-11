@@ -19,7 +19,7 @@ CGFloat const kOGEnemyNodeAngularDamping = 0.0;
 CGFloat const kOGEnemyNodeFriction = 0.0;
 CGFloat const kOGEnemyNodeRestitution = 1.0;
 
-CGFloat const kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor = 1.0;
+CGFloat const kOGPlayerNodeColorBlendFactor = 1.0;
 
 @implementation OGEnemyNode
 
@@ -54,11 +54,11 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor = 1.0;
             
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
-                                                                              colorBlendFactor:kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor
+                                                                              colorBlendFactor:kOGPlayerNodeColorBlendFactor
                                                                                       duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration],
                                                                    [SKAction colorizeWithColor:[SKColor gameBlack]
-                                                                        colorBlendFactor:kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor
-                                                                                duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
+                                                                              colorBlendFactor:kOGPlayerNodeColorBlendFactor
+                                                                                      duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
                                                              ]];
             
             SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGPlayerNodeInvulnerabilityRepeatCount];
@@ -75,7 +75,7 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingColorBlendFactor = 1.0;
     if (self.parent)
     {
         self.position = point;
-        CGVector vector = ogRanomVector(kOGEnemyNodeVelocity);
+        CGVector vector = ogRandomVector(kOGEnemyNodeVelocity);
         [self.physicsBody applyImpulse:vector];
     }
 }

@@ -27,7 +27,7 @@ NSInteger const kOGTimerTicksIncrement = 1;
     
     if (self)
     {
-        _ticks = [[NSNumber alloc] initWithInt:0];
+        _ticks = kOGTimerTicksStartValue;
     }
     else
     {

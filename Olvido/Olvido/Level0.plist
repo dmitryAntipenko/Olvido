@@ -44,13 +44,13 @@
 	<key>Colors</key>
 	<dict>
 		<key>Enemy Color</key>
-		<string>0xe74c3c</string>
-		<key>Player Color</key>
-		<string>0xe74c3c</string>
-		<key>Accent Color</key>
-		<string>0x3498db</string>
-		<key>Background Color</key>
 		<string>0xf2f2f2</string>
+		<key>Player Color</key>
+		<string>0xf2f2f2</string>
+		<key>Accent Color</key>
+		<string>0xe74c3c</string>
+		<key>Background Color</key>
+		<string>0x11181f</string>
 	</dict>
 </dict>
 </plist>

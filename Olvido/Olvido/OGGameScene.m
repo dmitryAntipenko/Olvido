@@ -333,7 +333,7 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
     {
         OGBonusNode *bonus = [OGBonusNode bonusNodeWithColor:[SKColor yellowColor] type:rand() % kOGGameSceneBonusTypesCount];
         
-        bonus.position = ogRanomPoint(kOGGameSceneNodesPositionOffset,
+        bonus.position = ogRandomPoint(kOGGameSceneNodesPositionOffset,
                                       self.frame.size.width - kOGGameSceneNodesPositionOffset,
                                       kOGGameSceneNodesPositionOffset,
                                       self.frame.size.height - kOGGameSceneNodesPositionOffset);
