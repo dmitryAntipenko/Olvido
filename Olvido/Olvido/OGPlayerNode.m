@@ -17,6 +17,13 @@ CGFloat const kOGPlayerNodeSpeed = 300.0;
 NSUInteger const kOGPlayerNodeDefaultPreviousPositionsBufferSize = 5;
 NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey";
 
+CGFloat const kOGPlayerNodeLinearDamping = 0.0;
+CGFloat const kOGPlayerNodeAngularDamping = 0.0;
+CGFloat const kOGPlayerNodeFriction = 0.0;
+CGFloat const kOGPlayerNodeRestitution = 1.0;
+
+CGFloat const kOGPlayerNodeAppearanceColorBlendFactor = 1.0;
+
 @interface OGPlayerNode ()
 
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
@@ -42,19 +49,19 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         if (playerNode.appearance)
         {
             playerNode.name = kOGPlayerNodeName;
-            playerNode.appearance.size = CGSizeMake(playerNode.radius * 2.0,
-                                                    playerNode.radius * 2.0);
+            playerNode.appearance.size = CGSizeMake(playerNode.diameter,
+                                                    playerNode.diameter);
             playerNode.appearance.color = [SKColor blackColor];
-            playerNode.appearance.colorBlendFactor = 1.0;
+            playerNode.appearance.colorBlendFactor = kOGPlayerNodeAppearanceColorBlendFactor;
             [playerNode addChild:playerNode.appearance];
             
             playerNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:kOGBasicGameNodeRadius];
             playerNode.physicsBody.dynamic = YES;
-            playerNode.physicsBody.linearDamping = 0.0;
-            playerNode.physicsBody.angularDamping = 0.0;
+            playerNode.physicsBody.linearDamping = kOGPlayerNodeLinearDamping;
+            playerNode.physicsBody.angularDamping = kOGPlayerNodeAngularDamping;
             
-            playerNode.physicsBody.friction = 0.0;
-            playerNode.physicsBody.restitution = 1.0;
+            playerNode.physicsBody.friction = kOGPlayerNodeFriction;
+            playerNode.physicsBody.restitution = kOGPlayerNodeRestitution;
             
             playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
             playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;

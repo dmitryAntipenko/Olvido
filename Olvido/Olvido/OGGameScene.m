@@ -25,13 +25,32 @@
 #import "OGConstants.h"
 #import "OGContactType.h"
 
-NSUInteger const kOGGameSceneTimerInterval = 1.0;
+NSUInteger const kOGGameSceneTimerInterval = 1;
 NSUInteger const kOGGameSceneDefaultEnemyCount = 4;
 NSUInteger const kOGGameSceneNodesPositionOffset = 50;
 NSUInteger const kOGGameSceneBonusNodesMaximumCount = 10;
 NSUInteger const kOGGameSceneBonusTypesCount = 4;
 NSUInteger const kOGGameSceneBonusDuration = 5;
 CGFloat const kOGGameSceneBlurDuration = 1.0;
+
+CGFloat const kOGGameScenePhysicsWorldGameOverSpeed = 0.0;
+
+CGFloat const kOGGameSceneDimPanelFadeAlphaTo = 0.3;
+CGFloat const kOGGameSceneDimPanelDuration = 1.0;
+
+CGFloat const kOGGameSceneGameOverScreenFadeInDuration = 1.0;
+
+CGFloat const kOGGameSceneColorizeActionColorBlendFactor = 1.0;
+CGFloat const kOGGameSceneColorizeActionDuration = 0.5;
+
+CGFloat const kOGGameSceneBonusBlinkActionBeforeScaleTo = 1.2;
+CGFloat const kOGGameSceneBonusBlinkActionBeforeDuration  = 2.0;
+CGFloat const kOGGameSceneBonusBlinkActionAfterScaleTo = 1.0;
+CGFloat const kOGGameSceneBonusBlinkActionAfterDuration  = 2.0;
+
+CGFloat const kOGGameSceneBonusSlowMoPhysicsWorldSpeed = 0.6;
+CGFloat const kOGGameSceneBonusSpeedUpPhysicsWorldSpeed = 1.4;
+CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 
 @interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
 
@@ -219,7 +238,7 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-//        [self showGameOverScreen];
+        //        [self showGameOverScreen];
     }
     else if (contactType == kOGContactTypePlayerDidGetBonus)
     {
@@ -257,18 +276,18 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
 
 - (void)showGameOverScreen
 {
-    self.physicsWorld.speed = 0.0;
+    self.physicsWorld.speed = kOGGameScenePhysicsWorldGameOverSpeed;
     [self.timer invalidate];
     [self.playerNode removeFromParent];
-
+    
     SKNode *dimPanel = [self createDimPanel];
     [self addChild:dimPanel];
-
+    
     SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.scoreController.score];
     [self addChild:gameOverScreen];
-
-    [dimPanel runAction:[SKAction fadeAlphaTo:0.3 duration:0.5]];
-    [gameOverScreen runAction:[SKAction fadeInWithDuration:0.5]];
+    
+    [dimPanel runAction:[SKAction fadeAlphaTo:kOGGameSceneDimPanelFadeAlphaTo duration:kOGGameSceneDimPanelDuration]];
+    [gameOverScreen runAction:[SKAction fadeInWithDuration:kOGGameSceneGameOverScreenFadeInDuration]];
 }
 
 - (void)update:(CFTimeInterval)currentTime
@@ -315,7 +334,7 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
 
 - (void)runActionWithColor:(SKColor *)color target:(SKNode *)target
 {
-    [target runAction:[SKAction colorizeWithColor:color colorBlendFactor:1.0 duration:0.5]];
+    [target runAction:[SKAction colorizeWithColor:color colorBlendFactor:kOGGameSceneColorizeActionColorBlendFactor duration:kOGGameSceneColorizeActionDuration]];
 }
 
 - (void)addRandomBonus
@@ -324,18 +343,18 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
     {
         OGBonusNode *bonus = [OGBonusNode bonusNodeWithColor:[SKColor yellowColor] type:rand() % kOGGameSceneBonusTypesCount];
         
-        bonus.position = ogRanomPoint(kOGGameSceneNodesPositionOffset,
-                                      self.frame.size.width - kOGGameSceneNodesPositionOffset,
-                                      kOGGameSceneNodesPositionOffset,
-                                      self.frame.size.height - kOGGameSceneNodesPositionOffset);
+        bonus.position = ogRandomPoint(kOGGameSceneNodesPositionOffset,
+                                       self.frame.size.width - kOGGameSceneNodesPositionOffset,
+                                       kOGGameSceneNodesPositionOffset,
+                                       self.frame.size.height - kOGGameSceneNodesPositionOffset);
         
         [self.bonusNodes addObject:bonus];
         [self.foreground addChild:bonus];
         
         SKAction *blinkAction = [SKAction sequence:@[
-                                                    [SKAction scaleTo:1.2 duration:2.0],
-                                                    [SKAction scaleTo:1.0 duration:2.0]
-                                                    ]];
+                                                     [SKAction scaleTo:kOGGameSceneBonusBlinkActionBeforeScaleTo duration:kOGGameSceneBonusBlinkActionBeforeDuration],
+                                                     [SKAction scaleTo:kOGGameSceneBonusBlinkActionAfterScaleTo duration:kOGGameSceneBonusBlinkActionAfterDuration]
+                                                     ]];
         
         [bonus runAction:[SKAction repeatActionForever:blinkAction]];
     }
@@ -353,13 +372,14 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
         }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
-        {
-            for (OGEnemyNode *enemyNode in self.enemyNodes)
-            {
-                [enemyNode changeSpeedWithFactor:1.0];
-            }
-            [self.playerNode changeSpeedWithFactor:1.0];
-        }];
+         {
+             for (OGEnemyNode *enemyNode in self.enemyNodes)
+             {
+                 [enemyNode changeSpeedWithFactor:1.0];
+             }
+             
+             [self.playerNode changeSpeedWithFactor:1.0];
+         }];
     }
     else if (type == kOGBonusTypeSpeedUp)
     {

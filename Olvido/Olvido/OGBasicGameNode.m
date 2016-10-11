@@ -10,6 +10,9 @@
 
 CGFloat const kOGBasicGameNodeRadius = 16.0;
 
+CGFloat const kOGBasicGameNodeDefaultVelocityX = 0.0;
+CGFloat const kOGBasicGameNodeDefaultVelocityY = 0.0;
+
 @interface OGBasicGameNode()
 
 @property (nonatomic, retain) SKSpriteNode *skin;
@@ -47,7 +50,7 @@ CGFloat const kOGBasicGameNodeRadius = 16.0;
 {
     return [self initWithColor:color
                         radius:kOGBasicGameNodeRadius
-                      velocity:CGVectorMake(0.0, 0.0)
+                      velocity:CGVectorMake(kOGBasicGameNodeDefaultVelocityX, kOGBasicGameNodeDefaultVelocityY)
                     appearance:nil
                           skin:nil];
 }
@@ -59,6 +62,11 @@ CGFloat const kOGBasicGameNodeRadius = 16.0;
     [_skin release];
     
     [super dealloc];
+}
+
+- (CGFloat)diameter
+{
+    return self.radius * 2.0;
 }
 
 - (void)moveToPoint:(CGPoint)point

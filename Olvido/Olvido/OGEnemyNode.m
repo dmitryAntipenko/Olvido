@@ -13,6 +13,13 @@
 
 NSString *const kOGEnemyNodeTextureName = @"EnemyBall";
 CGFloat const kOGEnemyNodeSpeed = 300;
+CGFloat const kOGEnemyNodeVelocity = 10;
+CGFloat const kOGEnemyNodeLinearDamping = 0.0;
+CGFloat const kOGEnemyNodeAngularDamping = 0.0;
+CGFloat const kOGEnemyNodeFriction = 0.0;
+CGFloat const kOGEnemyNodeRestitution = 1.0;
+
+CGFloat const kOGPlayerNodeColorBlendFactor = 1.0;
 
 @interface OGEnemyNode ()
 
@@ -30,8 +37,8 @@ CGFloat const kOGEnemyNodeSpeed = 300;
     
     if (enemyNodeTexture)
     {
-        CGSize size = CGSizeMake(enemyNode.radius * 2.0,
-                                 enemyNode.radius * 2.0);
+        CGSize size = CGSizeMake(enemyNode.diameter,
+                                 enemyNode.diameter);
         
         enemyNode.appearance = [SKSpriteNode spriteNodeWithTexture:enemyNodeTexture size:size];
         
@@ -42,10 +49,10 @@ CGFloat const kOGEnemyNodeSpeed = 300;
             [enemyNode addChild:enemyNode.appearance];
             
             enemyNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyNode.radius];
-            enemyNode.physicsBody.linearDamping = 0.0;
-            enemyNode.physicsBody.angularDamping = 0.0;
-            enemyNode.physicsBody.friction = 0.0;
-            enemyNode.physicsBody.restitution = 1.0;
+            enemyNode.physicsBody.linearDamping = kOGEnemyNodeLinearDamping;
+            enemyNode.physicsBody.angularDamping = kOGEnemyNodeAngularDamping;
+            enemyNode.physicsBody.friction = kOGEnemyNodeFriction;
+            enemyNode.physicsBody.restitution = kOGEnemyNodeRestitution;
             
             enemyNode.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
@@ -55,11 +62,11 @@ CGFloat const kOGEnemyNodeSpeed = 300;
             
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
-                                                                              colorBlendFactor:1.0
+                                                                              colorBlendFactor:kOGPlayerNodeColorBlendFactor
                                                                                       duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration],
                                                                    [SKAction colorizeWithColor:[SKColor gameBlack]
-                                                                        colorBlendFactor:1.0
-                                                                                duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
+                                                                              colorBlendFactor:kOGPlayerNodeColorBlendFactor
+                                                                                      duration:kOGPlayerNodeInvulnerabilityBlinkingTimeDuration]
                                                              ]];
             
             SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGPlayerNodeInvulnerabilityRepeatCount];
@@ -76,8 +83,7 @@ CGFloat const kOGEnemyNodeSpeed = 300;
     if (self.parent)
     {
         self.position = point;
-        CGVector vector = ogRanomVector(kOGEnemyNodeSpeed * self.physicsBody.mass);
-        
+        CGVector vector = ogRandomVector(kOGEnemyNodeSpeed * self.physicsBody.mass);
         [self.physicsBody applyImpulse:vector];
     }
 }

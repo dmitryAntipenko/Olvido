@@ -13,6 +13,7 @@ extern CGFloat const kOGBasicGameNodeRadius;
 @interface OGBasicGameNode : SKNode
 
 @property (nonatomic, assign) CGFloat radius;
+@property (nonatomic, assign, readonly) CGFloat diameter;
 @property (nonatomic, assign) CGVector velocity;
 @property (nonatomic, retain) SKColor *color;
 @property (nonatomic, retain) SKSpriteNode *appearance;

@@ -8,7 +8,7 @@
 
 #import "OGBasicGameNode.h"
 
-static inline CGPoint ogRanomPoint(CGFloat minX, CGFloat maxX, CGFloat minY, CGFloat maxY)
+static inline CGPoint ogRandomPoint(CGFloat minX, CGFloat maxX, CGFloat minY, CGFloat maxY)
 {
     CGFloat x = rand() / (CGFloat) RAND_MAX * (maxX - minX) + minX;
     CGFloat y = rand() / (CGFloat) RAND_MAX * (maxY - minY) + minY;
@@ -21,7 +21,7 @@ static inline CGFloat ogRand()
     return arc4random() / (CGFloat) RAND_MAX;
 }
 
-static inline CGVector ogRanomVector(CGFloat length)
+static inline CGVector ogRandomVector(CGFloat length)
 {
     CGFloat angle = ogRand() * 2 * M_PI;
     
