@@ -51,6 +51,8 @@ CGFloat const kOGEnemyNodeSpeed = 300;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
             enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
             
+            [enemyNode changeSpeedWithFactor:1.0];
+            
             SKAction *invulnerabilityAction = [SKAction sequence:@[
                                                                    [SKAction colorizeWithColor:[SKColor backgroundLightGrayColor]
                                                                               colorBlendFactor:1.0
@@ -80,9 +82,9 @@ CGFloat const kOGEnemyNodeSpeed = 300;
     }
 }
 
-- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
+- (void)changeSpeedWithFactor:(CGFloat)speedFactor
 {
-    self.currentSpeed = kOGEnemyNodeSpeed * speedCoefficient;
+    self.currentSpeed = kOGEnemyNodeSpeed * speedFactor;
     
     CGVector movementVector = self.physicsBody.velocity;
     CGFloat movementVectorModule = pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);

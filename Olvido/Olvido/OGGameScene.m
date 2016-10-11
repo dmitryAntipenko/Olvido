@@ -345,39 +345,39 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
 {
     if (type == kOGBonusTypeSlowMo)
     {
-        [self.playerNode changeSpeedWithCoefficient:0.3];
+        [self.playerNode changeSpeedWithFactor:0.3];
         
         for (OGEnemyNode *enemyNode in self.enemyNodes)
         {
-            [enemyNode changeSpeedWithCoefficient:0.3];
+            [enemyNode changeSpeedWithFactor:0.3];
         }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
         {
             for (OGEnemyNode *enemyNode in self.enemyNodes)
             {
-                [enemyNode changeSpeedWithCoefficient:1.0];
+                [enemyNode changeSpeedWithFactor:1.0];
             }
-            [self.playerNode changeSpeedWithCoefficient:1.0];
+            [self.playerNode changeSpeedWithFactor:1.0];
         }];
     }
     else if (type == kOGBonusTypeSpeedUp)
     {
-        [self.playerNode changeSpeedWithCoefficient:3.0];
+        [self.playerNode changeSpeedWithFactor:3.0];
         
         for (OGEnemyNode *enemyNode in self.enemyNodes)
         {
-            [enemyNode changeSpeedWithCoefficient:3.0];
+            [enemyNode changeSpeedWithFactor:3.0];
         }
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
          {
              for (OGEnemyNode *enemyNode in self.enemyNodes)
              {
-                 [enemyNode changeSpeedWithCoefficient:1.0];
+                 [enemyNode changeSpeedWithFactor:1.0];
              }
              
-             [self.playerNode changeSpeedWithCoefficient:1.0];
+             [self.playerNode changeSpeedWithFactor:1.0];
          }];
     }
 }

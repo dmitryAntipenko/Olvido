@@ -62,7 +62,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
             
-            [playerNode changeSpeedWithCoefficient:1.0];
+            [playerNode changeSpeedWithFactor:1.0];
             
             SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
             
@@ -206,9 +206,9 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
     return pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);
 }
 
-- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
+- (void)changeSpeedWithFactor:(CGFloat)speedFactor;
 {
-    self.currentSpeed = kOGPlayerNodeSpeed * speedCoefficient;
+    self.currentSpeed = kOGPlayerNodeSpeed * speedFactor;
     self.currentSpeedDidChanged = YES;
     
     if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])

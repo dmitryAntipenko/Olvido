@@ -20,6 +20,6 @@ extern CGFloat const kOGPlayerNodeBorderLineWidth;
 
 - (void)moveByInertia;
 
-- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
+- (void)changeSpeedWithFactor:(CGFloat)speedFactor;
 
 @end

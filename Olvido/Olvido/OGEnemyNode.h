@@ -34,6 +34,6 @@ static inline CGVector ogRanomVector(CGFloat length)
 
 - (void)startWithPoint:(CGPoint)point;
 
-- (void)changeSpeedWithCoefficient:(CGFloat)speedCoefficient;
+- (void)changeSpeedWithFactor:(CGFloat)speedFactor;
 
 @end
