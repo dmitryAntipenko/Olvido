@@ -18,6 +18,8 @@ extern CGFloat const kOGPlayerNodeBorderLineWidth;
 
 - (void)positionDidUpdate;
 
-- (void)moveByInertia;//when contact with obstacle;
+- (void)moveByInertia;
+
+- (void)changeSpeedCoefficient:(CGFloat)speedCoefficient;
 
 @end

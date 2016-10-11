@@ -345,20 +345,24 @@ CGFloat const kOGGameSceneBlurDuration = 1.0;
 {
     if (type == kOGBonusTypeSlowMo)
     {
-        self.physicsWorld.speed = 0.6;
+        self.physicsWorld.speed = 0.3;
+        [self.playerNode changeSpeedCoefficient:0.3];
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
         {
             self.physicsWorld.speed = 1.0;
+            [self.playerNode changeSpeedCoefficient:1.0];
         }];
     }
     else if (type == kOGBonusTypeSpeedUp)
     {
-        self.physicsWorld.speed = 1.4;
+        self.physicsWorld.speed = 1.8;
+        [self.playerNode changeSpeedCoefficient:1.8];
         
         [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
          {
              self.physicsWorld.speed = 1.0;
+             [self.playerNode changeSpeedCoefficient:1.0];
          }];
     }
 }

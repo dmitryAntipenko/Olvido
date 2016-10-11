@@ -22,6 +22,8 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 @property (nonatomic, retain) NSMutableArray<NSValue *> *previousPositionsBuffer;
 @property (nonatomic, assign, readonly) CGVector movementVector;
 @property (nonatomic, assign, readonly) CGFloat movementVectorModule;
+@property (nonatomic, assign) CGFloat speedWithCoefficient;
+@property (nonatomic, assign) CGPoint targetPoint;
 
 @end
 
@@ -57,6 +59,8 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
             playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
+            
+            [playerNode changeSpeedCoefficient:1.0];
             
             SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
             
@@ -115,6 +119,8 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 
 - (void)moveToPoint:(CGPoint)point
 {
+    self.targetPoint = point;
+    
     self.physicsBody.velocity = CGVectorMake(0, 0);
     [self removeActionForKey:kOGPlayerNodeMoveToPointActionKey];
     
@@ -144,7 +150,7 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
         
         CGPathAddQuadCurveToPoint(path, NULL, bX, bY, displacementVector.dx, displacementVector.dy);
         
-        SKAction *moveToPoint = [SKAction followPath:path speed:kOGPlayerNodeSpeed];
+        SKAction *moveToPoint = [SKAction followPath:path speed:self.speedWithCoefficient];
         
         [self runAction:[SKAction sequence:@[
                                              moveToPoint,
@@ -189,6 +195,16 @@ NSString *const kOGPlayerNodeMoveToPointActionKey = @"movePlayerToPointActionKey
 {
     CGVector movementVector = self.movementVector;
     return pow(pow(movementVector.dx, 2) + pow(movementVector.dy, 2), 0.5);;
+}
+
+- (void)changeSpeedCoefficient:(CGFloat)speedCoefficient
+{
+    self.speedWithCoefficient = kOGPlayerNodeSpeed * speedCoefficient;
+    
+    if ([self actionForKey:kOGPlayerNodeMoveToPointActionKey])
+    {
+        [self moveToPoint:self.targetPoint];
+    }
 }
 
 - (void)dealloc
