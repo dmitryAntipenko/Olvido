@@ -16,9 +16,7 @@
     OGObstacleNode *obstacle = [[OGObstacleNode alloc] init];
     
     if (obstacle)
-    {
-        obstacle.name = kOGObstacleNodeName;
-        
+    {        
         obstacle.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:path];
         obstacle.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
         obstacle.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;

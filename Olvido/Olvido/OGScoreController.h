@@ -14,7 +14,6 @@
 
 @property (nonatomic, retain, readonly) NSNumber *score;
 
-- (instancetype)initWithLevelController:(OGLevelController *)levelController;
 - (void)incrementScore;
 
 @end

@@ -47,7 +47,6 @@ CGFloat const kOGPlayerNodeAppearanceColorBlendFactor = 1.0;
         
         if (playerNode.appearance)
         {
-            playerNode.name = kOGPlayerNodeName;
             playerNode.appearance.size = CGSizeMake(playerNode.diameter,
                                                     playerNode.diameter);
             playerNode.appearance.color = [SKColor blackColor];

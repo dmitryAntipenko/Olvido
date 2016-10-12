@@ -28,8 +28,6 @@ CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
     
     if (bonus)
     {
-        bonus.name = kOGBonusNodeName;
-        
         SKTexture *bonusTexture = [SKTexture textureWithImageNamed:kOGBonusNodeTextureName];
         
         CGSize size = CGSizeMake(bonus.diameter,

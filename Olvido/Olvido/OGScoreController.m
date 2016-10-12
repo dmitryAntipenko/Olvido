@@ -7,7 +7,6 @@
 //
 
 #import "OGScoreController.h"
-#import "OGLevelController.h"
 #import "OGConstants.h"
 
 NSNumber *const kOGScoreControllerDefaultScore = 0;
@@ -16,21 +15,19 @@ NSInteger const kOGScoreControllerScoreIncrement = 1;
 @interface OGScoreController ()
 
 @property (nonatomic, retain, readwrite) NSNumber *score;
-@property (nonatomic, retain) OGLevelController *levelController;
 @property (nonatomic, readonly) NSNumber *randomLevelNumber;
 
 @end
 
 @implementation OGScoreController
 
-- (instancetype)initWithLevelController:(OGLevelController *)levelController
+- (instancetype)init
 {
     self = [super init];
     
     if (self)
     {
         _score = kOGScoreControllerDefaultScore;
-        _levelController = [levelController retain];
     }
     else
     {
@@ -44,22 +41,16 @@ NSInteger const kOGScoreControllerScoreIncrement = 1;
 - (void)incrementScore
 {
     self.score = @(self.score.integerValue + kOGScoreControllerScoreIncrement);
-    
-    if (self.score.integerValue % kOGLevelControllerLevelChangeInterval == 0)
-    {
-        [self.levelController loadLevelWithNumber:self.randomLevelNumber];
-    }
 }
 
 - (NSNumber *)randomLevelNumber
 {
-    return @(rand() % kOGLevelsCount + 1);
+    return @(rand() % rand() + 1);
 }
 
 - (void)dealloc
 {
     [_score release];
-    [_levelController release];
     
     [super dealloc];
 }

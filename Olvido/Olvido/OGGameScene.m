@@ -7,7 +7,6 @@
 //
 
 #import "OGGameScene.h"
-#import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
 #import "OGTimerNode.h"
@@ -17,7 +16,6 @@
 #import "OGBonusNode.h"
 
 #import "OGScoreController.h"
-#import "OGLevelController.h"
 #import "OGTimer.h"
 
 #import "OGLevelChanging.h"
@@ -55,26 +53,11 @@ CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 CGFloat const kOGGameSceneSpeedUpFactor = 1.5;
 CGFloat const kOGGameSceneSlowDownFactor = 0.7;
 
-@interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
+@interface OGGameScene () <SKPhysicsContactDelegate>
 
-@property (nonatomic, retain) SKNode *background;
-@property (nonatomic, retain) SKNode *middleground;
-@property (nonatomic, retain) SKNode *foreground;
-@property (nonatomic, retain) OGTimerNode *timerNode;
-
-@property (nonatomic, retain) NSTimer *timer;
 @property (nonatomic, retain) OGScoreController *scoreController;
-@property (nonatomic, retain) OGLevelController *levelController;
 
 @property (nonatomic, getter=isSceneCreated) BOOL sceneCreated;
-
-@property (nonatomic, retain) OGPlayerNode *playerNode;
-@property (nonatomic, retain) NSMutableArray<OGEnemyNode *> *enemyNodes;
-@property (nonatomic, retain) NSMutableArray<OGBonusNode *> *bonusNodes;
-
-@property (nonatomic, retain) NSArray<NSValue *> *defaultEnemyPositions;
-
-@property (nonatomic, copy) SKColor *currentAccentColor;
 
 @end
 
@@ -86,15 +69,6 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.7;
     {
         self.backgroundColor = [SKColor backgroundLightGrayColor];
         
-        NSMutableArray *enemyNodes = [[NSMutableArray alloc] init];
-        self.enemyNodes = enemyNodes;
-        
-        NSMutableArray *bonusNodes = [[NSMutableArray alloc] init];
-        self.bonusNodes = bonusNodes;
-        
-        [enemyNodes release];
-        [bonusNodes release];
-        
         [self createDefaultValues];
         [self createSceneContents];
         self.sceneCreated = YES;
@@ -105,24 +79,11 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.7;
 
 - (void)createDefaultValues
 {
-    CGFloat width = self.frame.size.width;
-    CGFloat height = self.frame.size.height;
-    
-    NSArray *defaultEnemyPositions = [[NSArray alloc] initWithObjects:
-                                      [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
-                                      [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, kOGGameSceneNodesPositionOffset)],
-                                      [NSValue valueWithCGPoint:CGPointMake(width - kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
-                                      [NSValue valueWithCGPoint:CGPointMake(kOGGameSceneNodesPositionOffset, height - kOGGameSceneNodesPositionOffset)],
-                                      nil];
-    
-    self.defaultEnemyPositions = defaultEnemyPositions;
-    [defaultEnemyPositions release];
+
 }
 
 - (void)createSceneContents
 {
-    self.name = kOGObstacleNodeName;
-    
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     self.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
     self.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
@@ -132,70 +93,12 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.7;
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneTimerInterval
-                                                  target:self
-                                                selector:@selector(timerTick)
-                                                userInfo:nil
-                                                 repeats:YES];
-    
-    OGLevelController *levelController = [[OGLevelController alloc] init];
-    self.levelController = levelController;
-    self.levelController.gameScene = self;
-    
-    OGScoreController *scoreController = [[OGScoreController alloc] initWithLevelController:self.levelController];
-    self.scoreController = scoreController;
-    
-    [levelController release];
-    [scoreController release];
-    
     [self createLayers];
-    
-    self.playerNode = [OGPlayerNode playerNodeWithColor:[SKColor blackColor]];
-    
-    if (self.playerNode)
-    {
-        self.playerNode.position = CGPointMake(CGRectGetMidX(self.frame),
-                                               CGRectGetMidY(self.frame));
-        
-        [self.foreground addChild:self.playerNode];
-    }
-    
-    [self createEnemies];
-}
-
-- (void)createEnemies
-{
-    for (unsigned i = 0; i < kOGGameSceneDefaultEnemyCount; i++)
-    {
-        OGEnemyNode *enemyNode = [OGEnemyNode enemyNode];
-        
-        if (enemyNode)
-        {
-            [self.foreground addChild:enemyNode];
-            [self.enemyNodes addObject:enemyNode];
-            [enemyNode startWithPoint:self.defaultEnemyPositions[i].CGPointValue];
-        }
-    }
-}
-
-- (void)timerTick
-{
-    [self.scoreController incrementScore];
-    self.timerNode.text = self.scoreController.score.stringValue;
 }
 
 - (void)createLayers
 {
-    self.background = [self createBackground];
-    [self addChild:self.background];
-    
-    self.middleground = [self createMiddleGround];
-    [self addChild:self.middleground];
-    
-    self.foreground = [self createForeground];
-    [self addChild:self.foreground];
-    
-    self.timerNode = (OGTimerNode *) [self.middleground childNodeWithName:kOGTimerNodeName];
+
 }
 
 #pragma mark - Touches detection
@@ -205,24 +108,6 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.7;
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *touchedNode = [self nodeAtPoint:location];
-    
-    for (UITouch *touch in touches)
-    {
-        CGPoint location = [touch locationInNode:self];
-        [self.playerNode moveToPoint:location];
-    }
-    
-    [self handleGameOverEventsWithNode:touchedNode];
-}
-
-- (void)handleGameOverEventsWithNode:(SKNode *)touchedNode
-{
-    if ([touchedNode.name isEqualToString:kOGGameSceneRestartButtonSpriteName])
-    {
-        OGGameScene *gameScene = [[OGGameScene alloc] initWithSize:self.frame.size];
-        [self.view presentScene:gameScene];
-        [gameScene release];
-    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -239,217 +124,17 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.7;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    UIImpactFeedbackGenerator *generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
-    [generator impactOccurred];
-    
-    OGContactType contactType = [self contactType:contact];
-    
-    if (contactType == kOGContactTypeGameOver)
-    {
-        [self showGameOverScreen];
-    }
-    else if (contactType == kOGContactTypePlayerDidGetBonus)
-    {
-        OGBonusNode *bonus = ((OGBonusNode *) contact.bodyA.node);
-        
-        [self applyBonusWithType:bonus.bonusType bonusTitle:bonus.title];
-        
-        [contact.bodyA.node removeFromParent];
-        [self.bonusNodes removeObject:(OGBonusNode*) contact.bodyA.node];
-    }
-    else if (contactType == kOGContactTypePlayerDidTouchObstacle)
-    {
-        [self.playerNode moveByInertia];
-    }
-}
 
-- (OGContactType)contactType:(SKPhysicsContact *)contact
-{
-    SKNode *nodeA = contact.bodyA.node;
-    SKNode *nodeB = contact.bodyB.node;
-    
-    if ([nodeA.name isEqualToString:kOGPlayerNodeName] && [nodeB.name isEqualToString:kOGEnemyNodeName])
-    {
-        return kOGContactTypeGameOver;
-    }
-    else if (([nodeA.name isEqualToString:kOGPlayerNodeName] && [nodeB.name isEqualToString:kOGBonusNodeName])
-             || ([nodeB.name isEqualToString:kOGPlayerNodeName] && [nodeA.name isEqualToString:kOGBonusNodeName]))
-    {
-        return kOGContactTypePlayerDidGetBonus;
-    }
-    else if ([nodeA.name isEqualToString:kOGObstacleNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
-    {
-        return kOGContactTypePlayerDidTouchObstacle;
-    }
-    
-    return kOGContactTypeNone;
-}
-
-- (void)showGameOverScreen
-{
-    self.physicsWorld.speed = kOGGameScenePhysicsWorldGameOverSpeed;
-    [self.timer invalidate];
-    [self.playerNode removeFromParent];
-    
-    SKNode *dimPanel = [self createDimPanel];
-    [self addChild:dimPanel];
-    
-    SKNode *gameOverScreen = [self createGameOverScreenWithScore:self.scoreController.score];
-    [self addChild:gameOverScreen];
-    
-    [dimPanel runAction:[SKAction fadeAlphaTo:kOGGameSceneDimPanelFadeAlphaTo duration:kOGGameSceneDimPanelDuration]];
-    [gameOverScreen runAction:[SKAction fadeInWithDuration:kOGGameSceneGameOverScreenFadeInDuration]];
 }
 
 - (void)update:(CFTimeInterval)currentTime
 {
-    [self.playerNode positionDidUpdate];
-}
 
-#pragma mark - LevelChanging methods
-
-- (void)changeBackgroundWithColor:(SKColor *)color
-{
-    [self runActionWithColor:color target:self];
-}
-
--(void)changeAccentWithColor:(SKColor *)color
-{
-    self.currentAccentColor = color;
-    self.timerNode.fontColor = color;
-    
-    SKNode *borderCropNode = [self.background childNodeWithName:kOGGameSceneBorderCropNodeName];
-    SKSpriteNode *borderNode = (SKSpriteNode *) [borderCropNode childNodeWithName:kOGGameSceneBorderNodeName];
-    [self runActionWithColor:color target:borderNode];
-    
-    SKSpriteNode *timerCircleNode = (SKSpriteNode *) [self.background childNodeWithName:kOGGameSceneTimerCircleNodeName];
-    [self runActionWithColor:color target:timerCircleNode];
-}
-
-- (void)changePlayerWithColor:(SKColor *)color
-{
-    [self runActionWithColor:color target:self.playerNode.appearance];
-}
-
-- (void)changeEnemiesWithColor:(SKColor *)color enemyCount:(NSNumber *)count
-{
-    for (OGEnemyNode *enemy in self.enemyNodes)
-    {
-        [self runActionWithColor:color target:enemy.appearance];
-    }
-}
-
-- (void)changeObstacles:(NSArray *)obstacles
-{
-    //NSLog(@"%@", obstacles);
-}
-
-- (void)runActionWithColor:(SKColor *)color target:(SKNode *)target
-{
-    [target runAction:[SKAction colorizeWithColor:color colorBlendFactor:kOGGameSceneColorizeActionColorBlendFactor duration:kOGGameSceneColorizeActionDuration]];
-}
-
-- (void)addRandomBonus
-{
-    if (self.bonusNodes.count < kOGGameSceneBonusNodesMaximumCount)
-    {
-        OGBonusNode *bonus = [OGBonusNode bonusNodeWithColor:[SKColor yellowColor] type:rand() % kOGGameSceneBonusTypesCount];
-        
-        bonus.position = ogRandomPoint(kOGGameSceneNodesPositionOffset,
-                                       self.frame.size.width - kOGGameSceneNodesPositionOffset,
-                                       kOGGameSceneNodesPositionOffset,
-                                       self.frame.size.height - kOGGameSceneNodesPositionOffset);
-        
-        [self.bonusNodes addObject:bonus];
-        [self.foreground addChild:bonus];
-        
-        SKAction *blinkAction = [SKAction sequence:@[
-                                                     [SKAction scaleTo:kOGGameSceneBonusBlinkActionBeforeScaleTo duration:kOGGameSceneBonusBlinkActionBeforeDuration],
-                                                     [SKAction scaleTo:kOGGameSceneBonusBlinkActionAfterScaleTo duration:kOGGameSceneBonusBlinkActionAfterDuration]
-                                                     ]];
-        
-        [bonus runAction:[SKAction repeatActionForever:blinkAction]];
-    }
-}
-
-- (void)applyBonusWithType:(OGBonusType)type bonusTitle:(NSString *)title
-{
-    [self.foreground addChild:[self createBonusLabelNode]];
-    
-    if (type == kOGBonusTypeSlowMo)
-    {
-        [self.playerNode changeSpeedWithFactor:kOGGameSceneSlowDownFactor];
-        
-        for (OGEnemyNode *enemyNode in self.enemyNodes)
-        {
-            [enemyNode changeSpeedWithFactor:kOGGameSceneSlowDownFactor];
-        }
-        
-        [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
-         {
-             for (OGEnemyNode *enemyNode in self.enemyNodes)
-             {
-                 [enemyNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
-             }
-             
-             [self.playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
-         }];
-    }
-    else if (type == kOGBonusTypeSpeedUp)
-    {
-        [self.playerNode changeSpeedWithFactor:kOGGameSceneSpeedUpFactor];
-        
-        for (OGEnemyNode *enemyNode in self.enemyNodes)
-        {
-            [enemyNode changeSpeedWithFactor:kOGGameSceneSpeedUpFactor];
-        }
-        
-        [self runAction:[SKAction waitForDuration:kOGGameSceneBonusDuration] completion:^()
-         {
-             for (OGEnemyNode *enemyNode in self.enemyNodes)
-             {
-                 [enemyNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
-             }
-             
-             [self.playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
-         }];
-    }
-    
-    [self showBonusLabelWithText:title];
-}
-
-- (void)showBonusLabelWithText:(NSString *)text
-{
-    SKLabelNode *bonusLabel = [self createBonusLabelNode];
-    [self addChild:bonusLabel];
-    
-    bonusLabel.text = text;
-    bonusLabel.fontColor = [SKColor inverseColor:self.currentAccentColor];
-    
-    SKAction *appearLabel = [SKAction sequence:@[
-                                                 [SKAction scaleBy:1.7 duration:0.2],
-                                                 [SKAction fadeOutWithDuration:0.2]
-                                                 ]];
-    
-    [bonusLabel runAction:appearLabel completion:^()
-     {
-         [bonusLabel removeFromParent];
-     }];
 }
 
 - (void)dealloc
 {
-    [_background release];
-    [_foreground release];
-    [_middleground release];
-    [_timer release];
-    [_timerNode release];
-    [_levelController release];
     [_scoreController release];
-    [_playerNode release];
-    [_enemyNodes release];
-    [_bonusNodes release];
-    [_defaultEnemyPositions release];
     
     [super dealloc];
 }

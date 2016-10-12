@@ -9,6 +9,8 @@
 #ifndef OGConstants_h
 #define OGConstants_h
 
+#import <SpriteKit/SpriteKit.h>
+
 extern NSString *const kOGPlayerNodeName;
 extern NSString *const kOGEnemyNodeName;
 extern NSString *const kOGObstacleNodeName;
