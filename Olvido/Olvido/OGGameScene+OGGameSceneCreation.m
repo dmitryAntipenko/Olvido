@@ -10,7 +10,7 @@
 #import "SKColor+OGConstantColors.h"
 #import "OGTimerNode.h"
 
-CGFloat const kOGGameSceneScoreDefaultFontSize = 36.0;
+CGFloat const kOGGameSceneDefaultFontSize = 36.0;
 CGFloat const kOGGameSceneBorderSize = 3.0;
 
 CGFloat const kOGGameSceneTimerCircleRadiusFactor = 4.0;
@@ -40,6 +40,7 @@ CGFloat const kOGGameSceneBackgroundZPosition = -2.0;
 CGFloat const kOGGameSceneMiddlegroundZPosition = -1.0;
 
 NSString *const kOGGameSceneScoreString = @"Your Score";
+NSString *const kOGGameSceneFontName = @"Helvetica";
 
 CGFloat const kOGGameSceneDimPanelAlpha = 0.0;
 
@@ -133,7 +134,7 @@ CGFloat const kOGGameSceneDimPanelAlpha = 0.0;
     scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
     scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     
-    scoreLabel.fontSize = kOGGameSceneScoreDefaultFontSize * self.scaleFactor;
+    scoreLabel.fontSize = kOGGameSceneDefaultFontSize * self.scaleFactor;
     scoreLabel.fontColor = [SKColor gameBlack];
     
     return scoreLabel;
@@ -198,6 +199,17 @@ CGFloat const kOGGameSceneDimPanelAlpha = 0.0;
     button.size = CGSizeMake(kOGGameSceneButtonWidth, kOGGameSceneButtonWidth);
     
     return button;
+}
+
+- (SKLabelNode *)createBonusLabelNode
+{
+    SKLabelNode *bonusLabel = [SKLabelNode node];
+    
+    bonusLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    bonusLabel.fontSize = kOGGameSceneDefaultFontSize;
+    bonusLabel.fontName = kOGGameSceneFontName;
+    
+    return bonusLabel;
 }
 
 - (CGFloat)scaleFactor

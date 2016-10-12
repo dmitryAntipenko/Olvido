@@ -23,4 +23,6 @@ extern NSString *const kOGGameSceneRestartButtonSpriteName;
 - (SKNode *)createGameOverScreenWithScore:(NSNumber *)score;
 - (SKNode *)createDimPanel;
 
+- (SKLabelNode *)createBonusLabelNode;
+
 @end

@@ -14,6 +14,12 @@
 NSString *const kOGBonusNodeTextureName = @"EnemyBall";
 CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
 
+@interface OGBonusNode ()
+
+@property (nonatomic, copy) NSString *title;
+
+@end
+
 @implementation OGBonusNode
 
 + (instancetype)bonusNodeWithColor:(SKColor *)color type:(OGBonusType)type;
@@ -43,6 +49,8 @@ CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
                                                     bonus.diameter,
                                                     bonus.diameter);
             
+            bonus.title = [bonus bonusTitleWithType:type];
+            
             CGPathRef physicsBodyPath = CGPathCreateWithEllipseInRect(physicsBodyPathRect, NULL);
             
             bonus.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromPath:physicsBodyPath];
@@ -55,6 +63,28 @@ CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
     }
     
     return [bonus autorelease];
+}
+
+- (NSString *)bonusTitleWithType:(NSUInteger)type
+{
+    NSString *result;
+    
+    switch (type)
+    {
+        case kOGBonusTypeSlowMo:
+            result = @"SLOW MO";
+            break;
+            
+        case kOGBonusTypeSpeedUp:
+            result = @"SPEED UP";
+            break;
+            
+        default:
+            result = @"";
+            break;
+    }
+    
+    return result;
 }
 
 - (instancetype)initWithColor:(SKColor *)color type:(OGBonusType)type

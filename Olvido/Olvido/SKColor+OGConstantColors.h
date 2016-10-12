@@ -14,5 +14,6 @@
 + (SKColor *)backgroundGrayColor;
 + (SKColor *)gameBlue;
 + (SKColor *)gameBlack;
++ (SKColor *)inverseColor:(SKColor *)color;
 
 @end

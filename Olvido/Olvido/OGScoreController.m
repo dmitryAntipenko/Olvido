@@ -53,7 +53,7 @@ NSInteger const kOGScoreControllerScoreIncrement = 1;
 
 - (NSNumber *)randomLevelNumber
 {
-    return @(rand() % kOGLevelsCount);
+    return @(rand() % kOGLevelsCount + 1);
 }
 
 - (void)dealloc

@@ -64,18 +64,11 @@ CGFloat const kOGPlayerNodeAppearanceColorBlendFactor = 1.0;
             
             playerNode.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
             playerNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
-            playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle;
+            playerNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskBonus | kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
             
             playerNode.physicsBody.usesPreciseCollisionDetection = YES;
             
             [playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
-            
-            SKAction *invulnerability = [SKAction waitForDuration:kOGPlayerNodeInvulnerabilityRepeatCount * kOGPlayerNodeInvulnerabilityBlinkingTimeDuration * 2.0];
-            
-            [playerNode runAction:invulnerability completion:^
-             {
-                 playerNode.physicsBody.contactTestBitMask = playerNode.physicsBody.contactTestBitMask | kOGCollisionBitMaskEnemy;
-             }];
         }
     }
     

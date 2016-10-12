@@ -60,4 +60,11 @@ NSUInteger const kOGConstantColorsBlack = 0x11181f;
     return [self colorWithHex:result];
 }
 
++ (SKColor *)inverseColor:(SKColor *)color
+{
+    CGFloat r,g,b,a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    return [UIColor colorWithRed:1.-r green:1.-g blue:1.-b alpha:a];
+}
+
 @end

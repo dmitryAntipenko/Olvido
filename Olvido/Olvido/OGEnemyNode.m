@@ -54,7 +54,7 @@ CGFloat const kOGPlayerNodeColorBlendFactor = 1.0;
             enemyNode.physicsBody.friction = kOGEnemyNodeFriction;
             enemyNode.physicsBody.restitution = kOGEnemyNodeRestitution;
             
-            enemyNode.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
+            enemyNode.physicsBody.categoryBitMask = kOGCollisionBitMaskDefault;
             enemyNode.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
             enemyNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
             
@@ -71,7 +71,10 @@ CGFloat const kOGPlayerNodeColorBlendFactor = 1.0;
             
             SKAction *repeatAction = [SKAction repeatAction:invulnerabilityAction count:kOGPlayerNodeInvulnerabilityRepeatCount];
             
-            [enemyNode.appearance runAction:repeatAction];
+            [enemyNode.appearance runAction:repeatAction completion:^()
+             {
+                 enemyNode.physicsBody.categoryBitMask = enemyNode.physicsBody.categoryBitMask | kOGCollisionBitMaskEnemy;
+             }];
         }
     }
     

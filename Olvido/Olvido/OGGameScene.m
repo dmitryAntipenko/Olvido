@@ -52,8 +52,8 @@ CGFloat const kOGGameSceneBonusSlowMoPhysicsWorldSpeed = 0.6;
 CGFloat const kOGGameSceneBonusSpeedUpPhysicsWorldSpeed = 1.4;
 CGFloat const kOGGameScenePhysicsWorldDefaultSpeed = 1.0;
 
-CGFloat const kOGGameSceneSpeedUpFactor = 3.0;
-CGFloat const kOGGameSceneSlowDownFactor = 0.3;
+CGFloat const kOGGameSceneSpeedUpFactor = 1.5;
+CGFloat const kOGGameSceneSlowDownFactor = 0.7;
 
 @interface OGGameScene () <SKPhysicsContactDelegate, OGLevelChanging>
 
@@ -73,6 +73,8 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.3;
 @property (nonatomic, retain) NSMutableArray<OGBonusNode *> *bonusNodes;
 
 @property (nonatomic, retain) NSArray<NSValue *> *defaultEnemyPositions;
+
+@property (nonatomic, copy) SKColor *currentAccentColor;
 
 @end
 
@@ -237,15 +239,21 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.3;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
+    UIImpactFeedbackGenerator *generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleHeavy];
+    [generator impactOccurred];
+    
     OGContactType contactType = [self contactType:contact];
     
     if (contactType == kOGContactTypeGameOver)
     {
-        //        [self showGameOverScreen];
+        [self showGameOverScreen];
     }
     else if (contactType == kOGContactTypePlayerDidGetBonus)
     {
-        [self applyBonusWithType:((OGBonusNode *) contact.bodyA.node).bonusType];
+        OGBonusNode *bonus = ((OGBonusNode *) contact.bodyA.node);
+        
+        [self applyBonusWithType:bonus.bonusType bonusTitle:bonus.title];
+        
         [contact.bodyA.node removeFromParent];
         [self.bonusNodes removeObject:(OGBonusNode*) contact.bodyA.node];
     }
@@ -307,6 +315,7 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.3;
 
 -(void)changeAccentWithColor:(SKColor *)color
 {
+    self.currentAccentColor = color;
     self.timerNode.fontColor = color;
     
     SKNode *borderCropNode = [self.background childNodeWithName:kOGGameSceneBorderCropNodeName];
@@ -363,8 +372,10 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.3;
     }
 }
 
-- (void)applyBonusWithType:(OGBonusType)type
+- (void)applyBonusWithType:(OGBonusType)type bonusTitle:(NSString *)title
 {
+    [self.foreground addChild:[self createBonusLabelNode]];
+    
     if (type == kOGBonusTypeSlowMo)
     {
         [self.playerNode changeSpeedWithFactor:kOGGameSceneSlowDownFactor];
@@ -403,6 +414,27 @@ CGFloat const kOGGameSceneSlowDownFactor = 0.3;
              [self.playerNode changeSpeedWithFactor:kOGGameNodeDefaultSpeed];
          }];
     }
+    
+    [self showBonusLabelWithText:title];
+}
+
+- (void)showBonusLabelWithText:(NSString *)text
+{
+    SKLabelNode *bonusLabel = [self createBonusLabelNode];
+    [self addChild:bonusLabel];
+    
+    bonusLabel.text = text;
+    bonusLabel.fontColor = [SKColor inverseColor:self.currentAccentColor];
+    
+    SKAction *appearLabel = [SKAction sequence:@[
+                                                 [SKAction scaleBy:1.7 duration:0.2],
+                                                 [SKAction fadeOutWithDuration:0.2]
+                                                 ]];
+    
+    [bonusLabel runAction:appearLabel completion:^()
+     {
+         [bonusLabel removeFromParent];
+     }];
 }
 
 - (void)dealloc

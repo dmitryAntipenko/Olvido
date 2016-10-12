@@ -13,7 +13,7 @@
 #import "OGLevelChanging.h"
 #import "OGObstacleNode.h"
 
-NSUInteger const kOGLevelControllerLevelChangeInterval = 5;
+NSUInteger const kOGLevelControllerLevelChangeInterval = 10;
 
 NSString *const kOGLevelControllerLevelNameFormat = @"Level%2@";
 NSString *const kOGLevelControllerLevelExtension = @"plist";
