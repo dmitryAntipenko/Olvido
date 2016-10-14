@@ -99,6 +99,8 @@ CGFloat const kOGBonusNodeAppearanceColorBlendFactor = 1.0;
 
 - (void)dealloc
 {
+    [_title release];
+    
     [super dealloc];
 }
 

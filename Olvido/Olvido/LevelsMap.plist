@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Identifier</key>
+		<string>0</string>
+		<key>Gates</key>
+		<array>
+			<dict>
+				<key>Next Level Index</key>
+				<integer>1</integer>
+				<key>Position</key>
+				<integer>0</integer>
+			</dict>
+		</array>
+		<key>Class Name</key>
+		<string>OGInitialScene</string>
+	</dict>
+	<dict>
+		<key>Identifier</key>
+		<string>1</string>
+		<key>Gates</key>
+		<array>
+			<dict>
+				<key>Next Level Index</key>
+				<integer>2</integer>
+				<key>Position</key>
+				<integer>0</integer>
+			</dict>
+		</array>
+		<key>Class Name</key>
+		<string>OGObstaclesScene</string>
+	</dict>
+	<dict>
+		<key>Identifier</key>
+		<string>2</string>
+		<key>Gates</key>
+		<array>
+			<dict>
+				<key>Next Level Index</key>
+				<integer>0</integer>
+				<key>Position</key>
+				<integer>0</integer>
+			</dict>
+		</array>
+		<key>Class Name</key>
+		<string>OGMovingObstaclesScene</string>
+	</dict>
+</array>
+</plist>

@@ -7,7 +7,13 @@
 //
 
 #import "OGGameViewController.h"
-#import "OGGameScene.h"
+#import "OGScenesController.h"
+
+@interface OGGameViewController ()
+
+@property (nonatomic, retain) OGScenesController *scenesController;
+
+@end
 
 @implementation OGGameViewController
 
@@ -21,16 +27,28 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    OGGameScene *scene = [[OGGameScene alloc] initWithSize:view.frame.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+    OGScenesController *scenesController = [[OGScenesController alloc] init];
     
-    [view presentScene:scene];
-    [scene release];
+    if (scenesController)
+    {
+        scenesController.view = view;
+        [scenesController loadLevelMap];
+        
+        self.scenesController = scenesController;
+        [self.scenesController loadInitialLevel];
+        
+        [scenesController release];
+    }
 }
 
 - (BOOL)shouldAutorotate
 {
     return NO;
+}
+
+- (void)didCallChangeScene
+{
+    
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
@@ -53,6 +71,13 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (void)dealloc
+{
+    [_scenesController release];
+    
+    [super dealloc];
 }
 
 @end
