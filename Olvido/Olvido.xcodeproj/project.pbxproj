@@ -28,6 +28,7 @@
 		EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490AF1DA54B72007734F0 /* OGScoreController.m */; };
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAA490CB1DA7E087007734F0 /* OGEnemyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */; };
+		EAFBC9721DB3CFC800142D66 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFBC9711DB3CFC800142D66 /* OGGameScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +49,6 @@
 		EA0D27391DB153A400CEFB8A /* OGPortalPosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGPortalPosition.h; sourceTree = "<group>"; };
 		EA0D273A1DB1576400CEFB8A /* OGObstaclesScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstaclesScene.h; sourceTree = "<group>"; };
 		EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstaclesScene.m; sourceTree = "<group>"; };
-		EA0D273D1DB1594900CEFB8A /* OGGameSceneProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneProtocol.h; sourceTree = "<group>"; };
 		EA0D273E1DB15C4E00CEFB8A /* OGMovingObstaclesScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovingObstaclesScene.h; sourceTree = "<group>"; };
 		EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovingObstaclesScene.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +76,8 @@
 		EAA490C91DA7E087007734F0 /* OGEnemyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyNode.h; sourceTree = "<group>"; };
 		EAA490CA1DA7E087007734F0 /* OGEnemyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyNode.m; sourceTree = "<group>"; };
 		EAA490CC1DAAA0B6007734F0 /* OGContactType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactType.h; sourceTree = "<group>"; };
+		EAFBC9701DB3CFC800142D66 /* OGGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
+		EAFBC9711DB3CFC800142D66 /* OGGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +109,6 @@
 				EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */,
 				EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */,
 				EA0D27391DB153A400CEFB8A /* OGPortalPosition.h */,
-				EA0D273D1DB1594900CEFB8A /* OGGameSceneProtocol.h */,
 			);
 			name = ScenesController;
 			sourceTree = "<group>";
@@ -171,6 +172,8 @@
 				EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */,
 				EA0D273E1DB15C4E00CEFB8A /* OGMovingObstaclesScene.h */,
 				EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */,
+				EAFBC9701DB3CFC800142D66 /* OGGameScene.h */,
+				EAFBC9711DB3CFC800142D66 /* OGGameScene.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */,
 				EA0D27351DB1503500CEFB8A /* OGInitialScene.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
+				EAFBC9721DB3CFC800142D66 /* OGGameScene.m in Sources */,
 				1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */,
 				EAA490CB1DA7E087007734F0 /* OGEnemyNode.m in Sources */,
 				EA976D0F1D9FE940003B77FC /* OGTimerNode.m in Sources */,

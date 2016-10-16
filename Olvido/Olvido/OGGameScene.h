@@ -1,17 +1,16 @@
 //
-//  OGGameSceneProtocol.h
+//  OGGameScene.h
 //  Olvido
 //
-//  Created by Дмитрий Антипенко on 10/14/16.
+//  Created by Дмитрий Антипенко on 10/16/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#ifndef OGGameSceneProtocol_h
-#define OGGameSceneProtocol_h
-
+#import <SpriteKit/SpriteKit.h>
+#import "OGGameSceneDelegate.h"
 #import "OGPortalPosition.h"
 
-@protocol OGGameScene <SKPhysicsContactDelegate>
+@interface OGGameScene : SKScene
 
 @property (nonatomic, retain) NSNumber *identifier;
 
@@ -26,5 +25,3 @@
 - (void)addPortalWithPosition:(OGPortalPosition)position nextLevelIdentifier:(NSNumber *)identifier;
 
 @end
-
-#endif /* OGGameSceneProtocol_h */

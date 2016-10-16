@@ -8,7 +8,7 @@
 
 #import "OGScenesController.h"
 #import "OGGameSceneDelegate.h"
-#import "OGGameSceneProtocol.h"
+#import "OGGameScene.h"
 
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
@@ -23,7 +23,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @interface OGScenesController () <OGGameSceneDelegate>
 
-@property (nonatomic, retain) id <OGGameScene> currentScene;
+@property (nonatomic, retain) OGGameScene *currentScene;
 @property (nonatomic, copy) NSArray *levelMap;
 
 @end
@@ -74,12 +74,11 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
     NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
-    
     Class class = NSClassFromString(className);
-    id <OGGameScene> scene = [[class alloc] init];
+    OGGameScene *scene = [[class alloc] init];
     
-    [scene setIdentifier:identifier];
-    [scene setSceneDelegate:self];
+    scene.identifier = identifier;
+    scene.sceneDelegate = self;
     [scene createSceneContents];
     
     self.currentScene = scene;
@@ -88,8 +87,10 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
     // parse gates
     
-    SKTransition *transition = [SKTransition moveInWithDirection:SKTransitionDirectionDown duration:kOGSceneControllerTransitionDuration];
-    [self.view presentScene:(SKScene *) self.currentScene transition:transition];
+    SKTransition *transition = [SKTransition moveInWithDirection:SKTransitionDirectionDown
+                                                        duration:kOGSceneControllerTransitionDuration];
+    
+    [self.view presentScene:self.currentScene transition:transition];
 }
 
 - (void)dealloc

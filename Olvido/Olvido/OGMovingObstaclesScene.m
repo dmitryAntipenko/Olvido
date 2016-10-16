@@ -26,13 +26,7 @@
 }
 
 - (void)dealloc
-{
-    [_enemies release];
-    [_player release];
-    [_identifier release];
-    [_portals release];
-    [_sceneDelegate release];
-    
+{    
     [super dealloc];
 }
 
