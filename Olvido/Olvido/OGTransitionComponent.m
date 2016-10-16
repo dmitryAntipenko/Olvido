@@ -10,4 +10,27 @@
 
 @implementation OGTransitionComponent
 
+- (instancetype)initWithLocation:(OGPortalLocation)location
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _location = location;
+        _closed = YES;
+    }
+    else
+    {
+        [self release];
+        self = nil;
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [super dealloc];
+}
+
 @end

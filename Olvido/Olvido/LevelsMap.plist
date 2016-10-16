@@ -11,7 +11,7 @@
 				<key>Next Level Index</key>
 				<integer>1</integer>
 				<key>Location</key>
-				<integer>0</integer>
+				<integer>1</integer>
 			</dict>
 		</array>
 		<key>Class Name</key>
@@ -20,7 +20,7 @@
 	<dict>
 		<key>Identifier</key>
 		<string>1</string>
-		<key>Gates</key>
+		<key>Portals</key>
 		<array>
 			<dict>
 				<key>Next Level Index</key>
@@ -35,13 +35,13 @@
 	<dict>
 		<key>Identifier</key>
 		<string>2</string>
-		<key>Gates</key>
+		<key>Portals</key>
 		<array>
 			<dict>
 				<key>Next Level Index</key>
 				<integer>0</integer>
 				<key>Location</key>
-				<integer>0</integer>
+				<integer>3</integer>
 			</dict>
 		</array>
 		<key>Class Name</key>

@@ -15,4 +15,6 @@
 @property (nonatomic, assign) OGPortalLocation location;
 @property (nonatomic, getter=isClosed) BOOL closed;
 
+- (instancetype)initWithLocation:(OGPortalLocation)location;
+
 @end

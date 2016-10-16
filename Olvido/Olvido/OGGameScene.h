@@ -8,7 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGGameSceneDelegate.h"
-#import "OGPortalPosition.h"
+#import "OGPortalLocation.h"
+
+@class OGEntity;
 
 @class OGPortal;
 
@@ -19,11 +21,11 @@
 @property (nonatomic, retain) id <OGGameSceneDelegate> sceneDelegate;
 
 @property (nonatomic, retain) SKNode *player;
-@property (nonatomic, retain) NSArray *enemies;
-@property (nonatomic, retain) NSArray *portals;
+@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *enemies;
+@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *portals;
 
 - (void)createSceneContents;
 
-- (void)addPortal:(OGPortal *)portal;
+- (void)addPortal:(OGEntity *)portal;
 
 @end

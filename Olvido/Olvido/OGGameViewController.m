@@ -35,10 +35,10 @@
         [scenesController loadLevelMap];
         
         self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];
-        
-        [scenesController release];
+        [self.scenesController loadInitialLevel];    
     }
+    
+    [scenesController release];
 }
 
 - (BOOL)shouldAutorotate

@@ -15,14 +15,9 @@
     self.backgroundColor = [SKColor yellowColor];
 }
 
-- (void)addPortal:(OGPortal *)portal
-{
-    
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.sceneDelegate gameSceneDidCallFinish];
+    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
 }
 
 - (void)dealloc

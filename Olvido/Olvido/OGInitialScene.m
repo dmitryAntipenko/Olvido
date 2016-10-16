@@ -7,8 +7,11 @@
 //
 
 #import "OGInitialScene.h"
-#import "OGPortal.h"
 #import "SKColor+OGConstantColors.h"
+#import "OGEntity.h"
+#import "OGTransitionComponent.h"
+
+NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 @interface OGInitialScene ()
 
@@ -21,21 +24,13 @@
     self.backgroundColor = [SKColor backgroundLightGrayColor];
 }
 
-- (void)addPortal:(OGPortal *)portal
-{
-    if (portal.location == kOGPortalLocationUp || location == kOGPortalLocationDown)
-    {
-        portalTexture = [SKTexture textureWithImageNamed:kOGPortalHorizontalTextureName];
-    }
-    else if (location == kOGPortalLocationRight || location == kOGPortalLocationLeft)
-    {
-        portalTexture = [SKTexture textureWithImageNamed:kOGPortalVerticalTextureName];
-    }
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.sceneDelegate gameSceneDidCallFinish];
+    OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [self.portals[0] componentForClass:[OGTransitionComponent class]];
+    
+    transitionComponent.closed = NO;
+    
+    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
 }
 
 - (void)dealloc
