@@ -9,12 +9,12 @@
 #ifndef OGPortalPosition_h
 #define OGPortalPosition_h
 
-typedef NS_ENUM (NSUInteger, OGPortalPosition)
+typedef NS_ENUM (NSUInteger, OGPortalLocation)
 {
-    kOGPortalPositionDown = 0,
-    kOGPortalPositionRight = 1,
-    kOGPortalPositionUp = 2,
-    kOGPortalPositionLeft = 3
+    kOGPortalLocationDown = 0,
+    kOGPortalLocationRight = 1,
+    kOGPortalLocationUp = 2,
+    kOGPortalLocationLeft = 3
 };
 
 #endif /* OGPortalPosition_h */

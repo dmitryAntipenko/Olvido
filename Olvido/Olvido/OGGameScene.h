@@ -10,6 +10,8 @@
 #import "OGGameSceneDelegate.h"
 #import "OGPortalPosition.h"
 
+@class OGPortal;
+
 @interface OGGameScene : SKScene
 
 @property (nonatomic, retain) NSNumber *identifier;
@@ -22,6 +24,6 @@
 
 - (void)createSceneContents;
 
-- (void)addPortalWithPosition:(OGPortalPosition)position nextLevelIdentifier:(NSNumber *)identifier;
+- (void)addPortal:(OGPortal *)portal;
 
 @end

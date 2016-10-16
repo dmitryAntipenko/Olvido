@@ -5,12 +5,12 @@
 	<dict>
 		<key>Identifier</key>
 		<string>0</string>
-		<key>Gates</key>
+		<key>Portals</key>
 		<array>
 			<dict>
 				<key>Next Level Index</key>
 				<integer>1</integer>
-				<key>Position</key>
+				<key>Location</key>
 				<integer>0</integer>
 			</dict>
 		</array>
@@ -25,7 +25,7 @@
 			<dict>
 				<key>Next Level Index</key>
 				<integer>2</integer>
-				<key>Position</key>
+				<key>Location</key>
 				<integer>0</integer>
 			</dict>
 		</array>
@@ -40,7 +40,7 @@
 			<dict>
 				<key>Next Level Index</key>
 				<integer>0</integer>
-				<key>Position</key>
+				<key>Location</key>
 				<integer>0</integer>
 			</dict>
 		</array>

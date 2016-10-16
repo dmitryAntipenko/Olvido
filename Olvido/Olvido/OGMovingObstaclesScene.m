@@ -15,7 +15,7 @@
     self.backgroundColor = [SKColor yellowColor];
 }
 
-- (void)addPortalWithPosition:(OGPortalPosition)position nextLevelIdentifier:(NSNumber *)identifier
+- (void)addPortal:(OGPortal *)portal
 {
     
 }
