@@ -52,21 +52,18 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 
 - (void)createSceneContents
 {
-    self.backgroundColor = [SKColor gameBlue];
+    [super createSceneContents];
     
-    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
-    self.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
-    self.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
-    self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
-    
-    self.physicsBody.usesPreciseCollisionDetection = YES;
-    self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
-    self.physicsWorld.contactDelegate = self;
-    
-    [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkBlue]]];
-    
+    self.backgroundColor = [SKColor gameBlack];
+
     [self createEnemies];
+    for (OGEntity *enemy in self.enemies)
+    {
+        ((OGVisualComponent *) [enemy componentForClass:[OGVisualComponent class]]).color = [SKColor gameWhite];
+    }
+    
     [self createPlayer];
+    ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).color = [SKColor gameWhite];
     
     [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), 0.0) emissionAngle:M_PI_2];
     [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height) emissionAngle:3 * M_PI_2];
@@ -108,28 +105,24 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     self.currentFlameLocation = (self.currentFlameLocation + 1) % 2;
     SKAction *rotation = [SKAction rotateByAngle:M_PI_2 duration:0.0];
     
-    switch (self.currentFlameLocation)
+    if (self.currentFlameLocation == kOGFlameLocationHorizontal)
     {
-        case kOGFlameLocationHorizontal:
-            for (NSUInteger i = 0; i < self.flames.count; i++)
-            {
-                self.flames[i].position = CGPointMake(CGRectGetMidX(self.frame), i * self.frame.size.height);
-                self.flames[i].emissionAngle = ((i * 2.0) + 1.0) * M_PI_2;
-                [self.flames[i] runAction:rotation];
-            }
-            break;
-            
-        case kOGFlameLocationVertical:
-            for (NSUInteger i = 0; i < self.flames.count; i++)
-            {
-                self.flames[i].position = CGPointMake(self.frame.size.width * i, CGRectGetMidY(self.frame));
-                self.flames[i].emissionAngle = i * M_PI;
-                [self.flames[i] runAction:rotation];
-            }
-            break;
-            
-        default:
-            break;
+        for (NSUInteger i = 0; i < self.flames.count; i++)
+        {
+            self.flames[i].position = CGPointMake(CGRectGetMidX(self.frame), i * self.frame.size.height);
+            self.flames[i].emissionAngle = ((i * 2.0) + 1.0) * M_PI_2;
+            [self.flames[i] runAction:rotation];
+        
+        }
+    }
+    else if (self.currentFlameLocation == kOGFlameLocationVertical)
+    {
+        for (NSUInteger i = 0; i < self.flames.count; i++)
+        {
+            self.flames[i].position = CGPointMake(self.frame.size.width * i, CGRectGetMidY(self.frame));
+            self.flames[i].emissionAngle = i * M_PI;
+            [self.flames[i] runAction:rotation];
+        }
     }
 }
 
@@ -189,6 +182,8 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 {
     [_timer invalidate];
     [_timer release];
+    [_flames release];
+    
     [super dealloc];
 }
 

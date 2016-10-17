@@ -14,6 +14,11 @@
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
 
+CGFloat const kOGGameSceneCoinAppearanceInterval = 8.0;
+CGFloat const kOGGameSceneCoinLifeTime = 3.0;
+NSUInteger const kOGGameSceneMaxCoinCount = 10;
+CGFloat const kOGGameSceneCoinFadeOutDuration = 0.5;
+
 CGFloat const kOGEnemyLinearDamping = 0.0;
 CGFloat const kOGEnemyAngularDamping = 0.0;
 CGFloat const kOGEnemyFriction = 0.0;
@@ -36,6 +41,7 @@ CGFloat const kOGEnemyMass = 0.01;
     {
         _enemies = [[NSMutableArray alloc] init];
         _portals = [[NSMutableArray alloc] init];
+        _coins = [[NSMutableArray alloc] init];
     }
     else
     {
@@ -48,7 +54,55 @@ CGFloat const kOGEnemyMass = 0.01;
 
 - (void)createSceneContents
 {
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
+    self.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
+    self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
     
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
+    self.physicsWorld.contactDelegate = self;
+    
+    [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneCoinAppearanceInterval
+                                     target:self
+                                   selector:@selector(addCoin)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+- (void)addCoin
+{
+    if (self.coins.count < kOGGameSceneMaxCoinCount)
+    {
+        OGEntity *coin = [OGEntity entity];
+        
+        OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
+        visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGEnemyTextureName];
+        visualComponent.color = [SKColor yellowColor];
+        
+        OGSpriteNode *sprite = visualComponent.spriteNode;
+        sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width];
+        sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskBonus;
+        sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+        sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
+        
+        sprite.position = [OGConstants randomPointInRect:self.frame];
+        
+        [self.coins addObject:coin];
+        [self addChild:sprite];
+        
+        SKAction *destroyCoin = [SKAction sequence:@[
+                                                     [SKAction waitForDuration:kOGGameSceneCoinLifeTime],
+                                                     [SKAction fadeOutWithDuration:kOGGameSceneCoinFadeOutDuration]
+                                                     ]];
+        [sprite runAction:destroyCoin completion:^()
+        {
+            [self.coins removeObject:coin];
+            [sprite removeFromParent];
+        }];
+        
+        [visualComponent release];
+    }
 }
 
 - (CGFloat)enemySpeed

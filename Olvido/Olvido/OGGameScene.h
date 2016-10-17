@@ -35,6 +35,7 @@
 @property (nonatomic, retain) OGEntity *player;
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *enemies;
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *portals;
+@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *coins;
 
 - (void)createSceneContents;
 - (void)createEnemies;
