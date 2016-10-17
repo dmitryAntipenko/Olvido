@@ -18,6 +18,7 @@
 #import "OGVisualComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGMovementComponent.h"
+#import "OGTrackControlComponent.h"
 #import "OGSpriteNode.h"
 
 @class OGEntity;

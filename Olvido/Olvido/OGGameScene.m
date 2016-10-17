@@ -115,11 +115,15 @@ CGFloat const kOGEnemyMass = 0.01;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
     
     [player addComponent:visualComponent];
-    self.player = player;
     
+    OGTrackControlComponent *trackControlComponent = [[OGTrackControlComponent alloc] initWithNode:sprite];
+    [player addComponent:trackControlComponent];
+    
+    self.player = player;
     [self addChild:sprite];
     
     [visualComponent release];
+    [trackControlComponent release];
 }
 
 - (void)addPortal:(OGEntity *)portal
