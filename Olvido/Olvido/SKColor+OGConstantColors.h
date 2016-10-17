@@ -9,11 +9,18 @@
 @interface SKColor (OGConstantColors)
 
 + (SKColor *)colorWithString:(NSString *)string;
++ (SKColor *)inverseColor:(SKColor *)color;
+
 + (SKColor *)gameRed;
++ (SKColor *)gameDarkRed;
+
++ (SKColor *)gameGreen;
++ (SKColor *)gameDarkGreen;
+
 + (SKColor *)backgroundLightGrayColor;
 + (SKColor *)backgroundGrayColor;
+
 + (SKColor *)gameBlue;
 + (SKColor *)gameBlack;
-+ (SKColor *)inverseColor:(SKColor *)color;
 
 @end

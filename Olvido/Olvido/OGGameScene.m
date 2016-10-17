@@ -8,10 +8,7 @@
 
 #import "OGGameScene.h"
 
-#import "OGEntity.h"
-#import "OGVisualComponent.h"
-#import "OGTransitionComponent.h"
-#import "OGSpriteNode.h"
+CGFloat const kOGGameSceneEnemyDefaultSpeed = 400.0;
 
 @implementation OGGameScene
 
@@ -36,6 +33,74 @@
 - (void)createSceneContents
 {
     
+}
+
+- (void)createEnemies
+{
+    for (NSUInteger i = 0; i < self.enemiesCount.integerValue; i++)
+    {
+        OGEntity *enemy = [OGEntity entity];
+        
+        OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
+        visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGEnemyTextureName];
+        visualComponent.color = [SKColor gameBlack];
+        
+        OGSpriteNode *sprite = visualComponent.spriteNode;
+        sprite.owner = visualComponent;
+        sprite.position = [OGConstants randomPointInRect:self.frame];
+        
+        CGFloat enemyRadius = visualComponent.spriteNode.size.width / 2.0;
+        sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyRadius];
+        sprite.physicsBody.linearDamping = 0.0;
+        sprite.physicsBody.angularDamping = 0.0;
+        sprite.physicsBody.friction = 0.0;
+        sprite.physicsBody.restitution = 1.0;
+        
+        sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
+        sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
+        sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
+        
+        [enemy addComponent:visualComponent];
+        
+        OGMovementComponent *movementComponent = [[OGMovementComponent alloc] initWithPhysicsBody:sprite.physicsBody];
+        [enemy addComponent:movementComponent];
+        
+        [self.enemies addObject:enemy];
+        [self addChild:sprite];
+        
+        [movementComponent startMovementWithSpeed:kOGGameSceneEnemyDefaultSpeed];
+        
+        [visualComponent release];
+        [movementComponent release];
+    }
+}
+
+- (void)createPlayer
+{
+    OGEntity *player = [OGEntity entity];
+    
+    OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
+    visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGPlayerTextureName];
+    visualComponent.color = [SKColor gameBlack];
+    
+    OGSpriteNode *sprite = visualComponent.spriteNode;
+    sprite.owner = visualComponent;
+    sprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width / 2.0];
+    sprite.physicsBody.dynamic = YES;
+    
+    sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
+    sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
+    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
+    
+    [player addComponent:visualComponent];
+    self.player = player;
+    
+    [self addChild:sprite];
+    
+    [visualComponent release];
+
 }
 
 - (void)addPortal:(OGEntity *)portal
@@ -74,6 +139,7 @@
     [_identifier release];
     [_portals release];
     [_sceneDelegate release];
+    [_enemiesCount release];
     
     [super dealloc];
 }

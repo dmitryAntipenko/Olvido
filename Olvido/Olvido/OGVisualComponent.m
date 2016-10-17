@@ -26,6 +26,7 @@
         [_color release];
         _color = [color retain];
         self.spriteNode.color = color;
+        self.spriteNode.colorBlendFactor = 1.0;
     }
 }
 

@@ -23,6 +23,8 @@ NSString *const kOGSceneControllerPortalsKey = @"Portals";
 NSString *const kOGSceneControllerNextLevelIndexKey = @"Next Level Index";
 NSString *const kOGSceneControllerLocationKey = @"Location";
 NSString *const kOGSceneControllerClassNameKey = @"Class Name";
+NSString *const kOGSceneControllerPortalColorKey = @"Color";
+NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
 NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
@@ -110,6 +112,7 @@ NSString *const kOGSceneControllerVerticalPortalTextureName = @"PortalVertical";
     OGGameScene *scene = [[class alloc] initWithSize:self.view.frame.size];
     
     scene.identifier = identifier;
+    scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
     [scene createSceneContents];
 
@@ -133,6 +136,9 @@ NSString *const kOGSceneControllerVerticalPortalTextureName = @"PortalVertical";
             portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerVerticalPortalTextureName];
         }
         
+        NSString *portalColor = portalDictionary[kOGSceneControllerPortalColorKey];
+        
+        portalVisualComponent.color = [SKColor colorWithString:portalColor];
         portalVisualComponent.spriteNode.owner = portalVisualComponent;
         
         [portal addComponent:portalVisualComponent];

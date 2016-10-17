@@ -7,21 +7,29 @@
 //
 
 #import "OGInitialScene.h"
-#import "SKColor+OGConstantColors.h"
-#import "OGEntity.h"
-#import "OGTransitionComponent.h"
+#import "OGGameScene+OGGameSceneCreation.h"
 
 NSUInteger const kOGInitialSceneEnemiesCount = 4;
-
-@interface OGInitialScene ()
-
-@end
 
 @implementation OGInitialScene
 
 - (void)createSceneContents
 {
     self.backgroundColor = [SKColor backgroundLightGrayColor];
+    
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
+    self.physicsBody.collisionBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskEnemy;
+    self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
+    
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
+    self.physicsWorld.contactDelegate = self;
+    
+    [self addChild:[self createBackgroundBorderWithColor:[SKColor backgroundGrayColor]]];
+    
+    [self createEnemies];
+    [self createPlayer];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -31,6 +39,11 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     transitionComponent.closed = NO;
     
     [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
+}
+
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
+    
 }
 
 - (void)dealloc

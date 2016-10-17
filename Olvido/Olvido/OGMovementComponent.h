@@ -10,4 +10,10 @@
 
 @interface OGMovementComponent : GKComponent
 
+@property (nonatomic, assign) CGFloat speedFactor;
+
+- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body;
+
+- (void)startMovementWithSpeed:(CGFloat)speed;
+
 @end

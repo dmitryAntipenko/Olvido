@@ -12,8 +12,11 @@
 NSUInteger const kOGConstantColorsBackgroundLightGray = 0xf2f2f2;
 NSUInteger const kOGConstantColorsBackgroundGray = 0xdddddd;
 NSUInteger const kOGConstantColorsRed = 0xe74c3c;
+NSUInteger const kOGConstantColorsDarkRed = 0xc0392b;
 NSUInteger const kOGConstantColorsBlue = 0x3498db;
 NSUInteger const kOGConstantColorsBlack = 0x11181f;
+NSUInteger const kOGConstantColorsGreen = 0x1abc9c;
+NSUInteger const kOGConstantColorsDarkGreen = 0x16a085;
 
 @implementation SKColor (OGConstantColors)
 
@@ -30,6 +33,21 @@ NSUInteger const kOGConstantColorsBlack = 0x11181f;
 + (SKColor *)gameRed
 {
     return [SKColor colorWithHex:kOGConstantColorsRed];
+}
+
++ (SKColor *)gameDarkRed
+{
+    return [SKColor colorWithHex:kOGConstantColorsDarkRed];
+}
+
++ (SKColor *)gameGreen
+{
+    return [SKColor colorWithHex:kOGConstantColorsGreen];
+}
+
++ (SKColor *)gameDarkGreen
+{
+    return [SKColor colorWithHex:kOGConstantColorsDarkGreen];
 }
 
 + (SKColor *)gameBlue
