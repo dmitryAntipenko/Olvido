@@ -88,16 +88,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     flame.targetNode = self;
     flame.position = point;
     flame.emissionAngle = angle;
-    
-    CGFloat h = flame.particleLifetime * flame.speed;
-    
-    CGPoint pointA = CGPointMake(-flame.particlePositionRange.dx / 2, h);
-    CGPoint pointB = CGPointMake(flame.particlePositionRange.dx / 2, h);
-    
-    NSLog(@"%@, %@", NSStringFromCGPoint(pointA), NSStringFromCGPoint(pointB));
-    
-    flame.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:pointA toPoint:pointB];
-    flame.physicsBody.categoryBitMask = kOGCollisionBitMaskFlame;
+
     flame.name = kOGFlameSceneFlameNodeName;
     
     [self.flames addObject:flame];
@@ -160,6 +151,8 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 {
     SKNode *nodeA = contact.bodyA.node;
     SKNode *nodeB = contact.bodyB.node;
+    
+   NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
     
     if ([nodeA.name isEqualToString:kOGPortalNodeName])
     {
