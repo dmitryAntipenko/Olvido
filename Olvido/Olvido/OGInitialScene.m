@@ -43,7 +43,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    
+    NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
 }
 
 - (void)dealloc

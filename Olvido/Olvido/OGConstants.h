@@ -15,6 +15,7 @@ extern NSString *const kOGPlayerNodeName;
 extern NSString *const kOGEnemyNodeName;
 extern NSString *const kOGObstacleNodeName;
 extern NSString *const kOGBonusNodeName;
+extern NSString *const kOGPortalNodeName;
 
 extern NSString *const kOGEnemyTextureName;
 extern NSString *const kOGPlayerTextureName;

@@ -25,6 +25,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 
 @property (nonatomic, retain) NSMutableArray<SKEmitterNode *> *flames;
 @property (nonatomic, assign) NSUInteger currentFlameLocation;
+@property (nonatomic, retain) NSTimer *timer;
 
 @end
 
@@ -69,7 +70,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), 0.0) emissionAngle:M_PI_2];
     [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height) emissionAngle:3 * M_PI_2];
     
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:kOGFlameChangeInterval
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGFlameChangeInterval
                                                       target:self
                                                     selector:@selector(changeFlameLocation)
                                                     userInfo:nil
@@ -137,6 +138,8 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 
 - (void)dealloc
 {
+    [_timer invalidate];
+    [_timer release];
     [super dealloc];
 }
 

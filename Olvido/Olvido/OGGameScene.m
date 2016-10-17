@@ -7,6 +7,7 @@
 //
 
 #import "OGGameScene.h"
+#import "OGConstants.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
@@ -80,6 +81,8 @@ CGFloat const kOGEnemyMass = 0.01;
         sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
         sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
         
+        sprite.name = kOGEnemyNodeName;
+        
         [enemy addComponent:visualComponent];
         
         OGMovementComponent *movementComponent = [[OGMovementComponent alloc] initWithPhysicsBody:sprite.physicsBody];
@@ -114,6 +117,8 @@ CGFloat const kOGEnemyMass = 0.01;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
     
+    sprite.name = kOGPlayerNodeName;
+    
     [player addComponent:visualComponent];
     self.player = player;
     
@@ -126,6 +131,8 @@ CGFloat const kOGEnemyMass = 0.01;
 {
     OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
     OGVisualComponent *visualComponent = (OGVisualComponent *) [portal componentForClass:[OGVisualComponent class]];
+    
+    visualComponent.spriteNode.name = kOGPortalNodeName;
     
     if (transitionComponent)
     {
