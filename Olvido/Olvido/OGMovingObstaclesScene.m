@@ -94,7 +94,47 @@ CGFloat const kOGObstacleMovementDuration = 1.0;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
+    
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent touchMovedToPoint:touchLocation];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
+}
+
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
+    SKNode *nodeA = contact.bodyA.node;
+    SKNode *nodeB = contact.bodyB.node;
+    
+    if ([nodeA.name isEqualToString:kOGPortalNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
+    else if ([nodeB.name isEqualToString:kOGPortalNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
+    
+    //    NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
 }
 
 - (void)dealloc

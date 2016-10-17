@@ -18,6 +18,7 @@
 #import "OGVisualComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGMovementComponent.h"
+#import "OGMovementControlComponent.h"
 #import "OGSpriteNode.h"
 
 @class OGEntity;
@@ -26,6 +27,8 @@
 
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSNumber *enemiesCount;
+
+@property (nonatomic, assign) OGMovementControlComponent *playerMovementControlComponent;
 
 @property (nonatomic, retain) id <OGGameSceneDelegate> sceneDelegate;
 

@@ -23,6 +23,8 @@
 
     SKView *view = (SKView *) self.view;
     
+    view.multipleTouchEnabled = NO;
+    
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
@@ -35,7 +37,7 @@
         [scenesController loadLevelMap];
         
         self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];    
+        [self.scenesController loadInitialLevel];
     }
     
     [scenesController release];

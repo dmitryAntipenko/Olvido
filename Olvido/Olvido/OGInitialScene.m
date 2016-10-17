@@ -8,6 +8,7 @@
 
 #import "OGInitialScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
+#import "OGTapMovementControlComponent.h"
 
 NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
@@ -34,16 +35,46 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [self.portals[0] componentForClass:[OGTransitionComponent class]];
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    transitionComponent.closed = NO;
+    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
+    [self.playerMovementControlComponent touchMovedToPoint:touchLocation];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
+    SKNode *nodeA = contact.bodyA.node;
+    SKNode *nodeB = contact.bodyB.node;
     
+    if ([nodeA.name isEqualToString:kOGPortalNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
+    else if ([nodeB.name isEqualToString:kOGPortalNodeName] && [nodeA.name isEqualToString:kOGPlayerNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
 }
 
 - (void)dealloc

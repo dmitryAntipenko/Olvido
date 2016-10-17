@@ -7,6 +7,9 @@
 //
 
 #import "OGGameScene.h"
+#import "OGConstants.h"
+#import "OGTrackMovementControlComponent.h"
+#import "OGTapMovementControlComponent.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
@@ -80,6 +83,8 @@ CGFloat const kOGEnemyMass = 0.01;
         sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
         sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
         
+        sprite.name = kOGEnemyNodeName;
+        
         [enemy addComponent:visualComponent];
         
         OGMovementComponent *movementComponent = [[OGMovementComponent alloc] initWithPhysicsBody:sprite.physicsBody];
@@ -114,18 +119,35 @@ CGFloat const kOGEnemyMass = 0.01;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
     
-    [player addComponent:visualComponent];
-    self.player = player;
+    sprite.name = kOGPlayerNodeName;
+    sprite.physicsBody.friction = 0.0;
+    sprite.physicsBody.restitution = 1.0;
+    sprite.physicsBody.linearDamping = 0.0;
+    sprite.physicsBody.angularDamping = 0.0;
     
+    [player addComponent:visualComponent];
+    
+    OGMovementControlComponent *movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
+    self.playerMovementControlComponent = movementControlComponent;
+    [player addComponent:movementControlComponent];
+    
+    self.player = player;
     [self addChild:sprite];
     
     [visualComponent release];
+    [movementControlComponent release];
 }
 
 - (void)addPortal:(OGEntity *)portal
 {
     OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
     OGVisualComponent *visualComponent = (OGVisualComponent *) [portal componentForClass:[OGVisualComponent class]];
+    
+    visualComponent.spriteNode.name = kOGPortalNodeName;
+    visualComponent.spriteNode.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:visualComponent.spriteNode.frame];
+    visualComponent.spriteNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPortal | kOGCollisionBitMaskFlame;
+    visualComponent.spriteNode.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+//    visualComponent.spriteNode.physicsBody
     
     if (transitionComponent)
     {

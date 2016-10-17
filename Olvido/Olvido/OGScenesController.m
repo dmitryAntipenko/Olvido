@@ -94,7 +94,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
                                                                 inLevel:self.currentScene.identifier];
     [self loadLevelWithIdentifier:nextLevelId];
     
-    SKTransition *transition = [SKTransition moveInWithDirection:nextSceneTransitionDirection
+    SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
                                                         duration:kOGSceneControllerTransitionDuration];
 
     [self.view presentScene:self.currentScene transition:transition];
@@ -158,19 +158,19 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     switch (location)
     {
         case kOGPortalLocationDown:
-            result = SKTransitionDirectionUp;
-            break;
-            
-        case kOGPortalLocationUp:
             result = SKTransitionDirectionDown;
             break;
             
+        case kOGPortalLocationUp:
+            result = SKTransitionDirectionUp;
+            break;
+            
         case kOGPortalLocationRight:
-            result = SKTransitionDirectionRight;
+            result = SKTransitionDirectionLeft;
             break;
             
         case kOGPortalLocationLeft:
-            result = SKTransitionDirectionLeft;
+            result = SKTransitionDirectionRight;
             break;
             
         default:
