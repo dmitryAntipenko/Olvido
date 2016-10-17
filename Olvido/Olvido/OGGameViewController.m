@@ -37,7 +37,7 @@
         [scenesController loadLevelMap];
         
         self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];    
+        [self.scenesController loadInitialLevel];
     }
     
     [scenesController release];

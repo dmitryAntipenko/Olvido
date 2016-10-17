@@ -31,7 +31,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
     return self;
 }
 
-- (void)didTouchDownAtPoint:(CGPoint)point
+- (void)touchBeganAtPoint:(CGPoint)point
 {
     if (self.node && self.node.physicsBody)
     {

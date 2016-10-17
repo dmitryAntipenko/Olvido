@@ -145,7 +145,7 @@ CGFloat const kOGEnemyMass = 0.01;
     
     visualComponent.spriteNode.name = kOGPortalNodeName;
     visualComponent.spriteNode.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:visualComponent.spriteNode.frame];
-    visualComponent.spriteNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPortal;
+    visualComponent.spriteNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPortal | kOGCollisionBitMaskFlame;
     visualComponent.spriteNode.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
 //    visualComponent.spriteNode.physicsBody
     

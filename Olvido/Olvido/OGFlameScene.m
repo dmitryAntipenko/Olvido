@@ -18,6 +18,7 @@ typedef NS_ENUM (NSUInteger, OGFlameLocation)
 
 NSString *const kOGFlameSceneParticleFileName = @"Flame";
 NSString *const kOGFlameSceneParticleFileExtension = @"sks";
+NSString *const kOGFlameSceneFlameNodeName = @"flameNode";
 
 NSUInteger const kOGFlameChangeInterval = 5.0;
 
@@ -88,6 +89,17 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     flame.position = point;
     flame.emissionAngle = angle;
     
+    CGFloat h = flame.particleLifetime * flame.speed;
+    
+    CGPoint pointA = CGPointMake(-flame.particlePositionRange.dx / 2, h);
+    CGPoint pointB = CGPointMake(flame.particlePositionRange.dx / 2, h);
+    
+    NSLog(@"%@, %@", NSStringFromCGPoint(pointA), NSStringFromCGPoint(pointB));
+    
+    flame.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:pointA toPoint:pointB];
+    flame.physicsBody.categoryBitMask = kOGCollisionBitMaskFlame;
+    flame.name = kOGFlameSceneFlameNodeName;
+    
     [self.flames addObject:flame];
     [self addChild:flame];
 }
@@ -127,21 +139,21 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchDownAtPoint:touchLocation];
+    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchMoveToPoint:touchLocation];
+    [self.playerMovementControlComponent touchMovedToPoint:touchLocation];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchUpAtPoint:touchLocation];
+    [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
@@ -163,8 +175,11 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
         transitionComponent.closed = NO;
         [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
     }
-    
-    //    NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
+    else if ([nodeB.name isEqualToString:kOGFlameSceneFlameNodeName])
+    {
+        NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
+    }
+
 }
 
 - (void)dealloc

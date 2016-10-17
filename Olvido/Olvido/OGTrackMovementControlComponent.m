@@ -10,7 +10,7 @@
 
 @implementation OGTrackMovementControlComponent
 
-- (void)didTouchMoveToPoint:(CGPoint)point
+- (void)touchMovedToPoint:(CGPoint)point
 {
     if (self.node)
     {

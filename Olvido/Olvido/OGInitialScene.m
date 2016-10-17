@@ -35,24 +35,23 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchDownAtPoint:touchLocation];
+    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchMoveToPoint:touchLocation];
+    [self.playerMovementControlComponent touchMovedToPoint:touchLocation];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.playerMovementControlComponent didTouchUpAtPoint:touchLocation];
+    [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact

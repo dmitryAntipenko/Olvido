@@ -25,17 +25,22 @@
 
 #pragma mark subclasses should implement
 
-- (void)didTouchDownAtPoint:(CGPoint)point
+- (void)touchBeganAtPoint:(CGPoint)point
 {
     
 }
 
-- (void)didTouchUpAtPoint:(CGPoint)point
+- (void)touchEndedAtPoint:(CGPoint)point
 {
     
 }
 
-- (void)didTouchMoveToPoint:(CGPoint)point
+- (void)touchMovedToPoint:(CGPoint)point
+{
+    
+}
+
+- (void)stop
 {
     
 }
