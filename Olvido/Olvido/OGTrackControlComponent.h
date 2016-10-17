@@ -10,4 +10,10 @@
 
 @interface OGTrackControlComponent : GKComponent
 
+- (instancetype)initWithNode:(SKNode *)node;
+
+- (void)moveToPoint:(CGPoint)point;
+
+- (void)moveOnVector:(CGVector)vector;
+
 @end
