@@ -51,4 +51,9 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
     }
 }
 
+- (void)stop
+{
+    self.speedFactor = 0.0;
+}
+
 @end

@@ -127,10 +127,6 @@ CGFloat const kOGEnemyMass = 0.01;
     
     [player addComponent:visualComponent];
     
-//    OGMovementControlComponent *trackMovementControlComponent = [[OGTrackMovementControlComponent alloc] initWithNode:sprite];
-//    self.playerMovementControlComponent = trackMovementControlComponent;
-//    [player addComponent:trackMovementControlComponent];
-    
     OGMovementControlComponent *movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
     self.playerMovementControlComponent = movementControlComponent;
     [player addComponent:movementControlComponent];
@@ -148,6 +144,10 @@ CGFloat const kOGEnemyMass = 0.01;
     OGVisualComponent *visualComponent = (OGVisualComponent *) [portal componentForClass:[OGVisualComponent class]];
     
     visualComponent.spriteNode.name = kOGPortalNodeName;
+    visualComponent.spriteNode.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:visualComponent.spriteNode.frame];
+    visualComponent.spriteNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPortal;
+    visualComponent.spriteNode.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+//    visualComponent.spriteNode.physicsBody
     
     if (transitionComponent)
     {

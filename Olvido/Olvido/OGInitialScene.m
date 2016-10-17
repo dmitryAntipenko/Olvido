@@ -39,11 +39,6 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
     [self.playerMovementControlComponent didTouchDownAtPoint:touchLocation];
-//    OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [self.portals[0] componentForClass:[OGTransitionComponent class]];
-//    
-//    transitionComponent.closed = NO;
-//    
-//    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -53,9 +48,34 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     [self.playerMovementControlComponent didTouchMoveToPoint:touchLocation];
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent didTouchUpAtPoint:touchLocation];
+}
+
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
+    SKNode *nodeA = contact.bodyA.node;
+    SKNode *nodeB = contact.bodyB.node;
+    
+    if ([nodeA.name isEqualToString:kOGPortalNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
+    else if ([nodeB.name isEqualToString:kOGPortalNodeName] && [nodeA.name isEqualToString:kOGPlayerNodeName])
+    {
+        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
+        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+        transitionComponent.closed = NO;
+        
+        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
+    }
 }
 
 - (void)dealloc

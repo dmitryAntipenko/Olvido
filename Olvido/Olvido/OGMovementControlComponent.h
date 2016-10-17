@@ -20,4 +20,6 @@
 
 - (void)didTouchMoveToPoint:(CGPoint)point;
 
+- (void)stop;
+
 @end
