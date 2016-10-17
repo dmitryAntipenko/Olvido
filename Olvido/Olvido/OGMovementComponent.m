@@ -9,6 +9,8 @@
 #import "OGMovementComponent.h"
 #import "OGConstants.h"
 
+CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
+
 @interface OGMovementComponent ()
 
 @property (nonatomic, retain) SKPhysicsBody *physicsBody;
@@ -24,7 +26,7 @@
     if (self)
     {
         _physicsBody = [body retain];
-        _speedFactor = 1.0;
+        _speedFactor = kOGMovementComponentDefaultSpeedFactor;
     }
     else
     {

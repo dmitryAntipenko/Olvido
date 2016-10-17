@@ -11,8 +11,6 @@
 
 @interface OGAppDelegate ()
 
-@property (nonatomic, retain) OGGameViewController *game;
-
 @end
 
 @implementation OGAppDelegate
@@ -53,7 +51,6 @@
 - (void)dealloc
 {
     [_window release];
-    [_game release];
     
     [super dealloc];
 }

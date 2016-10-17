@@ -175,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				EA70E52C1DB3F4770034116D /* Nodes */,
-				EA70E5261DB3F4620034116D /* playerTail.sks */,
 				EA0D27281DB1475000CEFB8A /* ScenesController */,
 				EA976D051D9EDBF8003B77FC /* Scenes */,
 				EA976D091D9F03A9003B77FC /* Entities */,
@@ -222,9 +221,9 @@
 		EA976D091D9F03A9003B77FC /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA70E51E1DB3F4620034116D /* OGEntity.h */,
 				EA70E51F1DB3F4620034116D /* OGEntity.m */,
-				EA0D27271DB1473A00CEFB8A /* Components */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -250,6 +249,7 @@
 				EAA490C51DA7BE52007734F0 /* OGConstants.h */,
 				EAA490C61DA7BE64007734F0 /* OGConstants.m */,
 				EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */,
+				EA70E5261DB3F4620034116D /* playerTail.sks */,
 			);
 			name = Utils;
 			sourceTree = "<group>";

@@ -8,7 +8,14 @@
 
 #import "OGGameScene.h"
 
-CGFloat const kOGGameSceneEnemyDefaultSpeed = 400.0;
+CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
+CGFloat const kOGGameSceneScaleFactor = 4.0;
+
+@interface OGGameScene ()
+
+@property (nonatomic, readonly) CGFloat enemySpeed;
+
+@end
 
 @implementation OGGameScene
 
@@ -33,6 +40,11 @@ CGFloat const kOGGameSceneEnemyDefaultSpeed = 400.0;
 - (void)createSceneContents
 {
     
+}
+
+- (CGFloat)enemySpeed
+{
+    return self.frame.size.height * kOGGameSceneEnemyDefaultSpeed / kOGGameSceneScaleFactor;
 }
 
 - (void)createEnemies
@@ -68,7 +80,7 @@ CGFloat const kOGGameSceneEnemyDefaultSpeed = 400.0;
         [self.enemies addObject:enemy];
         [self addChild:sprite];
         
-        [movementComponent startMovementWithSpeed:kOGGameSceneEnemyDefaultSpeed];
+        [movementComponent startMovementWithSpeed:self.enemySpeed];
         
         [visualComponent release];
         [movementComponent release];

@@ -27,6 +27,9 @@
     self.physicsWorld.contactDelegate = self;
     
     [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkGreen]]];
+    
+    [self createEnemies];
+    [self createPlayer];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
