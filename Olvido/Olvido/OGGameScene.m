@@ -8,6 +8,8 @@
 
 #import "OGGameScene.h"
 #import "OGConstants.h"
+#import "OGTrackMovementControlComponent.h"
+#import "OGTapMovementControlComponent.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
@@ -118,13 +120,26 @@ CGFloat const kOGEnemyMass = 0.01;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
     
     sprite.name = kOGPlayerNodeName;
+    sprite.physicsBody.friction = 0.0;
+    sprite.physicsBody.restitution = 1.0;
+    sprite.physicsBody.linearDamping = 0.0;
+    sprite.physicsBody.angularDamping = 0.0;
     
     [player addComponent:visualComponent];
-    self.player = player;
     
+//    OGMovementControlComponent *trackMovementControlComponent = [[OGTrackMovementControlComponent alloc] initWithNode:sprite];
+//    self.playerMovementControlComponent = trackMovementControlComponent;
+//    [player addComponent:trackMovementControlComponent];
+    
+    OGMovementControlComponent *movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
+    self.playerMovementControlComponent = movementControlComponent;
+    [player addComponent:movementControlComponent];
+    
+    self.player = player;
     [self addChild:sprite];
     
     [visualComponent release];
+    [movementControlComponent release];
 }
 
 - (void)addPortal:(OGEntity *)portal

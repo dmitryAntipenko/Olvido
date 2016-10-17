@@ -8,6 +8,7 @@
 
 #import "OGInitialScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
+#import "OGTapMovementControlComponent.h"
 
 NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
@@ -34,11 +35,22 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [self.portals[0] componentForClass:[OGTransitionComponent class]];
     
-    transitionComponent.closed = NO;
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
-    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
+    [self.playerMovementControlComponent didTouchDownAtPoint:touchLocation];
+//    OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [self.portals[0] componentForClass:[OGTransitionComponent class]];
+//    
+//    transitionComponent.closed = NO;
+//    
+//    [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    
+    [self.playerMovementControlComponent didTouchMoveToPoint:touchLocation];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
