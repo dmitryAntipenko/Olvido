@@ -7,9 +7,7 @@
 //
 
 #import "OGObstaclesScene.h"
-#import "OGCollisionBitMask.h"
 #import "OGGameScene+OGGameSceneCreation.h"
-#import "SKColor+OGConstantColors.h"
 
 CGFloat const kOGObstacleWidth = 30.0;
 

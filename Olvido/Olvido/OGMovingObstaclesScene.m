@@ -7,9 +7,7 @@
 //
 
 #import "OGMovingObstaclesScene.h"
-#import "OGCollisionBitMask.h"
 #import "OGGameScene+OGGameSceneCreation.h"
-#import "SKColor+OGConstantColors.h"
 
 CGFloat const kOGObstacleLinearDamping = 0.0;
 CGFloat const kOGObstacleAngularDamping = 0.0;

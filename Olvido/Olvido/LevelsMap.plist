@@ -51,13 +51,32 @@
 				<key>Color</key>
 				<string>0xf1c40f</string>
 				<key>Next Level Index</key>
-				<integer>0</integer>
+				<integer>3</integer>
 				<key>Location</key>
 				<integer>3</integer>
 			</dict>
 		</array>
 		<key>Class Name</key>
 		<string>OGMovingObstaclesScene</string>
+	</dict>
+	<dict>
+		<key>Enemies Count</key>
+		<integer>4</integer>
+		<key>Identifier</key>
+		<string>3</string>
+		<key>Portals</key>
+		<array>
+			<dict>
+				<key>Color</key>
+				<string>0xf1c40f</string>
+				<key>Next Level Index</key>
+				<integer>0</integer>
+				<key>Location</key>
+				<integer>1</integer>
+			</dict>
+		</array>
+		<key>Class Name</key>
+		<string>OGFlameScene</string>
 	</dict>
 </array>
 </plist>
