@@ -88,6 +88,14 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     flame.targetNode = self;
     flame.position = point;
     flame.emissionAngle = angle;
+    
+    CGFloat flameTriggerHeightHalf = flame.particleLifetime * (flame.particleSpeed - flame.particleSpeedRange);
+    CGRect flameTriggerRect = CGRectMake(-flame.particlePositionRange.dx / 2, -flameTriggerHeightHalf, flame.particlePositionRange.dx, flameTriggerHeightHalf * 2);
+    
+    flame.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:flameTriggerRect];
+    flame.physicsBody.categoryBitMask = kOGCollisionBitMaskFlame;
+    flame.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+    flame.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;
 
     flame.name = kOGFlameSceneFlameNodeName;
     
@@ -152,8 +160,6 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     SKNode *nodeA = contact.bodyA.node;
     SKNode *nodeB = contact.bodyB.node;
     
-   NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
-    
     if ([nodeA.name isEqualToString:kOGPortalNodeName])
     {
         OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
@@ -168,9 +174,13 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
         transitionComponent.closed = NO;
         [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
     }
+    else if ([nodeA.name isEqualToString:kOGFlameSceneFlameNodeName])
+    {
+        NSLog(@"P R O G R A V");
+    }
     else if ([nodeB.name isEqualToString:kOGFlameSceneFlameNodeName])
     {
-        NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
+        NSLog(@"P R O G R A V");
     }
 
 }

@@ -8,7 +8,7 @@
 
 #import "OGGameScene.h"
 #import "OGConstants.h"
-#import "OGTrackMovementControlComponent.h"
+#import "OGDragMovementControlComponent.h"
 #import "OGTapMovementControlComponent.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
@@ -117,7 +117,7 @@ CGFloat const kOGEnemyMass = 0.01;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
-    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
+    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame;
     
     sprite.name = kOGPlayerNodeName;
     sprite.physicsBody.friction = 0.0;
@@ -127,7 +127,7 @@ CGFloat const kOGEnemyMass = 0.01;
     
     [player addComponent:visualComponent];
     
-    OGMovementControlComponent *movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
+    OGMovementControlComponent *movementControlComponent = [[OGDragMovementControlComponent alloc] initWithNode:sprite];
     self.playerMovementControlComponent = movementControlComponent;
     [player addComponent:movementControlComponent];
     
@@ -147,7 +147,6 @@ CGFloat const kOGEnemyMass = 0.01;
     visualComponent.spriteNode.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:visualComponent.spriteNode.frame];
     visualComponent.spriteNode.physicsBody.contactTestBitMask = kOGCollisionBitMaskPortal | kOGCollisionBitMaskFlame;
     visualComponent.spriteNode.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
-//    visualComponent.spriteNode.physicsBody
     
     if (transitionComponent)
     {

@@ -9,6 +9,6 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGMovementControlComponent.h"
 
-@interface OGTrackMovementControlComponent : OGMovementControlComponent
+@interface OGDragMovementControlComponent : OGMovementControlComponent
 
 @end
