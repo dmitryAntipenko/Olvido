@@ -23,6 +23,8 @@
 
     SKView *view = (SKView *) self.view;
     
+    view.multipleTouchEnabled = NO;
+    
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B2388DB1DB4BDD000A9092B /* OGTrackControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */; };
+		1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */; };
 		1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */; };
 		1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */; };
 		1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		1B2388D91DB4BDD000A9092B /* OGTrackControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrackControlComponent.h; sourceTree = "<group>"; };
 		1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTrackControlComponent.m; sourceTree = "<group>"; };
+		1B2388DD1DB4C4A000A9092B /* OGMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementControlComponent.h; sourceTree = "<group>"; };
+		1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementControlComponent.m; sourceTree = "<group>"; };
 		1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBasicGameNode.h; sourceTree = "<group>"; };
 		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
 		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
@@ -120,17 +123,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B2388DC1DB4C47D00A9092B /* movementControlComponents */ = {
+			isa = PBXGroup;
+			children = (
+				1B2388D91DB4BDD000A9092B /* OGTrackControlComponent.h */,
+				1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */,
+				1B2388DD1DB4C4A000A9092B /* OGMovementControlComponent.h */,
+				1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */,
+			);
+			name = movementControlComponents;
+			sourceTree = "<group>";
+		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1B2388DC1DB4C47D00A9092B /* movementControlComponents */,
 				EAFBC9761DB3E64800142D66 /* OGTransitionComponent.h */,
 				EAFBC9771DB3E64800142D66 /* OGTransitionComponent.m */,
 				EA70E5201DB3F4620034116D /* OGMovementComponent.h */,
 				EA70E5211DB3F4620034116D /* OGMovementComponent.m */,
 				EA70E5241DB3F4620034116D /* OGVisualComponent.h */,
 				EA70E5251DB3F4620034116D /* OGVisualComponent.m */,
-				1B2388D91DB4BDD000A9092B /* OGTrackControlComponent.h */,
-				1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -302,7 +315,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -369,6 +382,7 @@
 				EA0D272B1DB1478F00CEFB8A /* OGScenesController.m in Sources */,
 				EA0D273C1DB1576400CEFB8A /* OGObstaclesScene.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
+				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
 				EA70E5271DB3F4620034116D /* OGEntity.m in Sources */,
 				EA0D27401DB15C4E00CEFB8A /* OGMovingObstaclesScene.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
@@ -492,11 +506,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -509,11 +523,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

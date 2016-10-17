@@ -7,6 +7,7 @@
 //
 
 #import "OGGameScene.h"
+#import "OGTrackControlComponent.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
@@ -117,6 +118,7 @@ CGFloat const kOGEnemyMass = 0.01;
     [player addComponent:visualComponent];
     
     OGTrackControlComponent *trackControlComponent = [[OGTrackControlComponent alloc] initWithNode:sprite];
+    self.playerMovementControlComponent = trackControlComponent;
     [player addComponent:trackControlComponent];
     
     self.player = player;

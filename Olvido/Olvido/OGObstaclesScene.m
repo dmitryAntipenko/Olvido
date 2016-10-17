@@ -71,6 +71,8 @@ CGFloat const kOGObstacleWidth = 30.0;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    
+    
     [self.sceneDelegate gameSceneDidCallFinishWithPortal:self.portals[0]];
 }
 

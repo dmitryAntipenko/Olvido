@@ -7,13 +7,8 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGMovementControlComponent.h"
 
-@interface OGTrackControlComponent : GKComponent
-
-- (instancetype)initWithNode:(SKNode *)node;
-
-- (void)moveToPoint:(CGPoint)point;
-
-- (void)moveOnVector:(CGVector)vector;
+@interface OGTrackControlComponent : OGMovementControlComponent
 
 @end
