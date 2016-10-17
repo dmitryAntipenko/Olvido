@@ -11,6 +11,13 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
+CGFloat const kOGObstacleLinearDamping = 0.0;
+CGFloat const kOGObstacleAngularDamping = 0.0;
+CGFloat const kOGObstacleFriction = 0.0;
+CGFloat const kOGObstacleRestitution = 1.0;
+
+CGFloat const kOGObstacleMovementDuration = 1.0;
+
 @implementation OGMovingObstaclesScene
 
 - (void)createSceneContents
@@ -31,13 +38,12 @@
     [self createEnemies];
     [self createPlayer];
     
-    CGFloat offset = self.frame.size.height / 5.0;
+    [self createObstaclesWithSize:CGSizeMake(self.frameOffset, 30.0)
+                          atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frameOffset)];
     
-    [self createObstaclesWithSize:CGSizeMake(offset, 30.0)
-                          atPoint:CGPointMake(CGRectGetMidX(self.frame), offset)];
-    
-    [self createObstaclesWithSize:CGSizeMake(offset, 30.0)
-                          atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height - offset)];
+    [self createObstaclesWithSize:CGSizeMake(self.frameOffset, 30.0)
+                          atPoint:CGPointMake(CGRectGetMidX(self.frame),
+                                              self.frame.size.height - self.frameOffset)];
 
 }
 
@@ -55,10 +61,10 @@
     sprite.position = point;
     
     sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:size];
-    sprite.physicsBody.restitution = 1.0;
-    sprite.physicsBody.friction = 0.0;
-    sprite.physicsBody.linearDamping = 0.0;
-    sprite.physicsBody.angularDamping = 0.0;
+    sprite.physicsBody.restitution = kOGObstacleRestitution;
+    sprite.physicsBody.friction = kOGObstacleFriction;
+    sprite.physicsBody.linearDamping = kOGObstacleLinearDamping;
+    sprite.physicsBody.angularDamping = kOGObstacleAngularDamping;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskObstacle;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
@@ -68,10 +74,11 @@
     
     [self addChild:sprite];
     
-    CGFloat offset = self.frame.size.height / 5.0;
+    SKAction *moveActionRight = [SKAction moveToX:self.frameOffset
+                                         duration:kOGObstacleMovementDuration];
     
-    SKAction *moveActionRight = [SKAction moveToX:offset duration:1.0];
-    SKAction *moveActionLeft = [SKAction moveToX:self.frame.size.width - offset duration:1.0];
+    SKAction *moveActionLeft = [SKAction moveToX:self.frame.size.width - self.frameOffset
+                                        duration:kOGObstacleMovementDuration];
     
     SKAction *repeatAction = [SKAction repeatActionForever:[SKAction sequence:@[
                                                                                 moveActionRight,
@@ -80,6 +87,11 @@
     [sprite runAction:repeatAction];
     
     [visualComponent release];
+}
+
+- (CGFloat)frameOffset
+{
+    return self.frame.size.height / 5.0;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

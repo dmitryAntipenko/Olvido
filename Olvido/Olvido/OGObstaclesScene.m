@@ -11,6 +11,8 @@
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
+CGFloat const kOGObstacleWidth = 30.0;
+
 @implementation OGObstaclesScene
 
 - (void)createSceneContents
@@ -31,13 +33,16 @@
     [self createEnemies];
     [self createPlayer];
     
-    CGFloat offset = self.frame.size.height / 5.0;
+    [self createObstaclesWithSize:CGSizeMake(self.frameOffset * 2.0, kOGObstacleWidth)
+                          atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frameOffset)];
     
-    [self createObstaclesWithSize:CGSizeMake(400.0, 30.0)
-                          atPoint:CGPointMake(CGRectGetMidX(self.frame), offset)];
-    
-    [self createObstaclesWithSize:CGSizeMake(400.0, 30.0)
-                          atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height - offset)];
+    [self createObstaclesWithSize:CGSizeMake(self.frameOffset * 2.0, kOGObstacleWidth)
+                          atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height - self.frameOffset)];
+}
+
+- (CGFloat)frameOffset
+{
+    return self.frame.size.height / 5.0;
 }
 
 - (void)createObstaclesWithSize:(CGSize)size atPoint:(CGPoint)point

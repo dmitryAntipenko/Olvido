@@ -11,6 +11,12 @@
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
 
+CGFloat const kOGEnemyLinearDamping = 0.0;
+CGFloat const kOGEnemyAngularDamping = 0.0;
+CGFloat const kOGEnemyFriction = 0.0;
+CGFloat const kOGEnemyRestitution = 1.0;
+CGFloat const kOGEnemyMass = 0.01;
+
 @interface OGGameScene ()
 
 @property (nonatomic, readonly) CGFloat enemySpeed;
@@ -62,11 +68,13 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         sprite.position = [OGConstants randomPointInRect:self.frame];
         
         CGFloat enemyRadius = visualComponent.spriteNode.size.width / 2.0;
+        
         sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyRadius];
-        sprite.physicsBody.linearDamping = 0.0;
-        sprite.physicsBody.angularDamping = 0.0;
-        sprite.physicsBody.friction = 0.0;
-        sprite.physicsBody.restitution = 1.0;
+        sprite.physicsBody.linearDamping = kOGEnemyLinearDamping;
+        sprite.physicsBody.angularDamping = kOGEnemyAngularDamping;
+        sprite.physicsBody.friction = kOGEnemyFriction;
+        sprite.physicsBody.restitution = kOGEnemyRestitution;
+        sprite.physicsBody.mass = kOGEnemyMass;
         
         sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
         sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
