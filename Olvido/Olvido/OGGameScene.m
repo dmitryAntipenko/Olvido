@@ -117,7 +117,7 @@ CGFloat const kOGEnemyMass = 0.01;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
-    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
+    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame;
     
     sprite.name = kOGPlayerNodeName;
     sprite.physicsBody.friction = 0.0;
