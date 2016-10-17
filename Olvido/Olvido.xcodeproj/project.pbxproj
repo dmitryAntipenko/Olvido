@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B2388DB1DB4BDD000A9092B /* OGTrackControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */; };
+		1B2388DB1DB4BDD000A9092B /* OGTrackMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGTrackMovementControlComponent.m */; };
 		1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */; };
+		1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */; };
 		1B9458A41DA6B08900C0C951 /* OGBasicGameNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */; };
 		1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9458A61DA6B0B300C0C951 /* OGBonusNode.m */; };
 		1BDD76321DA7C26500C522DE /* OGObstacleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDD762F1DA7C26500C522DE /* OGObstacleNode.m */; };
@@ -44,10 +45,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1B2388D91DB4BDD000A9092B /* OGTrackControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrackControlComponent.h; sourceTree = "<group>"; };
-		1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTrackControlComponent.m; sourceTree = "<group>"; };
+		1B2388D91DB4BDD000A9092B /* OGTrackMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrackMovementControlComponent.h; sourceTree = "<group>"; };
+		1B2388DA1DB4BDD000A9092B /* OGTrackMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTrackMovementControlComponent.m; sourceTree = "<group>"; };
 		1B2388DD1DB4C4A000A9092B /* OGMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementControlComponent.h; sourceTree = "<group>"; };
 		1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementControlComponent.m; sourceTree = "<group>"; };
+		1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTapMovementControlComponent.h; sourceTree = "<group>"; };
+		1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTapMovementControlComponent.m; sourceTree = "<group>"; };
 		1B9458A21DA6B08900C0C951 /* OGBasicGameNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBasicGameNode.h; sourceTree = "<group>"; };
 		1B9458A31DA6B08900C0C951 /* OGBasicGameNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBasicGameNode.m; sourceTree = "<group>"; };
 		1B9458A51DA6B0B300C0C951 /* OGBonusNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBonusNode.h; sourceTree = "<group>"; };
@@ -126,10 +129,12 @@
 		1B2388DC1DB4C47D00A9092B /* movementControlComponents */ = {
 			isa = PBXGroup;
 			children = (
-				1B2388D91DB4BDD000A9092B /* OGTrackControlComponent.h */,
-				1B2388DA1DB4BDD000A9092B /* OGTrackControlComponent.m */,
+				1B2388D91DB4BDD000A9092B /* OGTrackMovementControlComponent.h */,
+				1B2388DA1DB4BDD000A9092B /* OGTrackMovementControlComponent.m */,
 				1B2388DD1DB4C4A000A9092B /* OGMovementControlComponent.h */,
 				1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */,
+				1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */,
+				1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */,
 			);
 			name = movementControlComponents;
 			sourceTree = "<group>";
@@ -359,10 +364,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA5C3B0F1DB4A682006FC219 /* OGFlameScene.m in Sources */,
 				EAC384131DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				1B9458A71DA6B0B300C0C951 /* OGBonusNode.m in Sources */,
-				1B2388DB1DB4BDD000A9092B /* OGTrackControlComponent.m in Sources */,
+				1B2388DB1DB4BDD000A9092B /* OGTrackMovementControlComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,

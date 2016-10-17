@@ -7,7 +7,8 @@
 //
 
 #import "OGGameScene.h"
-#import "OGTrackControlComponent.h"
+#import "OGTrackMovementControlComponent.h"
+#import "OGTapMovementControlComponent.h"
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
@@ -117,15 +118,19 @@ CGFloat const kOGEnemyMass = 0.01;
     
     [player addComponent:visualComponent];
     
-    OGTrackControlComponent *trackControlComponent = [[OGTrackControlComponent alloc] initWithNode:sprite];
-    self.playerMovementControlComponent = trackControlComponent;
-    [player addComponent:trackControlComponent];
+//    OGMovementControlComponent *trackMovementControlComponent = [[OGTrackMovementControlComponent alloc] initWithNode:sprite];
+//    self.playerMovementControlComponent = trackMovementControlComponent;
+//    [player addComponent:trackMovementControlComponent];
+    
+    OGMovementControlComponent *movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
+    self.playerMovementControlComponent = movementControlComponent;
+    [player addComponent:movementControlComponent];
     
     self.player = player;
     [self addChild:sprite];
     
     [visualComponent release];
-    [trackControlComponent release];
+    [movementControlComponent release];
 }
 
 - (void)addPortal:(OGEntity *)portal

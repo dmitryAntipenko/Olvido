@@ -6,9 +6,9 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGTrackControlComponent.h"
+#import "OGTrackMovementControlComponent.h"
 
-@implementation OGTrackControlComponent
+@implementation OGTrackMovementControlComponent
 
 - (void)didTouchMoveToPoint:(CGPoint)point
 {
