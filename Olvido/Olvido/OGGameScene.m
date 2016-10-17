@@ -116,6 +116,11 @@ CGFloat const kOGEnemyMass = 0.01;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskObstacle | kOGCollisionBitMaskEnemy;
     
+    sprite.physicsBody.friction = 0.0;
+    sprite.physicsBody.restitution = 1.0;
+    sprite.physicsBody.linearDamping = 0.0;
+    sprite.physicsBody.angularDamping = 0.0;
+    
     [player addComponent:visualComponent];
     
 //    OGMovementControlComponent *trackMovementControlComponent = [[OGTrackMovementControlComponent alloc] initWithNode:sprite];
