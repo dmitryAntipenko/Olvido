@@ -30,9 +30,6 @@ NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
-NSString *const kOGSceneControllerHorizontalPortalTextureName = @"PortalHorizontal";
-NSString *const kOGSceneControllerVerticalPortalTextureName = @"PortalVertical";
-
 @interface OGScenesController () <OGGameSceneDelegate>
 
 @property (nonatomic, retain) OGGameScene *currentScene;

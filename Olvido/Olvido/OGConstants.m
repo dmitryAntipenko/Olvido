@@ -25,6 +25,9 @@ CGFloat const kOGGameNodeDefaultSpeed = 1.0;
 
 CGFloat const kOGConstantsOffset = 80.0;
 
+NSString *const kOGSceneControllerHorizontalPortalTextureName = @"PortalHorizontal";
+NSString *const kOGSceneControllerVerticalPortalTextureName = @"PortalVertical";
+
 @implementation OGConstants
 
 + (CGPoint)randomPointInRect:(CGRect)rect

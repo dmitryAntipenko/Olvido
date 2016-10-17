@@ -26,6 +26,9 @@ extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
 extern CGFloat const kOGGameNodeDefaultSpeed;
 
+extern NSString *const kOGSceneControllerHorizontalPortalTextureName;
+extern NSString *const kOGSceneControllerVerticalPortalTextureName;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;

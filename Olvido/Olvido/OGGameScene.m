@@ -112,7 +112,6 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     [self addChild:sprite];
     
     [visualComponent release];
-
 }
 
 - (void)addPortal:(OGEntity *)portal
