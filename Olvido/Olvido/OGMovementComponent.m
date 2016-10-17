@@ -50,7 +50,8 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
 {
     _speedFactor = speedFactor;
     
-    
+    CGVector velocity = self.physicsBody.velocity;
+    self.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
 }
 
 - (void)dealloc
