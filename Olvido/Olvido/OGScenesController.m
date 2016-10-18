@@ -111,7 +111,12 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     OGGameScene *scene = [[class alloc] initWithSize:self.view.frame.size];
     
     scene.identifier = identifier;
+    
+    /* temorary code */
     scene.controlType = self.controlType;
+    scene.godMode = self.godMode;
+    /* temorary code */
+    
     scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
     [scene createSceneContents];

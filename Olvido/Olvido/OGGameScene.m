@@ -38,8 +38,12 @@
     
     if (contactType == kOGContactTypeGameOver)
     {
-        NSLog(@"game Over");
-//        [self gameOver];
+        /* temporary code */
+        if (!self.godMode)
+        {
+            NSLog(@"Game Over");
+        }
+        /* temporary code */
     }
     else if (contactType == kOGContactTypePlayerDidGetCoin)
     {

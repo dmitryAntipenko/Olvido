@@ -32,6 +32,7 @@
     view.showsNodeCount = YES;
     view.showsPhysics = YES;
     
+    /* Temporary code */
     OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];
     
     controlChoosingScene.viewController = self;
@@ -39,6 +40,22 @@
     [view presentScene:controlChoosingScene];
 
     [controlChoosingScene release];
+    /* Temporary code */
+    
+    /* Should be uncommented after temporary code delete */
+    
+//    OGScenesController *scenesController = [[OGScenesController alloc] init];
+//    
+//    if (scenesController)
+//    {
+//        scenesController.view = view;
+//        [scenesController loadLevelMap];
+//        
+//        self.scenesController = scenesController;
+//        [self.scenesController loadInitialLevel];
+//    }
+//    
+//    [scenesController release];
 }
 
 - (BOOL)shouldAutorotate
@@ -46,7 +63,8 @@
     return NO;
 }
 
-- (void)startGame
+/* Temporary code */
+- (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode
 {
     OGScenesController *scenesController = [[OGScenesController alloc] init];
     SKView *view = (SKView *) self.view;
@@ -54,7 +72,8 @@
     if (scenesController)
     {
         scenesController.view = view;
-        scenesController.controlType = self.controlType;
+        scenesController.controlType = type;
+        scenesController.godMode = mode;
         [scenesController loadLevelMap];
 
         self.scenesController = scenesController;
@@ -63,6 +82,7 @@
 
     [scenesController release];
 }
+/* Temporary code */
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
@@ -89,7 +109,6 @@
 - (void)dealloc
 {
     [_scenesController release];
-    [_controlType release];
     
     [super dealloc];
 }

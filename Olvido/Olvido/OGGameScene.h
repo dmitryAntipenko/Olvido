@@ -31,7 +31,10 @@
 
 @interface OGGameScene : SKScene <SKPhysicsContactDelegate>
 
+/* temporary code */
 @property (nonatomic, copy) NSString *controlType;
+@property (nonatomic, assign) BOOL godMode;
+/* temporary code */
 
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSNumber *enemiesCount;
