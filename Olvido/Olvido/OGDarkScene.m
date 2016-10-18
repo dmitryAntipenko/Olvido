@@ -11,15 +11,15 @@
 #import "OGVisualComponent.h"
 
 NSInteger const kOGDarkSceneDarknessRadius = 200;
+NSString *const kOGDarkSceneLightImageName = @"LightImg";
 
 @implementation OGDarkScene
-
 
 - (void)createSceneContents
 {
     [super createSceneContents];
     
-    self.backgroundColor = [SKColor gameRed];
+    self.backgroundColor = [SKColor gameGreen];
     
     
 //     [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkRed]]];
@@ -35,7 +35,7 @@ NSInteger const kOGDarkSceneDarknessRadius = 200;
     [self createPlayer];
     OGVisualComponent *visualComponent = (OGVisualComponent *)[self.player componentForClass:[OGVisualComponent class]];
 //    visualComponent.spriteNode.zPosition = 2;
-//    visualComponent.color = [SKColor gameWhite];
+    visualComponent.color = [SKColor gameBlack];
 //    
 //    
 //    SKCropNode *cropNode = [SKCropNode node];
@@ -50,44 +50,54 @@ NSInteger const kOGDarkSceneDarknessRadius = 200;
 //    //cropNode.position = CGPointMake(self.size.width/2, self.size.height/2);
 //    
 //    [self addChild:cropNode];
+    
+    
+    
+    SKSpriteNode *pic = [self createBackgroundNodeWithColor:[SKColor orangeColor]];
+    pic.name = @"PictureNode";
+    
+   // UIImage *image = [UIImage imag
+    //SKTexture *all = [SKTexture text]
+    
+//    SKTexture *maskText = [SKTexture textureWithImageNamed:@"EnemyBall"];
+//    SKTexture *newTexture = [SKTexture textureWithRect:maskText.textureRect inTexture:maskText];
+//    
+//    SKSpriteNode *mask = [SKSpriteNode spriteNodeWithImageNamed:@"EnemyBall"];
     CGFloat screenDiagonal = powf(powf(self.size.height, 2.0) + powf(self.size.width, 2.0), 0.5) + kOGDarkSceneDarknessRadius;
-    SKShapeNode *darknessBackground = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(screenDiagonal, screenDiagonal)];
-    darknessBackground.strokeColor = [SKColor blackColor];
-    darknessBackground.zPosition = 1;
-    darknessBackground.lineWidth = screenDiagonal - (CGFloat)kOGDarkSceneDarknessRadius;
-    //darknessBackground.lineLength = 500;
+    SKShapeNode *mask = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(100, 100)];
+    mask.alpha = 0.0;
+    mask.lineWidth = 100;
+   // mask.size=CGSizeMake(100, 100);
+    //mask.position=CGPointMake(50, 50);
     
-    [visualComponent.spriteNode addChild:darknessBackground];
-    [self addChild:visualComponent.spriteNode];
+    SKCropNode *cropNode = [SKCropNode node];
+    cropNode.position=CGPointMake(0.0, 0.0);
+
+
     
-//    SKSpriteNode *pictureToMask = [SKSpriteNode spriteNodeWithImageNamed:@"EnemyBall"];
-//    SKSpriteNode *mask = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(200, 200)]; //100 by 100 is the size of the mask
-//    SKCropNode *cropNode = [SKCropNode node];
-//    cropNode.zPosition = 1;
-//    [cropNode addChild: pictureToMask];
-//    [cropNode setMaskNode: mask];
-//    [self addChild: cropNode];
-//    cropNode.position = CGPointMake( CGRectGetMidX (self.frame), CGRectGetMidY (self.frame));
+    [cropNode addChild:mask];
+    [cropNode setMaskNode:visualComponent.spriteNode];
     
-    //[self addChild:visualComponent.spriteNode];
-   // [self addChild:background];
+    [pic addChild:cropNode];
+    [self addChild:pic];
     
     
-    //[self addChild:background];
-    //[self addChild:background];
     
-    //((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode.lightingBitMask = 1;
     
-//    SKLightNode *light = [SKLightNode node];
-//    light.falloff = 1.7;
-//    light.categoryBitMask = 1;
-//    light.ambientColor = [UIColor blackColor];
-//    light.lightColor = [[[UIColor alloc] initWithRed:1.0 green:1.0 blue:1.0 alpha:0.5] autorelease];
-//    light.shadowColor = [[[UIColor alloc] initWithRed:0.0 green:0.0 blue:0.0 alpha:0.4] autorelease];
-//    light.enabled = YES;
+    
+//    CGFloat screenDiagonal = powf(powf(self.size.height, 2.0) + powf(self.size.width, 2.0), 0.5) + kOGDarkSceneDarknessRadius;
+//    SKShapeNode *darknessBackground = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(screenDiagonal, screenDiagonal)];
+//    darknessBackground.strokeColor = [SKColor blackColor];
+//    darknessBackground.zPosition = 1;
+//    darknessBackground.lineWidth = screenDiagonal - (CGFloat)kOGDarkSceneDarknessRadius;
 //    
+//    SKSpriteNode *light = [SKSpriteNode spriteNodeWithImageNamed:kOGDarkSceneLightImageName];
+//    light.zPosition = 1;
+//    light.size = CGSizeMake(kOGDarkSceneDarknessRadius*1.7, kOGDarkSceneDarknessRadius*1.7);
 //    
-//    [((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode addChild:light];
+//    [darknessBackground addChild:light];
+//    [visualComponent.spriteNode addChild:darknessBackground];
+//    visualComponent.spriteNode.zPosition = 2000;
 }
 
 - (SKSpriteNode *)createBackgroundNodeWithColor:(SKColor *)color

@@ -196,7 +196,7 @@ CGFloat const kOGEnemyMass = 0.01;
     [player addComponent:movementControlComponent];
     
     self.player = player;
-    //[self addChild:sprite];
+    [self addChild:sprite];
     
     [visualComponent release];
     [movementControlComponent release];
