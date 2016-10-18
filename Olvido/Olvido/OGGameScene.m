@@ -181,7 +181,17 @@ CGFloat const kOGEnemyMass = 0.01;
     
     [player addComponent:visualComponent];
     
-    OGMovementControlComponent *movementControlComponent = [[OGDragMovementControlComponent alloc] initWithNode:sprite];
+    OGMovementControlComponent *movementControlComponent = nil;
+    
+    if ([self.controlType isEqualToString:@"Drag"])
+    {
+        movementControlComponent = [[OGDragMovementControlComponent alloc] initWithNode:sprite];
+    }
+    else
+    {
+        movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite];
+    }
+    
     self.playerMovementControlComponent = movementControlComponent;
     [player addComponent:movementControlComponent];
     

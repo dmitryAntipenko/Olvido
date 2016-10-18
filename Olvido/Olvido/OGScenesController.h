@@ -11,6 +11,7 @@
 @interface OGScenesController : NSObject
 
 @property (nonatomic, assign) SKView *view;
+@property (nonatomic, copy) NSString *controlType;
 
 - (void)loadLevelMap;
 - (void)loadInitialLevel;

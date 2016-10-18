@@ -25,6 +25,8 @@
 
 @interface OGGameScene : SKScene <SKPhysicsContactDelegate>
 
+@property (nonatomic, copy) NSString *controlType;
+
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSNumber *enemiesCount;
 

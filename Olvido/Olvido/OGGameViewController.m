@@ -9,6 +9,8 @@
 #import "OGGameViewController.h"
 #import "OGScenesController.h"
 
+#import "OGControlChoosingScene.h"
+
 @interface OGGameViewController ()
 
 @property (nonatomic, retain) OGScenesController *scenesController;
@@ -29,18 +31,13 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    OGScenesController *scenesController = [[OGScenesController alloc] init];
+    OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];
     
-    if (scenesController)
-    {
-        scenesController.view = view;
-        [scenesController loadLevelMap];
-        
-        self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];
-    }
+    controlChoosingScene.viewController = self;
     
-    [scenesController release];
+    [view presentScene:controlChoosingScene];
+
+    [controlChoosingScene release];
 }
 
 - (BOOL)shouldAutorotate
@@ -48,9 +45,22 @@
     return NO;
 }
 
-- (void)didCallChangeScene
+- (void)startGame
 {
-    
+    OGScenesController *scenesController = [[OGScenesController alloc] init];
+    SKView *view = (SKView *) self.view;
+
+    if (scenesController)
+    {
+        scenesController.view = view;
+        scenesController.controlType = self.controlType;
+        [scenesController loadLevelMap];
+
+        self.scenesController = scenesController;
+        [self.scenesController loadInitialLevel];
+    }
+
+    [scenesController release];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
