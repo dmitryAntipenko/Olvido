@@ -11,9 +11,9 @@
 
 typedef NS_ENUM (NSUInteger, OGPortalLocation)
 {
-    kOGPortalLocationDown = 0,
+    kOGPortalLocationUp = 0,
     kOGPortalLocationRight = 1,
-    kOGPortalLocationUp = 2,
+    kOGPortalLocationDown = 2,
     kOGPortalLocationLeft = 3
 };
 

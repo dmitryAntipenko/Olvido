@@ -9,13 +9,6 @@
 #import "OGTapMovementControlComponent.h"
 
 CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
-CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
-
-@interface OGTapMovementControlComponent ()
-
-@property (nonatomic, assign) CGFloat speedFactor;
-
-@end
 
 @implementation OGTapMovementControlComponent
 
@@ -23,9 +16,10 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
 {
     self = [super initWithNode:node];
     
-    if (self)
+    if (!self)
     {
-        _speedFactor = kOGTapMovementControlComponentDefaultSpeedFactor;
+        [self release];
+        self = nil;
     }
     
     return self;

@@ -8,7 +8,7 @@
 
 #import "OGScenesController.h"
 #import "OGGameSceneDelegate.h"
-#import "OGGameScene.h"
+#import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
 #import "OGEntity.h"
@@ -105,11 +105,18 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
     NSArray *portals = self.levelMap[identifier.integerValue][kOGSceneControllerPortalsKey];
     
+    self.currentScene.sceneDelegate = nil;
+    
     Class class = NSClassFromString(className);
     OGGameScene *scene = [[class alloc] initWithSize:self.view.frame.size];
     
     scene.identifier = identifier;
+    
+    /* temorary code */
     scene.controlType = self.controlType;
+    scene.godMode = self.godMode;
+    /* temorary code */
+    
     scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
     [scene createSceneContents];
@@ -126,12 +133,12 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         if (portalTransitionComponent.location == kOGPortalLocationUp
             || portalTransitionComponent.location == kOGPortalLocationDown)
         {
-            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerHorizontalPortalTextureName];
+            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGHorizontalPortalTextureName];
         }
         else if (portalTransitionComponent.location == kOGPortalLocationLeft
                  || portalTransitionComponent.location == kOGPortalLocationRight)
         {
-            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerVerticalPortalTextureName];
+            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGVerticalPortalTextureName];
         }
         
         NSString *portalColor = portalDictionary[kOGSceneControllerPortalColorKey];

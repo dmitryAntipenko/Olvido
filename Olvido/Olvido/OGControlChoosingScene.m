@@ -9,19 +9,41 @@
 #import "OGControlChoosingScene.h"
 #import "OGGameViewController.h"
 
+NSString *const kOGControlChoosingSceneFormat = @"GOD MODE: %@";
+
+@interface OGControlChoosingScene ()
+
+@property (nonatomic, assign) BOOL godMode;
+@property (nonatomic, retain) SKLabelNode *godModeLabel;
+@property (nonatomic, retain) SKSpriteNode *jesus;
+
+@end
+
 @implementation OGControlChoosingScene
 
 - (void)didMoveToView:(SKView *)view
 {
-    CGFloat offset = 50.0;
+    CGFloat offset = 100.0;
     
-    self.backgroundColor = [SKColor whiteColor];
+    self.jesus = [SKSpriteNode spriteNodeWithImageNamed:@"Jesus"];
+    self.jesus.alpha = 0.0;
+    self.jesus.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    self.jesus.size = self.frame.size;
+    
+    self.backgroundColor = [SKColor blackColor];
     
     SKLabelNode *tapButton = [self createButtonWithTitle:@"Tap" atPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + offset)];
-    SKLabelNode *dragButton = [self createButtonWithTitle:@"Drag" atPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - offset)];
+    SKLabelNode *dragButton = [self createButtonWithTitle:@"Drag" atPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
+    SKLabelNode *godMode = [self createButtonWithTitle:@"godMode" atPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - offset)];
     
+    godMode.text = @"GOD MODE: OFF";
+    
+    self.godModeLabel = godMode;
+    
+    [self addChild:self.jesus];
     [self addChild:tapButton];
     [self addChild:dragButton];
+    [self addChild:godMode];
 }
 
 - (SKLabelNode *)createButtonWithTitle:(NSString *)title atPoint:(CGPoint)point
@@ -30,8 +52,9 @@
     
     button.name = title;
     button.position = point;
-    button.fontSize = 48.0;
-    button.fontColor = [SKColor blueColor];
+    button.fontSize = 32.0;
+    button.fontName = @"Helvetica";
+    button.fontColor = [SKColor whiteColor];
     
     return button;
 }
@@ -44,16 +67,34 @@
     
     if ([touchedNode.name isEqualToString:@"Tap"])
     {
-        self.viewController.controlType = @"Tap";
-        
-        [self.viewController startGame];
+        [self.viewController startGameWithControlType:touchedNode.name godMode:self.godMode];
     }
     else if ([touchedNode.name isEqualToString:@"Drag"])
     {
-        self.viewController.controlType = @"Drag";
-        
-        [self.viewController startGame];
+        [self.viewController startGameWithControlType:touchedNode.name godMode:self.godMode];
     }
+    else if ([touchedNode.name isEqualToString:@"godMode"])
+    {
+        self.godMode = !self.godMode;
+        
+        if (self.godMode)
+        {
+            self.jesus.alpha = 1.0;
+        }
+        else
+        {
+            self.jesus.alpha = 0.0;
+        }
+        
+        self.godModeLabel.text = [NSString stringWithFormat:kOGControlChoosingSceneFormat, (self.godMode) ? @"ON" : @"OFF"];
+    }
+}
+
+- (void)dealloc
+{
+    [_viewController release];
+    
+    [super dealloc];
 }
 
 @end

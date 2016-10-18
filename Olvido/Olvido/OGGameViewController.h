@@ -12,9 +12,7 @@
 @interface OGGameViewController : UIViewController
 
 /* Temporary code */
-
-@property (nonatomic, copy) NSString *controlType;
-
-- (void)startGame;
+- (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode;
+/* Temporary code */
 
 @end

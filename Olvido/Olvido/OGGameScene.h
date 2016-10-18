@@ -9,10 +9,13 @@
 @import SpriteKit;
 
 #import "OGGameSceneDelegate.h"
+#import "OGConstants.h"
+
 #import "OGPortalLocation.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGCollisionBitMask.h"
 #import "OGConstants.h"
+#import "OGContactType.h"
 
 #import "OGEntity.h"
 #import "OGVisualComponent.h"
@@ -20,12 +23,18 @@
 #import "OGMovementComponent.h"
 #import "OGMovementControlComponent.h"
 #import "OGSpriteNode.h"
+#import "OGDragMovementControlComponent.h"
+#import "OGTapMovementControlComponent.h"
 
 @class OGEntity;
+@class OGMovementControlComponent;
 
 @interface OGGameScene : SKScene <SKPhysicsContactDelegate>
 
+/* temporary code */
 @property (nonatomic, copy) NSString *controlType;
+@property (nonatomic, assign) BOOL godMode;
+/* temporary code */
 
 @property (nonatomic, retain) NSNumber *identifier;
 @property (nonatomic, retain) NSNumber *enemiesCount;
@@ -38,11 +47,5 @@
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *enemies;
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *portals;
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *coins;
-
-- (void)createSceneContents;
-- (void)createEnemies;
-- (void)createPlayer;
-
-- (void)addPortal:(OGEntity *)portal;
 
 @end
