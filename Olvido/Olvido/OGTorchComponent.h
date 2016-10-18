@@ -10,6 +10,14 @@
 
 @interface OGTorchComponent : GKComponent
 
+
+
 @property (nonatomic, assign) CGFloat torchRadius;
 
+- (instancetype)initWithTorchSprite:(SKSpriteNode *)torchSprite
+                       tourchRadius:(CGFloat)torchRadius;
+- (void)torchTurnOn;
+- (void)torchTurnOff;
+
+- (void)createDarknessWithSize:(CGSize)size;
 @end

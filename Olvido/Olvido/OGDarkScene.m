@@ -8,7 +8,7 @@
 
 #import "OGDarkScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
-#import "OGVisualComponent.h"
+#import "OGTorchComponent.h"
 
 NSInteger const kOGDarkSceneDarknessRadius = 200;
 NSString *const kOGDarkSceneLightImageName = @"LightImg";
@@ -22,7 +22,7 @@ NSString *const kOGDarkSceneLightImageName = @"LightImg";
     self.backgroundColor = [SKColor gameGreen];
     
     
-//     [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkRed]]];
+    [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkRed]]];
 //    
 //    
 //    [self createEnemies];
@@ -34,8 +34,12 @@ NSString *const kOGDarkSceneLightImageName = @"LightImg";
 //    }
     [self createPlayer];
     OGVisualComponent *visualComponent = (OGVisualComponent *)[self.player componentForClass:[OGVisualComponent class]];
+    [self.player addComponent:[[OGTorchComponent alloc] initWithTorchSprite:visualComponent.spriteNode tourchRadius:100]];
+    [((OGTorchComponent *)[self.player componentForClass:[OGTorchComponent class]]) torchTurnOn];
 //    visualComponent.spriteNode.zPosition = 2;
     visualComponent.color = [SKColor gameBlack];
+    
+    [((OGTorchComponent *)[self.player componentForClass:[OGTorchComponent class]]) createDarknessWithSize:self.size];
 //    
 //    
 //    SKCropNode *cropNode = [SKCropNode node];
@@ -53,9 +57,9 @@ NSString *const kOGDarkSceneLightImageName = @"LightImg";
     
     
     
-    SKSpriteNode *pic = [self createBackgroundNodeWithColor:[SKColor orangeColor]];
-    pic.name = @"PictureNode";
-    
+//    SKSpriteNode *pic = [self createBackgroundNodeWithColor:[SKColor orangeColor]];
+//    pic.name = @"PictureNode";
+//    
    // UIImage *image = [UIImage imag
     //SKTexture *all = [SKTexture text]
     
@@ -63,24 +67,24 @@ NSString *const kOGDarkSceneLightImageName = @"LightImg";
 //    SKTexture *newTexture = [SKTexture textureWithRect:maskText.textureRect inTexture:maskText];
 //    
 //    SKSpriteNode *mask = [SKSpriteNode spriteNodeWithImageNamed:@"EnemyBall"];
-    CGFloat screenDiagonal = powf(powf(self.size.height, 2.0) + powf(self.size.width, 2.0), 0.5) + kOGDarkSceneDarknessRadius;
-    SKShapeNode *mask = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(100, 100)];
-    mask.alpha = 0.0;
-    mask.lineWidth = 100;
+//    CGFloat screenDiagonal = powf(powf(self.size.height, 2.0) + powf(self.size.width, 2.0), 0.5) + kOGDarkSceneDarknessRadius;
+//    SKShapeNode *mask = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(100, 100)];
+//    mask.alpha = 0.0;
+//    mask.lineWidth = 100;
    // mask.size=CGSizeMake(100, 100);
     //mask.position=CGPointMake(50, 50);
-    
-    SKCropNode *cropNode = [SKCropNode node];
-    cropNode.position=CGPointMake(0.0, 0.0);
-
-
-    
-    [cropNode addChild:mask];
-    [cropNode setMaskNode:visualComponent.spriteNode];
-    
-    [pic addChild:cropNode];
-    [self addChild:pic];
-    
+//    
+//    SKCropNode *cropNode = [SKCropNode node];
+//    cropNode.position=CGPointMake(0.0, 0.0);
+//
+//
+//    
+//    [cropNode addChild:mask];
+//    [cropNode setMaskNode:visualComponent.spriteNode];
+//    
+//    [pic addChild:cropNode];
+//    [self addChild:pic];
+//    
     
     
     

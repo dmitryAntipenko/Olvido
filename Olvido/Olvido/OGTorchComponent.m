@@ -44,18 +44,29 @@ NSString *const kOGTorchComponentLightName = @"light";
 {
     if (!self.isTurnedOn)
     {
-        if (![self.torchSprite childNodeWithName:kOGTorchComponentLightName])
+        SKSpriteNode *light = (SKSpriteNode *)[self.torchSprite childNodeWithName:kOGTorchComponentLightName];
+        
+        if (light)
+        {
+            light.colorBlendFactor = 0.0;
+            light.color = [SKColor clearColor];
+        }
+        else
         {
             [self createLight];
         }
-        
-        
     }
 }
 
-- (void)tourchTornOff
+- (void)torchTurnOff
 {
+    SKSpriteNode *light = (SKSpriteNode *)[self.torchSprite childNodeWithName:kOGTorchComponentLightName];
     
+    if (light)
+    {
+        light.colorBlendFactor = 1.0;
+        light.color = [SKColor blackColor];
+    }
 }
 
 - (void)createLight
@@ -63,9 +74,22 @@ NSString *const kOGTorchComponentLightName = @"light";
     SKSpriteNode *light = [SKSpriteNode spriteNodeWithImageNamed:kOGTorchComponentLightImageName];
     light.name = kOGTorchComponentLightName;
     light.zPosition = 1;
+    light.colorBlendFactor = 0.0;
     light.size = CGSizeMake(self.torchRadius, self.torchRadius);
     
     [self.torchSprite addChild:light];
+}
+
+- (void)createDarknessWithSize:(CGSize)size
+{
+    CGFloat screenDiagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + self.torchRadius;
+    
+    SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(screenDiagonal, screenDiagonal)];
+    darkness.strokeColor = [SKColor blackColor];
+    darkness.zPosition = 1;
+    darkness.lineWidth = screenDiagonal - self.torchRadius;
+    
+    [self.torchSprite addChild:darkness];
 }
 
 - (void)dealloc
