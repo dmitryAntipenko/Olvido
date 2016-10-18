@@ -11,7 +11,7 @@
 NSString *const kOGPlayerNodeName = @"player";
 NSString *const kOGEnemyNodeName = @"enemy";
 NSString *const kOGObstacleNodeName = @"obstacle";
-NSString *const kOGBonusNodeName = @"bonus";
+NSString *const kOGCoinNodeName = @"coin";
 NSString *const kOGPortalNodeName = @"portal";
 
 NSString *const kOGEnemyTextureName = @"EnemyBall";

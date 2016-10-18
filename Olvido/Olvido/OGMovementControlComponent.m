@@ -45,4 +45,11 @@
     
 }
 
+- (void)dealloc
+{
+    [_node release];
+    
+    [super dealloc];
+}
+
 @end

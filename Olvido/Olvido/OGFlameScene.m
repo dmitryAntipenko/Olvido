@@ -150,32 +150,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKNode *nodeA = contact.bodyA.node;
-    SKNode *nodeB = contact.bodyB.node;
-    
-    if ([nodeA.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    else if ([nodeB.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    else if ([nodeA.name isEqualToString:kOGFlameSceneFlameNodeName])
-    {
-        NSLog(@"P R O G R A V");
-    }
-    else if ([nodeB.name isEqualToString:kOGFlameSceneFlameNodeName])
-    {
-        NSLog(@"P R O G R A V");
-    }
-
+    [super didBeginContact:contact];
 }
 
 - (void)dealloc

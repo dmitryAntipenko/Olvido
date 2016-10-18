@@ -49,25 +49,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKNode *nodeA = contact.bodyA.node;
-    SKNode *nodeB = contact.bodyB.node;
-    
-    if ([nodeA.name isEqualToString:kOGPortalNodeName] && [nodeB.name isEqualToString:kOGPlayerNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    else if ([nodeB.name isEqualToString:kOGPortalNodeName] && [nodeA.name isEqualToString:kOGPlayerNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
+    [super didBeginContact:contact];
 }
 
 - (void)dealloc

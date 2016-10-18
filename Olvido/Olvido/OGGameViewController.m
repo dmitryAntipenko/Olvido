@@ -88,6 +88,7 @@
 - (void)dealloc
 {
     [_scenesController release];
+    [_controlType release];
     
     [super dealloc];
 }

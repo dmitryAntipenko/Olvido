@@ -8,7 +8,7 @@
 
 #import "OGScenesController.h"
 #import "OGGameSceneDelegate.h"
-#import "OGGameScene.h"
+#import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
 #import "OGEntity.h"
@@ -104,6 +104,8 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
     NSArray *portals = self.levelMap[identifier.integerValue][kOGSceneControllerPortalsKey];
+    
+    self.currentScene.sceneDelegate = nil;
     
     Class class = NSClassFromString(className);
     OGGameScene *scene = [[class alloc] initWithSize:self.view.frame.size];

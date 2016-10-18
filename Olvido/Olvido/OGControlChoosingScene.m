@@ -56,4 +56,11 @@
     }
 }
 
+- (void)dealloc
+{
+    [_viewController release];
+    
+    [super dealloc];
+}
+
 @end

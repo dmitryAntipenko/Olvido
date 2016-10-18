@@ -12,4 +12,10 @@
 
 - (SKCropNode *)createBackgroundBorderWithColor:(SKColor *)color;
 
+- (void)createSceneContents;
+- (void)createEnemies;
+- (void)createPlayer;
+
+- (void)addPortal:(OGEntity *)portal;
+
 @end

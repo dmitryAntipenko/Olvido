@@ -86,25 +86,7 @@ CGFloat const kOGObstacleWidth = 30.0;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKNode *nodeA = contact.bodyA.node;
-    SKNode *nodeB = contact.bodyB.node;
-    
-    if ([nodeA.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    else if ([nodeB.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    
-    //    NSLog(@" a : %@, B : %@", contact.bodyA.node.name, contact.bodyB.node.name);
+    [super didBeginContact:contact];
 }
 
 - (void)dealloc
