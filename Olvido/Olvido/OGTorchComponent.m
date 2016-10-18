@@ -82,12 +82,12 @@ NSString *const kOGTorchComponentLightName = @"light";
 
 - (void)createDarknessWithSize:(CGSize)size
 {
-    CGFloat screenDiagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + self.torchRadius;
+    CGFloat diagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + self.torchRadius;
     
-    SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(screenDiagonal, screenDiagonal)];
+    SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
     darkness.strokeColor = [SKColor blackColor];
     darkness.zPosition = 1;
-    darkness.lineWidth = screenDiagonal - self.torchRadius;
+    darkness.lineWidth = diagonal - self.torchRadius;
     
     [self.torchSprite addChild:darkness];
 }
