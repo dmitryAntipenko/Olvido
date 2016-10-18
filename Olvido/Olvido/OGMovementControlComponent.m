@@ -8,6 +8,8 @@
 
 #import "OGMovementControlComponent.h"
 
+CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
+
 @implementation OGMovementControlComponent
 
 - (instancetype)initWithNode:(SKNode *)node
@@ -17,6 +19,7 @@
     if (self)
     {
         _node = [node retain];
+        _speedFactor = kOGTapMovementControlComponentDefaultSpeedFactor;
     }
     
     return self;
@@ -43,6 +46,14 @@
 - (void)stop
 {
     
+}
+
+- (void)setSpeedFactor:(CGFloat)speedFactor
+{
+    _speedFactor = speedFactor;
+    
+    CGVector velocity = self.node.physicsBody.velocity;
+    self.node.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
 }
 
 - (void)dealloc

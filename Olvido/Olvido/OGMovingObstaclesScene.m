@@ -43,7 +43,7 @@ CGFloat const kOGObstacleMovementDuration = 1.0;
     OGEntity *obstacle = [OGEntity entity];
     
     OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
-    visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerHorizontalPortalTextureName];
+    visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGHorizontalPortalTextureName];
     visualComponent.color = [SKColor gameBlack];
     
     OGSpriteNode *sprite = visualComponent.spriteNode;

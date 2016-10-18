@@ -87,7 +87,11 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     flame.emissionAngle = angle;
     
     CGFloat flameTriggerHeightHalf = flame.particleLifetime * (flame.particleSpeed - flame.particleSpeedRange);
-    CGRect flameTriggerRect = CGRectMake(-flame.particlePositionRange.dx / 2, -flameTriggerHeightHalf, flame.particlePositionRange.dx, flameTriggerHeightHalf * 2);
+    
+    CGRect flameTriggerRect = CGRectMake(-flame.particlePositionRange.dx / 2,
+                                         -flameTriggerHeightHalf,
+                                         flame.particlePositionRange.dx,
+                                         flameTriggerHeightHalf * 2);
     
     flame.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:flameTriggerRect];
     flame.physicsBody.categoryBitMask = kOGCollisionBitMaskFlame;

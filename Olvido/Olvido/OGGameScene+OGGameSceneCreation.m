@@ -22,15 +22,15 @@ CGFloat const kOGGameSceneCoinLifeTime = 3.0;
 NSUInteger const kOGGameSceneMaxCoinCount = 10;
 CGFloat const kOGGameSceneCoinFadeOutDuration = 0.5;
 
-CGFloat const kOGEnemyLinearDamping = 0.0;
-CGFloat const kOGEnemyAngularDamping = 0.0;
-CGFloat const kOGEnemyFriction = 0.0;
-CGFloat const kOGEnemyRestitution = 1.0;
-CGFloat const kOGEnemyMass = 0.01;
+CGFloat const kOGDefaultLinearDamping = 0.0;
+CGFloat const kOGDefaultAngularDamping = 0.0;
+CGFloat const kOGDefaultFriction = 0.0;
+CGFloat const kOGDefaultRestitution = 1.0;
+CGFloat const kOGDefaultMass = 0.01;
 
 CGFloat const kOGGameSceneBorderSize = 3.0;
 
-CGFloat const kOGGameSceneEnemyDefaultSpeed = 3.0;
+CGFloat const kOGGameSceneEnemyDefaultSpeed = 2.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
 
 @interface OGGameScene ()
@@ -91,7 +91,9 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     sprite.owner = visualComponent;
     sprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
-    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width / 2.0];
+    CGFloat playerRadius = sprite.size.width / 2.0;
+    
+    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:playerRadius];
     sprite.physicsBody.dynamic = YES;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
@@ -99,10 +101,11 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame | kOGCollisionBitMaskCoin | kOGCollisionBitMaskPortal;
     
     sprite.name = kOGPlayerNodeName;
-    sprite.physicsBody.friction = 0.0;
-    sprite.physicsBody.restitution = 1.0;
-    sprite.physicsBody.linearDamping = 0.0;
-    sprite.physicsBody.angularDamping = 0.0;
+    sprite.physicsBody.friction = kOGDefaultFriction;
+    sprite.physicsBody.restitution = kOGDefaultRestitution;
+    sprite.physicsBody.linearDamping = kOGDefaultLinearDamping;
+    sprite.physicsBody.angularDamping = kOGDefaultAngularDamping;
+    sprite.physicsBody.mass = kOGDefaultMass;
     
     [player addComponent:visualComponent];
     
@@ -144,11 +147,11 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         CGFloat enemyRadius = visualComponent.spriteNode.size.width / 2.0;
         
         sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemyRadius];
-        sprite.physicsBody.linearDamping = kOGEnemyLinearDamping;
-        sprite.physicsBody.angularDamping = kOGEnemyAngularDamping;
-        sprite.physicsBody.friction = kOGEnemyFriction;
-        sprite.physicsBody.restitution = kOGEnemyRestitution;
-        sprite.physicsBody.mass = kOGEnemyMass;
+        sprite.physicsBody.linearDamping = kOGDefaultLinearDamping;
+        sprite.physicsBody.angularDamping = kOGDefaultAngularDamping;
+        sprite.physicsBody.friction = kOGDefaultFriction;
+        sprite.physicsBody.restitution = kOGDefaultRestitution;
+        sprite.physicsBody.mass = kOGDefaultMass;
         
         sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
         sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
@@ -183,11 +186,14 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         OGEntity *coin = [OGEntity entity];
         
         OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
-        visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGEnemyTextureName];
+        visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGCoinTextureName];
         visualComponent.color = [SKColor yellowColor];
         
         OGSpriteNode *sprite = visualComponent.spriteNode;
-        sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sprite.size.width];
+        
+        CGFloat coinRadius = sprite.size.width / 2.0;
+        
+        sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:coinRadius];
         sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskCoin;
         sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
         sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskDefault;

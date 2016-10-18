@@ -41,7 +41,7 @@ CGFloat const kOGObstacleWidth = 30.0;
     OGEntity *obstacle = [OGEntity entity];
     
     OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
-    visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerHorizontalPortalTextureName];
+    visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGHorizontalPortalTextureName];
     visualComponent.color = [SKColor gameBlack];
     
     OGSpriteNode *sprite = visualComponent.spriteNode;
@@ -64,7 +64,6 @@ CGFloat const kOGObstacleWidth = 30.0;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
     [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];

@@ -128,12 +128,12 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         if (portalTransitionComponent.location == kOGPortalLocationUp
             || portalTransitionComponent.location == kOGPortalLocationDown)
         {
-            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerHorizontalPortalTextureName];
+            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGHorizontalPortalTextureName];
         }
         else if (portalTransitionComponent.location == kOGPortalLocationLeft
                  || portalTransitionComponent.location == kOGPortalLocationRight)
         {
-            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGSceneControllerVerticalPortalTextureName];
+            portalVisualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGVerticalPortalTextureName];
         }
         
         NSString *portalColor = portalDictionary[kOGSceneControllerPortalColorKey];
