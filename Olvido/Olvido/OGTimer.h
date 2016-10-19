@@ -10,11 +10,7 @@
 
 @interface OGTimer : NSObject
 
-@property (nonatomic, retain, readonly) NSNumber *ticks;
-
-- (void)start;
-- (void)startWithSelector:(SEL)selector sender:(id)sender;
-- (void)tick;
+- (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender;
 - (void)stop;
 
 @end

@@ -8,15 +8,25 @@
 
 #import "OGTapMovementControlComponent.h"
 
-CGFloat const kOGTapMovementControlComponentDefaultSpeed = 300;
+CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
+
+@interface OGTapMovementControlComponent ()
+
+@property (nonatomic, assign) CGFloat defaultSpeed;
+
+@end
 
 @implementation OGTapMovementControlComponent
 
-- (instancetype)initWithNode:(SKNode *)node
+- (instancetype)initWithNode:(SKNode *)node speed:(CGFloat)speed
 {
     self = [super initWithNode:node];
     
-    if (!self)
+    if (self)
+    {
+        _defaultSpeed = speed;
+    }
+    else
     {
         [self release];
         self = nil;
@@ -36,9 +46,9 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 300;
         
         CGVector movementVector = self.node.physicsBody.velocity;
         
-        CGFloat impulseX = displacementVector.dx / displacement * self.speedFactor * kOGTapMovementControlComponentDefaultSpeed - movementVector.dx;
+        CGFloat impulseX = displacementVector.dx / displacement * self.speedFactor * self.defaultSpeed - movementVector.dx;
         
-        CGFloat impulseY = displacementVector.dy / displacement * self.speedFactor * kOGTapMovementControlComponentDefaultSpeed - movementVector.dy;
+        CGFloat impulseY = displacementVector.dy / displacement * self.speedFactor * self.defaultSpeed - movementVector.dy;
         
         [self.node.physicsBody applyImpulse:CGVectorMake(impulseX * self.node.physicsBody.mass,
                                                          impulseY * self.node.physicsBody.mass)];

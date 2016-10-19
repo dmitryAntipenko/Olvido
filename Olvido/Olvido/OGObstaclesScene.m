@@ -9,7 +9,7 @@
 #import "OGObstaclesScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
 
-CGFloat const kOGObstacleWidth = 30.0;
+CGFloat const kOGObstacleHeight = 30.0;
 
 @implementation OGObstaclesScene
 
@@ -24,10 +24,10 @@ CGFloat const kOGObstacleWidth = 30.0;
     [self createEnemies];
     [self createPlayer];
     
-    [self createObstaclesWithSize:CGSizeMake(self.frameOffset * 2.0, kOGObstacleWidth)
+    [self createObstaclesWithSize:CGSizeMake(self.frame.size.width / 3.0, kOGObstacleHeight)
                           atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frameOffset)];
     
-    [self createObstaclesWithSize:CGSizeMake(self.frameOffset * 2.0, kOGObstacleWidth)
+    [self createObstaclesWithSize:CGSizeMake(self.frame.size.width / 3.0, kOGObstacleHeight)
                           atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height - self.frameOffset)];
 }
 
