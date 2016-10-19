@@ -15,7 +15,10 @@
 #import "OGSpriteNode.h"
 #import "OGTransitionComponent.h"
 #import "OGVisualComponent.h"
+
 #import "OGGameOverState.h"
+#import "OGPauseState.h"
+#import "OGMainMenuState.h"
 
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
@@ -206,6 +209,35 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         ((OGGameOverState *) [self.uiStateMachine stateForClass:[OGGameOverState class]]).score = score;
         [self.uiStateMachine enterState:[OGGameOverState class]];
     }
+}
+
+- (void)gameSceneDidCallPause
+{
+    if ([self.uiStateMachine canEnterState:[OGPauseState class]])
+    {
+        [self.uiStateMachine enterState:[OGPauseState class]];
+    }
+}
+
+- (void)gameSceneDidCallResume
+{
+    [self.currentScene.pauseBarSprite removeAllChildren];
+    [self.currentScene.pauseBarSprite removeFromParent];
+    [((OGPauseState *)[self.uiStateMachine stateForClass:[OGPauseState class]]) resumeScene];
+    
+    [self.currentScene changeStatusBarLocationWithY:kOGGameSceneStatusBarYOffset * 2.0];
+}
+
+- (void)gameSceneDidCallMenu
+{
+
+    [self.uiStateMachine enterState:[OGMainMenuState class]];
+}
+
+- (void)gameSceneDidCallRestart
+{
+    [((OGMainMenuState *) [self.uiStateMachine stateForClass:[OGMainMenuState class]]) startGameWithControlType:self.controlType
+                                                                                                            godMode:self.godMode];
 }
 
 - (void)dealloc

@@ -8,6 +8,13 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+extern CGFloat const kOGGameSceneStatusBarDuration;
+
 @interface OGPauseState : GKState
+
+- (instancetype)initWithView:(SKView *)view;
+
+- (void)pauseScene;
+- (void)resumeScene;
 
 @end

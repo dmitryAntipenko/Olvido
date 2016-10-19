@@ -13,6 +13,7 @@
 #import "OGMainMenuState.h"
 #import "OGGameState.h"
 #import "OGGameOverState.h"
+#import "OGPauseState.h"
 
 @interface OGGameViewController ()
 
@@ -38,13 +39,15 @@
     OGMainMenuState *mainMenuState = [[OGMainMenuState alloc] initWithView:view];
     OGGameState *gameState = [[OGGameState alloc] initWithView:view];
     OGGameOverState *gameOverState = [[OGGameOverState alloc] initWithView:view];
+    OGPauseState *gamePause = [[OGPauseState alloc] initWithView:view];
 
-    GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState]];
+    GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState, gamePause]];
     [uiStateMachine enterState:[OGMainMenuState class]];
     
     [mainMenuState release];
     [gameState release];
     [gameOverState release];
+    [gamePause release];
     
     /* Should be uncommented after temporary code delete */
     

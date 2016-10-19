@@ -15,6 +15,7 @@
 - (void)createSceneContents;
 - (void)createEnemies;
 - (void)createPlayer;
+- (void)createPauseBar;
 
 - (void)addPortalToScene:(OGEntity *)portal;
 
