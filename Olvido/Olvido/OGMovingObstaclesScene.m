@@ -87,24 +87,17 @@ CGFloat const kOGObstacleMovementDuration = 1.0;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
-    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
-    
-    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
+    [super touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
-    
-    [self.playerMovementControlComponent touchMovedToPoint:touchLocation];
+    [super touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
-    
-    [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
+    [super touchesEnded:touches withEvent:event];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
