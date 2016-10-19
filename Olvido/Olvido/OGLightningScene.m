@@ -68,10 +68,10 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     pairDetectionRadius.name = kOGLightningSceneRadiusNodeName;
     pairDetectionRadius.position = spriteNode.position;
     
-//    SKShapeNode *sh = [SKShapeNode shapeNodeWithCircleOfRadius:kOGLightningSceneRadiusForCreationPair];
-//    sh.strokeColor = [SKColor blackColor];
-//    [pairDetectionRadius addChild:sh];
-//    
+    //    SKShapeNode *sh = [SKShapeNode shapeNodeWithCircleOfRadius:kOGLightningSceneRadiusForCreationPair];
+    //    sh.strokeColor = [SKColor blackColor];
+    //    [pairDetectionRadius addChild:sh];
+    //
     [self.detectionRediuses addObject:pairDetectionRadius];
     [self addChild:pairDetectionRadius];
 }
@@ -93,8 +93,6 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    
-    NSLog(@"%@", contact.bodyA.node.name);
     if (contact.bodyA.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask && contact.bodyB.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask)
     {
         OGSpriteNode *nodeA = ((OGVisualComponent *)[self.enemies[[self.detectionRediuses indexOfObject:contact.bodyA.node]] componentForClass:[OGVisualComponent class]]).spriteNode;
@@ -119,17 +117,30 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     }
     else
     {
-//        [super didEndContact:contact];
+        //        [super didEndContact:contact];
     }
 }
 
 
 - (void)createPairBetweenSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
 {
-    OGLightningScenePair *newPair = [OGLightningScenePair pairWithSpriteNodeA:spriteNodeA spriteNodeB:spriteNodeB];
-    [self.lightningPairs addObject:newPair];
-    [self addChild:newPair];
+    __block BOOL isExist = NO;
+    [self.lightningPairs enumerateObjectsUsingBlock:^(OGLightningScenePair * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+     {
+         if ((obj.spriteNodeA == spriteNodeA && obj.spriteNodeB == spriteNodeB)
+             || (obj.spriteNodeA == spriteNodeB && obj.spriteNodeB == spriteNodeA))
+         {
+             isExist = YES;
+             *stop = YES;
+         }
+     }];
     
+    if (!isExist)
+    {
+        OGLightningScenePair *newPair = [OGLightningScenePair pairWithSpriteNodeA:spriteNodeA spriteNodeB:spriteNodeB];
+        [self.lightningPairs addObject:newPair];
+        [self addChild:newPair];
+    }
 }
 
 - (void)removePairBetweenSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
@@ -161,9 +172,9 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     }
     
     [self.detectionRediuses enumerateObjectsUsingBlock:^(SKNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
-    {
-        obj.position = ((OGVisualComponent *)[self.enemies[idx] componentForClass:[OGVisualComponent class]]).spriteNode.position;
-    }];
+     {
+         obj.position = ((OGVisualComponent *)[self.enemies[idx] componentForClass:[OGVisualComponent class]]).spriteNode.position;
+     }];
     
     [super update:currentTime];
 }
