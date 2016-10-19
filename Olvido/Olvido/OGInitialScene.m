@@ -30,7 +30,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     
     ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode.position = centerPosition;
     
-    self.statusBar.color = [SKColor gameBlack];
+    self.statusBar.color = [SKColor gameBlue];
     self.statusBar.colorBlendFactor = 1.0;
 }
 
