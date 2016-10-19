@@ -125,7 +125,40 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     [statusBarSprite addChild:scoreLabel];
     
     self.statusBar = statusBarSprite;
+    self.statusBarMinDistance = self.statusBar.size.height * 2.0;
     [self addChild:statusBarSprite];
+}
+
+- (void)createPauseBar
+{
+    SKSpriteNode *pauseBarSprite = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
+                                                                 size:CGSizeMake(self.scene.size.width, self.scene.size.height / 3.5)];
+    pauseBarSprite.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
+    
+    CGSize buttonSize = CGSizeMake(70.0, 70.0);
+    
+    SKSpriteNode *resume = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneResumeName];
+    resume.name = kOGGameSceneResumeName;
+    resume.position = CGPointMake(-100.0, 0.0);
+    resume.size = buttonSize;
+    
+    SKSpriteNode *menu = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneMenuName];
+    menu.name = kOGGameSceneMenuName;
+    menu.position = CGPointMake(0.0, 0.0);
+    menu.size = buttonSize;
+    
+    SKSpriteNode *restart = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneRestartName];
+    restart.name = kOGGameSceneRestartName;
+    restart.position = CGPointMake(100.0, 0.0);
+    restart.size = buttonSize;
+    
+    self.pauseBarSprite = pauseBarSprite;
+    
+    [self addChild:self.pauseBarSprite];
+    
+    [self.pauseBarSprite addChild:resume];
+    [self.pauseBarSprite addChild:menu];
+    [self.pauseBarSprite addChild:restart];
 }
 
 - (SKCropNode *)createBackgroundBorderWithColor:(SKColor *)color
