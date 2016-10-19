@@ -22,7 +22,7 @@ NSString *const kOGTorchComponentLightName = @"light";
 @implementation OGTorchComponent
 
 - (instancetype)initWithTorchSprite:(SKSpriteNode *)torchSprite
-                             tourchRadius:(CGFloat)torchRadius
+                       tourchRadius:(CGFloat)torchRadius
 {
     self = [super init];
     
@@ -45,7 +45,7 @@ NSString *const kOGTorchComponentLightName = @"light";
 {
     if (!self.isTurnedOn)
     {
-        SKSpriteNode *light = (SKSpriteNode *)[self.torchSprite childNodeWithName:kOGTorchComponentLightName];
+        SKSpriteNode *light = (SKSpriteNode *) [self.torchSprite childNodeWithName:kOGTorchComponentLightName];
         
         if (light)
         {
@@ -61,7 +61,7 @@ NSString *const kOGTorchComponentLightName = @"light";
 
 - (void)torchTurnOff
 {
-    SKSpriteNode *light = (SKSpriteNode *)[self.torchSprite childNodeWithName:kOGTorchComponentLightName];
+    SKSpriteNode *light = (SKSpriteNode *) [self.torchSprite childNodeWithName:kOGTorchComponentLightName];
     
     if (light)
     {
@@ -76,7 +76,6 @@ NSString *const kOGTorchComponentLightName = @"light";
     light.name = kOGTorchComponentLightName;
     light.zPosition = 1;
     light.colorBlendFactor = 0.0;
-    light.size = CGSizeMake(self.torchRadius, self.torchRadius);
     
     [self.torchSprite addChild:light];
 }
