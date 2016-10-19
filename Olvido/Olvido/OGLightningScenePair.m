@@ -52,13 +52,16 @@ NSString *const kOGLightningSceneParticleFileExtension = @"sks";
 
 - (void)update
 {
-    CGFloat angle = atan((self.spriteNodeA.position.x - self.spriteNodeB.position.x) / (self.spriteNodeA.position.y - self.spriteNodeB.position.y));
+    CGFloat angle = atan((self.spriteNodeA.position.y - self.spriteNodeB.position.y) / (self.spriteNodeA.position.x - self.spriteNodeB.position.x));
     
     CGFloat distance = pow(pow(self.spriteNodeA.position.x - self.spriteNodeB.position.x, 2)
                            + pow(self.spriteNodeA.position.y - self.spriteNodeB.position.y, 2), 0.5);
     
     self.lightningEmitter.particlePositionRange = CGVectorMake(distance, 0.0);
     self.zRotation = angle;
+    
+    self.position = CGPointMake((self.spriteNodeA.position.x - self.spriteNodeB.position.x) / 2 + self.spriteNodeB.position.x,
+                                (self.spriteNodeA.position.y - self.spriteNodeB.position.y) / 2 + self.spriteNodeB.position.y);
 }
 
 - (BOOL)isEqual:(OGLightningScenePair *)object
