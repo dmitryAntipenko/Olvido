@@ -12,6 +12,6 @@
 
 @interface OGControlChoosingScene : SKScene
 
-@property (nonatomic, retain) OGGameViewController *viewController;
+@property (nonatomic, retain) GKStateMachine *uiStateMachine;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameplayKit/GameplayKit.h>
 
 @interface OGScenesController : NSObject
 
 @property (nonatomic, assign) SKView *view;
+@property (nonatomic, retain) GKStateMachine *uiStateMachine;
 
 /* temporary code */
 @property (nonatomic, copy) NSString *controlType;

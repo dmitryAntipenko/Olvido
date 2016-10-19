@@ -193,6 +193,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [_levelMap release];
     [_currentScene release];
+    [_uiStateMachine release];
     
     [super dealloc];
 }

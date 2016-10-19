@@ -8,8 +8,10 @@
 
 #import "OGGameViewController.h"
 #import "OGScenesController.h"
-
 #import "OGControlChoosingScene.h"
+
+#import "OGMainMenuState.h"
+#import "OGGameState.h"
 
 @interface OGGameViewController ()
 
@@ -32,14 +34,25 @@
     view.showsNodeCount = YES;
     view.showsPhysics = YES;
     
+    
+    OGMainMenuState *mainMenuState = [[OGMainMenuState alloc] initWithView:view];
+    OGGameState *gameState = [[OGGameState alloc] init];
+    
+    
+    GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState]];
+    [uiStateMachine enterState:[OGMainMenuState class]];
+    
+    [mainMenuState release];
+    [gameState release];
+    
     /* Temporary code */
-    OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];
-    
-    controlChoosingScene.viewController = self;
-    
-    [view presentScene:controlChoosingScene];
-
-    [controlChoosingScene release];
+//    OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];
+//    
+//    controlChoosingScene.viewController = self;
+//    
+//    [view presentScene:controlChoosingScene];
+//
+//    [controlChoosingScene release];
     /* Temporary code */
     
     /* Should be uncommented after temporary code delete */

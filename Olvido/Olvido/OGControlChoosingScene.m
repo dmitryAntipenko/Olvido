@@ -8,6 +8,7 @@
 
 #import "OGControlChoosingScene.h"
 #import "OGGameViewController.h"
+#import "OGMainMenuState.h"
 
 NSString *const kOGControlChoosingSceneFormat = @"GOD MODE: %@";
 
@@ -67,11 +68,11 @@ NSString *const kOGControlChoosingSceneFormat = @"GOD MODE: %@";
     
     if ([touchedNode.name isEqualToString:@"Tap"])
     {
-        [self.viewController startGameWithControlType:touchedNode.name godMode:self.godMode];
+        [((OGMainMenuState *) self.uiStateMachine.currentState) startGameWithControlType:touchedNode.name godMode:self.godMode];
     }
     else if ([touchedNode.name isEqualToString:@"Drag"])
     {
-        [self.viewController startGameWithControlType:touchedNode.name godMode:self.godMode];
+        [((OGMainMenuState *) self.uiStateMachine.currentState) startGameWithControlType:touchedNode.name godMode:self.godMode];
     }
     else if ([touchedNode.name isEqualToString:@"godMode"])
     {
@@ -92,7 +93,7 @@ NSString *const kOGControlChoosingSceneFormat = @"GOD MODE: %@";
 
 - (void)dealloc
 {
-    [_viewController release];
+    [_uiStateMachine release];
     
     [super dealloc];
 }
