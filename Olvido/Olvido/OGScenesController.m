@@ -64,6 +64,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 - (void)loadInitialLevel
 {
     [self loadLevelWithIdentifier:@(kOGSceneControllerInitialLevelIndex)];
+    [self didLoadNextLevel];
     [self.view presentScene:self.currentScene];
 }
 
@@ -94,10 +95,18 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
                                                                 inLevel:self.currentScene.identifier];
     [self loadLevelWithIdentifier:nextLevelId];
     
+    self.currentScene.exitPortalLocation = transitionComponent.location;
+    [self didLoadNextLevel];
+    
     SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
                                                         duration:kOGSceneControllerTransitionDuration];
 
     [self.view presentScene:self.currentScene transition:transition];
+}
+
+- (void)didLoadNextLevel
+{
+    [self.currentScene createSceneContents];
 }
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
@@ -119,7 +128,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
     scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
-    [scene createSceneContents];
+    //[scene createSceneContents];
 
     for (NSDictionary *portalDictionary in portals)
     {

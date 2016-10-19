@@ -48,4 +48,6 @@
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *portals;
 @property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *coins;
 
+@property (nonatomic, assign) OGPortalLocation exitPortalLocation;
+
 @end

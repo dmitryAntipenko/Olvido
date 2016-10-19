@@ -32,6 +32,7 @@ CGFloat const kOGGameSceneBorderSize = 3.0;
 
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 2.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
+CGFloat const kOGGameScenePlayerAppearanceDelay = 0.1;
 
 @interface OGGameScene ()
 
@@ -89,7 +90,28 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
-    sprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+
+
+    if (self.exitPortalLocation == kOGPortalLocationUp)
+    {
+        sprite.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height);
+    }
+    else if (self.exitPortalLocation == kOGPortalLocationDown)
+    {
+        sprite.position = CGPointMake(CGRectGetMidX(self.frame), 0.0);
+    }
+    else if (self.exitPortalLocation == kOGPortalLocationLeft)
+    {
+        sprite.position = CGPointMake(self.frame.size.width, CGRectGetMidY(self.frame));
+    }
+    else if (self.exitPortalLocation == kOGPortalLocationRight)
+    {
+        sprite.position = CGPointMake(0.0, CGRectGetMidY(self.frame));
+    }
+    else
+    {
+        sprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    }
     
     CGFloat playerRadius = sprite.size.width / 2.0;
     
@@ -125,6 +147,20 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     
     self.player = player;
     [self addChild:sprite];
+    
+    SKAction *hide = [SKAction runBlock:^{
+        sprite.hidden = YES;
+    }];
+    
+    SKAction *wait = [SKAction waitForDuration:kOGGameScenePlayerAppearanceDelay];
+    
+    SKAction *show = [SKAction runBlock:^{
+        sprite.hidden = NO;
+    }];
+    
+    SKAction *sequence = [SKAction sequence:@[hide, wait, show]];
+    
+    [sprite runAction:sequence];
     
     [visualComponent release];
     [movementControlComponent release];
