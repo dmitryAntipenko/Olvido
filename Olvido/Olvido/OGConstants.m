@@ -1,4 +1,4 @@
-//
+ //
 //  OGConstants.m
 //  Olvido
 //
@@ -23,16 +23,14 @@ NSString *const kOGVerticalPortalTextureName = @"PortalVertical";
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 3.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.5;
 
-CGFloat const kOGConstantsOffset = 80.0;
-
 @implementation OGConstants
 
 + (CGPoint)randomPointInRect:(CGRect)rect
 {
-    CGFloat maxX = rect.size.width - kOGConstantsOffset;
-    CGFloat minX = kOGConstantsOffset;
-    CGFloat maxY = rect.size.height - kOGConstantsOffset;
-    CGFloat minY = kOGConstantsOffset;
+    CGFloat maxX = rect.size.width;
+    CGFloat minX = rect.origin.x;
+    CGFloat maxY = rect.size.height;
+    CGFloat minY = rect.origin.y;
     
     CGFloat x = rand() / (CGFloat) RAND_MAX * (maxX - minX) + minX;
     CGFloat y = rand() / (CGFloat) RAND_MAX * (maxY - minY) + minY;

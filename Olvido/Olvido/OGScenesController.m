@@ -158,7 +158,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         [portal addComponent:portalVisualComponent];
         [portal addComponent:portalTransitionComponent];
         
-        [scene addPortal:portal];
+        [scene addPortalToScene:portal];
         
         [portalTransitionComponent release];
         [portalVisualComponent release];

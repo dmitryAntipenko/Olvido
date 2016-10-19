@@ -16,6 +16,6 @@
 - (void)createEnemies;
 - (void)createPlayer;
 
-- (void)addPortal:(OGEntity *)portal;
+- (void)addPortalToScene:(OGEntity *)portal;
 
 @end

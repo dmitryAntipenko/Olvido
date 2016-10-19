@@ -48,6 +48,7 @@ CGFloat const kOGObstacleWidth = 30.0;
     sprite.owner = visualComponent;
     sprite.size = size;
     sprite.position = point;
+    sprite.name = kOGObstacleNodeName;
     
     sprite.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:size];
     
