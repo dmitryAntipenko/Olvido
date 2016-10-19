@@ -15,4 +15,5 @@
 /* Temporary code */
 
 - (instancetype)initWithView:(SKView *)view;
+
 @end

@@ -7,7 +7,12 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+@class OGScenesController;
 
 @interface OGGameState : GKState
+
+@property (nonatomic, retain) OGScenesController *scenesController;
+
+- (instancetype)initWithView:(SKView *)view;
 
 @end

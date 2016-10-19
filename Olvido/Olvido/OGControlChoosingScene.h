@@ -8,8 +8,6 @@
 
 #import "OGGameScene.h"
 
-@class OGGameViewController;
-
 @interface OGControlChoosingScene : SKScene
 
 @property (nonatomic, retain) GKStateMachine *uiStateMachine;

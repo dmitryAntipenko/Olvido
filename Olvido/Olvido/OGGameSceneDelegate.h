@@ -14,6 +14,7 @@
 @protocol OGGameSceneDelegate <NSObject>
 
 - (void)gameSceneDidCallFinishWithPortal:(OGEntity *)portal;
+- (void)gameSceneDidCallFinishGameWithScore:(NSNumber *)score;
 
 @end
 

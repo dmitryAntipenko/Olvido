@@ -10,11 +10,11 @@
 #import "OGGameState.h"
 #import "OGControlChoosingScene.h"
 #import "OGScenesController.h"
+#import "OGGameOverState.h"
 
 @interface OGMainMenuState ()
 
 @property (nonatomic, retain) SKView *view;
-@property (nonatomic, retain) OGScenesController *scenesController;
 
 @end
 
@@ -41,7 +41,6 @@
 - (void)dealloc
 {
     [_view release];
-    [_scenesController release];
     
     [super dealloc];
 }
@@ -58,38 +57,42 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    if (!previousState)
-    {
-        OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:self.view.frame.size];
-        controlChoosingScene.uiStateMachine = self.stateMachine;
-        
-        [self.view presentScene:controlChoosingScene];
-        
-        [controlChoosingScene release];
-    }
+    OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:self.view.frame.size];
+    controlChoosingScene.uiStateMachine = self.stateMachine;
+    
+    [self.view presentScene:controlChoosingScene];
+    
+    [controlChoosingScene release];
+
 }
 
 /* Temporary code */
 - (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode
 {
-    OGScenesController *scenesController = [[OGScenesController alloc] init];
-    SKView *view = self.view;
-    
-    if (scenesController)
+    if ([self.stateMachine canEnterState:[OGGameState class]])
     {
-        scenesController.view = view;
-        scenesController.controlType = type;
-        scenesController.godMode = mode;
-        scenesController.uiStateMachine = self.stateMachine;
-        [scenesController loadLevelMap];
+        [self.stateMachine enterState:[OGGameState class]];
         
-        self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];
+        OGScenesController *scenesController = [[OGScenesController alloc] init];
+        SKView *view = self.view;
+        
+        if (scenesController)
+        {
+            scenesController.view = view;
+            scenesController.controlType = type;
+            scenesController.godMode = mode;
+            scenesController.uiStateMachine = self.stateMachine;
+            [scenesController loadLevelMap];
+            
+            ((OGGameOverState *) [self.stateMachine stateForClass:[OGGameOverState class]]).godMode = mode;
+            ((OGGameOverState *) [self.stateMachine stateForClass:[OGGameOverState class]]).controlType = type;
+            
+            ((OGGameState *) self.stateMachine.currentState).scenesController = scenesController;
+            [((OGGameState *) self.stateMachine.currentState).scenesController loadInitialLevel];
+        }
+        
+        [scenesController release];
     }
-    
-    [scenesController release];
-    
-    [self.stateMachine enterState:[OGGameState class]];
 }
 /* Temporary code */
 

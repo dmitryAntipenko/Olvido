@@ -15,6 +15,7 @@
 #import "OGSpriteNode.h"
 #import "OGTransitionComponent.h"
 #import "OGVisualComponent.h"
+#import "OGGameOverState.h"
 
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
@@ -196,6 +197,14 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     }
     
     return result;
+}
+
+- (void)gameSceneDidCallFinishGameWithScore:(NSNumber *)score
+{
+    if ([self.uiStateMachine canEnterState:[OGGameOverState class]])
+    {
+        [self.uiStateMachine enterState:[OGGameOverState class]];
+    }
 }
 
 - (void)dealloc

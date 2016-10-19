@@ -10,12 +10,13 @@
 		1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGDragMovementControlComponent.m */; };
 		1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */; };
 		1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */; };
+		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
+		210C995A1DB6D4C600704C62 /* OGDarkScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99591DB6D4C600704C62 /* OGDarkScene.m */; };
 		210C995E1DB70AD400704C62 /* OGMainMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C995D1DB70AD400704C62 /* OGMainMenuState.m */; };
 		210C99611DB70AEE00704C62 /* OGGameOverState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99601DB70AEE00704C62 /* OGGameOverState.m */; };
 		210C99641DB70B1400704C62 /* OGPauseState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99631DB70B1400704C62 /* OGPauseState.m */; };
 		210C99671DB70FAA00704C62 /* OGGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99661DB70FAA00704C62 /* OGGameState.m */; };
-		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
-		210C995A1DB6D4C600704C62 /* OGDarkScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99591DB6D4C600704C62 /* OGDarkScene.m */; };
+		210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C996A1DB72F5600704C62 /* OGGameOverScene.m */; };
 		EA0D272B1DB1478F00CEFB8A /* OGScenesController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */; };
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
 		EA0D27351DB1503500CEFB8A /* OGInitialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D27341DB1503500CEFB8A /* OGInitialScene.m */; };
@@ -52,6 +53,10 @@
 		1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementControlComponent.m; sourceTree = "<group>"; };
 		1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTapMovementControlComponent.h; sourceTree = "<group>"; };
 		1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTapMovementControlComponent.m; sourceTree = "<group>"; };
+		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
+		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
+		210C99581DB6D4C600704C62 /* OGDarkScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDarkScene.h; sourceTree = "<group>"; };
+		210C99591DB6D4C600704C62 /* OGDarkScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDarkScene.m; sourceTree = "<group>"; };
 		210C995C1DB70AD400704C62 /* OGMainMenuState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMainMenuState.h; sourceTree = "<group>"; };
 		210C995D1DB70AD400704C62 /* OGMainMenuState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMainMenuState.m; sourceTree = "<group>"; };
 		210C995F1DB70AEE00704C62 /* OGGameOverState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameOverState.h; sourceTree = "<group>"; };
@@ -60,10 +65,8 @@
 		210C99631DB70B1400704C62 /* OGPauseState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPauseState.m; sourceTree = "<group>"; };
 		210C99651DB70FAA00704C62 /* OGGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameState.h; sourceTree = "<group>"; };
 		210C99661DB70FAA00704C62 /* OGGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameState.m; sourceTree = "<group>"; };
-		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
-		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
-		210C99581DB6D4C600704C62 /* OGDarkScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDarkScene.h; sourceTree = "<group>"; };
-		210C99591DB6D4C600704C62 /* OGDarkScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDarkScene.m; sourceTree = "<group>"; };
+		210C99691DB72F5600704C62 /* OGGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameOverScene.h; sourceTree = "<group>"; };
+		210C996A1DB72F5600704C62 /* OGGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameOverScene.m; sourceTree = "<group>"; };
 		EA0D27291DB1478F00CEFB8A /* OGScenesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGScenesController.h; sourceTree = "<group>"; };
 		EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGScenesController.m; sourceTree = "<group>"; };
 		EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneDelegate.h; sourceTree = "<group>"; };
@@ -155,6 +158,15 @@
 				210C99631DB70B1400704C62 /* OGPauseState.m */,
 			);
 			name = UIStates;
+			sourceTree = "<group>";
+		};
+		210C99681DB72F2D00704C62 /* UIScenes */ = {
+			isa = PBXGroup;
+			children = (
+				210C99691DB72F5600704C62 /* OGGameOverScene.h */,
+				210C996A1DB72F5600704C62 /* OGGameOverScene.m */,
+			);
+			name = UIScenes;
 			sourceTree = "<group>";
 		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
@@ -251,6 +263,7 @@
 		EA976D051D9EDBF8003B77FC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				210C99681DB72F2D00704C62 /* UIScenes */,
 				EA5C3B171DB66A70006FC219 /* Control choosing */,
 				EAC384141DB43A0A00235B27 /* Utils */,
 				EA0D27331DB1503500CEFB8A /* OGInitialScene.h */,
@@ -393,6 +406,7 @@
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
+				210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */,
 				210C99671DB70FAA00704C62 /* OGGameState.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
