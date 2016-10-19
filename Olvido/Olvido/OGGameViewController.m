@@ -30,7 +30,6 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
-    view.showsPhysics = YES;
     
     /* Temporary code */
     OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];

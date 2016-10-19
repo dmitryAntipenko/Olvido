@@ -11,6 +11,7 @@
 #import "OGTorchComponent.h"
 
 NSInteger const kOGDarkSceneDarknessRadius = 200;
+CGFloat const kOGDarkSceneSpeedFactor = 0.3;
 
 @implementation OGDarkScene
 
@@ -18,26 +19,31 @@ NSInteger const kOGDarkSceneDarknessRadius = 200;
 {
     [super createSceneContents];
     
-    self.backgroundColor = [SKColor gameGreen];
+    self.backgroundColor = [SKColor gameBlack];
     
     [self addChild:[self createBackgroundBorderWithColor:[SKColor gameDarkRed]]];
     
     [self createEnemies];
+    
     for (OGEntity *enemy in self.enemies)
     {
+        ((OGMovementComponent *) [enemy componentForClass:[OGMovementComponent class]]).speedFactor = kOGDarkSceneSpeedFactor;
         ((OGVisualComponent *) [enemy componentForClass:[OGVisualComponent class]]).color = [SKColor gameWhite];
-        ((OGVisualComponent *) [enemy componentForClass:[OGVisualComponent class]]).spriteNode.lightingBitMask = 1.0;
     }
     
     [self createPlayer];
     
-    OGVisualComponent *visualComponent = (OGVisualComponent *)[self.player componentForClass:[OGVisualComponent class]];
-    [self.player addComponent:[[OGTorchComponent alloc] initWithTorchSprite:visualComponent.spriteNode
-                                                               tourchRadius:kOGDarkSceneDarknessRadius]];
+    self.playerMovementControlComponent.speedFactor = kOGDarkSceneSpeedFactor;
     
-    OGTorchComponent *torchComponent = (OGTorchComponent *)[self.player componentForClass:[OGTorchComponent class]];
+    OGVisualComponent *visualComponent = (OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]];
+    
+    OGTorchComponent *torchComponent = [[OGTorchComponent alloc] initWithTorchSprite:visualComponent.spriteNode
+                                                                         tourchRadius:kOGDarkSceneDarknessRadius];
+    [self.player addComponent:torchComponent];
     [torchComponent torchTurnOn];
     [torchComponent createDarknessWithSize:self.size];
+    
+    [torchComponent release];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -63,23 +69,7 @@ NSInteger const kOGDarkSceneDarknessRadius = 200;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKNode *nodeA = contact.bodyA.node;
-    SKNode *nodeB = contact.bodyB.node;
-    
-    if ([nodeA.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeA).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
-    else if ([nodeB.name isEqualToString:kOGPortalNodeName])
-    {
-        OGEntity *portal = (OGEntity *)((OGSpriteNode *) nodeB).owner.entity;
-        OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-        transitionComponent.closed = NO;
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:portal];
-    }
+    [super didBeginContact:contact];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "OGTorchComponent.h"
+#import "SKColor+OGConstantColors.h"
 
 NSString *const kOGTorchComponentLightImageName = @"LightImg";
 NSString *const kOGTorchComponentLightName = @"light";
@@ -65,7 +66,7 @@ NSString *const kOGTorchComponentLightName = @"light";
     if (light)
     {
         light.colorBlendFactor = 1.0;
-        light.color = [SKColor blackColor];
+        light.color = [SKColor gameBlue];
     }
 }
 
@@ -85,7 +86,7 @@ NSString *const kOGTorchComponentLightName = @"light";
     CGFloat diagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + self.torchRadius;
     
     SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
-    darkness.strokeColor = [SKColor blackColor];
+    darkness.strokeColor = [SKColor gameBlack];
     darkness.zPosition = 1;
     darkness.lineWidth = diagonal - self.torchRadius;
     
