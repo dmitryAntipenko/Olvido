@@ -104,7 +104,7 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
         if (!self.godMode)
         {
             NSLog(@"Game Over");
-            [self.sceneDelegate gameSceneDidCallFinishGameWithScore:@100];
+            [self.sceneDelegate gameSceneDidCallFinishGameWithScore:self.scoreController.score];
         }
         /* temporary code */
     }

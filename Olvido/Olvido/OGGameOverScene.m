@@ -28,7 +28,7 @@ NSString *const kOGGameOverSceneRestartName = @"Restart";
                                                     atPoint:CGPointMake(150, 300)
                                                    fontSize:kOGGameOverSceneDefaultFontSize];
     
-    SKLabelNode *scoreLabel = [self createLabelWithTitle:@"100"
+    SKLabelNode *scoreLabel = [self createLabelWithTitle:[NSString stringWithFormat:@"%@", self.score]
                                                  atPoint:CGPointMake(150, 250)
                                                 fontSize:kOGGameOverSceneDefaultFontSize];
     
@@ -65,6 +65,7 @@ NSString *const kOGGameOverSceneRestartName = @"Restart";
 - (void)dealloc
 {
     [_uiStateMachine release];
+    [_score release];
     
     [super dealloc];
 }

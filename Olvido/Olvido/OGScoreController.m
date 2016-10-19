@@ -9,7 +9,7 @@
 #import "OGScoreController.h"
 #import "OGConstants.h"
 
-NSNumber *const kOGScoreControllerDefaultScore = 0;
+NSUInteger const kOGScoreControllerDefaultScore = 0;
 NSInteger const kOGScoreControllerScoreIncrement = 1;
 
 @interface OGScoreController ()
@@ -27,7 +27,7 @@ NSInteger const kOGScoreControllerScoreIncrement = 1;
     
     if (self)
     {
-        _score = kOGScoreControllerDefaultScore;
+        _score = @(kOGScoreControllerDefaultScore);
     }
     else
     {

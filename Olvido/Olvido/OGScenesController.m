@@ -203,6 +203,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     if ([self.uiStateMachine canEnterState:[OGGameOverState class]])
     {
+        ((OGGameOverState *) [self.uiStateMachine stateForClass:[OGGameOverState class]]).score = score;
         [self.uiStateMachine enterState:[OGGameOverState class]];
     }
 }
