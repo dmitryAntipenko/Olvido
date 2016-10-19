@@ -13,6 +13,8 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 @interface OGTapMovementControlComponent ()
 
 @property (nonatomic, assign) CGFloat defaultSpeed;
+@property (nonatomic, assign) CGPoint targetPoint;
+@property (nonatomic, assign) BOOL isMooving;
 
 @end
 
@@ -25,6 +27,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     if (self)
     {
         _defaultSpeed = speed;
+        _targetPoint = CGPointZero;
     }
     else
     {
@@ -37,21 +40,22 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 - (void)touchBeganAtPoint:(CGPoint)point
 {
+    self.isMooving = YES;
+    
     if (self.spriteNode && self.spriteNode.physicsBody)
     {
+        self.targetPoint = point;
         CGVector displacementVector = CGVectorMake(point.x - self.spriteNode.position.x,
                                                    point.y - self.spriteNode.position.y);
         
         CGFloat displacement = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
         
-        CGVector movementVector = self.spriteNode.physicsBody.velocity;
+        CGFloat speedX = displacementVector.dx / displacement * self.speedFactor * self.defaultSpeed;
         
-        CGFloat impulseX = displacementVector.dx / displacement * self.speedFactor * self.defaultSpeed - movementVector.dx;
+        CGFloat speedY = displacementVector.dy / displacement * self.speedFactor * self.defaultSpeed;
         
-        CGFloat impulseY = displacementVector.dy / displacement * self.speedFactor * self.defaultSpeed - movementVector.dy;
+        self.spriteNode.physicsBody.velocity = CGVectorMake(speedX, speedY);
         
-        [self.spriteNode.physicsBody applyImpulse:CGVectorMake(impulseX * self.spriteNode.physicsBody.mass,
-                                                         impulseY * self.spriteNode.physicsBody.mass)];
     }
 }
 

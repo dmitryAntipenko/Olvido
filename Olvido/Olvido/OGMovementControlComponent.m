@@ -8,7 +8,7 @@
 
 #import "OGMovementControlComponent.h"
 
-CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
+CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
 
 @implementation OGMovementControlComponent
 
@@ -19,7 +19,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
     if (self)
     {
         _spriteNode = [spriteNode retain];
-        _speedFactor = kOGTapMovementControlComponentDefaultSpeedFactor;
+        _speedFactor = kOGMovementControlComponentDefaultSpeedFactor;
     }
     
     return self;
@@ -52,8 +52,11 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeedFactor = 1.0;
 {
     _speedFactor = speedFactor;
     
-    CGVector velocity = self.spriteNode.physicsBody.velocity;
-    self.spriteNode.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
+    if (self.spriteNode)
+    {
+        CGVector velocity = self.spriteNode.physicsBody.velocity;
+        self.spriteNode.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
+    }
 }
 
 - (void)dealloc
