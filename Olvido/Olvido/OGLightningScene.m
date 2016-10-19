@@ -11,13 +11,10 @@
 CGFloat const kOGLightningSceneRadiusForCreationPair = 150;
 CGFloat const kOGLightningSceneRadiusCategoryBitMask = 0x01 << 7;
 NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
-NSString *const kOGLightningSceneParticleFileName = @"Lightning";
-NSString *const kOGLightningSceneParticleFileExtension = @"sks";
 
 @interface OGLightningScene ()
 
-@property (nonatomic, retain) NSMutableArray<OGLightningScene *> *lightningPairs;
-@property (nonatomic, retain) NSString *lightningParticleFilePath;
+@property (nonatomic, retain) NSMutableArray<OGLightningScenePair *> *lightningPairs;
 
 @end
 
@@ -30,8 +27,6 @@ NSString *const kOGLightningSceneParticleFileExtension = @"sks";
     if (self)
     {
         _lightningPairs = [[NSMutableArray alloc] init];
-        _lightningParticleFilePath =[[NSBundle mainBundle] pathForResource:kOGLightningSceneParticleFileName
-                                                                      ofType:kOGLightningSceneParticleFileExtension];
     }
 
     return self;
@@ -119,15 +114,15 @@ NSString *const kOGLightningSceneParticleFileExtension = @"sks";
 - (void)dealloc
 {
     [_lightningPairs release];
-    [_lightningParticleFilePath release];
     
     [super dealloc];
 }
 
-- (void)createPairBetweenSpriteNodeA:(OGSpriteNode *)spriteNode psriteNodeB:(OGSpriteNode *)spriteNodeB
+- (void)createPairBetweenSpriteNodeA:(OGSpriteNode *)spriteNodeA psriteNodeB:(OGSpriteNode *)spriteNodeB
 {
-    SKEmitterNode *lightningEmitter = [NSKeyedUnarchiver unarchiveObjectWithFile:self.lightningParticleFilePath];
-    lightningEmitter.
+    OGLightningScenePair *newPair = [OGLightningScenePair pairWithSpriteNodeA:spriteNodeA spriteNodeB:spriteNodeB];
+    [self.lightningPairs addObject:newPair];
+    [self addChild:newPair];
     
 }
 
@@ -136,36 +131,19 @@ NSString *const kOGLightningSceneParticleFileExtension = @"sks";
     
 }
 
-@end
-
-
-@interface OGLightningScenePair : NSObject
-
-+ (instancetype)pairWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB;
-
-@property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeA;
-@property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeB;
-
-@end
-
-@implementation OGLightningScenePair
-
-+ (instancetype)pairWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
+- (void)updateLightnings
 {
-    return [[[self alloc] initWithSpriteNodeA:spriteNodeA spriteNodeB:spriteNodeB] autorelease];
+    
 }
 
-- (instancetype)initWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
+- (void)update:(NSTimeInterval)currentTime
 {
-    self = [self init];
-    
-    if (self)
+    for (OGLightningScenePair *pair in self.lightningPairs)
     {
-        _spriteNodeA = spriteNodeA;
-        _spriteNodeB = spriteNodeB;
+        [pair update];
     }
     
-    return self;
+    [super update:currentTime];
 }
 
 @end

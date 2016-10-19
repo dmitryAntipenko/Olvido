@@ -12,6 +12,7 @@
 		1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */; };
 		1B8A94A71DB7BC6900D86E2D /* OGLightningScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */; };
 		1BF3E2E01DB7D1860033364D /* Lightning.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1BF3E2DF1DB7D1860033364D /* Lightning.sks */; };
+		1BF3E2E41DB7DC6E0033364D /* OGLightningScenePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3E2E31DB7DC6E0033364D /* OGLightningScenePair.m */; };
 		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
 		210C995A1DB6D4C600704C62 /* OGDarkScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99591DB6D4C600704C62 /* OGDarkScene.m */; };
 		210C995E1DB70AD400704C62 /* OGMainMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C995D1DB70AD400704C62 /* OGMainMenuState.m */; };
@@ -58,6 +59,8 @@
 		1B8A94A51DB7BC6900D86E2D /* OGLightningScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLightningScene.h; sourceTree = "<group>"; };
 		1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLightningScene.m; sourceTree = "<group>"; };
 		1BF3E2DF1DB7D1860033364D /* Lightning.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Lightning.sks; sourceTree = "<group>"; };
+		1BF3E2E21DB7DC6E0033364D /* OGLightningScenePair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLightningScenePair.h; sourceTree = "<group>"; };
+		1BF3E2E31DB7DC6E0033364D /* OGLightningScenePair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLightningScenePair.m; sourceTree = "<group>"; };
 		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
 		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
 		210C99581DB6D4C600704C62 /* OGDarkScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDarkScene.h; sourceTree = "<group>"; };
@@ -148,6 +151,17 @@
 				1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */,
 			);
 			name = MovementControlComponents;
+			sourceTree = "<group>";
+		};
+		1BF3E2E11DB7DC400033364D /* LightningScene */ = {
+			isa = PBXGroup;
+			children = (
+				1B8A94A51DB7BC6900D86E2D /* OGLightningScene.h */,
+				1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */,
+				1BF3E2E21DB7DC6E0033364D /* OGLightningScenePair.h */,
+				1BF3E2E31DB7DC6E0033364D /* OGLightningScenePair.m */,
+			);
+			name = LightningScene;
 			sourceTree = "<group>";
 		};
 		210C995B1DB70AB000704C62 /* UIStates */ = {
@@ -285,8 +299,7 @@
 				EAFBC9711DB3CFC800142D66 /* OGGameScene.m */,
 				EAC384111DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.h */,
 				EAC384121DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.m */,
-				1B8A94A51DB7BC6900D86E2D /* OGLightningScene.h */,
-				1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */,
+				1BF3E2E11DB7DC400033364D /* LightningScene */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -412,6 +425,7 @@
 				EAC384131DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */,
+				1BF3E2E41DB7DC6E0033364D /* OGLightningScenePair.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
