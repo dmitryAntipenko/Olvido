@@ -52,7 +52,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     return self;
 }
 
-- (void)loadLevelMap
+- (void)loadLevelMap    
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGSceneControllerLevelMapName
                                                           ofType:kOGSceneControllerLevelMapExtension];

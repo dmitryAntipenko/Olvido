@@ -97,6 +97,7 @@
         if (!self.godMode)
         {
             NSLog(@"Game Over");
+            self.view.paused = YES;
         }
         /* temporary code */
     }

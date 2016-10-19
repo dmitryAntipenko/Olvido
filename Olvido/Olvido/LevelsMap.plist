@@ -23,7 +23,7 @@
 	</dict>
 	<dict>
 		<key>Enemies Count</key>
-		<integer>3</integer>
+		<integer>2</integer>
 		<key>Identifier</key>
 		<string>1</string>
 		<key>Portals</key>
@@ -42,7 +42,7 @@
 	</dict>
 	<dict>
 		<key>Enemies Count</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Identifier</key>
 		<string>2</string>
 		<key>Portals</key>
@@ -61,7 +61,7 @@
 	</dict>
 	<dict>
 		<key>Enemies Count</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Identifier</key>
 		<string>3</string>
 		<key>Portals</key>
@@ -80,7 +80,7 @@
 	</dict>
 	<dict>
 		<key>Enemies Count</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Identifier</key>
 		<string>4</string>
 		<key>Portals</key>
