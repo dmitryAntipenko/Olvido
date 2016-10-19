@@ -44,8 +44,17 @@
 @property (nonatomic, retain) id <OGGameSceneDelegate> sceneDelegate;
 
 @property (nonatomic, retain) OGEntity *player;
-@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *enemies;
-@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *portals;
-@property (nonatomic, retain, readonly) NSMutableArray<OGEntity *> *coins;
+@property (nonatomic, retain, readonly) NSArray<OGEntity *> *enemies;
+@property (nonatomic, retain, readonly) NSArray<OGEntity *> *portals;
+@property (nonatomic, retain, readonly) NSArray<OGEntity *> *coins;
+
+- (void)addEnemy:(OGEntity *)enemy;
+- (void)removeEnemy:(OGEntity *)enemy;
+
+- (void)addCoin:(OGEntity *)coin;
+- (void)removeCoin:(OGEntity *)coin;
+
+- (void)addPortal:(OGEntity *)portal;
+- (void)removePortal:(OGEntity *)portal;
 
 @end

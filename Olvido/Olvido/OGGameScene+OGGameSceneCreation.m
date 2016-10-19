@@ -33,6 +33,8 @@ CGFloat const kOGGameSceneBorderSize = 3.0;
 CGFloat const kOGGameSceneEnemyDefaultSpeed = 2.0;
 CGFloat const kOGGameSceneScaleFactor = 4.0;
 
+CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, readonly) CGFloat enemySpeed;
@@ -54,7 +56,7 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     
     [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneCoinAppearanceInterval
                                      target:self
-                                   selector:@selector(addCoin)
+                                   selector:@selector(createCoin)
                                    userInfo:nil
                                     repeats:YES];
 }
@@ -164,7 +166,7 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         OGMovementComponent *movementComponent = [[OGMovementComponent alloc] initWithPhysicsBody:sprite.physicsBody];
         [enemy addComponent:movementComponent];
         
-        [self.enemies addObject:enemy];
+        [self addEnemy:enemy];
         [self addChild:sprite];
         
         [movementComponent startMovementWithSpeed:self.enemySpeed];
@@ -179,7 +181,7 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     return self.frame.size.height * kOGGameSceneEnemyDefaultSpeed / kOGGameSceneScaleFactor;
 }
 
-- (void)addCoin
+- (void)createCoin
 {
     if (self.coins.count < kOGGameSceneMaxCoinCount)
     {
@@ -200,10 +202,10 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         
         sprite.owner = visualComponent;
         sprite.name = kOGCoinNodeName;
-        sprite.position = [OGConstants randomPointInRect:self.frame];
+        sprite.position = [self randomCoinPositionWithCoinRadius:coinRadius];
         
         [coin addComponent:visualComponent];
-        [self.coins addObject:coin];
+        [self addCoin:coin];
         [self addChild:sprite];
         
         SKAction *destroyCoin = [SKAction sequence:@[
@@ -213,7 +215,7 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         
         [sprite runAction:destroyCoin completion:^()
          {
-             [self.coins removeObject:coin];
+             [self removeCoin:coin];
              [sprite removeFromParent];
          }];
         
@@ -221,7 +223,45 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
     }
 }
 
-- (void)addPortal:(OGEntity *)portal
+- (CGPoint)randomCoinPositionWithCoinRadius:(CGFloat)radius
+{
+    CGRect rect = CGRectMake(self.frame.origin.x + kOGGameSceneCoinPositionFrameOffset,
+                             self.frame.origin.y + kOGGameSceneCoinPositionFrameOffset,
+                             self.frame.size.width - kOGGameSceneCoinPositionFrameOffset * 2.0,
+                             self.frame.size.height - kOGGameSceneCoinPositionFrameOffset * 2.0);
+    
+    CGPoint possiblePoint = CGPointZero;
+    __block BOOL keepSearching = YES;
+    
+    while (keepSearching)
+    {
+        keepSearching = NO;
+        possiblePoint = [OGConstants randomPointInRect:rect];
+        CGRect pointRect = CGRectMake(possiblePoint.x - radius, possiblePoint.y - radius, radius * 2.0, radius * 2.0);
+        
+        for (SKNode *node in self.children)
+        {
+            if ([node isKindOfClass:[SKSpriteNode class]])
+            {
+                SKSpriteNode *sprite = (SKSpriteNode *) node;
+
+                CGRect spriteRect = CGRectMake(sprite.position.x - sprite.size.width / 2.0,
+                                               sprite.position.y - sprite.size.height / 2.0,
+                                               sprite.size.width,
+                                               sprite.size.height);
+
+                if (CGRectIntersectsRect(pointRect, spriteRect))
+                {
+                    keepSearching = YES;
+                }
+            }
+        }
+    }
+    
+    return possiblePoint;
+}
+
+- (void)addPortalToScene:(OGEntity *)portal
 {
     OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
     OGVisualComponent *visualComponent = (OGVisualComponent *) [portal componentForClass:[OGVisualComponent class]];
@@ -252,7 +292,7 @@ CGFloat const kOGGameSceneScaleFactor = 4.0;
         }
     }
     
-    [self.portals addObject:portal];
+    [self addPortal:portal];
     [self addChild:visualComponent.spriteNode];
 }
 

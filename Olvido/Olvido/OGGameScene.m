@@ -8,6 +8,14 @@
 
 #import "OGGameScene.h"
 
+@interface OGGameScene ()
+
+@property (nonatomic, retain) NSMutableArray<OGEntity *> *mutableEnemies;
+@property (nonatomic, retain) NSMutableArray<OGEntity *> *mutablePortals;
+@property (nonatomic, retain) NSMutableArray<OGEntity *> *mutableCoins;
+
+@end
+
 @implementation OGGameScene
 
 - (instancetype)initWithSize:(CGSize)size
@@ -16,9 +24,9 @@
     
     if (self)
     {
-        _enemies = [[NSMutableArray alloc] init];
-        _portals = [[NSMutableArray alloc] init];
-        _coins = [[NSMutableArray alloc] init];
+        _mutableEnemies = [[NSMutableArray alloc] init];
+        _mutablePortals = [[NSMutableArray alloc] init];
+        _mutableCoins = [[NSMutableArray alloc] init];
     }
     else
     {
@@ -27,6 +35,53 @@
     }
     
     return self;
+}
+
+#pragma mark - Add & Remove
+
+- (void)addEnemy:(OGEntity *)enemy
+{
+    [self.mutableEnemies addObject:enemy];
+}
+
+- (void)removeEnemy:(OGEntity *)enemy
+{
+    [self.mutableEnemies removeObject:enemy];
+}
+
+- (void)addCoin:(OGEntity *)coin
+{
+    [self.mutableCoins addObject:coin];
+}
+
+- (void)removeCoin:(OGEntity *)coin
+{
+    [self.mutableCoins removeObject:coin];
+}
+
+- (void)addPortal:(OGEntity *)portal
+{
+    [self.mutablePortals addObject:portal];
+}
+
+- (void)removePortal:(OGEntity *)portal
+{
+    [self.mutablePortals removeObject:portal];
+}
+
+- (NSArray<OGEntity *> *)enemies
+{
+    return [[_mutableEnemies copy] autorelease];
+}
+
+- (NSArray<OGEntity *> *)coins
+{
+    return [[_mutableCoins copy] autorelease];
+}
+
+- (NSArray<OGEntity *> *)portals
+{
+    return [[_mutablePortals copy] autorelease];
 }
 
 #pragma mark - Collision Detection
@@ -47,7 +102,7 @@
     }
     else if (contactType == kOGContactTypePlayerDidGetCoin)
     {
-        [self.coins removeObject:(OGEntity *) touchedBody.owner.entity];
+        [self removeCoin:(OGEntity *) touchedBody.owner.entity];
         [touchedBody removeFromParent];
     }
     else if (contactType == kOGContactTypePlayerDidTouchPortal)
@@ -111,13 +166,13 @@
 
 - (void)dealloc
 {
-    [_enemies release];
+    [_mutableEnemies release];
     [_player release];
     [_identifier release];
-    [_portals release];
+    [_mutablePortals release];
     [_sceneDelegate release];
     [_enemiesCount release];
-    [_coins release];
+    [_mutableCoins release];
     [_controlType release];
     
     [super dealloc];
