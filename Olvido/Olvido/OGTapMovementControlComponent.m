@@ -8,7 +8,7 @@
 
 #import "OGTapMovementControlComponent.h"
 
-CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
+CGFloat const kOGTapMovementControlComponentDefaultSpeed = 300;
 
 @implementation OGTapMovementControlComponent
 

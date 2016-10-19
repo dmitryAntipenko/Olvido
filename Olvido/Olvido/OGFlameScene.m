@@ -39,7 +39,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     if (self)
     {
         _flames = [[NSMutableArray alloc] init];
-        _currentFlameLocation = 0;
+        _currentFlameLocation = kOGFlameLocationHorizontal;
     }
     else
     {
@@ -57,6 +57,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     self.backgroundColor = [SKColor gameBlack];
 
     [self createEnemies];
+    
     for (OGEntity *enemy in self.enemies)
     {
         ((OGVisualComponent *) [enemy componentForClass:[OGVisualComponent class]]).color = [SKColor gameWhite];
@@ -65,8 +66,10 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     [self createPlayer];
     ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).color = [SKColor gameWhite];
     
-    [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), 0.0) emissionAngle:M_PI_2];
-    [self createFlameAtPoint:CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height) emissionAngle:3 * M_PI_2];
+    [self createFlame];
+    [self createFlame];
+    
+    [self changeFlameLocation];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGFlameChangeInterval
                                                       target:self
@@ -75,7 +78,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
                                                      repeats:YES];
 }
 
-- (void)createFlameAtPoint:(CGPoint)point emissionAngle:(CGFloat)angle
+- (void)createFlame
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:kOGFlameSceneParticleFileName
                                                      ofType:kOGFlameSceneParticleFileExtension];
@@ -83,8 +86,6 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     SKEmitterNode *flame = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     flame.targetNode = self;
-    flame.position = point;
-    flame.emissionAngle = angle;
     
     CGFloat flameTriggerHeightHalf = flame.particleLifetime * (flame.particleSpeed - flame.particleSpeedRange);
     

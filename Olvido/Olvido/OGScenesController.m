@@ -52,7 +52,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     return self;
 }
 
-- (void)loadLevelMap
+- (void)loadLevelMap    
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGSceneControllerLevelMapName
                                                           ofType:kOGSceneControllerLevelMapExtension];
@@ -64,6 +64,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 - (void)loadInitialLevel
 {
     [self loadLevelWithIdentifier:@(kOGSceneControllerInitialLevelIndex)];
+    [self didLoadNextLevel];
     [self.view presentScene:self.currentScene];
 }
 
@@ -94,10 +95,18 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
                                                                 inLevel:self.currentScene.identifier];
     [self loadLevelWithIdentifier:nextLevelId];
     
+    self.currentScene.exitPortalLocation = transitionComponent.location;
+    [self didLoadNextLevel];
+    
     SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
                                                         duration:kOGSceneControllerTransitionDuration];
 
     [self.view presentScene:self.currentScene transition:transition];
+}
+
+- (void)didLoadNextLevel
+{
+    [self.currentScene createSceneContents];
 }
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
@@ -119,7 +128,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
     scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
-    [scene createSceneContents];
 
     for (NSDictionary *portalDictionary in portals)
     {
@@ -145,11 +153,12 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         
         portalVisualComponent.color = [SKColor colorWithString:portalColor];
         portalVisualComponent.spriteNode.owner = portalVisualComponent;
+        portalVisualComponent.spriteNode.zPosition = 2.0;
         
         [portal addComponent:portalVisualComponent];
         [portal addComponent:portalTransitionComponent];
         
-        [scene addPortal:portal];
+        [scene addPortalToScene:portal];
         
         [portalTransitionComponent release];
         [portalVisualComponent release];

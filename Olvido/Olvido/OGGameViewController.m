@@ -32,7 +32,6 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
-    view.showsPhysics = YES;
     
     
     OGMainMenuState *mainMenuState = [[OGMainMenuState alloc] initWithView:view];
@@ -44,16 +43,6 @@
     
     [mainMenuState release];
     [gameState release];
-    
-    /* Temporary code */
-//    OGControlChoosingScene *controlChoosingScene = [[OGControlChoosingScene alloc] initWithSize:view.frame.size];
-//    
-//    controlChoosingScene.viewController = self;
-//    
-//    [view presentScene:controlChoosingScene];
-//
-//    [controlChoosingScene release];
-    /* Temporary code */
     
     /* Should be uncommented after temporary code delete */
     
@@ -75,27 +64,6 @@
 {
     return NO;
 }
-
-/* Temporary code */
-- (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode
-{
-    OGScenesController *scenesController = [[OGScenesController alloc] init];
-    SKView *view = (SKView *) self.view;
-
-    if (scenesController)
-    {
-        scenesController.view = view;
-        scenesController.controlType = type;
-        scenesController.godMode = mode;
-        [scenesController loadLevelMap];
-
-        self.scenesController = scenesController;
-        [self.scenesController loadInitialLevel];
-    }
-
-    [scenesController release];
-}
-/* Temporary code */
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {

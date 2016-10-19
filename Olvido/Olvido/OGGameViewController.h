@@ -11,8 +11,4 @@
 
 @interface OGGameViewController : UIViewController
 
-/* Temporary code */
-- (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode;
-/* Temporary code */
-
 @end
