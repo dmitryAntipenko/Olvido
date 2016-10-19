@@ -128,7 +128,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
     scene.enemiesCount = self.levelMap[identifier.integerValue][kOGSceneControllerEnemiesCountKey];
     scene.sceneDelegate = self;
-    //[scene createSceneContents];
 
     for (NSDictionary *portalDictionary in portals)
     {
@@ -154,6 +153,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         
         portalVisualComponent.color = [SKColor colorWithString:portalColor];
         portalVisualComponent.spriteNode.owner = portalVisualComponent;
+        portalVisualComponent.spriteNode.zPosition = 2.0;
         
         [portal addComponent:portalVisualComponent];
         [portal addComponent:portalTransitionComponent];

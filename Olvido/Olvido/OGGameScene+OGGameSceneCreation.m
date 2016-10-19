@@ -90,7 +90,7 @@ CGFloat const kOGGameScenePlayerAppearanceDelay = 0.1;
     
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
-
+    sprite.alpha = 0.0;
 
     if (self.exitPortalLocation == kOGPortalLocationUp)
     {
@@ -148,17 +148,11 @@ CGFloat const kOGGameScenePlayerAppearanceDelay = 0.1;
     self.player = player;
     [self addChild:sprite];
     
-    SKAction *hide = [SKAction runBlock:^{
-        sprite.hidden = YES;
-    }];
-    
     SKAction *wait = [SKAction waitForDuration:kOGGameScenePlayerAppearanceDelay];
     
-    SKAction *show = [SKAction runBlock:^{
-        sprite.hidden = NO;
-    }];
+    SKAction *show = [SKAction fadeInWithDuration:kOGGameScenePlayerAppearanceDelay];
     
-    SKAction *sequence = [SKAction sequence:@[hide, wait, show]];
+    SKAction *sequence = [SKAction sequence:@[wait, show]];
     
     [sprite runAction:sequence];
     

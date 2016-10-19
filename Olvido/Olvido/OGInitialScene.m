@@ -27,6 +27,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     
     CGPoint centerPosition = CGPointMake(CGRectGetMidX(self.frame),
                                          CGRectGetMidY(self.frame));
+    
     ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode.position = centerPosition;
 }
 

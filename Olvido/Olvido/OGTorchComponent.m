@@ -87,7 +87,7 @@ NSString *const kOGTorchComponentLightName = @"light";
     
     SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
     darkness.strokeColor = [SKColor gameBlack];
-    darkness.zPosition = 1;
+    darkness.zPosition = 3;
     darkness.lineWidth = diagonal - self.torchRadius;
     
     [self.torchSprite addChild:darkness];
