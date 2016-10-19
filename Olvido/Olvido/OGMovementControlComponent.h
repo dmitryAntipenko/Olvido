@@ -10,10 +10,10 @@
 
 @interface OGMovementControlComponent : GKComponent
 
-@property (nonatomic, retain, readonly) SKNode *node;
+@property (nonatomic, retain, readonly) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) CGFloat speedFactor;
 
-- (instancetype)initWithNode:(SKNode *)node;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)node;
 
 - (void)touchBeganAtPoint:(CGPoint)point;
 

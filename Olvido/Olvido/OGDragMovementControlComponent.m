@@ -8,14 +8,35 @@
 
 #import "OGDragMovementControlComponent.h"
 
+@interface OGDragMovementControlComponent ()
+
+@property (nonatomic, assign) BOOL isMooving;
+
+@end
+
 @implementation OGDragMovementControlComponent
 
 - (void)touchMovedToPoint:(CGPoint)point
 {
-    if (self.node)
+    if (self.isMooving && self.spriteNode)
     {
-        self.node.position = point;
+        self.spriteNode.position = point;
     }
+}
+
+- (void)touchBeganAtPoint:(CGPoint)point
+{
+    
+    if (CGRectContainsPoint(self.spriteNode.frame, point))
+    {
+        self.isMooving = YES;
+        self.spriteNode.position = point;
+    }
+}
+
+- (void)touchEndedAtPoint:(CGPoint)point
+{
+    self.isMooving = NO;
 }
 
 @end
