@@ -7,6 +7,7 @@
 //
 
 #import "OGLightningScene.h"
+#import "OGLightningScenePair.h"
 
 CGFloat const kOGLightningSceneRadiusForCreationPair = 150;
 CGFloat const kOGLightningSceneRadiusCategoryBitMask = 0x01 << 7;
@@ -28,7 +29,7 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     {
         _lightningPairs = [[NSMutableArray alloc] init];
     }
-
+    
     return self;
 }
 
@@ -126,14 +127,25 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     
 }
 
-- (void)removePairBetweenSpriteNodeA:(OGSpriteNode *)spriteNode psriteNodeB:(OGSpriteNode *)spriteNodeB
+- (void)removePairBetweenSpriteNodeA:(OGSpriteNode *)spriteNodeA psriteNodeB:(OGSpriteNode *)spriteNodeB
 {
+    __block NSUInteger index = 0;
     
-}
-
-- (void)updateLightnings
-{
+    [self.lightningPairs enumerateObjectsUsingBlock:^(OGLightningScenePair * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+     {
+         if ((obj.spriteNodeA == spriteNodeA && obj.spriteNodeB == spriteNodeB)
+             || (obj.spriteNodeA == spriteNodeB && obj.spriteNodeB == spriteNodeA))
+         {
+             index = idx;
+             *stop = YES;
+         }
+     }];
     
+    if (index < self.lightningPairs.count)
+    {
+        [self.lightningPairs[index] removeFromParent];
+        [self.lightningPairs removeObjectAtIndex:index];
+    }
 }
 
 - (void)update:(NSTimeInterval)currentTime

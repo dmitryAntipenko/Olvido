@@ -61,6 +61,12 @@ NSString *const kOGLightningSceneParticleFileExtension = @"sks";
     self.zRotation = angle;
 }
 
+- (BOOL)isEqual:(OGLightningScenePair *)object
+{
+    return ((self.spriteNodeA == object.spriteNodeA) && (self.spriteNodeB == object.spriteNodeB))
+    || ((self.spriteNodeA == object.spriteNodeB) && (self.spriteNodeB == object.spriteNodeA));
+}
+
 @end
 
 

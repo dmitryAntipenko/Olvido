@@ -97,5 +97,15 @@
 		<key>Class Name</key>
 		<string>OGDarkScene</string>
 	</dict>
+	<dict>
+		<key>Enemies Count</key>
+		<string>4</string>
+		<key>Identifier</key>
+		<string>9</string>
+		<key>Portals</key>
+		<array/>
+		<key>Class Name</key>
+		<string>OGLightningScene</string>
+	</dict>
 </array>
 </plist>
