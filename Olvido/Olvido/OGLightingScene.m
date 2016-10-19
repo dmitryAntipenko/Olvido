@@ -8,9 +8,11 @@
 
 #import "OGLightingScene.h"
 
+CGFloat const kOGLightingSceneMaxDistanceBetweenPairNodes = 300;
+
 @interface OGLightingScene ()
 
-@property (nonatomic, retain) NSMutableArray<OGLightingScene *> lightingPairs;
+@property (nonatomic, retain) NSMutableArray<OGLightingScene *> *lightingPairs;
 
 @end
 
@@ -22,7 +24,7 @@
     
     if (self)
     {
-        
+        _lightingPairs = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -76,6 +78,8 @@
         for (NSUInteger j = i + 1; j < self.enemies.count; j++)
         {
             OGSpriteNode *temporaryEnemySprite = ((OGVisualComponent *)[self.enemies[j] componentForClass:[OGVisualComponent class]]).spriteNode;
+            
+            if ()
         }
     }
 }
@@ -85,7 +89,29 @@
     return pow(pow(enemySpriteNodeA.position.x - enemySpriteNodeB.position.x, 2) + pow(enemySpriteNodeA.position.y - enemySpriteNodeB.position.y, 2), 0.5);
 }
 
+- (void)dealloc
+{
+    [_lightingPairs release];
+    
+    [super dealloc];
+}
+
+- (BOOL)approachingSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
+{
+    CGFloat distanceBeforeAddingVelocityVectors = pow(pow(spriteNodeA.position.x - spriteNodeB.position.x, 2)
+                                                      + pow(spriteNodeA.position.y - spriteNodeB.position.y, 2), 0.5);
+    
+    CGVector movementVectorA = spriteNodeA.physicsBody.velocity;
+    CGVector movementVectorB = spriteNodeB.physicsBody.velocity;
+    
+    CGFloat distanceAfterAddingVelocityVectors = pow(pow((spriteNodeA.position.x + movementVectorA.dx) - (spriteNodeB.position.x + movementVectorB.dx), 2)
+                                                     + pow((spriteNodeA.position.y + movementVectorA.dy) - (spriteNodeB.position.y + movementVectorB.dy), 2), 0.5);
+    
+    return distanceAfterAddingVelocityVectors <= distanceBeforeAddingVelocityVectors;
+}
+
 @end
+
 
 @interface OGLightingScenePair : NSObject
 
