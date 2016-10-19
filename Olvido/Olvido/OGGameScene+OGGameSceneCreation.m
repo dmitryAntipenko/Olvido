@@ -205,11 +205,11 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     
     if ([self.controlType isEqualToString:@"Drag"])
     {
-        movementControlComponent = [[OGDragMovementControlComponent alloc] initWithNode:sprite];
+        movementControlComponent = [[OGDragMovementControlComponent alloc] initWithSpriteNode:sprite];
     }
     else
     {
-        movementControlComponent = [[OGTapMovementControlComponent alloc] initWithNode:sprite
+        movementControlComponent = [[OGTapMovementControlComponent alloc] initWithSpriteNode:sprite
                                                                                  speed:self.enemySpeed * kOGGameScenePlayerSpeedIncreaseFactor];
     }
     /* temporary code */
