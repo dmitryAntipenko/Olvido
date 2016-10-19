@@ -8,11 +8,17 @@
 
 #import "OGGameScene.h"
 
+CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
+CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
+CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, retain) NSMutableArray<OGEntity *> *mutableEnemies;
 @property (nonatomic, retain) NSMutableArray<OGEntity *> *mutablePortals;
 @property (nonatomic, retain) NSMutableArray<OGEntity *> *mutableCoins;
+
+@property (nonatomic, assign) BOOL shouldShowStatusBar;
 
 @end
 
@@ -27,6 +33,7 @@
         _mutableEnemies = [[NSMutableArray alloc] init];
         _mutablePortals = [[NSMutableArray alloc] init];
         _mutableCoins = [[NSMutableArray alloc] init];
+        _shouldShowStatusBar = NO;
     }
     else
     {
@@ -165,11 +172,22 @@
     }
 }
 
+#pragma mark - Touches handling
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    CGPoint touchLocation = [[touches anyObject] locationInNode:self];
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *touchedNode = [self nodeAtPoint:location];
     
-    [self.playerMovementControlComponent touchBeganAtPoint:touchLocation];
+    if ([touchedNode.name isEqualToString:kOGPauseButtonName])
+    {
+        self.view.paused = !self.view.paused;
+    }
+    else
+    {
+        [self.playerMovementControlComponent touchBeganAtPoint:location];
+    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -184,6 +202,34 @@
     CGPoint touchLocation = [[touches anyObject] locationInNode:self];
     
     [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
+}
+
+#pragma mark - Scene update
+
+- (void)update:(NSTimeInterval)currentTime
+{
+    CGFloat playerPositionY = self.playerVisualComponent.spriteNode.position.y;
+    CGFloat statusBarPositionY = self.frame.size.height - kOGGameSceneStatusBarYOffset;
+    
+    CGFloat distance = fabs(playerPositionY - statusBarPositionY);
+    CGFloat minDistance = self.statusBar.size.height * 2.0;
+    CGFloat statusBarHidingOffset = self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
+    
+    if (distance > minDistance && self.shouldShowStatusBar)
+    {
+        [self changeStatusBarLocationWithY:-statusBarHidingOffset];
+    }
+    else if (distance <= minDistance && !self.shouldShowStatusBar)
+    {
+        [self changeStatusBarLocationWithY:statusBarHidingOffset];
+    }
+}
+
+- (void)changeStatusBarLocationWithY:(CGFloat)y
+{
+    SKAction *statusBarAction = [SKAction moveByX:0.0 y:y duration:0.2];
+    [self.statusBar runAction:statusBarAction];
+    self.shouldShowStatusBar = !self.shouldShowStatusBar;
 }
 
 - (void)dealloc

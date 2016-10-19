@@ -16,12 +16,16 @@ extern NSString *const kOGEnemyNodeName;
 extern NSString *const kOGObstacleNodeName;
 extern NSString *const kOGCoinNodeName;
 extern NSString *const kOGPortalNodeName;
+extern NSString *const kOGPauseButtonName;
 
 extern NSString *const kOGEnemyTextureName;
 extern NSString *const kOGPlayerTextureName;
 extern NSString *const kOGCoinTextureName;
 extern NSString *const kOGHorizontalPortalTextureName;
 extern NSString *const kOGVerticalPortalTextureName;
+extern NSString *const kOGStatusBarBackgroundTextureName;
+extern NSString *const kOGPauseButtonTextureName;
+extern NSString *const kOGResumeButtonTextureName;
 
 extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
 extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;

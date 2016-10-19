@@ -29,6 +29,9 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
                                          CGRectGetMidY(self.frame));
     
     ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode.position = centerPosition;
+    
+    self.statusBar.color = [SKColor gameBlack];
+    self.statusBar.colorBlendFactor = 1.0;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

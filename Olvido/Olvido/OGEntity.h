@@ -11,6 +11,6 @@
 
 @interface OGEntity : GKEntity
 
-@property (nonatomic, assign) CGPoint position;
+@property (nonatomic, assign, readonly) CGPoint position;
 
 @end

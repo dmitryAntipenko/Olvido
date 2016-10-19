@@ -8,13 +8,11 @@
 
 #import "OGTimer.h"
 
-CGFloat const kOGTimerInterval = 1.0;
 NSNumber *const kOGTimerTicksStartValue = 0;
 NSInteger const kOGTimerTicksIncrement = 1;
 
 @interface OGTimer ()
 
-@property (nonatomic, retain, readwrite) NSNumber *ticks;
 @property (nonatomic, retain) NSTimer *timer;
 
 @end
@@ -25,11 +23,7 @@ NSInteger const kOGTimerTicksIncrement = 1;
 {
     self = [super init];
     
-    if (self)
-    {
-        _ticks = kOGTimerTicksStartValue;
-    }
-    else
+    if (!self)
     {
         [self release];
         self = nil;
@@ -38,21 +32,9 @@ NSInteger const kOGTimerTicksIncrement = 1;
     return self;
 }
 
-- (void)start
+- (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender
 {
-    self.ticks = kOGTimerTicksStartValue;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:self selector:@selector(tick) userInfo:nil repeats:YES];
-}
-
-- (void)startWithSelector:(SEL)selector sender:(id)sender
-{
-    self.ticks = kOGTimerTicksStartValue;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kOGTimerInterval target:sender selector:selector userInfo:nil repeats:YES];
-}
-
-- (void)tick
-{
-    self.ticks = @(self.ticks.integerValue + kOGTimerTicksIncrement);
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:interval target:sender selector:selector userInfo:nil repeats:YES];
 }
 
 - (void)stop
@@ -64,7 +46,6 @@ NSInteger const kOGTimerTicksIncrement = 1;
 {
     [_timer invalidate];
     [_timer release];
-    [_ticks release];
     
     [super dealloc];
 }

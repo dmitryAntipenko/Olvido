@@ -25,6 +25,9 @@
 #import "OGSpriteNode.h"
 #import "OGDragMovementControlComponent.h"
 #import "OGTapMovementControlComponent.h"
+#import "OGScoreController.h"
+
+extern CGFloat const kOGGameSceneStatusBarYOffset;
 
 @class OGEntity;
 @class OGMovementControlComponent;
@@ -40,6 +43,7 @@
 @property (nonatomic, retain) NSNumber *enemiesCount;
 
 @property (nonatomic, assign) OGMovementControlComponent *playerMovementControlComponent;
+@property (nonatomic, assign) OGVisualComponent *playerVisualComponent;
 
 @property (nonatomic, retain) id <OGGameSceneDelegate> sceneDelegate;
 
@@ -47,6 +51,11 @@
 @property (nonatomic, retain, readonly) NSArray<OGEntity *> *enemies;
 @property (nonatomic, retain, readonly) NSArray<OGEntity *> *portals;
 @property (nonatomic, retain, readonly) NSArray<OGEntity *> *coins;
+
+@property (nonatomic, retain) SKSpriteNode *statusBar;
+@property (nonatomic, retain) SKLabelNode *scoreLabel;
+@property (nonatomic, retain) OGScoreController *scoreController;
+@property (nonatomic, retain) NSTimer *scoreTimer;
 
 - (void)addEnemy:(OGEntity *)enemy;
 - (void)removeEnemy:(OGEntity *)enemy;
