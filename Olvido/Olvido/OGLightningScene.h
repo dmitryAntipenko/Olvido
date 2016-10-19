@@ -8,6 +8,6 @@
 
 #import "OGGameScene+OGGameSceneCreation.h"
 
-@interface OGLightingScene : OGGameScene
+@interface OGLightningScene : OGGameScene
 
 @end
