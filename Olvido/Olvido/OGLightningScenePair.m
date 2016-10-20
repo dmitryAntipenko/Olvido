@@ -10,10 +10,10 @@
 #import "OGSpriteNode.h"
 
 CGFloat const kOGLightningScenePairBoltDisplace = 50.0;
-NSUInteger const kOGLightningScenePairBoltsCount = 1;
-CGFloat const kOGLightningScenePairBoltDetailFactor = 1.0;
-CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.05;
-CGFloat const kOGLightningScenePairBoltWidth = 2.0;
+NSUInteger const kOGLightningScenePairBoltsCount = 5;
+CGFloat const kOGLightningScenePairBoltDetailFactor = 4.0;
+CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.02;
+CGFloat const kOGLightningScenePairBoltWidth = 4.0;
 
 @interface OGLightningScenePair ()
 
