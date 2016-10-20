@@ -125,6 +125,7 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 - (void)createPairBetweenSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
 {
     __block BOOL isExist = NO;
+    
     [self.lightningPairs enumerateObjectsUsingBlock:^(OGLightningScenePair * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
      {
          if ((obj.spriteNodeA == spriteNodeA && obj.spriteNodeB == spriteNodeB)

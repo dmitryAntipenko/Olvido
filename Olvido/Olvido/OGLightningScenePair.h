@@ -10,13 +10,12 @@
 
 @class OGSpriteNode;
 
-@interface OGLightningScenePair : SKNode
+@interface OGLightningScenePair : SKSpriteNode
 
 + (instancetype)pairWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB;
 
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeA;
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeB;
-@property (nonatomic, assign, readonly) SKEmitterNode *lightningEmitter;
 
 - (void)update;
 
