@@ -43,19 +43,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @implementation OGScenesController
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (!self)
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
 - (void)loadLevelMap    
 {
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGSceneControllerLevelMapName

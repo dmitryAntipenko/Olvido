@@ -42,6 +42,7 @@
     OGPauseState *gamePause = [[OGPauseState alloc] initWithView:view];
 
     GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState, gamePause]];
+    self.uiStateMachine = uiStateMachine;
     [uiStateMachine enterState:[OGMainMenuState class]];
     
     [mainMenuState release];
@@ -97,6 +98,16 @@
     [_scenesController release];
     
     [super dealloc];
+}
+
+- (void)pause
+{
+//    self.
+}
+
+- (void)resume
+{
+    
 }
 
 @end
