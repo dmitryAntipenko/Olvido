@@ -15,6 +15,10 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 @property (nonatomic, retain) NSTimer *timer;
 
+@property (nonatomic, retain) NSDate *pauseDate;
+@property (nonatomic, retain) NSDate *previouseFireDate;
+@property (nonatomic, assign) BOOL paused;
+
 @end
 
 @implementation OGTimer
@@ -45,32 +49,26 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 - (void)pause
 {
-    
+    if (!self.paused)
+    {
+        self.pauseDate = [NSDate date];
+        self.previouseFireDate = self.timer.fireDate;
+        
+        self.timer.fireDate = [NSDate distantFuture];
+        
+        self.paused = YES;
+    }
 }
 
 - (void)resume
 {
-    
-}
-
--(void)pauseTimer:(NSTimer *)timer {
-    
-    pauseStart = [[NSDate date] retain];
-    
-    previousFireDate = [[timer fireDate] retain];
-    
-    [timer setFireDate:[NSDate distantFuture]];
-}
-
--(void)resumeTimer:(NSTimer *)timer {
-    
-    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
-    
-    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
-    
-    [pauseStart release];
-    
-    [previousFireDate release];
+    if (!self.paused)
+    {
+        CGFloat dTime = (-1) * self.pauseDate.timeIntervalSinceNow;
+        self.timer.fireDate = [self.previouseFireDate initWithTimeInterval:dTime sinceDate:self.previouseFireDate];
+        
+        self.paused = NO;
+    }
 }
 
 - (void)dealloc
