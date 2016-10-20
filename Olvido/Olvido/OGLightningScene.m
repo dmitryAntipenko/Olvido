@@ -167,6 +167,11 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
 - (void)update:(NSTimeInterval)currentTime
 {
+    for (OGLightningScenePair *pair in self.lightningPairs)
+    {
+        [pair updatePositionAndSize];
+    }
+    
     [self.detectionRediuses enumerateObjectsUsingBlock:^(SKNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
      {
          obj.position = ((OGVisualComponent *)[self.enemies[idx] componentForClass:[OGVisualComponent class]]).spriteNode.position;

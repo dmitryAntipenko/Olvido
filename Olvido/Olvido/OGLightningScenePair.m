@@ -76,15 +76,6 @@ CGFloat const kOGLightningScenePairBoltWidth = 2.0;
     UIGraphicsEndImageContext();
     
     self.texture = [SKTexture textureWithImage:image];
-    
-    self.size = image.size;
-    
-    CGFloat midX = (self.spriteNodeA.position.x + self.spriteNodeB.position.x) / 2;
-    CGFloat midY = (self.spriteNodeA.position.y + self.spriteNodeB.position.y) / 2;
-    
-    CGPoint midPoint = CGPointMake(midX, midY);
-    
-    self.position = midPoint;
 }
 
 - (void)drawBoltWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
@@ -96,6 +87,19 @@ CGFloat const kOGLightningScenePairBoltWidth = 2.0;
     path.lineWidth = 1.0;
     [[SKColor whiteColor] setStroke];
     [path stroke];
+}
+
+- (void)updatePositionAndSize
+{
+    self.size = CGSizeMake(fabs(self.spriteNodeA.position.x - self.spriteNodeB.position.x),
+                           fabs(self.spriteNodeA.position.y - self.spriteNodeB.position.y));
+    
+    CGFloat midX = (self.spriteNodeA.position.x + self.spriteNodeB.position.x) / 2;
+    CGFloat midY = (self.spriteNodeA.position.y + self.spriteNodeB.position.y) / 2;
+    
+    CGPoint midPoint = CGPointMake(midX, midY);
+    
+    self.position = midPoint;
 }
 
 - (void)createBoltPathWithPointA:(CGPoint)pointA pointB:(CGPoint)pointB displace:(CGFloat)displace path:(UIBezierPath*)path
