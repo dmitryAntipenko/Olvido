@@ -19,6 +19,6 @@ extern NSUInteger const kOGLightningScenePairBoltCategoryBitMask;
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeA;
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeB;
 
-- (void)updatePositionAndSize;
+- (void)update;
 
 @end

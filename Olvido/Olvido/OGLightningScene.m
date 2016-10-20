@@ -10,7 +10,7 @@
 #import "OGLightningScenePair.h"
 #import "OGContactType.h"
 
-CGFloat const kOGLightningSceneRadiusForCreationPair = 200;
+CGFloat const kOGLightningSceneRadiusForCreationPair = 400;
 CGFloat const kOGLightningSceneRadiusCategoryBitMask = 0x01 << 7;
 NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
@@ -152,7 +152,7 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 {
     for (OGLightningScenePair *pair in self.lightningPairs)
     {
-        [pair updatePositionAndSize];
+        [pair update];
     }
     
     [self.detectionRediuses enumerateObjectsUsingBlock:^(SKNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
@@ -162,23 +162,6 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     
     [super update:currentTime];
 }
-
-//- (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
-//{
-//    OGContactType result;
-//
-//    if ((contact.bodyA.categoryBitMask == kOGLightningScenePairBoltCategoryBitMask && contact.bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-//        || (contact.bodyB.categoryBitMask == kOGLightningScenePairBoltCategoryBitMask && contact.bodyA.categoryBitMask == kOGCollisionBitMaskPlayer))
-//    {
-//        result =  kOGContactTypeGameOver;
-//    }
-//    else
-//    {
-//        result = [super contactType:contact withBody:body];
-//    }
-//
-//    return result;
-//}
 
 - (void)dealloc
 {

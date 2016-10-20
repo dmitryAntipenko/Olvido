@@ -16,7 +16,7 @@ CGFloat const kOGLightningScenePairBoltDetailFactor = 4.0;
 CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.02;
 CGFloat const kOGLightningScenePairBoltWidth = 4.0;
 
-//NSUInteger const kOGLightningScenePairBoltCategoryBitMask = 0x01 << 8;
+CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
 
 @interface OGLightningScenePair ()
 
@@ -32,19 +32,27 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     
     if (pair)
     {
-        pair.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:spriteNodeA.position toPoint:spriteNodeB.position];
-        pair.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
-        pair.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
-        pair.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
-        pair.physicsBody.usesPreciseCollisionDetection = YES;
+        [pair updatePhysicsBody];
         
         [pair runAction:[SKAction repeatActionForever:[SKAction sequence:@[
                                                                            [SKAction waitForDuration:kOGLightningScenePairUpdateTimeDuration],
-                                                                           [SKAction performSelector:@selector(update) onTarget:pair]
+                                                                           [SKAction performSelector:@selector(updateBoltSprite) onTarget:pair]
                                                                            ]]]];
     }
     
     return [pair autorelease];
+}
+
+- (void)updatePhysicsBody
+{
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+    self.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
+    self.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+    self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    self.color = [SKColor blackColor];
+    self.colorBlendFactor = 1.0;
+    self.blendMode = SKBlendModeAdd;
 }
 
 - (instancetype)initWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
@@ -60,20 +68,20 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     return self;
 }
 
-- (void)update
+- (void)updateBoltSprite
 {
-    CGFloat minX = fmin(self.spriteNodeA.position.x, self.spriteNodeB.position.x);
-    CGFloat minY = fmin(self.spriteNodeA.position.y, self.spriteNodeB.position.y);
+    CGFloat distance = hypot(self.spriteNodeA.position.x - self.spriteNodeB.position.x, self.spriteNodeA.position.y - self.spriteNodeB.position.y);
     
-    CGPoint startPoint = CGPointMake(self.spriteNodeA.position.x - minX, self.spriteNodeA.position.y - minY);
-    CGPoint endPoint = CGPointMake(self.spriteNodeB.position.x - minX, self.spriteNodeB.position.y - minY);
+    CGSize imageSize = CGSizeMake(distance, kOGLightningScenePairBoltSpriteWidth);
     
-    UIGraphicsBeginImageContext(CGSizeMake(fabs(self.spriteNodeA.position.x - self.spriteNodeB.position.x),
-                                           fabs(self.spriteNodeA.position.y - self.spriteNodeB.position.y)));
+    CGPoint startPoint = CGPointMake(0.0, kOGLightningScenePairBoltSpriteWidth * 0.5);
+    CGPoint endPoint = CGPointMake(distance, kOGLightningScenePairBoltSpriteWidth * 0.5);
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(context, self.size.width, 0);
-    CGContextScaleCTM(context, -1.0f, 1.0f);
+    UIGraphicsBeginImageContext(imageSize);
+    
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextTranslateCTM(context, imageSize.width, 0);
+//    CGContextScaleCTM(context, -1.0f, 1.0f);
     
     for (NSUInteger i = 0; i < kOGLightningScenePairBoltsCount; i++)
     {
@@ -98,10 +106,15 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     [path stroke];
 }
 
-- (void)updatePositionAndSize
+- (void)update
 {
-    self.size = CGSizeMake(fabs(self.spriteNodeA.position.x - self.spriteNodeB.position.x),
-                           fabs(self.spriteNodeA.position.y - self.spriteNodeB.position.y));
+    CGFloat distance = hypot(self.spriteNodeA.position.x - self.spriteNodeB.position.x, self.spriteNodeA.position.y - self.spriteNodeB.position.y);
+    
+    self.size = CGSizeMake(distance, kOGLightningScenePairBoltSpriteWidth);
+    
+    [self updatePhysicsBody];
+    
+    self.zRotation = atan((self.spriteNodeA.position.y - self.spriteNodeB.position.y) / (self.spriteNodeA.position.x - self.spriteNodeB.position.x));
     
     CGFloat midX = (self.spriteNodeA.position.x + self.spriteNodeB.position.x) / 2;
     CGFloat midY = (self.spriteNodeA.position.y + self.spriteNodeB.position.y) / 2;
@@ -109,6 +122,7 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     CGPoint midPoint = CGPointMake(midX, midY);
     
     self.position = midPoint;
+    
 }
 
 - (void)createBoltPathWithPointA:(CGPoint)pointA pointB:(CGPoint)pointB displace:(CGFloat)displace path:(UIBezierPath*)path
