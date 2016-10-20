@@ -18,6 +18,9 @@
 		210C99671DB70FAA00704C62 /* OGGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99661DB70FAA00704C62 /* OGGameState.m */; };
 		210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C996A1DB72F5600704C62 /* OGGameOverScene.m */; };
 		210C996E1DB8DEB400704C62 /* OGUIState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C996D1DB8DEB400704C62 /* OGUIState.m */; };
+		210C99721DB8E40800704C62 /* OGPrehistoryAnimationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99711DB8E40800704C62 /* OGPrehistoryAnimationNode.m */; };
+		210C99751DB8E65B00704C62 /* OGSpeechCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99741DB8E65B00704C62 /* OGSpeechCloud.m */; };
+		210C99781DB8E75500704C62 /* OGSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99771DB8E75500704C62 /* OGSpeaker.m */; };
 		EA0D272B1DB1478F00CEFB8A /* OGScenesController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */; };
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
 		EA0D27351DB1503500CEFB8A /* OGInitialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D27341DB1503500CEFB8A /* OGInitialScene.m */; };
@@ -70,6 +73,13 @@
 		210C996A1DB72F5600704C62 /* OGGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameOverScene.m; sourceTree = "<group>"; };
 		210C996C1DB8DEB400704C62 /* OGUIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGUIState.h; sourceTree = "<group>"; };
 		210C996D1DB8DEB400704C62 /* OGUIState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGUIState.m; sourceTree = "<group>"; };
+		210C99701DB8E40800704C62 /* OGPrehistoryAnimationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPrehistoryAnimationNode.h; sourceTree = "<group>"; };
+		210C99711DB8E40800704C62 /* OGPrehistoryAnimationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPrehistoryAnimationNode.m; sourceTree = "<group>"; };
+		210C99731DB8E65B00704C62 /* OGSpeechCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSpeechCloud.h; sourceTree = "<group>"; };
+		210C99741DB8E65B00704C62 /* OGSpeechCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSpeechCloud.m; sourceTree = "<group>"; };
+		210C99761DB8E75500704C62 /* OGSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSpeaker.h; sourceTree = "<group>"; };
+		210C99771DB8E75500704C62 /* OGSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSpeaker.m; sourceTree = "<group>"; };
+		210C99791DB8EA4700704C62 /* OGAnimationActionType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAnimationActionType.h; sourceTree = "<group>"; };
 		EA0D27291DB1478F00CEFB8A /* OGScenesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGScenesController.h; sourceTree = "<group>"; };
 		EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGScenesController.m; sourceTree = "<group>"; };
 		EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneDelegate.h; sourceTree = "<group>"; };
@@ -174,6 +184,20 @@
 			name = UIScenes;
 			sourceTree = "<group>";
 		};
+		210C996F1DB8E39E00704C62 /* PrehistoryAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				210C99701DB8E40800704C62 /* OGPrehistoryAnimationNode.h */,
+				210C99711DB8E40800704C62 /* OGPrehistoryAnimationNode.m */,
+				210C99731DB8E65B00704C62 /* OGSpeechCloud.h */,
+				210C99741DB8E65B00704C62 /* OGSpeechCloud.m */,
+				210C99761DB8E75500704C62 /* OGSpeaker.h */,
+				210C99771DB8E75500704C62 /* OGSpeaker.m */,
+				210C99791DB8EA4700704C62 /* OGAnimationActionType.h */,
+			);
+			name = PrehistoryAnimation;
+			sourceTree = "<group>";
+		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +262,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				210C996F1DB8E39E00704C62 /* PrehistoryAnimation */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
 				EA0D27281DB1475000CEFB8A /* ScenesController */,
 				EA976D051D9EDBF8003B77FC /* Scenes */,
@@ -406,6 +431,7 @@
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA5C3B0F1DB4A682006FC219 /* OGFlameScene.m in Sources */,
 				EAC384131DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.m in Sources */,
+				210C99751DB8E65B00704C62 /* OGSpeechCloud.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
@@ -413,7 +439,9 @@
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
 				210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */,
 				210C99671DB70FAA00704C62 /* OGGameState.m in Sources */,
+				210C99781DB8E75500704C62 /* OGSpeaker.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
+				210C99721DB8E40800704C62 /* OGPrehistoryAnimationNode.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
