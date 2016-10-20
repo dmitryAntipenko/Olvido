@@ -1,5 +1,5 @@
 //
-//  OGPrehistoryAnimationNode.h
+//  OGStoryLevelScene.h
 //  Olvido
 //
 //  Created by Александр Песоцкий on 10/20/16.
@@ -8,8 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface OGPrehistoryAnimationNode : SKNode
+@interface OGStoryLevelScene : SKScene
 
-//@property (nonatomic, retain, readonly) NSArray *spritesNode;
 
 @end

@@ -49,6 +49,7 @@
     [gameOverState release];
     [gamePause release];
     
+     
     /* Should be uncommented after temporary code delete */
     
 //    OGScenesController *scenesController = [[OGScenesController alloc] init];

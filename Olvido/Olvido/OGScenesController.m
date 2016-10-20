@@ -20,6 +20,8 @@
 #import "OGPauseState.h"
 #import "OGMainMenuState.h"
 
+#import "OGStoriesLevelController.h"
+
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
 
@@ -38,6 +40,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @property (nonatomic, retain) OGGameScene *currentScene;
 @property (nonatomic, copy) NSArray *levelMap;
+@property (nonatomic, retain) OGStoriesLevelController *storiesLevelController;
 
 @end
 
@@ -47,10 +50,9 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     self = [super init];
     
-    if (!self)
+    if (self)
     {
-        [self release];
-        self = nil;
+        _storiesLevelController = [[OGStoriesLevelController alloc] init];
     }
     
     return self;
@@ -69,6 +71,8 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [self loadLevelWithIdentifier:@(kOGSceneControllerInitialLevelIndex)];
     [self didLoadNextLevel];
+    [self.storiesLevelController prepareStoryWithPlistName:@"Chapter1"];
+    
     [self.view presentScene:self.currentScene];
 }
 
@@ -245,6 +249,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     [_levelMap release];
     [_currentScene release];
     [_uiStateMachine release];
+    [_storiesLevelController release];
     
     [super dealloc];
 }
