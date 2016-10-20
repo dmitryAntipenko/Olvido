@@ -76,4 +76,7 @@ extern NSString *const kOGGameSceneRestartName;
 
 @property (nonatomic, assign) OGPortalLocation exitPortalLocation;
 
+- (void)pause;
+- (void)resume;
+
 @end

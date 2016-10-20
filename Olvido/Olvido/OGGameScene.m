@@ -241,6 +241,17 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     }
 }
 
+
+- (void)pause
+{
+    self.paused = YES;
+}
+
+- (void)resume
+{
+    self.paused = NO;
+}
+
 - (void)changeStatusBarLocationWithY:(CGFloat)y
 {
     SKAction *statusBarAction = [SKAction moveByX:0.0 y:y duration:kOGGameSceneStatusBarDuration];

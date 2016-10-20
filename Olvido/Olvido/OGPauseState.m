@@ -65,12 +65,12 @@
 
 - (void)pauseScene
 {
-    self.view.scene.paused = YES;
+    [(OGGameScene *)self.view.scene pause];
 }
 
 - (void)resumeScene
 {
-    self.view.scene.paused = NO;
+    [(OGGameScene *)self.view.scene resume];
 }
 
 @end
