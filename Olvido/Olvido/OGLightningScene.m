@@ -10,7 +10,7 @@
 #import "OGLightningScenePair.h"
 #import "OGContactType.h"
 
-CGFloat const kOGLightningSceneRadiusForCreationPair = 400;
+CGFloat const kOGLightningSceneRadiusForCreationPair = 300;
 CGFloat const kOGLightningSceneRadiusCategoryBitMask = 0x01 << 7;
 NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 

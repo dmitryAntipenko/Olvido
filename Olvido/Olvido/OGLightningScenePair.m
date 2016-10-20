@@ -14,7 +14,7 @@ CGFloat const kOGLightningScenePairBoltDisplace = 50.0;
 NSUInteger const kOGLightningScenePairBoltsCount = 5;
 CGFloat const kOGLightningScenePairBoltDetailFactor = 4.0;
 CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.02;
-CGFloat const kOGLightningScenePairBoltWidth = 4.0;
+CGFloat const kOGLightningScenePairBoltWidth = 3.0;
 
 CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
 
@@ -32,8 +32,6 @@ CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
     
     if (pair)
     {
-        [pair updatePhysicsBody];
-        
         [pair runAction:[SKAction repeatActionForever:[SKAction sequence:@[
                                                                            [SKAction waitForDuration:kOGLightningScenePairUpdateTimeDuration],
                                                                            [SKAction performSelector:@selector(updateBoltSprite) onTarget:pair]
@@ -50,9 +48,6 @@ CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
     self.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
     self.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
     self.physicsBody.usesPreciseCollisionDetection = YES;
-    self.color = [SKColor blackColor];
-    self.colorBlendFactor = 1.0;
-    self.blendMode = SKBlendModeAdd;
 }
 
 - (instancetype)initWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB
