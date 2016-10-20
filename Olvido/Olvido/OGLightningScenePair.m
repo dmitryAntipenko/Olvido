@@ -47,42 +47,47 @@ NSUInteger const kOGLightningScenePairBoltsCount = 1;
 
 - (void)update
 {
-    self.texture = [SKTexture textureWithImageNamed:@"PlayerBall"];
-    self.position = CGPointMake((self.spriteNodeA.position.x - self.spriteNodeB.position.x) / 2 + self.spriteNodeB.position.x,
-                                (self.spriteNodeA.position.y - self.spriteNodeB.position.y) / 2 + self.spriteNodeB.position.y);
-//    UIGraphicsBeginImageContext(CGSizeMake(fabs(self.spriteNodeA.position.x - self.spriteNodeB.position.x),
-//                                           fabs(self.spriteNodeA.position.y - self.spriteNodeB.position.y)));
-//    
-//    for (NSUInteger i = 0; i < kOGLightningScenePairBoltsCount; i++)
-//    {
-//        [self drawBoltWithStartPoint:self.spriteNodeA.position endPoint:self.spriteNodeB.position displace:kOGLightningScenePairBoltDisplacement];
-//    }
-//    
-//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
+    UIGraphicsBeginImageContext(CGSizeMake(fabs(self.spriteNodeA.position.x - self.spriteNodeB.position.x),
+                                           fabs(self.spriteNodeA.position.y - self.spriteNodeB.position.y)));
+    
+    CGFloat startPointX = fmin(self.spriteNodeA.position.x, self.spriteNodeB.position.x);
+    CGFloat startPointY = fmin(self.spriteNodeA.position.y, self.spriteNodeB.position.y);
+    CGFloat endPointX = fmax(self.spriteNodeA.position.x, self.spriteNodeB.position.x);
+    CGFloat endPointY = fmax(self.spriteNodeA.position.y, self.spriteNodeB.position.y);
+    
+    CGPoint startPoint = CGPointMake(startPointX, startPointY);
+    CGPoint endPoint = CGPointMake(endPointX, endPointY);
+    
+    for (NSUInteger i = 0; i < kOGLightningScenePairBoltsCount; i++)
+    {
+        [self drawBoltWithStartPoint:startPoint endPoint:endPoint displace:kOGLightningScenePairBoltDisplacement];
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
 }
 
 - (void)drawBoltWithStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint displace:(CGFloat)displace
 {
-//    UIBezierPath *path = [UIBezierPath bezierPath];
-//    [path moveToPoint:startPoint];
-//    
-//    createBoltPath(startPoint.x, startPoint.y, endPoint.x, endPoint.y, displace, path);
-//    
-//    SKShapeNode *bolt = [SKShapeNode node];
-//    bolt.path = path.CGPath;
-//    bolt.strokeColor = [SKColor whiteColor];
-//    bolt.lineWidth = 0.5f;
-//    bolt.antialiased = NO;
-//    [self addChild:bolt];
-//    
-//    SKShapeNode *shadowNode = [[SKShapeNode alloc] init];
-//    shadowNode.path = path.CGPath;
-//    shadowNode.strokeColor = [SKColor colorWithRed:0.702 green:0.745 blue:1 alpha:1.0];
-//    shadowNode.lineWidth = 0.5f;
-//    shadowNode.alpha = 0.4;
-//    shadowNode.glowWidth = 5.f;
-//    [self addChild:shadowNode];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:startPoint];
+    
+    createBoltPath(startPoint.x, startPoint.y, endPoint.x, endPoint.y, displace, path);
+    
+    SKShapeNode *bolt = [SKShapeNode node];
+    bolt.path = path.CGPath;
+    bolt.strokeColor = [SKColor whiteColor];
+    bolt.lineWidth = 0.5f;
+    bolt.antialiased = NO;
+    [self addChild:bolt];
+    
+    SKShapeNode *shadowNode = [[SKShapeNode alloc] init];
+    shadowNode.path = path.CGPath;
+    shadowNode.strokeColor = [SKColor colorWithRed:0.702 green:0.745 blue:1 alpha:1.0];
+    shadowNode.lineWidth = 0.5f;
+    shadowNode.alpha = 0.4;
+    shadowNode.glowWidth = 5.f;
+    [self addChild:shadowNode];
 }
 
 - (BOOL)isEqual:(OGLightningScenePair *)object
