@@ -42,6 +42,37 @@ NSInteger const kOGTimerTicksIncrement = 1;
     [self.timer invalidate];
 }
 
+
+- (void)pause
+{
+    
+}
+
+- (void)resume
+{
+    
+}
+
+-(void)pauseTimer:(NSTimer *)timer {
+    
+    pauseStart = [[NSDate date] retain];
+    
+    previousFireDate = [[timer fireDate] retain];
+    
+    [timer setFireDate:[NSDate distantFuture]];
+}
+
+-(void)resumeTimer:(NSTimer *)timer {
+    
+    float pauseTime = -1*[pauseStart timeIntervalSinceNow];
+    
+    [timer setFireDate:[previousFireDate initWithTimeInterval:pauseTime sinceDate:previousFireDate]];
+    
+    [pauseStart release];
+    
+    [previousFireDate release];
+}
+
 - (void)dealloc
 {
     [_timer invalidate];
