@@ -10,6 +10,8 @@
 
 @class OGSpriteNode;
 
+extern NSUInteger const kOGLightningScenePairBoltCategoryBitMask;
+
 @interface OGLightningScenePair : SKSpriteNode
 
 + (instancetype)pairWithSpriteNodeA:(OGSpriteNode *)spriteNodeA spriteNodeB:(OGSpriteNode *)spriteNodeB;

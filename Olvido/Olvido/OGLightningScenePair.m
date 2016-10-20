@@ -8,12 +8,15 @@
 
 #import "OGLightningScenePair.h"
 #import "OGSpriteNode.h"
+#import "OGCollisionBitMask.h"
 
 CGFloat const kOGLightningScenePairBoltDisplace = 50.0;
 NSUInteger const kOGLightningScenePairBoltsCount = 5;
 CGFloat const kOGLightningScenePairBoltDetailFactor = 4.0;
 CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.02;
 CGFloat const kOGLightningScenePairBoltWidth = 4.0;
+
+//NSUInteger const kOGLightningScenePairBoltCategoryBitMask = 0x01 << 8;
 
 @interface OGLightningScenePair ()
 
@@ -29,6 +32,12 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     
     if (pair)
     {
+        pair.physicsBody = [SKPhysicsBody bodyWithEdgeFromPoint:spriteNodeA.position toPoint:spriteNodeB.position];
+        pair.physicsBody.categoryBitMask = kOGCollisionBitMaskEnemy;
+        pair.physicsBody.collisionBitMask = kOGCollisionBitMaskDefault;
+        pair.physicsBody.contactTestBitMask = kOGCollisionBitMaskPlayer;
+        pair.physicsBody.usesPreciseCollisionDetection = YES;
+        
         [pair runAction:[SKAction repeatActionForever:[SKAction sequence:@[
                                                                            [SKAction waitForDuration:kOGLightningScenePairUpdateTimeDuration],
                                                                            [SKAction performSelector:@selector(update) onTarget:pair]

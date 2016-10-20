@@ -33,6 +33,7 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
+    view.showsPhysics = YES;
     
     
     OGMainMenuState *mainMenuState = [[OGMainMenuState alloc] initWithView:view];
