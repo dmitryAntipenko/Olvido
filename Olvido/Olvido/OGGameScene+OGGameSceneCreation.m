@@ -72,12 +72,14 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
                                    userInfo:nil
                                     repeats:YES];
     
-//    self.scoreTimer = [NSTimer sta]
-    self.scoreTimer = [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneScoreIncrementInterval
-                                                        target:self
-                                                     selector:@selector(timerTick)
-                                                     userInfo:nil
-                                                      repeats:YES];
+    
+    OGTimer *scoreTimer = [[OGTimer alloc] init];
+    self.scoreTimer = scoreTimer;
+    [scoreTimer release];
+    
+    [self.scoreTimer startWithInterval:kOGGameSceneScoreIncrementInterval
+                              selector:@selector(timerTick)
+                                sender:self];
     
     [self createStatusBar];
     [self createScoreController];

@@ -249,11 +249,13 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 - (void)pause
 {
+    [self.scoreTimer pause];
     self.paused = YES;
 }
 
 - (void)resume
 {
+    [self.scoreTimer resume];
     self.paused = NO;
 }
 

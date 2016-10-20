@@ -49,7 +49,7 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 - (void)resume
 {
-    if (!self.paused)
+    if (self.paused)
     {
         CGFloat dTime = (-1) * self.pauseDate.timeIntervalSinceNow;
         self.timer.fireDate = [self.previouseFireDate initWithTimeInterval:dTime sinceDate:self.previouseFireDate];

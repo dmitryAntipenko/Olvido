@@ -30,7 +30,7 @@ NSString *const kOGSceneControllerClassNameKey = @"Class Name";
 NSString *const kOGSceneControllerPortalColorKey = @"Color";
 NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
-NSUInteger const kOGSceneControllerInitialLevelIndex = 5;
+NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 

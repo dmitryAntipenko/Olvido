@@ -10,6 +10,7 @@
 
 #import "OGGameSceneDelegate.h"
 #import "OGConstants.h"
+#import "OGTimer.h"
 
 #import "OGPortalLocation.h"
 #import "SKColor+OGConstantColors.h"
@@ -60,7 +61,7 @@ extern NSString *const kOGGameSceneRestartName;
 @property (nonatomic, assign) CGFloat statusBarMinDistance;
 @property (nonatomic, retain) SKLabelNode *scoreLabel;
 @property (nonatomic, retain) OGScoreController *scoreController;
-@property (nonatomic, retain) NSTimer *scoreTimer;
+@property (nonatomic, retain) OGTimer *scoreTimer;
 @property (nonatomic, retain) SKSpriteNode *pauseBarSprite;
 
 - (void)addEnemy:(OGEntity *)enemy;
