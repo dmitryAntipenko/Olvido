@@ -250,11 +250,13 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 - (void)pause
 {
     [self.scoreTimer pause];
+    [self.coinsCreationTimer pause];
     self.paused = YES;
 }
 
 - (void)resume
 {
+    [self.scoreTimer resume];
     [self.scoreTimer resume];
     self.paused = NO;
 }
@@ -268,6 +270,12 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 - (void)dealloc
 {
+    [_coinsCreationTimer stop];
+    [_coinsCreationTimer release];
+    
+    [_scoreTimer stop];
+    [_scoreTimer release];
+    
     [_mutableEnemies release];
     [_player release];
     [_identifier release];

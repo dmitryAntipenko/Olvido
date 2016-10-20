@@ -62,6 +62,8 @@ extern NSString *const kOGGameSceneRestartName;
 @property (nonatomic, retain) SKLabelNode *scoreLabel;
 @property (nonatomic, retain) OGScoreController *scoreController;
 @property (nonatomic, retain) OGTimer *scoreTimer;
+@property (nonatomic, retain) OGTimer *coinsCreationTimer;
+
 @property (nonatomic, retain) SKSpriteNode *pauseBarSprite;
 
 - (void)addEnemy:(OGEntity *)enemy;

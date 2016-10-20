@@ -66,12 +66,13 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
     
-    [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneCoinAppearanceInterval
-                                     target:self
-                                   selector:@selector(createCoin)
-                                   userInfo:nil
-                                    repeats:YES];
+    OGTimer *coinsCreationTimer = [[OGTimer alloc] init];
+    self.coinsCreationTimer = coinsCreationTimer;
+    [coinsCreationTimer release];
     
+    [self.coinsCreationTimer startWithInterval:kOGGameSceneCoinAppearanceInterval
+                                      selector:@selector(createCoin)
+                                        sender:self];
     
     OGTimer *scoreTimer = [[OGTimer alloc] init];
     self.scoreTimer = scoreTimer;
