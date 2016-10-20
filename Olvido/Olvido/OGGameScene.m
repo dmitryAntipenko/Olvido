@@ -119,6 +119,11 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
     }
 }
 
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    
+}
+
 - (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
 {
     SKPhysicsBody *bodyA = nil;

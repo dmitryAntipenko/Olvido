@@ -84,7 +84,7 @@ CGFloat const kOGLightningScenePairBoltWidth = 4.0;
     [path moveToPoint:startPoint];
     [self createBoltPathWithPointA:startPoint pointB:endPoint displace:kOGLightningScenePairBoltDisplace path:path];
     
-    path.lineWidth = 1.0;
+    path.lineWidth = kOGLightningScenePairBoltWidth;
     [[SKColor whiteColor] setStroke];
     [path stroke];
 }

@@ -9,7 +9,7 @@
 #import "OGLightningScene.h"
 #import "OGLightningScenePair.h"
 
-CGFloat const kOGLightningSceneRadiusForCreationPair = 150;
+CGFloat const kOGLightningSceneRadiusForCreationPair = 200;
 CGFloat const kOGLightningSceneRadiusCategoryBitMask = 0x01 << 7;
 NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
@@ -117,7 +117,7 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     }
     else
     {
-        //        [super didEndContact:contact];
+        [super didEndContact:contact];
     }
 }
 
@@ -140,6 +140,8 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
     {
         OGLightningScenePair *newPair = [OGLightningScenePair pairWithSpriteNodeA:spriteNodeA spriteNodeB:spriteNodeB];
         [self.lightningPairs addObject:newPair];
+        
+        newPair.zPosition = fmin(spriteNodeA.zPosition, spriteNodeB.zPosition) - 1;
         [self addChild:newPair];
     }
 }
