@@ -8,7 +8,6 @@
 
 #import "OGGameState.h"
 #import "OGMainMenuState.h"
-#import "OGScenesController.h"
 
 @interface OGGameState ()
 

@@ -11,6 +11,11 @@
 CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
 CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
+CGFloat const kOGGameSceneStatusBarDuration = 0.2;
+
+NSString *const kOGGameSceneResumeName = @"ResumeButton";
+NSString *const kOGGameSceneMenuName = @"MenuButton";
+NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 @interface OGGameScene ()
 
@@ -104,7 +109,7 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
         if (!self.godMode)
         {
             NSLog(@"Game Over");
-            [self.sceneDelegate gameSceneDidCallFinishGameWithScore:@100];
+            [self.sceneDelegate gameSceneDidCallFinishGameWithScore:self.scoreController.score];
         }
         /* temporary code */
     }
@@ -187,7 +192,19 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
     
     if ([touchedNode.name isEqualToString:kOGPauseButtonName])
     {
-        self.view.paused = !self.view.paused;
+        [self.sceneDelegate gameSceneDidCallPause];
+    }
+    else if ([touchedNode.name isEqualToString:kOGGameSceneResumeName])
+    {
+        [self.sceneDelegate gameSceneDidCallResume];
+    }
+    else if ([touchedNode.name isEqualToString:kOGGameSceneMenuName])
+    {
+        [self.sceneDelegate gameSceneDidCallMenu];
+    }
+    else if ([touchedNode.name isEqualToString:kOGGameSceneRestartName])
+    {
+        [self.sceneDelegate gameSceneDidCallRestart];
     }
     else
     {
@@ -217,14 +234,13 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
     CGFloat statusBarPositionY = self.frame.size.height - kOGGameSceneStatusBarYOffset;
     
     CGFloat distance = fabs(playerPositionY - statusBarPositionY);
-    CGFloat minDistance = self.statusBar.size.height * 2.0;
     CGFloat statusBarHidingOffset = self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
     
-    if (distance > minDistance && self.shouldShowStatusBar)
+    if (distance > self.statusBarMinDistance && self.shouldShowStatusBar)
     {
         [self changeStatusBarLocationWithY:-statusBarHidingOffset];
     }
-    else if (distance <= minDistance && !self.shouldShowStatusBar)
+    else if (distance <= self.statusBarMinDistance && !self.shouldShowStatusBar)
     {
         [self changeStatusBarLocationWithY:statusBarHidingOffset];
     }
@@ -232,7 +248,7 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 
 - (void)changeStatusBarLocationWithY:(CGFloat)y
 {
-    SKAction *statusBarAction = [SKAction moveByX:0.0 y:y duration:0.2];
+    SKAction *statusBarAction = [SKAction moveByX:0.0 y:y duration:kOGGameSceneStatusBarDuration];
     [self.statusBar runAction:statusBarAction];
     self.shouldShowStatusBar = !self.shouldShowStatusBar;
 }
@@ -247,6 +263,7 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
     [_enemiesCount release];
     [_mutableCoins release];
     [_controlType release];
+    [_pauseBarSprite release];
     
     [super dealloc];
 }

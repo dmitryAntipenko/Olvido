@@ -38,6 +38,7 @@
 - (void)dealloc
 {
     [_view release];
+    [_score release];
     
     [super dealloc];
 }
@@ -48,6 +49,7 @@
     if ([self.stateMachine canEnterState:[OGGameState class]])
     {
         OGGameOverScene *gameOverScene = [[OGGameOverScene alloc] initWithSize:self.view.frame.size];
+        gameOverScene.score = self.score;
         gameOverScene.uiStateMachine = self.stateMachine;
         gameOverScene.godMode = self.godMode;
         gameOverScene.controlType = self.controlType;

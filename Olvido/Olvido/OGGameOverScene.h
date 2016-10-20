@@ -10,6 +10,8 @@
 
 @interface OGGameOverScene : SKScene
 
+@property (nonatomic, retain) NSNumber *score;
+
 /* temporary code */
 @property (nonatomic, copy) NSString *controlType;
 @property (nonatomic, assign) BOOL godMode;

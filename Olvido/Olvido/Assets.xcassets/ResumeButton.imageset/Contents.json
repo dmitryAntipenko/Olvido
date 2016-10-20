@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "iphone",
-      "filename" : "ResumeButtonIPhone.png",
+      "filename" : "pause_button_back.png",
       "scale" : "1x"
     },
     {
@@ -15,7 +15,7 @@
     },
     {
       "idiom" : "ipad",
-      "filename" : "ResumeButtonIPad.png",
+      "filename" : "pause_button_back-1.png",
       "scale" : "1x"
     },
     {

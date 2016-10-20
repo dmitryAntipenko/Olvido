@@ -7,7 +7,70 @@
 //
 
 #import "OGPauseState.h"
+#import "OGGameState.h"
+#import "OGGameScene.h"
+#import "OGGameScene+OGGameSceneCreation.h"
+
+@interface OGPauseState ()
+
+@property (nonatomic, retain) SKView *view;
+
+@end
 
 @implementation OGPauseState
+
+- (instancetype)initWithView:(SKView *)view
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _view = [view retain];
+    }
+    else
+    {
+        [self release];
+        self  = nil;
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_view release];
+    
+    [super dealloc];
+}
+
+- (void)willExitWithNextState:(GKState *)nextState
+{
+    [self resumeScene];
+}
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    if ([self.stateMachine canEnterState:[OGGameState class]])
+    {
+        
+        OGGameScene *gameScene = (OGGameScene *) self.view.scene;
+        gameScene.statusBar.position = CGPointMake(gameScene.statusBar.position.x,
+                                                   self.view.scene.size.height + gameScene.statusBar.size.height);
+        
+        [self pauseScene];
+        
+        [gameScene createPauseBar];
+    }
+}
+
+- (void)pauseScene
+{
+    self.view.scene.paused = YES;
+}
+
+- (void)resumeScene
+{
+    self.view.scene.paused = NO;
+}
 
 @end
