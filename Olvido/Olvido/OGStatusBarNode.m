@@ -46,6 +46,11 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     return self;
 }
 
++ (instancetype)statusBarNode
+{
+    return [[[OGStatusBarNode alloc] init] autorelease];
+}
+
 - (void)dealloc
 {
     [_scoreLabel release];

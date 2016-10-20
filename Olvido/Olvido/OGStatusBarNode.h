@@ -12,4 +12,6 @@
 
 @property (nonatomic, retain) SKLabelNode *scoreLabel;
 
++ (instancetype)statusBarNode;
+
 @end
