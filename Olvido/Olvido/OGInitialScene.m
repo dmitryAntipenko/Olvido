@@ -24,6 +24,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     
     [self createEnemies];
     [self createPlayer];
+    [self createPortalAccessComponent];
     
     CGPoint centerPosition = CGPointMake(CGRectGetMidX(self.frame),
                                          CGRectGetMidY(self.frame));

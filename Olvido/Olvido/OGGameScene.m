@@ -8,14 +8,7 @@
 
 #import "OGGameScene.h"
 
-CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
 CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
-CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
-CGFloat const kOGGameSceneStatusBarDuration = 0.2;
-
-NSString *const kOGGameSceneResumeName = @"ResumeButton";
-NSString *const kOGGameSceneMenuName = @"MenuButton";
-NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 @interface OGGameScene ()
 
@@ -105,13 +98,10 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     
     if (contactType == kOGContactTypeGameOver)
     {
-        /* temporary code */
         if (!self.godMode)
         {
-            NSLog(@"Game Over");
             [self.sceneDelegate gameSceneDidCallFinishGameWithScore:self.scoreController.score];
         }
-        /* temporary code */
     }
     else if (contactType == kOGContactTypePlayerDidGetCoin)
     {
@@ -226,6 +216,24 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
 }
 
+#pragma mark - Access Component Delegate Method
+
+- (void)checkAccess
+{
+    if (self.scoreController.score.integerValue > 5)
+    {
+        for (OGEntity *portal in self.portals)
+        {
+            OGAccessComponent *accessComponent = (OGAccessComponent *) [portal componentForClass:[OGAccessComponent class]];
+            [accessComponent grantAccessWithCompletionBlock:^()
+             {
+                 OGTransitionComponent *transitionBlock = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+                 transitionBlock.closed = NO;
+             }];
+        }
+    }
+}
+
 #pragma mark - Scene update
 
 - (void)update:(NSTimeInterval)currentTime
@@ -244,6 +252,17 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     {
         [self changeStatusBarLocationWithY:statusBarHidingOffset];
     }
+    
+    for (OGEntity *portal in self.portals)
+    {
+        OGAccessComponent *accessComponent = (OGAccessComponent *) [portal componentForClass:[OGAccessComponent class]];
+        [accessComponent updateWithDeltaTime:currentTime];
+    }
+}
+
+- (CGFloat)statusBarMinDistance
+{
+    return self.statusBar.size.height * 2.0;
 }
 
 - (void)changeStatusBarLocationWithY:(CGFloat)y

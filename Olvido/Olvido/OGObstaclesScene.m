@@ -23,6 +23,7 @@ CGFloat const kOGObstacleHeight = 30.0;
     
     [self createEnemies];
     [self createPlayer];
+    [self createPortalAccessComponent];
     
     [self createObstaclesWithSize:CGSizeMake(self.frame.size.width / 3.0, kOGObstacleHeight)
                           atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frameOffset)];

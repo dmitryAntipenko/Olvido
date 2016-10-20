@@ -14,6 +14,6 @@
 
 - (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body;
 
-- (void)startMovementWithSpeed:(CGFloat)speed;
+- (void)startMovementWithSpeed:(CGFloat)speed vector:(CGVector)vectro;
 
 @end
