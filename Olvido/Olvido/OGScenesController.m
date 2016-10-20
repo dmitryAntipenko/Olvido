@@ -36,7 +36,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @interface OGScenesController () <OGGameSceneDelegate>
 
-@property (nonatomic, retain) OGGameScene *currentScene;
 @property (nonatomic, copy) NSArray *levelMap;
 
 @end

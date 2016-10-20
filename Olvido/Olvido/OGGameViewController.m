@@ -102,12 +102,12 @@
 
 - (void)pause
 {
-//    self.
+    [self.scenesController.currentScene pause];
 }
 
 - (void)resume
 {
-    
+    [self.scenesController.currentScene resume];
 }
 
 @end

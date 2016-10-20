@@ -12,57 +12,50 @@
 #import "OGPauseState.h"
 #import "OGGameState.h"
 
+NSString *const kOGAppDelegateMainStoryboardName = @"Main";
+
 @interface OGAppDelegate ()
 
-@property (nonatomic, assign, assign) OGGameViewController *gameViewController;
+@property (nonatomic, retain) OGGameViewController *gameViewController;
 
 @end
 
 @implementation OGAppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.gameViewController = (OGGameViewController *)self.window.rootViewController;
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:kOGAppDelegateMainStoryboardName bundle:nil];
+    self.gameViewController = mainStoryboard.instantiateInitialViewController;
+    
+    self.window.rootViewController = self.gameViewController;
+    [self.window makeKeyAndVisible];
     
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    if ([self.gameViewController.uiStateMachine canEnterState:[OGPauseState class]])
-    {
-        [self.gameViewController.uiStateMachine enterState:[OGPauseState class]];
-    }
+    [self.gameViewController pause];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    if ([self.gameViewController.uiStateMachine canEnterState:[OGPauseState class]])
-    {
-        [self.gameViewController.uiStateMachine enterState:[OGPauseState class]];
-    }
+    [self.gameViewController pause];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    if ([self.gameViewController.uiStateMachine canEnterState:[OGGameState class]])
-    {
-        [self.gameViewController.uiStateMachine enterState:[OGGameState class]];
-    }
+    [self.gameViewController resume];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    if ([self.gameViewController.uiStateMachine canEnterState:[OGGameState class]])
-    {
-        [self.gameViewController.uiStateMachine enterState:[OGGameState class]];
-    }
+    [self.gameViewController resume];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    
+    [_gameViewController release];
 }
 
 - (void)dealloc
@@ -71,5 +64,6 @@
     
     [super dealloc];
 }
+
 
 @end
