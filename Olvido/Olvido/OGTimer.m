@@ -23,19 +23,6 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 @implementation OGTimer
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (!self)
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
 - (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender
 {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:interval target:sender selector:selector userInfo:nil repeats:YES];
