@@ -10,13 +10,13 @@
 #import "OGSpriteNode.h"
 #import "OGCollisionBitMask.h"
 
-CGFloat const kOGLightningScenePairBoltDisplace = 50.0;
+CGFloat const kOGLightningScenePairBoltDisplace = 30.0;
 NSUInteger const kOGLightningScenePairBoltsCount = 5;
 CGFloat const kOGLightningScenePairBoltDetailFactor = 4.0;
 CGFloat const kOGLightningScenePairUpdateTimeDuration = 0.02;
 CGFloat const kOGLightningScenePairBoltWidth = 3.0;
 
-CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
+CGFloat const kOGLightningScenePairBoltSpriteWidth = 30.0;
 
 @interface OGLightningScenePair ()
 
@@ -73,10 +73,6 @@ CGFloat const kOGLightningScenePairBoltSpriteWidth = 50.0;
     CGPoint endPoint = CGPointMake(distance, kOGLightningScenePairBoltSpriteWidth * 0.5);
     
     UIGraphicsBeginImageContext(imageSize);
-    
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextTranslateCTM(context, imageSize.width, 0);
-//    CGContextScaleCTM(context, -1.0f, 1.0f);
     
     for (NSUInteger i = 0; i < kOGLightningScenePairBoltsCount; i++)
     {
