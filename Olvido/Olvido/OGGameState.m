@@ -9,38 +9,7 @@
 #import "OGGameState.h"
 #import "OGMainMenuState.h"
 
-@interface OGGameState ()
-
-@property (nonatomic, retain) SKView *view;
-
-@end
-
 @implementation OGGameState
-
-- (instancetype)initWithView:(SKView *)view
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _view = [view retain];
-    }
-    else
-    {
-        [self release];
-        self  = nil;
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [_view release];
-    
-    [super dealloc];
-}
-
 
 - (BOOL)isValidNextState:(Class)stateClass
 {

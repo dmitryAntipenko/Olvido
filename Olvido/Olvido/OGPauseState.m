@@ -11,37 +11,7 @@
 #import "OGGameScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
 
-@interface OGPauseState ()
-
-@property (nonatomic, retain) SKView *view;
-
-@end
-
 @implementation OGPauseState
-
-- (instancetype)initWithView:(SKView *)view
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _view = [view retain];
-    }
-    else
-    {
-        [self release];
-        self  = nil;
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [_view release];
-    
-    [super dealloc];
-}
 
 - (void)willExitWithNextState:(GKState *)nextState
 {

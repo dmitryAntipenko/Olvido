@@ -6,13 +6,11 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGUIState.h"
 
 extern CGFloat const kOGGameSceneStatusBarDuration;
 
-@interface OGPauseState : GKState
-
-- (instancetype)initWithView:(SKView *)view;
+@interface OGPauseState : OGUIState
 
 - (void)pauseScene;
 - (void)resumeScene;

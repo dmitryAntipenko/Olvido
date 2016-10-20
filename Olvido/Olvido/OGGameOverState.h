@@ -6,9 +6,9 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGUIState.h"
 
-@interface OGGameOverState : GKState
+@interface OGGameOverState : OGUIState
 
 @property (nonatomic, retain) NSNumber *score;
 
@@ -16,7 +16,5 @@
 @property (nonatomic, copy) NSString *controlType;
 @property (nonatomic, assign) BOOL godMode;
 /* temporary code */
-
-- (instancetype)initWithView:(SKView *)view;
 
 @end
