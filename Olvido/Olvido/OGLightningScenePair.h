@@ -17,6 +17,4 @@
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeA;
 @property (nonatomic, assign, readonly) OGSpriteNode *spriteNodeB;
 
-- (void)update;
-
 @end
