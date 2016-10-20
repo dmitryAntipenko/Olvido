@@ -124,6 +124,11 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     }
 }
 
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    
+}
+
 - (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
 {
     SKPhysicsBody *bodyA = nil;
