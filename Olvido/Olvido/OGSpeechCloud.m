@@ -10,13 +10,15 @@
 
 @implementation OGSpeechCloud
 
-- (instancetype)initWithSpeechText:(NSString *)speechText animation
+- (instancetype)initWithSpeechText:(NSString *)speechText
+               animationActionType:(OGAnimationActionType)animationActionType
 {
     self = [super init];
     
     if (self)
     {
         _speechText = [speechText copy];
+        _animationActionType = animationActionType;
     }
     else
     {

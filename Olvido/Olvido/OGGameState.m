@@ -16,9 +16,11 @@
     return YES;
 }
 
-- (void)didEnterWithPreviousState:(GKState *)previousState
+- (void)dealloc
 {
-
+    [_scenesController release];
+    
+    [super dealloc];
 }
 
 @end

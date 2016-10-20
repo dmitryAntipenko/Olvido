@@ -10,6 +10,6 @@
 
 @interface OGPrehistoryAnimationNode : SKNode
 
-@property (nonatomic, retain, readonly) NSArray *spriteNode;
+//@property (nonatomic, retain, readonly) NSArray *spritesNode;
 
 @end

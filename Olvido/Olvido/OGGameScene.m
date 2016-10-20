@@ -259,6 +259,10 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     [_mutableCoins release];
     [_controlType release];
     [_pauseBarSprite release];
+    [_statusBar release];
+    [_scoreTimer release];
+    [_scoreLabel release];
+    [_scoreController release];
     
     [super dealloc];
 }

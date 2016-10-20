@@ -7,11 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGAnimationAction.h"
+#import "OGAnimationActionType.h"
 
 @interface OGSpeechCloud : SKSpriteNode
 
 @property (nonatomic, copy) NSString *speechText;
-@property (nonatomic, assign) OGAnimationActionType animationAction;
+@property (nonatomic, assign) OGAnimationActionType animationActionType;
+
+- (instancetype)initWithSpeechText:(NSString *)speechText
+               animationActionType:(OGAnimationActionType)animationActionType;
 
 @end

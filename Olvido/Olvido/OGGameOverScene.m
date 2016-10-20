@@ -66,6 +66,7 @@ NSString *const kOGGameOverSceneRestartName = @"Restart";
 {
     [_uiStateMachine release];
     [_score release];
+    [_controlType release];
     
     [super dealloc];
 }

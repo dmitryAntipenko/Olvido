@@ -15,6 +15,7 @@
 - (void)dealloc
 {
     [_score release];
+    [_controlType release];
     
     [super dealloc];
 }
