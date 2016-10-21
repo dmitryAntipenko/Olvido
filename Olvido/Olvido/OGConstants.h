@@ -40,6 +40,8 @@ extern NSString *const kOGResumeButtonTextureName;
 extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
 extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
+extern CGFloat const kOGGameSceneScoreLabelYPosition;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;

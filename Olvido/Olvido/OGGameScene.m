@@ -263,15 +263,14 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     CGFloat statusBarPositionY = self.frame.size.height - kOGGameSceneStatusBarYOffset;
     
     CGFloat distance = fabs(playerPositionY - statusBarPositionY);
-    CGFloat statusBarHidingOffset = self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
     
     if (distance > self.statusBarMinDistance && self.shouldShowStatusBar)
     {
-        [self changeStatusBarLocationWithY:-statusBarHidingOffset];
+        [self changeStatusBarLocationWithY:-self.statusBarHidingOffset];
     }
     else if (distance <= self.statusBarMinDistance && !self.shouldShowStatusBar)
     {
-        [self changeStatusBarLocationWithY:statusBarHidingOffset];
+        [self changeStatusBarLocationWithY:self.statusBarHidingOffset];
     }
     
     for (OGEntity *portal in self.portals)
@@ -286,11 +285,20 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     return self.statusBar.size.height * 2.0;
 }
 
+- (CGFloat)statusBarHidingOffset
+{
+    return self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
+}
 
 - (void)pause
 {
     [self.scoreTimer pause];
     [self.coinsCreationTimer pause];
+    
+    CGPoint point = CGPointMake(self.statusBar.position.x,
+                                self.statusBar.position.y + self.statusBarHidingOffset);
+    
+    self.statusBar.position = point;
     
     self.physicsWorld.speed = kOGGameSceneSpeedStop;
     self.speed = kOGGameSceneSpeedStop;
@@ -301,7 +309,11 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
 - (void)resume
 {
     [self.scoreTimer resume];
-    [self.scoreTimer resume];
+    
+    CGPoint point = CGPointMake(self.statusBar.position.x,
+                                self.statusBar.position.y - self.statusBarHidingOffset);
+    
+    self.statusBar.position = point;
     
     self.physicsWorld.speed = kOGGameSceneSpeedDefault;
     self.speed = kOGGameSceneSpeedDefault;
