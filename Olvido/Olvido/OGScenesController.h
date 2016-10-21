@@ -21,7 +21,7 @@
 @property (nonatomic, assign) BOOL godMode;
 /* temporary code */
 
-@property (nonatomic, retain) OGGameScene *currentScene;
+@property (nonatomic, retain, readonly) OGGameScene *currentScene;
 
 - (void)loadLevelMap;
 - (void)loadInitialLevel;

@@ -119,7 +119,13 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
 
 - (void)didEndContact:(SKPhysicsContact *)contact
 {
+    OGSpriteNode *touchedBody = nil;
+    OGContactType contactType = [self contactType:contact withBody:&touchedBody];
     
+    if (contactType == kOGContactTypePlayerDidTouchObstacle)
+    {
+         [self.playerMovementControlComponent didChangeDirection];
+    }
 }
 
 - (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
@@ -156,6 +162,18 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     {
         *body = bodyB.node;
         result = kOGContactTypePlayerDidTouchPortal;
+    }
+    else if (bodyB.categoryBitMask == kOGCollisionBitMaskObstacle
+             && bodyA.categoryBitMask == kOGCollisionBitMaskPlayer)
+    {
+        *body = bodyA.node;
+        result = kOGContactTypePlayerDidTouchObstacle;
+    }
+    else if (bodyA.categoryBitMask == kOGCollisionBitMaskObstacle
+             && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
+    {
+        *body = bodyB.node;
+        result = kOGContactTypePlayerDidTouchObstacle;
     }
     
     return result;
