@@ -51,8 +51,6 @@
     if ([self.stateMachine canEnterState:[OGGameState class]])
     {
         OGGameScene *gameScene = (OGGameScene *) self.view.scene;
-        gameScene.statusBar.position = CGPointMake(gameScene.statusBar.position.x,
-                                                   self.view.scene.size.height + gameScene.statusBar.size.height);
         
         [self pauseScene];
         

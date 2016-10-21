@@ -37,6 +37,8 @@ NSString *const kOGResumeButtonTextureName = @"ResumeButton";
 CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 3.0;
 CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.5;
 
+CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
+
 @implementation OGConstants
 
 + (CGPoint)randomPointInRect:(CGRect)rect

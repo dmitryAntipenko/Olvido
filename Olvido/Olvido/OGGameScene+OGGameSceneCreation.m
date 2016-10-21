@@ -289,7 +289,7 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
         [self addChild:sprite];
         
         CGVector movementVector = [OGConstants randomVector];
-        NSLog(@"%@", [NSValue valueWithCGVector:movementVector]);
+        
         [movementComponent startMovementWithSpeed:self.enemySpeed vector:movementVector];
         
         [visualComponent release];
