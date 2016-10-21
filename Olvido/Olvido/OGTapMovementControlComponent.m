@@ -85,12 +85,13 @@ NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMo
         self.spriteNode.physicsBody.velocity = CGVectorMake(speedX, speedY);
         
     }
+    
+    [self didChangeDirection];
 }
 
 - (void)didChangeDirection
 {
     [self.spriteNode removeActionForKey:kOGTapMovementControlComponentSpriteAnimationActionKey];
-    
     SKAction *moovingAnimation = nil;
     
     if (self.spriteNode.physicsBody.velocity.dx > 0)
