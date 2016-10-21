@@ -8,9 +8,6 @@
 
 #import "OGInitialScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
-#import "OGTapMovementControlComponent.h"
-
-NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 @implementation OGInitialScene
 
