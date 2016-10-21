@@ -174,7 +174,6 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
     visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGPlayerTextureName];
     visualComponent.spriteNode.colorBlendFactor = 0.0;
-    visualComponent.color = [SKColor gameBlack];
     
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
