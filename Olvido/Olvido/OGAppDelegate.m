@@ -25,8 +25,10 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:kOGAppDelegateMainStoryboardName bundle:nil];
-    self.gameViewController = mainStoryboard.instantiateInitialViewController;
     
+    self.gameViewController = [mainStoryboard instantiateInitialViewController];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = self.gameViewController;
     [self.window makeKeyAndVisible];
     
