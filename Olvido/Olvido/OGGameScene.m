@@ -124,7 +124,7 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     
     if (contactType == kOGContactTypePlayerDidTouchObstacle)
     {
-         [((OGMovementControlComponent *)[((OGSpriteNode *)(touchedBody)).owner.entity componentForClass:[OGMovementControlComponent class]]) didChangeDirection];
+         [self.playerMovementControlComponent didChangeDirection];
     }
 }
 

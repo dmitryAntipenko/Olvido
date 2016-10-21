@@ -10,6 +10,8 @@
 		1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGDragMovementControlComponent.m */; };
 		1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */; };
 		1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */; };
+		1B2B87B61DBA37CE0013A84B /* PlayerMovementImagesR.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1B2B87B41DBA37CE0013A84B /* PlayerMovementImagesR.atlas */; };
+		1B2B87B71DBA37CE0013A84B /* PlayerMovementImagesL.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 1B2B87B51DBA37CE0013A84B /* PlayerMovementImagesL.atlas */; };
 		1B8A94A71DB7BC6900D86E2D /* OGLightningScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */; };
 		1BF3E2E01DB7D1860033364D /* Lightning.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1BF3E2DF1DB7D1860033364D /* Lightning.sks */; };
 		1BF3E2E41DB7DC6E0033364D /* OGLightningScenePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3E2E31DB7DC6E0033364D /* OGLightningScenePair.m */; };
@@ -58,6 +60,8 @@
 		1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementControlComponent.m; sourceTree = "<group>"; };
 		1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTapMovementControlComponent.h; sourceTree = "<group>"; };
 		1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTapMovementControlComponent.m; sourceTree = "<group>"; };
+		1B2B87B41DBA37CE0013A84B /* PlayerMovementImagesR.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = PlayerMovementImagesR.atlas; sourceTree = "<group>"; };
+		1B2B87B51DBA37CE0013A84B /* PlayerMovementImagesL.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = PlayerMovementImagesL.atlas; sourceTree = "<group>"; };
 		1B8A94A51DB7BC6900D86E2D /* OGLightningScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLightningScene.h; sourceTree = "<group>"; };
 		1B8A94A61DB7BC6900D86E2D /* OGLightningScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLightningScene.m; sourceTree = "<group>"; };
 		1BF3E2DF1DB7D1860033364D /* Lightning.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Lightning.sks; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 		EAC384141DB43A0A00235B27 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1B2B87B41DBA37CE0013A84B /* PlayerMovementImagesR.atlas */,
+				1B2B87B51DBA37CE0013A84B /* PlayerMovementImagesL.atlas */,
 				EAA490C41DA7BE0C007734F0 /* OGCollisionBitMask.h */,
 				EAA490AE1DA54B72007734F0 /* OGScoreController.h */,
 				EAA490AF1DA54B72007734F0 /* OGScoreController.m */,
@@ -417,10 +423,12 @@
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA70E52B1DB3F4620034116D /* playerTail.sks in Resources */,
+				1B2B87B61DBA37CE0013A84B /* PlayerMovementImagesR.atlas in Resources */,
 				EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
+				1B2B87B71DBA37CE0013A84B /* PlayerMovementImagesL.atlas in Resources */,
 				1BF3E2E01DB7D1860033364D /* Lightning.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

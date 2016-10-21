@@ -207,7 +207,8 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
-    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame | kOGCollisionBitMaskCoin | kOGCollisionBitMaskPortal;
+    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame
+    | kOGCollisionBitMaskCoin | kOGCollisionBitMaskPortal | kOGCollisionBitMaskObstacle;
     
     sprite.name = kOGPlayerNodeName;
     sprite.physicsBody.friction = kOGDefaultFriction;

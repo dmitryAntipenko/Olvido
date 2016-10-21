@@ -20,6 +20,7 @@ CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
     if (self)
     {
         _spriteNode = [spriteNode retain];
+        _speedFactor = kOGMovementControlComponentDefaultSpeedFactor;
     }
     
     return self;

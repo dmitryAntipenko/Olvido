@@ -62,7 +62,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     }
 }
 
-- (void)didChangeMovementDirection
+- (void)didChangeDirection
 {
     NSLog(@"%@", NSStringFromCGVector(self.spriteNode.physicsBody.velocity));
 }
