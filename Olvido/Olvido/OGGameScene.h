@@ -11,6 +11,8 @@
 #import "OGGameSceneDelegate.h"
 #import "OGAccessComponentDelegate.h"
 #import "OGConstants.h"
+#import "OGTimer.h"
+
 #import "OGStatusBarNode.h"
 
 #import "OGPortalLocation.h"
@@ -56,7 +58,9 @@
 @property (nonatomic, retain) OGStatusBarNode *statusBar;
 @property (nonatomic, assign, readonly) CGFloat statusBarMinDistance;
 @property (nonatomic, retain) OGScoreController *scoreController;
-@property (nonatomic, retain) NSTimer *scoreTimer;
+@property (nonatomic, retain) OGTimer *scoreTimer;
+@property (nonatomic, retain) OGTimer *coinsCreationTimer;
+
 @property (nonatomic, retain) SKSpriteNode *pauseBarSprite;
 
 - (void)addEnemy:(OGEntity *)enemy;
@@ -71,5 +75,8 @@
 - (void)changeStatusBarLocationWithY:(CGFloat)y;
 
 @property (nonatomic, assign) OGPortalLocation exitPortalLocation;
+
+- (void)pause;
+- (void)resume;
 
 @end

@@ -37,10 +37,10 @@
 - (void)dealloc
 {
     [_view release];
+    [_scenesController release];
     
     [super dealloc];
 }
-
 
 - (BOOL)isValidNextState:(Class)stateClass
 {

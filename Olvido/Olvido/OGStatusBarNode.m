@@ -10,7 +10,6 @@
 #import "OGConstants.h"
 
 NSString *const kOGGameSceneScoreLabelFontName = @"Helvetica";
-CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 NSUInteger const kOGGameSceneScoreLabelFontSize = 32;
 NSString *const kOGGameSceneDefaultScoreValue = @"0";
 
