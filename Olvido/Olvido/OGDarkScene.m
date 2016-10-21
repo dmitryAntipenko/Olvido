@@ -32,6 +32,7 @@ CGFloat const kOGDarkSceneSpeedFactor = 0.3;
     }
     
     [self createPlayer];
+    [self createPortalAccessComponent];
     
     self.playerMovementControlComponent.speedFactor = kOGDarkSceneSpeedFactor;
     

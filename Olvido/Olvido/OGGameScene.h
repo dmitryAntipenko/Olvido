@@ -9,8 +9,11 @@
 @import SpriteKit;
 
 #import "OGGameSceneDelegate.h"
+#import "OGAccessComponentDelegate.h"
 #import "OGConstants.h"
 #import "OGTimer.h"
+
+#import "OGStatusBarNode.h"
 
 #import "OGPortalLocation.h"
 #import "SKColor+OGConstantColors.h"
@@ -27,17 +30,12 @@
 #import "OGDragMovementControlComponent.h"
 #import "OGTapMovementControlComponent.h"
 #import "OGScoreController.h"
-
-extern CGFloat const kOGGameSceneStatusBarYOffset;
-extern CGFloat const kOGGameSceneStatusBarDuration;
-extern NSString *const kOGGameSceneResumeName;
-extern NSString *const kOGGameSceneMenuName;
-extern NSString *const kOGGameSceneRestartName;
+#import "OGAccessComponent.h"
 
 @class OGEntity;
 @class OGMovementControlComponent;
 
-@interface OGGameScene : SKScene <SKPhysicsContactDelegate>
+@interface OGGameScene : SKScene <SKPhysicsContactDelegate, OGAccessComponentDelegate>
 
 /* temporary code */
 @property (nonatomic, copy) NSString *controlType;
@@ -57,9 +55,8 @@ extern NSString *const kOGGameSceneRestartName;
 @property (nonatomic, retain, readonly) NSArray<OGEntity *> *portals;
 @property (nonatomic, retain, readonly) NSArray<OGEntity *> *coins;
 
-@property (nonatomic, retain) SKSpriteNode *statusBar;
-@property (nonatomic, assign) CGFloat statusBarMinDistance;
-@property (nonatomic, retain) SKLabelNode *scoreLabel;
+@property (nonatomic, retain) OGStatusBarNode *statusBar;
+@property (nonatomic, assign, readonly) CGFloat statusBarMinDistance;
 @property (nonatomic, retain) OGScoreController *scoreController;
 @property (nonatomic, retain) OGTimer *scoreTimer;
 @property (nonatomic, retain) OGTimer *coinsCreationTimer;
