@@ -208,7 +208,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 - (void)gameSceneDidCallResume
 {
-    [self.currentScene.pauseBarSprite removeAllChildren];
+//    [self.currentScene.pauseBarSprite removeAllChildren];
     [self.currentScene.pauseBarSprite removeFromParent];
     
     [self.uiStateMachine enterState:[OGGameState class]];

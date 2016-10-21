@@ -114,7 +114,7 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     SKTexture *pauseButtonTexture = [SKTexture textureWithImageNamed:kOGPauseButtonTextureName];
     SKSpriteNode *pauseButton = [SKSpriteNode spriteNodeWithTexture:pauseButtonTexture];
     
-    pauseButton.name = kOGPauseButtonName;    
+    pauseButton.name = kOGPauseButtonName;
     pauseButton.position = CGPointMake(statusBarSprite.size.width / 2.0 - pauseButton.size.width / 2.0 - kOGGameSceneStatusBarPositionOffset,
                                        0.0);
     
@@ -135,34 +135,37 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
 
 - (void)createPauseBar
 {
-    SKSpriteNode *pauseBarSprite = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
-                                                                 size:CGSizeMake(self.scene.size.width, self.scene.size.height / 3.5)];
-    pauseBarSprite.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
+    if (!self.pauseBarSprite)
+    {
+        SKSpriteNode *pauseBarSprite = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
+                                                                    size:CGSizeMake(self.scene.size.width, self.scene.size.height / 3.5)];
+        
+        CGSize buttonSize = CGSizeMake(70.0, 70.0);
+        
+        SKSpriteNode *resume = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneResumeName];
+        resume.name = kOGGameSceneResumeName;
+        resume.position = CGPointMake(-100.0, 0.0);
+        resume.size = buttonSize;
+        
+        SKSpriteNode *menu = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneMenuName];
+        menu.name = kOGGameSceneMenuName;
+        menu.position = CGPointMake(0.0, 0.0);
+        menu.size = buttonSize;
+        
+        SKSpriteNode *restart = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneRestartName];
+        restart.name = kOGGameSceneRestartName;
+        restart.position = CGPointMake(100.0, 0.0);
+        restart.size = buttonSize;
+        
+        self.pauseBarSprite = pauseBarSprite;
+        
+        [self.pauseBarSprite addChild:resume];
+        [self.pauseBarSprite addChild:menu];
+        [self.pauseBarSprite addChild:restart];
+    }
     
-    CGSize buttonSize = CGSizeMake(70.0, 70.0);
-    
-    SKSpriteNode *resume = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneResumeName];
-    resume.name = kOGGameSceneResumeName;
-    resume.position = CGPointMake(-100.0, 0.0);
-    resume.size = buttonSize;
-    
-    SKSpriteNode *menu = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneMenuName];
-    menu.name = kOGGameSceneMenuName;
-    menu.position = CGPointMake(0.0, 0.0);
-    menu.size = buttonSize;
-    
-    SKSpriteNode *restart = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneRestartName];
-    restart.name = kOGGameSceneRestartName;
-    restart.position = CGPointMake(100.0, 0.0);
-    restart.size = buttonSize;
-    
-    self.pauseBarSprite = pauseBarSprite;
-    
+    self.pauseBarSprite.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     [self addChild:self.pauseBarSprite];
-    
-    [self.pauseBarSprite addChild:resume];
-    [self.pauseBarSprite addChild:menu];
-    [self.pauseBarSprite addChild:restart];
 }
 
 - (SKCropNode *)createBackgroundBorderWithColor:(SKColor *)color
@@ -196,7 +199,7 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
     sprite.alpha = 0.0;
-
+    
     if (self.exitPortalLocation == kOGPortalLocationUp)
     {
         sprite.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height);
@@ -247,7 +250,7 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
     else
     {
         movementControlComponent = [[OGTapMovementControlComponent alloc] initWithSpriteNode:sprite
-                                                                                 speed:self.enemySpeed * kOGGameScenePlayerSpeedIncreaseFactor];
+                                                                                       speed:self.enemySpeed * kOGGameScenePlayerSpeedIncreaseFactor];
     }
     /* temporary code */
     
@@ -381,12 +384,12 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
             if ([node isKindOfClass:[SKSpriteNode class]])
             {
                 SKSpriteNode *sprite = (SKSpriteNode *) node;
-
+                
                 CGRect spriteRect = CGRectMake(sprite.position.x - sprite.size.width / 2.0,
                                                sprite.position.y - sprite.size.height / 2.0,
                                                sprite.size.width,
                                                sprite.size.height);
-
+                
                 if (CGRectIntersectsRect(pointRect, spriteRect))
                 {
                     keepSearching = YES;

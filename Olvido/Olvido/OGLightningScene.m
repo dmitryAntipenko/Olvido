@@ -90,10 +90,14 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    if (contact.bodyA.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask && contact.bodyB.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask)
+    if (contact.bodyA.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask
+        && contact.bodyB.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask)
     {
-        OGSpriteNode *nodeA = ((OGVisualComponent *)[self.enemies[[self.detectionRediuses indexOfObject:contact.bodyA.node]] componentForClass:[OGVisualComponent class]]).spriteNode;
-        OGSpriteNode *nodeB = ((OGVisualComponent *)[self.enemies[[self.detectionRediuses indexOfObject:contact.bodyB.node]] componentForClass:[OGVisualComponent class]]).spriteNode;
+        NSUInteger indexA = [self.detectionRediuses indexOfObject:contact.bodyA.node];
+        NSUInteger indexB = [self.detectionRediuses indexOfObject:contact.bodyB.node];
+        
+        OGSpriteNode *nodeA = ((OGVisualComponent *)[self.enemies[indexA] componentForClass:[OGVisualComponent class]]).spriteNode;
+        OGSpriteNode *nodeB = ((OGVisualComponent *)[self.enemies[indexB] componentForClass:[OGVisualComponent class]]).spriteNode;
         
         [self createPairBetweenSpriteNodeA:nodeA spriteNodeB:nodeB];
     }
@@ -105,10 +109,14 @@ NSString *const kOGLightningSceneRadiusNodeName = @"radiusForDetectionPair";
 
 - (void)didEndContact:(SKPhysicsContact *)contact
 {
-    if (contact.bodyA.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask && contact.bodyB.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask)
+    if (contact.bodyA.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask
+        && contact.bodyB.categoryBitMask == kOGLightningSceneRadiusCategoryBitMask)
     {
-        OGSpriteNode *nodeA = ((OGVisualComponent *)[self.enemies[[self.detectionRediuses indexOfObject:contact.bodyA.node]] componentForClass:[OGVisualComponent class]]).spriteNode;
-        OGSpriteNode *nodeB = ((OGVisualComponent *)[self.enemies[[self.detectionRediuses indexOfObject:contact.bodyB.node]] componentForClass:[OGVisualComponent class]]).spriteNode;
+        NSUInteger indexA = [self.detectionRediuses indexOfObject:contact.bodyA.node];
+        NSUInteger indexB = [self.detectionRediuses indexOfObject:contact.bodyB.node];
+        
+        OGSpriteNode *nodeA = ((OGVisualComponent *)[self.enemies[indexA] componentForClass:[OGVisualComponent class]]).spriteNode;
+        OGSpriteNode *nodeB = ((OGVisualComponent *)[self.enemies[indexB] componentForClass:[OGVisualComponent class]]).spriteNode;
         
         [self removePairBetweenSpriteNodeA:nodeA spriteNodeB:nodeB];
     }

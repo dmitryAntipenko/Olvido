@@ -45,7 +45,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [self.gameViewController pause];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
