@@ -23,9 +23,10 @@ CGFloat const kOGShootingComponentDefaultShootingSpeed = 2.0;
 
 - (instancetype)initWithShell:(SKNode *)shell shooter:(SKNode *)shooter lifeTime:(NSTimeInterval)time
 {
-    if (!shell && !shooter && time <= 0.0)
+    if (!shell || !shooter || time <= 0.0)
     {
-        return nil;
+       [self release];
+        self = nil;
     }
     else
     {

@@ -21,6 +21,7 @@
     
     [self createEnemies];
     [self createPlayer];
+    
     [self createPortalAccessComponent];
     
     CGPoint centerPosition = CGPointMake(CGRectGetMidX(self.frame),
