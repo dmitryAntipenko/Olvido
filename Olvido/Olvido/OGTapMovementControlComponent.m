@@ -7,8 +7,12 @@
 //
 
 #import "OGTapMovementControlComponent.h"
+#import "OGVisualComponent.h"
+#import "OGSpriteNode.h"
 
 CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
+CGFloat const kOGTapMovementControlComponentSpriteAnimateTimeInterval = 0.15;
+NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMovementControlComponentSpriteAnimationActionKey";
 
 @interface OGTapMovementControlComponent ()
 
@@ -16,7 +20,12 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
-@property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementSprites;
+
+/*temporary*/
+
+@property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementRightTextures;
+@property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementLeftTextures;
+/*temporary*/
 
 @end
 
@@ -30,7 +39,26 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     {
         _defaultSpeed = speed;
         _targetPoint = CGPointZero;
-        _playerMovementSprites = [[NSMutableArray alloc] init];
+        
+        /*temporary*/
+        
+        SKTextureAtlas *playerMovingRightSpriteAtlas = [SKTextureAtlas atlasNamed:@"PlayerMovementImagesR"];
+        _playerMovementRightTextures = [[NSMutableArray alloc] init];
+        
+        for (NSString *textureName in playerMovingRightSpriteAtlas.textureNames)
+        {
+            [_playerMovementRightTextures addObject:[playerMovingRightSpriteAtlas textureNamed:textureName]];
+        }
+        
+        SKTextureAtlas *playerMovingLeftSpriteAtlas = [SKTextureAtlas atlasNamed:@"PlayerMovementImagesL"];
+        _playerMovementLeftTextures = [[NSMutableArray alloc] init];
+        
+        for (NSString *textureName in playerMovingLeftSpriteAtlas.textureNames)
+        {
+            [_playerMovementLeftTextures addObject:[playerMovingLeftSpriteAtlas textureNamed:textureName]];
+        }
+        
+        /*temporary*/
     }
     else
     {
@@ -64,7 +92,20 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 - (void)didChangeDirection
 {
-    NSLog(@"%@", NSStringFromCGVector(self.spriteNode.physicsBody.velocity));
+    [self.spriteNode removeActionForKey:kOGTapMovementControlComponentSpriteAnimationActionKey];
+    
+    SKAction *moovingAnimation = nil;
+    
+    if (self.spriteNode.physicsBody.velocity.dx > 0)
+    {
+        moovingAnimation = [SKAction animateWithTextures:self.playerMovementRightTextures timePerFrame:kOGTapMovementControlComponentSpriteAnimateTimeInterval];
+    }
+    else
+    {
+        moovingAnimation = [SKAction animateWithTextures:self.playerMovementLeftTextures timePerFrame:kOGTapMovementControlComponentSpriteAnimateTimeInterval];
+    }
+    
+    [self.spriteNode runAction:[SKAction repeatActionForever:moovingAnimation]];
 }
 
 - (void)stop
@@ -74,7 +115,8 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 - (void)dealloc
 {
-    [_playerMovementSprites release];
+    [_playerMovementRightTextures release];
+    [_playerMovementLeftTextures release];
     
     [super dealloc];
 }

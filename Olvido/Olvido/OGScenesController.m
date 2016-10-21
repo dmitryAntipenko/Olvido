@@ -38,6 +38,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 @interface OGScenesController () <OGGameSceneDelegate>
 
 @property (nonatomic, copy) NSArray *levelMap;
+@property (nonatomic, retain) OGGameScene *privateCurrentGameScene;
 
 @end
 
@@ -159,7 +160,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
         [portalVisualComponent release];
     }
     
-    self.currentScene = scene;
+    self.privateCurrentGameScene = scene;
     [scene release];
 }
 
@@ -233,10 +234,15 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
                                                                                                             godMode:self.godMode];
 }
 
+- (OGGameScene *)currentScene
+{
+    return  _privateCurrentGameScene;
+}
+
 - (void)dealloc
 {
     [_levelMap release];
-    [_currentScene release];
+    [_privateCurrentGameScene release];
     [_uiStateMachine release];
     
     [super dealloc];
