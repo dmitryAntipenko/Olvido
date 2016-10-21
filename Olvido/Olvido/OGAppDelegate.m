@@ -28,7 +28,10 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
     
     self.gameViewController = [mainStoryboard instantiateInitialViewController];
     
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window = window;
+    [window release];
+    
     self.window.rootViewController = self.gameViewController;
     [self.window makeKeyAndVisible];
     
@@ -47,22 +50,23 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self.gameViewController resume];
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [self.gameViewController resume];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [_gameViewController release];
+    
 }
 
 - (void)dealloc
 {
     [_window release];
+    [_gameViewController release];
     
     [super dealloc];
 }

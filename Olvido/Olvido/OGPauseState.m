@@ -45,7 +45,10 @@
 
 - (void)willExitWithNextState:(GKState *)nextState
 {
-    [self resumeScene];
+    if ([nextState isKindOfClass:[OGGameState class]])
+    {
+        [self resumeScene];
+    }
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState

@@ -104,20 +104,7 @@
 
 - (void)pause
 {
-    if ([self.uiStateMachine.currentState.class instancesRespondToSelector:@selector(scenesController)])
-    {
-        [((OGGameState *)self.uiStateMachine.currentState).scenesController.currentScene pause];
-        //    [self.scenesController.currentScene pause];
-    }
-}
-
-- (void)resume
-{
-    if ([self.uiStateMachine.currentState.class instancesRespondToSelector:@selector(scenesController)])
-    {
-        [((OGGameState *)self.uiStateMachine.currentState).scenesController.currentScene resume];
-        //    [self.scenesController.currentScene resume];
-    }
+    [self.uiStateMachine enterState:[OGPauseState class]];
 }
 
 @end

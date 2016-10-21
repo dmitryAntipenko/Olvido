@@ -52,7 +52,8 @@ NSInteger const kOGTimerTicksIncrement = 1;
     if (self.paused)
     {
         CGFloat dTime = (-1) * self.pauseDate.timeIntervalSinceNow;
-        self.timer.fireDate = [self.previouseFireDate initWithTimeInterval:dTime sinceDate:self.previouseFireDate];
+
+        self.timer.fireDate = [NSDate dateWithTimeInterval:dTime sinceDate:self.previouseFireDate];
         
         self.paused = NO;
     }
@@ -62,6 +63,8 @@ NSInteger const kOGTimerTicksIncrement = 1;
 {
     [_timer invalidate];
     [_timer release];
+    [_pauseDate release];
+    [_previouseFireDate release];
     
     [super dealloc];
 }
