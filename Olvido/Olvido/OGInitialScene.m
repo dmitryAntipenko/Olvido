@@ -33,22 +33,6 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     
     self.statusBar.color = [SKColor gameBlue];
     self.statusBar.colorBlendFactor = 1.0;
-    
-    [self createHealthComponent];
-}
-
-- (void)createHealthComponent
-{
-    OGHealthComponent *healthComponent = [[OGHealthComponent alloc] initWithMaxHealth:@(100.0)];
-    [self.player addComponent:healthComponent];
-    
-    for (int i = 0; i < 100; i++)
-    {
-        [healthComponent dealDamage:@(30.0)];
-    }
-    
-    [healthComponent restoreFullHealth];
-    [healthComponent kill];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
