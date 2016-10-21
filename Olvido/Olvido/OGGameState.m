@@ -41,7 +41,6 @@
     [super dealloc];
 }
 
-
 - (BOOL)isValidNextState:(Class)stateClass
 {
     return YES;

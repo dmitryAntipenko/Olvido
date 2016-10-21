@@ -13,6 +13,9 @@ CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
+CGFloat const kOGGameSceneSpeedStop = 0.0;
+CGFloat const kOGGameSceneSpeedDefault = 1.0;
+
 NSString *const kOGGameSceneResumeName = @"ResumeButton";
 NSString *const kOGGameSceneMenuName = @"MenuButton";
 NSString *const kOGGameSceneRestartName = @"RestartButton";
@@ -251,6 +254,10 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 {
     [self.scoreTimer pause];
     [self.coinsCreationTimer pause];
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedStop;
+    self.speed = kOGGameSceneSpeedStop;
+    
     self.paused = YES;
 }
 
@@ -258,6 +265,10 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 {
     [self.scoreTimer resume];
     [self.scoreTimer resume];
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedDefault;
+    self.speed = kOGGameSceneSpeedDefault;
+    
     self.paused = NO;
 }
 

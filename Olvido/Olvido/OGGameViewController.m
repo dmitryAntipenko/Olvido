@@ -95,16 +95,16 @@
     return YES;
 }
 
+- (void)pause
+{
+    [self.uiStateMachine enterState:[OGPauseState class]];
+}
+
 - (void)dealloc
 {
     [_scenesController release];
     
     [super dealloc];
-}
-
-- (void)pause
-{
-    [self.uiStateMachine enterState:[OGPauseState class]];
 }
 
 @end
