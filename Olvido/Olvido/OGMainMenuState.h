@@ -8,6 +8,8 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+@class OGScenesController;
+
 @interface OGMainMenuState : GKState
 
 /* Temporary code */

@@ -12,8 +12,6 @@
 
 @interface OGGameViewController : UIViewController
 
-@property (nonatomic, assign) GKStateMachine *uiStateMachine;
-
 - (void)pause;
 
 - (void)resume;
