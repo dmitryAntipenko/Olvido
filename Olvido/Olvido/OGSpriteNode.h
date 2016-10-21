@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+
 @class OGVisualComponent;
 
 @interface OGSpriteNode : SKSpriteNode

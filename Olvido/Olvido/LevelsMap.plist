@@ -17,14 +17,6 @@
 				<key>Location</key>
 				<integer>1</integer>
 			</dict>
-			<dict>
-				<key>Color</key>
-				<string>0x3498db</string>
-				<key>Next Level Index</key>
-				<integer>1</integer>
-				<key>Location</key>
-				<integer>2</integer>
-			</dict>
 		</array>
 		<key>Class Name</key>
 		<string>OGInitialScene</string>

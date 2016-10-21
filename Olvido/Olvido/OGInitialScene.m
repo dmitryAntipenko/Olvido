@@ -8,9 +8,6 @@
 
 #import "OGInitialScene.h"
 #import "OGGameScene+OGGameSceneCreation.h"
-#import "OGHealthComponent.h"
-
-NSUInteger const kOGInitialSceneEnemiesCount = 4;
 
 @implementation OGInitialScene
 
@@ -24,6 +21,7 @@ NSUInteger const kOGInitialSceneEnemiesCount = 4;
     
     [self createEnemies];
     [self createPlayer];
+    
     [self createPortalAccessComponent];
     
     CGPoint centerPosition = CGPointMake(CGRectGetMidX(self.frame),
