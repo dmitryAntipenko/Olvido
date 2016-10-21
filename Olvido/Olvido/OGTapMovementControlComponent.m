@@ -22,7 +22,6 @@ NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMo
 
 
 /*temporary*/
-
 @property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementRightTextures;
 @property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementLeftTextures;
 /*temporary*/
@@ -41,7 +40,6 @@ NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMo
         _targetPoint = CGPointZero;
         
         /*temporary*/
-        
         SKTextureAtlas *playerMovingRightSpriteAtlas = [SKTextureAtlas atlasNamed:@"PlayerMovementImagesR"];
         _playerMovementRightTextures = [[NSMutableArray alloc] init];
         
@@ -57,7 +55,6 @@ NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMo
         {
             [_playerMovementLeftTextures addObject:[playerMovingLeftSpriteAtlas textureNamed:textureName]];
         }
-        
         /*temporary*/
     }
     else
@@ -110,6 +107,7 @@ NSString *const kOGTapMovementControlComponentSpriteAnimationActionKey = @"tapMo
 
 - (void)stop
 {
+    [self.spriteNode removeActionForKey:kOGTapMovementControlComponentSpriteAnimationActionKey];
     self.speedFactor = 0.0;
 }
 
