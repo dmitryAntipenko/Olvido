@@ -16,6 +16,8 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
+@property (nonatomic, retain) NSMutableArray<SKTexture *> *playerMovementSprites;
+
 @end
 
 @implementation OGTapMovementControlComponent
@@ -28,6 +30,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     {
         _defaultSpeed = speed;
         _targetPoint = CGPointZero;
+        _playerMovementSprites = [[NSMutableArray alloc] init];
     }
     else
     {
@@ -48,7 +51,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
         CGVector displacementVector = CGVectorMake(point.x - self.spriteNode.position.x,
                                                    point.y - self.spriteNode.position.y);
         
-        CGFloat displacement = pow(pow(displacementVector.dx, 2) + pow(displacementVector.dy, 2), 0.5);
+        CGFloat displacement = hypot(displacementVector.dx, displacementVector.dy);
         
         CGFloat speedX = displacementVector.dx / displacement * self.speedFactor * self.defaultSpeed;
         
@@ -59,9 +62,21 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     }
 }
 
+- (void)didChangeMovementDirection
+{
+    NSLog(@"%@", NSStringFromCGVector(self.spriteNode.physicsBody.velocity));
+}
+
 - (void)stop
 {
     self.speedFactor = 0.0;
+}
+
+- (void)dealloc
+{
+    [_playerMovementSprites release];
+    
+    [super dealloc];
 }
 
 @end

@@ -13,13 +13,15 @@
 @property (nonatomic, retain, readonly) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) CGFloat speedFactor;
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)node;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 
 - (void)touchBeganAtPoint:(CGPoint)point;
 
 - (void)touchEndedAtPoint:(CGPoint)point;
 
 - (void)touchMovedToPoint:(CGPoint)point;
+
+- (void)didChangeDirection;
 
 - (void)stop;
 
