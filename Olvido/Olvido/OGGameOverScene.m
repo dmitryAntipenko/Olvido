@@ -16,6 +16,8 @@ NSString *const kOGGameOverSceneRestartImageName = @"RestartButton";
 NSString *const kOGGameOverSceneMenuName = @"Menu";
 NSString *const kOGGameOverSceneRestartName = @"Restart";
 
+CGFloat const kOGGameOverSceneButtonsPositionFactor = 5.0;
+
 @interface OGGameOverScene ()
 
 @end
@@ -25,21 +27,23 @@ NSString *const kOGGameOverSceneRestartName = @"Restart";
 - (void)didMoveToView:(SKView *)view
 {
     SKLabelNode *gameOverLabel = [self createLabelWithTitle:kOGGameOverSceneGameOverText
-                                                    atPoint:CGPointMake(150, 300)
+                                                    atPoint:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
                                                    fontSize:kOGGameOverSceneDefaultFontSize];
     
     SKLabelNode *scoreLabel = [self createLabelWithTitle:self.score.stringValue
-                                                 atPoint:CGPointMake(150, 250)
+                                                 atPoint:CGPointMake(CGRectGetMidX(self.frame), gameOverLabel.position.y - 60.0)
                                                 fontSize:kOGGameOverSceneDefaultFontSize];
     
     SKSpriteNode *menuButton = [SKSpriteNode spriteNodeWithImageNamed:kOGGameOverSceneMenuImageName];
     menuButton.name = kOGGameOverSceneMenuName;
-    menuButton.position = CGPointMake(100, 100);
+    menuButton.position = CGPointMake(self.frame.size.width / kOGGameOverSceneButtonsPositionFactor,
+                                      CGRectGetMidY(self.frame));
     menuButton.size = CGSizeMake(100, 100);
     
     SKSpriteNode *restartButton = [SKSpriteNode spriteNodeWithImageNamed:kOGGameOverSceneRestartImageName];
     restartButton.name = kOGGameOverSceneRestartName;
-    restartButton.position = CGPointMake(230, 100);
+    restartButton.position = CGPointMake(self.frame.size.width / kOGGameOverSceneButtonsPositionFactor * (kOGGameOverSceneButtonsPositionFactor - 1),
+                                         CGRectGetMidY(self.frame));
     restartButton.size = CGSizeMake(100, 100);
     
     [self addChild:gameOverLabel];

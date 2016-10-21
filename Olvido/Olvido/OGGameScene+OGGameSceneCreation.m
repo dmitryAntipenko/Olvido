@@ -17,6 +17,7 @@
 #import "OGDragMovementControlComponent.h"
 #import "OGTapMovementControlComponent.h"
 #import "OGScoreController.h"
+#import "OGStatusBarNode.h"
 
 CGFloat const kOGGameSceneCoinAppearanceInterval = 8.0;
 CGFloat const kOGGameSceneCoinLifeTime = 3.0;
@@ -31,25 +32,19 @@ CGFloat const kOGDefaultMass = 0.01;
 
 CGFloat const kOGGameSceneBorderSize = 3.0;
 
-CGFloat const kOGGameSceneEnemyDefaultSpeed = 2.0;
-CGFloat const kOGGameSceneScaleFactor = 4.0;
+CGFloat const kOGGameSceneScoreIncrementInterval = 1.0;
+
+CGFloat const kOGGameSceneEnemyDefaultSpeed = 200.0;
+CGFloat const kOGGameSceneScaleFactor = 500.0;
 CGFloat const kOGGameScenePlayerAppearanceDelay = 0.1;
 CGFloat const kOGGameScenePlayerSpeedIncreaseFactor = 1.2;
 
 CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
 
-CGFloat const kOGGameSceneStatusBarAlpha = 0.5;
-CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
-
-NSString *const kOGGameSceneScoreLabelFontName = @"Helvetica";
-CGFloat const kOGGameSceneScoreIncrementInterval = 1.0;
-CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
-NSUInteger const kOGGameSceneScoreLabelFontSize = 32;
-NSString *const kOGGameSceneDefaultScoreValue = @"0";
-
 @interface OGGameScene ()
 
 @property (nonatomic, readonly) CGFloat enemySpeed;
+@property (nonatomic, readonly) CGFloat screenDiagonal;
 
 @end
 
@@ -85,7 +80,7 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
 - (void)timerTick
 {
     [self.scoreController incrementScore];
-    self.scoreLabel.text = self.scoreController.score.stringValue;
+    self.statusBar.scoreLabel.text = self.scoreController.score.stringValue;
 }
 
 - (void)createScoreController
@@ -99,34 +94,18 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
 
 - (void)createStatusBar
 {
-    SKSpriteNode *statusBarSprite = [SKSpriteNode spriteNodeWithImageNamed:kOGStatusBarBackgroundTextureName];
+    OGStatusBarNode *statusBar = [[OGStatusBarNode alloc] init];
     
-    statusBarSprite.alpha = kOGGameSceneStatusBarAlpha;
-    statusBarSprite.zPosition = 4;
+    CGFloat statusBarY = self.frame.size.height - statusBar.size.height / 2.0 - kOGGameSceneStatusBarYOffset;
+    CGPoint statusBarPosition = CGPointMake(CGRectGetMidX(self.frame), statusBarY);
     
-    CGFloat statusBarY = self.frame.size.height - statusBarSprite.size.height / 2.0 - kOGGameSceneStatusBarYOffset;
-    statusBarSprite.position = CGPointMake(CGRectGetMidX(self.frame), statusBarY);
+    statusBar.position = statusBarPosition;
+    statusBar.color = [SKColor gameWhite];
     
-    SKTexture *pauseButtonTexture = [SKTexture textureWithImageNamed:kOGPauseButtonTextureName];
-    SKSpriteNode *pauseButton = [SKSpriteNode spriteNodeWithTexture:pauseButtonTexture];
+    [self addChild:statusBar];
     
-    pauseButton.name = kOGPauseButtonName;    
-    pauseButton.position = CGPointMake(statusBarSprite.size.width / 2.0 - pauseButton.size.width / 2.0 - kOGGameSceneStatusBarPositionOffset,
-                                       0.0);
-    
-    [statusBarSprite addChild:pauseButton];
-    
-    SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:kOGGameSceneScoreLabelFontName];
-    scoreLabel.fontSize = kOGGameSceneScoreLabelFontSize;
-    scoreLabel.text = kOGGameSceneDefaultScoreValue;
-    scoreLabel.position = CGPointMake(0.0, kOGGameSceneScoreLabelYPosition);
-    
-    self.scoreLabel = scoreLabel;
-    [statusBarSprite addChild:scoreLabel];
-    
-    self.statusBar = statusBarSprite;
-    self.statusBarMinDistance = self.statusBar.size.height * 2.0;
-    [self addChild:statusBarSprite];
+    self.statusBar = statusBar;
+    [statusBar release];
 }
 
 - (void)createPauseBar
@@ -302,16 +281,35 @@ NSString *const kOGGameSceneDefaultScoreValue = @"0";
         [self addEnemy:enemy];
         [self addChild:sprite];
         
-        [movementComponent startMovementWithSpeed:self.enemySpeed];
+        CGVector movementVector = [OGConstants randomVector];
+        [movementComponent startMovementWithSpeed:self.enemySpeed vector:movementVector];
         
         [visualComponent release];
         [movementComponent release];
     }
 }
 
+- (void)createPortalAccessComponent
+{
+    for (OGEntity *portal in self.portals)
+    {
+        OGAccessComponent *accessComponent = [[OGAccessComponent alloc] init];
+        
+        accessComponent.componentDelegate = self;
+        
+        [portal addComponent:accessComponent];
+        [accessComponent release];
+    }
+}
+
 - (CGFloat)enemySpeed
 {
-    return self.frame.size.height * kOGGameSceneEnemyDefaultSpeed / kOGGameSceneScaleFactor;
+    return self.screenDiagonal * kOGGameSceneEnemyDefaultSpeed / kOGGameSceneScaleFactor;
+}
+
+- (CGFloat)screenDiagonal
+{
+    return sqrt(pow(self.frame.size.width, 2) + pow(self.frame.size.height, 2));
 }
 
 - (void)createCoin

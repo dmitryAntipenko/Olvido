@@ -18,6 +18,16 @@ extern NSString *const kOGCoinNodeName;
 extern NSString *const kOGPortalNodeName;
 extern NSString *const kOGPauseButtonName;
 
+extern CGFloat const kOGGameSceneStatusBarHidingDistance;
+extern CGFloat const kOGGameSceneStatusBarAlpha;
+extern CGFloat const kOGGameSceneStatusBarPositionOffset;
+extern CGFloat const kOGGameSceneStatusBarYOffset;
+extern CGFloat const kOGGameSceneStatusBarDuration;
+
+extern NSString *const kOGGameSceneResumeName;
+extern NSString *const kOGGameSceneMenuName;
+extern NSString *const kOGGameSceneRestartName;
+
 extern NSString *const kOGEnemyTextureName;
 extern NSString *const kOGPlayerTextureName;
 extern NSString *const kOGCoinTextureName;
@@ -34,6 +44,7 @@ extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
 
 + (CGPoint)randomPointInRect:(CGRect)rect;
 + (CGVector)randomVectorWithLength:(CGFloat)length;
++ (CGVector)randomVector;
 
 @end
 

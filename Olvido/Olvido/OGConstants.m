@@ -15,6 +15,16 @@ NSString *const kOGCoinNodeName = @"coin";
 NSString *const kOGPortalNodeName = @"portal";
 NSString *const kOGPauseButtonName = @"pause";
 
+CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
+CGFloat const kOGGameSceneStatusBarAlpha = 0.5;
+CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
+CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
+CGFloat const kOGGameSceneStatusBarDuration = 0.2;
+
+NSString *const kOGGameSceneResumeName = @"ResumeButton";
+NSString *const kOGGameSceneMenuName = @"MenuButton";
+NSString *const kOGGameSceneRestartName = @"RestartButton";
+
 NSString *const kOGEnemyTextureName = @"EnemyBall";
 NSString *const kOGPlayerTextureName = @"PlayerBall";
 NSString *const kOGCoinTextureName = @"EnemyBall";
@@ -47,6 +57,13 @@ CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.5;
     CGFloat angle = (rand() / (CGFloat) RAND_MAX) * 2 * M_PI;
     
     return CGVectorMake(length * cosf(angle), length * sinf(angle));
+}
+
++ (CGVector)randomVector
+{
+    CGFloat angle = (rand() / (CGFloat) RAND_MAX) * 2 * M_PI;
+    
+    return CGVectorMake(cosf(angle), sinf(angle));
 }
 
 @end

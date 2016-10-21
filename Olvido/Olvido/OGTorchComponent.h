@@ -18,4 +18,5 @@
 - (void)torchTurnOff;
 
 - (void)createDarknessWithSize:(CGSize)size;
+
 @end

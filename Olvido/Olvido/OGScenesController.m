@@ -30,7 +30,7 @@ NSString *const kOGSceneControllerClassNameKey = @"Class Name";
 NSString *const kOGSceneControllerPortalColorKey = @"Color";
 NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
-NSUInteger const kOGSceneControllerInitialLevelIndex = 5;
+NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
@@ -93,19 +93,23 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 - (void)gameSceneDidCallFinishWithPortal:(OGEntity *)portal
 {
     OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-    SKTransitionDirection nextSceneTransitionDirection = [self transitionDirectionWithPortalLocation:transitionComponent.location];
     
-    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalLocation:transitionComponent.location
-                                                                inLevel:self.currentScene.identifier];
-    [self loadLevelWithIdentifier:nextLevelId];
-    
-    self.currentScene.exitPortalLocation = transitionComponent.location;
-    [self didLoadNextLevel];
-    
-    SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
-                                                        duration:kOGSceneControllerTransitionDuration];
+    if (!transitionComponent.isClosed)
+    {
+        SKTransitionDirection nextSceneTransitionDirection = [self transitionDirectionWithPortalLocation:transitionComponent.location];
+        
+        NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalLocation:transitionComponent.location
+                                                                    inLevel:self.currentScene.identifier];
+        [self loadLevelWithIdentifier:nextLevelId];
+        
+        self.currentScene.exitPortalLocation = transitionComponent.location;
+        [self didLoadNextLevel];
+        
+        SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
+                                                            duration:kOGSceneControllerTransitionDuration];
 
-    [self.view presentScene:self.currentScene transition:transition];
+        [self.view presentScene:self.currentScene transition:transition];
+    }
 }
 
 - (void)didLoadNextLevel
