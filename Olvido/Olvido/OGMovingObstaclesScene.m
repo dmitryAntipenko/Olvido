@@ -28,6 +28,7 @@ CGFloat const kOGObstacleMovementDuration = 1.0;
     
     [self createEnemies];
     [self createPlayer];
+    [self createPortalAccessComponent];
     
     [self createObstaclesWithSize:CGSizeMake(self.frameOffset, 30.0)
                           atPoint:CGPointMake(CGRectGetMidX(self.frame), self.frameOffset)];

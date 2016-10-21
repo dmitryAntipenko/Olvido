@@ -35,6 +35,11 @@
     [super dealloc];
 }
 
+- (void)runStoryWithSceneStory:(NSMutableDictionary *)sceneStory
+{
+    
+}
+
 
 
 @end

@@ -10,5 +10,6 @@
 
 @interface OGStoryLevelScene : SKScene
 
+- (void)runStoryWithSceneStory:(NSMutableDictionary *)sceneStory;
 
 @end

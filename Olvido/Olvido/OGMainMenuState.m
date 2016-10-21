@@ -43,6 +43,7 @@
         [self.stateMachine enterState:[OGGameState class]];
         
         OGScenesController *scenesController = [[OGScenesController alloc] init];
+        
         SKView *view = self.view;
         
         if (scenesController)

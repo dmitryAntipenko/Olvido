@@ -15,22 +15,13 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 @property (nonatomic, retain) NSTimer *timer;
 
+@property (nonatomic, retain) NSDate *pauseDate;
+@property (nonatomic, retain) NSDate *previouseFireDate;
+@property (nonatomic, assign) BOOL paused;
+
 @end
 
 @implementation OGTimer
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (!self)
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
 
 - (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender
 {
@@ -42,10 +33,38 @@ NSInteger const kOGTimerTicksIncrement = 1;
     [self.timer invalidate];
 }
 
+
+- (void)pause
+{
+    if (!self.paused)
+    {
+        self.pauseDate = [NSDate date];
+        self.previouseFireDate = self.timer.fireDate;
+        
+        self.timer.fireDate = [NSDate distantFuture];
+        
+        self.paused = YES;
+    }
+}
+
+- (void)resume
+{
+    if (self.paused)
+    {
+        CGFloat dTime = (-1) * self.pauseDate.timeIntervalSinceNow;
+
+        self.timer.fireDate = [NSDate dateWithTimeInterval:dTime sinceDate:self.previouseFireDate];
+        
+        self.paused = NO;
+    }
+}
+
 - (void)dealloc
 {
     [_timer invalidate];
     [_timer release];
+    [_pauseDate release];
+    [_previouseFireDate release];
     
     [super dealloc];
 }

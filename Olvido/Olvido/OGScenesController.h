@@ -8,6 +8,8 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+@class OGGameScene;
+
 @interface OGScenesController : NSObject
 
 @property (nonatomic, assign) SKView *view;
@@ -17,6 +19,8 @@
 @property (nonatomic, copy) NSString *controlType;
 @property (nonatomic, assign) BOOL godMode;
 /* temporary code */
+
+@property (nonatomic, retain) OGGameScene *currentScene;
 
 - (void)loadLevelMap;
 - (void)loadInitialLevel;

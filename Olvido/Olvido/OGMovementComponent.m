@@ -37,12 +37,13 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
     return self;
 }
 
-- (void)startMovementWithSpeed:(CGFloat)speed
+- (void)startMovementWithSpeed:(CGFloat)speed vector:(CGVector)vector
 {
     if (self.physicsBody)
     {
-        CGVector vector = [OGConstants randomVectorWithLength:self.speedFactor * speed * self.physicsBody.mass];
-        [self.physicsBody applyImpulse:vector];
+        CGFloat vectorFactor = self.speedFactor * speed * self.physicsBody.mass;
+        CGVector movementVector = CGVectorMake(vector.dx * vectorFactor, vector.dy * vectorFactor);
+        [self.physicsBody applyImpulse:movementVector];
     }
 }
 

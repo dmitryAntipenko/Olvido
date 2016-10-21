@@ -8,14 +8,10 @@
 
 #import "OGGameScene.h"
 
-CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
 CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
-CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
-CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
-NSString *const kOGGameSceneResumeName = @"ResumeButton";
-NSString *const kOGGameSceneMenuName = @"MenuButton";
-NSString *const kOGGameSceneRestartName = @"RestartButton";
+CGFloat const kOGGameSceneSpeedStop = 0.0;
+CGFloat const kOGGameSceneSpeedDefault = 1.0;
 
 @interface OGGameScene ()
 
@@ -105,13 +101,10 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     
     if (contactType == kOGContactTypeGameOver)
     {
-        /* temporary code */
         if (!self.godMode)
         {
-            NSLog(@"Game Over");
             [self.sceneDelegate gameSceneDidCallFinishGameWithScore:self.scoreController.score];
         }
-        /* temporary code */
     }
     else if (contactType == kOGContactTypePlayerDidGetCoin)
     {
@@ -122,6 +115,11 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     {
         [self.sceneDelegate gameSceneDidCallFinishWithPortal:(OGEntity *) touchedBody.owner.entity];
     }
+}
+
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    
 }
 
 - (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
@@ -221,6 +219,24 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     [self.playerMovementControlComponent touchEndedAtPoint:touchLocation];
 }
 
+#pragma mark - Access Component Delegate Method
+
+- (void)checkAccess
+{
+    if (self.scoreController.score.integerValue > 5)
+    {
+        for (OGEntity *portal in self.portals)
+        {
+            OGAccessComponent *accessComponent = (OGAccessComponent *) [portal componentForClass:[OGAccessComponent class]];
+            [accessComponent grantAccessWithCompletionBlock:^()
+             {
+                 OGTransitionComponent *transitionBlock = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
+                 transitionBlock.closed = NO;
+             }];
+        }
+    }
+}
+
 #pragma mark - Scene update
 
 - (void)update:(NSTimeInterval)currentTime
@@ -229,16 +245,62 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     CGFloat statusBarPositionY = self.frame.size.height - kOGGameSceneStatusBarYOffset;
     
     CGFloat distance = fabs(playerPositionY - statusBarPositionY);
-    CGFloat statusBarHidingOffset = self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
     
     if (distance > self.statusBarMinDistance && self.shouldShowStatusBar)
     {
-        [self changeStatusBarLocationWithY:-statusBarHidingOffset];
+        [self changeStatusBarLocationWithY:-self.statusBarHidingOffset];
     }
     else if (distance <= self.statusBarMinDistance && !self.shouldShowStatusBar)
     {
-        [self changeStatusBarLocationWithY:statusBarHidingOffset];
+        [self changeStatusBarLocationWithY:self.statusBarHidingOffset];
     }
+    
+    for (OGEntity *portal in self.portals)
+    {
+        OGAccessComponent *accessComponent = (OGAccessComponent *) [portal componentForClass:[OGAccessComponent class]];
+        [accessComponent updateWithDeltaTime:currentTime];
+    }
+}
+
+- (CGFloat)statusBarMinDistance
+{
+    return self.statusBar.size.height * 2.0;
+}
+
+- (CGFloat)statusBarHidingOffset
+{
+    return self.statusBar.size.height + kOGGameSceneStatusBarHidingOffset;
+}
+
+- (void)pause
+{
+    [self.scoreTimer pause];
+    [self.coinsCreationTimer pause];
+    
+    CGPoint point = CGPointMake(self.statusBar.position.x,
+                                self.statusBar.position.y + self.statusBarHidingOffset);
+    
+    self.statusBar.position = point;
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedStop;
+    self.speed = kOGGameSceneSpeedStop;
+    
+    self.paused = YES;
+}
+
+- (void)resume
+{
+    [self.scoreTimer resume];
+    
+    CGPoint point = CGPointMake(self.statusBar.position.x,
+                                self.statusBar.position.y - self.statusBarHidingOffset);
+    
+    self.statusBar.position = point;
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedDefault;
+    self.speed = kOGGameSceneSpeedDefault;
+    
+    self.paused = NO;
 }
 
 - (void)changeStatusBarLocationWithY:(CGFloat)y
@@ -250,6 +312,12 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 - (void)dealloc
 {
+    [_coinsCreationTimer stop];
+    [_coinsCreationTimer release];
+    
+    [_scoreTimer stop];
+    [_scoreTimer release];
+    
     [_mutableEnemies release];
     [_player release];
     [_identifier release];
@@ -261,7 +329,6 @@ NSString *const kOGGameSceneRestartName = @"RestartButton";
     [_pauseBarSprite release];
     [_statusBar release];
     [_scoreTimer release];
-    [_scoreLabel release];
     [_scoreController release];
     
     [super dealloc];

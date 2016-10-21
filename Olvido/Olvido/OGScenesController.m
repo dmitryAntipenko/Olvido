@@ -19,6 +19,7 @@
 #import "OGGameOverState.h"
 #import "OGPauseState.h"
 #import "OGMainMenuState.h"
+#import "OGGameState.h"
 
 #import "OGStoriesLevelController.h"
 
@@ -38,7 +39,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @interface OGScenesController () <OGGameSceneDelegate>
 
-@property (nonatomic, retain) OGGameScene *currentScene;
 @property (nonatomic, copy) NSArray *levelMap;
 @property (nonatomic, retain) OGStoriesLevelController *storiesLevelController;
 
@@ -73,7 +73,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     [self didLoadNextLevel];
     [self.storiesLevelController prepareStoryWithPlistName:@"Chapter1"];
     
-    [self.view presentScene:self.currentScene];
+    //[self.view presentScene:self.currentScene];
 }
 
 - (NSNumber *)nextLevelIdentifierWithPortalLocation:(OGPortalLocation)location inLevel:(NSNumber *)identifier
@@ -97,19 +97,23 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 - (void)gameSceneDidCallFinishWithPortal:(OGEntity *)portal
 {
     OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [portal componentForClass:[OGTransitionComponent class]];
-    SKTransitionDirection nextSceneTransitionDirection = [self transitionDirectionWithPortalLocation:transitionComponent.location];
     
-    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalLocation:transitionComponent.location
-                                                                inLevel:self.currentScene.identifier];
-    [self loadLevelWithIdentifier:nextLevelId];
-    
-    self.currentScene.exitPortalLocation = transitionComponent.location;
-    [self didLoadNextLevel];
-    
-    SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
-                                                        duration:kOGSceneControllerTransitionDuration];
+    if (!transitionComponent.isClosed)
+    {
+        SKTransitionDirection nextSceneTransitionDirection = [self transitionDirectionWithPortalLocation:transitionComponent.location];
+        
+        NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalLocation:transitionComponent.location
+                                                                    inLevel:self.currentScene.identifier];
+        [self loadLevelWithIdentifier:nextLevelId];
+        
+        self.currentScene.exitPortalLocation = transitionComponent.location;
+        [self didLoadNextLevel];
+        
+        SKTransition *transition = [SKTransition pushWithDirection:nextSceneTransitionDirection
+                                                            duration:kOGSceneControllerTransitionDuration];
 
-    [self.view presentScene:self.currentScene transition:transition];
+        [self.view presentScene:self.currentScene transition:transition];
+    }
 }
 
 - (void)didLoadNextLevel
@@ -225,11 +229,9 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 - (void)gameSceneDidCallResume
 {
-    [self.currentScene.pauseBarSprite removeAllChildren];
     [self.currentScene.pauseBarSprite removeFromParent];
-    [((OGPauseState *)[self.uiStateMachine stateForClass:[OGPauseState class]]) resumeScene];
     
-    [self.currentScene changeStatusBarLocationWithY:kOGGameSceneStatusBarYOffset * 2.0];
+    [self.uiStateMachine enterState:[OGGameState class]];
 }
 
 - (void)gameSceneDidCallMenu

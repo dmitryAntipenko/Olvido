@@ -24,9 +24,9 @@
 				<dict>
 					<key>Position</key>
 					<dict>
-						<key>x</key>
+						<key>X</key>
 						<integer>100</integer>
-						<key>y</key>
+						<key>Y</key>
 						<integer>100</integer>
 					</dict>
 				</dict>
@@ -37,9 +37,9 @@
 				<dict>
 					<key>Position</key>
 					<dict>
-						<key>x</key>
+						<key>X</key>
 						<integer>100</integer>
-						<key>y</key>
+						<key>Y</key>
 						<integer>100</integer>
 					</dict>
 				</dict>
@@ -51,7 +51,10 @@
 				<key>Say</key>
 				<dict>
 					<key>Replica</key>
-					<string>AAAA!!!</string>
+					<dict>
+						<key>Text</key>
+						<string>AAAA!</string>
+					</dict>
 				</dict>
 			</dict>
 		</dict>

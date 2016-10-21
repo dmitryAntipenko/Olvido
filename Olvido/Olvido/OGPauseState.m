@@ -15,17 +15,17 @@
 
 - (void)willExitWithNextState:(GKState *)nextState
 {
-    [self resumeScene];
+    if ([nextState isKindOfClass:[OGGameState class]])
+    {
+        [self resumeScene];
+    }
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     if ([self.stateMachine canEnterState:[OGGameState class]])
     {
-        
         OGGameScene *gameScene = (OGGameScene *) self.view.scene;
-        gameScene.statusBar.position = CGPointMake(gameScene.statusBar.position.x,
-                                                   self.view.scene.size.height + gameScene.statusBar.size.height);
         
         [self pauseScene];
         
@@ -35,12 +35,12 @@
 
 - (void)pauseScene
 {
-    self.view.scene.paused = YES;
+    [(OGGameScene *)self.view.scene pause];
 }
 
 - (void)resumeScene
 {
-    self.view.scene.paused = NO;
+    [(OGGameScene *)self.view.scene resume];
 }
 
 @end

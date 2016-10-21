@@ -68,6 +68,7 @@ NSUInteger const kOGFlameChangeInterval = 5.0;
     
     [self createFlame];
     [self createFlame];
+    [self createPortalAccessComponent];
     
     [self changeFlameLocation];
     
