@@ -61,17 +61,21 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
     self.physicsWorld.contactDelegate = self;
     
-    [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneCoinAppearanceInterval
-                                     target:self
-                                   selector:@selector(createCoin)
-                                   userInfo:nil
-                                    repeats:YES];
+    OGTimer *coinsCreationTimer = [[OGTimer alloc] init];
+    self.coinsCreationTimer = coinsCreationTimer;
+    [coinsCreationTimer release];
     
-    self.scoreTimer = [NSTimer scheduledTimerWithTimeInterval:kOGGameSceneScoreIncrementInterval
-                                                        target:self
-                                                     selector:@selector(timerTick)
-                                                     userInfo:nil
-                                                      repeats:YES];
+    [self.coinsCreationTimer startWithInterval:kOGGameSceneCoinAppearanceInterval
+                                      selector:@selector(createCoin)
+                                        sender:self];
+    
+    OGTimer *scoreTimer = [[OGTimer alloc] init];
+    self.scoreTimer = scoreTimer;
+    [scoreTimer release];
+    
+    [self.scoreTimer startWithInterval:kOGGameSceneScoreIncrementInterval
+                              selector:@selector(timerTick)
+                                sender:self];
     
     [self createStatusBar];
     [self createScoreController];
@@ -110,34 +114,37 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
 
 - (void)createPauseBar
 {
-    SKSpriteNode *pauseBarSprite = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
-                                                                 size:CGSizeMake(self.scene.size.width, self.scene.size.height / 3.5)];
-    pauseBarSprite.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
+    if (!self.pauseBarSprite)
+    {
+        SKSpriteNode *pauseBarSprite = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
+                                                                    size:CGSizeMake(self.scene.size.width, self.scene.size.height / 3.5)];
+        
+        CGSize buttonSize = CGSizeMake(70.0, 70.0);
+        
+        SKSpriteNode *resume = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneResumeName];
+        resume.name = kOGGameSceneResumeName;
+        resume.position = CGPointMake(-100.0, 0.0);
+        resume.size = buttonSize;
+        
+        SKSpriteNode *menu = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneMenuName];
+        menu.name = kOGGameSceneMenuName;
+        menu.position = CGPointMake(0.0, 0.0);
+        menu.size = buttonSize;
+        
+        SKSpriteNode *restart = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneRestartName];
+        restart.name = kOGGameSceneRestartName;
+        restart.position = CGPointMake(100.0, 0.0);
+        restart.size = buttonSize;
+        
+        self.pauseBarSprite = pauseBarSprite;
+        
+        [self.pauseBarSprite addChild:resume];
+        [self.pauseBarSprite addChild:menu];
+        [self.pauseBarSprite addChild:restart];
+    }
     
-    CGSize buttonSize = CGSizeMake(70.0, 70.0);
-    
-    SKSpriteNode *resume = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneResumeName];
-    resume.name = kOGGameSceneResumeName;
-    resume.position = CGPointMake(-100.0, 0.0);
-    resume.size = buttonSize;
-    
-    SKSpriteNode *menu = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneMenuName];
-    menu.name = kOGGameSceneMenuName;
-    menu.position = CGPointMake(0.0, 0.0);
-    menu.size = buttonSize;
-    
-    SKSpriteNode *restart = [SKSpriteNode spriteNodeWithImageNamed:kOGGameSceneRestartName];
-    restart.name = kOGGameSceneRestartName;
-    restart.position = CGPointMake(100.0, 0.0);
-    restart.size = buttonSize;
-    
-    self.pauseBarSprite = pauseBarSprite;
-    
+    self.pauseBarSprite.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     [self addChild:self.pauseBarSprite];
-    
-    [self.pauseBarSprite addChild:resume];
-    [self.pauseBarSprite addChild:menu];
-    [self.pauseBarSprite addChild:restart];
 }
 
 - (SKCropNode *)createBackgroundBorderWithColor:(SKColor *)color
@@ -171,7 +178,7 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
     sprite.alpha = 0.0;
-
+    
     if (self.exitPortalLocation == kOGPortalLocationUp)
     {
         sprite.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height);
@@ -222,7 +229,7 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     else
     {
         movementControlComponent = [[OGTapMovementControlComponent alloc] initWithSpriteNode:sprite
-                                                                                 speed:self.enemySpeed * kOGGameScenePlayerSpeedIncreaseFactor];
+                                                                                       speed:self.enemySpeed * kOGGameScenePlayerSpeedIncreaseFactor];
     }
     /* temporary code */
     
@@ -376,12 +383,12 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
             if ([node isKindOfClass:[SKSpriteNode class]])
             {
                 SKSpriteNode *sprite = (SKSpriteNode *) node;
-
+                
                 CGRect spriteRect = CGRectMake(sprite.position.x - sprite.size.width / 2.0,
                                                sprite.position.y - sprite.size.height / 2.0,
                                                sprite.size.width,
                                                sprite.size.height);
-
+                
                 if (CGRectIntersectsRect(pointRect, spriteRect))
                 {
                     keepSearching = YES;

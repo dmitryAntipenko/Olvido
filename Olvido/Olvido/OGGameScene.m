@@ -10,6 +10,9 @@
 
 CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
 
+CGFloat const kOGGameSceneSpeedStop = 0.0;
+CGFloat const kOGGameSceneSpeedDefault = 1.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, retain) NSMutableArray<OGEntity *> *mutableEnemies;
@@ -265,6 +268,29 @@ CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
     return self.statusBar.size.height * 2.0;
 }
 
+
+- (void)pause
+{
+    [self.scoreTimer pause];
+    [self.coinsCreationTimer pause];
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedStop;
+    self.speed = kOGGameSceneSpeedStop;
+    
+    self.paused = YES;
+}
+
+- (void)resume
+{
+    [self.scoreTimer resume];
+    [self.scoreTimer resume];
+    
+    self.physicsWorld.speed = kOGGameSceneSpeedDefault;
+    self.speed = kOGGameSceneSpeedDefault;
+    
+    self.paused = NO;
+}
+
 - (void)changeStatusBarLocationWithY:(CGFloat)y
 {
     SKAction *statusBarAction = [SKAction moveByX:0.0 y:y duration:kOGGameSceneStatusBarDuration];
@@ -274,6 +300,12 @@ CGFloat const kOGGameSceneStatusBarHidingOffset = 50.0;
 
 - (void)dealloc
 {
+    [_coinsCreationTimer stop];
+    [_coinsCreationTimer release];
+    
+    [_scoreTimer stop];
+    [_scoreTimer release];
+    
     [_mutableEnemies release];
     [_player release];
     [_identifier release];

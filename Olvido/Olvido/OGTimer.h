@@ -11,6 +11,11 @@
 @interface OGTimer : NSObject
 
 - (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender;
+
 - (void)stop;
+
+- (void)pause;
+
+- (void)resume;
 
 @end

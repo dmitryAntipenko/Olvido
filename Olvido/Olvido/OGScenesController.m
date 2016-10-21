@@ -19,6 +19,7 @@
 #import "OGGameOverState.h"
 #import "OGPauseState.h"
 #import "OGMainMenuState.h"
+#import "OGGameState.h"
 
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
@@ -36,25 +37,11 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @interface OGScenesController () <OGGameSceneDelegate>
 
-@property (nonatomic, retain) OGGameScene *currentScene;
 @property (nonatomic, copy) NSArray *levelMap;
 
 @end
 
 @implementation OGScenesController
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (!self)
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
 
 - (void)loadLevelMap    
 {
@@ -225,9 +212,11 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 - (void)gameSceneDidCallResume
 {
-    [self.currentScene.pauseBarSprite removeAllChildren];
+//    [self.currentScene.pauseBarSprite removeAllChildren];
     [self.currentScene.pauseBarSprite removeFromParent];
-    [((OGPauseState *)[self.uiStateMachine stateForClass:[OGPauseState class]]) resumeScene];
+    
+    [self.uiStateMachine enterState:[OGGameState class]];
+//    [((OGPauseState *)[self.uiStateMachine stateForClass:[OGPauseState class]]) resumeScene];
     
     [self.currentScene changeStatusBarLocationWithY:kOGGameSceneStatusBarYOffset * 2.0];
 }

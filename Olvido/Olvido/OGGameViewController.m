@@ -18,6 +18,7 @@
 @interface OGGameViewController ()
 
 @property (nonatomic, retain) OGScenesController *scenesController;
+@property (nonatomic, assign) GKStateMachine *uiStateMachine;
 
 @end
 
@@ -26,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     SKView *view = (SKView *) self.view;
     
     view.multipleTouchEnabled = NO;
@@ -40,8 +41,9 @@
     OGGameState *gameState = [[OGGameState alloc] initWithView:view];
     OGGameOverState *gameOverState = [[OGGameOverState alloc] initWithView:view];
     OGPauseState *gamePause = [[OGPauseState alloc] initWithView:view];
-
+    
     GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState, gamePause]];
+    self.uiStateMachine = uiStateMachine;
     [uiStateMachine enterState:[OGMainMenuState class]];
     
     [mainMenuState release];
@@ -51,18 +53,19 @@
     
     /* Should be uncommented after temporary code delete */
     
-//    OGScenesController *scenesController = [[OGScenesController alloc] init];
-//    
-//    if (scenesController)
-//    {
-//        scenesController.view = view;
-//        [scenesController loadLevelMap];
-//        
-//        self.scenesController = scenesController;
-//        [self.scenesController loadInitialLevel];
-//    }
-//    
-//    [scenesController release];
+    //    OGScenesController *scenesController = [[OGScenesController alloc] init];
+    //    self.scenesController = scenesController;
+    
+    //    if (scenesController)
+    //    {
+    //        scenesController.view = view;
+    //        [scenesController loadLevelMap];
+    //
+    //        self.scenesController = scenesController;
+    //        [self.scenesController loadInitialLevel];
+    //    }
+    
+    //    [scenesController release];
 }
 
 - (BOOL)shouldAutorotate
@@ -90,6 +93,11 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (void)pause
+{
+    [self.uiStateMachine enterState:[OGPauseState class]];
 }
 
 - (void)dealloc

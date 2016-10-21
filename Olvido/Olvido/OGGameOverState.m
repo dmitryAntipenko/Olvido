@@ -26,11 +26,6 @@
     {
         _view = [view retain];
     }
-    else
-    {
-        [self release];
-        self  = nil;
-    }
     
     return self;
 }
