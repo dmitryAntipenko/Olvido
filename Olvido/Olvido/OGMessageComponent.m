@@ -79,7 +79,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
     {
         SKSpriteNode *sprite = self.sprites[key.integerValue];
         
-        CGFloat distance = sqrt(pow(sprite.position.x - self.target.position.x, 2) + pow(sprite.position.y - self.target.position.y, 2));
+        CGFloat distance = hypot(sprite.position.x - self.target.position.x, sprite.position.y - self.target.position.y);
         
         if (distance <= self.minDistance)
         {
@@ -97,6 +97,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
     [_target release];
     [_messages release];
     [_messageLabel release];
+    [_sprites release];
     
     [super dealloc];
 }
