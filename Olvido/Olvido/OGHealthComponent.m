@@ -54,6 +54,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
         }
         else
         {
+            [_currentHealth release];
             _currentHealth = [newHealth copy];
         }
     }
