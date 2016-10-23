@@ -71,9 +71,9 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [self loadLevelWithIdentifier:@(kOGSceneControllerInitialLevelIndex)];
     [self didLoadNextLevel];
-    [self.storiesLevelController prepareStoryWithPlistName:@"Chapter1"];
+    [self.storiesLevelController prepareStoryWithPlistName:@"Chapter1" view:self.view];
     
-    //[self.view presentScene:self.currentScene];
+   // [self.view presentScene:self.currentScene];
 }
 
 - (NSNumber *)nextLevelIdentifierWithPortalLocation:(OGPortalLocation)location inLevel:(NSNumber *)identifier

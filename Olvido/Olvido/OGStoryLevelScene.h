@@ -10,6 +10,10 @@
 
 @interface OGStoryLevelScene : SKScene
 
+@property (nonatomic, copy, readonly) NSArray<SKSpriteNode *> *performers;
+
 - (void)runStoryWithSceneStory:(NSMutableDictionary *)sceneStory;
+
+- (void)addPerformer:(SKSpriteNode *)performer;
 
 @end

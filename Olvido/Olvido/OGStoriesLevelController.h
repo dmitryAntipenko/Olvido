@@ -10,6 +10,6 @@
 
 @interface OGStoriesLevelController : NSObject
 
-- (void)prepareStoryWithPlistName:(NSString *)plistName;
+- (void)prepareStoryWithPlistName:(NSString *)plistName view:(SKView *)view;
 
 @end

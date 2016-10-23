@@ -23,9 +23,12 @@ NSString *const kOGStoriesLevelControllerActionParameterPosition = @"Position";
 NSString *const kOGStoriesLevelControllerActionParameterPositionX = @"X";
 NSString *const kOGStoriesLevelControllerActionParameterPositionY = @"Y";
 
-NSInteger const kOGStoriesLevelControllerActionDefaultDuration = 0.0;
+NSInteger const kOGStoriesLevelControllerActionDefaultDuration = 0;
 NSString *const kOGStoriesLevelControllerActionParameterReplica = @"Replica";
 NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
+
+NSString *const kOGStoriesLevelControllerActionParameterReplicaSpeechCloudImageName = @"SpeechCloudImageName";
+NSString *const kOGStoriesLevelControllerActionParameterReplicaSpeechCloudNodeName = @"cloudName";
 
 @interface OGStoriesLevelController ()
 
@@ -55,10 +58,11 @@ NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
     [super dealloc];
 }
 
-
-- (void)prepareStoryWithPlistName:(NSString *)plistName
+- (void)prepareStoryWithPlistName:(NSString *)plistName view:(SKView *)view
 {
     [self.sceneStory removeAllObjects];
+    
+    OGStoryLevelScene *storyLevelScene = [[OGStoryLevelScene alloc] initWithSize:view.scene.size];
     
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:plistName
                                                           ofType:kOGStoriesLevelControllerStoriesExtension];
@@ -82,6 +86,7 @@ NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
                 }
             }
             
+            [storyLevelScene addPerformer:performer];
             [performers addObject:performer];
         }];
         
@@ -92,30 +97,27 @@ NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
         [self parseStepWithActionsArray:allActions];
     }
     
-    OGStoryLevelScene *storyLevelScene = [[OGStoryLevelScene alloc] init];
-    
     self.currentScene = storyLevelScene;
     
     [storyLevelScene release];
     
-    [self runStory];
+    [self runStoryWithView:view];
 }
 
 - (void)parseStepWithActionsArray:(NSArray *)actionsArray
 {
-    NSMutableDictionary *actions = [NSMutableDictionary dictionary];
+    NSMutableArray *actions = [NSMutableArray array];
     
     for (NSDictionary *step in actionsArray)
     {
+        NSMutableDictionary *actionStep = [NSMutableDictionary dictionary];
+        
         [step enumerateKeysAndObjectsUsingBlock:^(NSString *perfomerName, NSDictionary *performerActions, BOOL *stop)
          {
-             if (![actions objectForKey:perfomerName])
-             {
-                 [actions setObject:[NSMutableArray array] forKey:perfomerName];
-             }
-             
-             [actions[perfomerName] addObject:[self parseActionsWithActionsDictionary:performerActions]];
+             actionStep[perfomerName] = [self parseActionsWithActionsDictionary:performerActions];
          }];
+        
+        [actions addObject:actionStep];
     }
     
     self.sceneStory[kOGStoriesLevelControllerActions] = actions;
@@ -144,25 +146,21 @@ NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
 
 - (SKAction *)actionCreateWithDictionary:(NSDictionary *)dictionary
 {
-    __block SKAction *action = nil;
+    SKAction *action = nil;
     
-    [dictionary enumerateKeysAndObjectsUsingBlock:^(NSString *actionParameterName, NSDictionary *parameterValue, BOOL *stop)
-     {
-         if ([actionParameterName isEqualToString:kOGStoriesLevelControllerActionParameterPosition])
-         {
-             CGFloat x = [parameterValue[kOGStoriesLevelControllerActionParameterPositionX] floatValue];
-             CGFloat y = [parameterValue[kOGStoriesLevelControllerActionParameterPositionY] floatValue];
-             
-             CGPoint position = CGPointMake(x, y);
-             
-             action = [SKAction customActionWithDuration:kOGStoriesLevelControllerActionDefaultDuration actionBlock:^(SKNode *node, CGFloat elapsedTime)
-             {
-                 node.position = position;
-                 node.hidden = NO;
-             }];
-         }
+    if (dictionary[kOGStoriesLevelControllerActionParameterPosition])
+    {
+        CGFloat x = [dictionary[kOGStoriesLevelControllerActionParameterPosition][kOGStoriesLevelControllerActionParameterPositionX] floatValue];
+        CGFloat y = [dictionary[kOGStoriesLevelControllerActionParameterPosition][kOGStoriesLevelControllerActionParameterPositionY] floatValue];
         
-     }];
+        CGPoint position = CGPointMake(x, y);
+        
+        action = [SKAction customActionWithDuration:kOGStoriesLevelControllerActionDefaultDuration actionBlock:^(SKNode *node, CGFloat elapsedTime)
+        {
+            node.position = position;
+            ((SKSpriteNode *)node).size = ((SKSpriteNode *)node).texture.size;
+        }];
+    }
     
     return action;
 }
@@ -170,26 +168,48 @@ NSString *const kOGStoriesLevelControllerActionParameterReplicaText = @"Text";
 
 - (SKAction *)actionSayWithDictionary:(NSDictionary *)dictionary
 {
-    __block SKAction *action = nil;
+    SKAction *action = nil;
     
-    [dictionary enumerateKeysAndObjectsUsingBlock:^(NSString *actionParameterName, NSDictionary *parameterValue, BOOL *stop)
-     {
-         if ([actionParameterName isEqualToString:kOGStoriesLevelControllerActionParameterReplica])
-         {
-             NSString *replica = parameterValue[kOGStoriesLevelControllerActionParameterReplica][kOGStoriesLevelControllerActionParameterReplicaText];
-             
-             action = [SKAction customActionWithDuration:kOGStoriesLevelControllerActionDefaultDuration actionBlock:^(SKNode *node, CGFloat elapsedTime)
-             {
-                 NSLog(@"%@", replica);
-             }];
-         }
-     }];
+    if (dictionary[kOGStoriesLevelControllerActionParameterReplica]
+        && dictionary[kOGStoriesLevelControllerActionParameterReplicaSpeechCloudImageName])
+    {
+        NSString *replica = dictionary[kOGStoriesLevelControllerActionParameterReplica][kOGStoriesLevelControllerActionParameterReplicaText];
+        NSString *cloudImageName = dictionary[kOGStoriesLevelControllerActionParameterReplicaSpeechCloudImageName];
+        
+        SKSpriteNode *cloudNode = [SKSpriteNode spriteNodeWithImageNamed:cloudImageName];
+        cloudNode.name = kOGStoriesLevelControllerActionParameterReplicaSpeechCloudNodeName;
+        
+        cloudNode.position = CGPointMake(400, 50);
+        
+        SKLabelNode *replicaNode = [SKLabelNode labelNodeWithText:replica];
+        replicaNode.fontColor = [SKColor blackColor];
+        replicaNode.position = CGPointZero;
+        replicaNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+        replicaNode.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+        [cloudNode addChild:replicaNode];
+        
+        SKAction *createCloud = [SKAction customActionWithDuration:kOGStoriesLevelControllerActionDefaultDuration actionBlock:^(SKNode *node, CGFloat elapsedTime)
+        {
+            [node.parent addChild:cloudNode];
+        }];
+        
+        SKAction *durationCloud = [SKAction waitForDuration:3];
+        
+        SKAction *removeCloud = [SKAction customActionWithDuration:kOGStoriesLevelControllerActionDefaultDuration actionBlock:^(SKNode *node, CGFloat elapsedTime)
+        {
+            [cloudNode removeFromParent];
+        }];
+        
+        action = [SKAction sequence:@[createCloud, durationCloud, removeCloud]];
+        
+    }
     
     return action;
 }
 
-- (void)runStory
+- (void)runStoryWithView:(SKView *)view
 {
+    [view presentScene:self.currentScene];
     [self.currentScene runStoryWithSceneStory:self.sceneStory];
 }
 

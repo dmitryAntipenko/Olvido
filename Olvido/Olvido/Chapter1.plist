@@ -27,7 +27,7 @@
 						<key>X</key>
 						<integer>100</integer>
 						<key>Y</key>
-						<integer>100</integer>
+						<integer>200</integer>
 					</dict>
 				</dict>
 			</dict>
@@ -38,9 +38,9 @@
 					<key>Position</key>
 					<dict>
 						<key>X</key>
-						<integer>100</integer>
+						<integer>500</integer>
 						<key>Y</key>
-						<integer>100</integer>
+						<integer>200</integer>
 					</dict>
 				</dict>
 			</dict>
@@ -55,6 +55,38 @@
 						<key>Text</key>
 						<string>AAAA!</string>
 					</dict>
+					<key>SpeechCloudImageName</key>
+					<string>Cloud2</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Player</key>
+			<dict>
+				<key>Say</key>
+				<dict>
+					<key>Replica</key>
+					<dict>
+						<key>Text</key>
+						<string>frhfhrfhrh</string>
+					</dict>
+					<key>SpeechCloudImageName</key>
+					<string>Cloud2</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>Person</key>
+			<dict>
+				<key>Say</key>
+				<dict>
+					<key>Replica</key>
+					<dict>
+						<key>Text</key>
+						<string>frhfhrfhrh</string>
+					</dict>
+					<key>SpeechCloudImageName</key>
+					<string>Cloud1</string>
 				</dict>
 			</dict>
 		</dict>
