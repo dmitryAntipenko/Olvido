@@ -29,6 +29,7 @@
 		EA0D27351DB1503500CEFB8A /* OGInitialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D27341DB1503500CEFB8A /* OGInitialScene.m */; };
 		EA0D273C1DB1576400CEFB8A /* OGObstaclesScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */; };
 		EA0D27401DB15C4E00CEFB8A /* OGMovingObstaclesScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */; };
+		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA5C3B0F1DB4A682006FC219 /* OGFlameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C3B0E1DB4A682006FC219 /* OGFlameScene.m */; };
 		EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B101DB4A7D4006FC219 /* Flame.sks */; };
 		EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B111DB4A7D4006FC219 /* spark.png */; };
@@ -97,6 +98,8 @@
 		EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstaclesScene.m; sourceTree = "<group>"; };
 		EA0D273E1DB15C4E00CEFB8A /* OGMovingObstaclesScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovingObstaclesScene.h; sourceTree = "<group>"; };
 		EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovingObstaclesScene.m; sourceTree = "<group>"; };
+		EA2389BF1DBA63C600E5B01F /* OGHealthComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthComponent.h; sourceTree = "<group>"; };
+		EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthComponent.m; sourceTree = "<group>"; };
 		EA5C3B0D1DB4A682006FC219 /* OGFlameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGFlameScene.h; sourceTree = "<group>"; };
 		EA5C3B0E1DB4A682006FC219 /* OGFlameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGFlameScene.m; sourceTree = "<group>"; };
 		EA5C3B101DB4A7D4006FC219 /* Flame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Flame.sks; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 				EA9918FE1DB9324700E273B4 /* OGAccessComponent.h */,
 				EA9918FF1DB9324700E273B4 /* OGAccessComponent.m */,
 				EA9919011DB937EF00E273B4 /* OGAccessComponentDelegate.h */,
+				EA2389BF1DBA63C600E5B01F /* OGHealthComponent.h */,
+				EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */,
 				EA00D1991DBA142100B6AC1B /* OGShootingComponent.h */,
 				EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */,
 			);
@@ -398,7 +403,8 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 93L4B89BM9;
+						DevelopmentTeam = Z8D3NJ2X9W;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -447,6 +453,7 @@
 			files = (
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA5C3B0F1DB4A682006FC219 /* OGFlameScene.m in Sources */,
+				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				EAC384131DB439CE00235B27 /* OGGameScene+OGGameSceneCreation.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */,
@@ -600,11 +607,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -618,11 +625,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

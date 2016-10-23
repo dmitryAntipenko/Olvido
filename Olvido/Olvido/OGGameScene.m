@@ -335,6 +335,7 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     
     [_scoreTimer stop];
     [_scoreTimer release];
+    [_scoreController release];
     
     [_mutableEnemies release];
     [_player release];
@@ -345,6 +346,7 @@ CGFloat const kOGGameSceneSpeedDefault = 1.0;
     [_mutableCoins release];
     [_controlType release];
     [_pauseBarSprite release];
+    [_statusBar release];
     
     [super dealloc];
 }
