@@ -8,6 +8,7 @@
 
 #import "OGScenesController.h"
 #import "OGGameSceneDelegate.h"
+#import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene+OGGameSceneCreation.h"
 #import "SKColor+OGConstantColors.h"
 
@@ -21,7 +22,7 @@
 #import "OGMainMenuState.h"
 #import "OGGameState.h"
 
-#import "OGStoriesLevelController.h"
+//#import "OGStoriesLevelController.h"
 
 NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
 NSString *const kOGSceneControllerLevelMapExtension = @"plist";
@@ -32,15 +33,15 @@ NSString *const kOGSceneControllerLocationKey = @"Location";
 NSString *const kOGSceneControllerClassNameKey = @"Class Name";
 NSString *const kOGSceneControllerPortalColorKey = @"Color";
 NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
+NSString *const kOGSceneControllerStorySceneName = @"Story Scene Name";
 
 NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
-@interface OGScenesController () <OGGameSceneDelegate>
+@interface OGScenesController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy) NSArray *levelMap;
-@property (nonatomic, retain) OGStoriesLevelController *storiesLevelController;
 
 @end
 
@@ -52,7 +53,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
     if (self)
     {
-        _storiesLevelController = [[OGStoriesLevelController alloc] init];
+      
     }
     
     return self;
@@ -71,9 +72,8 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [self loadLevelWithIdentifier:@(kOGSceneControllerInitialLevelIndex)];
     [self didLoadNextLevel];
-    [self.storiesLevelController prepareStoryWithPlistName:@"Chapter1" view:self.view];
     
-   // [self.view presentScene:self.currentScene];
+    //[self.view presentScene:self.currentScene];
 }
 
 - (NSNumber *)nextLevelIdentifierWithPortalLocation:(OGPortalLocation)location inLevel:(NSNumber *)identifier
@@ -121,8 +121,19 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     [self.currentScene createSceneContents];
 }
 
+- (void)gameSceneDidFinishRunStory
+{
+    
+}
+
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
+    NSString *storySceneName = self.levelMap[identifier.integerValue][kOGSceneControllerStorySceneName];
+    
+    GKScene *storySceneFile = [GKScene sceneWithFileNamed:storySceneName];
+    SKScene *storyScene = (OGGameScene *)storySceneFile.rootNode;
+    [self.view presentScene:storyScene];
+    
     NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
     NSArray *portals = self.levelMap[identifier.integerValue][kOGSceneControllerPortalsKey];
     
@@ -251,7 +262,6 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     [_levelMap release];
     [_currentScene release];
     [_uiStateMachine release];
-    [_storiesLevelController release];
     
     [super dealloc];
 }
