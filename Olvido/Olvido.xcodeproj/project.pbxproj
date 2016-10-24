@@ -29,6 +29,7 @@
 		EA0D27351DB1503500CEFB8A /* OGInitialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D27341DB1503500CEFB8A /* OGInitialScene.m */; };
 		EA0D273C1DB1576400CEFB8A /* OGObstaclesScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */; };
 		EA0D27401DB15C4E00CEFB8A /* OGMovingObstaclesScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */; };
+		EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CE3231DBA8E680087842D /* OGMessageComponent.m */; };
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA5C3B0F1DB4A682006FC219 /* OGFlameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C3B0E1DB4A682006FC219 /* OGFlameScene.m */; };
 		EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B101DB4A7D4006FC219 /* Flame.sks */; };
@@ -98,6 +99,8 @@
 		EA0D273B1DB1576400CEFB8A /* OGObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstaclesScene.m; sourceTree = "<group>"; };
 		EA0D273E1DB15C4E00CEFB8A /* OGMovingObstaclesScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovingObstaclesScene.h; sourceTree = "<group>"; };
 		EA0D273F1DB15C4E00CEFB8A /* OGMovingObstaclesScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovingObstaclesScene.m; sourceTree = "<group>"; };
+		EA3CE3221DBA8E680087842D /* OGMessageComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMessageComponent.h; sourceTree = "<group>"; };
+		EA3CE3231DBA8E680087842D /* OGMessageComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMessageComponent.m; sourceTree = "<group>"; };
 		EA2389BF1DBA63C600E5B01F /* OGHealthComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthComponent.h; sourceTree = "<group>"; };
 		EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthComponent.m; sourceTree = "<group>"; };
 		EA5C3B0D1DB4A682006FC219 /* OGFlameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGFlameScene.h; sourceTree = "<group>"; };
@@ -224,6 +227,8 @@
 				EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */,
 				EA00D1991DBA142100B6AC1B /* OGShootingComponent.h */,
 				EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */,
+				EA3CE3221DBA8E680087842D /* OGMessageComponent.h */,
+				EA3CE3231DBA8E680087842D /* OGMessageComponent.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -404,7 +409,6 @@
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = Z8D3NJ2X9W;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -465,6 +469,7 @@
 				210C99671DB70FAA00704C62 /* OGGameState.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
+				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
