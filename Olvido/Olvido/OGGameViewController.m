@@ -41,7 +41,7 @@
     OGGameState *gameState = [[OGGameState alloc] initWithView:view];
     OGGameOverState *gameOverState = [[OGGameOverState alloc] initWithView:view];
     OGPauseState *gamePause = [[OGPauseState alloc] initWithView:view];
-    
+        
     GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState, gamePause]];
     self.uiStateMachine = uiStateMachine;
     [uiStateMachine enterState:[OGMainMenuState class]];
@@ -51,6 +51,7 @@
     [gameOverState release];
     [gamePause release];
     
+     
     /* Should be uncommented after temporary code delete */
     
     //    OGScenesController *scenesController = [[OGScenesController alloc] init];

@@ -6,13 +6,11 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGUIState.h"
 @class OGScenesController;
 
-@interface OGGameState : GKState
+@interface OGGameState : OGUIState
 
 @property (nonatomic, retain) OGScenesController *scenesController;
-
-- (instancetype)initWithView:(SKView *)view;
 
 @end

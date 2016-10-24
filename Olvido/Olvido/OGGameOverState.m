@@ -10,30 +10,12 @@
 #import "OGGameState.h"
 #import "OGGameOverScene.h"
 
-@interface OGGameOverState ()
-
-@property (nonatomic, retain) SKView *view;
-
-@end
-
 @implementation OGGameOverState
-
-- (instancetype)initWithView:(SKView *)view
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _view = [view retain];
-    }
-    
-    return self;
-}
 
 - (void)dealloc
 {
-    [_view release];
     [_score release];
+    [_controlType release];
     
     [super dealloc];
 }

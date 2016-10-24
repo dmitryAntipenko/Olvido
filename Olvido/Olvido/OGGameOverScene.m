@@ -70,6 +70,7 @@ CGFloat const kOGGameOverSceneButtonsPositionFactor = 5.0;
 {
     [_uiStateMachine release];
     [_score release];
+    [_controlType release];
     
     [super dealloc];
 }

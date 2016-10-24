@@ -20,6 +20,8 @@
 		</array>
 		<key>Class Name</key>
 		<string>OGInitialScene</string>
+		<key>Story Scene Name</key>
+		<string>OGChapter1</string>
 	</dict>
 	<dict>
 		<key>Enemies Count</key>

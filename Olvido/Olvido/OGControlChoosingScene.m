@@ -94,6 +94,8 @@ NSString *const kOGControlChoosingSceneFormat = @"GOD MODE: %@";
 - (void)dealloc
 {
     [_uiStateMachine release];
+    [_godModeLabel release];
+    [_jesus release];
     
     [super dealloc];
 }

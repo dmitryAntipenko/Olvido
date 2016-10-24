@@ -6,16 +6,12 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGUIState.h"
 
-@class OGScenesController;
-
-@interface OGMainMenuState : GKState
+@interface OGMainMenuState : OGUIState
 
 /* Temporary code */
 - (void)startGameWithControlType:(NSString *)type godMode:(BOOL)mode;
 /* Temporary code */
-
-- (instancetype)initWithView:(SKView *)view;
 
 @end
