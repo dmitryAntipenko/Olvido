@@ -21,11 +21,6 @@
 		210C99671DB70FAA00704C62 /* OGGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99661DB70FAA00704C62 /* OGGameState.m */; };
 		210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C996A1DB72F5600704C62 /* OGGameOverScene.m */; };
 		210C996E1DB8DEB400704C62 /* OGUIState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C996D1DB8DEB400704C62 /* OGUIState.m */; };
-		210C997E1DB901F200704C62 /* OGStoryLevelScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C997D1DB901F200704C62 /* OGStoryLevelScene.m */; };
-		210C99811DB903F900704C62 /* OGStoryPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99801DB903F900704C62 /* OGStoryPage.m */; };
-		210C99841DB92E4400704C62 /* Chapter1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 210C99831DB92E4400704C62 /* Chapter1.plist */; };
-		210C99861DB92E5D00704C62 /* Chapter2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 210C99851DB92E5D00704C62 /* Chapter2.plist */; };
-		210C99891DB92F8D00704C62 /* OGStoriesLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99881DB92F8D00704C62 /* OGStoriesLevelController.m */; };
 		21DD19731DBE1C0E0048658A /* Chapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* Chapter1.sks */; };
 		21DD19761DBE1C360048658A /* OGChapter1.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DD19751DBE1C360048658A /* OGChapter1.m */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
@@ -88,14 +83,7 @@
 		210C996A1DB72F5600704C62 /* OGGameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameOverScene.m; sourceTree = "<group>"; };
 		210C996C1DB8DEB400704C62 /* OGUIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGUIState.h; sourceTree = "<group>"; };
 		210C996D1DB8DEB400704C62 /* OGUIState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGUIState.m; sourceTree = "<group>"; };
-		210C997C1DB901F200704C62 /* OGStoryLevelScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryLevelScene.h; sourceTree = "<group>"; };
-		210C997D1DB901F200704C62 /* OGStoryLevelScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryLevelScene.m; sourceTree = "<group>"; };
-		210C997F1DB903F900704C62 /* OGStoryPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryPage.h; sourceTree = "<group>"; };
-		210C99801DB903F900704C62 /* OGStoryPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryPage.m; sourceTree = "<group>"; };
-		210C99831DB92E4400704C62 /* Chapter1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Chapter1.plist; sourceTree = "<group>"; };
-		210C99851DB92E5D00704C62 /* Chapter2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Chapter2.plist; sourceTree = "<group>"; };
-		210C99871DB92F8D00704C62 /* OGStoriesLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoriesLevelController.h; sourceTree = "<group>"; };
-		210C99881DB92F8D00704C62 /* OGStoriesLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoriesLevelController.m; sourceTree = "<group>"; };
+		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* Chapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Chapter1.sks; sourceTree = "<group>"; };
 		21DD19741DBE1C360048658A /* OGChapter1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGChapter1.h; sourceTree = "<group>"; };
 		21DD19751DBE1C360048658A /* OGChapter1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGChapter1.m; sourceTree = "<group>"; };
@@ -225,32 +213,24 @@
 			isa = PBXGroup;
 			children = (
 				21DD19711DBE1BEE0048658A /* StoriesScene */,
-				210C99821DB92E1000704C62 /* StoriesPlist */,
-				210C99871DB92F8D00704C62 /* OGStoriesLevelController.h */,
-				210C99881DB92F8D00704C62 /* OGStoriesLevelController.m */,
-				210C997C1DB901F200704C62 /* OGStoryLevelScene.h */,
-				210C997D1DB901F200704C62 /* OGStoryLevelScene.m */,
-				210C997F1DB903F900704C62 /* OGStoryPage.h */,
-				210C99801DB903F900704C62 /* OGStoryPage.m */,
 			);
 			name = StoryLevelScenes;
 			sourceTree = "<group>";
 		};
-		210C99821DB92E1000704C62 /* StoriesPlist */ = {
-			isa = PBXGroup;
-			children = (
-				210C99831DB92E4400704C62 /* Chapter1.plist */,
-				210C99851DB92E5D00704C62 /* Chapter2.plist */,
-			);
-			name = StoriesPlist;
-			sourceTree = "<group>";
-		};
-		21DD19711DBE1BEE0048658A /* StoriesScene */ = {
+		2154A6021DBE3FF800E414F3 /* Chapter1 */ = {
 			isa = PBXGroup;
 			children = (
 				21DD19721DBE1C0E0048658A /* Chapter1.sks */,
 				21DD19741DBE1C360048658A /* OGChapter1.h */,
 				21DD19751DBE1C360048658A /* OGChapter1.m */,
+			);
+			name = Chapter1;
+			sourceTree = "<group>";
+		};
+		21DD19711DBE1BEE0048658A /* StoriesScene */ = {
+			isa = PBXGroup;
+			children = (
+				2154A6021DBE3FF800E414F3 /* Chapter1 */,
 			);
 			name = StoriesScene;
 			sourceTree = "<group>";
@@ -282,6 +262,7 @@
 				EA0D27291DB1478F00CEFB8A /* OGScenesController.h */,
 				EA0D272A1DB1478F00CEFB8A /* OGScenesController.m */,
 				EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */,
+				2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */,
 				EA0D27391DB153A400CEFB8A /* OGPortalLocation.h */,
 			);
 			name = ScenesController;
@@ -478,8 +459,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21DD19731DBE1C0E0048658A /* Chapter1.sks in Resources */,
-				210C99841DB92E4400704C62 /* Chapter1.plist in Resources */,
-				210C99861DB92E5D00704C62 /* Chapter2.plist in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA70E52B1DB3F4620034116D /* playerTail.sks in Resources */,
@@ -510,11 +489,8 @@
 				210C996B1DB72F5600704C62 /* OGGameOverScene.m in Sources */,
 				210C99671DB70FAA00704C62 /* OGGameState.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
-				210C997E1DB901F200704C62 /* OGStoryLevelScene.m in Sources */,
 				21DD19761DBE1C360048658A /* OGChapter1.m in Sources */,
-				210C99811DB903F900704C62 /* OGStoryPage.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
-				210C99891DB92F8D00704C62 /* OGStoriesLevelController.m in Sources */,
 				EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
