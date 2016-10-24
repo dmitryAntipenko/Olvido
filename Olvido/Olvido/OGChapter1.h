@@ -6,8 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "OGStoryScene.h"
 
-@interface OGChapter1 : SKScene
+@interface OGChapter1 : OGStoryScene
 
 @end

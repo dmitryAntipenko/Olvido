@@ -27,7 +27,8 @@
     CGPoint centerPosition = CGPointMake(CGRectGetMidX(self.frame),
                                          CGRectGetMidY(self.frame));
     
-    ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode.position = centerPosition;
+    SKSpriteNode *playerSprite = ((OGVisualComponent *) [self.player componentForClass:[OGVisualComponent class]]).spriteNode;
+    playerSprite.position = centerPosition;
     
     self.statusBar.color = [SKColor gameBlue];
     self.statusBar.colorBlendFactor = 1.0;

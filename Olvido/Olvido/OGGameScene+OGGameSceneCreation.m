@@ -173,7 +173,7 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     
     OGVisualComponent *visualComponent = [[OGVisualComponent alloc] init];
     visualComponent.spriteNode = [OGSpriteNode spriteNodeWithImageNamed:kOGPlayerTextureName];
-    visualComponent.color = [SKColor gameBlack];
+    visualComponent.spriteNode.colorBlendFactor = 0.0;
     
     OGSpriteNode *sprite = visualComponent.spriteNode;
     sprite.owner = visualComponent;
@@ -207,7 +207,8 @@ CGFloat const kOGGameSceneCoinPositionFrameOffset = 40.0;
     
     sprite.physicsBody.categoryBitMask = kOGCollisionBitMaskPlayer;
     sprite.physicsBody.collisionBitMask = kOGCollisionBitMaskObstacle;
-    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame | kOGCollisionBitMaskCoin | kOGCollisionBitMaskPortal;
+    sprite.physicsBody.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskFlame
+    | kOGCollisionBitMaskCoin | kOGCollisionBitMaskPortal | kOGCollisionBitMaskObstacle;
     
     sprite.name = kOGPlayerNodeName;
     sprite.physicsBody.friction = kOGDefaultFriction;

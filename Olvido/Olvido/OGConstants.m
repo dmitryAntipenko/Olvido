@@ -26,7 +26,7 @@ NSString *const kOGGameSceneMenuName = @"MenuButton";
 NSString *const kOGGameSceneRestartName = @"RestartButton";
 
 NSString *const kOGEnemyTextureName = @"EnemyBall";
-NSString *const kOGPlayerTextureName = @"PlayerBall";
+NSString *const kOGPlayerTextureName = @"F_R_1.png";
 NSString *const kOGCoinTextureName = @"EnemyBall";
 NSString *const kOGHorizontalPortalTextureName = @"PortalHorizontal";
 NSString *const kOGVerticalPortalTextureName = @"PortalVertical";

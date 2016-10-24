@@ -10,6 +10,7 @@
 
 CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
 
+
 @implementation OGMovementControlComponent
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
@@ -44,6 +45,11 @@ CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
 }
 
 - (void)stop
+{
+    
+}
+
+- (void)didChangeDirection
 {
     
 }
