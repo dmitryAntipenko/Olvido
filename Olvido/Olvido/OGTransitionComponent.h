@@ -8,13 +8,10 @@
 
 @import GameplayKit;
 
-#import "OGPortalLocation.h"
-
 @interface OGTransitionComponent : GKComponent
 
-@property (nonatomic, assign) OGPortalLocation location;
-@property (nonatomic, getter=isClosed) BOOL closed;
+@property (nonatomic, assign) GKInspectable NSUInteger identifier;
+@property (nonatomic, getter=isClosed) GKInspectable BOOL closed;
 
-- (instancetype)initWithLocation:(OGPortalLocation)location;
 
 @end

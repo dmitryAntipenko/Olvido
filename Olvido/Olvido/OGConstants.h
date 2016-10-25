@@ -14,33 +14,13 @@
 extern NSString *const kOGPlayerNodeName;
 extern NSString *const kOGEnemyNodeName;
 extern NSString *const kOGObstacleNodeName;
-extern NSString *const kOGCoinNodeName;
 extern NSString *const kOGPortalNodeName;
-extern NSString *const kOGPauseButtonName;
 
 extern CGFloat const kOGGameSceneStatusBarHidingDistance;
 extern CGFloat const kOGGameSceneStatusBarAlpha;
 extern CGFloat const kOGGameSceneStatusBarPositionOffset;
 extern CGFloat const kOGGameSceneStatusBarYOffset;
 extern CGFloat const kOGGameSceneStatusBarDuration;
-
-extern NSString *const kOGGameSceneResumeName;
-extern NSString *const kOGGameSceneMenuName;
-extern NSString *const kOGGameSceneRestartName;
-
-extern NSString *const kOGEnemyTextureName;
-extern NSString *const kOGPlayerTextureName;
-extern NSString *const kOGCoinTextureName;
-extern NSString *const kOGHorizontalPortalTextureName;
-extern NSString *const kOGVerticalPortalTextureName;
-extern NSString *const kOGStatusBarBackgroundTextureName;
-extern NSString *const kOGPauseButtonTextureName;
-extern NSString *const kOGResumeButtonTextureName;
-
-extern CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount;
-extern CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration;
-
-extern CGFloat const kOGGameSceneScoreLabelYPosition;
 
 @interface OGConstants : NSObject
 

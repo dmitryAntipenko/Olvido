@@ -9,8 +9,6 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGAppDelegate.h"
 #import "OGGameViewController.h"
-#import "OGPauseState.h"
-#import "OGGameState.h"
 
 NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
@@ -40,7 +38,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    [self.gameViewController pause];
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

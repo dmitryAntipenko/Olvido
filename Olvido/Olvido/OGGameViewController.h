@@ -12,6 +12,4 @@
 
 @interface OGGameViewController : UIViewController
 
-- (void)pause;
-
 @end

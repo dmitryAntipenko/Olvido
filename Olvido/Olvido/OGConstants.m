@@ -11,7 +11,6 @@
 NSString *const kOGPlayerNodeName = @"player";
 NSString *const kOGEnemyNodeName = @"enemy";
 NSString *const kOGObstacleNodeName = @"obstacle";
-NSString *const kOGCoinNodeName = @"coin";
 NSString *const kOGPortalNodeName = @"portal";
 NSString *const kOGPauseButtonName = @"pause";
 
@@ -20,22 +19,6 @@ CGFloat const kOGGameSceneStatusBarAlpha = 0.5;
 CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
-
-NSString *const kOGGameSceneResumeName = @"ResumeButton";
-NSString *const kOGGameSceneMenuName = @"MenuButton";
-NSString *const kOGGameSceneRestartName = @"RestartButton";
-
-NSString *const kOGEnemyTextureName = @"EnemyBall";
-NSString *const kOGPlayerTextureName = @"F_R_1.png";
-NSString *const kOGCoinTextureName = @"EnemyBall";
-NSString *const kOGHorizontalPortalTextureName = @"PortalHorizontal";
-NSString *const kOGVerticalPortalTextureName = @"PortalVertical";
-NSString *const kOGStatusBarBackgroundTextureName = @"StatusBarBackground";
-NSString *const kOGPauseButtonTextureName = @"PauseButton";
-NSString *const kOGResumeButtonTextureName = @"ResumeButton";
-
-CGFloat const kOGPlayerNodeInvulnerabilityRepeatCount = 3.0;
-CGFloat const kOGPlayerNodeInvulnerabilityBlinkingTimeDuration = 0.5;
 
 CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 

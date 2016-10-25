@@ -7,18 +7,10 @@
 //
 
 #import "OGGameViewController.h"
-#import "OGScenesController.h"
-#import "OGControlChoosingScene.h"
-
-#import "OGMainMenuState.h"
-#import "OGGameState.h"
-#import "OGGameOverState.h"
-#import "OGPauseState.h"
 
 @interface OGGameViewController ()
 
-@property (nonatomic, retain) OGScenesController *scenesController;
-@property (nonatomic, assign) GKStateMachine *uiStateMachine;
+//@property (nonatomic, retain) OGScenesController *scenesController;
 
 @end
 
@@ -36,22 +28,6 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    
-    OGMainMenuState *mainMenuState = [[OGMainMenuState alloc] initWithView:view];
-    OGGameState *gameState = [[OGGameState alloc] initWithView:view];
-    OGGameOverState *gameOverState = [[OGGameOverState alloc] initWithView:view];
-    OGPauseState *gamePause = [[OGPauseState alloc] initWithView:view];
-        
-    GKStateMachine *uiStateMachine = [GKStateMachine stateMachineWithStates:@[mainMenuState, gameState, gameOverState, gamePause]];
-    self.uiStateMachine = uiStateMachine;
-    [uiStateMachine enterState:[OGMainMenuState class]];
-    
-    [mainMenuState release];
-    [gameState release];
-    [gameOverState release];
-    [gamePause release];
-    
-     
     /* Should be uncommented after temporary code delete */
     
     //    OGScenesController *scenesController = [[OGScenesController alloc] init];
@@ -96,15 +72,8 @@
     return YES;
 }
 
-- (void)pause
-{
-    [self.uiStateMachine enterState:[OGPauseState class]];
-}
-
 - (void)dealloc
-{
-    [_scenesController release];
-    
+{    
     [super dealloc];
 }
 

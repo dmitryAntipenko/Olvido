@@ -10,13 +10,12 @@
 
 @implementation OGTransitionComponent
 
-- (instancetype)initWithLocation:(OGPortalLocation)location
+- (instancetype)init
 {
     self = [super init];
     
     if (self)
     {
-        _location = location;
         _closed = YES;
     }
     else

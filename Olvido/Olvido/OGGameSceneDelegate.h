@@ -13,12 +13,7 @@
 
 @protocol OGGameSceneDelegate <NSObject>
 
-- (void)gameSceneDidCallFinishWithPortal:(OGEntity *)portal;
 - (void)gameSceneDidCallFinishGameWithScore:(NSNumber *)score;
-- (void)gameSceneDidCallPause;
-- (void)gameSceneDidCallResume;
-- (void)gameSceneDidCallMenu;
-- (void)gameSceneDidCallRestart;
 
 @end
 
