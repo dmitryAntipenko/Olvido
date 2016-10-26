@@ -15,6 +15,7 @@
 #import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
+#import "OGInventoryComponent.h"
 
 @interface OGGameScene ()
 
@@ -53,8 +54,10 @@
         if ([sprite.name isEqualToString:kOGPlayerSpriteName])
         {
             OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
-
             self.playerControlComponent = controlComponent;
+            
+            OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [sprite.entity componentForClass:[OGInventoryComponent class]];
+            self.inventoryComponent = inventoryComponent;
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
