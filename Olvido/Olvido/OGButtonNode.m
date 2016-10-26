@@ -11,6 +11,7 @@
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 NSString *const kOGButtonNodeUSerDataNextSceneKey = @"nextScene";
+NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
 
 @interface OGButtonNode ()
 
@@ -61,6 +62,18 @@ NSString *const kOGButtonNodeUSerDataNextSceneKey = @"nextScene";
             SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:nextSceneFilePath];
             
             [self.scene.view presentScene:nextScene transition:[OGConstants defaultTransion]];
+        }
+    }
+    
+    NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUSerDataSelectorKey];
+    
+    if (selectorName)
+    {
+        SEL selector = NSSelectorFromString(selectorName);
+        
+        if ([self.scene respondsToSelector:selector])
+        {
+            [self.scene performSelector:selector];
         }
     }
 }

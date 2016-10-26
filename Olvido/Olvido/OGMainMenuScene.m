@@ -18,15 +18,12 @@
 
 - (void)didMoveToView:(SKView *)view
 {
-    for (OGButtonNode *button in self.children)
-    {
-        if ([button respondsToSelector:@selector(loadTextures)])
-        {
-            
-        }
-    }
-    
     self.scaleMode = SKSceneScaleModeFill;
+}
+
+- (void)olexiy
+{
+    NSLog(@"ha!");
 }
 
 @end
