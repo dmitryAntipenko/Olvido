@@ -12,7 +12,7 @@
 @interface OGMovementControlComponent : GKComponent
 
 @property (nonatomic, assign) OGVisualComponent *visualComponent;
-@property (nonatomic, assign) CGFloat speedFactor;
+@property (nonatomic, assign) GKInspectable CGFloat speedFactor;
 
 - (void)touchBeganAtPoint:(CGPoint)point;
 
