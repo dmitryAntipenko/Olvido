@@ -10,23 +10,30 @@
 
 @interface OGButtonNode ()
 
+
+
 @end
 
 @implementation OGButtonNode
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
+    NSLog(@"began");
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
+    NSLog(@"ended");
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    
+    NSLog(@"moved");
+}
+
+- (BOOL)isUserInteractionEnabled
+{
+    return YES;
 }
 
 @end
