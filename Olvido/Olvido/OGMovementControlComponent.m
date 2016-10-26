@@ -12,21 +12,6 @@ CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
 
 
 @implementation OGMovementControlComponent
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _spriteNode = [spriteNode retain];
-        _speedFactor = kOGMovementControlComponentDefaultSpeedFactor;
-    }
-    
-    return self;
-}
-
-
 #pragma mark subclasses should implement
 
 - (void)touchBeganAtPoint:(CGPoint)point
@@ -54,21 +39,13 @@ CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
     
 }
 
-- (void)setSpeedFactor:(CGFloat)speedFactor
+- (void)didAddToEntity
 {
-    _speedFactor = speedFactor;
-    
-    if (self.spriteNode)
-    {
-        CGVector velocity = self.spriteNode.physicsBody.velocity;
-        self.spriteNode.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
-    }
+    _visualComponent = (OGVisualComponent *)[self.entity componentForClass:[OGVisualComponent class]];
 }
 
 - (void)dealloc
 {
-    [_spriteNode release];
-    
     [super dealloc];
 }
 

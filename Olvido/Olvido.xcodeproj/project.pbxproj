@@ -13,6 +13,7 @@
 		1B27EA9C1DC090BE00E9CA23 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B27EA9B1DC090BE00E9CA23 /* MainMenuScene.sks */; };
 		1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */; };
 		1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */; };
+		1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */; };
 		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
@@ -54,6 +55,8 @@
 		1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGButtonNode.m; sourceTree = "<group>"; };
 		1B27EAA01DC0934300E9CA23 /* OGMainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMainMenuScene.h; sourceTree = "<group>"; };
 		1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMainMenuScene.m; sourceTree = "<group>"; };
+		1B27EAA31DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTapAndStopMovementControlComponent.h; sourceTree = "<group>"; };
+		1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTapAndStopMovementControlComponent.m; sourceTree = "<group>"; };
 		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
 		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */,
 				1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */,
 				1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */,
+				1B27EAA31DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.h */,
+				1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */,
 			);
 			name = MovementControlComponents;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
+				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				21DD19761DBE1C360048658A /* OGChapter1.m in Sources */,

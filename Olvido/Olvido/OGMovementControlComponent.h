@@ -7,13 +7,12 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGVisualComponent.h"
 
 @interface OGMovementControlComponent : GKComponent
 
-@property (nonatomic, retain, readonly) SKSpriteNode *spriteNode;
+@property (nonatomic, assign) OGVisualComponent *visualComponent;
 @property (nonatomic, assign) CGFloat speedFactor;
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 
 - (void)touchBeganAtPoint:(CGPoint)point;
 
