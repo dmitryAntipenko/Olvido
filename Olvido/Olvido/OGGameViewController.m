@@ -7,6 +7,7 @@
 //
 
 #import "OGGameViewController.h"
+#import "OGMainMenuScene.h"
 
 @interface OGGameViewController ()
 
@@ -28,21 +29,9 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    /* Should be uncommented after temporary code delete */
+    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:<#(nullable NSString *)#> ofType:<#(nullable NSString *)#>]
+    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:<#(nonnull NSString *)#>]
     
-    //    OGScenesController *scenesController = [[OGScenesController alloc] init];
-    //    self.scenesController = scenesController;
-    
-    //    if (scenesController)
-    //    {
-    //        scenesController.view = view;
-    //        [scenesController loadLevelMap];
-    //
-    //        self.scenesController = scenesController;
-    //        [self.scenesController loadInitialLevel];
-    //    }
-    
-    //    [scenesController release];
 }
 
 - (BOOL)shouldAutorotate
