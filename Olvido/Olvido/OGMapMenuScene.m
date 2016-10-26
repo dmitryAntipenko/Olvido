@@ -12,7 +12,7 @@
 
 - (void)didMoveToView:(SKView *)view
 {
-    self.scaleMode = SKSceneScaleModeFill;
+    self.scaleMode = SKSceneScaleModeAspectFit;
 }
 
 @end
