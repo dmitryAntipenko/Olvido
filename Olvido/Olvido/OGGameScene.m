@@ -15,6 +15,11 @@
 #import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
+#import "OGHealthComponent.h"
+
+#import "OGStatusBar.h"
+
+NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
 @interface OGGameScene ()
 
@@ -33,6 +38,7 @@
         if (self)
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
+            _statusBar = [[OGStatusBar alloc] init];
         }
     }
     else
@@ -53,8 +59,10 @@
         if ([sprite.name isEqualToString:kOGPlayerSpriteName])
         {
             OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
-
             self.playerControlComponent = controlComponent;
+            
+            OGHealthComponent *healthComponent = (OGHealthComponent *) [sprite.entity componentForClass:[OGHealthComponent class]];
+            self.healthComponent = healthComponent;
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
@@ -66,7 +74,21 @@
         }
     }
     
+    [self createStatusBar];
+    
     [super didMoveToView:view];
+}
+
+- (void)createStatusBar
+{
+    SKSpriteNode *statusBar = (SKSpriteNode *) [self childNodeWithName:kOGGameSceneStatusBarSpriteName];
+    
+    if (statusBar)
+    {
+        self.statusBar.statusBarSprite = statusBar;
+        self.statusBar.maxHealth = self.healthComponent.maxHealth;
+        [self.statusBar createContents];
+    }
 }
 
 - (NSArray *)spriteNodes

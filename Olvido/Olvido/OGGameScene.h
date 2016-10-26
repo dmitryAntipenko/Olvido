@@ -13,6 +13,8 @@
 @class OGMovementControlComponent;
 @class OGTransitionComponent;
 @class OGAccessComponent;
+@class OGStatusBar;
+@class OGHealthComponent;
 
 @interface OGGameScene : SKScene <SKPhysicsContactDelegate>
 
@@ -21,9 +23,12 @@
 @property (nonatomic, retain, readonly) NSArray<OGSpriteNode *> *spriteNodes;
 @property (nonatomic, assign) id<OGGameSceneDelegate> sceneDelegate;
 
+@property (nonatomic, retain) OGStatusBar *statusBar;
+
 @property (nonatomic, retain) OGMovementControlComponent *playerControlComponent;
 @property (nonatomic, retain) OGTransitionComponent *transitionComponent;
 @property (nonatomic, retain) OGAccessComponent *accessComponent;
+@property (nonatomic, retain) OGHealthComponent *healthComponent;
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 
