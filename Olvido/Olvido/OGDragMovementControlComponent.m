@@ -7,6 +7,8 @@
 //
 
 #import "OGDragMovementControlComponent.h"
+#import "OGVisualComponent.h"
+#import "OGSpriteNode.h"
 
 @interface OGDragMovementControlComponent ()
 
@@ -18,19 +20,18 @@
 
 - (void)touchMovedToPoint:(CGPoint)point
 {
-    if (self.isMooving && self.spriteNode)
+    if (self.isMooving && self.visualComponent)
     {
-        self.spriteNode.position = point;
+        self.visualComponent.spriteNode.position = point;
     }
 }
 
 - (void)touchBeganAtPoint:(CGPoint)point
 {
-    
-    if (CGRectContainsPoint(self.spriteNode.frame, point))
+    if (CGRectContainsPoint(self.visualComponent.spriteNode.frame, point))
     {
         self.isMooving = YES;
-        self.spriteNode.position = point;
+        self.visualComponent.spriteNode.position = point;
     }
 }
 
