@@ -102,9 +102,9 @@
              [touchedBody removeFromParent];
          }];
     }
-    else if (contactType == kOGContactTypePlayerDidTouchPortal)
+    else if (contactType == kOGContactTypePlayerDidTouchPortal && !self.transitionComponent.isClosed)
     {
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:(OGEntity *) touchedBody.entity];
+        [self.sceneDelegate gameSceneDidCallFinish];
     }
 }
 

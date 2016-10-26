@@ -6,8 +6,18 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <GameplayKit/GameplayKit.h>
 
-@interface OGScenesController : NSObject <OGGameSceneDelegate>
+@class OGGameScene;
+
+@interface OGScenesController : NSObject
+
+@property (nonatomic, assign) SKView *view;
+
+@property (nonatomic, copy, readonly) NSArray *levelMap;
+@property (nonatomic, retain, readonly) OGGameScene *currentScene;
+
+- (void)loadLevelMap;
+- (void)loadLevelWithIdentifier:(NSNumber *)identifier;
 
 @end
