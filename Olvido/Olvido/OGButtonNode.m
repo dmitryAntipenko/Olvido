@@ -7,16 +7,37 @@
 //
 
 #import "OGButtonNode.h"
+#import "OGConstants.h"
+
+NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 
 @interface OGButtonNode ()
+
+@property (nonatomic, retain) SKTexture *touchedTexture;
+@property (nonatomic, assign) SKTexture *defaultTexture;
 
 @end
 
 @implementation OGButtonNode
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (!self.defaultTexture)
+    {
+        self.defaultTexture = self.texture;
+    }
+    
+    if (!self.touchedTexture)
+    {
+        self.touchedTexture = [SKTexture textureWithImageNamed:[self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey]];
+    }
+    
+    self.texture = self.touchedTexture;
+}
+
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"ended");
+    self.texture = self.defaultTexture;
 }
 
 - (BOOL)isUserInteractionEnabled

@@ -18,10 +18,15 @@
 
 - (void)didMoveToView:(SKView *)view
 {
-    for (SKNode *node in self.children)
+    for (OGButtonNode *button in self.children)
     {
-        NSLog(@"%@", node.class);
+        if ([button respondsToSelector:@selector(loadTextures)])
+        {
+            
+        }
     }
+    
+    self.scaleMode = SKSceneScaleModeFill;
 }
 
 @end
