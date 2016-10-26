@@ -10,6 +10,7 @@
 #import "OGConstants.h"
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
+NSString *const kOGButtonNodeUSerDataNextSceneKey = @"nextScene";
 
 @interface OGButtonNode ()
 
@@ -38,6 +39,30 @@ NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.texture = self.defaultTexture;
+    
+    CGPoint touchlocation = [touches.anyObject locationInNode:self.parent];
+    
+    if ([self containsPoint:touchlocation])
+    {
+        [self doAction];
+    }
+}
+
+- (void)doAction
+{
+    NSString *nextSceneName = [self.userData objectForKey:kOGButtonNodeUSerDataNextSceneKey];
+    
+    if (nextSceneName)
+    {
+        NSString *nextSceneFilePath = [[NSBundle mainBundle] pathForResource:nextSceneName ofType:kOGSceneFileExtension];
+        
+        if (nextSceneFilePath)
+        {
+            SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:nextSceneFilePath];
+            
+            [self.scene.view presentScene:nextScene transition:[OGConstants defaultTransion]];
+        }
+    }
 }
 
 - (BOOL)isUserInteractionEnabled

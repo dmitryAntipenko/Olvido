@@ -31,6 +31,8 @@ extern NSString *const kOGMainMenuSceneFileName;
 + (CGVector)randomVectorWithLength:(CGFloat)length;
 + (CGVector)randomVector;
 
++ (SKTransition *)defaultTransion;
+
 @end
 
 #endif /* OGConstants_h */
