@@ -247,6 +247,7 @@
 				EA0D27281DB1475000CEFB8A /* ScenesController */,
 				EA976D051D9EDBF8003B77FC /* Scenes */,
 				EA976D091D9F03A9003B77FC /* Entities */,
+				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
 				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
@@ -283,7 +284,6 @@
 		EA976D091D9F03A9003B77FC /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA70E51E1DB3F4620034116D /* OGEntity.h */,
 				EA70E51F1DB3F4620034116D /* OGEntity.m */,
 			);

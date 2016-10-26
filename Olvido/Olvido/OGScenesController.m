@@ -42,7 +42,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
     NSArray *plistData = [NSArray arrayWithContentsOfFile:plistPath];
     
-    self.levelMap = [plistData copy];
+    self.levelMap = plistData;
 }
 
 - (NSNumber *)nextLevelIdentifierWithPortalIdentifier:(NSNumber *)identifier inLevel:(NSNumber *)levelIdentifier
@@ -105,6 +105,14 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     scene.scaleMode = SKSceneScaleModeAspectFit;
     self.currentScene = scene;
     [scene release];
+}
+
+- (void)dealloc
+{
+    [_levelMap release];
+    [_currentScene release];
+    
+    [super dealloc];
 }
 
 @end

@@ -187,6 +187,9 @@
 {
     [_identifier release];
     [_mutableSpriteNodes release];
+    [_accessComponent release];
+    [_playerControlComponent release];
+    [_transitionComponent release];
     
     [super dealloc];
 }
