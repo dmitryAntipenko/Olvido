@@ -20,7 +20,12 @@ CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
+NSString *const kOGSceneFileExtension = @"sks";
+NSString *const kOGMainMenuSceneFileName = @"MainMenuScene";
+
 CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
+
+CGFloat const kOGConstantsDefaultTransitionTimeDuration = 1.0;
 
 @implementation OGConstants
 
@@ -49,6 +54,18 @@ CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
     CGFloat angle = (rand() / (CGFloat) RAND_MAX) * 2 * M_PI;
     
     return CGVectorMake(cosf(angle), sinf(angle));
+}
+
++ (SKTransition *)defaultTransion
+{
+    static SKTransition *transition;
+    
+    if (!transition)
+    {
+        transition = [SKTransition fadeWithDuration:kOGConstantsDefaultTransitionTimeDuration];
+    }
+    
+    return transition;
 }
 
 @end
