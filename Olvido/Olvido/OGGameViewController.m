@@ -10,6 +10,9 @@
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
 
+#import "OGGameScene.h"
+#import "OGSpriteNode.h"
+
 @interface OGGameViewController ()
 
 //@property (nonatomic, retain) OGScenesController *scenesController;

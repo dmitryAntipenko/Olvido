@@ -12,7 +12,6 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 @implementation OGHealthComponent
 
-
 - (void)setCurrentHealth:(NSUInteger)newHealth
 {
     if (newHealth > self.maxHealth)
