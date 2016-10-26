@@ -211,6 +211,8 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
     [_accessComponent release];
     [_playerControlComponent release];
     [_transitionComponent release];
+    [_healthComponent release];
+    [_statusBar release];
     
     [super dealloc];
 }

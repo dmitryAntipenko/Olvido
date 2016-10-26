@@ -118,6 +118,7 @@ NSString *const kOGStatusBarPauseButtonTextureName = @"PauseButton";
     [_healthSprites release];
     [_fullHealthTexture release];
     [_emptyHealthTexture release];
+    [_statusBarSprite release];
     
     [super dealloc];
 }
