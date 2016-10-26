@@ -16,7 +16,7 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
 @interface OGButtonNode ()
 
 @property (nonatomic, retain) SKTexture *touchedTexture;
-@property (nonatomic, assign) SKTexture *defaultTexture;
+@property (nonatomic, retain) SKTexture *defaultTexture;
 
 @end
 
@@ -61,7 +61,7 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
         {
             SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:nextSceneFilePath];
             
-            [self.scene.view presentScene:nextScene transition:[OGConstants defaultTransion]];
+            [self.scene.view presentScene:nextScene];
         }
     }
     
@@ -81,6 +81,14 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
 - (BOOL)isUserInteractionEnabled
 {
     return YES;
+}
+
+- (void)dealloc
+{
+    [_touchedTexture release];
+    [_defaultTexture release];
+    
+    [super dealloc];
 }
 
 @end

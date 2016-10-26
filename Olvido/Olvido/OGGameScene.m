@@ -53,8 +53,7 @@
         if ([sprite.name isEqualToString:kOGPlayerSpriteName])
         {
             OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
-            
-            self.playerControlComponent.spriteNode = sprite;
+
             self.playerControlComponent = controlComponent;
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
