@@ -21,9 +21,4 @@
     self.scaleMode = SKSceneScaleModeFill;
 }
 
-- (void)olexiy
-{
-    NSLog(@"ha!");
-}
-
 @end
