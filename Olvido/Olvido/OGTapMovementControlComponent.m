@@ -22,6 +22,18 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 @implementation OGTapMovementControlComponent
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _defaultSpeed = kOGTapMovementControlComponentDefaultSpeed;
+    }
+    
+    return self;
+}
+
 - (void)touchBeganAtPoint:(CGPoint)point
 {
     self.isMooving = YES;
@@ -35,7 +47,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
     if (self.isMooving)
     {
-        
+        [self moveToPoint:self.targetPoint];
     }
 }
 

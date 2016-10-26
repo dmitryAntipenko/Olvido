@@ -10,6 +10,4 @@
 
 @interface OGTapAndStopMovementControlComponent : OGMovementControlComponent
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode speed:(CGFloat)speed;
-
 @end

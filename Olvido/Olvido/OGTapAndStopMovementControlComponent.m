@@ -10,6 +10,7 @@
 #import "OGVisualComponent.h"
 #import "OGSpriteNode.h"
 
+CGFloat const kOGTapAndStopMovementControlComponentDefaultSpeed = 500;
 NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingAction";
 
 @interface OGTapAndStopMovementControlComponent ()
@@ -18,21 +19,17 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
-@property (nonatomic, assign) OGVisualComponent *visualComponentl;
-
 @end
-
 
 @implementation OGTapAndStopMovementControlComponent
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode speed:(CGFloat)speed
+- (instancetype)init
 {
-    self = [super initWithSpriteNode:spriteNode];
+    self = [super init];
     
     if (self)
     {
-        _defaultSpeed = speed;
-        _targetPoint = CGPointZero;
+        _defaultSpeed = kOGTapAndStopMovementControlComponentDefaultSpeed;
     }
     
     return self;
@@ -42,12 +39,38 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 {
     self.isMooving = YES;
     
-    if (self.spriteNode && self.spriteNode.physicsBody)
+    if (self.visualComponent)
     {
         self.targetPoint = point;
+        
+        [self moveToPoint:point];
     }
+}
+
+- (void)moveToPoint:(CGPoint)point
+{
+    if (self.visualComponent)
+    {
+        [self.visualComponent.spriteNode removeActionForKey:kOGTapAndStopMovementControlComponentMovingActionKey];
+        
+        CGFloat distance = hypot(self.visualComponent.spriteNode.position.x - point.x, self.visualComponent.spriteNode.position.y);
+        
+        CGFloat timeDuration = distance / (self.speedFactor * self.defaultSpeed);
+        
+        SKAction *movingAction = [SKAction moveTo:point duration:timeDuration];
+        
+        [self.visualComponent.spriteNode runAction:movingAction withKey:kOGTapAndStopMovementControlComponentMovingActionKey];
+    }
+}
+
+- (void)setSpeedFactor:(CGFloat)speedFactor
+{
+    [super setSpeedFactor:speedFactor];
     
-    [self didChangeDirection];
+    if (self.isMooving)
+    {
+        [self moveToPoint:self.targetPoint];
+    }
 }
 
 - (void)stop
@@ -57,7 +80,6 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 
 - (void)dealloc
 {
-    
     [super dealloc];
 }
 
