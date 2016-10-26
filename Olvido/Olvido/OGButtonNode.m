@@ -61,7 +61,7 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
         {
             SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:nextSceneFilePath];
             
-            [self.scene.view presentScene:nextScene transition:[OGConstants defaultTransion]];
+            [self.scene.view presentScene:nextScene];
         }
     }
     
