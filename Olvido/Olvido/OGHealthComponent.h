@@ -10,12 +10,11 @@
 
 @interface OGHealthComponent : GKComponent
 
-@property (nonatomic, copy, readonly) NSNumber *currentHealth;
+@property (nonatomic, assign) NSUInteger currentHealth;
+@property (nonatomic, assign) GKInspectable NSUInteger maxHealth;
 
-- (instancetype)initWithMaxHealth:(NSNumber *)maxHealth;
-
-- (void)dealDamage:(NSNumber *)damage;
-- (void)restoreHealth:(NSNumber *)health;
+- (void)dealDamage:(NSUInteger)damage;
+- (void)restoreHealth:(NSUInteger)health;
 - (void)kill;
 - (void)restoreFullHealth;
 

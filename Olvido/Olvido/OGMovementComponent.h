@@ -10,7 +10,7 @@
 
 @interface OGMovementComponent : GKComponent
 
-@property (nonatomic, assign) CGFloat speedFactor;
+@property (nonatomic, assign) GKInspectable CGFloat speedFactor;
 
 - (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body;
 

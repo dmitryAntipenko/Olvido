@@ -18,6 +18,8 @@
 		1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */; };
 		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
+		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
+		215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		21DD19761DBE1C360048658A /* OGChapter1.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DD19751DBE1C360048658A /* OGChapter1.m */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
@@ -69,6 +71,9 @@
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
+		215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInitialLevel.h; sourceTree = "<group>"; };
+		215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInitialLevel.m; sourceTree = "<group>"; };
+		215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGInitialLevel.sks; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		21DD19741DBE1C360048658A /* OGChapter1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGChapter1.h; sourceTree = "<group>"; };
 		21DD19751DBE1C360048658A /* OGChapter1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGChapter1.m; sourceTree = "<group>"; };
@@ -186,6 +191,16 @@
 			name = Chapter1;
 			sourceTree = "<group>";
 		};
+		215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */ = {
+			isa = PBXGroup;
+			children = (
+				215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */,
+				215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */,
+				215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */,
+			);
+			name = "Level1 - InitialLevel";
+			sourceTree = "<group>";
+		};
 		21DD19711DBE1BEE0048658A /* StoriesScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +311,7 @@
 				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
 				EAC384141DB43A0A00235B27 /* Utils */,
+				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
 				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
 			);
@@ -401,6 +417,7 @@
 				1B27EAA81DC0CEA200E9CA23 /* MapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
 				1B27EA9C1DC090BE00E9CA23 /* MainMenuScene.sks in Resources */,
+				215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA70E52B1DB3F4620034116D /* playerTail.sks in Resources */,
@@ -437,6 +454,7 @@
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				EA70E5291DB3F4620034116D /* OGSpriteNode.m in Sources */,
+				215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,

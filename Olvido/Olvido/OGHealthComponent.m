@@ -10,59 +10,28 @@
 
 CGFloat const kOGHealthComponentMinHealth = 0.0;
 
-@interface OGHealthComponent ()
-
-@property (nonatomic, copy) NSNumber *maxHealth;
-@property (nonatomic, copy, readwrite) NSNumber *currentHealth;
-
-@end
-
 @implementation OGHealthComponent
 
-- (instancetype)initWithMaxHealth:(NSNumber *)maxHealth
+
+- (void)setCurrentHealth:(NSUInteger)newHealth
 {
-    if (maxHealth && maxHealth.doubleValue > kOGHealthComponentMinHealth)
+    if (newHealth > self.maxHealth)
     {
-        self = [super init];
-        
-        if (self)
-        {
-            _maxHealth = [maxHealth copy];
-            _currentHealth = [maxHealth copy];
-        }
+        _currentHealth = self.maxHealth;
+    }
+    else if (newHealth < kOGHealthComponentMinHealth)
+    {
+        _currentHealth = kOGHealthComponentMinHealth;
     }
     else
     {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
-- (void)setCurrentHealth:(NSNumber *)newHealth
-{
-    if (_currentHealth != newHealth)
-    {
-        if (newHealth.doubleValue > self.maxHealth.doubleValue)
-        {
-            _currentHealth = [self.maxHealth copy];
-        }
-        else if (newHealth.doubleValue < kOGHealthComponentMinHealth)
-        {
-            _currentHealth = @(kOGHealthComponentMinHealth);
-        }
-        else
-        {
-            [_currentHealth release];
-            _currentHealth = [newHealth copy];
-        }
+        _currentHealth = newHealth;
     }
 }
 
-- (void)restoreHealth:(NSNumber *)health
+- (void)restoreHealth:(NSUInteger)health
 {
-    self.currentHealth = @(self.currentHealth.doubleValue + health.doubleValue);
+    self.currentHealth = self.currentHealth + health;
 }
 
 - (void)restoreFullHealth
@@ -70,20 +39,18 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
     self.currentHealth = self.maxHealth;
 }
 
-- (void)dealDamage:(NSNumber *)damage
+- (void)dealDamage:(NSUInteger)damage
 {
-    self.currentHealth = @(self.currentHealth.doubleValue - damage.doubleValue);
+    self.currentHealth = self.currentHealth - damage;
 }
 
 - (void)kill
 {
-    self.currentHealth = @(kOGHealthComponentMinHealth);
+    self.currentHealth = kOGHealthComponentMinHealth;
 }
 
 - (void)dealloc
 {
-    [_currentHealth release];
-    [_maxHealth release];
     
     [super dealloc];
 }
