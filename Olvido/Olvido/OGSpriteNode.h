@@ -8,10 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@class OGVisualComponent;
+@class OGEntity;
 
 @interface OGSpriteNode : SKSpriteNode
 
-@property (nonatomic, assign) OGVisualComponent *owner;
+@property (nonatomic, retain) OGEntity *entity;
 
 @end

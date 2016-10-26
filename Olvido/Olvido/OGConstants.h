@@ -25,6 +25,9 @@ extern CGFloat const kOGGameSceneStatusBarDuration;
 extern NSString *const kOGSceneFileExtension;
 extern NSString *const kOGMainMenuSceneFileName;
 
+extern NSString *const kOGPlayerSpriteName;
+extern NSString *const kOGPortalSpriteName;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;
