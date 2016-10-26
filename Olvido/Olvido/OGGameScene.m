@@ -16,10 +16,12 @@
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"
+#import "OGInventoryComponent.h"
 
 #import "OGStatusBar.h"
 
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
+
 
 @interface OGGameScene ()
 
@@ -60,9 +62,12 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
         {
             OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
             self.playerControlComponent = controlComponent;
-            
+        
             OGHealthComponent *healthComponent = (OGHealthComponent *) [sprite.entity componentForClass:[OGHealthComponent class]];
             self.healthComponent = healthComponent;
+            
+            OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [sprite.entity componentForClass:[OGInventoryComponent class]];
+            self.inventoryComponent = inventoryComponent;
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
