@@ -7,7 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import <SpriteKit/SpriteKit.h>
 
 @interface OGEntity : GKEntity
 
