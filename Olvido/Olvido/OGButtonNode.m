@@ -83,4 +83,11 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
     return YES;
 }
 
+- (void)dealloc
+{
+    [_touchedTexture release];
+    
+    [super dealloc];
+}
+
 @end
