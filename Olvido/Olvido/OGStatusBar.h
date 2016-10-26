@@ -8,11 +8,14 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@class OGHealthComponent;
+
 @interface OGStatusBar : NSObject
 
-@property (nonatomic, assign) NSUInteger maxHealth;
 @property (nonatomic, retain) SKSpriteNode *statusBarSprite;
+@property (nonatomic, assign) OGHealthComponent *healthComponent;
 
 - (void)createContents;
+- (void)healthDidChange;
 
 @end

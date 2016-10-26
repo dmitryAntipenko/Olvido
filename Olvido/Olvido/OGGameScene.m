@@ -86,7 +86,7 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
     if (statusBar)
     {
         self.statusBar.statusBarSprite = statusBar;
-        self.statusBar.maxHealth = self.healthComponent.maxHealth;
+        self.statusBar.healthComponent = self.healthComponent;
         [self.statusBar createContents];
     }
 }

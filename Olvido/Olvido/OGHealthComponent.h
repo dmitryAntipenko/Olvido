@@ -10,7 +10,7 @@
 
 @interface OGHealthComponent : GKComponent
 
-@property (nonatomic, assign) NSUInteger currentHealth;
+@property (nonatomic, assign) GKInspectable NSUInteger currentHealth;
 @property (nonatomic, assign) GKInspectable NSUInteger maxHealth;
 
 - (void)dealDamage:(NSUInteger)damage;
