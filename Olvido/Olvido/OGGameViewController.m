@@ -33,24 +33,10 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-//    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-//    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
-
-    GKScene *sceneFile = [GKScene sceneWithFileNamed:@"MyScene"];
-    OGGameScene *scene = (OGGameScene *)sceneFile.rootNode;
-    scene.scaleMode = SKSceneScaleModeAspectFit;
+    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
     
-    for (GKEntity *entity in sceneFile.entities)
-    {
-        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
-        
-        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
-        spriteNode.entity = (OGEntity *) nodeComponent.entity;
-        
-        [scene addSpriteNode:spriteNode];
-    }
-    
-    [view presentScene:scene];
+    [view presentScene:mainMenuScene];
     
 }
 
