@@ -17,6 +17,8 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
+@property (nonatomic, assign) CGFloat pausedSpeedFactor;
+
 @end
 
 @implementation OGTapAndStopMovementControlComponent
@@ -59,10 +61,17 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
     }
 }
 
-- (void)stop
+- (void)pause
 {
+    self.pausedSpeedFactor = self.speedFactor;
     self.speedFactor = 0.0;
 }
+
+- (void)resume
+{
+    self.speedFactor = self.pausedSpeedFactor;
+}
+
 
 - (void)dealloc
 {

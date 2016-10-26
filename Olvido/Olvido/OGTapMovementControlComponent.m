@@ -15,6 +15,8 @@
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
+@property (nonatomic, assign) CGFloat pausedSpeedFactor;
+
 @end
 
 @implementation OGTapMovementControlComponent
@@ -54,9 +56,15 @@
     }
 }
 
-- (void)stop
+- (void)pause
 {
+    self.pausedSpeedFactor = self.speedFactor;
     self.speedFactor = 0.0;
+}
+
+- (void)resume
+{
+    self.speedFactor = self.pausedSpeedFactor;
 }
 
 - (void)dealloc

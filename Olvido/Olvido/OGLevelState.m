@@ -11,7 +11,7 @@
 
 @interface OGLevelState ()
 
-@property (nonatomic, assign) OGGameScene *scene;
+@property (nonatomic, retain) OGGameScene *privateScene;
 
 @end
 
@@ -25,10 +25,22 @@
     {
         state = [OGLevelState state];
         
-        state.scene = scene;
+        state.privateScene = scene;
     }
     
     return state;
+}
+
+- (OGGameScene *)scene
+{
+    return self.privateScene;
+}
+
+- (void)dealloc
+{
+    [_privateScene release];
+    
+    [super dealloc];
 }
 
 @end

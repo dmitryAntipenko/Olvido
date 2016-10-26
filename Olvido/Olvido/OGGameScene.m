@@ -11,14 +11,26 @@
 #import "OGCollisionBitMask.h"
 #import "OGSpriteNode.h"
 #import "OGConstants.h"
+#import "OGEntity.h"
 
 #import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
 
+#import "OGBeforeStartLevelState.h"
+#import "OGInitLevelState.h"
+#import "OGGameLevelState.h"
+#import "OGPauseLevelState.h"
+#import "OGCompleteLevelState.h"
+#import "OGDeathLevelState.h"
+
+CGFloat const kOGGameScenePauseSpeed = 0.0;
+CGFloat const kOGGameScenePlayeSpeed = 1.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
+@property (nonatomic, retain) GKStateMachine *stateMachine;
 
 @end
 
@@ -33,6 +45,14 @@
         if (self)
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
+            _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+                                                                     [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                     [OGInitLevelState stateWithLevelScene:self],
+                                                                     [OGGameLevelState stateWithLevelScene:self],
+                                                                     [OGPauseLevelState stateWithLevelScene:self],
+                                                                     [OGCompleteLevelState stateWithLevelScene:self],
+                                                                     [OGDeathLevelState stateWithLevelScene:self]
+                                                                     ]];
         }
     }
     else
@@ -67,6 +87,8 @@
     }
     
     [super didMoveToView:view];
+    
+    [self.stateMachine enterState:[OGBeforeStartLevelState class]];
 }
 
 - (NSArray *)spriteNodes
@@ -182,6 +204,22 @@
     }
 }
 
+- (void)pause
+{
+    [self.playerControlComponent pause];
+    self.physicsWorld.speed = kOGGameScenePauseSpeed;
+    self.speed = kOGGameScenePauseSpeed;
+    self.paused = YES;
+}
+
+- (void)resume
+{
+    [self.playerControlComponent resume];
+    self.physicsWorld.speed = kOGGameScenePlayeSpeed;
+    self.speed = kOGGameScenePlayeSpeed;
+    self.paused = NO;
+}
+
 - (void)dealloc
 {
     [_identifier release];
@@ -189,6 +227,7 @@
     [_accessComponent release];
     [_playerControlComponent release];
     [_transitionComponent release];
+    [_stateMachine release];
     
     [super dealloc];
 }

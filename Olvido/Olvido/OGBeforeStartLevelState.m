@@ -8,8 +8,19 @@
 
 #import "OGBeforeStartLevelState.h"
 #import "OGInitLevelState.h"
+#import "OGGameScene.h"
 
 @implementation OGBeforeStartLevelState
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    [self.scene pause];
+}
+
+- (void)willExitWithNextState:(GKState *)nextState
+{
+    
+}
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
@@ -18,6 +29,11 @@
     result = (result || stateClass == [OGInitLevelState class]);
     
     return result;
+}
+
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    
 }
 
 @end

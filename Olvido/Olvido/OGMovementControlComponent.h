@@ -23,6 +23,8 @@
 
 - (void)didChangeDirection;
 
-- (void)stop;
+- (void)pause;
+
+- (void)resume;
 
 @end

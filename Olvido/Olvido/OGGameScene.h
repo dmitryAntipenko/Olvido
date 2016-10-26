@@ -27,4 +27,10 @@
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 
+- (void)pause;
+
+- (void)start;
+
+- (void)resume;
+
 @end

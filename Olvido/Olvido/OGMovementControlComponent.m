@@ -43,7 +43,12 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
 }
 
-- (void)stop
+- (void)pause
+{
+    
+}
+
+- (void)resume
 {
     
 }
