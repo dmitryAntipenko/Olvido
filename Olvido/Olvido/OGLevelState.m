@@ -8,6 +8,10 @@
 
 #import "OGLevelState.h"
 
+@interface OGLevelState ()
+
+@end
+
 @implementation OGLevelState
 
 @end

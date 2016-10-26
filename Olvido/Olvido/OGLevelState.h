@@ -10,4 +10,6 @@
 
 @interface OGLevelState : GKState
 
++ (instancetype)stateWithLevelScene:()
+
 @end
