@@ -1,13 +1,18 @@
 //
-//  OGButtonNode.h
+//  OGMapMenuScene.m
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/26/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGMapMenuScene.h"
 
-@interface OGButtonNode : SKSpriteNode
+@implementation OGMapMenuScene
+
+- (void)didMoveToView:(SKView *)view
+{
+    self.scaleMode = SKSceneScaleModeFill;
+}
 
 @end

@@ -9,23 +9,22 @@
 #import "OGMovementControlComponent.h"
 
 CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
+CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 
 @implementation OGMovementControlComponent
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
+- (instancetype)init
 {
     self = [super init];
     
     if (self)
     {
-        _spriteNode = [spriteNode retain];
-        _speedFactor = kOGMovementControlComponentDefaultSpeedFactor;
+        _defaultSpeed = kOGTapMovementControlComponentDefaultSpeed;
     }
     
     return self;
 }
-
 
 #pragma mark subclasses should implement
 
@@ -54,21 +53,13 @@ CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
     
 }
 
-- (void)setSpeedFactor:(CGFloat)speedFactor
+- (void)didAddToEntity
 {
-    _speedFactor = speedFactor;
-    
-    if (self.spriteNode)
-    {
-        CGVector velocity = self.spriteNode.physicsBody.velocity;
-        self.spriteNode.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
-    }
+    _visualComponent = (OGVisualComponent *)[self.entity componentForClass:[OGVisualComponent class]];
 }
 
 - (void)dealloc
 {
-    [_spriteNode release];
-    
     [super dealloc];
 }
 

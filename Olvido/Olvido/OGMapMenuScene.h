@@ -1,13 +1,13 @@
 //
-//  OGButtonNode.h
+//  OGMapMenuScene.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/26/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import <SpriteKit/SpriteKit.h>
 
-@interface OGButtonNode : SKSpriteNode
+@interface OGMapMenuScene : SKScene
 
 @end

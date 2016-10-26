@@ -13,6 +13,9 @@
 		1B27EA9C1DC090BE00E9CA23 /* MainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B27EA9B1DC090BE00E9CA23 /* MainMenuScene.sks */; };
 		1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */; };
 		1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */; };
+		1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */; };
+		1B27EAA81DC0CEA200E9CA23 /* MapMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B27EAA71DC0CEA200E9CA23 /* MapMenuScene.sks */; };
+		1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */; };
 		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
@@ -56,6 +59,11 @@
 		1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGButtonNode.m; sourceTree = "<group>"; };
 		1B27EAA01DC0934300E9CA23 /* OGMainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMainMenuScene.h; sourceTree = "<group>"; };
 		1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMainMenuScene.m; sourceTree = "<group>"; };
+		1B27EAA31DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTapAndStopMovementControlComponent.h; sourceTree = "<group>"; };
+		1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTapAndStopMovementControlComponent.m; sourceTree = "<group>"; };
+		1B27EAA71DC0CEA200E9CA23 /* MapMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapMenuScene.sks; sourceTree = "<group>"; };
+		1B27EAA91DC0D0A900E9CA23 /* OGMapMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMapMenuScene.h; sourceTree = "<group>"; };
+		1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMapMenuScene.m; sourceTree = "<group>"; };
 		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
 		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
@@ -134,6 +142,8 @@
 				1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */,
 				1B2388E01DB4C97700A9092B /* OGTapMovementControlComponent.h */,
 				1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */,
+				1B27EAA31DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.h */,
+				1B27EAA41DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m */,
 			);
 			name = MovementControlComponents;
 			sourceTree = "<group>";
@@ -146,6 +156,16 @@
 				1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */,
 			);
 			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		1B27EAA61DC0CE8F00E9CA23 /* MapMenu */ = {
+			isa = PBXGroup;
+			children = (
+				1B27EAA71DC0CEA200E9CA23 /* MapMenuScene.sks */,
+				1B27EAA91DC0D0A900E9CA23 /* OGMapMenuScene.h */,
+				1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */,
+			);
+			name = MapMenu;
 			sourceTree = "<group>";
 		};
 		210C996F1DB8E39E00704C62 /* StoryLevelScenes */ = {
@@ -273,6 +293,7 @@
 		EA976D051D9EDBF8003B77FC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
 				EAC384141DB43A0A00235B27 /* Utils */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
@@ -377,6 +398,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B27EAA81DC0CEA200E9CA23 /* MapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
 				1B27EA9C1DC090BE00E9CA23 /* MainMenuScene.sks in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
@@ -400,10 +422,12 @@
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
+				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
+				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				21DD19761DBE1C360048658A /* OGChapter1.m in Sources */,

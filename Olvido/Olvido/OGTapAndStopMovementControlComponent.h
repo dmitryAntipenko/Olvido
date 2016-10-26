@@ -1,13 +1,13 @@
 //
-//  OGButtonNode.h
+//  OGTapAndStopMovementControlComponent.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/26/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
+#import "OGMovementControlComponent.h"
 
-@interface OGButtonNode : SKSpriteNode
+@interface OGTapAndStopMovementControlComponent : OGMovementControlComponent
 
 @end
