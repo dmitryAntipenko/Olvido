@@ -6,7 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-@import GameplayKit;
+#import <GameplayKit/GameplayKit.h>
 
 @interface OGTransitionComponent : GKComponent
 

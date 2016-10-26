@@ -14,8 +14,9 @@ typedef NS_ENUM(NSUInteger, OGContactType)
     kOGContactTypeNone = -1,
     kOGContactTypeGameOver = 0,
     kOGContactTypePlayerDidGetCoin = 1,
-    kOGContactTypePlayerDidTouchPortal = 2,
-    kOGContactTypePlayerDidTouchObstacle = 3
+    kOGContactTypePlayerDidGrantAccess = 2,
+    kOGContactTypePlayerDidTouchPortal = 3,
+    kOGContactTypePlayerDidTouchObstacle = 4
 };
 
 #endif /* OGContactType_h */
