@@ -83,6 +83,11 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     
 }
 
+- (void)runScene
+{
+    [self.view presentScene:self.currentScene];
+}
+
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
     NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];

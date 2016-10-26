@@ -21,7 +21,7 @@ CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
 NSString *const kOGSceneFileExtension = @"sks";
-NSString *const kOGMainMenuSceneFileName = @"MainMenuScene";
+NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
 
 CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 

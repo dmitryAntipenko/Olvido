@@ -10,8 +10,8 @@
 #import "OGConstants.h"
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
-NSString *const kOGButtonNodeUSerDataNextSceneKey = @"nextScene";
-NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
+NSString *const kOGButtonNodeUserDataNextSceneKey = @"nextScene";
+NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 @interface OGButtonNode ()
 
@@ -51,7 +51,7 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
 
 - (void)doAction
 {
-    NSString *nextSceneName = [self.userData objectForKey:kOGButtonNodeUSerDataNextSceneKey];
+    NSString *nextSceneName = [self.userData objectForKey:kOGButtonNodeUserDataNextSceneKey];
     
     if (nextSceneName)
     {
@@ -65,7 +65,7 @@ NSString *const kOGButtonNodeUSerDataSelectorKey = @"selector";
         }
     }
     
-    NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUSerDataSelectorKey];
+    NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUserDataSelectorKey];
     
     if (selectorName)
     {

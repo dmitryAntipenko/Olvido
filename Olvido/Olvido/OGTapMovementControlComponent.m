@@ -38,11 +38,14 @@
 
 - (void)moveToPoint:(CGPoint)point
 {
-    if (self.visualComponent && self.visualComponent.spriteNode.physicsBody)
+    GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [self.entity componentForClass:[GKSKNodeComponent class]];
+    SKSpriteNode *spriteNode = (SKSpriteNode *) nodeComponent.node;
+    
+    if (spriteNode && spriteNode.physicsBody)
     {
         self.targetPoint = point;
-        CGVector displacementVector = CGVectorMake(point.x - self.visualComponent.spriteNode.position.x,
-                                                   point.y - self.visualComponent.spriteNode.position.y);
+        CGVector displacementVector = CGVectorMake(point.x - spriteNode.position.x,
+                                                   point.y - spriteNode.position.y);
         
         CGFloat displacement = hypot(displacementVector.dx, displacementVector.dy);
         
@@ -50,7 +53,7 @@
         
         CGFloat speedY = displacementVector.dy / displacement * self.speedFactor * self.defaultSpeed;
         
-        self.visualComponent.spriteNode.physicsBody.velocity = CGVectorMake(speedX, speedY);
+        spriteNode.physicsBody.velocity = CGVectorMake(speedX, speedY);
     }
 }
 

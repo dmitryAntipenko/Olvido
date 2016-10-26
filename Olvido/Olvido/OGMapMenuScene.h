@@ -10,4 +10,6 @@
 
 @interface OGMapMenuScene : SKScene
 
+- (void)startGame;
+
 @end

@@ -19,5 +19,6 @@
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;
+- (void)runScene;
 
 @end
