@@ -8,8 +8,10 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+@class OGGameScene;
+
 @interface OGLevelState : GKState
 
-//+ (instancetype)stateWithLevelScene:();
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene;
 
 @end
