@@ -13,6 +13,7 @@
 
 @protocol OGGameSceneDelegate <NSObject>
 
+- (void)gameSceneDidCallFinish;
 - (void)gameSceneDidCallFinishGameWithScore:(NSNumber *)score;
 
 @end
