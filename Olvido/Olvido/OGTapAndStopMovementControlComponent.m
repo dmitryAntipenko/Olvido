@@ -10,30 +10,16 @@
 #import "OGVisualComponent.h"
 #import "OGSpriteNode.h"
 
-CGFloat const kOGTapAndStopMovementControlComponentDefaultSpeed = 500;
 NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingAction";
 
 @interface OGTapAndStopMovementControlComponent ()
 
-@property (nonatomic, assign) CGFloat defaultSpeed;
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
 @end
 
 @implementation OGTapAndStopMovementControlComponent
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _defaultSpeed = kOGTapAndStopMovementControlComponentDefaultSpeed;
-    }
-    
-    return self;
-}
 
 - (void)touchBeganAtPoint:(CGPoint)point
 {

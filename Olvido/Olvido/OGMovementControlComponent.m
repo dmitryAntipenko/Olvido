@@ -9,9 +9,23 @@
 #import "OGMovementControlComponent.h"
 
 CGFloat const kOGMovementControlComponentDefaultSpeedFactor = 1.0;
+CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 
 @implementation OGMovementControlComponent
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _defaultSpeed = kOGTapMovementControlComponentDefaultSpeed;
+    }
+    
+    return self;
+}
+
 #pragma mark subclasses should implement
 
 - (void)touchBeganAtPoint:(CGPoint)point

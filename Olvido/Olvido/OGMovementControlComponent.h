@@ -13,6 +13,7 @@
 
 @property (nonatomic, assign) OGVisualComponent *visualComponent;
 @property (nonatomic, assign) GKInspectable CGFloat speedFactor;
+@property (nonatomic, assign) GKInspectable CGFloat defaultSpeed;
 
 - (void)touchBeganAtPoint:(CGPoint)point;
 
