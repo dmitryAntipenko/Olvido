@@ -17,6 +17,12 @@
 		1B27EAA81DC0CEA200E9CA23 /* MapMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B27EAA71DC0CEA200E9CA23 /* MapMenuScene.sks */; };
 		1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */; };
 		1B27EAB11DC0E2DE00E9CA23 /* OGLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB01DC0E2DE00E9CA23 /* OGLevelState.m */; };
+		1B27EAB41DC0F6B400E9CA23 /* OGBeforeStartLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGBeforeStartLevelState.m */; };
+		1B27EAB71DC0F6C100E9CA23 /* OGInitLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB61DC0F6C100E9CA23 /* OGInitLevelState.m */; };
+		1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB91DC0F6D100E9CA23 /* OGGameLevelState.m */; };
+		1B27EABD1DC0F6DE00E9CA23 /* OGPauseLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EABC1DC0F6DE00E9CA23 /* OGPauseLevelState.m */; };
+		1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EABF1DC0F6F000E9CA23 /* OGCompleteLevelState.m */; };
+		1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */; };
 		210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210C99531DB6D48400704C62 /* OGTorchComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
@@ -67,6 +73,18 @@
 		1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMapMenuScene.m; sourceTree = "<group>"; };
 		1B27EAAF1DC0E2DE00E9CA23 /* OGLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelState.h; sourceTree = "<group>"; };
 		1B27EAB01DC0E2DE00E9CA23 /* OGLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelState.m; sourceTree = "<group>"; };
+		1B27EAB21DC0F6B400E9CA23 /* OGBeforeStartLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBeforeStartLevelState.h; sourceTree = "<group>"; };
+		1B27EAB31DC0F6B400E9CA23 /* OGBeforeStartLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBeforeStartLevelState.m; sourceTree = "<group>"; };
+		1B27EAB51DC0F6C100E9CA23 /* OGInitLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInitLevelState.h; sourceTree = "<group>"; };
+		1B27EAB61DC0F6C100E9CA23 /* OGInitLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInitLevelState.m; sourceTree = "<group>"; };
+		1B27EAB81DC0F6D100E9CA23 /* OGGameLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameLevelState.h; sourceTree = "<group>"; };
+		1B27EAB91DC0F6D100E9CA23 /* OGGameLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameLevelState.m; sourceTree = "<group>"; };
+		1B27EABB1DC0F6DE00E9CA23 /* OGPauseLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPauseLevelState.h; sourceTree = "<group>"; };
+		1B27EABC1DC0F6DE00E9CA23 /* OGPauseLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPauseLevelState.m; sourceTree = "<group>"; };
+		1B27EABE1DC0F6F000E9CA23 /* OGCompleteLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGCompleteLevelState.h; sourceTree = "<group>"; };
+		1B27EABF1DC0F6F000E9CA23 /* OGCompleteLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGCompleteLevelState.m; sourceTree = "<group>"; };
+		1B27EAC11DC0F6FD00E9CA23 /* OGDeathLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDeathLevelState.h; sourceTree = "<group>"; };
+		1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeathLevelState.m; sourceTree = "<group>"; };
 		210C99521DB6D48400704C62 /* OGTorchComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTorchComponent.h; sourceTree = "<group>"; };
 		210C99531DB6D48400704C62 /* OGTorchComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTorchComponent.m; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
@@ -184,6 +202,18 @@
 			children = (
 				1B27EAAF1DC0E2DE00E9CA23 /* OGLevelState.h */,
 				1B27EAB01DC0E2DE00E9CA23 /* OGLevelState.m */,
+				1B27EAB21DC0F6B400E9CA23 /* OGBeforeStartLevelState.h */,
+				1B27EAB31DC0F6B400E9CA23 /* OGBeforeStartLevelState.m */,
+				1B27EAB51DC0F6C100E9CA23 /* OGInitLevelState.h */,
+				1B27EAB61DC0F6C100E9CA23 /* OGInitLevelState.m */,
+				1B27EAB81DC0F6D100E9CA23 /* OGGameLevelState.h */,
+				1B27EAB91DC0F6D100E9CA23 /* OGGameLevelState.m */,
+				1B27EABB1DC0F6DE00E9CA23 /* OGPauseLevelState.h */,
+				1B27EABC1DC0F6DE00E9CA23 /* OGPauseLevelState.m */,
+				1B27EABE1DC0F6F000E9CA23 /* OGCompleteLevelState.h */,
+				1B27EABF1DC0F6F000E9CA23 /* OGCompleteLevelState.m */,
+				1B27EAC11DC0F6FD00E9CA23 /* OGDeathLevelState.h */,
+				1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */,
 			);
 			name = LevelStateMachine;
 			sourceTree = "<group>";
@@ -442,23 +472,29 @@
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
+				1B27EAB71DC0F6C100E9CA23 /* OGInitLevelState.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				210C99571DB6D48400704C62 /* OGTorchComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */,
 				EA70E52A1DB3F4620034116D /* OGVisualComponent.m in Sources */,
+				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
+				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,
 				21DD19761DBE1C360048658A /* OGChapter1.m in Sources */,
+				1B27EABD1DC0F6DE00E9CA23 /* OGPauseLevelState.m in Sources */,
 				EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */,
+				1B27EAB41DC0F6B400E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				1B27EAB11DC0E2DE00E9CA23 /* OGLevelState.m in Sources */,
 				EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				EA70E5291DB3F4620034116D /* OGSpriteNode.m in Sources */,
+				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
