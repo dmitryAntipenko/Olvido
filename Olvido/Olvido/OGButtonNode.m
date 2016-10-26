@@ -8,6 +8,25 @@
 
 #import "OGButtonNode.h"
 
+@interface OGButtonNode ()
+
+@end
+
 @implementation OGButtonNode
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+}
 
 @end

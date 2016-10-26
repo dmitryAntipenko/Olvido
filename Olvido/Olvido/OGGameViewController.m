@@ -8,6 +8,7 @@
 
 #import "OGGameViewController.h"
 #import "OGMainMenuScene.h"
+#import "OGConstants.h"
 
 @interface OGGameViewController ()
 
@@ -29,8 +30,10 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:<#(nullable NSString *)#> ofType:<#(nullable NSString *)#>]
-    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:<#(nonnull NSString *)#>]
+    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
+    
+    [view presentScene:mainMenuScene];
     
 }
 
