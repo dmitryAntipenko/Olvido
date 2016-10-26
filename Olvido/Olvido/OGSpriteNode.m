@@ -10,4 +10,11 @@
 
 @implementation OGSpriteNode
 
+- (void)dealloc
+{
+    [_entity release];
+    
+    [super dealloc];
+}
+
 @end

@@ -25,6 +25,7 @@
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CE3231DBA8E680087842D /* OGMessageComponent.m */; };
 		EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F41DC0D26000FCF126 /* OGGameScene.m */; };
+		EA5870F81DC0D8D400FCF126 /* OGScenesController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGScenesController.m */; };
 		EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B101DB4A7D4006FC219 /* Flame.sks */; };
 		EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B111DB4A7D4006FC219 /* spark.png */; };
 		EA70E5271DB3F4620034116D /* OGEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E51F1DB3F4620034116D /* OGEntity.m */; };
@@ -81,6 +82,8 @@
 		EA3CE3231DBA8E680087842D /* OGMessageComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMessageComponent.m; sourceTree = "<group>"; };
 		EA5870F31DC0D26000FCF126 /* OGGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
 		EA5870F41DC0D26000FCF126 /* OGGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
+		EA5870F61DC0D8D400FCF126 /* OGScenesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGScenesController.h; sourceTree = "<group>"; };
+		EA5870F71DC0D8D400FCF126 /* OGScenesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGScenesController.m; sourceTree = "<group>"; };
 		EA5C3B101DB4A7D4006FC219 /* Flame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Flame.sks; sourceTree = "<group>"; };
 		EA5C3B111DB4A7D4006FC219 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		EA70E51E1DB3F4620034116D /* OGEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEntity.h; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 			children = (
 				EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */,
 				2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */,
+				EA5870F61DC0D8D400FCF126 /* OGScenesController.h */,
+				EA5870F71DC0D8D400FCF126 /* OGScenesController.m */,
 			);
 			name = ScenesController;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				EA0D27281DB1475000CEFB8A /* ScenesController */,
 				EA976D051D9EDBF8003B77FC /* Scenes */,
 				EA976D091D9F03A9003B77FC /* Entities */,
+				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
 				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
@@ -299,7 +305,6 @@
 		EA976D091D9F03A9003B77FC /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA70E51E1DB3F4620034116D /* OGEntity.h */,
 				EA70E51F1DB3F4620034116D /* OGEntity.m */,
 			);
@@ -366,7 +371,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 93L4B89BM9;
+						DevelopmentTeam = Z8D3NJ2X9W;
 					};
 				};
 			};
@@ -435,6 +440,7 @@
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
+				EA5870F81DC0D8D400FCF126 /* OGScenesController.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,
 				EA70E5271DB3F4620034116D /* OGEntity.m in Sources */,
 				EA9919001DB9324700E273B4 /* OGAccessComponent.m in Sources */,
@@ -560,11 +566,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -578,11 +584,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

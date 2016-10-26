@@ -101,9 +101,9 @@
              [touchedBody removeFromParent];
          }];
     }
-    else if (contactType == kOGContactTypePlayerDidTouchPortal)
+    else if (contactType == kOGContactTypePlayerDidTouchPortal && !self.transitionComponent.isClosed)
     {
-        [self.sceneDelegate gameSceneDidCallFinishWithPortal:(OGEntity *) touchedBody.entity];
+        [self.sceneDelegate gameSceneDidCallFinish];
     }
 }
 
@@ -186,6 +186,9 @@
 {
     [_identifier release];
     [_mutableSpriteNodes release];
+    [_accessComponent release];
+    [_playerControlComponent release];
+    [_transitionComponent release];
     
     [super dealloc];
 }
