@@ -1,3 +1,13 @@
+# Game Scene Base Class
+
+- To use game scenes make .sks file, build your scene, create custom class subclassed from OGGameScene.
+- Your custom class should call super's didMoveToView and didBeginContact in its implementation.
+
+OGGameScene contains:
+- References to OGAccessComponent and OGTransitionComponent for portal and OGMovementControlComponent for player.
+- Array of sprite nodes on scene. You can add node from scene via addSpriteNode:(OGSpriteNode *)node
+- Scene Delegate which method should be called to finish the game propely.
+
 # Nodes
 
 ## SKButtonNode
