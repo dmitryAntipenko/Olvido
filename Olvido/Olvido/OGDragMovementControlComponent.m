@@ -20,18 +20,18 @@
 
 - (void)touchMovedToPoint:(CGPoint)point
 {
-    if (self.isMooving && self.visualComponent)
+    if (self.isMooving && self.node)
     {
-        self.visualComponent.spriteNode.position = point;
+        self.node.position = point;
     }
 }
 
 - (void)touchBeganAtPoint:(CGPoint)point
 {
-    if (CGRectContainsPoint(self.visualComponent.spriteNode.frame, point))
+    if (CGRectContainsPoint(self.node.frame, point))
     {
         self.isMooving = YES;
-        self.visualComponent.spriteNode.position = point;
+        self.node.position = point;
     }
 }
 
