@@ -40,11 +40,11 @@
 
 - (void)moveToPoint:(CGPoint)point
 {
-    if (self.visualComponent && self.visualComponent.spriteNode.physicsBody)
+    if (self.node && self.node.physicsBody)
     {
         self.targetPoint = point;
-        CGVector displacementVector = CGVectorMake(point.x - self.visualComponent.spriteNode.position.x,
-                                                   point.y - self.visualComponent.spriteNode.position.y);
+        CGVector displacementVector = CGVectorMake(point.x - self.node.position.x,
+                                                   point.y - self.node.position.y);
         
         CGFloat displacement = hypot(displacementVector.dx, displacementVector.dy);
         
@@ -52,7 +52,7 @@
         
         CGFloat speedY = displacementVector.dy / displacement * self.speedFactor * self.defaultSpeed;
         
-        self.visualComponent.spriteNode.physicsBody.velocity = CGVectorMake(speedX, speedY);
+        self.node.physicsBody.velocity = CGVectorMake(speedX, speedY);
     }
 }
 

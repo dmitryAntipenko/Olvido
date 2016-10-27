@@ -60,7 +60,7 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
 
 - (void)didAddToEntity
 {
-    _visualComponent = (OGVisualComponent *)[self.entity componentForClass:[OGVisualComponent class]];
+    self.node = ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
 }
 
 - (void)dealloc
