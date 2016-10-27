@@ -40,4 +40,6 @@
 
 - (void)resume;
 
+- (void)runStoryConclusion;
+
 @end

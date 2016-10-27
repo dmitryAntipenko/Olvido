@@ -103,7 +103,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [super didMoveToView:view];
     
-    [self.stateMachine enterState:[OGBeforeStartLevelState class]];
+    [self.stateMachine enterState:[OGStoryConclusionLevelState class]];
 }
 
 - (void)createStatusBar
@@ -247,9 +247,24 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = NO;
 }
 
-- (void)restart;
+- (void)restart
 {
     // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+}
+
+- (void)runStoryConclusion
+{
+    
+}
+
+- (void)save
+{
+    
+}
+
+- (void)restore
+{
+    
 }
 
 - (void)dealloc
