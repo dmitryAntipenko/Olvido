@@ -220,7 +220,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = NO;
 }
 
-- (void)start
+- (void)restart;
 {
     // HERE RESTART ALL SCENE OBJECT TO DEFAULT
 }

@@ -8,8 +8,14 @@
 
 #import "OGInitLevelState.h"
 #import "OGGameLevelState.h"
+#import "OGGameScene.h"
 
 @implementation OGInitLevelState
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    [self.scene restart];
+}
 
 - (BOOL)isValidNextState:(Class)stateClass
 {

@@ -29,7 +29,7 @@
 
 - (void)pause;
 
-- (void)start;
+- (void)restart;
 
 - (void)resume;
 

@@ -17,11 +17,6 @@
     [self.scene pause];
 }
 
-- (void)willExitWithNextState:(GKState *)nextState
-{
-    
-}
-
 - (BOOL)isValidNextState:(Class)stateClass
 {
     BOOL result = NO;
@@ -29,11 +24,6 @@
     result = (result || stateClass == [OGInitLevelState class]);
     
     return result;
-}
-
-- (void)updateWithDeltaTime:(NSTimeInterval)seconds
-{
-    
 }
 
 @end

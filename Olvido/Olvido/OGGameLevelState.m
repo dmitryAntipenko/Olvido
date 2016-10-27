@@ -10,8 +10,14 @@
 #import "OGPauseLevelState.h"
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
+#import "OGGameScene.h"
 
 @implementation OGGameLevelState
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    [self.scene resume];
+}
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
