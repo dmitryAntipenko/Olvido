@@ -220,6 +220,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = NO;
 }
 
+- (void)start
+{
+    // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+}
+
 - (void)dealloc
 {
     [_identifier release];
