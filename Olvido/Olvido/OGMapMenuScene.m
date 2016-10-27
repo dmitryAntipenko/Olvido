@@ -7,13 +7,7 @@
 //
 
 #import "OGMapMenuScene.h"
-#import "OGScenesController.h"
-
-@interface OGMapMenuScene ()
-
-@property (nonatomic, retain) OGScenesController *scenesController;
-
-@end
+#import "OGLevelController.h"
 
 @implementation OGMapMenuScene
 
@@ -24,23 +18,16 @@
 
 - (void)startGame
 {
-    OGScenesController *scenesController = [[OGScenesController alloc] init];
-    scenesController.view = self.view;
+    OGLevelController *levelController = [OGLevelController sharedInstance];
+    levelController.view = self.view;
+    [levelController loadLevelMap];
+    [levelController loadLevelWithIdentifier:@0];
     
-    self.scenesController = scenesController;
-    [self.scenesController loadLevelMap];
-    [self.scenesController loadLevelWithIdentifier:@0];
-    
-    [self.scenesController runScene];
-    
-    //memory leak
-    //[scenesController release];
+    [levelController runScene];
 }
 
 - (void)dealloc
 {
-    [_scenesController release];
-    
     [super dealloc];
 }
 
