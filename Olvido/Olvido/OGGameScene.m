@@ -25,7 +25,7 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
 
 #import "OGBeforeStartLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGStoryConclusionLevelState.h"
 #import "OGGameLevelState.h"
 #import "OGPauseLevelState.h"
 #import "OGCompleteLevelState.h"
@@ -53,8 +53,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
             _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+                                                                     [OGStoryConclusionLevelState stateWithLevelScene:self],
                                                                      [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                     [OGInitLevelState stateWithLevelScene:self],
                                                                      [OGGameLevelState stateWithLevelScene:self],
                                                                      [OGPauseLevelState stateWithLevelScene:self],
                                                                      [OGCompleteLevelState stateWithLevelScene:self],

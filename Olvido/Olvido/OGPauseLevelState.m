@@ -8,7 +8,7 @@
 
 #import "OGPauseLevelState.h"
 #import "OGGameLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGBeforeStartLevelState.h"
 #import "OGGameScene.h"
 
 @implementation OGPauseLevelState
@@ -23,7 +23,7 @@
     BOOL result = NO;
     
     result = (result || stateClass == [OGGameLevelState class]);
-    result = (result || stateClass == [OGInitLevelState class]);
+    result = (result || stateClass == [OGBeforeStartLevelState class]);
     
     return result;
 }

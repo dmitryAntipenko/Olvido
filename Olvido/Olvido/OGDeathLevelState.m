@@ -7,7 +7,7 @@
 //
 
 #import "OGDeathLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGBeforeStartLevelState.h"
 
 @implementation OGDeathLevelState
 
@@ -15,7 +15,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGInitLevelState class]);
+    result = (result || stateClass == [OGBeforeStartLevelState class]);
     
     return result;
 }
