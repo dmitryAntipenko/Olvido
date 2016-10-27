@@ -1,5 +1,5 @@
 //
-//  OGShopScene.h
+//  OGSettingsMenuScene.h
 //  Olvido
 //
 //  Created by Александр Песоцкий on 10/27/16.
@@ -8,6 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface OGShopScene : SKScene
+@interface OGSettingsMenuScene : SKScene
+
+- (void)activateDrag;
+- (void)activateTapContinue;
+- (void)activateTapStop;
+
+- (void)changeGodMode;
 
 @end

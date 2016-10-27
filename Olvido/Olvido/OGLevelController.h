@@ -7,8 +7,13 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-
 @class OGGameScene;
+
+/* temporary code */
+extern NSString *const kOGLevelControllerDragControl;
+extern NSString *const kOGLevelControllerTapContinueControl;
+extern NSString *const kOGLevelControllerTapStopControl;
+/* temporary code */
 
 @interface OGLevelController : NSObject
 
@@ -16,6 +21,11 @@
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
 @property (nonatomic, retain, readonly) OGGameScene *currentScene;
+
+/* temporary code */
+@property (nonatomic, copy) NSString *controlType;
+@property (nonatomic, assign) BOOL godMode;
+/* temporary code */
 
 + (OGLevelController *)sharedInstance;
 

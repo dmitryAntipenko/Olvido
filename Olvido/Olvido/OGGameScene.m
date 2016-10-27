@@ -13,7 +13,7 @@
 #import "OGConstants.h"
 #import "OGEntity.h"
 
-#import "OGMovementControlComponent.h"
+//#import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"
@@ -27,6 +27,11 @@
 #import "OGPauseLevelState.h"
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
+
+#import "OGLevelController.h"
+#import "OGTapMovementControlComponent.h"
+#import "OGTapAndStopMovementControlComponent.h"
+#import "OGDragMovementControlComponent.h"
 
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
@@ -87,6 +92,39 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             
             OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [sprite.entity componentForClass:[OGInventoryComponent class]];
             self.inventoryComponent = inventoryComponent;
+            
+            OGLevelController *levelController = [OGLevelController sharedInstance];
+
+            if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
+            {
+                OGTapMovementControlComponent *tapMovementComponent = [[OGTapMovementControlComponent alloc] init];
+                tapMovementComponent.speedFactor = 1.0;
+                [sprite.entity addComponent:tapMovementComponent];
+                
+                self.playerControlComponent = tapMovementComponent;
+                
+                [tapMovementComponent release];
+            }
+            else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
+            {
+                OGTapAndStopMovementControlComponent *tapAndStopMovementComponent = [[OGTapAndStopMovementControlComponent alloc] init];
+                tapAndStopMovementComponent.speedFactor = 1.0;
+                [sprite.entity addComponent:tapAndStopMovementComponent];
+                
+                self.playerControlComponent = tapAndStopMovementComponent;
+                
+                [tapAndStopMovementComponent release];
+            }
+            else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
+            {
+                OGDragMovementControlComponent *dragMovementComponent = [[OGDragMovementControlComponent alloc] init];
+                [sprite.entity addComponent:dragMovementComponent];
+                
+                self.playerControlComponent = dragMovementComponent;
+                
+                [dragMovementComponent release];
+            }
+            
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
@@ -248,7 +286,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = NO;
 }
 
-- (void)restart;
+- (void)restart
 {
     // HERE RESTART ALL SCENE OBJECT TO DEFAULT
 }

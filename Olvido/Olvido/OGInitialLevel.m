@@ -9,8 +9,8 @@
 #import "OGInitialLevel.h"
 #import "OGSpriteNode.h"
 #import "OGMovementComponent.h"
+#import "OGMovementControlComponent.h"
 #import "OGConstants.h"
-#import "OGTapMovementControlComponent.h"
 
 NSString *const kOGInitialLevelZombie = @"Zombie";
 NSString *const kOGInitialLevelFrank = @"Frank";
@@ -26,10 +26,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
     {
         if ([sprite.name isEqualToString:kOGInitialLevelFrank])
         {
-            OGTapMovementControlComponent *controlComponent = (OGTapMovementControlComponent *) [sprite.entity componentForClass:[OGTapMovementControlComponent class]];
-            controlComponent.speedFactor = 1.0;
-            
-            self.playerControlComponent = controlComponent;
+            // add when decide with player movement control
         }
         else if ([sprite.name isEqualToString:kOGInitialLevelDoor])
         {

@@ -6,9 +6,9 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGShopScene.h"
+#import "OGShopMenuScene.h"
 
-@implementation OGShopScene
+@implementation OGShopMenuScene
 
 - (void)didMoveToView:(SKView *)view
 {

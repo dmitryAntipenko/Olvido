@@ -26,6 +26,12 @@ NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
+/* temporary code */
+NSString *const kOGLevelControllerDragControl = @"drag";
+NSString *const kOGLevelControllerTapContinueControl = @"tapContinue";
+NSString *const kOGLevelControllerTapStopControl = @"tapStop";
+/* temporary code */
+
 @interface OGLevelController () <OGGameSceneDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray *levelMap;
@@ -34,6 +40,18 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 @end
 
 @implementation OGLevelController
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _controlType = kOGLevelControllerTapStopControl;
+    }
+    
+    return self;
+}
 
 + (OGLevelController *)sharedInstance
 {
@@ -129,6 +147,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [_levelMap release];
     [_currentScene release];
+    [_controlType release];
     
     [super dealloc];
 }
