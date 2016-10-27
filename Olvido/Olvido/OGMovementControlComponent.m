@@ -58,9 +58,9 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
 }
 
-- (void)didAddToEntity
+- (SKNode *)node
 {
-    self.node = ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
+    return ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
 }
 
 - (void)dealloc

@@ -11,38 +11,14 @@
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
 
-@interface OGMovementComponent ()
-
-@property (nonatomic, retain) SKPhysicsBody *physicsBody;
-
-@end
-
 @implementation OGMovementComponent
 
-- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _physicsBody = [body retain];
-        _speedFactor = kOGMovementComponentDefaultSpeedFactor;
-    }
-    else
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
-- (void)startMovementWithSpeed:(CGFloat)speed vector:(CGVector)vector
+- (void)startMovement
 {
     if (self.physicsBody)
     {
-        CGFloat vectorFactor = self.speedFactor * speed * self.physicsBody.mass;
-        CGVector movementVector = CGVectorMake(vector.dx * vectorFactor, vector.dy * vectorFactor);
+        CGFloat vectorFactor = self.speedFactor * self.speed * self.physicsBody.mass;
+        CGVector movementVector = CGVectorMake(self.dx * vectorFactor, self.dy * vectorFactor);
         [self.physicsBody applyImpulse:movementVector];
     }
 }
@@ -54,6 +30,7 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
     CGVector velocity = self.physicsBody.velocity;
     self.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
 }
+
 
 - (void)dealloc
 {

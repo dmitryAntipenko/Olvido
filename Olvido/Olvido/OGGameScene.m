@@ -52,7 +52,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         if (self)
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
-<<<<<<< HEAD
             _stateMachine = [[GKStateMachine alloc] initWithStates:@[
                                                                      [OGBeforeStartLevelState stateWithLevelScene:self],
                                                                      [OGInitLevelState stateWithLevelScene:self],
@@ -61,9 +60,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                                                                      [OGCompleteLevelState stateWithLevelScene:self],
                                                                      [OGDeathLevelState stateWithLevelScene:self]
                                                                      ]];
-=======
             _statusBar = [[OGStatusBar alloc] init];
->>>>>>> development
         }
     }
     else
@@ -262,12 +259,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_accessComponent release];
     [_playerControlComponent release];
     [_transitionComponent release];
-<<<<<<< HEAD
     [_stateMachine release];
-=======
+    
     [_healthComponent release];
     [_statusBar release];
->>>>>>> development
     
     [super dealloc];
 }

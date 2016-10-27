@@ -1,0 +1,101 @@
+//
+//  OGInitialLevel.m
+//  Olvido
+//
+//  Created by Александр Песоцкий on 10/26/16.
+//  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
+//
+
+#import "OGInitialLevel.h"
+#import "OGSpriteNode.h"
+#import "OGMovementComponent.h"
+#import "OGConstants.h"
+#import "OGTapMovementControlComponent.h"
+
+NSString *const kOGInitialLevelZombie = @"Zombie";
+NSString *const kOGInitialLevelFrank = @"Frank";
+NSString *const kOGInitialLevelDoor = @"Door";
+
+@interface OGInitialLevel () <SKPhysicsContactDelegate>
+
+@property (nonatomic, retain) OGMovementControlComponent *controlComponent;
+
+@end
+
+@implementation OGInitialLevel
+
+- (void)didMoveToView:(SKView *)view
+{
+    self.scene.scaleMode = SKSceneScaleModeAspectFit;
+    
+    for (OGSpriteNode *sprite in self.spriteNodes)
+    {
+        if ([sprite.name isEqualToString:kOGInitialLevelFrank])
+        {
+            OGTapMovementControlComponent *controlComponent = (OGTapMovementControlComponent *) [sprite.entity componentForClass:[OGTapMovementControlComponent class]];
+            controlComponent.speedFactor = 1.0;
+            
+            self.controlComponent = controlComponent;
+        }
+        else if ([sprite.name isEqualToString:kOGInitialLevelDoor])
+        {
+            // contact with door
+        }
+        else if ([sprite.name isEqualToString:kOGInitialLevelZombie])
+        {
+            OGMovementComponent *movementComponent = (OGMovementComponent *) [sprite.entity componentForClass:[OGMovementComponent class]];
+            movementComponent.physicsBody = ((SKSpriteNode *)sprite).physicsBody;
+            
+            [movementComponent startMovement];
+        }
+    }
+    
+    [super didMoveToView:view];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    
+    [self.controlComponent touchBeganAtPoint:location];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    
+    [self.controlComponent touchMovedToPoint:location];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    
+    [self.controlComponent touchEndedAtPoint:location];
+}
+
+- (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
+{
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
+    {
+        *bodyA = contact.bodyA;
+        *bodyB = contact.bodyB;
+    }
+    else
+    {
+        *bodyA = contact.bodyB;
+        *bodyB = contact.bodyA;
+    }
+}
+
+- (void)dealloc
+{
+    [_controlComponent release];
+    
+    [super dealloc];
+}
+
+@end
