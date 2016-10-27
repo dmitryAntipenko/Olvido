@@ -17,6 +17,8 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 @property (nonatomic, assign) CGPoint targetPoint;
 @property (nonatomic, assign) BOOL isMooving;
 
+@property (nonatomic, assign) CGFloat pausedSpeedFactor;
+
 @end
 
 @implementation OGTapAndStopMovementControlComponent
@@ -25,7 +27,7 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 {
     self.isMooving = YES;
     
-    if (self.visualComponent)
+    if (self.node)
     {
         self.targetPoint = point;
         
@@ -35,17 +37,17 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 
 - (void)moveToPoint:(CGPoint)point
 {
-    if (self.visualComponent)
+    if (self.node)
     {
-        [self.visualComponent.spriteNode removeActionForKey:kOGTapAndStopMovementControlComponentMovingActionKey];
+        [self.node removeActionForKey:kOGTapAndStopMovementControlComponentMovingActionKey];
         
-        CGFloat distance = hypot(self.visualComponent.spriteNode.position.x - point.x, self.visualComponent.spriteNode.position.y);
+        CGFloat distance = hypot(self.node.position.x - point.x, self.node.position.y);
         
         CGFloat timeDuration = distance / (self.speedFactor * self.defaultSpeed);
         
         SKAction *movingAction = [SKAction moveTo:point duration:timeDuration];
         
-        [self.visualComponent.spriteNode runAction:movingAction withKey:kOGTapAndStopMovementControlComponentMovingActionKey];
+        [self.node runAction:movingAction withKey:kOGTapAndStopMovementControlComponentMovingActionKey];
     }
 }
 
@@ -59,10 +61,17 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
     }
 }
 
-- (void)stop
+- (void)pause
 {
+    self.pausedSpeedFactor = self.speedFactor;
     self.speedFactor = 0.0;
 }
+
+- (void)resume
+{
+    self.speedFactor = self.pausedSpeedFactor;
+}
+
 
 - (void)dealloc
 {

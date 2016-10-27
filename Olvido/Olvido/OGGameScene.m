@@ -11,6 +11,7 @@
 #import "OGCollisionBitMask.h"
 #import "OGSpriteNode.h"
 #import "OGConstants.h"
+#import "OGEntity.h"
 
 #import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
@@ -23,9 +24,20 @@
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
 
+#import "OGBeforeStartLevelState.h"
+#import "OGInitLevelState.h"
+#import "OGGameLevelState.h"
+#import "OGPauseLevelState.h"
+#import "OGCompleteLevelState.h"
+#import "OGDeathLevelState.h"
+
+CGFloat const kOGGameScenePauseSpeed = 0.0;
+CGFloat const kOGGameScenePlayeSpeed = 1.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
+@property (nonatomic, retain) GKStateMachine *stateMachine;
 
 @end
 
@@ -40,6 +52,14 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
         if (self)
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
+            _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+                                                                     [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                     [OGInitLevelState stateWithLevelScene:self],
+                                                                     [OGGameLevelState stateWithLevelScene:self],
+                                                                     [OGPauseLevelState stateWithLevelScene:self],
+                                                                     [OGCompleteLevelState stateWithLevelScene:self],
+                                                                     [OGDeathLevelState stateWithLevelScene:self]
+                                                                     ]];
             _statusBar = [[OGStatusBar alloc] init];
         }
     }
@@ -82,6 +102,8 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
     [self createStatusBar];
     
     [super didMoveToView:view];
+    
+    [self.stateMachine enterState:[OGBeforeStartLevelState class]];
 }
 
 - (void)createStatusBar
@@ -209,6 +231,27 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
     }
 }
 
+- (void)pause
+{
+    [self.playerControlComponent pause];
+    self.physicsWorld.speed = kOGGameScenePauseSpeed;
+    self.speed = kOGGameScenePauseSpeed;
+    self.paused = YES;
+}
+
+- (void)resume
+{
+    [self.playerControlComponent resume];
+    self.physicsWorld.speed = kOGGameScenePlayeSpeed;
+    self.speed = kOGGameScenePlayeSpeed;
+    self.paused = NO;
+}
+
+- (void)restart;
+{
+    // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+}
+
 - (void)dealloc
 {
     [_identifier release];
@@ -216,6 +259,8 @@ NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
     [_accessComponent release];
     [_playerControlComponent release];
     [_transitionComponent release];
+    [_stateMachine release];
+    
     [_healthComponent release];
     [_statusBar release];
     

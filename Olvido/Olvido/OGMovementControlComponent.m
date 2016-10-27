@@ -43,7 +43,12 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
 }
 
-- (void)stop
+- (void)pause
+{
+    
+}
+
+- (void)resume
 {
     
 }
@@ -53,9 +58,9 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
 }
 
-- (void)didAddToEntity
+- (SKNode *)node
 {
-    _visualComponent = (OGVisualComponent *)[self.entity componentForClass:[OGVisualComponent class]];
+    return ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
 }
 
 - (void)dealloc

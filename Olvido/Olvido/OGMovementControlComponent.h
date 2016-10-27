@@ -11,7 +11,7 @@
 
 @interface OGMovementControlComponent : GKComponent
 
-@property (nonatomic, assign) OGVisualComponent *visualComponent;
+@property (nonatomic, assign) SKNode *node;
 @property (nonatomic, assign) GKInspectable CGFloat speedFactor;
 @property (nonatomic, assign) GKInspectable CGFloat defaultSpeed;
 
@@ -23,6 +23,8 @@
 
 - (void)didChangeDirection;
 
-- (void)stop;
+- (void)pause;
+
+- (void)resume;
 
 @end

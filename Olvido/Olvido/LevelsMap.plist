@@ -19,7 +19,7 @@
 			</dict>
 		</array>
 		<key>Class Name</key>
-		<string>OGInitialScene</string>
+		<string>OGInitialLevel</string>
 		<key>Story Scene Name</key>
 		<string>OGChapter1</string>
 	</dict>
