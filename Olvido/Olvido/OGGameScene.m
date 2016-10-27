@@ -21,15 +21,14 @@
 
 #import "OGStatusBar.h"
 
-NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
-
-
 #import "OGBeforeStartLevelState.h"
 #import "OGInitLevelState.h"
 #import "OGGameLevelState.h"
 #import "OGPauseLevelState.h"
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
+
+NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
@@ -98,6 +97,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             self.transitionComponent = transitionComponent;
         }
     }
+    
+    
     
     [self createStatusBar];
     
@@ -263,6 +264,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [_healthComponent release];
     [_statusBar release];
+    [_inventoryComponent release];
     
     [super dealloc];
 }

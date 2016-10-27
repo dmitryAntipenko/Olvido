@@ -77,20 +77,6 @@ NSString *const kOGInitialLevelDoor = @"Door";
     [self.controlComponent touchEndedAtPoint:location];
 }
 
-- (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
-{
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        *bodyA = contact.bodyA;
-        *bodyB = contact.bodyB;
-    }
-    else
-    {
-        *bodyA = contact.bodyB;
-        *bodyB = contact.bodyA;
-    }
-}
-
 - (void)dealloc
 {
     [_controlComponent release];
