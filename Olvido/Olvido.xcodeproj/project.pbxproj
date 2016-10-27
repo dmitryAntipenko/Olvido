@@ -27,6 +27,8 @@
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
 		215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */; };
+		215C4BE01DC25D3F000DF29F /* OGShopScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BDF1DC25D3F000DF29F /* OGShopScene.m */; };
+		215C4BE21DC25D53000DF29F /* OGShopScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE11DC25D53000DF29F /* OGShopScene.sks */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		21DD19761DBE1C360048658A /* OGChapter1.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DD19751DBE1C360048658A /* OGChapter1.m */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
@@ -97,6 +99,9 @@
 		215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInitialLevel.h; sourceTree = "<group>"; };
 		215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInitialLevel.m; sourceTree = "<group>"; };
 		215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGInitialLevel.sks; sourceTree = "<group>"; };
+		215C4BDE1DC25D3F000DF29F /* OGShopScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShopScene.h; sourceTree = "<group>"; };
+		215C4BDF1DC25D3F000DF29F /* OGShopScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShopScene.m; sourceTree = "<group>"; };
+		215C4BE11DC25D53000DF29F /* OGShopScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGShopScene.sks; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		21DD19741DBE1C360048658A /* OGChapter1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGChapter1.h; sourceTree = "<group>"; };
 		21DD19751DBE1C360048658A /* OGChapter1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGChapter1.m; sourceTree = "<group>"; };
@@ -257,6 +262,16 @@
 			name = "Level1 - InitialLevel";
 			sourceTree = "<group>";
 		};
+		215C4BDD1DC2576E000DF29F /* ShopMenu */ = {
+			isa = PBXGroup;
+			children = (
+				215C4BDE1DC25D3F000DF29F /* OGShopScene.h */,
+				215C4BDF1DC25D3F000DF29F /* OGShopScene.m */,
+				215C4BE11DC25D53000DF29F /* OGShopScene.sks */,
+			);
+			name = ShopMenu;
+			sourceTree = "<group>";
+		};
 		21DD19711DBE1BEE0048658A /* StoriesScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +384,7 @@
 		EA976D051D9EDBF8003B77FC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				215C4BDD1DC2576E000DF29F /* ShopMenu */,
 				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
 				EAC384141DB43A0A00235B27 /* Utils */,
@@ -475,6 +491,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				215C4BE21DC25D53000DF29F /* OGShopScene.sks in Resources */,
 				1B27EAA81DC0CEA200E9CA23 /* OGMapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
 				1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */,
@@ -529,6 +546,7 @@
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
 				EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,
+				215C4BE01DC25D3F000DF29F /* OGShopScene.m in Sources */,
 				EA70E5271DB3F4620034116D /* OGEntity.m in Sources */,
 				EA9919001DB9324700E273B4 /* OGAccessComponent.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
