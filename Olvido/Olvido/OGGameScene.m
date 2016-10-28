@@ -13,7 +13,6 @@
 #import "OGConstants.h"
 #import "OGEntity.h"
 
-//#import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"

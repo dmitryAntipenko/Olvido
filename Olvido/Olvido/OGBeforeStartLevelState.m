@@ -14,6 +14,7 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    // здесь должен вызываться не рестарт, а метод инициализации сцены вроде createSceneContents
     [self.scene restart];
 }
 
