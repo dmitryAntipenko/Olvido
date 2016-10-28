@@ -1,12 +1,12 @@
 //
-//  OGScenesController.m
+//  OGLevelController.m
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 10/26/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGScenesController.h"
+#import "OGLevelController.h"
 #import "OGGameSceneDelegate.h"
 #import "OGGameScene.h"
 #import "OGSpriteNode.h"
@@ -26,14 +26,45 @@ NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
-@interface OGScenesController () <OGGameSceneDelegate>
+/* temporary code */
+NSString *const kOGLevelControllerDragControl = @"drag";
+NSString *const kOGLevelControllerTapContinueControl = @"tapContinue";
+NSString *const kOGLevelControllerTapStopControl = @"tapStop";
+/* temporary code */
+
+@interface OGLevelController () <OGGameSceneDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray *levelMap;
 @property (nonatomic, retain, readwrite) OGGameScene *currentScene;
 
 @end
 
-@implementation OGScenesController
+@implementation OGLevelController
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _controlType = kOGLevelControllerTapStopControl;
+    }
+    
+    return self;
+}
+
++ (OGLevelController *)sharedInstance
+{
+    static OGLevelController *levelController = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
+    
+    dispatch_once(&dispatchOnceToken, ^()
+    {
+        levelController = [[OGLevelController alloc] init];
+    });
+    
+    return levelController;
+}
 
 - (void)loadLevelMap
 {
@@ -116,6 +147,7 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 {
     [_levelMap release];
     [_currentScene release];
+    [_controlType release];
     
     [super dealloc];
 }

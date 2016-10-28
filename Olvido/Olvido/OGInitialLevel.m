@@ -9,18 +9,12 @@
 #import "OGInitialLevel.h"
 #import "OGSpriteNode.h"
 #import "OGMovementComponent.h"
+#import "OGMovementControlComponent.h"
 #import "OGConstants.h"
-#import "OGTapMovementControlComponent.h"
 
 NSString *const kOGInitialLevelZombie = @"Zombie";
 NSString *const kOGInitialLevelFrank = @"Frank";
 NSString *const kOGInitialLevelDoor = @"Door";
-
-@interface OGInitialLevel () <SKPhysicsContactDelegate>
-
-@property (nonatomic, retain) OGMovementControlComponent *controlComponent;
-
-@end
 
 @implementation OGInitialLevel
 
@@ -32,10 +26,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
     {
         if ([sprite.name isEqualToString:kOGInitialLevelFrank])
         {
-            OGTapMovementControlComponent *controlComponent = (OGTapMovementControlComponent *) [sprite.entity componentForClass:[OGTapMovementControlComponent class]];
-            controlComponent.speedFactor = 1.0;
-            
-            self.controlComponent = controlComponent;
+            // add when decide with player movement control
         }
         else if ([sprite.name isEqualToString:kOGInitialLevelDoor])
         {
@@ -58,7 +49,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    [self.controlComponent touchBeganAtPoint:location];
+    [self.playerControlComponent touchBeganAtPoint:location];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -66,7 +57,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    [self.controlComponent touchMovedToPoint:location];
+    [self.playerControlComponent touchMovedToPoint:location];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -74,27 +65,11 @@ NSString *const kOGInitialLevelDoor = @"Door";
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     
-    [self.controlComponent touchEndedAtPoint:location];
-}
-
-- (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
-{
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        *bodyA = contact.bodyA;
-        *bodyB = contact.bodyB;
-    }
-    else
-    {
-        *bodyA = contact.bodyB;
-        *bodyB = contact.bodyA;
-    }
+    [self.playerControlComponent touchEndedAtPoint:location];
 }
 
 - (void)dealloc
 {
-    [_controlComponent release];
-    
     [super dealloc];
 }
 

@@ -41,7 +41,7 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
     {
         [self.node removeActionForKey:kOGTapAndStopMovementControlComponentMovingActionKey];
         
-        CGFloat distance = hypot(self.node.position.x - point.x, self.node.position.y);
+        CGFloat distance = hypot(self.node.position.x - point.x, self.node.position.y - point.y);
         
         CGFloat timeDuration = distance / (self.speedFactor * self.defaultSpeed);
         

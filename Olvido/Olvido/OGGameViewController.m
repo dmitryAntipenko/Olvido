@@ -9,13 +9,12 @@
 #import "OGGameViewController.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
+#import "OGLevelController.h"
 
 #import "OGGameScene.h"
 #import "OGSpriteNode.h"
 
 @interface OGGameViewController ()
-
-//@property (nonatomic, retain) OGScenesController *scenesController;
 
 @end
 
@@ -37,7 +36,6 @@
     OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
     
     [view presentScene:mainMenuScene];
-    
 }
 
 - (BOOL)shouldAutorotate

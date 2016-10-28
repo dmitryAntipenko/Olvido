@@ -27,7 +27,7 @@ CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 
 CGFloat const kOGConstantsDefaultTransitionTimeDuration = 1.0;
 
-NSString *const kOGPlayerSpriteName = @"Player";
+NSString *const kOGPlayerSpriteName = @"Frank";
 NSString *const kOGPortalSpriteName = @"Door";
 
 @implementation OGConstants
