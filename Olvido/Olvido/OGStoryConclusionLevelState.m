@@ -15,7 +15,6 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene pause];
-    [self.scene ]
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

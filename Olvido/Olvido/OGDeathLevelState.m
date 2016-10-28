@@ -11,6 +11,11 @@
 
 @implementation OGDeathLevelState
 
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    //Do something when death;
+}
+
 - (BOOL)isValidNextState:(Class)stateClass
 {
     BOOL result = NO;
