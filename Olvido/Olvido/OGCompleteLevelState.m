@@ -7,15 +7,20 @@
 //
 
 #import "OGCompleteLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGBeforeStartLevelState.h"
 
 @implementation OGCompleteLevelState
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    //do something when complete level;
+}
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGInitLevelState class]);
+    result = (result || stateClass == [OGBeforeStartLevelState class]);
     
     return result;
 }

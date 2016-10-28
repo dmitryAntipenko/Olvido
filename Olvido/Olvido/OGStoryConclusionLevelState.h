@@ -1,5 +1,5 @@
 //
-//  OGInitLevelState.h
+//  OGBeforeStartLevelState.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/26/16.
@@ -8,6 +8,6 @@
 
 #import "OGLevelState.h"
 
-@interface OGInitLevelState : OGLevelState
+@interface OGStoryConclusionLevelState : OGLevelState
 
 @end

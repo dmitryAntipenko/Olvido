@@ -7,15 +7,20 @@
 //
 
 #import "OGDeathLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGBeforeStartLevelState.h"
 
 @implementation OGDeathLevelState
+
+- (void)didEnterWithPreviousState:(GKState *)previousState
+{
+    //Do something when death;
+}
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGInitLevelState class]);
+    result = (result || stateClass == [OGBeforeStartLevelState class]);
     
     return result;
 }

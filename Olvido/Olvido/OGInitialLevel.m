@@ -12,8 +12,8 @@
 #import "OGMovementControlComponent.h"
 #import "OGConstants.h"
 
-NSString *const kOGInitialLevelZombie = @"Zombie";
-NSString *const kOGInitialLevelFrank = @"Frank";
+NSString *const kOGInitialLevelEnemyName = @"Zombie";
+NSString *const kOGInitialLevelPlayerName = @"Frank";
 NSString *const kOGInitialLevelDoor = @"Door";
 
 @implementation OGInitialLevel
@@ -24,7 +24,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
     
     for (OGSpriteNode *sprite in self.spriteNodes)
     {
-        if ([sprite.name isEqualToString:kOGInitialLevelFrank])
+        if ([sprite.name isEqualToString:kOGInitialLevelPlayerName])
         {
             // add when decide with player movement control
         }
@@ -32,7 +32,7 @@ NSString *const kOGInitialLevelDoor = @"Door";
         {
             // contact with door
         }
-        else if ([sprite.name isEqualToString:kOGInitialLevelZombie])
+        else if ([sprite.name isEqualToString:kOGInitialLevelEnemyName])
         {
             OGMovementComponent *movementComponent = (OGMovementComponent *) [sprite.entity componentForClass:[OGMovementComponent class]];
             movementComponent.physicsBody = ((SKSpriteNode *)sprite).physicsBody;

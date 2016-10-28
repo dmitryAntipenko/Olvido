@@ -10,26 +10,4 @@
 
 @implementation OGTransitionComponent
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _closed = YES;
-    }
-    else
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 @end

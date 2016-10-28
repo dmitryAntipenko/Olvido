@@ -1,5 +1,5 @@
 //
-//  OGBeforeStartLevelState.h
+//  OGInitLevelState.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/26/16.

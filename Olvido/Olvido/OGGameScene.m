@@ -13,7 +13,6 @@
 #import "OGConstants.h"
 #import "OGEntity.h"
 
-//#import "OGMovementControlComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"
@@ -22,7 +21,7 @@
 #import "OGStatusBar.h"
 
 #import "OGBeforeStartLevelState.h"
-#import "OGInitLevelState.h"
+#import "OGStoryConclusionLevelState.h"
 #import "OGGameLevelState.h"
 #import "OGPauseLevelState.h"
 #import "OGCompleteLevelState.h"
@@ -57,8 +56,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         {
             _mutableSpriteNodes = [[NSMutableArray alloc] init];
             _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+                                                                     [OGStoryConclusionLevelState stateWithLevelScene:self],
                                                                      [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                     [OGInitLevelState stateWithLevelScene:self],
                                                                      [OGGameLevelState stateWithLevelScene:self],
                                                                      [OGPauseLevelState stateWithLevelScene:self],
                                                                      [OGCompleteLevelState stateWithLevelScene:self],
@@ -142,7 +141,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [super didMoveToView:view];
     
-    [self.stateMachine enterState:[OGBeforeStartLevelState class]];
+    [self.stateMachine enterState:[OGStoryConclusionLevelState class]];
 }
 
 - (void)createStatusBar
@@ -289,6 +288,21 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 - (void)restart
 {
     // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+}
+
+- (void)runStoryConclusion
+{
+    
+}
+
+- (void)save
+{
+    
+}
+
+- (void)restore
+{
+    
 }
 
 - (void)dealloc
