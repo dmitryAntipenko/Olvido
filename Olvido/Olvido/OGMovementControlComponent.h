@@ -7,7 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGVisualComponent.h"
 
 @interface OGMovementControlComponent : GKComponent
 

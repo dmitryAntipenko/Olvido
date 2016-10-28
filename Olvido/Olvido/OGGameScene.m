@@ -135,13 +135,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         }
     }
     
-    
-    
     [self createStatusBar];
     
-    [super didMoveToView:view];
-    
     [self.stateMachine enterState:[OGStoryConclusionLevelState class]];
+    
+    [super didMoveToView:view];
 }
 
 - (void)createStatusBar
@@ -178,7 +176,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-        // death
+        [self.stateMachine enterState:[OGDeathLevelState class]];
     }
     else if (contactType == kOGContactTypePlayerDidGrantAccess)
     {
@@ -269,6 +267,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
+#pragma mark - States
+
 - (void)pause
 {
     [self.playerControlComponent pause];
@@ -303,6 +303,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 - (void)restore
 {
     
+}
+
+- (void)gameOver
+{
+    NSLog(@"game over");
 }
 
 - (void)dealloc

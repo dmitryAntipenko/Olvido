@@ -37,6 +37,7 @@
 - (void)pause;
 - (void)restart;
 - (void)resume;
+- (void)gameOver;
 
 - (void)runStoryConclusion;
 
