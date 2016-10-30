@@ -307,6 +307,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)gameOver
 {
+    [self pause];
     NSLog(@"game over");
 }
 
