@@ -12,8 +12,12 @@
 
 @interface OGAnimationComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable CGFloat speedFactor;
+@property (nonatomic, assign) GKInspectable CGFloat timePerFrame;
 
 - (void)enterNextState:(OGAnimationState *)nextState;
+
+- (void)pause;
+
+- (void)play;
 
 @end
