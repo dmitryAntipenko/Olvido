@@ -140,12 +140,22 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 - (void)runGameScene
 {
-    [self.view presentScene:self.currentGameScene];
+    if (self.currentGameScene)
+    {
+        [self.view presentScene:self.currentGameScene];
+    }
 }
 
 - (void)runStoryScene
 {
-    [self.view presentScene:self.currentStoryScene];
+    if (self.currentStoryScene)
+    {
+        [self.view presentScene:self.currentStoryScene];
+    }
+    else
+    {
+        [self runGameScene];
+    }
 }
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier

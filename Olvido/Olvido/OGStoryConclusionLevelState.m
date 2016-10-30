@@ -26,7 +26,7 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    [self.scene pauseAndShowPauseScreen];
+    // [self.scene pauseAndShowPauseScreen];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
