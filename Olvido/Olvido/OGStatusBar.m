@@ -56,21 +56,21 @@ NSString *const kOGStatusBarPauseButtonTextureName = @"PauseButton";
     {
         for (NSUInteger i = 0; i < self.healthComponent.maxHealth; i++)
         {
-            SKSpriteNode *healthSprite = [SKSpriteNode spriteNodeWithTexture:self.fullHealthTexture];
+            SKSpriteNode *healthSprite = [SKSpriteNode node];
             
             CGFloat healthSpriteX = (self.fullHealthTexture.size.width + kOGStatusBarHealthSpriteXOffset) * (i + 1);
             CGPoint spritePosition = CGPointMake(-self.statusBarSprite.size.width / 2.0 + healthSpriteX, 0.0);
             
             healthSprite.position = spritePosition;
-            
+            healthSprite.zPosition = self.statusBarSprite.zPosition + 1.0;
             healthSprite.texture = (i < self.healthComponent.currentHealth) ? self.fullHealthTexture : self.emptyHealthTexture;
             
             [self.healthSprites addObject:healthSprite];
             [self.statusBarSprite addChild:healthSprite];
         }
-        
-        [self createPauseButton];
     }
+    
+    [self createPauseButton];
 }
 
 - (void)createPauseButton
@@ -80,6 +80,7 @@ NSString *const kOGStatusBarPauseButtonTextureName = @"PauseButton";
     CGFloat pauseButtonX = self.statusBarSprite.size.width / 2.0 - pauseButton.size.width;
     CGPoint pauseButtonPosition = CGPointMake(pauseButtonX, 0.0);
     pauseButton.position = pauseButtonPosition;
+    pauseButton.zPosition = self.statusBarSprite.zPosition + 1.0;
     
     [self.statusBarSprite addChild:pauseButton];
 }
