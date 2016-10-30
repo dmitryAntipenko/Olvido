@@ -69,6 +69,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                                                                      [OGDeathLevelState stateWithLevelScene:self]
                                                                      ]];
             _statusBar = [[OGStatusBar alloc] init];
+            
             _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
             _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
         }
@@ -342,6 +343,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_stateMachine release];
     
     [_pauseScreenNode release];
+    [_gameOverScreenNode release];
     
     [_healthComponent release];
     [_statusBar release];
