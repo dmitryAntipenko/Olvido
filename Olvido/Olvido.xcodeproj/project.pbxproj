@@ -58,6 +58,7 @@
 		EA9919001DB9324700E273B4 /* OGAccessComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9918FF1DB9324700E273B4 /* OGAccessComponent.m */; };
 		EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490AF1DA54B72007734F0 /* OGScoreController.m */; };
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
+		EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
 		EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFBC9771DB3E64800142D66 /* OGTransitionComponent.m */; };
 /* End PBXBuildFile section */
@@ -159,6 +160,7 @@
 		EAA490C51DA7BE52007734F0 /* OGConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConstants.h; sourceTree = "<group>"; };
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
 		EAA490CC1DAAA0B6007734F0 /* OGContactType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactType.h; sourceTree = "<group>"; };
+		EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGGameOverScreen.sks; sourceTree = "<group>"; };
 		EAFBC9761DB3E64800142D66 /* OGTransitionComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponent.h; sourceTree = "<group>"; };
 		EAFBC9771DB3E64800142D66 /* OGTransitionComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTransitionComponent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -342,6 +344,7 @@
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
 				EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */,
+				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */,
 				215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
+				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA70E52B1DB3F4620034116D /* playerTail.sks in Resources */,
 				EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */,

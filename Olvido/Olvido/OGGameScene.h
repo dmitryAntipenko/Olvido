@@ -37,6 +37,7 @@
 - (void)pauseWithoutPauseScreen;
 - (void)restart;
 - (void)resume;
+- (void)gameOver;
 - (void)pauseAndShowPauseScreen;
 
 - (void)runStoryConclusion;

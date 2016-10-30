@@ -20,6 +20,13 @@
 
 @implementation OGTapMovementControlComponent
 
+- (void)didAddToEntity
+{
+    self.pausedSpeedFactor = kOGMovementControlComponentDefaultSpeedFactor;
+    
+    [super didAddToEntity];
+}
+
 - (void)touchBeganAtPoint:(CGPoint)point
 {
     self.isMooving = YES;

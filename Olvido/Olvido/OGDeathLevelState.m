@@ -8,6 +8,7 @@
 
 #import "OGDeathLevelState.h"
 #import "OGBeforeStartLevelState.h"
+#import "OGGameScene.h"
 
 @implementation OGDeathLevelState
 
@@ -25,7 +26,7 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    //Do something when death;
+    [self.scene gameOver];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

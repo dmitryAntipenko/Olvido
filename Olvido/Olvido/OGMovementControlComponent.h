@@ -8,6 +8,8 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+extern CGFloat const kOGMovementControlComponentDefaultSpeedFactor;
+
 @interface OGMovementControlComponent : GKComponent
 
 @property (nonatomic, assign) SKNode *node;
