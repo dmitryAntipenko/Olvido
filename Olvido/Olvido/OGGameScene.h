@@ -36,10 +36,10 @@
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 
-- (void)pauseWithoutPauseScreen;
+- (void)pause;
 - (void)restart;
 - (void)resume;
-- (void)pauseAndShowPauseScreen;
+- (void)showPauseScreen;
 
 - (void)runStoryConclusion;
 

@@ -286,7 +286,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
-- (void)pauseWithoutPauseScreen
+- (void)pause
 {
     [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
@@ -294,10 +294,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = YES;
 }
 
-- (void)pauseAndShowPauseScreen
+- (void)showPauseScreen
 {
-    [self pauseWithoutPauseScreen];
-    
     if (!self.pauseScreenNode.parent)
     {
         [self addChild:self.pauseScreenNode];
