@@ -14,6 +14,8 @@
 
 @property (nonatomic, retain, readonly) OGGameScene *scene;
 
+- (instancetype)initWithLevelScene:(OGGameScene *)scene;
+
 + (instancetype)stateWithLevelScene:(OGGameScene *)scene;
 
 @end

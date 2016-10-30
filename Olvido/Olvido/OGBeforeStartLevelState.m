@@ -12,6 +12,18 @@
 
 @implementation OGBeforeStartLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGBeforeStartLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGBeforeStartLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     // здесь должен вызываться не рестарт, а метод инициализации сцены вроде createSceneContents

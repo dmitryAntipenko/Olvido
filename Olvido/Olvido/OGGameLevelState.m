@@ -14,6 +14,18 @@
 
 @implementation OGGameLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGGameLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGGameLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene resume];
