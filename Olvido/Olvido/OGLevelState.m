@@ -36,7 +36,7 @@
 
 - (OGGameScene *)scene
 {
-    return self.scene;
+    return _scene;
 }
 
 - (void)dealloc
