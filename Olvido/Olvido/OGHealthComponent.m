@@ -30,7 +30,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 - (void)restoreHealth:(NSUInteger)health
 {
-    self.currentHealth = self.currentHealth + health;
+    self.currentHealth += health;
 }
 
 - (void)restoreFullHealth
@@ -40,7 +40,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 - (void)dealDamage:(NSUInteger)damage
 {
-    self.currentHealth = self.currentHealth - damage;
+    self.currentHealth -= damage;
 }
 
 - (void)kill

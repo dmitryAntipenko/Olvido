@@ -11,7 +11,6 @@
 #import "OGCollisionBitMask.h"
 #import "OGSpriteNode.h"
 #import "OGConstants.h"
-#import "OGEntity.h"
 
 #import "OGTransitionComponent.h"
 #import "OGAccessComponent.h"
