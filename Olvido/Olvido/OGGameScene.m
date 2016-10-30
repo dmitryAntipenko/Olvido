@@ -269,14 +269,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
-- (void)pause
+- (void)pauseWithoutPauseScreen
 {
     [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;
+}
+
+- (void)pauseAndShowPauseScreen
+{
+    [self pauseWithoutPauseScreen];
     
-    [self addChild:self.pauseScreenNode];
+    if (!self.pauseScreenNode.parent)
+    {
+        [self addChild:self.pauseScreenNode];
+    }
 }
 
 - (void)resume
@@ -286,7 +294,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
     
-    [self.pauseScreenNode removeFromParent];
+    if (self.pauseScreenNode.parent)
+    {
+        [self.pauseScreenNode removeFromParent];
+    }
 }
 
 - (void)restart
