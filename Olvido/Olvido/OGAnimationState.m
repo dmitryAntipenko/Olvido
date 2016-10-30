@@ -18,9 +18,7 @@
 
 + (instancetype)animationStateWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates
 {
-    OGAnimationState *state = [[OGAnimationState alloc] initWithName:name textures:textures validNextStates:validStates];
-    
-    return [state autorelease];
+    return [[[OGAnimationState alloc] initWithName:name textures:textures validNextStates:validStates] autorelease];
 }
 
 - (instancetype)initWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates
@@ -39,6 +37,7 @@
     }
     else
     {
+        [self release];
         self = nil;
     }
     
