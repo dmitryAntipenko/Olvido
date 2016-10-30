@@ -41,7 +41,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
 @property (nonatomic, retain) GKStateMachine *stateMachine;
-@property (nonatomic, assign) SKReferenceNode *pauseScreenNode;
+@property (nonatomic, retain) SKReferenceNode *pauseScreenNode;
 
 @end
 

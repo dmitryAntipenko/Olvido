@@ -67,6 +67,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     dispatch_once(&dispatchOnceToken, ^()
     {
         levelController = [[OGLevelController alloc] init];
+        [levelController loadLevelMap];
     });
     
     return levelController;
@@ -156,7 +157,6 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     
     scene.scaleMode = SKSceneScaleModeAspectFit;
     self.currentGameScene = scene;
-    [scene release];
     
     NSString *storySceneName = self.levelMap[identifier.integerValue][kOGSceneControllerStorySceneName];
     GKScene *storySceneFile = [GKScene sceneWithFileNamed:storySceneName];
@@ -166,7 +166,6 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     storyScene.scaleMode = SKSceneScaleModeAspectFit;
     
     self.currentStoryScene = storyScene;
-    [storyScene release];
 }
 
 - (void)dealloc

@@ -20,7 +20,6 @@
 {
     OGLevelController *levelController = [OGLevelController sharedInstance];
     levelController.view = self.view;
-    [levelController loadLevelMap];
     [levelController loadLevelWithIdentifier:@0];
     
     [levelController runStoryScene];
