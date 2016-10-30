@@ -8,9 +8,12 @@
 
 #import "OGLevelController.h"
 #import "OGGameSceneDelegate.h"
+#import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene.h"
+#import "OGStoryScene.h"
 #import "OGSpriteNode.h"
 #import "OGTransitionComponent.h"
+
 
 NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
@@ -24,6 +27,8 @@ NSString *const kOGSceneControllerClassNameKey = @"Class Name";
 NSString *const kOGSceneControllerPortalColorKey = @"Color";
 NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
 
+NSString *const kOGSceneControllerStorySceneName = @"Story Scene Name";
+
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 /* temporary code */
@@ -32,10 +37,11 @@ NSString *const kOGLevelControllerTapContinueControl = @"tapContinue";
 NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 /* temporary code */
 
-@interface OGLevelController () <OGGameSceneDelegate>
+@interface OGLevelController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray *levelMap;
-@property (nonatomic, retain, readwrite) OGGameScene *currentScene;
+@property (nonatomic, retain, readwrite) OGGameScene *currentGameScene;
+@property (nonatomic, retain, readwrite) OGStoryScene *currentStoryScene;
 
 @end
 
@@ -61,6 +67,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     dispatch_once(&dispatchOnceToken, ^()
     {
         levelController = [[OGLevelController alloc] init];
+        [levelController loadLevelMap];
     });
     
     return levelController;
@@ -96,16 +103,16 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 - (void)gameSceneDidCallFinish
 {
-    NSNumber *portalIdentifier = @(self.currentScene.transitionComponent.identifier);
+    NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
     NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalIdentifier:portalIdentifier
-                                                                  inLevel:self.currentScene.identifier];
+                                                                  inLevel:self.currentGameScene.identifier];
     
     [self loadLevelWithIdentifier:nextLevelId];
     
-    if (self.currentScene)
+    if (self.currentGameScene)
     {
         SKTransition *transition = [SKTransition doorwayWithDuration:kOGSceneControllerTransitionDuration];
-        [self.view presentScene:self.currentScene transition:transition];
+        [self.view presentScene:self.currentGameScene transition:transition];
     }
 }
 
@@ -114,9 +121,29 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     
 }
 
-- (void)runScene
+- (void)gameSceneDidFinishRunStory
 {
-    [self.view presentScene:self.currentScene];
+    [self runGameScene];
+}
+
+- (void)runGameScene
+{
+    if (self.currentGameScene)
+    {
+        [self.view presentScene:self.currentGameScene];
+    }
+}
+
+- (void)runStoryScene
+{
+    if (self.currentStoryScene)
+    {
+        [self.view presentScene:self.currentStoryScene];
+    }
+    else
+    {
+        [self runGameScene];
+    }
 }
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
@@ -139,14 +166,23 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     }
     
     scene.scaleMode = SKSceneScaleModeAspectFit;
-    self.currentScene = scene;
-    [scene release];
+    self.currentGameScene = scene;
+    
+    NSString *storySceneName = self.levelMap[identifier.integerValue][kOGSceneControllerStorySceneName];
+    GKScene *storySceneFile = [GKScene sceneWithFileNamed:storySceneName];
+    OGStoryScene *storyScene = (OGStoryScene *)storySceneFile.rootNode;
+    
+    storyScene.sceneDelegate = self;
+    storyScene.scaleMode = SKSceneScaleModeAspectFit;
+    
+    self.currentStoryScene = storyScene;
 }
 
 - (void)dealloc
 {
     [_levelMap release];
-    [_currentScene release];
+    [_currentGameScene release];
+    [_currentStoryScene release];
     [_controlType release];
     
     [super dealloc];

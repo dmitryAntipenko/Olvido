@@ -11,6 +11,7 @@
 @interface OGTorchComponent : GKComponent
 
 @property (nonatomic, assign) GKInspectable CGFloat torchRadius;
+@property (nonatomic, assign, readonly) CGFloat torchDiameter;
 
 - (void)torchTurnOn;
 - (void)torchTurnOff;

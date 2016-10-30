@@ -46,16 +46,18 @@ NSString *const kOGTorchComponentLightName = @"light";
     if (light)
     {
         light.colorBlendFactor = 1.0;
-        light.color = [SKColor gameBlue];
+        light.color = [SKColor gameBlack];
     }
 }
 
 - (void)createLight
 {
     SKSpriteNode *light = [SKSpriteNode spriteNodeWithImageNamed:kOGTorchComponentLightImageName];
+    light.size = CGSizeMake(self.torchDiameter, self.torchDiameter);
     light.name = kOGTorchComponentLightName;
     light.zPosition = 1;
     light.colorBlendFactor = 0.0;
+    light.color = [SKColor gameBlack];
     
     [self.torchNode addChild:light];
 }
@@ -65,4 +67,8 @@ NSString *const kOGTorchComponentLightName = @"light";
     return ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
 }
 
+- (CGFloat)torchDiameter
+{
+    return self.torchRadius * 2.0;
+}
 @end

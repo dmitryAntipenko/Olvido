@@ -28,7 +28,7 @@
         {
             // contact with door
         }
-        else if ([sprite.name isEqualToString:kOGPortalSpriteName])
+        else if ([sprite.name isEqualToString:kOGEnemySpriteName])
         {
             OGMovementComponent *movementComponent = (OGMovementComponent *) [sprite.entity componentForClass:[OGMovementComponent class]];
             movementComponent.physicsBody = ((SKSpriteNode *)sprite).physicsBody;

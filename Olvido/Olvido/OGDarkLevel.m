@@ -28,13 +28,14 @@
             if (torchComponent)
             {
                 [self createDarknessWithScreenSize:self.size node:sprite radius:torchComponent.torchRadius];
+                [torchComponent torchTurnOn];
             }
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
             // contact with door
         }
-        else if ([sprite.name isEqualToString:kOGPortalSpriteName])
+        else if ([sprite.name isEqualToString:kOGEnemySpriteName])
         {
             OGMovementComponent *movementComponent = (OGMovementComponent *) [sprite.entity componentForClass:[OGMovementComponent class]];
             movementComponent.physicsBody = ((SKSpriteNode *)sprite).physicsBody;
@@ -78,7 +79,7 @@
     
     SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
     darkness.strokeColor = [SKColor blackColor];
-    darkness.zPosition = 3;
+    darkness.zPosition = 1;
     darkness.lineWidth = diagonal - radius;
     
     [node addChild:darkness];

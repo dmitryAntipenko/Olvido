@@ -13,9 +13,21 @@
 
 @implementation OGPauseLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGPauseLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGPauseLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    [self.scene pause];
+    [self.scene pauseAndShowPauseScreen];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
