@@ -11,6 +11,18 @@
 
 @implementation OGDeathLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGDeathLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGDeathLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     //Do something when death;
