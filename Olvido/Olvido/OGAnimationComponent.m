@@ -21,13 +21,15 @@ NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
 
 @end
 
+
 @implementation OGAnimationComponent
 
-- (void)enterNextState:(OGAnimationState *)nextState
+- (void)playNextAnimationState:(OGAnimationState *)nextState
 {
     if (nextState && [self.currentState isValidNextState:nextState])
     {
         self.currentState = nextState;
+        [self play];
     }
 }
 

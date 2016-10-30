@@ -14,10 +14,10 @@
 
 @property (nonatomic, assign) GKInspectable CGFloat timePerFrame;
 
-- (void)enterNextState:(OGAnimationState *)nextState;
+- (void)playNextAnimationState:(OGAnimationState *)nextState;
 
 - (void)pause;
 
-- (void)play;
+- (void)resume;
 
 @end
