@@ -6,12 +6,10 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
-
-@class OGEntity;
+#import <GameplayKit/GameplayKit.h>
 
 @interface OGSpriteNode : SKSpriteNode
 
-@property (nonatomic, retain) OGEntity *entity;
+@property (nonatomic, retain) GKEntity *entity;
 
 @end

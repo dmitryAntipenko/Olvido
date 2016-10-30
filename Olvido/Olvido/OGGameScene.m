@@ -16,6 +16,7 @@
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGDestroyableComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -223,6 +224,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     OGContactType result = kOGContactTypeNone;
     
     [self contact:contact toBodyA:&bodyA bodyB:&bodyB];
+    [self checkDestroyableWithBodyA:&bodyA bodyB:&bodyB];
     
     if (bodyA.categoryBitMask == kOGCollisionBitMaskEnemy
         || bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
@@ -275,6 +277,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
     
     return result;
+}
+
+- (void)checkDestroyableWithBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
+{
+    OGDestroyableComponent *destroyableComponentBodyA = (OGDestroyableComponent *) [(*bodyA).node.entity componentForClass:[OGDestroyableComponent class]];
+    OGDestroyableComponent *destroyableComponentBodyB = (OGDestroyableComponent *) [(*bodyB).node.entity componentForClass:[OGDestroyableComponent class]];
+    
+    if (destroyableComponentBodyA)
+    {
+        [destroyableComponentBodyA dealDamage:1];
+    }
+    
+    if (destroyableComponentBodyB)
+    {
+        [destroyableComponentBodyB dealDamage:1];
+    }
 }
 
 - (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB

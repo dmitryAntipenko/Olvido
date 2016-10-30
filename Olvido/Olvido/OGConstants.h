@@ -11,7 +11,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-extern NSString *const kOGObstacleNodeName;
 extern NSString *const kOGPortalNodeName;
 
 extern CGFloat const kOGGameSceneStatusBarHidingDistance;
@@ -26,6 +25,7 @@ extern NSString *const kOGMainMenuSceneFileName;
 extern NSString *const kOGPlayerSpriteName;
 extern NSString *const kOGPortalSpriteName;
 extern NSString *const kOGEnemySpriteName;
+extern NSString *const kOGObstacleSpriteName;
 
 @interface OGConstants : NSObject
 

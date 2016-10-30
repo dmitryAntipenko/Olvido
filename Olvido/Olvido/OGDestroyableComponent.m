@@ -7,7 +7,38 @@
 //
 
 #import "OGDestroyableComponent.h"
+#import "OGHealthComponent.h"
 
 @implementation OGDestroyableComponent
+
+- (void)dealDamage:(NSUInteger)damage
+{
+    if (self.healthComponent)
+    {
+        [self.healthComponent dealDamage:damage];
+        
+        if (self.healthComponent.currentHealth <= 0)
+        {
+            [self destroyNode];
+        }
+        else
+        {
+            NSLog(@"dd");
+        }
+    }
+}
+
+- (void)destroyNode
+{
+    SKNode *node = ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
+    [node removeFromParent];
+}
+
+- (void)dealloc
+{
+    [_healthComponent release];
+    
+    [ super dealloc];
+}
 
 @end

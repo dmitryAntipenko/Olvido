@@ -172,7 +172,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
         GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
         
         OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
-        spriteNode.entity = (OGEntity *) nodeComponent.entity;
+        spriteNode.entity = (GKEntity *) nodeComponent.entity;
         
         [scene addSpriteNode:spriteNode];
     }

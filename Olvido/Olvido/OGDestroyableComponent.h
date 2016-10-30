@@ -13,4 +13,6 @@
 
 @property (nonatomic, retain) OGHealthComponent *healthComponent;
 
+- (void)dealDamage:(NSUInteger)damage;
+
 @end

@@ -9,8 +9,6 @@
 #ifndef OGGameSceneDelegate_h
 #define OGGameSceneDelegate_h
 
-@class OGEntity;
-
 @protocol OGGameSceneDelegate <NSObject>
 
 - (void)gameSceneDidCallFinish;

@@ -8,7 +8,6 @@
 
 #import "OGConstants.h"
 
-NSString *const kOGObstacleNodeName = @"obstacle";
 NSString *const kOGPortalNodeName = @"portal";
 NSString *const kOGPauseButtonName = @"pause";
 
@@ -28,6 +27,7 @@ CGFloat const kOGConstantsDefaultTransitionTimeDuration = 1.0;
 NSString *const kOGPlayerSpriteName = @"Player";
 NSString *const kOGEnemySpriteName = @"Enemy";
 NSString *const kOGPortalSpriteName = @"Door";
+NSString *const kOGObstacleSpriteName = @"Obstacle";
 
 @implementation OGConstants
 

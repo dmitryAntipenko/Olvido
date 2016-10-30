@@ -13,6 +13,8 @@
 #import "OGConstants.h"
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
+#import "OGDestroyableComponent.h"
+#import "OGHealthComponent.h"
 
 @implementation OGInitialLevel
 
@@ -36,6 +38,13 @@
             movementComponent.physicsBody = ((SKSpriteNode *)sprite).physicsBody;
             
             [movementComponent startMovement];
+        }
+        else if ([sprite.name isEqualToString:kOGObstacleSpriteName])
+        {
+            OGDestroyableComponent *destroyableComponent = (OGDestroyableComponent *) [sprite.entity componentForClass:[OGDestroyableComponent class]];
+            OGHealthComponent *healthComponent = (OGHealthComponent *) [sprite.entity componentForClass:[OGHealthComponent class]];
+            
+            destroyableComponent.healthComponent = healthComponent;
         }
     }
     
