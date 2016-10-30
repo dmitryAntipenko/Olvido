@@ -15,4 +15,6 @@
 
 + (instancetype)animationStateWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates;
 
+- (BOOL)isValidNextState:(OGAnimationState *)nextState;
+
 @end

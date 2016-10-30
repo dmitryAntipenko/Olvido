@@ -44,6 +44,23 @@
     return self;
 }
 
+- (BOOL)isValidNextState:(OGAnimationState *)nextState
+{
+    BOOL result = YES;
+    
+    if (self.validNextStates)
+    {
+        result = NO;
+        
+        for (OGAnimationState *state in self.validNextStates)
+        {
+            result = result || [state.name isEqualToString:nextState.name];
+        }
+    }
+    
+    return result;
+}
+
 - (void)dealloc
 {
     [_name release];
