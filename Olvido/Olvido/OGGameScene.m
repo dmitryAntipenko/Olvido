@@ -201,7 +201,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-        [self.stateMachine enterState:[OGDeathLevelState class]];
+        [self.healthComponent dealDamage:1];
+        [self.statusBar healthDidChange];
     }
     else if (contactType == kOGContactTypePlayerDidGrantAccess)
     {
@@ -300,8 +301,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = YES;
 }
 
-- (void)showPauseScreen
+- (void)pauseWithPauseScreen
 {
+    [self pause];
+    
     if (!self.pauseScreenNode.parent)
     {
         [self addChild:self.pauseScreenNode];
@@ -348,7 +351,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)update:(NSTimeInterval)currentTime
 {
+    if (self.healthComponent.currentHealth <= 0)
+    {
+        [self.stateMachine enterState:[OGDeathLevelState class]];
+    }
     
+    [super update:currentTime];
 }
 
 - (void)dealloc
