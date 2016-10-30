@@ -7,7 +7,6 @@
 //
 
 #import "OGTapAndStopMovementControlComponent.h"
-#import "OGVisualComponent.h"
 #import "OGSpriteNode.h"
 
 NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingAction";

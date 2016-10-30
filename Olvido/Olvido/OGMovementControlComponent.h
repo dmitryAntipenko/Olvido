@@ -7,11 +7,10 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGVisualComponent.h"
 
 @interface OGMovementControlComponent : GKComponent
 
-@property (nonatomic, assign) SKNode *node;
+@property (nonatomic, assign, readonly) SKNode *node;
 @property (nonatomic, assign) GKInspectable CGFloat speedFactor;
 @property (nonatomic, assign) GKInspectable CGFloat defaultSpeed;
 
