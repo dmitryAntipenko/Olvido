@@ -31,6 +31,8 @@
 #import "OGTapMovementControlComponent.h"
 #import "OGTapAndStopMovementControlComponent.h"
 #import "OGDragMovementControlComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGAnimationState.h"
 
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
@@ -87,15 +89,18 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         {
             OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
             self.playerControlComponent = controlComponent;
-        
+            
             OGHealthComponent *healthComponent = (OGHealthComponent *) [sprite.entity componentForClass:[OGHealthComponent class]];
             self.healthComponent = healthComponent;
             
             OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [sprite.entity componentForClass:[OGInventoryComponent class]];
             self.inventoryComponent = inventoryComponent;
             
+            OGAnimationComponent *animationComponent = (OGAnimationComponent *)[sprite.entity componentForClass:[OGAnimationComponent class]];
+            self.playerAnimationComponent = animationComponent;
+            
             OGLevelController *levelController = [OGLevelController sharedInstance];
-
+            
             if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
             {
                 OGTapMovementControlComponent *tapMovementComponent = [[OGTapMovementControlComponent alloc] init];
@@ -134,6 +139,18 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             
             OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [sprite.entity componentForClass:[OGTransitionComponent class]];
             self.transitionComponent = transitionComponent;
+        }
+        else if ([sprite.name isEqualToString:kOGEnemyNodeName])
+        {
+            OGAnimationState *animationState = [OGAnimationState animationStateWithName:@"mooving"
+                                                                               textures:@[
+                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 1"],
+                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 2"]
+                                                                                          ]
+                                                                        validNextStates:nil];
+            
+            OGAnimationComponent *animationComponent = (OGAnimationComponent *)[sprite.entity componentForClass:[OGAnimationComponent class]];
+            [animationComponent playNextAnimationState:animationState];
         }
     }
     
@@ -327,6 +344,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_accessComponent release];
     [_playerControlComponent release];
     [_transitionComponent release];
+    [_playerAnimationComponent release];
     [_stateMachine release];
     
     [_pauseScreenNode release];

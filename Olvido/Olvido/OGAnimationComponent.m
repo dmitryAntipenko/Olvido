@@ -26,7 +26,7 @@ NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
 
 - (void)playNextAnimationState:(OGAnimationState *)nextState
 {
-    if (nextState && [self.currentState isValidNextState:nextState])
+    if (nextState && (!self.currentState || [self.currentState isValidNextState:nextState]))
     {
         self.currentState = nextState;
         [self play];
@@ -71,7 +71,7 @@ NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
     }
 }
 
-- (SKSpriteNode *)spritenode
+- (SKSpriteNode *)spriteNode
 {
     return (SKSpriteNode *)(((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node);
 }

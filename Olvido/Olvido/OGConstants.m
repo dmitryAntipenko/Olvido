@@ -9,7 +9,7 @@
 #import "OGConstants.h"
 
 NSString *const kOGPlayerNodeName = @"player";
-NSString *const kOGEnemyNodeName = @"enemy";
+NSString *const kOGEnemyNodeName = @"Zombie";
 NSString *const kOGObstacleNodeName = @"obstacle";
 NSString *const kOGPortalNodeName = @"portal";
 NSString *const kOGPauseButtonName = @"pause";
