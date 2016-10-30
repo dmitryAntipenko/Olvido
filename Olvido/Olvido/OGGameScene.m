@@ -41,6 +41,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
 @property (nonatomic, retain) GKStateMachine *stateMachine;
+@property (nonatomic, assign) SKReferenceNode *pauseScreenNode;
 
 @end
 
@@ -64,6 +65,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                                                                      [OGDeathLevelState stateWithLevelScene:self]
                                                                      ]];
             _statusBar = [[OGStatusBar alloc] init];
+            _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:@"OGPauseScreen.sks"];
         }
     }
     else
@@ -134,8 +136,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             self.transitionComponent = transitionComponent;
         }
     }
-    
-    
     
     [self createStatusBar];
     
@@ -269,12 +269,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
-- (void)pause
+- (void)pauseWithoutPauseScreen
 {
     [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;
+}
+
+- (void)pauseAndShowPauseScreen
+{
+    [self pauseWithoutPauseScreen];
+    
+    if (!self.pauseScreenNode.parent)
+    {
+        [self addChild:self.pauseScreenNode];
+    }
 }
 
 - (void)resume
@@ -283,6 +293,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
+    
+    if (self.pauseScreenNode.parent)
+    {
+        [self.pauseScreenNode removeFromParent];
+    }
 }
 
 - (void)restart
@@ -313,6 +328,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_playerControlComponent release];
     [_transitionComponent release];
     [_stateMachine release];
+    
+    [_pauseScreenNode release];
     
     [_healthComponent release];
     [_statusBar release];
