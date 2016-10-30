@@ -20,6 +20,12 @@ NSString *const kOGStorySceneDarknessNode = @"Darkness";
     }
 }
 
+- (void)skipStory
+{
+    self.scene.paused = YES;
+    [self.sceneDelegate gameSceneDidFinishRunStory];
+}
+
 - (void)dealloc
 {
     [_sceneDelegate release];
