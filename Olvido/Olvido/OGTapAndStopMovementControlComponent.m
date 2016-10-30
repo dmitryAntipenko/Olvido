@@ -22,6 +22,13 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 
 @implementation OGTapAndStopMovementControlComponent
 
+- (void)didAddToEntity
+{
+    self.pausedSpeedFactor = kOGMovementControlComponentDefaultSpeedFactor;
+    
+    [super didAddToEntity];
+}
+
 - (void)touchBeganAtPoint:(CGPoint)point
 {
     self.isMooving = YES;
@@ -70,7 +77,6 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
 {
     self.speedFactor = self.pausedSpeedFactor;
 }
-
 
 - (void)dealloc
 {

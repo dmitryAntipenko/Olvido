@@ -8,6 +8,7 @@
 
 #import <GameplayKit/GameplayKit.h>
 @class OGGameScene;
+@class OGStoryScene;
 
 /* temporary code */
 extern NSString *const kOGLevelControllerDragControl;
@@ -20,7 +21,8 @@ extern NSString *const kOGLevelControllerTapStopControl;
 @property (nonatomic, assign) SKView *view;
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
-@property (nonatomic, retain, readonly) OGGameScene *currentScene;
+@property (nonatomic, retain, readonly) OGGameScene *currentGameScene;
+@property (nonatomic, retain, readonly) OGStoryScene *currentStoryScene;
 
 /* temporary code */
 @property (nonatomic, copy) NSString *controlType;
@@ -31,6 +33,7 @@ extern NSString *const kOGLevelControllerTapStopControl;
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;
-- (void)runScene;
+- (void)runGameScene;
+- (void)runStoryScene;
 
 @end

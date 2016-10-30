@@ -34,6 +34,9 @@
 
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
+NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
+NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
+
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
@@ -41,6 +44,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
 @property (nonatomic, retain) GKStateMachine *stateMachine;
+@property (nonatomic, retain) SKReferenceNode *pauseScreenNode;
+@property (nonatomic, retain) SKReferenceNode *gameOverScreenNode;
 
 @end
 
@@ -64,6 +69,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                                                                      [OGDeathLevelState stateWithLevelScene:self]
                                                                      ]];
             _statusBar = [[OGStatusBar alloc] init];
+            _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
+            _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
         }
     }
     else
@@ -137,7 +144,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [self createStatusBar];
     
-    [self.stateMachine enterState:[OGStoryConclusionLevelState class]];
+    [self.stateMachine enterState:[OGGameLevelState class]];
     
     [super didMoveToView:view];
 }
@@ -269,12 +276,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 #pragma mark - States
 
-- (void)pause
+- (void)pauseWithoutPauseScreen
 {
     [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;
+}
+
+- (void)pauseAndShowPauseScreen
+{
+    [self pauseWithoutPauseScreen];
+    
+    if (!self.pauseScreenNode.parent)
+    {
+        [self addChild:self.pauseScreenNode];
+    }
 }
 
 - (void)resume
@@ -283,6 +300,16 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
+    
+    if (self.pauseScreenNode.parent)
+    {
+        [self.pauseScreenNode removeFromParent];
+    }
+    
+    if (self.gameOverScreenNode.parent)
+    {
+        [self.gameOverScreenNode removeFromParent];
+    }
 }
 
 - (void)restart
@@ -307,8 +334,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)gameOver
 {
-    [self pause];
-    NSLog(@"game over");
+    [self pauseWithoutPauseScreen];
+    
+    if (!self.gameOverScreenNode.parent)
+    {
+        [self addChild:self.gameOverScreenNode];
+    }
 }
 
 - (void)dealloc
@@ -319,6 +350,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_playerControlComponent release];
     [_transitionComponent release];
     [_stateMachine release];
+    
+    [_pauseScreenNode release];
     
     [_healthComponent release];
     [_statusBar release];

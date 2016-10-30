@@ -11,6 +11,18 @@
 
 @implementation OGCompleteLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGCompleteLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGCompleteLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     //do something when complete level;
