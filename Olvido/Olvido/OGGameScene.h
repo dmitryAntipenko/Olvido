@@ -40,6 +40,7 @@
 - (void)restart;
 - (void)resume;
 - (void)showPauseScreen;
+- (void)gameOver;
 
 - (void)runStoryConclusion;
 

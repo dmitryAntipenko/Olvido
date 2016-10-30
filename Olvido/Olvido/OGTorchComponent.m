@@ -14,38 +14,18 @@ NSString *const kOGTorchComponentLightName = @"light";
 
 @interface OGTorchComponent ()
 
-@property (nonatomic, retain) SKSpriteNode *torchSprite;
 @property (nonatomic, getter=isTurnedOn) BOOL turnedOn;
+@property (nonatomic, assign) SKNode *torchNode;
 
 @end
 
 @implementation OGTorchComponent
 
-- (instancetype)initWithTorchSprite:(SKSpriteNode *)torchSprite
-                       tourchRadius:(CGFloat)torchRadius
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _torchSprite = [torchSprite retain];
-        _torchRadius = torchRadius;
-        _turnedOn = NO;
-    }
-    else
-    {
-        [self release];
-        self = nil;
-    }
-    
-    return self;
-}
-
 - (void)torchTurnOn
 {
     if (!self.isTurnedOn)
     {
-        SKSpriteNode *light = (SKSpriteNode *) [self.torchSprite childNodeWithName:kOGTorchComponentLightName];
+        SKSpriteNode *light = (SKSpriteNode *) [self.torchNode childNodeWithName:kOGTorchComponentLightName];
         
         if (light)
         {
@@ -61,42 +41,34 @@ NSString *const kOGTorchComponentLightName = @"light";
 
 - (void)torchTurnOff
 {
-    SKSpriteNode *light = (SKSpriteNode *) [self.torchSprite childNodeWithName:kOGTorchComponentLightName];
+    SKSpriteNode *light = (SKSpriteNode *) [self.torchNode childNodeWithName:kOGTorchComponentLightName];
     
     if (light)
     {
         light.colorBlendFactor = 1.0;
-        light.color = [SKColor gameBlue];
+        light.color = [SKColor gameBlack];
     }
 }
 
 - (void)createLight
 {
     SKSpriteNode *light = [SKSpriteNode spriteNodeWithImageNamed:kOGTorchComponentLightImageName];
+    light.size = CGSizeMake(self.torchDiameter, self.torchDiameter);
     light.name = kOGTorchComponentLightName;
     light.zPosition = 1;
     light.colorBlendFactor = 0.0;
+    light.color = [SKColor gameBlack];
     
-    [self.torchSprite addChild:light];
+    [self.torchNode addChild:light];
 }
 
-- (void)createDarknessWithSize:(CGSize)size
+- (SKNode *)torchNode
 {
-    CGFloat diagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + self.torchRadius;
-    
-    SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
-    darkness.strokeColor = [SKColor gameBlack];
-    darkness.zPosition = 3;
-    darkness.lineWidth = diagonal - self.torchRadius;
-    
-    [self.torchSprite addChild:darkness];
+    return ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;
 }
 
-- (void)dealloc
+- (CGFloat)torchDiameter
 {
-    [_torchSprite release];
-    
-    [super dealloc];
+    return self.torchRadius * 2.0;
 }
-
 @end

@@ -13,5 +13,4 @@
 @property (nonatomic, assign) GKInspectable NSUInteger identifier;
 @property (nonatomic, getter=isClosed) GKInspectable BOOL closed;
 
-
 @end

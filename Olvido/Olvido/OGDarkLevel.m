@@ -1,20 +1,19 @@
 //
-//  OGInitialLevel.m
+//  OGDarkLevel.m
 //  Olvido
 //
-//  Created by Александр Песоцкий on 10/26/16.
+//  Created by Александр Песоцкий on 10/30/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGInitialLevel.h"
+#import "OGDarkLevel.h"
 #import "OGSpriteNode.h"
+#import "OGConstants.h"
 #import "OGMovementComponent.h"
 #import "OGMovementControlComponent.h"
-#import "OGConstants.h"
-#import "OGAnimationComponent.h"
-#import "OGAnimationState.h"
+#import "OGTorchComponent.h"
 
-@implementation OGInitialLevel
+@implementation OGDarkLevel
 
 - (void)didMoveToView:(SKView *)view
 {
@@ -24,7 +23,13 @@
     {
         if ([sprite.name isEqualToString:kOGPlayerSpriteName])
         {
-            // add when decide with player movement control
+            OGTorchComponent *torchComponent = (OGTorchComponent *) [sprite.entity componentForClass:[OGTorchComponent class]];
+            
+            if (torchComponent)
+            {
+                [self createDarknessWithScreenSize:self.size node:sprite radius:torchComponent.torchRadius];
+                [torchComponent torchTurnOn];
+            }
         }
         else if ([sprite.name isEqualToString:kOGPortalSpriteName])
         {
@@ -64,6 +69,20 @@
     CGPoint location = [touch locationInNode:self];
     
     [self.playerControlComponent touchEndedAtPoint:location];
+}
+
+- (void)createDarknessWithScreenSize:(CGSize)size
+                                node:(SKNode *)node
+                              radius:(CGFloat)radius
+{
+    CGFloat diagonal = sqrtf(powf(size.height, 2.0) + powf(size.width, 2.0)) + radius;
+    
+    SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
+    darkness.strokeColor = [SKColor blackColor];
+    darkness.zPosition = 1;
+    darkness.lineWidth = diagonal - radius;
+    
+    [node addChild:darkness];
 }
 
 - (void)dealloc

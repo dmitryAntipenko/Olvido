@@ -33,6 +33,8 @@
 		215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE11DC25D53000DF29F /* OGShopMenuScene.sks */; };
 		215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */; };
 		215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */; };
+		21DA96FD1DC6290C00EA3293 /* OGDarkLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA96FC1DC6290C00EA3293 /* OGDarkLevel.m */; };
+		21DA96FF1DC6291B00EA3293 /* OGDarkLevel.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DA96FE1DC6291B00EA3293 /* OGDarkLevel.sks */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		21DD19761DBE1C360048658A /* OGChapter1.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DD19751DBE1C360048658A /* OGChapter1.m */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
@@ -60,6 +62,7 @@
 		EA9919001DB9324700E273B4 /* OGAccessComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9918FF1DB9324700E273B4 /* OGAccessComponent.m */; };
 		EAA490B01DA54B72007734F0 /* OGScoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490AF1DA54B72007734F0 /* OGScoreController.m */; };
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
+		EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
 		EAFBC9781DB3E64800142D66 /* OGTransitionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFBC9771DB3E64800142D66 /* OGTransitionComponent.m */; };
 /* End PBXBuildFile section */
@@ -114,6 +117,9 @@
 		215C4BE41DC269AC000DF29F /* OGSettingsMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSettingsMenuScene.h; sourceTree = "<group>"; };
 		215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSettingsMenuScene.m; sourceTree = "<group>"; };
 		215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGSettingsMenuScene.sks; sourceTree = "<group>"; };
+		21DA96FB1DC6290C00EA3293 /* OGDarkLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDarkLevel.h; sourceTree = "<group>"; };
+		21DA96FC1DC6290C00EA3293 /* OGDarkLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDarkLevel.m; sourceTree = "<group>"; };
+		21DA96FE1DC6291B00EA3293 /* OGDarkLevel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGDarkLevel.sks; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		21DD19741DBE1C360048658A /* OGChapter1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGChapter1.h; sourceTree = "<group>"; };
 		21DD19751DBE1C360048658A /* OGChapter1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGChapter1.m; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 		EAA490C51DA7BE52007734F0 /* OGConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConstants.h; sourceTree = "<group>"; };
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
 		EAA490CC1DAAA0B6007734F0 /* OGContactType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactType.h; sourceTree = "<group>"; };
+		EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGGameOverScreen.sks; sourceTree = "<group>"; };
 		EAFBC9761DB3E64800142D66 /* OGTransitionComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponent.h; sourceTree = "<group>"; };
 		EAFBC9771DB3E64800142D66 /* OGTransitionComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTransitionComponent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -313,6 +320,26 @@
 			name = SettingsMenu;
 			sourceTree = "<group>";
 		};
+		21DA96FA1DC628A000EA3293 /* Level3 - DarkLevel */ = {
+			isa = PBXGroup;
+			children = (
+				21DA96FB1DC6290C00EA3293 /* OGDarkLevel.h */,
+				21DA96FC1DC6290C00EA3293 /* OGDarkLevel.m */,
+				21DA96FE1DC6291B00EA3293 /* OGDarkLevel.sks */,
+			);
+			name = "Level3 - DarkLevel";
+			sourceTree = "<group>";
+		};
+		21DD19711DBE1BEE0048658A /* StoriesScene */ = {
+			isa = PBXGroup;
+			children = (
+				2154A6021DBE3FF800E414F3 /* Chapter1 */,
+				2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */,
+				2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */,
+			);
+			name = StoriesScene;
+			sourceTree = "<group>";
+		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +387,7 @@
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
 				EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */,
+				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -421,6 +449,7 @@
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
 				EAC384141DB43A0A00235B27 /* Utils */,
 				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
+				21DA96FA1DC628A000EA3293 /* Level3 - DarkLevel */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
 				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
 			);
@@ -530,10 +559,12 @@
 				1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */,
 				215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
+				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA70E52B1DB3F4620034116D /* playerTail.sks in Resources */,
 				EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
+				21DA96FF1DC6291B00EA3293 /* OGDarkLevel.sks in Resources */,
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 				215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */,
@@ -572,6 +603,7 @@
 				1B27EAB11DC0E2DE00E9CA23 /* OGLevelState.m in Sources */,
 				EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
+				21DA96FD1DC6290C00EA3293 /* OGDarkLevel.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				EA70E5291DB3F4620034116D /* OGSpriteNode.m in Sources */,
 				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,

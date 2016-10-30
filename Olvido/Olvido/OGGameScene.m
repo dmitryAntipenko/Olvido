@@ -36,6 +36,9 @@
 
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
+NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
+NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
+
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
@@ -44,6 +47,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 @property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
 @property (nonatomic, retain) GKStateMachine *stateMachine;
 @property (nonatomic, retain) SKReferenceNode *pauseScreenNode;
+@property (nonatomic, retain) SKReferenceNode *gameOverScreenNode;
 
 @end
 
@@ -67,7 +71,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                                                                      [OGDeathLevelState stateWithLevelScene:self]
                                                                      ]];
             _statusBar = [[OGStatusBar alloc] init];
-            _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:@"OGPauseScreen.sks"];
+            
+            _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
+            _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
         }
     }
     else
@@ -140,7 +146,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [sprite.entity componentForClass:[OGTransitionComponent class]];
             self.transitionComponent = transitionComponent;
         }
-        else if ([sprite.name isEqualToString:kOGEnemyNodeName])
+        else if ([sprite.name isEqualToString:kOGEnemySpriteName])
         {
             OGAnimationState *animationState = [OGAnimationState animationStateWithName:@"mooving"
                                                                                textures:@[
@@ -156,9 +162,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [self createStatusBar];
     
-    [super didMoveToView:view];
+    [self.stateMachine enterState:[OGGameLevelState class]];
     
-    [self.stateMachine enterState:[OGStoryConclusionLevelState class]];
+    [super didMoveToView:view];
 }
 
 - (void)createStatusBar
@@ -195,7 +201,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-        // death
+        [self.stateMachine enterState:[OGDeathLevelState class]];
     }
     else if (contactType == kOGContactTypePlayerDidGrantAccess)
     {
@@ -313,11 +319,16 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         [self.pauseScreenNode removeFromParent];
     }
+    
+    if (self.gameOverScreenNode.parent)
+    {
+        [self.gameOverScreenNode removeFromParent];
+    }
 }
 
 - (void)restart
 {
-    // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+    [self.sceneDelegate gameSceneDidCallRestart];
 }
 
 - (void)runStoryConclusion
@@ -325,12 +336,17 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
 }
 
-- (void)save
+- (void)gameOver
 {
+    [self pause];
     
+    if (!self.gameOverScreenNode.parent)
+    {
+        [self addChild:self.gameOverScreenNode];
+    }
 }
 
-- (void)restore
+- (void)update:(NSTimeInterval)currentTime
 {
     
 }
@@ -346,6 +362,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_stateMachine release];
     
     [_pauseScreenNode release];
+    [_gameOverScreenNode release];
     
     [_healthComponent release];
     [_statusBar release];
