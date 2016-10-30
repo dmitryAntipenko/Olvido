@@ -75,7 +75,7 @@
                                 node:(SKNode *)node
                               radius:(CGFloat)radius
 {
-    CGFloat diagonal = powf(powf(size.height, 2.0) + powf(size.width, 2.0), 0.5) + radius;
+    CGFloat diagonal = sqrtf(powf(size.height, 2.0) + powf(size.width, 2.0)) + radius;
     
     SKShapeNode *darkness = [SKShapeNode shapeNodeWithEllipseOfSize:CGSizeMake(diagonal, diagonal)];
     darkness.strokeColor = [SKColor blackColor];
