@@ -11,6 +11,8 @@
 #import "OGMovementComponent.h"
 #import "OGMovementControlComponent.h"
 #import "OGConstants.h"
+#import "OGAnimationComponent.h"
+#import "OGAnimationState.h"
 
 @implementation OGInitialLevel
 

@@ -8,7 +8,6 @@
 
 #import "OGConstants.h"
 
-
 NSString *const kOGObstacleNodeName = @"obstacle";
 NSString *const kOGPortalNodeName = @"portal";
 NSString *const kOGPauseButtonName = @"pause";

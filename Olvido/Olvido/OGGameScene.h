@@ -16,6 +16,7 @@
 @class OGStatusBar;
 @class OGHealthComponent;
 @class OGInventoryComponent;
+@class OGAnimationComponent;
 
 @interface OGGameScene : SKScene <SKPhysicsContactDelegate>
 
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) OGStatusBar *statusBar;
 
 @property (nonatomic, retain) OGMovementControlComponent *playerControlComponent;
+@property (nonatomic, retain) OGAnimationComponent *playerAnimationComponent;
 @property (nonatomic, retain) OGTransitionComponent *transitionComponent;
 @property (nonatomic, retain) OGAccessComponent *accessComponent;
 @property (nonatomic, retain) OGHealthComponent *healthComponent;
@@ -34,11 +36,11 @@
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 
-- (void)pauseWithoutPauseScreen;
+- (void)pause;
 - (void)restart;
 - (void)resume;
+- (void)showPauseScreen;
 - (void)gameOver;
-- (void)pauseAndShowPauseScreen;
 
 - (void)runStoryConclusion;
 
