@@ -314,20 +314,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)restart
 {
-    // HERE RESTART ALL SCENE OBJECT TO DEFAULT
+    [self.sceneDelegate gameSceneDidCallRestart];
 }
 
 - (void)runStoryConclusion
-{
-    
-}
-
-- (void)save
-{
-    
-}
-
-- (void)restore
 {
     
 }

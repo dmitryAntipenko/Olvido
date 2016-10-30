@@ -101,6 +101,8 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     return result;
 }
 
+#pragma mark - GameSceneDelegate methods
+
 - (void)gameSceneDidCallFinish
 {
     NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
@@ -121,10 +123,20 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     
 }
 
+- (void)gameSceneDidCallRestart
+{
+    [self loadLevelWithIdentifier:self.currentGameScene.identifier];
+    [self runGameScene];
+}
+
+#pragma mark - GameSceneStoreDelegate method
+
 - (void)gameSceneDidFinishRunStory
 {
     [self runGameScene];
 }
+
+#pragma mark - Loading and Running levels
 
 - (void)runGameScene
 {
