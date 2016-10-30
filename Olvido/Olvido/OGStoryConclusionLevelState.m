@@ -12,6 +12,18 @@
 
 @implementation OGStoryConclusionLevelState
 
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    OGStoryConclusionLevelState *state = nil;
+    
+    if (scene)
+    {
+        state = [[[OGStoryConclusionLevelState alloc] initWithLevelScene:scene] autorelease];
+    }
+    
+    return state;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene pause];

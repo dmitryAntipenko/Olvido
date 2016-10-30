@@ -17,18 +17,21 @@
 
 @implementation OGLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+- (instancetype)initWithLevelScene:(OGGameScene *)scene
 {
-    OGLevelState *state = nil;
+    self = [self init];
     
-    if (scene)
+    if (self)
     {
-        state = [OGLevelState state];
-        
-        state.scene = scene;
+        _scene = [scene retain];
     }
     
-    return state;
+    return self;
+}
+
++ (instancetype)stateWithLevelScene:(OGGameScene *)scene
+{
+    return [[[OGLevelState alloc] initWithLevelScene:scene] autorelease];
 }
 
 - (OGGameScene *)scene
