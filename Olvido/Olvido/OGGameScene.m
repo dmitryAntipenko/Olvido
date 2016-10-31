@@ -184,7 +184,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 {
     OGLevelController *levelController = [OGLevelController sharedInstance];
     
-    Class class;
+    id class = Nil;
     
     if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
     {
@@ -395,6 +395,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [_gameOverScreenNode release];
     
     [_statusBar release];
+    
+    [_portalNode release];
+    [_playerNode release];
     
     [super dealloc];
 }
