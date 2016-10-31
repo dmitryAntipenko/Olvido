@@ -3,8 +3,6 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>Enemies Count</key>
-		<integer>1</integer>
 		<key>Identifier</key>
 		<string>0</string>
 		<key>Portals</key>
@@ -24,8 +22,6 @@
 		<string>OGChapter1</string>
 	</dict>
 	<dict>
-		<key>Enemies Count</key>
-		<integer>2</integer>
 		<key>Identifier</key>
 		<string>1</string>
 		<key>Portals</key>
@@ -40,11 +36,9 @@
 			</dict>
 		</array>
 		<key>Class Name</key>
-		<string>OGObstaclesScene</string>
+		<string>OGBigLevel</string>
 	</dict>
 	<dict>
-		<key>Enemies Count</key>
-		<integer>12</integer>
 		<key>Identifier</key>
 		<string>2</string>
 		<key>Portals</key>
@@ -60,54 +54,6 @@
 		</array>
 		<key>Class Name</key>
 		<string>OGDarkLevel</string>
-	</dict>
-	<dict>
-		<key>Enemies Count</key>
-		<integer>3</integer>
-		<key>Identifier</key>
-		<string>3</string>
-		<key>Portals</key>
-		<array>
-			<dict>
-				<key>Color</key>
-				<string>0xf1c40f</string>
-				<key>Next Level Index</key>
-				<integer>3</integer>
-				<key>Location</key>
-				<integer>0</integer>
-			</dict>
-		</array>
-		<key>Class Name</key>
-		<string>OGMovingObstaclesScene</string>
-	</dict>
-	<dict>
-		<key>Enemies Count</key>
-		<integer>3</integer>
-		<key>Identifier</key>
-		<string>4</string>
-		<key>Portals</key>
-		<array>
-			<dict>
-				<key>Color</key>
-				<string>0xf1c40f</string>
-				<key>Next Level Index</key>
-				<integer>4</integer>
-				<key>Location</key>
-				<integer>1</integer>
-			</dict>
-		</array>
-		<key>Class Name</key>
-		<string>OGFlameScene</string>
-	</dict>
-	<dict>
-		<key>Enemies Count</key>
-		<string>3</string>
-		<key>Identifier</key>
-		<string>9</string>
-		<key>Portals</key>
-		<array/>
-		<key>Class Name</key>
-		<string>OGLightningScene</string>
 	</dict>
 </array>
 </plist>

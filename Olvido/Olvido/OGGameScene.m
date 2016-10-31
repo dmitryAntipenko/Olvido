@@ -93,18 +93,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         if ([sprite.name isEqualToString:kOGPlayerSpriteName])
         {
-            OGMovementControlComponent *controlComponent = (OGMovementControlComponent *) [sprite.entity componentForClass:[OGMovementControlComponent class]];
-            self.playerControlComponent = controlComponent;
-            
-            OGHealthComponent *healthComponent = (OGHealthComponent *) [sprite.entity componentForClass:[OGHealthComponent class]];
-            self.healthComponent = healthComponent;
-            
-            OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [sprite.entity componentForClass:[OGInventoryComponent class]];
-            self.inventoryComponent = inventoryComponent;
-            
-            OGAnimationComponent *animationComponent = (OGAnimationComponent *)[sprite.entity componentForClass:[OGAnimationComponent class]];
-            self.playerAnimationComponent = animationComponent;
-            
             OGLevelController *levelController = [OGLevelController sharedInstance];
             
             if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
@@ -112,8 +100,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                 OGTapMovementControlComponent *tapMovementComponent = [[OGTapMovementControlComponent alloc] init];
                 tapMovementComponent.speedFactor = 1.0;
                 [sprite.entity addComponent:tapMovementComponent];
-                
-                self.playerControlComponent = tapMovementComponent;
                 
                 [tapMovementComponent release];
             }
@@ -123,8 +109,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                 tapAndStopMovementComponent.speedFactor = 1.0;
                 [sprite.entity addComponent:tapAndStopMovementComponent];
                 
-                self.playerControlComponent = tapAndStopMovementComponent;
-                
                 [tapAndStopMovementComponent release];
             }
             else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
@@ -132,19 +116,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                 OGDragMovementControlComponent *dragMovementComponent = [[OGDragMovementControlComponent alloc] init];
                 [sprite.entity addComponent:dragMovementComponent];
                 
-                self.playerControlComponent = dragMovementComponent;
-                
                 [dragMovementComponent release];
             }
             
-        }
-        else if ([sprite.name isEqualToString:kOGPortalSpriteName])
-        {
-            OGAccessComponent *accessComponent = (OGAccessComponent *) [sprite.entity componentForClass:[OGAccessComponent class]];
-            self.accessComponent = accessComponent;
-            
-            OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [sprite.entity componentForClass:[OGTransitionComponent class]];
-            self.transitionComponent = transitionComponent;
         }
         else if ([sprite.name isEqualToString:kOGEnemySpriteName])
         {
@@ -179,6 +153,65 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
+#pragma mark - Getters & Setters
+
+- (OGSpriteNode *)playerNode
+{
+    return (OGSpriteNode *) [self childNodeWithName:kOGPlayerSpriteName];
+}
+
+- (OGSpriteNode *)portalNode
+{
+    return (OGSpriteNode *) [self childNodeWithName:kOGPortalSpriteName];
+}
+
+- (OGAnimationComponent *)playerAnimationComponent
+{
+    return (OGAnimationComponent *) [self.playerNode.entity componentForClass:[OGAnimationComponent class]];
+}
+
+- (OGHealthComponent *)healthComponent
+{
+    return (OGHealthComponent *) [self.playerNode.entity componentForClass:[OGHealthComponent class]];
+}
+
+- (OGInventoryComponent *)inventoryComponent
+{
+    return (OGInventoryComponent *) [self.playerNode.entity componentForClass:[OGInventoryComponent class]];
+}
+
+- (OGMovementControlComponent *)playerControlComponent
+{
+    OGLevelController *levelController = [OGLevelController sharedInstance];
+    
+    id class = Nil;
+    
+    if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
+    {
+        class = [OGTapMovementControlComponent class];
+    }
+    else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
+    {
+        class = [OGTapAndStopMovementControlComponent class];
+    }
+    else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
+    {
+        class = [OGDragMovementControlComponent class];
+    }
+    
+    return (OGMovementControlComponent *) [self.playerNode.entity componentForClass:class];
+}
+
+- (OGAccessComponent *)accessComponent
+{
+    return (OGAccessComponent *) [self.portalNode.entity componentForClass:[OGAccessComponent class]];
+}
+
+- (OGTransitionComponent *)transitionComponent
+{
+    return (OGTransitionComponent *) [self.portalNode.entity componentForClass:[OGTransitionComponent class]];
+}
+
 - (NSArray *)spriteNodes
 {
     return [[self.mutableSpriteNodes copy] autorelease];
@@ -201,7 +234,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-     //   [self.stateMachine enterState:[OGDeathLevelState class]];
+        [self.healthComponent dealDamage:1];
+        [self.statusBar healthDidChange];
     }
     else if (contactType == kOGContactTypePlayerDidGrantAccess)
     {
@@ -227,7 +261,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [self checkDestroyableWithBodyA:&bodyA bodyB:&bodyB];
     
     if (bodyA.categoryBitMask == kOGCollisionBitMaskEnemy
-        || bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
+        && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
+    {
+        result = kOGContactTypeGameOver;
+    }
+    else if (bodyA.categoryBitMask == kOGCollisionBitMaskPlayer
+        && bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
     {
         result = kOGContactTypeGameOver;
     }
@@ -317,8 +356,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.paused = YES;
 }
 
-- (void)showPauseScreen
+- (void)pauseWithPauseScreen
 {
+    [self pause];
+    
     if (!self.pauseScreenNode.parent)
     {
         [self addChild:self.pauseScreenNode];
@@ -365,25 +406,28 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)update:(NSTimeInterval)currentTime
 {
+    if (self.healthComponent.currentHealth <= 0)
+    {
+        [self.stateMachine enterState:[OGDeathLevelState class]];
+    }
     
+    [super update:currentTime];
 }
 
 - (void)dealloc
 {
     [_identifier release];
     [_mutableSpriteNodes release];
-    [_accessComponent release];
     [_playerControlComponent release];
-    [_transitionComponent release];
-    [_playerAnimationComponent release];
     [_stateMachine release];
     
     [_pauseScreenNode release];
     [_gameOverScreenNode release];
     
-    [_healthComponent release];
     [_statusBar release];
-    [_inventoryComponent release];
+    
+    [_portalNode release];
+    [_playerNode release];
     
     [super dealloc];
 }

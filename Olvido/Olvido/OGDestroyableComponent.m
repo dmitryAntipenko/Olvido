@@ -21,10 +21,6 @@
         {
             [self destroyNode];
         }
-        else
-        {
-            NSLog(@"dd");
-        }
     }
 }
 
