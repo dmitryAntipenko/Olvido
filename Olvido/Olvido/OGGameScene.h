@@ -26,13 +26,15 @@
 @property (nonatomic, assign) id<OGGameSceneDelegate> sceneDelegate;
 
 @property (nonatomic, retain) OGStatusBar *statusBar;
+@property (nonatomic, retain) OGSpriteNode *playerNode;
+@property (nonatomic, retain) OGSpriteNode *portalNode;
 
 @property (nonatomic, retain) OGMovementControlComponent *playerControlComponent;
-@property (nonatomic, retain) OGAnimationComponent *playerAnimationComponent;
-@property (nonatomic, retain) OGTransitionComponent *transitionComponent;
-@property (nonatomic, retain) OGAccessComponent *accessComponent;
-@property (nonatomic, retain) OGHealthComponent *healthComponent;
-@property (nonatomic, retain) OGInventoryComponent *inventoryComponent;
+@property (nonatomic, retain, readonly) OGAnimationComponent *playerAnimationComponent;
+@property (nonatomic, retain, readonly) OGTransitionComponent *transitionComponent;
+@property (nonatomic, retain, readonly) OGAccessComponent *accessComponent;
+@property (nonatomic, retain, readonly) OGHealthComponent *healthComponent;
+@property (nonatomic, retain, readonly) OGInventoryComponent *inventoryComponent;
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 

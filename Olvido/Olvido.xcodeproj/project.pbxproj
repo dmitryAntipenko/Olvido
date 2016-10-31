@@ -441,6 +441,7 @@
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
 				EAC384141DB43A0A00235B27 /* Utils */,
 				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
+				EAA798E21DC6717600FAC9A6 /* Level2 - BigLevel */,
 				21DA96FA1DC628A000EA3293 /* Level3 - DarkLevel */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
 				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
@@ -455,6 +456,13 @@
 				EA70E51F1DB3F4620034116D /* OGEntity.m */,
 			);
 			name = Entities;
+			sourceTree = "<group>";
+		};
+		EAA798E21DC6717600FAC9A6 /* Level2 - BigLevel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Level2 - BigLevel";
 			sourceTree = "<group>";
 		};
 		EAC384141DB43A0A00235B27 /* Utils */ = {
