@@ -201,7 +201,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (contactType == kOGContactTypeGameOver)
     {
-        [self.stateMachine enterState:[OGDeathLevelState class]];
+     //   [self.stateMachine enterState:[OGDeathLevelState class]];
     }
     else if (contactType == kOGContactTypePlayerDidGrantAccess)
     {
