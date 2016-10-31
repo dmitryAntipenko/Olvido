@@ -34,11 +34,6 @@
     return [[[OGLevelState alloc] initWithLevelScene:scene] autorelease];
 }
 
-- (OGGameScene *)scene
-{
-    return _scene;
-}
-
 - (void)dealloc
 {
     [_scene release];

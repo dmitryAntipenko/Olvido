@@ -25,9 +25,4 @@
     [levelController runStoryScene];
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
 @end

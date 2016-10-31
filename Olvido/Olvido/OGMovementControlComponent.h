@@ -22,8 +22,6 @@ extern CGFloat const kOGMovementControlComponentDefaultSpeedFactor;
 
 - (void)touchMovedToPoint:(CGPoint)point;
 
-- (void)didChangeDirection;
-
 - (void)pause;
 
 - (void)resume;

@@ -118,11 +118,6 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     }
 }
 
-- (void)gameSceneDidCallFinishGameWithScore:(NSNumber *)score
-{
-    
-}
-
 - (void)gameSceneDidCallRestart
 {
     [self loadLevelWithIdentifier:self.currentGameScene.identifier];

@@ -9,11 +9,6 @@
 #import "OGMainMenuScene.h"
 #import "OGButtonNode.h"
 
-@interface OGMainMenuScene ()
-
-
-@end
-
 @implementation OGMainMenuScene
 
 - (void)didMoveToView:(SKView *)view

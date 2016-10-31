@@ -16,7 +16,6 @@
 #import "OGAccessComponent.h"
 #import "OGHealthComponent.h"
 #import "OGInventoryComponent.h"
-#import "OGDestroyableComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -55,33 +54,25 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    if (aDecoder)
-    {
-        self = [super initWithCoder:aDecoder];
-        
-        if (self)
-        {
-            _mutableSpriteNodes = [[NSMutableArray alloc] init];
-            _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                                                                     [OGStoryConclusionLevelState stateWithLevelScene:self],
-                                                                     [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                     [OGGameLevelState stateWithLevelScene:self],
-                                                                     [OGPauseLevelState stateWithLevelScene:self],
-                                                                     [OGCompleteLevelState stateWithLevelScene:self],
-                                                                     [OGDeathLevelState stateWithLevelScene:self]
-                                                                     ]];
-            _statusBar = [[OGStatusBar alloc] init];
-            
-            _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
-            _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
-        }
-    }
-    else
-    {
-        [self release];
-        self = nil;
-    }
+    self = [super initWithCoder:aDecoder];
     
+    if (self)
+    {
+        _mutableSpriteNodes = [[NSMutableArray alloc] init];
+        _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+                 [OGStoryConclusionLevelState stateWithLevelScene:self],
+                 [OGBeforeStartLevelState stateWithLevelScene:self],
+                 [OGGameLevelState stateWithLevelScene:self],
+                 [OGPauseLevelState stateWithLevelScene:self],
+                 [OGCompleteLevelState stateWithLevelScene:self],
+                 [OGDeathLevelState stateWithLevelScene:self]
+                 ]];
+        _statusBar = [[OGStatusBar alloc] init];
+        
+        _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
+        _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
+    }
+
     return self;
 }
 
@@ -258,7 +249,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     OGContactType result = kOGContactTypeNone;
     
     [self contact:contact toBodyA:&bodyA bodyB:&bodyB];
-    [self checkDestroyableWithBodyA:&bodyA bodyB:&bodyB];
     
     if (bodyA.categoryBitMask == kOGCollisionBitMaskEnemy
         && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
@@ -316,22 +306,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
     
     return result;
-}
-
-- (void)checkDestroyableWithBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
-{
-    OGDestroyableComponent *destroyableComponentBodyA = (OGDestroyableComponent *) [(*bodyA).node.entity componentForClass:[OGDestroyableComponent class]];
-    OGDestroyableComponent *destroyableComponentBodyB = (OGDestroyableComponent *) [(*bodyB).node.entity componentForClass:[OGDestroyableComponent class]];
-    
-    if (destroyableComponentBodyA)
-    {
-        [destroyableComponentBodyA dealDamage:1];
-    }
-    
-    if (destroyableComponentBodyB)
-    {
-        [destroyableComponentBodyB dealDamage:1];
-    }
 }
 
 - (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB

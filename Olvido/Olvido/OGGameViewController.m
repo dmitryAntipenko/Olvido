@@ -34,7 +34,7 @@
     
     NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
     OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
-
+    
     [view presentScene:mainMenuScene];
 }
 
@@ -63,11 +63,6 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-- (void)dealloc
-{    
-    [super dealloc];
 }
 
 @end

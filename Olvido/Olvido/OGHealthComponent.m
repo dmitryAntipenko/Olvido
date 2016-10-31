@@ -48,10 +48,4 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
     self.currentHealth = kOGHealthComponentMinHealth;
 }
 
-- (void)dealloc
-{
-    
-    [super dealloc];
-}
-
 @end

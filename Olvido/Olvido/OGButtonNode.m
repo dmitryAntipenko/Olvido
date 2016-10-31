@@ -16,7 +16,7 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 @interface OGButtonNode ()
 
 @property (nonatomic, retain) SKTexture *touchedTexture;
-@property (nonatomic, retain) SKTexture *defaultTexture;
+@property (nonatomic, retain) SKTexture *preTouchedTexture;
 
 @end
 
@@ -24,9 +24,9 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    if (!self.defaultTexture)
+    if (!self.preTouchedTexture)
     {
-        self.defaultTexture = self.texture;
+        self.preTouchedTexture = self.texture;
     }
     
     if (!self.touchedTexture)
@@ -39,7 +39,7 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    self.texture = self.defaultTexture;
+    self.texture = self.preTouchedTexture;
     
     CGPoint touchlocation = [touches.anyObject locationInNode:self.parent];
     
@@ -86,7 +86,7 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 - (void)dealloc
 {
     [_touchedTexture release];
-    [_defaultTexture release];
+    [_preTouchedTexture release];
     
     [super dealloc];
 }

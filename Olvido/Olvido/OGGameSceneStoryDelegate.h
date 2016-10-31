@@ -9,7 +9,6 @@
 #ifndef OGGameSceneStoryDelegate_h
 #define OGGameSceneStoryDelegate_h
 
-
 @protocol OGGameSceneStoryDelegate <NSObject>
 
 - (void)gameSceneDidFinishRunStory;

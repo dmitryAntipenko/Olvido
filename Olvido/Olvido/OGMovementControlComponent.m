@@ -53,11 +53,6 @@ CGFloat const kOGTapMovementControlComponentDefaultSpeed = 500;
     
 }
 
-- (void)didChangeDirection
-{
-    
-}
-
 - (SKNode *)node
 {
     return ((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node;

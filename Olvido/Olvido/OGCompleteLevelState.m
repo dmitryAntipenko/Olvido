@@ -25,7 +25,7 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    //do something when complete level;
+    
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
