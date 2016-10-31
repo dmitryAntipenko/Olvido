@@ -11,7 +11,7 @@
 
 @interface OGLevelState ()
 
-@property (nonatomic, retain, readwrite) OGGameScene *scene;
+@property (nonatomic, strong, readwrite) OGGameScene *scene;
 
 @end
 
@@ -23,7 +23,7 @@
     
     if (self)
     {
-        _scene = [scene retain];
+        _scene = scene;
     }
     
     return self;
@@ -31,14 +31,8 @@
 
 + (instancetype)stateWithLevelScene:(OGGameScene *)scene
 {
-    return [[[OGLevelState alloc] initWithLevelScene:scene] autorelease];
+    return [[OGLevelState alloc] initWithLevelScene:scene];
 }
 
-- (void)dealloc
-{
-    [_scene release];
-    
-    [super dealloc];
-}
 
 @end

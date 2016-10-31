@@ -15,9 +15,9 @@ NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
 
 @interface OGAnimationComponent ()
 
-@property (nonatomic, retain) OGAnimationState *currentState;
-@property (nonatomic, assign, readonly) SKSpriteNode *spriteNode;
-@property (nonatomic, assign) SKAction *animationAction;
+@property (nonatomic, strong) OGAnimationState *currentState;
+@property (nonatomic, weak, readonly) SKSpriteNode *spriteNode;
+@property (nonatomic, weak) SKAction *animationAction;
 
 @end
 
@@ -76,11 +76,5 @@ NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
     return (SKSpriteNode *)(((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node);
 }
 
-- (void)dealloc
-{
-    [_currentState release];
-    
-    [super dealloc];
-}
 
 @end

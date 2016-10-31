@@ -10,7 +10,7 @@
 
 @interface OGAnimationState ()
 
-@property (nonatomic, retain) NSArray<NSString *> *validNextStates;
+@property (nonatomic, strong) NSArray<NSString *> *validNextStates;
 
 @end
 
@@ -18,7 +18,7 @@
 
 + (instancetype)animationStateWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates
 {
-    return [[[OGAnimationState alloc] initWithName:name textures:textures validNextStates:validStates] autorelease];
+    return [[OGAnimationState alloc] initWithName:name textures:textures validNextStates:validStates];
 }
 
 - (instancetype)initWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates
@@ -29,15 +29,14 @@
         
         if (self)
         {
-            _name = [name retain];
-            _textures = [textures retain];
-            _validNextStates = [validStates retain];
+            _name = name;
+            _textures = textures;
+            _validNextStates = validStates;
         }
         
     }
     else
     {
-        [self release];
         self = nil;
     }
     
@@ -61,13 +60,5 @@
     return result;
 }
 
-- (void)dealloc
-{
-    [_name release];
-    [_textures release];
-    [_validNextStates release];
-    
-    [super dealloc];
-}
 
 @end

@@ -15,11 +15,11 @@ NSString *const kOGMessageComponentClearMessage = @"";
 
 @interface OGMessageComponent ()
 
-@property (nonatomic, retain) NSMutableArray<SKSpriteNode *> *sprites;
-@property (nonatomic, retain) NSMutableDictionary<NSNumber *, NSString *> *messages;
-@property (nonatomic, retain) SKSpriteNode *target;
+@property (nonatomic, strong) NSMutableArray<SKSpriteNode *> *sprites;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSString *> *messages;
+@property (nonatomic, strong) SKSpriteNode *target;
 @property (nonatomic, assign) CGFloat minDistance;
-@property (nonatomic, retain) SKLabelNode *messageLabel;
+@property (nonatomic, strong) SKLabelNode *messageLabel;
 
 @end
 
@@ -33,7 +33,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
         
         if (self)
         {
-            _target = [target retain];
+            _target = target;
             _minDistance = distance;
             _messageLabel = [[SKLabelNode alloc] init];
             
@@ -43,7 +43,6 @@ NSString *const kOGMessageComponentClearMessage = @"";
     }
     else
     {
-        [self release];
         self = nil;
     }
     
@@ -92,14 +91,5 @@ NSString *const kOGMessageComponentClearMessage = @"";
     }
 }
 
-- (void)dealloc
-{
-    [_target release];
-    [_messages release];
-    [_messageLabel release];
-    [_sprites release];
-    
-    [super dealloc];
-}
 
 @end

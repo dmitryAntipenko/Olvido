@@ -32,11 +32,5 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
 }
 
 
-- (void)dealloc
-{
-    [_physicsBody release];
-    
-    [super dealloc];
-}
 
 @end

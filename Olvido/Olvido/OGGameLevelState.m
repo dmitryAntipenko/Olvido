@@ -20,7 +20,7 @@
     
     if (scene)
     {
-        state = [[[OGGameLevelState alloc] initWithLevelScene:scene] autorelease];
+        state = [[OGGameLevelState alloc] initWithLevelScene:scene];
     }
     
     return state;

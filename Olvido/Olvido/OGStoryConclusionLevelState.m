@@ -18,7 +18,7 @@
     
     if (scene)
     {
-        state = [[[OGStoryConclusionLevelState alloc] initWithLevelScene:scene] autorelease];
+        state = [[OGStoryConclusionLevelState alloc] initWithLevelScene:scene];
     }
     
     return state;

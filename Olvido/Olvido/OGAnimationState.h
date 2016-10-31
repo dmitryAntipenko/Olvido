@@ -10,8 +10,8 @@
 
 @interface OGAnimationState : NSObject
 
-@property (nonatomic, retain, readonly) NSString *name;
-@property (nonatomic, retain, readonly) NSArray<SKTexture *> *textures;
+@property (nonatomic, strong, readonly) NSString *name;
+@property (nonatomic, strong, readonly) NSArray<SKTexture *> *textures;
 
 + (instancetype)animationStateWithName:(NSString *)name textures:(NSArray<SKTexture *> *)textures validNextStates:(NSArray<NSString *> *)validStates;
 

@@ -11,7 +11,7 @@
 
 @interface OGStoryScene : SKScene
 
-@property (nonatomic, retain) id<OGGameSceneStoryDelegate> sceneDelegate;
+@property (nonatomic, strong) id<OGGameSceneStoryDelegate> sceneDelegate;
 
 - (void)skipStory;
 

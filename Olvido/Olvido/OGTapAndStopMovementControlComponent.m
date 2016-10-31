@@ -78,10 +78,6 @@ NSString *const kOGTapAndStopMovementControlComponentMovingActionKey = @"movingA
     self.speedFactor = self.pausedSpeedFactor;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 
 @end

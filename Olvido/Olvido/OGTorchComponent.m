@@ -15,7 +15,7 @@ NSString *const kOGTorchComponentLightName = @"light";
 @interface OGTorchComponent ()
 
 @property (nonatomic, getter=isTurnedOn) BOOL turnedOn;
-@property (nonatomic, assign) SKNode *torchNode;
+@property (nonatomic, weak) SKNode *torchNode;
 
 @end
 

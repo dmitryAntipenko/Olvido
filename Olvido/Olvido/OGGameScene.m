@@ -43,10 +43,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @interface OGGameScene ()
 
-@property (nonatomic, retain) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
-@property (nonatomic, retain) GKStateMachine *stateMachine;
-@property (nonatomic, retain) SKReferenceNode *pauseScreenNode;
-@property (nonatomic, retain) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
+@property (nonatomic, strong) GKStateMachine *stateMachine;
+@property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
+@property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
 
 @end
 
@@ -67,6 +67,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                  [OGCompleteLevelState stateWithLevelScene:self],
                  [OGDeathLevelState stateWithLevelScene:self]
                  ]];
+        
         _statusBar = [[OGStatusBar alloc] init];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
@@ -92,7 +93,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                 tapMovementComponent.speedFactor = 1.0;
                 [sprite.entity addComponent:tapMovementComponent];
                 
-                [tapMovementComponent release];
             }
             else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
             {
@@ -100,14 +100,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                 tapAndStopMovementComponent.speedFactor = 1.0;
                 [sprite.entity addComponent:tapAndStopMovementComponent];
                 
-                [tapAndStopMovementComponent release];
             }
             else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
             {
                 OGDragMovementControlComponent *dragMovementComponent = [[OGDragMovementControlComponent alloc] init];
                 [sprite.entity addComponent:dragMovementComponent];
                 
-                [dragMovementComponent release];
             }
             
         }
@@ -205,7 +203,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (NSArray *)spriteNodes
 {
-    return [[self.mutableSpriteNodes copy] autorelease];
+    return [self.mutableSpriteNodes copy];
 }
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode
@@ -388,22 +386,5 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [super update:currentTime];
 }
 
-- (void)dealloc
-{
-    [_identifier release];
-    [_mutableSpriteNodes release];
-    [_playerControlComponent release];
-    [_stateMachine release];
-    
-    [_pauseScreenNode release];
-    [_gameOverScreenNode release];
-    
-    [_statusBar release];
-    
-    [_portalNode release];
-    [_playerNode release];
-    
-    [super dealloc];
-}
 
 @end

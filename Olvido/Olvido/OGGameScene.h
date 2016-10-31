@@ -22,19 +22,19 @@
 
 @property (nonatomic, copy) NSNumber *identifier;
 
-@property (nonatomic, retain, readonly) NSArray<OGSpriteNode *> *spriteNodes;
-@property (nonatomic, assign) id<OGGameSceneDelegate> sceneDelegate;
+@property (nonatomic, strong, readonly) NSArray<OGSpriteNode *> *spriteNodes;
+@property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 
-@property (nonatomic, retain) OGStatusBar *statusBar;
-@property (nonatomic, retain) OGSpriteNode *playerNode;
-@property (nonatomic, retain) OGSpriteNode *portalNode;
+@property (nonatomic, strong) OGStatusBar *statusBar;
+@property (nonatomic, strong) OGSpriteNode *playerNode;
+@property (nonatomic, strong) OGSpriteNode *portalNode;
 
-@property (nonatomic, retain) OGMovementControlComponent *playerControlComponent;
-@property (nonatomic, retain, readonly) OGAnimationComponent *playerAnimationComponent;
-@property (nonatomic, retain, readonly) OGTransitionComponent *transitionComponent;
-@property (nonatomic, retain, readonly) OGAccessComponent *accessComponent;
-@property (nonatomic, retain, readonly) OGHealthComponent *healthComponent;
-@property (nonatomic, retain, readonly) OGInventoryComponent *inventoryComponent;
+@property (nonatomic, strong) OGMovementControlComponent *playerControlComponent;
+@property (nonatomic, strong, readonly) OGAnimationComponent *playerAnimationComponent;
+@property (nonatomic, strong, readonly) OGTransitionComponent *transitionComponent;
+@property (nonatomic, strong, readonly) OGAccessComponent *accessComponent;
+@property (nonatomic, strong, readonly) OGHealthComponent *healthComponent;
+@property (nonatomic, strong, readonly) OGInventoryComponent *inventoryComponent;
 
 - (void)addSpriteNode:(OGSpriteNode *)spriteNode;
 
