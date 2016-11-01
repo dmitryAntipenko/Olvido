@@ -11,6 +11,7 @@
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
+NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 @interface OGButtonNode ()
 
@@ -59,7 +60,16 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
         
         if ([self.scene respondsToSelector:selector])
         {
-            [self.scene performSelector:selector withObject:self];
+            [self.scene performSelector:selector];
+        }
+    }
+    else
+    {
+        SEL defaultSelector = NSSelectorFromString(kOGButtonNodeDefaultSelectorName);
+        
+        if ([self.scene respondsToSelector:defaultSelector])
+        {
+            [self.scene performSelector:defaultSelector withObject:self];
         }
     }
 }

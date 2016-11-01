@@ -8,6 +8,7 @@
 
 #import "OGMapMenuScene.h"
 #import "OGLevelController.h"
+#import "OGButtonNode.h"
 
 @implementation OGMapMenuScene
 
@@ -23,6 +24,11 @@
     [levelController loadLevelWithIdentifier:@0];
     
     [levelController runStoryScene];
+}
+
+- (void)onButtonClick:(OGButtonNode *)buttonNode
+{
+    
 }
 
 @end
