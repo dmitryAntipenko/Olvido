@@ -12,8 +12,8 @@
 
 @interface OGStatusBar : NSObject
 
-@property (nonatomic, retain) SKSpriteNode *statusBarSprite;
-@property (nonatomic, assign) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) SKSpriteNode *statusBarSprite;
+@property (nonatomic, weak) OGHealthComponent *healthComponent;
 
 - (void)createContents;
 - (void)healthDidChange;

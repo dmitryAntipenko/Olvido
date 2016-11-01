@@ -13,7 +13,7 @@
 @interface OGInventoryComponent : GKComponent
 
 @property (nonatomic, assign) GKInspectable NSUInteger capacity;
-@property (nonatomic, retain, readonly) NSArray<OGSpriteNode *> *inventory;
+@property (nonatomic, strong, readonly) NSArray<OGSpriteNode *> *inventory;
 
 - (void)addItem:(OGSpriteNode *)item;
 - (void)removeItem:(OGSpriteNode *)item;

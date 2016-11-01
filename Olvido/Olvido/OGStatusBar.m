@@ -21,11 +21,11 @@ NSString *const kOGStatusBarPauseButtonValue = @"pauseWithPauseScreen";
 
 @interface OGStatusBar ()
 
-@property (nonatomic, retain) SKTexture *fullHealthTexture;
-@property (nonatomic, retain) SKTexture *emptyHealthTexture;
+@property (nonatomic, strong) SKTexture *fullHealthTexture;
+@property (nonatomic, strong) SKTexture *emptyHealthTexture;
 
 @property (nonatomic, assign) NSUInteger currentHealth;
-@property (nonatomic, retain) NSMutableArray<SKSpriteNode *> *healthSprites;
+@property (nonatomic, strong) NSMutableArray<SKSpriteNode *> *healthSprites;
 
 @end
 
@@ -38,8 +38,8 @@ NSString *const kOGStatusBarPauseButtonValue = @"pauseWithPauseScreen";
     if (self)
     {
         _healthSprites = [[NSMutableArray alloc] init];
-        _fullHealthTexture = [[SKTexture textureWithImageNamed:kOGStatusBarHealthFullTextureName] retain];
-        _emptyHealthTexture = [[SKTexture textureWithImageNamed:kOGStatusBarHealthEmptyTextureName] retain];
+        _fullHealthTexture = [SKTexture textureWithImageNamed:kOGStatusBarHealthFullTextureName];
+        _emptyHealthTexture = [SKTexture textureWithImageNamed:kOGStatusBarHealthEmptyTextureName];
         
         _currentHealth = kOGStatusBarDefaultMaxHealth;
     }
@@ -125,14 +125,5 @@ NSString *const kOGStatusBarPauseButtonValue = @"pauseWithPauseScreen";
     self.currentHealth = self.healthComponent.currentHealth;
 }
 
-- (void)dealloc
-{
-    [_healthSprites release];
-    [_fullHealthTexture release];
-    [_emptyHealthTexture release];
-    [_statusBarSprite release];
-    
-    [super dealloc];
-}
 
 @end

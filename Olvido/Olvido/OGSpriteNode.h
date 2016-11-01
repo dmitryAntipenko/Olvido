@@ -10,6 +10,6 @@
 
 @interface OGSpriteNode : SKSpriteNode
 
-@property (nonatomic, retain) GKEntity *entity;
+@property (nonatomic, strong) GKEntity *entity;
 
 @end

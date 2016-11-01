@@ -40,8 +40,8 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 @interface OGLevelController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray *levelMap;
-@property (nonatomic, retain, readwrite) OGGameScene *currentGameScene;
-@property (nonatomic, retain, readwrite) OGStoryScene *currentStoryScene;
+@property (nonatomic, strong, readwrite) OGGameScene *currentGameScene;
+@property (nonatomic, strong, readwrite) OGStoryScene *currentStoryScene;
 
 @end
 
@@ -185,14 +185,5 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     self.currentStoryScene = storyScene;
 }
 
-- (void)dealloc
-{
-    [_levelMap release];
-    [_currentGameScene release];
-    [_currentStoryScene release];
-    [_controlType release];
-    
-    [super dealloc];
-}
 
 @end

@@ -13,7 +13,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 @interface OGInventoryComponent ()
 
-@property (nonatomic, retain, readwrite) NSMutableArray<OGSpriteNode *> *mutableInventory;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGSpriteNode *> *mutableInventory;
 
 @end
 
@@ -23,7 +23,6 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 {
     NSMutableArray *inventory = [[NSMutableArray alloc] init];
     self.mutableInventory = inventory;
-    [inventory release];
     
     self.capacity = kOGInventoryComponentDefaultCapacity;
 }
@@ -46,14 +45,8 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 - (NSArray<OGSpriteNode *> *)inventory
 {
-    return [[self.mutableInventory copy] autorelease];
+    return [self.mutableInventory copy];
 }
 
-- (void)dealloc
-{
-    [_mutableInventory release];
-    
-    [super dealloc];
-}
 
 @end

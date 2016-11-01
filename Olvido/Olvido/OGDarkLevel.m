@@ -85,9 +85,5 @@
     [node addChild:darkness];
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 @end

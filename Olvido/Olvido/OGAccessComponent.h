@@ -11,7 +11,7 @@
 
 @interface OGAccessComponent : GKComponent
 
-@property (nonatomic, assign) id<OGAccessComponentDelegate> componentDelegate;
+@property (nonatomic, weak) id<OGAccessComponentDelegate> componentDelegate;
 
 - (void)grantAccessWithCompletionBlock:(void (^)())completion;
 

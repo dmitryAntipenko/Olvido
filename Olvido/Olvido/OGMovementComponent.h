@@ -15,7 +15,7 @@
 @property (nonatomic, assign) GKInspectable CGFloat dx;
 @property (nonatomic, assign) GKInspectable CGFloat dy;
 
-@property (nonatomic, retain) SKPhysicsBody *physicsBody;
+@property (nonatomic, strong) SKPhysicsBody *physicsBody;
 
 - (void)startMovement;
 

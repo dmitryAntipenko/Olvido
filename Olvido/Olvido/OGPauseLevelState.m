@@ -19,7 +19,7 @@
     
     if (scene)
     {
-        state = [[[OGPauseLevelState alloc] initWithLevelScene:scene] autorelease];
+        state = [[OGPauseLevelState alloc] initWithLevelScene:scene];
     }
     
     return state;

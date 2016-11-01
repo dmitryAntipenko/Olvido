@@ -13,10 +13,10 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 @interface OGTimer ()
 
-@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, retain) NSDate *pauseDate;
-@property (nonatomic, retain) NSDate *previouseFireDate;
+@property (nonatomic, strong) NSDate *pauseDate;
+@property (nonatomic, strong) NSDate *previouseFireDate;
 @property (nonatomic, assign) BOOL paused;
 
 @end
@@ -62,11 +62,7 @@ NSInteger const kOGTimerTicksIncrement = 1;
 - (void)dealloc
 {
     [_timer invalidate];
-    [_timer release];
-    [_pauseDate release];
-    [_previouseFireDate release];
     
-    [super dealloc];
 }
 
 @end

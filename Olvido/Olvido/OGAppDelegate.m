@@ -14,7 +14,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 @interface OGAppDelegate ()
 
-@property (nonatomic, retain) OGGameViewController *gameViewController;
+@property (nonatomic, strong) OGGameViewController *gameViewController;
 
 @end
 
@@ -28,7 +28,6 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window = window;
-    [window release];
     
     self.window.rootViewController = self.gameViewController;
     [self.window makeKeyAndVisible];
@@ -36,13 +35,6 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
     return YES;
 }
 
-- (void)dealloc
-{
-    [_window release];
-    [_gameViewController release];
-    
-    [super dealloc];
-}
 
 
 @end

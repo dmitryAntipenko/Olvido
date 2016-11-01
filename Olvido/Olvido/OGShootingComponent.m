@@ -12,10 +12,10 @@ CGFloat const kOGShootingComponentDefaultShootingSpeed = 2.0;
 
 @interface OGShootingComponent ()
 
-@property (nonatomic, retain) SKNode *shell;
-@property (nonatomic, retain) SKNode *shooter;
+@property (nonatomic, strong) SKNode *shell;
+@property (nonatomic, strong) SKNode *shooter;
 @property (nonatomic, assign) NSTimeInterval lifeTime;
-@property (nonatomic, retain) NSTimer *shootingTimer;
+@property (nonatomic, strong) NSTimer *shootingTimer;
 
 @end
 
@@ -29,14 +29,13 @@ CGFloat const kOGShootingComponentDefaultShootingSpeed = 2.0;
     {
         if (shell && shooter && time > 0.0)
         {
-            _shell = [shell retain];
-            _shooter = [shooter retain];
+            _shell = shell;
+            _shooter = shooter;
             _lifeTime = time;
             _shootingSpeed = kOGShootingComponentDefaultShootingSpeed;
         }
         else
         {
-            [self release];
             self = nil;
         }
     }
@@ -81,11 +80,7 @@ CGFloat const kOGShootingComponentDefaultShootingSpeed = 2.0;
 - (void)dealloc
 {
     [_shootingTimer invalidate];
-    [_shootingTimer release];
-    [_shell release];
-    [_shooter release];
     
-    [super dealloc];
 }
 
 @end

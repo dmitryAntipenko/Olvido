@@ -26,11 +26,5 @@ NSString *const kOGStorySceneDarknessNode = @"Darkness";
     [self.sceneDelegate gameSceneDidFinishRunStory];
 }
 
-- (void)dealloc
-{
-    [_sceneDelegate release];
-    
-    [super dealloc];
-}
 
 @end

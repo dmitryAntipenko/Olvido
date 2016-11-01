@@ -73,9 +73,5 @@
     self.speedFactor = self.pausedSpeedFactor;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 @end

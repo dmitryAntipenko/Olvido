@@ -15,8 +15,8 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 @interface OGButtonNode ()
 
-@property (nonatomic, retain) SKTexture *touchedTexture;
-@property (nonatomic, retain) SKTexture *preTouchedTexture;
+@property (nonatomic, strong) SKTexture *touchedTexture;
+@property (nonatomic, strong) SKTexture *preTouchedTexture;
 
 @end
 
@@ -83,12 +83,5 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
     return YES;
 }
 
-- (void)dealloc
-{
-    [_touchedTexture release];
-    [_preTouchedTexture release];
-    
-    [super dealloc];
-}
 
 @end
