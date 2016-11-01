@@ -9,6 +9,10 @@
 #import "OGMapMenuScene.h"
 #import "OGLevelController.h"
 #import "OGButtonNode.h"
+#import "OGConstants.h"
+
+NSString *const kOGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
+NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 @implementation OGMapMenuScene
 
@@ -26,9 +30,28 @@
     [levelController runStoryScene];
 }
 
-- (void)onButtonClick:(OGButtonNode *)buttonNode
+- (void)onButtonClick:(OGButtonNode *)button
 {
+    NSString *sceneFilePath = nil;
     
+    if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
+    {
+        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+    }
+    else if ([button.name isEqualToString:kOGMapMenuSceneShopButtonNodeName])
+    {
+        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGShopMenuSceneFileName ofType:kOGSceneFileExtension];
+    }
+    
+    if (sceneFilePath)
+    {
+        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
+        
+        if (nextScene)
+        {
+            [self.view presentScene:nextScene];
+        }
+    }
 }
 
 @end
