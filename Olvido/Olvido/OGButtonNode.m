@@ -10,7 +10,6 @@
 #import "OGConstants.h"
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
-NSString *const kOGButtonNodeUserDataNextSceneKey = @"nextScene";
 NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 @interface OGButtonNode ()
@@ -24,17 +23,18 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    if (!self.preTouchedTexture)
-    {
-        self.preTouchedTexture = self.texture;
-    }
-    
-    if (!self.touchedTexture)
-    {
-        self.touchedTexture = [SKTexture textureWithImageNamed:[self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey]];
-    }
-    
+    self.preTouchedTexture = self.texture;
     self.texture = self.touchedTexture;
+}
+
+- (SKTexture *)touchedTexture
+{
+    if (!_touchedTexture)
+    {
+        _touchedTexture = [SKTexture textureWithImageNamed:[self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey]];
+    }
+    
+    return _touchedTexture;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -51,20 +51,6 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 
 - (void)doAction
 {
-    NSString *nextSceneName = [self.userData objectForKey:kOGButtonNodeUserDataNextSceneKey];
-    
-    if (nextSceneName)
-    {
-        NSString *nextSceneFilePath = [[NSBundle mainBundle] pathForResource:nextSceneName ofType:kOGSceneFileExtension];
-        
-        if (nextSceneFilePath)
-        {
-            SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:nextSceneFilePath];
-            
-            [self.scene.view presentScene:nextScene];
-        }
-    }
-    
     NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUserDataSelectorKey];
     
     if (selectorName)
@@ -73,7 +59,7 @@ NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
         
         if ([self.scene respondsToSelector:selector])
         {
-            [self.scene performSelector:selector];
+            [self.scene performSelector:selector withObject:self];
         }
     }
 }
