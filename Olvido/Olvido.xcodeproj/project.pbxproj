@@ -267,12 +267,13 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
-		1B36E4C91DC624010080D80B /* PauseScreen */ = {
+		1B36E4C91DC624010080D80B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 				1B36E4C71DC618100080D80B /* OGPauseScreen.sks */,
 			);
-			name = PauseScreen;
+			name = Screens;
 			sourceTree = "<group>";
 		};
 		1B36E4D11DC639490080D80B /* AnimationComponent */ = {
@@ -384,14 +385,13 @@
 		EA70E52C1DB3F4770034116D /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				1B36E4C91DC624010080D80B /* PauseScreen */,
+				1B36E4C91DC624010080D80B /* Screens */,
 				EA70E5221DB3F4620034116D /* OGSpriteNode.h */,
 				EA70E5231DB3F4620034116D /* OGSpriteNode.m */,
 				1B27EA9D1DC092DA00E9CA23 /* OGButtonNode.h */,
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
 				EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */,
-				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
