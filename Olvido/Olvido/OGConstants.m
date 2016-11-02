@@ -19,6 +19,9 @@ CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
 NSString *const kOGSceneFileExtension = @"sks";
 NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
+NSString *const kOGMapMenuSceneFileName = @"OGMapMenuScene";
+NSString *const kOGSettingsMenuSceneFileName = @"OGSettingsMenuScene";
+NSString *const kOGShopMenuSceneFileName = @"OGShopMenuScene";
 
 CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 
@@ -56,18 +59,6 @@ NSString *const kOGObstacleSpriteName = @"Obstacle";
     CGFloat angle = (rand() / (CGFloat) RAND_MAX) * 2 * M_PI;
     
     return CGVectorMake(cosf(angle), sinf(angle));
-}
-
-+ (SKTransition *)defaultTransion
-{
-    static SKTransition *transition;
-    
-    if (!transition)
-    {
-        transition = [SKTransition fadeWithDuration:kOGConstantsDefaultTransitionTimeDuration];
-    }
-    
-    return transition;
 }
 
 @end

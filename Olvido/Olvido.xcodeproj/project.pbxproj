@@ -242,12 +242,38 @@
 			name = LevelStateMachine;
 			sourceTree = "<group>";
 		};
-		1B36E4C91DC624010080D80B /* PauseScreen */ = {
+		1B28BEAA1DC8938100EC0BBD /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				215C4BE31DC268C2000DF29F /* SettingsMenu */,
+				215C4BDD1DC2576E000DF29F /* ShopMenu */,
+				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
+				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		1B28BEAB1DC893A000EC0BBD /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				210C996F1DB8E39E00704C62 /* StoryLevelScenes */,
+				EAC384141DB43A0A00235B27 /* Utils */,
+				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
+				EAA798E21DC6717600FAC9A6 /* Level2 - BigLevel */,
+				21DA96FA1DC628A000EA3293 /* Level3 - DarkLevel */,
+				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
+				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		1B36E4C91DC624010080D80B /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 				1B36E4C71DC618100080D80B /* OGPauseScreen.sks */,
 			);
-			name = PauseScreen;
+			name = Screens;
 			sourceTree = "<group>";
 		};
 		1B36E4D11DC639490080D80B /* AnimationComponent */ = {
@@ -359,14 +385,13 @@
 		EA70E52C1DB3F4770034116D /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				1B36E4C91DC624010080D80B /* PauseScreen */,
+				1B36E4C91DC624010080D80B /* Screens */,
 				EA70E5221DB3F4620034116D /* OGSpriteNode.h */,
 				EA70E5231DB3F4620034116D /* OGSpriteNode.m */,
 				1B27EA9D1DC092DA00E9CA23 /* OGButtonNode.h */,
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
 				EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */,
-				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -420,17 +445,8 @@
 		EA976D051D9EDBF8003B77FC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				210C996F1DB8E39E00704C62 /* StoryLevelScenes */,
-				215C4BE31DC268C2000DF29F /* SettingsMenu */,
-				215C4BDD1DC2576E000DF29F /* ShopMenu */,
-				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
-				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
-				EAC384141DB43A0A00235B27 /* Utils */,
-				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
-				EAA798E21DC6717600FAC9A6 /* Level2 - BigLevel */,
-				21DA96FA1DC628A000EA3293 /* Level3 - DarkLevel */,
-				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
-				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
+				1B28BEAB1DC893A000EC0BBD /* Game */,
+				1B28BEAA1DC8938100EC0BBD /* Menu */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -500,7 +516,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -712,11 +728,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -730,11 +746,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

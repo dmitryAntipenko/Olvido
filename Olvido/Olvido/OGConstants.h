@@ -27,13 +27,16 @@ extern NSString *const kOGPortalSpriteName;
 extern NSString *const kOGEnemySpriteName;
 extern NSString *const kOGObstacleSpriteName;
 
+extern NSString *const kOGMainMenuSceneFileName;
+extern NSString *const kOGMapMenuSceneFileName;
+extern NSString *const kOGSettingsMenuSceneFileName;
+extern NSString *const kOGShopMenuSceneFileName;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;
 + (CGVector)randomVectorWithLength:(CGFloat)length;
 + (CGVector)randomVector;
-
-+ (SKTransition *)defaultTransion;
 
 @end
 

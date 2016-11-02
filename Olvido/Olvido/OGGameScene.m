@@ -60,20 +60,20 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         _mutableSpriteNodes = [[NSMutableArray alloc] init];
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                 [OGStoryConclusionLevelState stateWithLevelScene:self],
-                 [OGBeforeStartLevelState stateWithLevelScene:self],
-                 [OGGameLevelState stateWithLevelScene:self],
-                 [OGPauseLevelState stateWithLevelScene:self],
-                 [OGCompleteLevelState stateWithLevelScene:self],
-                 [OGDeathLevelState stateWithLevelScene:self]
-                 ]];
+                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
+                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                 [OGGameLevelState stateWithLevelScene:self],
+                                                                 [OGPauseLevelState stateWithLevelScene:self],
+                                                                 [OGCompleteLevelState stateWithLevelScene:self],
+                                                                 [OGDeathLevelState stateWithLevelScene:self]
+                                                                 ]];
         
         _statusBar = [[OGStatusBar alloc] init];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
     }
-
+    
     return self;
 }
 
@@ -254,7 +254,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         result = kOGContactTypeGameOver;
     }
     else if (bodyA.categoryBitMask == kOGCollisionBitMaskPlayer
-        && bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
+             && bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
     {
         result = kOGContactTypeGameOver;
     }
@@ -373,6 +373,23 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     if (!self.gameOverScreenNode.parent)
     {
         [self addChild:self.gameOverScreenNode];
+    }
+}
+
+- (void)onMenuButtonClick
+{
+    NSString *sceneFilePath = nil;
+    
+    sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
+    
+    if (sceneFilePath)
+    {
+        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
+        
+        if (nextScene)
+        {
+            [self.view presentScene:nextScene];
+        }
     }
 }
 
