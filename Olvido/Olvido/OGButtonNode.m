@@ -54,6 +54,9 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 {
     NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUserDataSelectorKey];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    
     if (selectorName)
     {
         SEL selector = NSSelectorFromString(selectorName);
@@ -72,6 +75,8 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
             [self.scene performSelector:defaultSelector withObject:self];
         }
     }
+    
+#pragma clang diagnostic pop
 }
 
 - (BOOL)isUserInteractionEnabled
