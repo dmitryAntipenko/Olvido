@@ -14,18 +14,24 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    CGPoint displacement;
+    CGPoint direction;
     
-    if (location.x < self.size.width / 2.0)
+    if (location.x < 0.0)
     {
-        displacement = CGPointMake(-1.0, 0.0);
+        direction = CGPointMake(-1.0, 0.0);
     }
     else
     {
-        displacement = CGPointMake(1.0, 0.0);
+        direction = CGPointMake(1.0, 0.0);
     }
     
-    [self.inputSourceDelegate didUpdateDestinationPoint:location];
+    [self.inputSourceDelegate didUpdateDirection:direction];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint direction = CGPointZero;
+    [self.inputSourceDelegate didUpdateDirection:direction];
 }
 
 - (BOOL)isUserInteractionEnabled

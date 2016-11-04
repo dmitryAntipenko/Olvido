@@ -11,6 +11,7 @@
 #import "OGConstants.h"
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
+CGFloat const kOGMovementComponentDefaultSpeed = 200;
 
 @interface OGMovementComponent ()
 
@@ -20,6 +21,18 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
 
 @implementation OGMovementComponent
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _speedFactor = kOGMovementComponentDefaultSpeedFactor;
+    }
+    
+    return self;
+}
+
 - (void)didAddToEntity
 {
     [super didAddToEntity];
@@ -27,29 +40,14 @@ CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
     self.renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
 }
 
-- (void)setSpeedFactor:(CGFloat)speedFactor
-{
-    _speedFactor = speedFactor;
-    
-//    CGVector velocity = self.physicsBody.velocity;
-//    self.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
-}
-
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     [super updateWithDeltaTime:seconds];
     
-    CGFloat deltaX = self.renderComponent.sprite.position.x - self.destinationPoint.x;
-    CGFloat deltaY = self.renderComponent.sprite.position.y - self.destinationPoint.y;
+    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.direction.x, 0.0);
     
-    CGFloat angle = atan(deltaY / deltaX);
-    
-    CGFloat dx = cosf(angle);
-    CGFloat dy = sinf(angle);
-    
-    CGVector force = CGVectorMake(dx * 300, dy * 300);
-    
-    [self.renderComponent.sprite.physicsBody applyForce:force];
+    self.renderComponent.sprite.physicsBody.velocity = force;
+//    [self.renderComponent.sprite.physicsBody applyForce:force];
 }
 
 @end

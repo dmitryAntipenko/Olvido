@@ -25,25 +25,26 @@
     if (self)
     {
         _render = [[OGRenderComponent alloc] init];
+        [self addComponent:_render];
         
         _health = [[OGHealthComponent alloc] init];
         _health.maxHealth = playerConfiguration.maxHealth;
         _health.currentHealth = playerConfiguration.currentHealth;
+        [self addComponent:_health];
         
         _movement = [[OGMovementComponent alloc] init];
+        [self addComponent:_movement];
         
         _input = [[OGInputComponent alloc] init];
         _input.enabled = YES;
+        [self addComponent:_input];
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
-        _animation = [[OGAnimationComponent alloc] init];
         
-        [self addComponent:_render];
-        [self addComponent:_health];
-        [self addComponent:_movement];
-        [self addComponent:_input];
-        //[self addComponent:_intelligence];
+        _animation = [[OGAnimationComponent alloc] init];
         [self addComponent:_animation];
+        
+        //[self addComponent:_intelligence];
     }
     
     return self;
