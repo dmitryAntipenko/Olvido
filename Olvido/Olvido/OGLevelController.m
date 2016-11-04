@@ -103,20 +103,20 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 #pragma mark - GameSceneDelegate methods
 
-- (void)gameSceneDidCallFinish
-{
-    NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
-    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalIdentifier:portalIdentifier
-                                                                  inLevel:self.currentGameScene.identifier];
-    
-    [self loadLevelWithIdentifier:nextLevelId];
-    
-    if (self.currentGameScene)
-    {
-        SKTransition *transition = [SKTransition doorwayWithDuration:kOGSceneControllerTransitionDuration];
-        [self.view presentScene:self.currentGameScene transition:transition];
-    }
-}
+//- (void)gameSceneDidCallFinish
+//{
+//    NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
+//    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalIdentifier:portalIdentifier
+//                                                                  inLevel:self.currentGameScene.identifier];
+//    
+//    [self loadLevelWithIdentifier:nextLevelId];
+//    
+//    if (self.currentGameScene)
+//    {
+//        SKTransition *transition = [SKTransition doorwayWithDuration:kOGSceneControllerTransitionDuration];
+//        [self.view presentScene:self.currentGameScene transition:transition];
+//    }
+//}
 
 - (void)gameSceneDidCallRestart
 {
@@ -169,7 +169,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
         OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
         spriteNode.entity = (GKEntity *) nodeComponent.entity;
         
-        [scene addSpriteNode:spriteNode];
+//        [scene addSpriteNode:spriteNode];
     }
     
     scene.scaleMode = SKSceneScaleModeAspectFit;

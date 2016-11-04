@@ -9,13 +9,11 @@
 #import "OGGameScene.h"
 #import "OGContactType.h"
 #import "OGCollisionBitMask.h"
-#import "OGSpriteNode.h"
 #import "OGConstants.h"
+#import "OGTouchControlInputNode.h"
 
-#import "OGTransitionComponent.h"
-#import "OGAccessComponent.h"
-#import "OGHealthComponent.h"
-#import "OGInventoryComponent.h"
+#import "OGPlayerEntity.h"
+#import "OGRenderComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -43,10 +41,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @interface OGGameScene ()
 
-@property (nonatomic, strong) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+
+@property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
 @end
 
@@ -58,7 +57,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
-        _mutableSpriteNodes = [[NSMutableArray alloc] init];
+        _player = [[OGPlayerEntity alloc] init];
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
                                                                  [OGStoryConclusionLevelState stateWithLevelScene:self],
                                                                  [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -79,55 +78,21 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)didMoveToView:(SKView *)view
 {
-    self.physicsWorld.contactDelegate = self;
+    [super didMoveToView:view];
     
-    for (OGSpriteNode *sprite in self.spriteNodes)
-    {
-        if ([sprite.name isEqualToString:kOGPlayerSpriteName])
-        {
-            OGLevelController *levelController = [OGLevelController sharedInstance];
-            
-            if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
-            {
-                OGTapMovementControlComponent *tapMovementComponent = [[OGTapMovementControlComponent alloc] init];
-                tapMovementComponent.speedFactor = 1.0;
-                [sprite.entity addComponent:tapMovementComponent];
-                
-            }
-            else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
-            {
-                OGTapAndStopMovementControlComponent *tapAndStopMovementComponent = [[OGTapAndStopMovementControlComponent alloc] init];
-                tapAndStopMovementComponent.speedFactor = 1.0;
-                [sprite.entity addComponent:tapAndStopMovementComponent];
-                
-            }
-            else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
-            {
-                OGDragMovementControlComponent *dragMovementComponent = [[OGDragMovementControlComponent alloc] init];
-                [sprite.entity addComponent:dragMovementComponent];
-                
-            }
-            
-        }
-        else if ([sprite.name isEqualToString:kOGEnemySpriteName])
-        {
-            OGAnimationState *animationState = [OGAnimationState animationStateWithName:@"mooving"
-                                                                               textures:@[
-                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 1"],
-                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 2"]
-                                                                                          ]
-                                                                        validNextStates:nil];
-            
-            OGAnimationComponent *animationComponent = (OGAnimationComponent *)[sprite.entity componentForClass:[OGAnimationComponent class]];
-            [animationComponent playNextAnimationState:animationState];
-        }
-    }
+    self.physicsWorld.contactDelegate = self;
+    self.lastUpdateTimeInterval = 0.0;
+    
+    self.player.render.sprite = (SKSpriteNode *) [self childNodeWithName:@"Player"];
     
     [self createStatusBar];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
     
-    [super didMoveToView:view];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] init];
+    inputNode.size = self.size;
+    inputNode.inputSourceDelegate = self.player.input;
+    [self addChild:inputNode];
 }
 
 - (void)createStatusBar
@@ -137,108 +102,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     if (statusBar)
     {
         self.statusBar.statusBarSprite = statusBar;
-        self.statusBar.healthComponent = self.healthComponent;
+//        self.statusBar.healthComponent = self.healthComponent;
         [self.statusBar createContents];
     }
 }
 
-#pragma mark - Getters & Setters
-
-- (OGSpriteNode *)playerNode
-{
-    return (OGSpriteNode *) [self childNodeWithName:kOGPlayerSpriteName];
-}
-
-- (OGSpriteNode *)portalNode
-{
-    return (OGSpriteNode *) [self childNodeWithName:kOGPortalSpriteName];
-}
-
-- (OGAnimationComponent *)playerAnimationComponent
-{
-    return (OGAnimationComponent *) [self.playerNode.entity componentForClass:[OGAnimationComponent class]];
-}
-
-- (OGHealthComponent *)healthComponent
-{
-    return (OGHealthComponent *) [self.playerNode.entity componentForClass:[OGHealthComponent class]];
-}
-
-- (OGInventoryComponent *)inventoryComponent
-{
-    return (OGInventoryComponent *) [self.playerNode.entity componentForClass:[OGInventoryComponent class]];
-}
-
-- (OGMovementControlComponent *)playerControlComponent
-{
-    OGLevelController *levelController = [OGLevelController sharedInstance];
-    
-    id class = Nil;
-    
-    if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
-    {
-        class = [OGTapMovementControlComponent class];
-    }
-    else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
-    {
-        class = [OGTapAndStopMovementControlComponent class];
-    }
-    else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
-    {
-        class = [OGDragMovementControlComponent class];
-    }
-    
-    return (OGMovementControlComponent *) [self.playerNode.entity componentForClass:class];
-}
-
-- (OGAccessComponent *)accessComponent
-{
-    return (OGAccessComponent *) [self.portalNode.entity componentForClass:[OGAccessComponent class]];
-}
-
-- (OGTransitionComponent *)transitionComponent
-{
-    return (OGTransitionComponent *) [self.portalNode.entity componentForClass:[OGTransitionComponent class]];
-}
-
-- (NSArray *)spriteNodes
-{
-    return [self.mutableSpriteNodes copy];
-}
-
-- (void)addSpriteNode:(OGSpriteNode *)spriteNode
-{
-    if (spriteNode)
-    {
-        [self.mutableSpriteNodes addObject:spriteNode];
-    }
-}
-
 #pragma mark - Contact handling
-
-- (void)didBeginContact:(SKPhysicsContact *)contact
-{
-    OGSpriteNode *touchedBody = nil;
-    OGContactType contactType = [self contactType:contact withBody:&touchedBody];
-    
-    if (contactType == kOGContactTypeGameOver)
-    {
-        [self.healthComponent dealDamage:1];
-        [self.statusBar healthDidChange];
-    }
-    else if (contactType == kOGContactTypePlayerDidGrantAccess)
-    {
-        [self.accessComponent grantAccessWithCompletionBlock:^()
-         {
-             self.transitionComponent.closed = NO;
-             [touchedBody removeFromParent];
-         }];
-    }
-    else if (contactType == kOGContactTypePlayerDidTouchPortal && !self.transitionComponent.isClosed)
-    {
-        [self.sceneDelegate gameSceneDidCallFinish];
-    }
-}
 
 - (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
 {
@@ -322,7 +191,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)pause
 {
-    [self.playerControlComponent pause];
+//    [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;
@@ -340,7 +209,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)resume
 {
-    [self.playerControlComponent resume];
+//    [self.playerControlComponent resume];
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
@@ -395,12 +264,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if (self.healthComponent.currentHealth <= 0)
-    {
-        [self.stateMachine enterState:[OGDeathLevelState class]];
-    }
+//    if (self.healthComponent.currentHealth <= 0)
+//    {
+//        [self.stateMachine enterState:[OGDeathLevelState class]];
+//    }
     
     [super update:currentTime];
+    
+    CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
+    
+    // If more than `maximumUpdateDeltaTime` has passed, clamp to the maximum; otherwise use `deltaTime`.
+//    deltaTime = deltaTime > maximumUpdateDeltaTime ? maximumUpdateDeltaTime : deltaTime
+    
+    // The current time will be used as the last update time in the next execution of the method.
+    self.lastUpdateTimeInterval = currentTime;
+
+    [self.player updateWithDeltaTime:deltaTime];
 }
 
 
