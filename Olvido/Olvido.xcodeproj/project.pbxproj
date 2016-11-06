@@ -39,6 +39,8 @@
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CE3231DBA8E680087842D /* OGMessageComponent.m */; };
+		EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAAD81DCCC06800E36855 /* OGTouchControlInputNode.m */; };
+		EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */; };
 		EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F41DC0D26000FCF126 /* OGGameScene.m */; };
 		EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGLevelController.m */; };
 		EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */; };
@@ -127,6 +129,9 @@
 		EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthComponent.m; sourceTree = "<group>"; };
 		EA3CE3221DBA8E680087842D /* OGMessageComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMessageComponent.h; sourceTree = "<group>"; };
 		EA3CE3231DBA8E680087842D /* OGMessageComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMessageComponent.m; sourceTree = "<group>"; };
+		EA49823B1DCF77BB00DCFE00 /* OGThumbStickNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGThumbStickNode.h; sourceTree = "<group>"; };
+		EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGThumbStickNode.m; sourceTree = "<group>"; };
+		EA49823E1DCF787E00DCFE00 /* OGThumbStickNodeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGThumbStickNodeDelegate.h; sourceTree = "<group>"; };
 		EA5870F31DC0D26000FCF126 /* OGGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
 		EA5870F41DC0D26000FCF126 /* OGGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
 		EA5870F61DC0D8D400FCF126 /* OGLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelController.h; sourceTree = "<group>"; };
@@ -399,6 +404,9 @@
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
 				EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */,
+				EA49823B1DCF77BB00DCFE00 /* OGThumbStickNode.h */,
+				EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */,
+				EA49823E1DCF787E00DCFE00 /* OGThumbStickNodeDelegate.h */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -590,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
@@ -612,6 +621,7 @@
 				EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */,
 				EA67C48B1DC0FE7C00EC4297 /* OGStatusBar.m in Sources */,
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
+				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				1B27EAB11DC0E2DE00E9CA23 /* OGLevelState.m in Sources */,
@@ -698,7 +708,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -739,7 +749,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -756,7 +766,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -774,7 +784,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";

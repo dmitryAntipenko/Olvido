@@ -9,8 +9,8 @@
 #import "OGGameScene.h"
 #import "OGContactType.h"
 #import "OGCollisionBitMask.h"
-#import "OGConstants.h"
 #import "OGTouchControlInputNode.h"
+#import "OGConstants.h"
 
 #import "OGPlayerEntity.h"
 #import "OGRenderComponent.h"
@@ -89,9 +89,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     [self.stateMachine enterState:[OGGameLevelState class]];
     
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] init];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
-    inputNode.inputSourceDelegate = self.player.input;
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     [self addChild:inputNode];
 }
 

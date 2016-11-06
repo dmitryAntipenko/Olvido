@@ -11,6 +11,8 @@
 
 @interface OGTouchControlInputNode : SKSpriteNode
 
-@property (nonatomic, strong) id<OGControlInputSourceDelegate> inputSourceDelegate;
+@property (nonatomic, weak) id<OGControlInputSourceDelegate> inputSourceDelegate;
+
+- (instancetype)initWithFrame:(CGRect)frame thumbStickNodeSize:(CGSize)size;
 
 @end

@@ -13,6 +13,7 @@ typedef struct
 {
     CGPoint destinationPoint;
     CGPoint direction;
+    CGVector displacement;
 } InputState;
 
 @interface OGInputComponent ()
@@ -33,11 +34,22 @@ typedef struct
     }
 }
 
+- (void)didUpdateDisplacement:(CGVector)displacement
+{
+    InputState state;
+    state.destinationPoint = self.state.destinationPoint;
+    state.direction = self.state.direction;
+    state.displacement = displacement;
+    
+    self.state = state;
+}
+
 - (void)didUpdateDestinationPoint:(CGPoint)destinationPoint
 {
     InputState state;
     state.destinationPoint = destinationPoint;
     state.direction = self.state.direction;
+    state.displacement = self.state.displacement;
     
     self.state = state;
 }
@@ -47,10 +59,9 @@ typedef struct
     InputState state;
     state.direction = direction;
     state.destinationPoint = self.state.destinationPoint;
+    state.displacement = self.state.displacement;
     
     self.state = state;
-    
-    [self applyInputState];
 }
 
 - (void)applyInputState
@@ -59,6 +70,7 @@ typedef struct
     
     movementComponent.destinationPoint = self.state.destinationPoint;
     movementComponent.direction = self.state.direction;
+    movementComponent.displacementVector = self.state.displacement;
 }
 
 @end

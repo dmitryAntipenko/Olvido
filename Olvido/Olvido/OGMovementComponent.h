@@ -10,8 +10,10 @@
 
 @interface OGMovementComponent : GKComponent
 
+@property (nonatomic, assign) CGVector displacementVector;
 @property (nonatomic, assign) CGPoint destinationPoint;
 @property (nonatomic, assign) CGPoint direction;
+
 @property (nonatomic, assign) CGFloat speedFactor;
 
 @end

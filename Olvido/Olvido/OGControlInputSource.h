@@ -11,6 +11,7 @@
 
 @protocol OGControlInputSourceDelegate <NSObject>
 
+- (void)didUpdateDisplacement:(CGVector)displacement;
 - (void)didUpdateDirection:(CGPoint)direction;
 - (void)didUpdateDestinationPoint:(CGPoint)destinationPoint;
 

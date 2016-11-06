@@ -11,7 +11,7 @@
 #import "OGConstants.h"
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
-CGFloat const kOGMovementComponentDefaultSpeed = 200;
+CGFloat const kOGMovementComponentDefaultSpeed = 40;
 
 @interface OGMovementComponent ()
 
@@ -44,10 +44,10 @@ CGFloat const kOGMovementComponentDefaultSpeed = 200;
 {
     [super updateWithDeltaTime:seconds];
     
-    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.direction.x, 0.0);
+    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
+                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
     
-    self.renderComponent.sprite.physicsBody.velocity = force;
-//    [self.renderComponent.sprite.physicsBody applyForce:force];
+    [self.renderComponent.sprite.physicsBody applyForce:force];
 }
 
 @end
