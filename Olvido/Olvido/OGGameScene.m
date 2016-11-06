@@ -16,6 +16,7 @@
 #import "OGMovementComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
+#import "OGMessageComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -78,6 +79,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.class],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.class],
                              [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.class],
                              nil];
         
         _statusBar = [[OGStatusBar alloc] init];
@@ -141,7 +143,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     if (statusBar)
     {
         self.statusBar.statusBarSprite = statusBar;
-//        self.statusBar.healthComponent = self.healthComponent;
+        self.statusBar.healthComponent = self.player.health;
         [self.statusBar createContents];
     }
 }

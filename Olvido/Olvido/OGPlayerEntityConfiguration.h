@@ -15,6 +15,7 @@
 @property (nonatomic, assign, readonly) NSUInteger currentHealth;
 @property (nonatomic, assign, readonly) struct OGColliderType colliderType;
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
+@property (nonatomic, assign, readonly) CGFloat messageShowDistance;
 
 @end
 

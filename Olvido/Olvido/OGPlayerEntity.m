@@ -14,6 +14,7 @@
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGMessageComponent.h"
 
 #import "OGPlayerEntityConfiguration.h"
 
@@ -41,6 +42,7 @@
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
+        _render.node.physicsBody.allowsRotation = NO;
         
         _health = [[OGHealthComponent alloc] init];
         _health.maxHealth = _playerConfiguration.maxHealth;
@@ -59,6 +61,10 @@
         
         _animation = [[OGAnimationComponent alloc] init];
         [self addComponent:_animation];
+        
+        SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
+        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
+        [self addComponent:_messageComponent];
     }
     
     return self;

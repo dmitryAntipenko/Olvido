@@ -37,4 +37,9 @@
     return 30.0;
 }
 
+- (CGFloat)messageShowDistance
+{
+    return 50.0;
+}
+
 @end

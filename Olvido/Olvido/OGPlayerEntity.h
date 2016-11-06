@@ -15,6 +15,7 @@
 @class OGRenderComponent;
 @class OGMovementComponent;
 @class OGPhysicsComponent;
+@class OGMessageComponent;
 
 @interface OGPlayerEntity : GKEntity
 
@@ -25,5 +26,6 @@
 @property (nonatomic, strong) OGHealthComponent *health;
 @property (nonatomic, strong) OGAnimationComponent *animation;
 @property (nonatomic, strong) OGMovementComponent *movement;
+@property (nonatomic, strong) OGMessageComponent *messageComponent;
 
 @end
