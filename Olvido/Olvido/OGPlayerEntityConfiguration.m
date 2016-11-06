@@ -7,8 +7,34 @@
 //
 
 #import "OGPlayerEntityConfiguration.h"
+#import "OGCollisionBitMask.h"
 
-const struct OGPlayerEntityConfiguration playerConfiguration = {
-    .maxHealth = 3,
-    .currentHealth = 3
-};
+@implementation OGPlayerEntityConfiguration
+
+- (NSUInteger)maxHealth
+{
+    return 3;
+}
+
+- (NSUInteger)currentHealth
+{
+    return 3;
+}
+
+- (struct OGColliderType)colliderType
+{
+    struct OGColliderType result;
+    
+    result.categoryBitMask = kOGCollisionBitMaskPlayer;
+    result.collisionBitMask = kOGCollisionBitMaskObstacle;
+    result.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskPortal;
+    
+    return result;
+}
+
+- (CGFloat)physicsBodyRadius
+{
+    return 30.0;
+}
+
+@end

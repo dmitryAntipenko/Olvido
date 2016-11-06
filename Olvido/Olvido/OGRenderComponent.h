@@ -10,6 +10,6 @@
 
 @interface OGRenderComponent : GKComponent
 
-@property (nonatomic, strong) SKSpriteNode *sprite;
+@property (nonatomic, strong) SKNode *node;
 
 @end

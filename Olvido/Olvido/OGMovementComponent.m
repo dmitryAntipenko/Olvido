@@ -47,7 +47,7 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
     CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
                                   kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
     
-    [self.renderComponent.sprite.physicsBody applyForce:force];
+    [self.renderComponent.node.physicsBody applyForce:force];
 }
 
 @end

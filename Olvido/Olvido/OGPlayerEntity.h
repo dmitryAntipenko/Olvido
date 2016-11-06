@@ -14,10 +14,12 @@
 @class OGInputComponent;
 @class OGRenderComponent;
 @class OGMovementComponent;
+@class OGPhysicsComponent;
 
 @interface OGPlayerEntity : GKEntity
 
 @property (nonatomic, strong) OGRenderComponent *render;
+@property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGInputComponent *input;
 @property (nonatomic, strong) OGIntelligenceComponent *intelligence;
 @property (nonatomic, strong) OGHealthComponent *health;

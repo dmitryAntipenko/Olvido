@@ -13,8 +13,15 @@
 #import "OGInputComponent.h"
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
+#import "OGPhysicsComponent.h"
 
 #import "OGPlayerEntityConfiguration.h"
+
+@interface OGPlayerEntity ()
+
+@property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
+
+@end
 
 @implementation OGPlayerEntity
 
@@ -24,12 +31,20 @@
     
     if (self)
     {
+        _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
+        
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
+        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
+                                                      colliderType:_playerConfiguration.colliderType];
+        [self addComponent:_physics];
+        
+        _render.node.physicsBody = _physics.physicsBody;
+        
         _health = [[OGHealthComponent alloc] init];
-        _health.maxHealth = playerConfiguration.maxHealth;
-        _health.currentHealth = playerConfiguration.currentHealth;
+        _health.maxHealth = _playerConfiguration.maxHealth;
+        _health.currentHealth = _playerConfiguration.currentHealth;
         [self addComponent:_health];
         
         _movement = [[OGMovementComponent alloc] init];
@@ -40,11 +55,10 @@
         [self addComponent:_input];
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
+        //[self addComponent:_intelligence];
         
         _animation = [[OGAnimationComponent alloc] init];
         [self addComponent:_animation];
-        
-        //[self addComponent:_intelligence];
     }
     
     return self;
