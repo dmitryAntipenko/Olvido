@@ -7,13 +7,7 @@
 //
 
 #import "OGAnimationComponent.h"
-//#import "OGAnimationState.h"
 #import "OGAnimation.h"
-
-//CGFloat const kOGAnimationComponentSpeedFactorStop = 0.0;
-//CGFloat const kOGAnimationComponentSpeedFactorDefault = 1.0;
-//NSString *const kOGAnimationComponentAnimationActionKey = @"AnimationAction";
-
 
 NSString *const kOGAnimationComponentBodyActionKey = @"bodyAction";
 NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
@@ -21,25 +15,13 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 
 @interface OGAnimationComponent ()
 
-//@property (nonatomic, strong) OGAnimationState *currentState;
-//@property (nonatomic, weak, readonly) SKSpriteNode *spriteNode;
-//@property (nonatomic, weak) SKAction *animationAction;
-
 @property (nonatomic, strong) OGAnimation *currentAnimation;
 @property (nonatomic, assign) NSTimeInterval elapsedAnimationDuration;
+
 @end
 
 
 @implementation OGAnimationComponent
-
-//- (void)playNextAnimationState:(OGAnimationState *)nextState
-//{
-//    if (nextState && (!self.currentState || [self.currentState isValidNextState:nextState]))
-//    {
-//        self.currentState = nextState;
-//        [self play];
-//    }
-//}
 
 - (instancetype)initWithTextureSize:(CGSize)textureSize
                          animations:(NSDictionary *)animations
@@ -127,49 +109,52 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     }
 }
 
+- (SKTexture *)firstTextureForOrientationWithDirection:(OGDirection)direction
+                                                 atlas:(SKTextureAtlas *)atlas
+                                       imageIdentifier:(NSString *)imageIdentifier
+{
+    NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, direction];
+    NSString *filter = @"%K BEGINSWITH %@";
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, @"SELF", structure];
+    
+    NSArray<NSString *> *sortedTextureNames = [[[atlas textureNames] filteredArrayUsingPredicate:predicate] sortedArrayUsingSelector:@selector(compare:)];
+    
+    return [atlas textureNamed:sortedTextureNames.firstObject];
+}
 
-//- (void)pause
-//{
-//    if (self.animationAction)
-//    {
-//        self.animationAction.speed = kOGAnimationComponentSpeedFactorStop;
-//    }
-//}
-//
-//- (void)resume
-//{
-//    if (self.animationAction)
-//    {
-//        self.animationAction.speed = kOGAnimationComponentSpeedFactorDefault;
-//    }
-//}
-//
-//- (void)play
-//{
-//    SKSpriteNode *spriteNode = self.spriteNode;
-//    
-//    if (spriteNode && self.currentState)
-//    {
-//        [spriteNode removeActionForKey:kOGAnimationComponentAnimationActionKey];
-//        
-//        if (self.currentState.textures.count > 1)
-//        {
-//            SKAction *animationAction = [SKAction animateWithTextures:self.currentState.textures timePerFrame:self.timePerFrame];
-//            self.animationAction = animationAction;
-//            
-//            [spriteNode runAction:[SKAction repeatActionForever:animationAction] withKey:kOGAnimationComponentAnimationActionKey];
-//        }
-//        else if (self.currentState.textures.count == 1)
-//        {
-//            spriteNode.texture = self.currentState.textures.firstObject;
-//        }
-//    }
-//}
-//
-//- (SKSpriteNode *)spriteNode
-//{
-//    return (SKSpriteNode *)(((GKSKNodeComponent *)[self.entity componentForClass:[GKSKNodeComponent class]]).node);
-//}
+- (SKAction *)actionForAllTexturesWithAtlas:(SKTextureAtlas *)atlas
+{
+    NSArray<NSString *> *sortedTextureNames = [[atlas textureNames] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray<SKTexture *> *sortedTextures = [self mapWithArrayOfStrings:sortedTextureNames];
+    
+    SKAction *result = nil;
+    
+    if (sortedTextures.count == 1)
+    {
+        result = [SKAction setTexture:sortedTextures.firstObject];
+    }
+    else
+    {
+        SKAction *texturesAction = [SKAction animateWithTextures:sortedTextures timePerFrame:kOGAnimationComponentTimePerFrame];
+        result = [SKAction repeatActionForever:texturesAction];
+    }
+    
+    return result;
+}
 
+- (NSArray<SKTexture *> *)mapWithArrayOfStrings:(NSArray<NSString *> *)arrayOfStrings
+{
+    NSMutableArray<SKTexture *> *result = nil;
+    
+    for (NSString *imageName in arrayOfStrings)
+    {
+        SKTexture *texture = [SKTexture textureWithImageNamed:imageName];
+        
+        [result addObject:texture];
+    }
+    
+    return result;
+}
 
 @end

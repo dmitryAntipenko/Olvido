@@ -70,4 +70,19 @@
     return self;
 }
 
+- (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
+{
+    NSArray *playerAtlasNames = @[@"PlayerBotWalk"];
+    
+    [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
+    {
+        if (error)
+        {
+            [NSException raise:@"One or more texture atlases could not be found" format:@"%@", error];
+        }
+        
+        
+    }];
+}
+
 @end

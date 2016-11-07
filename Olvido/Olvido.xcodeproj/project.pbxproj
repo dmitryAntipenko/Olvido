@@ -33,6 +33,7 @@
 		215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE11DC25D53000DF29F /* OGShopMenuScene.sks */; };
 		215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */; };
 		215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */; };
+		2171E5531DD0EF6100C8675E /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2171E5521DD0EF6100C8675E /* Player.xcassets */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
@@ -103,6 +104,7 @@
 		1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationComponent.h; sourceTree = "<group>"; };
 		1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationComponent.m; sourceTree = "<group>"; };
 		1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZPositionEnum.m; sourceTree = "<group>"; };
+		210CC8021DD0FB4D00824E84 /* OGDirection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGDirection.h; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		215C4BE41DC269AC000DF29F /* OGSettingsMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSettingsMenuScene.h; sourceTree = "<group>"; };
 		215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSettingsMenuScene.m; sourceTree = "<group>"; };
 		215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGSettingsMenuScene.sks; sourceTree = "<group>"; };
+		2171E5521DD0EF6100C8675E /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		EA00D1991DBA142100B6AC1B /* OGShootingComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShootingComponent.h; sourceTree = "<group>"; };
 		EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShootingComponent.m; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 				215A3C201DCFA12100D5C609 /* OGAnimation.h */,
 				215A3C211DCFA12100D5C609 /* OGAnimation.m */,
 				215A3C231DCFABCD00D5C609 /* OGAnimationState.h */,
+				210CC8021DD0FB4D00824E84 /* OGDirection.h */,
 			);
 			name = AnimationComponent;
 			sourceTree = "<group>";
@@ -347,6 +351,14 @@
 				215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */,
 			);
 			name = SettingsMenu;
+			sourceTree = "<group>";
+		};
+		2171E5541DD0EFFE00C8675E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2171E5521DD0EF6100C8675E /* Player.xcassets */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
@@ -443,6 +455,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				2171E5541DD0EFFE00C8675E /* Assets */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
 				EA0D27281DB1475000CEFB8A /* LevelController */,
@@ -586,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */,
+				2171E5531DD0EF6100C8675E /* Player.xcassets in Resources */,
 				215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */,
 				1B27EAA81DC0CEA200E9CA23 /* OGMapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,

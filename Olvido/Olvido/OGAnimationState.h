@@ -16,7 +16,8 @@ typedef NS_ENUM(NSUInteger, OGAnimationState)
     OGAnimationStateWalkForward
 };
 
-NSString * const kOGAnimationStateDescription[] = {
+
+static NSString *const kOGAnimationStateDescription[] = {
     [OGAnimationStateNone] = @"none",
     [OGAnimationStateIdle] = @"idle",
     [OGAnimationStateWalkForward] = @"walkForward"

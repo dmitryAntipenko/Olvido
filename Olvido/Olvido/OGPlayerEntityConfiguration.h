@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGColliderType.h"
+@class OGAnimation;
 
 @interface OGPlayerEntityConfiguration : NSObject 
 
@@ -17,5 +18,7 @@
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, assign, readonly) CGFloat messageShowDistance;
 
+@property (nonatomic, strong, readonly) NSArray<OGAnimation *> *animations;
+@property (nonatomic, assign, readonly) CGSize textureSize;
 @end
 

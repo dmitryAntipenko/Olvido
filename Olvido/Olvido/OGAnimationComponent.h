@@ -8,8 +8,8 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGAnimationState.h"
+#import "OGDirection.h"
 
-//@class OGAnimationState;
 @class OGAnimation;
 
 @interface OGAnimationComponent : GKComponent
@@ -23,10 +23,5 @@
 
 - (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
                                               deltaTime:(CGFloat)deltaTime;
-//- (void)playNextAnimationState:(OGAnimationState *)nextState;
-
-//- (void)pause;
-//
-//- (void)resume;
 
 @end
