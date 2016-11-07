@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, OGCompasDirection)
 @property (nonatomic, assign) CGPoint shadowOffset;
 @property (nonatomic, retain) NSArray<NSArray<OGAnimationState *> *> *animations;
 @property (nonatomic, retain) NSArray<SKTexture *> *appearTextures;
+@property (nonatomic, retain) GKAgent2D *agent;
 
 @end
 
@@ -46,7 +47,6 @@ typedef NS_ENUM(NSUInteger, OGCompasDirection)
 // MARK: Properties
 
 /// The agent used when pathfinding to the `PlayerBot`.
-let agent: GKAgent2D
 
 /**
  A `PlayerBot` is only targetable when it is actively being controlled by a player or is taking damage.
