@@ -7,17 +7,26 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGAnimationState.h"
 
-@class OGAnimationState;
+//@class OGAnimationState;
+@class OGAnimation;
 
 @interface OGAnimationComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable CGFloat timePerFrame;
+@property (nonatomic, strong, readonly) NSDictionary *animations;
+@property (nonatomic, strong) SKSpriteNode *spriteNode;
+@property (nonatomic, assign) OGAnimationState requestedAnimationState;
 
-- (void)playNextAnimationState:(OGAnimationState *)nextState;
+- (instancetype)initWithTextureSize:(CGSize)textureSize
+                         animations:(NSDictionary *)animations;
 
-- (void)pause;
+- (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
+                                              deltaTime:(CGFloat)deltaTime;
+//- (void)playNextAnimationState:(OGAnimationState *)nextState;
 
-- (void)resume;
+//- (void)pause;
+//
+//- (void)resume;
 
 @end
