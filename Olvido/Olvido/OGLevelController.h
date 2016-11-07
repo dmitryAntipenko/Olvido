@@ -22,6 +22,7 @@ extern NSString *const kOGLevelControllerTapStopControl;
 @property (nonatomic, weak) SKView *view;
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
+@property (nonatomic, copy, readonly) NSString *currentSceneName;
 @property (nonatomic, strong, readonly) OGGameScene *currentGameScene;
 @property (nonatomic, strong, readonly) OGStoryScene *currentStoryScene;
 

@@ -42,6 +42,10 @@
 		EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */; };
 		EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982401DCF980A00DCFE00 /* OGPhysicsComponent.m */; };
 		EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */; };
+		EA49824A1DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982491DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m */; };
+		EA49824F1DD0F2ED00DCFE00 /* Level1.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA49824E1DD0F2ED00DCFE00 /* Level1.plist */; };
+		EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982511DD0F48400DCFE00 /* OGGameSceneConfiguration.m */; };
+		EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982551DD101ED00DCFE00 /* OGEnemyConfiguration.m */; };
 		EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F41DC0D26000FCF126 /* OGGameScene.m */; };
 		EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGLevelController.m */; };
 		EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */; };
@@ -49,7 +53,6 @@
 		EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5C3B111DB4A7D4006FC219 /* spark.png */; };
 		EA67C48B1DC0FE7C00EC4297 /* OGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
-		EA70E5291DB3F4620034116D /* OGSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5231DB3F4620034116D /* OGSpriteNode.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */; };
@@ -134,6 +137,13 @@
 		EA4982421DCF98D600DCFE00 /* OGColliderType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGColliderType.h; sourceTree = "<group>"; };
 		EA4982451DCFB44E00DCFE00 /* OGEnemyEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntity.h; sourceTree = "<group>"; };
 		EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntity.m; sourceTree = "<group>"; };
+		EA4982481DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityConfiguration.h; sourceTree = "<group>"; };
+		EA4982491DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityConfiguration.m; sourceTree = "<group>"; };
+		EA49824E1DD0F2ED00DCFE00 /* Level1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level1.plist; sourceTree = "<group>"; };
+		EA4982501DD0F48400DCFE00 /* OGGameSceneConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameSceneConfiguration.h; sourceTree = "<group>"; };
+		EA4982511DD0F48400DCFE00 /* OGGameSceneConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameSceneConfiguration.m; sourceTree = "<group>"; };
+		EA4982541DD101ED00DCFE00 /* OGEnemyConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyConfiguration.h; sourceTree = "<group>"; };
+		EA4982551DD101ED00DCFE00 /* OGEnemyConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyConfiguration.m; sourceTree = "<group>"; };
 		EA5870F31DC0D26000FCF126 /* OGGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
 		EA5870F41DC0D26000FCF126 /* OGGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
 		EA5870F61DC0D8D400FCF126 /* OGLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelController.h; sourceTree = "<group>"; };
@@ -146,8 +156,6 @@
 		EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStatusBar.m; sourceTree = "<group>"; };
 		EA70E5201DB3F4620034116D /* OGMovementComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementComponent.h; sourceTree = "<group>"; };
 		EA70E5211DB3F4620034116D /* OGMovementComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementComponent.m; sourceTree = "<group>"; };
-		EA70E5221DB3F4620034116D /* OGSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSpriteNode.h; sourceTree = "<group>"; };
-		EA70E5231DB3F4620034116D /* OGSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSpriteNode.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -210,7 +218,6 @@
 		1B27EA9A1DC0909F00E9CA23 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
-				1B27EA9B1DC090BE00E9CA23 /* OGMainMenuScene.sks */,
 				1B27EAA01DC0934300E9CA23 /* OGMainMenuScene.h */,
 				1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */,
 			);
@@ -220,7 +227,6 @@
 		1B27EAA61DC0CE8F00E9CA23 /* MapMenu */ = {
 			isa = PBXGroup;
 			children = (
-				1B27EAA71DC0CEA200E9CA23 /* OGMapMenuScene.sks */,
 				1B27EAA91DC0D0A900E9CA23 /* OGMapMenuScene.h */,
 				1B27EAAA1DC0D0A900E9CA23 /* OGMapMenuScene.m */,
 			);
@@ -271,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				210C996F1DB8E39E00704C62 /* StoryLevelScenes */,
+				EA4982531DD101CF00DCFE00 /* Configuration */,
 				EAC384141DB43A0A00235B27 /* Utils */,
 				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
@@ -322,7 +329,6 @@
 			children = (
 				215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */,
 				215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */,
-				215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */,
 			);
 			name = "Level1 - InitialLevel";
 			sourceTree = "<group>";
@@ -332,7 +338,6 @@
 			children = (
 				215C4BDE1DC25D3F000DF29F /* OGShopMenuScene.h */,
 				215C4BDF1DC25D3F000DF29F /* OGShopMenuScene.m */,
-				215C4BE11DC25D53000DF29F /* OGShopMenuScene.sks */,
 			);
 			name = ShopMenu;
 			sourceTree = "<group>";
@@ -342,7 +347,6 @@
 			children = (
 				215C4BE41DC269AC000DF29F /* OGSettingsMenuScene.h */,
 				215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */,
-				215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */,
 			);
 			name = SettingsMenu;
 			sourceTree = "<group>";
@@ -401,16 +405,56 @@
 			children = (
 				EA4982451DCFB44E00DCFE00 /* OGEnemyEntity.h */,
 				EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */,
+				EA4982481DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.h */,
+				EA4982491DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m */,
 			);
 			name = Enemy;
+			sourceTree = "<group>";
+		};
+		EA49824B1DD0F28200DCFE00 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EA49824C1DD0F29C00DCFE00 /* Scenes */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		EA49824C1DD0F29C00DCFE00 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1B27EA9B1DC090BE00E9CA23 /* OGMainMenuScene.sks */,
+				1B27EAA71DC0CEA200E9CA23 /* OGMapMenuScene.sks */,
+				215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */,
+				215C4BE11DC25D53000DF29F /* OGShopMenuScene.sks */,
+				EA49824D1DD0F2A800DCFE00 /* Level1 */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		EA49824D1DD0F2A800DCFE00 /* Level1 */ = {
+			isa = PBXGroup;
+			children = (
+				215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */,
+				EA49824E1DD0F2ED00DCFE00 /* Level1.plist */,
+			);
+			name = Level1;
+			sourceTree = "<group>";
+		};
+		EA4982531DD101CF00DCFE00 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				EA4982501DD0F48400DCFE00 /* OGGameSceneConfiguration.h */,
+				EA4982511DD0F48400DCFE00 /* OGGameSceneConfiguration.m */,
+				EA4982541DD101ED00DCFE00 /* OGEnemyConfiguration.h */,
+				EA4982551DD101ED00DCFE00 /* OGEnemyConfiguration.m */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 		EA70E52C1DB3F4770034116D /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
 				1B36E4C91DC624010080D80B /* Screens */,
-				EA70E5221DB3F4620034116D /* OGSpriteNode.h */,
-				EA70E5231DB3F4620034116D /* OGSpriteNode.m */,
 				1B27EA9D1DC092DA00E9CA23 /* OGButtonNode.h */,
 				1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */,
 				EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */,
@@ -455,6 +499,7 @@
 				EAC384151DB43A2800235B27 /* Utils */,
 				EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */,
 				EA976CCD1D9C253B003B77FC /* Main.storyboard */,
+				EA49824B1DD0F28200DCFE00 /* Assets */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
@@ -594,6 +639,7 @@
 				EA5C3B121DB4A7D4006FC219 /* Flame.sks in Resources */,
 				EA5C3B131DB4A7D4006FC219 /* spark.png in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
+				EA49824F1DD0F2ED00DCFE00 /* Level1.plist in Resources */,
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 				215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */,
@@ -609,12 +655,14 @@
 			files = (
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
+				EA49824A1DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m in Sources */,
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
+				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA9EAAD41DCCA76600E36855 /* OGPlayerEntityConfiguration.m in Sources */,
@@ -637,13 +685,13 @@
 				EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
-				EA70E5291DB3F4620034116D /* OGSpriteNode.m in Sources */,
 				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,
 				215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */,
 				1B36E4D01DC633300080D80B /* OGAnimationState.m in Sources */,
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
+				EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */,
 				EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,
 				215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */,

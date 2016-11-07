@@ -12,7 +12,6 @@
 #import "OGLevelController.h"
 
 #import "OGGameScene.h"
-#import "OGSpriteNode.h"
 
 @interface OGGameViewController ()
 

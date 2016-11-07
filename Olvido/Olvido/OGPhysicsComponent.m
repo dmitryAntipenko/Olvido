@@ -29,6 +29,10 @@
             _physicsBody.categoryBitMask = type.categoryBitMask;
             _physicsBody.collisionBitMask = type.collisionBitMask;
             _physicsBody.contactTestBitMask = type.contactTestBitMask;
+            _physicsBody.angularDamping = type.angularDamping;
+            _physicsBody.linearDamping = type.linearDamping;
+            _physicsBody.restitution = type.restitution;
+            _physicsBody.friction = type.friction;
         }
     }
     

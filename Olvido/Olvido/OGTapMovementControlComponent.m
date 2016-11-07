@@ -7,7 +7,6 @@
 //
 
 #import "OGTapMovementControlComponent.h"
-#import "OGSpriteNode.h"
 
 @interface OGTapMovementControlComponent ()
 

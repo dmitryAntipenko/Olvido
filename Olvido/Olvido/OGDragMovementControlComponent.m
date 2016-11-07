@@ -7,7 +7,6 @@
 //
 
 #import "OGDragMovementControlComponent.h"
-#import "OGSpriteNode.h"
 
 @interface OGDragMovementControlComponent ()
 

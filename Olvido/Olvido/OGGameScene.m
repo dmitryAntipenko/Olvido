@@ -10,9 +10,13 @@
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
+#import "OGGameSceneConfiguration.h"
+#import "OGEnemyConfiguration.h"
 
 #import "OGPlayerEntity.h"
+#import "OGEnemyEntity.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 #import "OGMovementComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
@@ -44,6 +48,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @interface OGGameScene ()
 
+@property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
@@ -63,7 +68,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
+        _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
+        
         _player = [[OGPlayerEntity alloc] init];
+        
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
              [OGStoryConclusionLevelState stateWithLevelScene:self],
              [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -95,14 +103,12 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 {
     [super didMoveToView:view];
     
+    [self.sceneConfiguration loadConfigurationWithFileName:self.name];
+    
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
     
-    [self addEntity:self.player];
-    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
-    self.player.render.node.position = playerInitialNode.position;
-    
-    [self createStatusBar];
+    [self createSceneContents];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
     
@@ -110,6 +116,25 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     [self addChild:inputNode];
+}
+
+- (void)createSceneContents
+{
+    [self addEntity:self.player];
+    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_point"];
+    self.player.render.node.position = playerInitialNode.position;
+    
+    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
+    {
+        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] init];
+        [self addEntity:enemy];
+        SKNode *enemyInitialNode = [self childNodeWithName:enemyConfiguration.initialPointName];
+        enemy.render.node.position = enemyInitialNode.position;
+        
+        enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
+    }
+    
+    [self createStatusBar];
 }
 
 - (void)addEntity:(GKEntity *)entity

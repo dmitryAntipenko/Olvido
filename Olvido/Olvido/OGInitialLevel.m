@@ -7,7 +7,6 @@
 //
 
 #import "OGInitialLevel.h"
-#import "OGSpriteNode.h"
 #import "OGMovementComponent.h"
 #import "OGMovementControlComponent.h"
 #import "OGConstants.h"

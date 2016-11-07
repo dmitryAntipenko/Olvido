@@ -28,6 +28,10 @@
     result.categoryBitMask = kOGCollisionBitMaskPlayer;
     result.collisionBitMask = kOGCollisionBitMaskObstacle;
     result.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskPortal;
+    result.angularDamping = 0.0;
+    result.linearDamping = 0.0;
+    result.restitution = 0.8;
+    result.friction = 0.2;
     
     return result;
 }

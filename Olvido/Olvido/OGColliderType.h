@@ -14,6 +14,10 @@ struct OGColliderType
     uint32_t categoryBitMask;
     uint32_t collisionBitMask;
     uint32_t contactTestBitMask;
+    NSUInteger angularDamping;
+    NSUInteger linearDamping;
+    NSUInteger friction;
+    NSUInteger restitution;
 };
 
 //extern const struct OGColliderType colliderType;

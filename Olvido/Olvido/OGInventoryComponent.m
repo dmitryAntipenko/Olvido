@@ -7,7 +7,6 @@
 //
 
 #import "OGInventoryComponent.h"
-#import "OGSpriteNode.h"
 
 NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
