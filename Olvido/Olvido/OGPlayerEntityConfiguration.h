@@ -6,12 +6,16 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <SpriteKit/SpriteKit.h>
+#import "OGColliderType.h"
 
-struct OGPlayerEntityConfiguration
-{
-    NSUInteger const maxHealth;
-    NSUInteger const currentHealth;
-};
+@interface OGPlayerEntityConfiguration : NSObject 
 
-extern const struct OGPlayerEntityConfiguration playerConfiguration;
+@property (nonatomic, assign, readonly) NSUInteger maxHealth;
+@property (nonatomic, assign, readonly) NSUInteger currentHealth;
+@property (nonatomic, assign, readonly) struct OGColliderType colliderType;
+@property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
+@property (nonatomic, assign, readonly) CGFloat messageShowDistance;
+
+@end
+

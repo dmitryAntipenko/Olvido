@@ -12,8 +12,6 @@
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
 #import "OGSpriteNode.h"
-#import "OGTransitionComponent.h"
-
 
 NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 

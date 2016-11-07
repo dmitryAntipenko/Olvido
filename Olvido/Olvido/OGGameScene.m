@@ -7,13 +7,16 @@
 //
 
 #import "OGGameScene.h"
-#import "OGContactType.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
 
 #import "OGPlayerEntity.h"
 #import "OGRenderComponent.h"
+#import "OGMovementComponent.h"
+#import "OGIntelligenceComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGMessageComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -47,6 +50,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
+@property (nonatomic, strong) NSMutableSet<GKEntity *> *entities;
+@property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
+
 @end
 
 @implementation OGGameScene
@@ -59,13 +65,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         _player = [[OGPlayerEntity alloc] init];
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
-                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                 [OGGameLevelState stateWithLevelScene:self],
-                                                                 [OGPauseLevelState stateWithLevelScene:self],
-                                                                 [OGCompleteLevelState stateWithLevelScene:self],
-                                                                 [OGDeathLevelState stateWithLevelScene:self]
-                                                                 ]];
+             [OGStoryConclusionLevelState stateWithLevelScene:self],
+             [OGBeforeStartLevelState stateWithLevelScene:self],
+             [OGGameLevelState stateWithLevelScene:self],
+             [OGPauseLevelState stateWithLevelScene:self],
+             [OGCompleteLevelState stateWithLevelScene:self],
+             [OGDeathLevelState stateWithLevelScene:self]
+        ]];
+        
+        _entities = [[NSMutableSet alloc] init];
+        
+        _componentSystems = [[NSMutableArray alloc] initWithObjects:
+                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.class],
+                             nil];
         
         _statusBar = [[OGStatusBar alloc] init];
         
@@ -83,7 +98,9 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
     
-    self.player.render.sprite = (SKSpriteNode *) [self childNodeWithName:@"Player"];
+    [self addEntity:self.player];
+    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
+    self.player.render.node.position = playerInitialNode.position;
     
     [self createStatusBar];
     
@@ -95,6 +112,30 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     [self addChild:inputNode];
 }
 
+- (void)addEntity:(GKEntity *)entity
+{
+    [self.entities addObject:entity];
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem addComponentWithEntity:entity];
+    }
+    
+    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.class]).node;
+    
+    if (renderNode)
+    {
+        [self addChild:renderNode];
+    }
+    
+    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.class];
+    
+    if (intelligenceComponent)
+    {
+        [intelligenceComponent enterInitialState];
+    }
+}
+
 - (void)createStatusBar
 {
     SKSpriteNode *statusBar = (SKSpriteNode *) [self childNodeWithName:kOGGameSceneStatusBarSpriteName];
@@ -102,77 +143,14 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     if (statusBar)
     {
         self.statusBar.statusBarSprite = statusBar;
-//        self.statusBar.healthComponent = self.healthComponent;
+        self.statusBar.healthComponent = self.player.health;
         [self.statusBar createContents];
     }
 }
 
-#pragma mark - Contact handling
-
-- (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
+- (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    SKPhysicsBody *bodyA = nil;
-    SKPhysicsBody *bodyB = nil;
-    OGContactType result = kOGContactTypeNone;
-    
-    [self contact:contact toBodyA:&bodyA bodyB:&bodyB];
-    
-    if (bodyA.categoryBitMask == kOGCollisionBitMaskEnemy
-        && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        result = kOGContactTypeGameOver;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskPlayer
-             && bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
-    {
-        result = kOGContactTypeGameOver;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskCoin)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidGetCoin;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskCoin)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidGetCoin;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskPortal)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidTouchPortal;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskPortal)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidTouchPortal;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskObstacle
-             && bodyA.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidTouchObstacle;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskObstacle
-             && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidTouchObstacle;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskKey
-             && bodyA.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidGrantAccess;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskKey
-             && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidGrantAccess;
-    }
-    
-    return result;
+    NSLog(@"%@", contact);
 }
 
 - (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
@@ -264,22 +242,15 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)update:(NSTimeInterval)currentTime
 {
-//    if (self.healthComponent.currentHealth <= 0)
-//    {
-//        [self.stateMachine enterState:[OGDeathLevelState class]];
-//    }
-    
     [super update:currentTime];
     
     CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
-    
-    // If more than `maximumUpdateDeltaTime` has passed, clamp to the maximum; otherwise use `deltaTime`.
-//    deltaTime = deltaTime > maximumUpdateDeltaTime ? maximumUpdateDeltaTime : deltaTime
-    
-    // The current time will be used as the last update time in the next execution of the method.
     self.lastUpdateTimeInterval = currentTime;
 
-    [self.player updateWithDeltaTime:deltaTime];
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem updateWithDeltaTime:deltaTime];
+    }
 }
 
 
