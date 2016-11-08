@@ -7,30 +7,47 @@
 //
 
 #import "OGMovementComponent.h"
+#import "OGRenderComponent.h"
 #import "OGConstants.h"
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
+CGFloat const kOGMovementComponentDefaultSpeed = 40;
+
+@interface OGMovementComponent ()
+
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+
+@end
 
 @implementation OGMovementComponent
 
-- (void)startMovement
+- (instancetype)init
 {
-    if (self.physicsBody)
-    {
-        CGFloat vectorFactor = self.speedFactor * self.speed * self.physicsBody.mass;
-        CGVector movementVector = CGVectorMake(self.dx * vectorFactor, self.dy * vectorFactor);
-        [self.physicsBody applyImpulse:movementVector];
-    }
-}
-
-- (void)setSpeedFactor:(CGFloat)speedFactor
-{
-    _speedFactor = speedFactor;
+    self = [super init];
     
-    CGVector velocity = self.physicsBody.velocity;
-    self.physicsBody.velocity = CGVectorMake(velocity.dx * speedFactor, velocity.dy * speedFactor);
+    if (self)
+    {
+        _speedFactor = kOGMovementComponentDefaultSpeedFactor;
+    }
+    
+    return self;
 }
 
+- (void)didAddToEntity
+{
+    [super didAddToEntity];
+    
+    self.renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
+}
 
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    [super updateWithDeltaTime:seconds];
+    
+    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
+                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
+    
+    [self.renderComponent.node.physicsBody applyForce:force];
+}
 
 @end

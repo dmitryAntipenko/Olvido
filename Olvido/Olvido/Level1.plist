@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Enemies</key>
+	<array>
+		<dict>
+			<key>InitialVector</key>
+			<dict>
+				<key>dx</key>
+				<string>150</string>
+				<key>dy</key>
+				<string>-150</string>
+			</dict>
+			<key>InitialPoint</key>
+			<string>enemy_initial_point_01</string>
+		</dict>
+	</array>
+</dict>
+</plist>

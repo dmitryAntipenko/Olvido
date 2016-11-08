@@ -10,13 +10,10 @@
 
 @interface OGMovementComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable CGFloat speedFactor;
-@property (nonatomic, assign) GKInspectable CGFloat speed;
-@property (nonatomic, assign) GKInspectable CGFloat dx;
-@property (nonatomic, assign) GKInspectable CGFloat dy;
+@property (nonatomic, assign) CGVector displacementVector;
+@property (nonatomic, assign) CGPoint destinationPoint;
+@property (nonatomic, assign) CGPoint direction;
 
-@property (nonatomic, strong) SKPhysicsBody *physicsBody;
-
-- (void)startMovement;
+@property (nonatomic, assign) CGFloat speedFactor;
 
 @end

@@ -12,7 +12,6 @@
 #import "OGLevelController.h"
 
 #import "OGGameScene.h"
-#import "OGSpriteNode.h"
 
 @interface OGGameViewController ()
 
@@ -26,7 +25,7 @@
     
     SKView *view = (SKView *) self.view;
     
-    view.multipleTouchEnabled = NO;
+    view.multipleTouchEnabled = YES;
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;

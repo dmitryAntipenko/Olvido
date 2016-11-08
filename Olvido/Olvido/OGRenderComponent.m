@@ -1,0 +1,44 @@
+//
+//  OGRenderComponent.m
+//  Olvido
+//
+//  Created by Дмитрий Антипенко on 11/4/16.
+//  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
+//
+
+#import "OGRenderComponent.h"
+
+@implementation OGRenderComponent
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _node = [[SKNode alloc] init];
+    }
+    
+    return self;
+}
+
+- (void)didAddToEntity
+{
+    [super didAddToEntity];
+    
+    self.node.entity = self.entity;
+    
+    /*temporary*/
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Frank Left 1"];
+    [self.node addChild:sprite];
+    /*temporary*/
+}
+
+- (void)willRemoveFromEntity
+{
+    [super willRemoveFromEntity];
+    
+    self.node.entity = nil;
+}
+
+@end

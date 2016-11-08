@@ -8,6 +8,10 @@
 
 #import "OGSettingsMenuScene.h"
 #import "OGLevelController.h"
+#import "OGConstants.h"
+#import "OGButtonNode.h"
+
+NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 @implementation OGSettingsMenuScene
 
@@ -37,5 +41,25 @@
     [OGLevelController sharedInstance].godMode = ![OGLevelController sharedInstance].godMode;
 }
 /* temporary code */
+
+- (void)onButtonClick:(OGButtonNode *)button
+{
+    NSString *sceneFilePath = nil;
+    
+    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
+    {
+        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+    }
+    
+    if (sceneFilePath)
+    {
+        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
+        
+        if (nextScene)
+        {
+            [self.view presentScene:nextScene];
+        }
+    }
+}
 
 @end
