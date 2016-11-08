@@ -20,4 +20,6 @@ static NSString *const kOGDirectionDescription[] = {
     [OGDirectionRight] = @"right"
 };
 
+static NSInteger const kOGDirectionCount = 2;
+
 #endif /* OGDirection_h */

@@ -11,16 +11,16 @@
 
 typedef NS_ENUM(NSUInteger, OGAnimationState)
 {
-    OGAnimationStateNone,
-    OGAnimationStateIdle,
-    OGAnimationStateWalkForward
+    kOGAnimationStateNone,
+    kOGAnimationStateIdle,
+    kOGAnimationStateWalkForward
 };
 
 
 static NSString *const kOGAnimationStateDescription[] = {
-    [OGAnimationStateNone] = @"none",
-    [OGAnimationStateIdle] = @"idle",
-    [OGAnimationStateWalkForward] = @"walkForward"
+    [kOGAnimationStateNone] = @"none",
+    [kOGAnimationStateIdle] = @"idle",
+    [kOGAnimationStateWalkForward] = @"walkForward"
 };
 
 #endif /* OGAnimationState_h */

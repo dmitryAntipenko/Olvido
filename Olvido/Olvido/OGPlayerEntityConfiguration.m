@@ -47,9 +47,4 @@
     return CGSizeMake(120.0, 120.0);
 }
 
-- (NSArray<OGAnimation *> *)animations
-{
-    
-}
-
 @end

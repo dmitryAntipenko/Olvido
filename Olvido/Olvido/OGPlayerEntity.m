@@ -17,6 +17,10 @@
 #import "OGMessageComponent.h"
 
 #import "OGPlayerEntityConfiguration.h"
+#import "OGAnimationState.h"
+
+NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
+NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
 @interface OGPlayerEntity ()
 
@@ -59,7 +63,9 @@
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
         //[self addComponent:_intelligence];
         
-        _animation = [[OGAnimationComponent alloc] init];
+        _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:nil];
+        //fix when write intelligenceComponent
+        _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
         [self addComponent:_animation];
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
@@ -72,7 +78,8 @@
 
 - (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
-    NSArray *playerAtlasNames = @[@"PlayerBotWalk"];
+    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
+                                  kOGPlayerEntityAtlasNamesPlayerBotWalk];
     
     [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
     {
@@ -81,8 +88,31 @@
             [NSException raise:@"One or more texture atlases could not be found" format:@"%@", error];
         }
         
+        NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
         
+        for (NSUInteger i = 0; i < kOGDirectionCount; i++)
+        {
+            appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
+                                                                                                                 atlas:foundAtlases[0]
+                                                                                                       imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
+        }
+        
+        self.appearTextures = appearTextures;
+        
+        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        
+        animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
+                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk
+                                                                                                            animationState:kOGAnimationStateWalkForward
+                                                                                                            bodyActionName:nil
+                                                                                                     repeatTexturesForever:YES
+                                                                                                             playBackwards:NO];
+        
+        self.animations = animations;
+        
+        completionHandler();
     }];
+    
 }
 
 @end

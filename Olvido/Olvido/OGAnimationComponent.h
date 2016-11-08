@@ -14,7 +14,7 @@
 
 @interface OGAnimationComponent : GKComponent
 
-@property (nonatomic, strong, readonly) NSDictionary *animations;
+@property (nonatomic, strong) NSDictionary *animations;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
 
@@ -22,6 +22,17 @@
                          animations:(NSDictionary *)animations;
 
 - (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
-                                              deltaTime:(CGFloat)deltaTime;
+                                              direction:(OGDirection)direction
+                                              deltaTime:(NSTimeInterval)deltaTime;
 
++ (SKTexture *)firstTextureForOrientationWithDirection:(OGDirection)direction
+                                                 atlas:(SKTextureAtlas *)atlas
+                                       imageIdentifier:(NSString *)imageIdentifier;
+
++ (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
+                      imageIdentifier:(NSString *)imageIdentifier
+                       animationState:(OGAnimationState)animationState
+                       bodyActionName:(NSString *)bodyActionName
+                repeatTexturesForever:(BOOL)repeatTexturesForever
+                        playBackwards:(BOOL)playBackwards;
 @end

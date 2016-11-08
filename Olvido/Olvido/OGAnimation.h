@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGAnimationState.h"
+#import "OGDirection.h"
 
 @interface OGAnimation : NSObject
 
@@ -17,6 +18,22 @@
 @property (nonatomic, assign, getter=isRepeatedTexturesForever) BOOL repeatTexturesForever;
 @property (nonatomic, assign) NSInteger frameOffset;
 @property (nonatomic, strong) SKAction *bodyAction;
-@property (nonatomic, strong) NSArray<SKTexture *> *offsetTextures;
+@property (nonatomic, strong, readonly) NSArray<SKTexture *> *offsetTextures;
+@property (nonatomic, assign) OGDirection direction;
 
+- (instancetype)initWithAnimationState:(OGAnimationState)animationState
+                             direction:(OGDirection)direction
+                              textures:(NSArray<SKTexture *> *)textures
+                           frameOffset:(NSInteger)frameOffset
+                 repeatTexturesForever:(BOOL)repeatTexturesForever
+                        bodyActionName:(NSString *)bodyActionName
+                            bodyAction:(SKAction *)bodyAction;
+
++ (instancetype)animationWithAnimationState:(OGAnimationState)animationState
+                                  direction:(OGDirection)direction
+                                   textures:(NSArray<SKTexture *> *)textures
+                                frameOffset:(NSInteger)frameOffset
+                      repeatTexturesForever:(BOOL)repeatTexturesForever
+                             bodyActionName:(NSString *)bodyActionName
+                                 bodyAction:(SKAction *)bodyAction;
 @end
