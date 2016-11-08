@@ -7,14 +7,43 @@
 //
 
 #import "OGSceneManager.h"
+#import "OGBaseScene.h"
+#import "OGSceneLoader.h"
 
 @interface OGSceneManager ()
 
-@property (nonatomic, retain) SKScene *currentScene;
-
+@property (nonatomic, strong) OGBaseScene *currentScene;
+@property (nonatomic, strong) NSArray<OGSceneLoader *> *sceneLoaders;
 
 @end
 
 @implementation OGSceneManager
+
+- (instancetype)initWithView:(SKView *)view
+{
+    self = [self init];
+    
+    if (self)
+    {
+        _view = view;
+    }
+    
+    return self;
+}
+
+- (instancetype)sceneManagerWithView:(SKView *)view
+{
+    return [[OGSceneManager alloc] initWithView:view];
+}
+
+- (void)prepareSceneWithIdentifier:(NSString *)sceneIdentifier
+{
+    
+}
+
+- (void)transitionToSceneWithIdentifier:(NSString *)sceneIdentifier
+{
+    
+}
 
 @end

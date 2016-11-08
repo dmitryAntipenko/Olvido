@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Type</key>
+		<string>SceneTypeMenu</string>
+		<key>Name</key>
+		<string>OGMainMenuScene</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>SceneTypeStory</string>
+		<key>Name</key>
+		<string>OGStoryScene1</string>
+	</dict>
+	<dict>
+		<key>Type</key>
+		<string>SceneTypeLevel</string>
+		<key>Name</key>
+		<string>OGLevelScene1</string>
+	</dict>
+</array>
+</plist>
