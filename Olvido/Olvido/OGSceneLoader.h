@@ -7,7 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameplayKit/GameplayKit.h>
+
+@class OGSceneMetadata;
+@class OGBaseScene;
 
 @interface OGSceneLoader : NSObject
+
+@property (nonatomic, strong, readonly) GKStateMachine *stateMachine;
+@property (nonatomic, strong, readonly) OGSceneMetadata *metadata;
+@property (nonatomic, strong, readonly) OGBaseScene *scene;
+
++ (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;
+
+- (void)asynchronouslyPreloadResources;
+
+- (void)purgeResources;
 
 @end

@@ -19,7 +19,7 @@
 
 @implementation OGSceneManager
 
-- (instancetype)initWithView:(SKView *)view
++ (instancetype)initWithView:(SKView *)view
 {
     self = [self init];
     

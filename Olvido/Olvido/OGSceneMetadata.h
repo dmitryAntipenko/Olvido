@@ -8,15 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, OGSceneType)
-{
-    OGSceneTypeLevel = 0,
-    OGSceneTypeMenu = 1
-};
-
 @interface OGSceneMetadata : NSObject
 
-@property (nonatomic, unsafe_unretained) NSUInteger identifier;
-@property (nonatomic, unsafe_unretained) OGSceneType sceneType;
+@property (nonatomic, unsafe_unretained, readonly) NSNumber *identifier;
+@property (nonatomic, unsafe_unretained, readonly) NSString  *sceneType;
+@property (nonatomic, strong, readonly) NSString *name;
+
++ (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration;
 
 @end
