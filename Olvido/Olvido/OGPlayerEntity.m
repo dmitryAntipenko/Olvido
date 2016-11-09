@@ -22,6 +22,9 @@
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
+static NSDictionary *sAnimations;
+static NSDictionary *sAppearTextures;
+
 @interface OGPlayerEntity ()
 
 @property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
@@ -61,12 +64,20 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
         [self addComponent:_input];
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
-        //[self addComponent:_intelligence];
+        [self addComponent:_intelligence];
         
-        _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:nil];
-        //fix when write intelligenceComponent
-        _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
-        [self addComponent:_animation];
+        if (sAnimations)
+        {
+            _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:sAnimations];
+            //rewrite in Player Intelligence Component when write intelligenceComponent
+            _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
+            [self addComponent:_animation];
+        }
+        else
+        {
+            [NSException raise:@"Attempt to access sAnimations before they have been loaded" format:@"no loadedAnimation"];
+            return nil;
+        }
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
@@ -76,7 +87,7 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
     return self;
 }
 
-- (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
     NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
                                   kOGPlayerEntityAtlasNamesPlayerBotWalk];
@@ -97,7 +108,7 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
         }
         
-        self.appearTextures = appearTextures;
+        sAppearTextures = appearTextures;
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
@@ -108,7 +119,7 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
                                                                                                      repeatTexturesForever:YES
                                                                                                              playBackwards:NO];
         
-        self.animations = animations;
+        sAnimations = animations;
         
         completionHandler();
     }];

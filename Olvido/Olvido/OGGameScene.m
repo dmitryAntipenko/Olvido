@@ -103,11 +103,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
     self.player.render.node.position = playerInitialNode.position;
     
-    [self.player loadResourcesWithCompletionHandler:^{
-        NSLog(@"Success! Animation loaded!");
-        ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).animations = self.player.animations;
-        ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).requestedAnimationState = 2;
-    }];
+//    [self.player loadResourcesWithCompletionHandler:^{
+//        NSLog(@"Success! Animation loaded!");
+//      //  ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).animations = self.player.animations;
+//       // ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).requestedAnimationState = 2;
+//    }];
     
     [self createStatusBar];
     
