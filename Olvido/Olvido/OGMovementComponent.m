@@ -44,10 +44,16 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
 {
     [super updateWithDeltaTime:seconds];
     
-    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
-                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
+    CGPoint oldPosition = self.renderComponent.node.position;
+    CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * 5.0,
+                                      oldPosition.y + self.displacementVector.dy * self.speedFactor * 5.0);
     
-    [self.renderComponent.node.physicsBody applyForce:force];
+    self.renderComponent.node.position = newPosition;
+    
+    //CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
+                                  //kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
+    
+    //[self.renderComponent.node.physicsBody applyForce:force];
 }
 
 @end
