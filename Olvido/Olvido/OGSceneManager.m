@@ -11,8 +11,6 @@
 #import "OGSceneLoader.h"
 #import "OGConstants.h"
 #import "OGSceneMetadata.h"
-#import "OGSceneLoaderBeforePreloadState.h"
-#import "OGSceneLoaderPreloadSuccessfulState.h"
 
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
@@ -67,31 +65,31 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
-    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
-    
-    if (sceneLoader.stateMachine.currentState == [OGSceneLoaderBeforePreloadState class])
-    {
-        [sceneLoader asynchronouslyPreloadResources];
-    }
+//    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
+//    
+//    if (sceneLoader.stateMachine.currentState == [OGSceneLoaderBeforePreloadState class])
+//    {
+//        [sceneLoader asynchronouslyPreloadResources];
+//    }
 }
 
 - (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
-    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
-    
-    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
-    {
-        [self presentSceneWithSceneLoader:sceneLoader];
-    }
-    else if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
-    {
-        [sceneLoader loadResources];
-        
-        if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
-        {
-            [self presentSceneWithSceneLoader:sceneLoader];
-        }
-    }
+//    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
+//    
+//    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
+//    {
+//        [self presentSceneWithSceneLoader:sceneLoader];
+//    }
+//    else if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
+//    {
+//        [sceneLoader loadResources];
+//        
+//        if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
+//        {
+//            [self presentSceneWithSceneLoader:sceneLoader];
+//        }
+//    }
 }
 
 - (OGSceneLoader *)sceneLoaderForIdentifier:(NSUInteger)identifier
