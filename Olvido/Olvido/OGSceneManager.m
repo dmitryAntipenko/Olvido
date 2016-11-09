@@ -91,10 +91,6 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
         {
             [self presentSceneWithSceneLoader:sceneLoader];
         }
-        else
-        {
-            NSLog(@"Scene loading ErrOrO !_!");
-        }
     }
 }
 
