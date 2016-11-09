@@ -16,6 +16,7 @@
 @class OGMovementComponent;
 @class OGPhysicsComponent;
 @class OGMessageComponent;
+@class OGOrientationComponent;
 
 @interface OGPlayerEntity : GKEntity
 
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) OGAnimationComponent *animation;
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientation;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 @end

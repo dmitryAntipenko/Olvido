@@ -7,7 +7,11 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGDirection.h"
 
 @interface OGOrientationComponent : GKComponent
+
+@property (nonatomic, assign) CGFloat zRotation;
+@property (nonatomic, assign, readonly) OGDirection direction;
 
 @end

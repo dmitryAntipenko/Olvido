@@ -15,6 +15,7 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
+#import "OGOrientationComponent.h"
 
 #import "OGPlayerEntityConfiguration.h"
 #import "OGAnimationState.h"
@@ -22,8 +23,8 @@
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
-static NSDictionary *sAnimations;
-static NSDictionary *sAppearTextures;
+static NSDictionary *sOGPlayerEntityAnimations;
+static NSDictionary *sOGPlayerEntityAppearTextures;
 
 @interface OGPlayerEntity ()
 
@@ -64,20 +65,23 @@ static NSDictionary *sAppearTextures;
         [self addComponent:_input];
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
-        [self addComponent:_intelligence];
+        //[self addComponent:_intelligence];
         
-        if (sAnimations)
+        if (sOGPlayerEntityAnimations)
         {
-            _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:sAnimations];
+            _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:sOGPlayerEntityAnimations];
             //rewrite in Player Intelligence Component when write intelligenceComponent
             _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
             [self addComponent:_animation];
         }
         else
         {
-            [NSException raise:@"Attempt to access sAnimations before they have been loaded" format:@"no loadedAnimation"];
+            [NSException raise:@"Exception.OGPlayerNode" format:@"Attempt to access sOGPlayerEntityAnimations before they have been loaded"];
             return nil;
         }
+        
+        _orientation = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientation];
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
@@ -85,6 +89,11 @@ static NSDictionary *sAppearTextures;
     }
     
     return self;
+}
+
++ (BOOL)resourcesNeedLoading
+{
+    return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
 }
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
@@ -96,7 +105,7 @@ static NSDictionary *sAppearTextures;
     {
         if (error)
         {
-            [NSException raise:@"One or more texture atlases could not be found" format:@"%@", error];
+            [NSException raise:@"Exception.OGPlayerNode" format:@"One or more texture atlases could not be found. Error:%@", error];
         }
         
         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
@@ -108,7 +117,7 @@ static NSDictionary *sAppearTextures;
                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
         }
         
-        sAppearTextures = appearTextures;
+        sOGPlayerEntityAppearTextures = appearTextures;
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
@@ -119,11 +128,17 @@ static NSDictionary *sAppearTextures;
                                                                                                      repeatTexturesForever:YES
                                                                                                              playBackwards:NO];
         
-        sAnimations = animations;
+        sOGPlayerEntityAnimations = animations;
         
         completionHandler();
     }];
     
+}
+
+- (void)purgeResources
+{
+    sOGPlayerEntityAppearTextures = nil;
+    sOGPlayerEntityAnimations = nil;
 }
 
 @end
