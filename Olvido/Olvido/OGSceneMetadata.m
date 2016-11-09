@@ -18,7 +18,7 @@ NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
 
 @implementation OGSceneMetadata
 
-- (instancetype)initWithSceneConfiguration:(NSDictionary *)configuration
+- (instancetype)initWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 {
     if (configuration)
     {
@@ -26,15 +26,14 @@ NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
         
         if (self)
         {
-            NSString *identifier = [configuration valueForKey:kOGSceneMetadataIdentifierKey];
-            NSString *sceneType = [configuration valueForKey:kOGSceneMetadataSceneTypeKey];
-            NSString *name = [configuration valueForKey:kOGSceneMetadataSceneNameKey];
+            NSString *sceneType = [configuration objectForKey:kOGSceneMetadataSceneTypeKey];
+            NSString *name = [configuration objectForKey:kOGSceneMetadataSceneNameKey];
             
-            if (identifier && sceneType && name)
+            if (sceneType && name)
             {
-                _identifier = identifier;
                 _sceneType = sceneType;
                 _name = name;
+                _identifier = identifier;
             }
             else
             {
@@ -50,9 +49,9 @@ NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
     return self;
 }
 
-+ (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration
++ (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 {
-    return [[OGSceneMetadata alloc] initWithSceneConfiguration:configuration];
+    return [[OGSceneMetadata alloc] initWithSceneConfiguration:configuration identifier:identifier];
 }
 
 @end

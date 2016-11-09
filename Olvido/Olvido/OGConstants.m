@@ -17,6 +17,7 @@ CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
+NSString *const kOGPropertyFileExtension = @"plist";
 NSString *const kOGSceneFileExtension = @"sks";
 NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
 NSString *const kOGMapMenuSceneFileName = @"OGMapMenuScene";

@@ -19,9 +19,9 @@
 
 + (instancetype)sceneManagerWithView:(SKView *)view;
 
-- (void)prepareSceneWithIdentifier:(NSString *)sceneIdentifier;
+- (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier;
 
-- (void)transitionToSceneWithIdentifier:(NSString *)sceneIdentifier;
+- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier;
 
 - (void)transitionToInitialScene;
 

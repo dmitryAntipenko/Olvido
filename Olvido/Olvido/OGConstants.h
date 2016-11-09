@@ -19,6 +19,7 @@ extern CGFloat const kOGGameSceneStatusBarPositionOffset;
 extern CGFloat const kOGGameSceneStatusBarYOffset;
 extern CGFloat const kOGGameSceneStatusBarDuration;
 
+extern NSString *const kOGPropertyFileExtension;
 extern NSString *const kOGSceneFileExtension;
 extern NSString *const kOGMainMenuSceneFileName;
 

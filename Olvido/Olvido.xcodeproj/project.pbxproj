@@ -110,6 +110,7 @@
 		1B27EABF1DC0F6F000E9CA23 /* OGCompleteLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGCompleteLevelState.m; sourceTree = "<group>"; };
 		1B27EAC11DC0F6FD00E9CA23 /* OGDeathLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDeathLevelState.h; sourceTree = "<group>"; };
 		1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeathLevelState.m; sourceTree = "<group>"; };
+		1B3005C91DD340E7000B0FBB /* OGSceneLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSceneLoaderDelegate.h; sourceTree = "<group>"; };
 		1B36E4C71DC618100080D80B /* OGPauseScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGPauseScreen.sks; sourceTree = "<group>"; };
 		1B36E4CE1DC633300080D80B /* OGAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationState.h; sourceTree = "<group>"; };
 		1B36E4CF1DC633300080D80B /* OGAnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationState.m; sourceTree = "<group>"; };
@@ -336,12 +337,13 @@
 			children = (
 				1B7C44B51DD1BB9B004F89EC /* OGSceneManager.h */,
 				1B7C44B61DD1BB9B004F89EC /* OGSceneManager.m */,
+				1B7C44BD1DD20FB0004F89EC /* OGSceneLoader.h */,
+				1B7C44BE1DD20FB0004F89EC /* OGSceneLoader.m */,
 				1B7C44B81DD1E5BF004F89EC /* OGSceneMetadata.h */,
 				1B7C44B91DD1E5BF004F89EC /* OGSceneMetadata.m */,
 				1B7C44C41DD254D2004F89EC /* SceneLoaderStates */,
-				1B7C44BD1DD20FB0004F89EC /* OGSceneLoader.h */,
-				1B7C44BE1DD20FB0004F89EC /* OGSceneLoader.m */,
 				1B7C44C01DD21195004F89EC /* OGSceneManagerDelegate.h */,
+				1B3005C91DD340E7000B0FBB /* OGSceneLoaderDelegate.h */,
 			);
 			name = SceneManager;
 			sourceTree = "<group>";
@@ -440,6 +442,7 @@
 				2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */,
 				EA5870F61DC0D8D400FCF126 /* OGLevelController.h */,
 				EA5870F71DC0D8D400FCF126 /* OGLevelController.m */,
+				EA976D051D9EDBF8003B77FC /* Scenes */,
 			);
 			name = LevelController;
 			sourceTree = "<group>";
@@ -544,7 +547,6 @@
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
 				EA0D27281DB1475000CEFB8A /* LevelController */,
-				EA976D051D9EDBF8003B77FC /* Scenes */,
 				EA9EAAC41DCC9CE400E36855 /* Entities */,
 				EA0D27271DB1473A00CEFB8A /* Components */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,

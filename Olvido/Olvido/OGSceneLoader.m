@@ -57,28 +57,47 @@
 
 - (void)asynchronouslyPreloadResources
 {
+    [self.stateMachine enterState:[OGSceneLoaderPreloadingState class]];
+    
     if (self.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
     {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0x0), ^
-        {
-            NSString *path = [[NSBundle mainBundle] pathForResource:self.metadata.name ofType:kOGSceneFileExtension];
-            self.scene = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-            
-            if (self.scene)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^
-                               {
-                                   [self preloadingSuccessful];
-                               });
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), ^
-                               {
-                                   [self preloadingFailure];
-                               });
-            }
-        });
+                       {
+                           NSString *path = [[NSBundle mainBundle] pathForResource:self.metadata.name ofType:kOGSceneFileExtension];
+                           self.scene = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+                           
+                           if (self.scene)
+                           {
+                               dispatch_async(dispatch_get_main_queue(), ^
+                                              {
+                                                  [self preloadingSuccessful];
+                                              });
+                           }
+                           else
+                           {
+                               dispatch_async(dispatch_get_main_queue(), ^
+                                              {
+                                                  [self preloadingFailure];
+                                              });
+                           }
+                       });
+    }
+}
+
+- (void)loadResources
+{
+    [self.stateMachine enterState:[OGSceneLoaderPreloadingState class]];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:self.metadata.name ofType:kOGSceneFileExtension];
+    self.scene = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    if (self.scene)
+    {
+        [self preloadingSuccessful];
+    }
+    else
+    {
+        [self preloadingFailure];
     }
 }
 

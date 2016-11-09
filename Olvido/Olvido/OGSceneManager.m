@@ -16,11 +16,12 @@
 
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
-NSUInteger *const kOGSceneManagerInitialSceneIdentifier = 0;
+NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 @interface OGSceneManager ()
 
 @property (nonatomic, strong) OGBaseScene *currentScene;
+@property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
 
 @end
@@ -34,20 +35,21 @@ NSUInteger *const kOGSceneManagerInitialSceneIdentifier = 0;
     if (self)
     {
         NSString *pathForScenesConfiguration = [[NSBundle mainBundle] pathForResource:kOGSceneManagerScenesConfigurationFileName
-                                                                               ofType:kOGSceneFileExtension];
+                                                                               ofType:kOGPropertyFileExtension];
         
         if (pathForScenesConfiguration)
         {
             NSArray *configuration = [NSArray arrayWithContentsOfFile:pathForScenesConfiguration];
             
-            NSMutableArray *mutableSceneLoaders = [NSMutableArray array];
+            __block NSMutableArray *mutableSceneLoaders = [NSMutableArray array];
             
-            for (NSDictionary *metadataAsDictionary in configuration)
+            [configuration enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop)
             {
-                OGSceneMetadata *sceneMetadata = [OGSceneMetadata sceneMetaDataWithSceneConfiguration:metadataAsDictionary];
+                OGSceneMetadata *sceneMetadata = [OGSceneMetadata sceneMetaDataWithSceneConfiguration:obj
+                                                                                           identifier:idx];
                 OGSceneLoader *sceneLoader = [OGSceneLoader sceneLoaderWithMetadata:sceneMetadata];
                 [mutableSceneLoaders addObject:sceneLoader];
-            }
+            }];
             
             _sceneLoaders = [mutableSceneLoaders copy];
         }
@@ -63,7 +65,7 @@ NSUInteger *const kOGSceneManagerInitialSceneIdentifier = 0;
     return [[OGSceneManager alloc] initWithView:view];
 }
 
-- (void)prepareSceneWithIdentifier:(NSString *)sceneIdentifier
+- (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
@@ -73,32 +75,38 @@ NSUInteger *const kOGSceneManagerInitialSceneIdentifier = 0;
     }
 }
 
-- (void)transitionToSceneWithIdentifier:(NSString *)sceneIdentifier
+- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
-    if (sceneLoader.stateMachine.currentState == [OGSceneLoaderPreloadSuccessfulState class])
+    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
     {
         [self presentSceneWithSceneLoader:sceneLoader];
     }
-    else
+    else if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
     {
+        [sceneLoader loadResources];
         
+        if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
+        {
+            [self presentSceneWithSceneLoader:sceneLoader];
+        }
+        else
+        {
+            NSLog(@"Scene loading ErrOrO !_!");
+        }
     }
 }
 
-- (OGSceneLoader *)sceneLoaderForIdentifier:(NSString *)identifier
+- (OGSceneLoader *)sceneLoaderForIdentifier:(NSUInteger)identifier
 {
     OGSceneLoader *result = nil;
     
-    if (identifier)
+    for (OGSceneLoader *sceneLoader in self.sceneLoaders)
     {
-        for (OGSceneLoader *sceneLoader in self.sceneLoaders)
+        if (sceneLoader.metadata.identifier == identifier)
         {
-            if ([sceneLoader.metadata.identifier isEqualToString:identifier])
-            {
-                result = sceneLoader;
-            }
+            result = sceneLoader;
         }
     }
     

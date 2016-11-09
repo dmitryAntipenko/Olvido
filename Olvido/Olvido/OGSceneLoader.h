@@ -22,6 +22,8 @@
 
 - (void)asynchronouslyPreloadResources;
 
+- (void)loadResources;
+
 - (void)purgeResources;
 
 @end
