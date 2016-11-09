@@ -10,7 +10,7 @@
 
 @interface OGSceneMetadata : NSObject
 
-@property (nonatomic, unsafe_unretained, readonly) NSNumber *identifier;
+@property (nonatomic, unsafe_unretained, readonly) NSString  *identifier;
 @property (nonatomic, unsafe_unretained, readonly) NSString  *sceneType;
 @property (nonatomic, strong, readonly) NSString *name;
 

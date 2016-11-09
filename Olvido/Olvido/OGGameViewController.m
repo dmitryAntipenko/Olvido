@@ -10,10 +10,12 @@
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
 #import "OGLevelController.h"
-
+#import "OGSceneManager.h"
 #import "OGGameScene.h"
 
 @interface OGGameViewController ()
+
+@property (nonatomic, strong) OGSceneManager *sceneManager;
 
 @end
 
@@ -31,10 +33,9 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
+    self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     
-    [view presentScene:mainMenuScene];
+    [self.sceneManager transitionToInitialScene];
 }
 
 - (BOOL)shouldAutorotate

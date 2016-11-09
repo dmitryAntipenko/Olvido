@@ -23,4 +23,6 @@
 
 - (void)transitionToSceneWithIdentifier:(NSString *)sceneIdentifier;
 
+- (void)transitionToInitialScene;
+
 @end

@@ -26,7 +26,7 @@ NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
         
         if (self)
         {
-            NSNumber *identifier = [configuration valueForKey:kOGSceneMetadataIdentifierKey];
+            NSString *identifier = [configuration valueForKey:kOGSceneMetadataIdentifierKey];
             NSString *sceneType = [configuration valueForKey:kOGSceneMetadataSceneTypeKey];
             NSString *name = [configuration valueForKey:kOGSceneMetadataSceneNameKey];
             
