@@ -27,7 +27,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 - (instancetype)initWithTextureSize:(CGSize)textureSize
                          animations:(NSDictionary *)animations
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {
@@ -107,7 +107,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     if (self.requestedAnimationState != kOGAnimationStateNone)
     {
-        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
+        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:OGOrientationComponent.self];
         
         if (orientationComponent)
         {

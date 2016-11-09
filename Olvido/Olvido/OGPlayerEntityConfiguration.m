@@ -42,9 +42,4 @@
     return 50.0;
 }
 
-- (CGSize)textureSize
-{
-    return CGSizeMake(120.0, 120.0);
-}
-
 @end

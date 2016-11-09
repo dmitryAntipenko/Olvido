@@ -18,7 +18,7 @@
                         bodyActionName:(NSString *)bodyActionName
                             bodyAction:(SKAction *)bodyAction
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {

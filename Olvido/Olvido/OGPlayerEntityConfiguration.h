@@ -18,6 +18,6 @@
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, assign, readonly) CGFloat messageShowDistance;
 
-@property (nonatomic, assign, readonly) CGSize textureSize;
+
 @end
 

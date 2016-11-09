@@ -26,6 +26,8 @@
 		1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */; };
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
 		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
+		210CC80B1DD38FEC00824E84 /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */; };
+		210CC80E1DD39D1200824E84 /* OGPlayerEntityControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
@@ -108,6 +110,10 @@
 		210CC8021DD0FB4D00824E84 /* OGDirection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGDirection.h; sourceTree = "<group>"; };
 		210CC8031DD3532000824E84 /* OGOrientationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGOrientationComponent.h; sourceTree = "<group>"; };
 		210CC8041DD3532000824E84 /* OGOrientationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGOrientationComponent.m; sourceTree = "<group>"; };
+		210CC8091DD38FEC00824E84 /* OGPlayerEntityAppearState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAppearState.h; sourceTree = "<group>"; };
+		210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAppearState.m; sourceTree = "<group>"; };
+		210CC80C1DD39D1200824E84 /* OGPlayerEntityControlledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityControlledState.h; sourceTree = "<group>"; };
+		210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityControlledState.m; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
@@ -318,6 +324,35 @@
 			name = StoryLevelScenes;
 			sourceTree = "<group>";
 		};
+		210CC8061DD3885100824E84 /* IntelligenceComponent */ = {
+			isa = PBXGroup;
+			children = (
+				210CC8081DD3889200824E84 /* IntelligenceComponent States (EnemyEntity) */,
+				210CC8071DD3887000824E84 /* IntelligenceComponent States (PlayerEntity) */,
+				EA9EAACE1DCC9E3E00E36855 /* OGIntelligenceComponent.h */,
+				EA9EAACF1DCC9E3E00E36855 /* OGIntelligenceComponent.m */,
+			);
+			name = IntelligenceComponent;
+			sourceTree = "<group>";
+		};
+		210CC8071DD3887000824E84 /* IntelligenceComponent States (PlayerEntity) */ = {
+			isa = PBXGroup;
+			children = (
+				210CC8091DD38FEC00824E84 /* OGPlayerEntityAppearState.h */,
+				210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */,
+				210CC80C1DD39D1200824E84 /* OGPlayerEntityControlledState.h */,
+				210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */,
+			);
+			name = "IntelligenceComponent States (PlayerEntity)";
+			sourceTree = "<group>";
+		};
+		210CC8081DD3889200824E84 /* IntelligenceComponent States (EnemyEntity) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "IntelligenceComponent States (EnemyEntity)";
+			sourceTree = "<group>";
+		};
 		2154A6021DBE3FF800E414F3 /* Chapter1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +402,7 @@
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				210CC8061DD3885100824E84 /* IntelligenceComponent */,
 				1B36E4D11DC639490080D80B /* AnimationComponent */,
 				1B2388DC1DB4C47D00A9092B /* MovementControlComponents */,
 				EA70E5201DB3F4620034116D /* OGMovementComponent.h */,
@@ -383,8 +419,6 @@
 				EA9EAAC91DCC9D1400E36855 /* OGRenderComponent.m */,
 				EA9EAACB1DCC9E3100E36855 /* OGInputComponent.h */,
 				EA9EAACC1DCC9E3100E36855 /* OGInputComponent.m */,
-				EA9EAACE1DCC9E3E00E36855 /* OGIntelligenceComponent.h */,
-				EA9EAACF1DCC9E3E00E36855 /* OGIntelligenceComponent.m */,
 				EA49823F1DCF980A00DCFE00 /* OGPhysicsComponent.h */,
 				EA4982401DCF980A00DCFE00 /* OGPhysicsComponent.m */,
 				210CC8031DD3532000824E84 /* OGOrientationComponent.h */,
@@ -645,6 +679,7 @@
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
+				210CC80E1DD39D1200824E84 /* OGPlayerEntityControlledState.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,
@@ -672,6 +707,7 @@
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
 				EA9EAACA1DCC9D1400E36855 /* OGRenderComponent.m in Sources */,
 				EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */,
+				210CC80B1DD38FEC00824E84 /* OGPlayerEntityAppearState.m in Sources */,
 				EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */,
 				215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */,
 			);

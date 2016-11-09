@@ -23,9 +23,6 @@
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
-static NSDictionary *sOGPlayerEntityAnimations;
-static NSDictionary *sOGPlayerEntityAppearTextures;
-
 @interface OGPlayerEntity ()
 
 @property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
@@ -33,6 +30,8 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
 @end
 
 @implementation OGPlayerEntity
+static NSDictionary *sOGPlayerEntityAnimations;
+static NSDictionary *sOGPlayerEntityAppearTextures;
 
 - (instancetype)init
 {
@@ -69,7 +68,7 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
         
         if (sOGPlayerEntityAnimations)
         {
-            _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:sOGPlayerEntityAnimations];
+            _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:sOGPlayerEntityAnimations];
             //rewrite in Player Intelligence Component when write intelligenceComponent
             _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
             [self addComponent:_animation];
@@ -139,6 +138,21 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
 {
     sOGPlayerEntityAppearTextures = nil;
     sOGPlayerEntityAnimations = nil;
+}
+
++ (NSDictionary *)sOGPlayerEntityAnimations
+{
+    return sOGPlayerEntityAnimations;
+}
+
++ (NSDictionary *)sOGPlayerEntityAppearTextures
+{
+    return sOGPlayerEntityAppearTextures;
+}
+
++ (CGSize)textureSize
+{
+    return CGSizeMake(120.0, 120.0);
 }
 
 @end
