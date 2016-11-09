@@ -7,7 +7,19 @@
 //
 
 #import "OGSceneLoaderPreloadingState.h"
+#import "OGSceneLoaderPreloadSuccessfulState.h"
+#import "OGSceneLoaderErrorState.h"
 
 @implementation OGSceneLoaderPreloadingState
+
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    BOOL result = NO;
+    
+    result = (stateClass == [OGSceneLoaderPreloadSuccessfulState class]);
+    result = result || (stateClass == [OGSceneLoaderErrorState class]);
+    
+    return result;
+}
 
 @end
