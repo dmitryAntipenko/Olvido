@@ -16,6 +16,7 @@
 @interface OGGameViewController ()
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, strong) OGLevelController *levelController;
 
 @end
 
@@ -33,8 +34,9 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    self.sceneManager = [OGSceneManager sceneManagerWithView:view];
+    self.levelController = [OGLevelController sharedInstance];
     
+    self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];
 }
 

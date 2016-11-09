@@ -112,6 +112,7 @@
 		1B27EAC11DC0F6FD00E9CA23 /* OGDeathLevelState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDeathLevelState.h; sourceTree = "<group>"; };
 		1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeathLevelState.m; sourceTree = "<group>"; };
 		1B3005C91DD340E7000B0FBB /* OGSceneLoaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSceneLoaderDelegate.h; sourceTree = "<group>"; };
+		1B3005CA1DD35EA0000B0FBB /* OGResourceLoadableType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGResourceLoadableType.h; sourceTree = "<group>"; };
 		1B36E4C71DC618100080D80B /* OGPauseScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGPauseScreen.sks; sourceTree = "<group>"; };
 		1B36E4CE1DC633300080D80B /* OGAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationState.h; sourceTree = "<group>"; };
 		1B36E4CF1DC633300080D80B /* OGAnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationState.m; sourceTree = "<group>"; };
@@ -347,6 +348,7 @@
 				1B7C44C41DD254D2004F89EC /* SceneLoaderStates */,
 				1B7C44C01DD21195004F89EC /* OGSceneManagerDelegate.h */,
 				1B3005C91DD340E7000B0FBB /* OGSceneLoaderDelegate.h */,
+				1B3005CA1DD35EA0000B0FBB /* OGResourceLoadableType.h */,
 			);
 			name = SceneManager;
 			sourceTree = "<group>";
