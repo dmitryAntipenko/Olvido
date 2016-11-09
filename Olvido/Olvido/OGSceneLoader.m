@@ -53,7 +53,7 @@
     return [[OGSceneLoader alloc] initWithMetadata:metadata];
 }
 
-- (void)asynchronouslyPreloadResources
+- (void)asynchronouslyLoadSceneForPresentation;
 {
 //    [self.stateMachine enterState:[OGSceneLoader class]];
 //    

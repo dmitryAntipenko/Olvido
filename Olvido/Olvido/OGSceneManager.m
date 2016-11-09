@@ -11,6 +11,9 @@
 #import "OGSceneLoader.h"
 #import "OGConstants.h"
 #import "OGSceneMetadata.h"
+#import "OGSceneLoaderInitialState.h"
+#import "OGSceneLoaderPrepearingResourcesState.h"
+#import "OGSceneLoaderResourcesReadyState.h"
 
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
@@ -65,12 +68,12 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
-//    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
-//    
-//    if (sceneLoader.stateMachine.currentState == [OGSceneLoaderBeforePreloadState class])
-//    {
-//        [sceneLoader asynchronouslyPreloadResources];
-//    }
+    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
+    
+    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
+    {
+        [sceneLoader asynchronouslyLoadSceneForPresentation];
+    }
 }
 
 - (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier
