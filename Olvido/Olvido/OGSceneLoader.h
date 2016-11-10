@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong, readonly) GKStateMachine *stateMachine;
 @property (nonatomic, strong, readonly) OGSceneMetadata *metadata;
-@property (nonatomic, strong, readonly) OGBaseScene *scene;
+@property (nonatomic, strong) OGBaseScene *scene;
 @property (nonatomic, strong) NSProgress *progress;
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;

@@ -17,12 +17,6 @@
 NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
 NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
 
-@interface OGSceneLoader ()
-
-@property (nonatomic, strong, readwrite) OGBaseScene *scene;
-
-@end
-
 @implementation OGSceneLoader
 
 - (instancetype)initWithMetadata:(OGSceneMetadata *)metadata

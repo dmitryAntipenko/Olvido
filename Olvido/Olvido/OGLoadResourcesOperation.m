@@ -13,7 +13,6 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 @interface OGLoadResourcesOperation ()
 
-@property (nonatomic, strong) NSProgress *progress;
 @property (nonatomic, unsafe_unretained) Class<OGResourceLoadable> loadableClass;
 
 @end
@@ -31,6 +30,11 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
     }
     
     return self;
+}
+
++ (instancetype)loadResourcesOperationWithLoadableClass:(Class<OGResourceLoadable>)loadableClass
+{
+    return [[OGLoadResourcesOperation alloc] initWithLoadableClass:loadableClass];
 }
 
 - (void)start

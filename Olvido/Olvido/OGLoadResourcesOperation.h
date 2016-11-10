@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGResourceLoadable.h"
 
 @interface OGLoadResourcesOperation : NSOperation
+
+@property (nonatomic, strong, readonly) NSProgress *progress;
+
++ (instancetype)loadResourcesOperationWithLoadableClass:(Class<OGResourceLoadable>)loadableClass;
 
 @end

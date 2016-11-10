@@ -8,9 +8,11 @@
 
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
 #import "OGLoadSceneOperation.h"
+#import "OGLoadResourcesOPeration.h"
 
 NSUInteger const kOGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
 NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
@@ -26,7 +28,19 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 - (void)didEnterWithPreviousState:(GKState *)state
 {
-    //    [self load]
+    [self loadResourcesAsunchronously];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _operationQueue = [NSOperationQueue currentQueue];
+    }
+    
+    return self;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
@@ -52,12 +66,45 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                        withPendingUnitCount: kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     }
     
+    OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:sceneMetadata];
     
+    [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+    
+    __block OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
+    
+    loadSceneOperation.completionBlock = ^
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           self.sceneLoader.scene = weakLoadSceneOperation.scene;
+                           
+                           [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                       });
+    };
+    
+    for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
+    {
+        OGLoadResourcesOperation *loadResourceOperation = [OGLoadResourcesOperation loadResourcesOperationWithLoadableClass:loadableClass];
+        
+        [self.progress addChild:loadResourceOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+        
+        [loadSceneOperation addDependency:loadResourceOperation];
+        
+        [self.operationQueue addOperation:loadResourceOperation];
+    }
+    
+    [self.operationQueue addOperation:loadSceneOperation];
 }
 
 - (void)cancel
 {
+    [self.operationQueue cancelAllOperations];
+    self.sceneLoader.scene = nil;
     
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       [self.stateMachine enterState:OGSceneLoaderInitialState.self];
+                   });
 }
 
 @end

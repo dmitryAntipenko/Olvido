@@ -16,7 +16,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
 
 @property (nonatomic, strong) OGSceneMetadata *sceneMetadata;
 @property (nonatomic, strong, readwrite) OGBaseScene *scene;
-@property (nonatomic, strong) NSProgress *progress;
+@property (nonatomic, strong, readwrite) NSProgress *progress;
 
 @end
 

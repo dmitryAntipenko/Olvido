@@ -14,6 +14,7 @@
 @interface OGLoadSceneOperation : NSOperation
 
 @property (nonatomic, strong, readonly) OGBaseScene *scene;
+@property (nonatomic, strong, readonly) NSProgress *progress;
 
 + (instancetype)loadSceneOperationWithSceneMetadata:(OGSceneMetadata *)sceneMetadata;
 

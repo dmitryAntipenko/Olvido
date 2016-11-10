@@ -113,14 +113,14 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.lastUpdateTimeInterval = 0.0;
     [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
-<<<<<<< HEAD
     [self createSceneContents];
     
     SKCameraNode *camera = [[SKCameraNode alloc] init];
     self.camera = camera;
     self.cameraController.camera = camera;
     [self addChild:camera];
-=======
+
+    
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
@@ -133,8 +133,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }];
     
     [self createStatusBar];
->>>>>>> AnimationComponent
-    
     self.cameraController.target = self.player.render.node;
     
     [self.cameraController moveCameraToNode:self.currentRoom];
