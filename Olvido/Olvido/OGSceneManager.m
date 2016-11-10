@@ -78,21 +78,17 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier
 {
-//    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
-//    
-//    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
-//    {
-//        [self presentSceneWithSceneLoader:sceneLoader];
-//    }
-//    else if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
-//    {
-//        [sceneLoader loadResources];
-//        
-//        if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderPreloadSuccessfulState class])
-//        {
-//            [self presentSceneWithSceneLoader:sceneLoader];
-//        }
-//    }
+    OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
+    
+    if (sceneLoader.stateMachine.currentState.class == OGSceneLoaderResourcesReadyState.self)
+    {
+        [self presentSceneWithSceneLoader:sceneLoader];
+    }
+    else
+    {
+        [sceneLoader asynchronouslyLoadSceneForPresentation];
+        sceneLoader.requestedForPresentation = YES;
+    }
 }
 
 - (OGSceneLoader *)sceneLoaderForIdentifier:(NSUInteger)identifier

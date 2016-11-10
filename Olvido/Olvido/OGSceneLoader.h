@@ -18,6 +18,7 @@
 @property (nonatomic, strong, readonly) OGSceneMetadata *metadata;
 @property (nonatomic, strong) OGBaseScene *scene;
 @property (nonatomic, strong) NSProgress *progress;
+@property (nonatomic, unsafe_unretained) BOOL requestedForPresentation;
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;
 
