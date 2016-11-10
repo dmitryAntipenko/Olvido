@@ -57,10 +57,13 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            self.scene = [[self.sceneMetadata.sceneClass alloc] initWithFileNamed:self.sceneMetadata.fileName];
+            self.scene = [self.sceneMetadata.sceneClass nodeWithFileNamed:self.sceneMetadata.fileName];
             
             [self.scene createCamera];
+            
             self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
+
+            self.state = finishedState;
         }
     }
 }

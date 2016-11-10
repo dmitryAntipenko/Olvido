@@ -31,8 +31,7 @@
 
 + (instancetype)stateWithLevelScene:(OGGameScene *)scene
 {
-    return [[OGLevelState alloc] initWithLevelScene:scene];
+    return [[self alloc] initWithLevelScene:scene];
 }
-
 
 @end

@@ -12,18 +12,6 @@
 
 @implementation OGBeforeStartLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
-{
-    OGBeforeStartLevelState *state = nil;
-    
-    if (scene)
-    {
-        state = [[OGBeforeStartLevelState alloc] initWithLevelScene:scene];
-    }
-    
-    return state;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
 //    [self.scene restart];

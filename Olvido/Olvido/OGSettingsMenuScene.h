@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGBaseScene.h"
 
-@interface OGSettingsMenuScene : SKScene
+@interface OGSettingsMenuScene : OGBaseScene
 
 - (void)activateDrag;
 - (void)activateTapContinue;

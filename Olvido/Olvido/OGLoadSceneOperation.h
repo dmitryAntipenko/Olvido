@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGLoadOperation.h"
 
 @class OGSceneMetadata;
 @class OGBaseScene;
 
-@interface OGLoadSceneOperation : NSOperation
+@interface OGLoadSceneOperation : OGLoadOperation
 
 @property (nonatomic, strong, readonly) OGBaseScene *scene;
 @property (nonatomic, strong, readonly) NSProgress *progress;

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "OGResourceLoadable.h"
+#import "OGLoadOperation.h"
 
-@interface OGLoadResourcesOperation : NSOperation
+@interface OGLoadResourcesOperation : OGLoadOperation
 
 @property (nonatomic, strong, readonly) NSProgress *progress;
 

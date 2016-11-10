@@ -48,7 +48,6 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     BOOL result = NO;
     
     result = (stateClass == [OGSceneLoaderResourcesReadyState class]);
-    result = result || (stateClass == [OGSceneLoaderResourcesReadyState class]);
     
     return result;
 }

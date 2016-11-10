@@ -134,6 +134,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     if (sceneLoader.requestedForPresentation)
     {
         [self presentSceneWithSceneLoader:sceneLoader];
+        self.loadingScene = nil;
     }
 }
 
