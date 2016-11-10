@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGResourceLoadable.h"
 
 @class OGHealthComponent;
 @class OGAnimationComponent;
@@ -18,7 +19,7 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-@interface OGPlayerEntity : GKEntity
+@interface OGPlayerEntity : GKEntity <OGResourceLoadable>
 
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;

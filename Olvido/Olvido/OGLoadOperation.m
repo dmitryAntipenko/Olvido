@@ -8,6 +8,10 @@
 
 #import "OGLoadOperation.h"
 
+NSString *const kOGLoadOperationKeyPathForIsFinishedValue = @"isFinished";
+NSString *const kOGLoadOperationKeyPathForIsCanceledValue = @"isCanceled";
+NSString *const kOGLoadOperationKeyPathForisExecutingValue = @"isExecuting";
+
 @implementation OGLoadOperation
 
 - (BOOL)isExecuting

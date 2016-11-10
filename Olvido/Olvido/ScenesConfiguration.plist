@@ -16,9 +16,13 @@
 	</dict>
 	<dict>
 		<key>ClassName</key>
-		<string>OGLevelScene1</string>
+		<string>OGInitialLevel</string>
 		<key>FileName</key>
-		<string>OGLevelScene1</string>
+		<string>OGInitialLevel</string>
+		<key>OnDemandResources</key>
+		<array>
+			<string>OGPlayerEntity</string>
+		</array>
 	</dict>
 </array>
 </plist>

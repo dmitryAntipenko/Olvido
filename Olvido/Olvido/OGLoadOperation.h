@@ -15,6 +15,10 @@ typedef NS_ENUM(NSUInteger, OGLoadOperationState)
     canceledState = 2
 };
 
+extern NSString *const kOGLoadOperationKeyPathForIsFinishedValue;
+extern NSString *const kOGLoadOperationKeyPathForIsCanceledValue;
+extern NSString *const kOGLoadOperationKeyPathForisExecutingValue;
+
 @interface OGLoadOperation : NSOperation
 
 @property (nonatomic, unsafe_unretained) OGLoadOperationState state;

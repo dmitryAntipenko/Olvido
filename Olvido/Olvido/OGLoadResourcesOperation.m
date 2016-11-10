@@ -65,7 +65,9 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 - (void)finish
 {
     self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+    [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
     self.state = finishedState;
+    [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
 }
 
 @end

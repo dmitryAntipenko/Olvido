@@ -31,13 +31,13 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                 _fileName = fileName;
                 _identifier = identifier;
                 
-                NSArray<NSString *> *onDemandResourcesClassesNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *onDemandResourcesClassNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 
-                if (onDemandResourcesClassesNames)
+                if (onDemandResourcesClassNames)
                 {
-                    for (NSString *resourceLoadableClassName in onDemandResourcesClassesNames)
+                    for (NSString *resourceLoadableClassName in onDemandResourcesClassNames)
                     {
                         Class loadableClass = NSClassFromString(resourceLoadableClassName);
                         

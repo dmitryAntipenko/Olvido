@@ -63,7 +63,9 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
             
             self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
             
+            [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
             self.state = finishedState;
+            [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
         }
     }
 }
