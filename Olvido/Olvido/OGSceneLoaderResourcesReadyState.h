@@ -7,7 +7,8 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGSceneLoaderState.h"
 
-@interface OGSceneLoaderResourcesReadyState : GKState
+@interface OGSceneLoaderResourcesReadyState : OGSceneLoaderState
 
 @end
