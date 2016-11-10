@@ -34,10 +34,11 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    self.levelController = [OGLevelController sharedInstance];
-    
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];
+    
+    self.levelController = [OGLevelController sharedInstance];
+    self.levelController.sceneManager = self.sceneManager;
 }
 
 - (BOOL)shouldAutorotate

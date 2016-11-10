@@ -10,6 +10,7 @@
 
 @class OGGameScene;
 @class OGStoryScene;
+@class OGSceneManager;
 
 /* temporary code */
 extern NSString *const kOGLevelControllerDragControl;
@@ -25,6 +26,7 @@ extern NSString *const kOGLevelControllerTapStopControl;
 @property (nonatomic, copy, readonly) NSString *currentSceneName;
 @property (nonatomic, strong, readonly) OGGameScene *currentGameScene;
 @property (nonatomic, strong, readonly) OGStoryScene *currentStoryScene;
+@property (nonatomic, strong) OGSceneManager *sceneManager;
 
 /* temporary code */
 @property (nonatomic, copy) NSString *controlType;

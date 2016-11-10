@@ -93,7 +93,6 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
     return self;
 }
 
-<<<<<<< HEAD
 + (BOOL)resourcesNeedLoading
 {
     return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
@@ -157,12 +156,13 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
 + (CGSize)textureSize
 {
     return CGSizeMake(120.0, 120.0);
-=======
+}
+
+
 - (void)loadMiscellaneousAssets
 {
     NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
->>>>>>> vicrattlehead_sandbox
 }
 
 @end

@@ -36,7 +36,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 @interface OGLevelController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
-@property (nonatomic, copy, readwrite) NSArray *levelMap;
+@property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
 @property (nonatomic, copy, readwrite) NSString *currentSceneName;
 @property (nonatomic, strong, readwrite) OGGameScene *currentGameScene;
 @property (nonatomic, strong, readwrite) OGStoryScene *currentStoryScene;
@@ -63,10 +63,10 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     static dispatch_once_t dispatchOnceToken = 0;
     
     dispatch_once(&dispatchOnceToken, ^()
-    {
-        levelController = [[OGLevelController alloc] init];
-        [levelController loadLevelMap];
-    });
+                  {
+                      levelController = [[OGLevelController alloc] init];
+                      [levelController loadLevelMap];
+                  });
     
     return levelController;
 }
@@ -106,9 +106,9 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 //    NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
 //    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalIdentifier:portalIdentifier
 //                                                                  inLevel:self.currentGameScene.identifier];
-//    
+//
 //    [self loadLevelWithIdentifier:nextLevelId];
-//    
+//
 //    if (self.currentGameScene)
 //    {
 //        SKTransition *transition = [SKTransition doorwayWithDuration:kOGSceneControllerTransitionDuration];
@@ -153,22 +153,23 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
-    NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
+        NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
+//    NSString *className = self.levelMap[identifier.integerValue][@"SceneIdentifier"];
     GKScene *sceneFile = [GKScene sceneWithFileNamed:className];
     OGGameScene *scene = (OGGameScene *)sceneFile.rootNode;
     
     scene.identifier = identifier;
     scene.sceneDelegate = self;
     
-//    for (GKEntity *entity in sceneFile.entities)
-//    {
-//        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
-//        
-//        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
-//        spriteNode.entity = (GKEntity *) nodeComponent.entity;
-//        
-////        [scene addSpriteNode:spriteNode];
-//    }
+    //    for (GKEntity *entity in sceneFile.entities)
+    //    {
+    //        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
+    //
+    //        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
+    //        spriteNode.entity = (GKEntity *) nodeComponent.entity;
+    //
+    ////        [scene addSpriteNode:spriteNode];
+    //    }
     
     scene.scaleMode = SKSceneScaleModeAspectFit;
     self.currentGameScene = scene;
