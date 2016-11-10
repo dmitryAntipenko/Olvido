@@ -17,6 +17,8 @@
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 
+#import "OGColliderType.h"
+
 #import "OGPlayerEntityConfiguration.h"
 #import "OGAnimationState.h"
 
@@ -50,7 +52,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
-                                                      colliderType:_playerConfiguration.colliderType];
+                                                      colliderType:[OGColliderType player]];
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
@@ -106,6 +108,8 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
+    [OGPlayerEntity loadMiscellaneousAssets];
+    
     NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
                                   kOGPlayerEntityAtlasNamesPlayerBotWalk];
     
@@ -163,6 +167,12 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 + (CGSize)textureSize
 {
     return CGSizeMake(120.0, 120.0);
+}
+
++ (void)loadMiscellaneousAssets
+{
+    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
 }
 
 @end

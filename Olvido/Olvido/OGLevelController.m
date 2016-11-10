@@ -11,7 +11,6 @@
 #import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
-#import "OGSpriteNode.h"
 
 NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
 
@@ -38,6 +37,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 @interface OGLevelController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray *levelMap;
+@property (nonatomic, copy, readwrite) NSString *currentSceneName;
 @property (nonatomic, strong, readwrite) OGGameScene *currentGameScene;
 @property (nonatomic, strong, readwrite) OGStoryScene *currentStoryScene;
 
@@ -160,18 +160,19 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     scene.identifier = identifier;
     scene.sceneDelegate = self;
     
-    for (GKEntity *entity in sceneFile.entities)
-    {
-        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
-        
-        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
-        spriteNode.entity = (GKEntity *) nodeComponent.entity;
-        
-//        [scene addSpriteNode:spriteNode];
-    }
+//    for (GKEntity *entity in sceneFile.entities)
+//    {
+//        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
+//        
+//        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
+//        spriteNode.entity = (GKEntity *) nodeComponent.entity;
+//        
+////        [scene addSpriteNode:spriteNode];
+//    }
     
     scene.scaleMode = SKSceneScaleModeAspectFit;
     self.currentGameScene = scene;
+    self.currentSceneName = className;
     
     NSString *storySceneName = self.levelMap[identifier.integerValue][kOGSceneControllerStorySceneName];
     GKScene *storySceneFile = [GKScene sceneWithFileNamed:storySceneName];

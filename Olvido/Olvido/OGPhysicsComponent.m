@@ -16,7 +16,7 @@
 
 @implementation OGPhysicsComponent
 
-- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body colliderType:(struct OGColliderType)type
+- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body colliderType:(OGColliderType *)type
 {
     if (body)
     {

@@ -10,9 +10,15 @@
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
+#import "OGGameSceneConfiguration.h"
+#import "OGEnemyConfiguration.h"
+#import "OGCameraController.h"
+#import "OGContactNotifiableType.h"
 
 #import "OGPlayerEntity.h"
+#import "OGEnemyEntity.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 #import "OGMovementComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
@@ -44,6 +50,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @interface OGGameScene ()
 
+@property (nonatomic, strong) SKNode *currentRoom;
+@property (nonatomic, strong) OGCameraController *cameraController;
+
+@property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
@@ -63,12 +73,16 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
-        
         [OGPlayerEntity loadResourcesWithCompletionHandler:^{
             NSLog(@"Success! Animation loaded!");
             _player = [[OGPlayerEntity alloc] init];
         }];
+
+        _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
+        _cameraController = [[OGCameraController alloc] init];
         //_player = [[OGPlayerEntity alloc] init];
+        
+
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
              [OGStoryConclusionLevelState stateWithLevelScene:self],
              [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -100,22 +114,49 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 {
     [super didMoveToView:view];
     
+    self.currentRoom = [self childNodeWithName:@"room1"];
+    
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
+    [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
-    [self addEntity:self.player];
+    [self createSceneContents];
     
-    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
-    self.player.render.node.position = playerInitialNode.position;
+    SKCameraNode *camera = [[SKCameraNode alloc] init];
+    self.camera = camera;
+    self.cameraController.camera = camera;
+    [self addChild:camera];
     
-    [self createStatusBar];
+    self.cameraController.target = self.player.render.node;
     
-    [self.stateMachine enterState:[OGGameLevelState class]];
-    
+    [self.cameraController moveCameraToNode:self.currentRoom];
+
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
-    [self addChild:inputNode];
+    inputNode.position = CGPointZero;
+    [self.camera addChild:inputNode];
+    
+    [self.stateMachine enterState:[OGGameLevelState class]];
+}
+
+- (void)createSceneContents
+{
+    [self addEntity:self.player];
+    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_point"];
+    self.player.render.node.position = playerInitialNode.position;
+    
+    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
+    {
+        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] init];
+        [self addEntity:enemy];
+        SKNode *enemyInitialNode = [self childNodeWithName:enemyConfiguration.initialPointName];
+        enemy.render.node.position = enemyInitialNode.position;
+        
+        enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
+    }
+    
+    [self createStatusBar];
 }
 
 - (void)addEntity:(GKEntity *)entity
@@ -156,7 +197,29 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    NSLog(@"%@", contact);
+    SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
+    SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
+    
+    GKEntity *entityA = bodyA.node.entity;
+    GKEntity *entityB = bodyB.node.entity;
+    
+    OGColliderType *colliderTypeA = [OGColliderType colliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
+    OGColliderType *colliderTypeB = [OGColliderType colliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
+    
+    BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
+    BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
+
+    if ([entityA conformsToProtocol:@protocol(OGContactNotifiableType)] && aNeedsCallback)
+    {
+        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityA;
+        [entity contactWithEntityDidBegin:entityB];
+    }
+
+    if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
+    {
+        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityB;
+        [entity contactWithEntityDidBegin:entityA];
+    }
 }
 
 - (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
@@ -249,6 +312,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
+    [self.cameraController update];
     
     CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;

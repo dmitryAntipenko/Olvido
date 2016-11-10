@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong, readonly) SKPhysicsBody *physicsBody;
 
-- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body colliderType:(struct OGColliderType)type;
+- (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body colliderType:(OGColliderType *)type;
 
 @end

@@ -21,17 +21,6 @@
     return 3;
 }
 
-- (struct OGColliderType)colliderType
-{
-    struct OGColliderType result;
-    
-    result.categoryBitMask = kOGCollisionBitMaskPlayer;
-    result.collisionBitMask = kOGCollisionBitMaskObstacle;
-    result.contactTestBitMask = kOGCollisionBitMaskEnemy | kOGCollisionBitMaskPortal;
-    
-    return result;
-}
-
 - (CGFloat)physicsBodyRadius
 {
     return 30.0;

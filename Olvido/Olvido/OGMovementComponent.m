@@ -40,13 +40,6 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
     return self;
 }
 
-- (void)didAddToEntity
-{
-    [super didAddToEntity];
-    
-   // self.renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
-}
-
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     [super updateWithDeltaTime:seconds];
@@ -54,9 +47,10 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
     if ([self animationStateCanBeOverwrittenWithAnimationState:self.animationComponent.currentAnimation.animationState])
     {
         if (self.displacementVector.dx != 0)
-            {
+        {
             OGDirection direction = [OGOrientationComponent directionWithVectorX:self.displacementVector.dx];
-            if (self.orientationComponent.direction != direction)
+            if (self.orientationComponent.direction != direction
+                || self.animationComponent.currentAnimation.animationState != kOGAnimationStateWalkForward)
             {
                 self.orientationComponent.direction = direction;
         
@@ -69,11 +63,11 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
         }
     }
     
+    CGPoint oldPosition = self.renderComponent.node.position;
+    CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * 5.0,
+                                      oldPosition.y + self.displacementVector.dy * self.speedFactor * 5.0);
     
-    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
-                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
-    
-    [self.renderComponent.node.physicsBody applyForce:force];
+    self.renderComponent.node.position = newPosition;
 }
 
 - (BOOL)animationStateCanBeOverwrittenWithAnimationState:(OGAnimationState)animationState
