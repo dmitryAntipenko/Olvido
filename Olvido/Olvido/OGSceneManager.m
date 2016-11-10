@@ -15,6 +15,7 @@
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 
+NSString *const kOGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
 NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
@@ -24,6 +25,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 @property (nonatomic, strong) OGBaseScene *currentScene;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
+@property (nonatomic, strong) OGBaseScene *loadingScene;
 
 @end
 
@@ -104,6 +106,14 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     }
     
     return result;
+}
+
+- (void)presentLoadingScene
+{
+    if (!self.loadingScene)
+    {
+        
+    }
 }
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
