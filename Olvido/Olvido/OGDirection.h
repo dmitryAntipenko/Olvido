@@ -11,13 +11,13 @@
 
 typedef NS_ENUM(NSUInteger, OGDirection)
 {
-    OGDirectionLeft,
-    OGDirectionRight
+    kOGDirectionRight,
+    kOGDirectionLeft
 };
 
 static NSString *const kOGDirectionDescription[] = {
-    [OGDirectionLeft] = @"left",
-    [OGDirectionRight] = @"right"
+    [kOGDirectionRight] = @"right",
+    [kOGDirectionLeft] = @"left"
 };
 
 static NSInteger const kOGDirectionCount = 2;

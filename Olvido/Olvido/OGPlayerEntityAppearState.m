@@ -77,10 +77,6 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
         
         [self.inputComponent setEnabled:NO];
     }
-    else
-    {
-        [NSException raise:@"Exception.OGPlayerEntityAppearState" format:@"Attempt to access PlayerEntity.appearTextures before they have been loaded."];
-    }
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -118,15 +114,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 {
     if (!_animationComponent)
     {
-        OGAnimationComponent *animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
-        if (animationComponent)
-        {
-            _animationComponent = animationComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityAppearState" format:@"A PlayerAppearState's entity must have an AnimationComponent."];
-        }
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
     }
     
     return _animationComponent;
@@ -134,17 +122,9 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 
 - (OGRenderComponent *)renderComponent
 {
-    if (!_animationComponent)
+    if (!_renderComponent)
     {
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [self.playerEntity componentForClass:OGRenderComponent.self];
-        if (renderComponent)
-        {
-            _renderComponent = renderComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityAppearState" format:@"A PlayerAppearState's entity must have an RenderComponent."];
-        }
+        _renderComponent = (OGRenderComponent *) [self.playerEntity componentForClass:OGRenderComponent.self];
     }
     
     return _renderComponent;
@@ -152,17 +132,9 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 
 - (OGOrientationComponent *)orientationComponent
 {
-    if (!_animationComponent)
+    if (!_orientationComponent)
     {
-        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.playerEntity componentForClass:OGOrientationComponent.self];
-        if (orientationComponent)
-        {
-            _orientationComponent = orientationComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityAppearState" format:@"A PlayerAppearState's entity must have an OrientationComponent."];
-        }
+        _orientationComponent = (OGOrientationComponent *) [self.playerEntity componentForClass:OGOrientationComponent.self];
     }
     
     return _orientationComponent;
@@ -170,17 +142,9 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 
 - (OGInputComponent *)inputComponent
 {
-    if (!_animationComponent)
+    if (!_inputComponent)
     {
-        OGInputComponent *inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
-        if (inputComponent)
-        {
-            _inputComponent = inputComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityAppearState" format:@"A PlayerBotAppearState's entity must have an InputComponent."];
-        }
+        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
     }
     
     return _inputComponent;
@@ -195,7 +159,5 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
     
     return _spriteNode;
 }
-
-
 
 @end

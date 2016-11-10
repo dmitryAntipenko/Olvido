@@ -27,11 +27,6 @@
     [super didAddToEntity];
     
     self.node.entity = self.entity;
-    
-    /*temporary*/
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Frank Left 1"];
-    [self.node addChild:sprite];
-    /*temporary*/
 }
 
 - (void)willRemoveFromEntity
