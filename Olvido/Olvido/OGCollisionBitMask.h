@@ -9,7 +9,7 @@
 #ifndef Header_h
 #define Header_h
 
-typedef NS_ENUM(uint32_t, OGCollisionBitMask)
+typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
 {
     kOGCollisionBitMaskDefault = 0x0,
     kOGCollisionBitMaskPlayer = 0x01 << 1,      //2

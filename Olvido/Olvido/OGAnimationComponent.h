@@ -7,17 +7,33 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGAnimationState.h"
+#import "OGDirection.h"
 
-@class OGAnimationState;
+@class OGAnimation;
 
 @interface OGAnimationComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable CGFloat timePerFrame;
+@property (nonatomic, strong) NSDictionary *animations;
+@property (nonatomic, strong) SKSpriteNode *spriteNode;
+@property (nonatomic, assign) OGAnimationState requestedAnimationState;
+@property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
 
-- (void)playNextAnimationState:(OGAnimationState *)nextState;
+- (instancetype)initWithTextureSize:(CGSize)textureSize
+                         animations:(NSDictionary *)animations;
 
-- (void)pause;
+- (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
+                                              direction:(OGDirection)direction
+                                              deltaTime:(NSTimeInterval)deltaTime;
 
-- (void)resume;
++ (SKTexture *)firstTextureForOrientationWithDirection:(OGDirection)direction
+                                                 atlas:(SKTextureAtlas *)atlas
+                                       imageIdentifier:(NSString *)imageIdentifier;
 
++ (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
+                      imageIdentifier:(NSString *)imageIdentifier
+                       animationState:(OGAnimationState)animationState
+                       bodyActionName:(NSString *)bodyActionName
+                repeatTexturesForever:(BOOL)repeatTexturesForever
+                        playBackwards:(BOOL)playBackwards;
 @end

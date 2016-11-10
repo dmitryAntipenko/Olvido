@@ -17,6 +17,7 @@
 @class OGMovementComponent;
 @class OGPhysicsComponent;
 @class OGMessageComponent;
+@class OGOrientationComponent;
 
 @interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
@@ -28,5 +29,12 @@
 @property (nonatomic, strong) OGAnimationComponent *animation;
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientation;
+
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
+
++ (NSDictionary *)sOGPlayerEntityAnimations;
++ (NSDictionary *)sOGPlayerEntityAppearTextures;
++ (CGSize)textureSize;
 
 @end

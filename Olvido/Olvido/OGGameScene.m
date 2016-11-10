@@ -75,10 +75,16 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
+        [OGPlayerEntity loadResourcesWithCompletionHandler:^{
+            NSLog(@"Success! Animation loaded!");
+            _player = [[OGPlayerEntity alloc] init];
+        }];
+
         _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
         _cameraController = [[OGCameraController alloc] init];
-        _player = [[OGPlayerEntity alloc] init];
+        //_player = [[OGPlayerEntity alloc] init];
         
+
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
              [OGStoryConclusionLevelState stateWithLevelScene:self],
              [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -180,14 +186,14 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         [componentSystem addComponentWithEntity:entity];
     }
     
-    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.class]).node;
+    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
     
     if (renderNode && !renderNode.parent)
     {
         [self addChild:renderNode];
     }
     
-    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.class];
+    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.self];
     
     if (intelligenceComponent)
     {
