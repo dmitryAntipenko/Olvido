@@ -7,7 +7,10 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+@class OGPlayerEntity;
 
 @interface OGPlayerEntityControlledState : GKState
+
+- (instancetype)initWithPlayerEntity:(OGPlayerEntity *)playerEntity;
 
 @end

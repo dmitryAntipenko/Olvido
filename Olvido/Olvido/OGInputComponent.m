@@ -9,24 +9,17 @@
 #import "OGInputComponent.h"
 #import "OGMovementComponent.h"
 
-typedef struct
-{
-    CGPoint destinationPoint;
-    CGPoint direction;
-    CGVector displacement;
-} InputState;
-
 @interface OGInputComponent ()
 
-@property (nonatomic, assign) InputState state;
+@property (nonatomic, assign) CGVector displacement;
 
 @end
 
 @implementation OGInputComponent
 
-- (void)setState:(InputState)state
+- (void)didUpdateDisplacement:(CGVector)displacement
 {
-    _state = state;
+    self.displacement = displacement;
     
     if (self.isEnabled)
     {
@@ -34,43 +27,14 @@ typedef struct
     }
 }
 
-- (void)didUpdateDisplacement:(CGVector)displacement
-{
-    InputState state;
-    state.destinationPoint = self.state.destinationPoint;
-    state.direction = self.state.direction;
-    state.displacement = displacement;
-    
-    self.state = state;
-}
-
-- (void)didUpdateDestinationPoint:(CGPoint)destinationPoint
-{
-    InputState state;
-    state.destinationPoint = destinationPoint;
-    state.direction = self.state.direction;
-    state.displacement = self.state.displacement;
-    
-    self.state = state;
-}
-
-- (void)didUpdateDirection:(CGPoint)direction
-{
-    InputState state;
-    state.direction = direction;
-    state.destinationPoint = self.state.destinationPoint;
-    state.displacement = self.state.displacement;
-    
-    self.state = state;
-}
-
 - (void)applyInputState
 {
-    OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:[OGMovementComponent class]];
+    OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:OGMovementComponent.self];
     
-    movementComponent.destinationPoint = self.state.destinationPoint;
-    movementComponent.direction = self.state.direction;
-    movementComponent.displacementVector = self.state.displacement;
+    if (movementComponent)
+    {
+        movementComponent.displacementVector = self.displacement;
+    }
 }
 
 @end

@@ -23,6 +23,9 @@
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
+static NSDictionary<NSString *, NSDictionary *> *sOGPlayerEntityAnimations;
+static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
+
 @interface OGPlayerEntity ()
 
 @property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
@@ -30,8 +33,6 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 @end
 
 @implementation OGPlayerEntity
-static NSDictionary *sOGPlayerEntityAnimations;
-static NSDictionary *sOGPlayerEntityAppearTextures;
 
 - (instancetype)init
 {
@@ -131,7 +132,6 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
         
         completionHandler();
     }];
-    
 }
 
 - (void)purgeResources

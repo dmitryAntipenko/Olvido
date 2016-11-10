@@ -8,6 +8,9 @@
 
 #import "OGMovementComponent.h"
 #import "OGRenderComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGOrientationComponent.h"
+
 #import "OGConstants.h"
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
@@ -16,6 +19,8 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
 @interface OGMovementComponent ()
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @end
 
@@ -44,10 +49,18 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
 {
     [super updateWithDeltaTime:seconds];
     
-    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
-                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
+    SKNode *node = self.renderComponent.node;
+    OGOrientationComponent *orientationComponent = self.orientationComponent;
     
-    [self.renderComponent.node.physicsBody applyForce:force];
+    OGAnimationState animationState;
+    
+    
+    
+    
+//    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
+//                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
+//    
+//    [self.renderComponent.node.physicsBody applyForce:force];
 }
 
 @end

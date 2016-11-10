@@ -28,6 +28,7 @@
 		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		210CC80B1DD38FEC00824E84 /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */; };
 		210CC80E1DD39D1200824E84 /* OGPlayerEntityControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */; };
+		210CC8111DD4A3B800824E84 /* OGPlayerEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8101DD4A3B800824E84 /* OGPlayerEntityAttackState.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
@@ -114,6 +115,8 @@
 		210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAppearState.m; sourceTree = "<group>"; };
 		210CC80C1DD39D1200824E84 /* OGPlayerEntityControlledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityControlledState.h; sourceTree = "<group>"; };
 		210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityControlledState.m; sourceTree = "<group>"; };
+		210CC80F1DD4A3B800824E84 /* OGPlayerEntityAttackState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAttackState.h; sourceTree = "<group>"; };
+		210CC8101DD4A3B800824E84 /* OGPlayerEntityAttackState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAttackState.m; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
@@ -342,6 +345,8 @@
 				210CC80A1DD38FEC00824E84 /* OGPlayerEntityAppearState.m */,
 				210CC80C1DD39D1200824E84 /* OGPlayerEntityControlledState.h */,
 				210CC80D1DD39D1200824E84 /* OGPlayerEntityControlledState.m */,
+				210CC80F1DD4A3B800824E84 /* OGPlayerEntityAttackState.h */,
+				210CC8101DD4A3B800824E84 /* OGPlayerEntityAttackState.m */,
 			);
 			name = "IntelligenceComponent States (PlayerEntity)";
 			sourceTree = "<group>";
@@ -665,6 +670,7 @@
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
+				210CC8111DD4A3B800824E84 /* OGPlayerEntityAttackState.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
