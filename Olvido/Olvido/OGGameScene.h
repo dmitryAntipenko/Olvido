@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGGameSceneDelegate.h"
+#import "OGTransitionComponentDelegate.h"
 
 @class OGPlayerEntity;
 @class OGMovementControlComponent;
@@ -18,7 +19,7 @@
 @class OGInventoryComponent;
 @class OGAnimationComponent;
 
-@interface OGGameScene : SKScene <SKPhysicsContactDelegate>
+@interface OGGameScene : SKScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate>
 
 @property (nonatomic, copy) NSNumber *identifier;
 

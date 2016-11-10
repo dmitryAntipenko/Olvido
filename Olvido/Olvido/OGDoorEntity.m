@@ -13,6 +13,7 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGLockComponent.h"
+#import "OGTransitionComponent.h"
 
 #import "OGPlayerEntity.h"
 
@@ -55,6 +56,9 @@
         
         _lockComponent = [[OGLockComponent alloc] init];
         [self addComponent:_lockComponent];
+        
+        _transition = [[OGTransitionComponent alloc] init];
+        [self addComponent:_transition];
     }
     
     return self;
@@ -74,8 +78,12 @@
 {
     if ([entity isKindOfClass:OGPlayerEntity.self])
     {
-        NSLog(@"open mf");
-        
+        [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transition completion:^()
+        {
+            SKNode *temp = self.transition.destination;
+            self.transition.destination = self.transition.source;
+            self.transition.source = temp;
+        }];
     }
 }
 

@@ -25,6 +25,7 @@
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGMessageComponent.h"
+#import "OGTransitionComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -69,6 +70,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 @implementation OGGameScene
 
+#pragma mark - Initializer
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -110,6 +113,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     return self;
 }
+
+#pragma mark - Scene contents
 
 - (void)didMoveToView:(SKView *)view
 {
@@ -164,10 +169,19 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         if ([doorNode isKindOfClass:SKSpriteNode.self])
         {
             OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            door.transitionDelegate = self;
+            
             door.lockComponent.target = self.player.render.node;
             door.lockComponent.openDistance = 100.0;
             door.lockComponent.closed = YES;
             door.lockComponent.locked = NO;
+            
+            NSString *sourceNodeName = doorNode.userData[@"source"];
+            NSString *destinationNodeName = doorNode.userData[@"destination"];
+            
+            door.transition.destination = (destinationNodeName  ) ? [self childNodeWithName:destinationNodeName] : nil;
+            door.transition.source = (sourceNodeName) ? [self childNodeWithName:sourceNodeName] : nil;
+            
             [self addEntity:door];
         }
     }
@@ -210,6 +224,19 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         [self.statusBar createContents];
     }
 }
+
+#pragma mark - TransitionComponentDelegate
+
+- (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
+{
+    SKNode *destinationNode = component.destination;
+    
+    [self.cameraController moveCameraToNode:destinationNode];
+    
+    completion();
+}
+
+#pragma mark - Contact handling
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
@@ -309,6 +336,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         }
     }
 }
+
+#pragma mark - Update
 
 - (void)update:(NSTimeInterval)currentTime
 {

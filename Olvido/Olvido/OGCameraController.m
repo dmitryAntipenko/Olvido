@@ -38,20 +38,22 @@ NSString *const kOGCameraControllerRailsResetPointsNodeName = @"rails_reset_poin
     SKSpriteNode *cameraRails = (SKSpriteNode *) [node childNodeWithName:kOGCameraControllerRailsNodeName];
     self.rails = cameraRails;
     
+    CGPoint newPosition;
+    
     if (cameraRails)
     {
-        CGPoint newPosition = [node.scene convertPoint:cameraRails.position fromNode:node];
-        
-        SKAction *cameraMovement = [SKAction moveTo:newPosition duration:1.0];
-        [self.camera runAction:cameraMovement completion:^()
-         {
-             self.locked = NO;
-         }];
+        newPosition = [node.scene convertPoint:cameraRails.position fromNode:node];
     }
     else
     {
-        [self lockAtPoint:node.position];
+        newPosition = node.position;
     }
+    
+    SKAction *cameraMovement = [SKAction moveTo:newPosition duration:1.0];
+    [self.camera runAction:cameraMovement completion:^()
+     {
+         self.locked = NO;
+     }];
 }
 
 - (void)update

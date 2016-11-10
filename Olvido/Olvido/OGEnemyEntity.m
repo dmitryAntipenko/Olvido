@@ -66,7 +66,7 @@
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    NSLog(@"test");
+    
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
