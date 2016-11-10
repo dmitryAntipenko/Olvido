@@ -193,6 +193,16 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
     SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
+    OGCollisionBitMask colliderTypeA = bodyA.categoryBitMask;
+    OGCollisionBitMask colliderTypeB = bodyB.categoryBitMask;
+    
+    BOOL aNeedsCallback = ;
+    BOOL bNeedsCallback = ;
+    
+    
+    
+
+    
     if ((bodyA.categoryBitMask == kOGCollisionBitMaskPlayer && bodyB.categoryBitMask == kOGCollisionBitMaskPortal)
         || (bodyB.categoryBitMask == kOGCollisionBitMaskPlayer && bodyA.categoryBitMask == kOGCollisionBitMaskPortal))
     {
