@@ -16,6 +16,7 @@
 @class OGMovementComponent;
 @class OGPhysicsComponent;
 @class OGMessageComponent;
+@class OGOrientationComponent;
 
 @interface OGPlayerEntity : GKEntity
 
@@ -27,9 +28,12 @@
 @property (nonatomic, strong) OGAnimationComponent *animation;
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientation;
 
-@property (nonatomic, strong) NSDictionary *animations;
-@property (nonatomic, strong) NSDictionary *appearTextures;
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 
-- (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
++ (NSDictionary *)sOGPlayerEntityAnimations;
++ (NSDictionary *)sOGPlayerEntityAppearTextures;
++ (CGSize)textureSize;
+
 @end

@@ -72,10 +72,20 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
+<<<<<<< HEAD
         _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
         _cameraController = [[OGCameraController alloc] init];
         _player = [[OGPlayerEntity alloc] init];
         
+=======
+        
+        [OGPlayerEntity loadResourcesWithCompletionHandler:^{
+            NSLog(@"Success! Animation loaded!");
+            _player = [[OGPlayerEntity alloc] init];
+            ((OGAnimationComponent *)[_player componentForClass:[OGAnimationComponent class]]).requestedAnimationState = 2;
+        }];
+        //_player = [[OGPlayerEntity alloc] init];
+>>>>>>> PlayerIntelligence
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
              [OGStoryConclusionLevelState stateWithLevelScene:self],
              [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -125,12 +135,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
     self.player.render.node.position = playerInitialNode.position;
-    
-    [self.player loadResourcesWithCompletionHandler:^{
-        NSLog(@"Success! Animation loaded!");
-        ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).animations = self.player.animations;
-        ((OGAnimationComponent *)[self.player componentForClass:[OGAnimationComponent class]]).requestedAnimationState = 2;
-    }];
     
     [self createStatusBar];
     self.cameraController.target = self.player.render.node;

@@ -8,6 +8,7 @@
 
 #import "OGAnimationComponent.h"
 #import "OGAnimation.h"
+#import "OGOrientationComponent.h"
 
 NSString *const kOGAnimationComponentBodyActionKey = @"bodyAction";
 NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
@@ -26,7 +27,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 - (instancetype)initWithTextureSize:(CGSize)textureSize
                          animations:(NSDictionary *)animations
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {
@@ -106,8 +107,17 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     if (self.requestedAnimationState != kOGAnimationStateNone)
     {
-        [self runAnimationForAnimationStateWithAnimationState:self.requestedAnimationState direction:1 deltaTime:deltaTime];
-        self.requestedAnimationState = kOGAnimationStateNone;
+        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:OGOrientationComponent.self];
+        
+        if (orientationComponent)
+        {
+            [self runAnimationForAnimationStateWithAnimationState:self.requestedAnimationState direction:orientationComponent.direction deltaTime:deltaTime];
+            self.requestedAnimationState = kOGAnimationStateNone;
+        }
+        else
+        {
+            [NSException raise:@"Exception.OGAnimationComponent" format:@"An AnimationComponent's entity must have an OrientationComponent."];
+        }
     }
 }
 

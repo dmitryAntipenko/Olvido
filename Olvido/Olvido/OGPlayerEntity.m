@@ -15,6 +15,7 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
+#import "OGOrientationComponent.h"
 
 #import "OGPlayerEntityConfiguration.h"
 #import "OGAnimationState.h"
@@ -29,6 +30,8 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 @end
 
 @implementation OGPlayerEntity
+static NSDictionary *sOGPlayerEntityAnimations;
+static NSDictionary *sOGPlayerEntityAppearTextures;
 
 - (instancetype)init
 {
@@ -63,10 +66,21 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
         //[self addComponent:_intelligence];
         
-        _animation = [[OGAnimationComponent alloc] initWithTextureSize:_playerConfiguration.textureSize animations:nil];
-        //fix when write intelligenceComponent
-        _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
-        [self addComponent:_animation];
+        if (sOGPlayerEntityAnimations)
+        {
+            _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:sOGPlayerEntityAnimations];
+            //rewrite in Player Intelligence Component when write intelligenceComponent
+            _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
+            [self addComponent:_animation];
+        }
+        else
+        {
+            [NSException raise:@"Exception.OGPlayerNode" format:@"Attempt to access sOGPlayerEntityAnimations before they have been loaded"];
+            return nil;
+        }
+        
+        _orientation = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientation];
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
@@ -76,7 +90,12 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
     return self;
 }
 
-- (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
++ (BOOL)resourcesNeedLoading
+{
+    return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
+}
+
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
     NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
                                   kOGPlayerEntityAtlasNamesPlayerBotWalk];
@@ -85,7 +104,7 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
     {
         if (error)
         {
-            [NSException raise:@"One or more texture atlases could not be found" format:@"%@", error];
+            [NSException raise:@"Exception.OGPlayerNode" format:@"One or more texture atlases could not be found. Error:%@", error];
         }
         
         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
@@ -97,7 +116,7 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
         }
         
-        self.appearTextures = appearTextures;
+        sOGPlayerEntityAppearTextures = appearTextures;
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
@@ -108,11 +127,32 @@ NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
                                                                                                      repeatTexturesForever:YES
                                                                                                              playBackwards:NO];
         
-        self.animations = animations;
+        sOGPlayerEntityAnimations = animations;
         
         completionHandler();
     }];
     
+}
+
+- (void)purgeResources
+{
+    sOGPlayerEntityAppearTextures = nil;
+    sOGPlayerEntityAnimations = nil;
+}
+
++ (NSDictionary *)sOGPlayerEntityAnimations
+{
+    return sOGPlayerEntityAnimations;
+}
+
++ (NSDictionary *)sOGPlayerEntityAppearTextures
+{
+    return sOGPlayerEntityAppearTextures;
+}
+
++ (CGSize)textureSize
+{
+    return CGSizeMake(120.0, 120.0);
 }
 
 @end
