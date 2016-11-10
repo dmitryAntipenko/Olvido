@@ -79,4 +79,9 @@
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
 }
 
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    
+}
+
 @end

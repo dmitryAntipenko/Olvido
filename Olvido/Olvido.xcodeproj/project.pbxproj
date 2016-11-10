@@ -51,6 +51,10 @@
 		EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGLevelController.m */; };
 		EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */; };
 		EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */; };
+		EA5F12031DD4E292006D4129 /* OGDoorEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F12021DD4E292006D4129 /* OGDoorEntity.m */; };
+		EA5F12081DD4EC38006D4129 /* OGDoorEntityClosedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F12071DD4EC38006D4129 /* OGDoorEntityClosedState.m */; };
+		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
+		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
 		EA67C48B1DC0FE7C00EC4297 /* OGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
@@ -154,6 +158,15 @@
 		EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventoryComponent.m; sourceTree = "<group>"; };
 		EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGColliderType.m; sourceTree = "<group>"; };
 		EA5F11FE1DD4D47D006D4129 /* OGContactNotifiableType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactNotifiableType.h; sourceTree = "<group>"; };
+		EA5F12011DD4E292006D4129 /* OGDoorEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntity.h; sourceTree = "<group>"; };
+		EA5F12021DD4E292006D4129 /* OGDoorEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntity.m; sourceTree = "<group>"; };
+		EA5F12061DD4EC38006D4129 /* OGDoorEntityClosedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityClosedState.h; sourceTree = "<group>"; };
+		EA5F12071DD4EC38006D4129 /* OGDoorEntityClosedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityClosedState.m; sourceTree = "<group>"; };
+		EA5F12091DD4EC50006D4129 /* OGDoorEntityOpenedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityOpenedState.h; sourceTree = "<group>"; };
+		EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityOpenedState.m; sourceTree = "<group>"; };
+		EA5F120C1DD4EDFF006D4129 /* OGLockComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLockComponent.h; sourceTree = "<group>"; };
+		EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLockComponent.m; sourceTree = "<group>"; };
+		EA5F12101DD4F072006D4129 /* OGLockComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGLockComponentDelegate.h; sourceTree = "<group>"; };
 		EA67C4891DC0FE7C00EC4297 /* OGStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStatusBar.h; sourceTree = "<group>"; };
 		EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStatusBar.m; sourceTree = "<group>"; };
 		EA70E5201DB3F4620034116D /* OGMovementComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementComponent.h; sourceTree = "<group>"; };
@@ -356,6 +369,7 @@
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				EA5F12041DD4EBEB006D4129 /* Intelligence Component */,
 				1B36E4D11DC639490080D80B /* AnimationComponent */,
 				1B2388DC1DB4C47D00A9092B /* MovementControlComponents */,
 				EA70E5201DB3F4620034116D /* OGMovementComponent.h */,
@@ -372,10 +386,9 @@
 				EA9EAAC91DCC9D1400E36855 /* OGRenderComponent.m */,
 				EA9EAACB1DCC9E3100E36855 /* OGInputComponent.h */,
 				EA9EAACC1DCC9E3100E36855 /* OGInputComponent.m */,
-				EA9EAACE1DCC9E3E00E36855 /* OGIntelligenceComponent.h */,
-				EA9EAACF1DCC9E3E00E36855 /* OGIntelligenceComponent.m */,
 				EA49823F1DCF980A00DCFE00 /* OGPhysicsComponent.h */,
 				EA4982401DCF980A00DCFE00 /* OGPhysicsComponent.m */,
+				EA5F120F1DD4F059006D4129 /* LockComponent */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -473,6 +486,46 @@
 			name = Camera;
 			sourceTree = "<group>";
 		};
+		EA5F12001DD4E25E006D4129 /* Door */ = {
+			isa = PBXGroup;
+			children = (
+				EA5F12011DD4E292006D4129 /* OGDoorEntity.h */,
+				EA5F12021DD4E292006D4129 /* OGDoorEntity.m */,
+			);
+			name = Door;
+			sourceTree = "<group>";
+		};
+		EA5F12041DD4EBEB006D4129 /* Intelligence Component */ = {
+			isa = PBXGroup;
+			children = (
+				EA5F12051DD4EBF6006D4129 /* IntelligenceComponent States (DoorEntity) */,
+				EA9EAACE1DCC9E3E00E36855 /* OGIntelligenceComponent.h */,
+				EA9EAACF1DCC9E3E00E36855 /* OGIntelligenceComponent.m */,
+			);
+			name = "Intelligence Component";
+			sourceTree = "<group>";
+		};
+		EA5F12051DD4EBF6006D4129 /* IntelligenceComponent States (DoorEntity) */ = {
+			isa = PBXGroup;
+			children = (
+				EA5F12061DD4EC38006D4129 /* OGDoorEntityClosedState.h */,
+				EA5F12071DD4EC38006D4129 /* OGDoorEntityClosedState.m */,
+				EA5F12091DD4EC50006D4129 /* OGDoorEntityOpenedState.h */,
+				EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */,
+			);
+			name = "IntelligenceComponent States (DoorEntity)";
+			sourceTree = "<group>";
+		};
+		EA5F120F1DD4F059006D4129 /* LockComponent */ = {
+			isa = PBXGroup;
+			children = (
+				EA5F120C1DD4EDFF006D4129 /* OGLockComponent.h */,
+				EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */,
+				EA5F12101DD4F072006D4129 /* OGLockComponentDelegate.h */,
+			);
+			name = LockComponent;
+			sourceTree = "<group>";
+		};
 		EA70E52C1DB3F4770034116D /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +605,7 @@
 			children = (
 				EA4982431DCFB12C00DCFE00 /* Player */,
 				EA4982441DCFB44000DCFE00 /* Enemy */,
+				EA5F12001DD4E25E006D4129 /* Door */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -669,9 +723,11 @@
 				1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
+				EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
+				EA5F12081DD4EC38006D4129 /* OGDoorEntityClosedState.m in Sources */,
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
@@ -681,9 +737,11 @@
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
+				EA5F12031DD4E292006D4129 /* OGDoorEntity.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,
+				EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */,
 				1B27EABD1DC0F6DE00E9CA23 /* OGPauseLevelState.m in Sources */,
 				EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */,
 				EA67C48B1DC0FE7C00EC4297 /* OGStatusBar.m in Sources */,

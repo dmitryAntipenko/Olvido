@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGContactNotifiableType.h"
 
 @class OGHealthComponent;
 @class OGAnimationComponent;
@@ -17,7 +18,7 @@
 @class OGPhysicsComponent;
 @class OGMessageComponent;
 
-@interface OGPlayerEntity : GKEntity
+@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;

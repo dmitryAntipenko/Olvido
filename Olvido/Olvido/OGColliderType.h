@@ -19,6 +19,7 @@
 + (OGColliderType *)player;
 + (OGColliderType *)enemy;
 + (OGColliderType *)obstacle;
++ (OGColliderType *)door;
 
 + (NSMutableDictionary *)definedCollisions;
 + (NSMutableDictionary *)requestedContactNotifications;

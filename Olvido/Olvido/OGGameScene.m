@@ -17,7 +17,9 @@
 
 #import "OGPlayerEntity.h"
 #import "OGEnemyEntity.h"
+#import "OGDoorEntity.h"
 #import "OGRenderComponent.h"
+#import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGMovementComponent.h"
 #import "OGIntelligenceComponent.h"
@@ -89,10 +91,11 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         _entities = [[NSMutableSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
-                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              nil];
         
         _statusBar = [[OGStatusBar alloc] init];
@@ -150,6 +153,21 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
     }
     
+    NSArray<SKNode *> *doorNodes = [self childNodeWithName:@"doors"].children;
+    
+    for (SKNode *doorNode in doorNodes)
+    {
+        if ([doorNode isKindOfClass:SKSpriteNode.self])
+        {
+            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            door.lockComponent.target = self.player.render.node;
+            door.lockComponent.openDistance = 100.0;
+            door.lockComponent.closed = YES;
+            door.lockComponent.locked = NO;
+            [self addEntity:door];
+        }
+    }
+    
     [self createStatusBar];
 }
 
@@ -164,7 +182,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.class]).node;
     
-    if (renderNode)
+    if (renderNode && !renderNode.parent)
     {
         [self addChild:renderNode];
     }
@@ -213,20 +231,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityB;
         [entity contactWithEntityDidBegin:entityA];
-    }
-}
-
-- (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
-{
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        *bodyA = contact.bodyA;
-        *bodyB = contact.bodyB;
-    }
-    else
-    {
-        *bodyA = contact.bodyB;
-        *bodyB = contact.bodyA;
     }
 }
 
