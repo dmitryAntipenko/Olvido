@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol OGResourceLoadableType <NSObject>
+@protocol OGResourceLoadable <NSObject>
 
 + (BOOL)resourcesNeedLoading;
 
-+ (void)loadResourcesWithCompletionHandler:(void (^))handler;
++ (void)loadResourcesWithCompletionHandler:(void (^)())handler;
 
 + (void)purgeResources;
 
