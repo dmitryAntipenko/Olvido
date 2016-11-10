@@ -7,7 +7,7 @@
 //
 
 #import "OGMapMenuScene.h"
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGButtonNode.h"
 #import "OGConstants.h"
 
@@ -23,11 +23,11 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 - (void)startGame
 {
-    OGLevelController *levelController = [OGLevelController sharedInstance];
-    levelController.view = self.view;
-    [levelController loadLevelWithIdentifier:@0];
+    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
+    levelManager.view = self.view;
+    [levelManager loadLevelWithIdentifier:@0];
     
-    [levelController runStoryScene];
+    [levelManager runStoryScene];
 }
 
 - (void)onButtonClick:(OGButtonNode *)button

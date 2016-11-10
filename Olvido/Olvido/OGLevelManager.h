@@ -1,5 +1,5 @@
 //
-//  OGLevelController.h
+//  OGLevelManager.h
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 10/26/16.
@@ -13,12 +13,12 @@
 @class OGSceneManager;
 
 /* temporary code */
-extern NSString *const kOGLevelControllerDragControl;
-extern NSString *const kOGLevelControllerTapContinueControl;
-extern NSString *const kOGLevelControllerTapStopControl;
+extern NSString *const kOGLevelManagerDragControl;
+extern NSString *const kOGLevelManagerTapContinueControl;
+extern NSString *const kOGLevelManagerTapStopControl;
 /* temporary code */
 
-@interface OGLevelController : NSObject
+@interface OGLevelManager : NSObject
 
 @property (nonatomic, weak) SKView *view;
 
@@ -33,7 +33,7 @@ extern NSString *const kOGLevelControllerTapStopControl;
 @property (nonatomic, assign) BOOL godMode;
 /* temporary code */
 
-+ (OGLevelController *)sharedInstance;
++ (OGLevelManager *)sharedInstance;
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;

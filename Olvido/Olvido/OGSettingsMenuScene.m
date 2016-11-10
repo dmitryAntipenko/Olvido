@@ -7,7 +7,7 @@
 //
 
 #import "OGSettingsMenuScene.h"
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGConstants.h"
 #import "OGButtonNode.h"
 
@@ -23,22 +23,22 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 /* temporary code */
 - (void)activateDrag
 {
-    [OGLevelController sharedInstance].controlType = kOGLevelControllerDragControl;
+    [OGLevelManager sharedInstance].controlType = kOGLevelManagerDragControl;
 }
 
 - (void)activateTapContinue
 {
-    [OGLevelController sharedInstance].controlType = kOGLevelControllerTapContinueControl;
+    [OGLevelManager sharedInstance].controlType = kOGLevelManagerTapContinueControl;
 }
 
 - (void)activateTapStop
 {
-    [OGLevelController sharedInstance].controlType = kOGLevelControllerTapStopControl;
+    [OGLevelManager sharedInstance].controlType = kOGLevelManagerTapStopControl;
 }
 
 - (void)changeGodMode
 {
-    [OGLevelController sharedInstance].godMode = ![OGLevelController sharedInstance].godMode;
+    [OGLevelManager sharedInstance].godMode = ![OGLevelManager sharedInstance].godMode;
 }
 /* temporary code */
 

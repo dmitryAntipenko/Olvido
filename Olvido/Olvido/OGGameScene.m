@@ -33,7 +33,7 @@
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
 
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGTapMovementControlComponent.h"
 #import "OGTapAndStopMovementControlComponent.h"
 #import "OGDragMovementControlComponent.h"

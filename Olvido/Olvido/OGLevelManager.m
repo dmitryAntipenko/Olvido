@@ -1,21 +1,21 @@
 //
-//  OGLevelController.m
+//  OGLevelManager.m
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 10/26/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGGameSceneDelegate.h"
 #import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
+#import "OGConstants.h"
 
-NSUInteger const kOGSceneControllerInitialLevelIndex = 0;
+NSUInteger const kOGLevelManagerInitialLevelIndex = 0;
 
-NSString *const kOGSceneControllerLevelMapName = @"LevelsMap";
-NSString *const kOGSceneControllerLevelMapExtension = @"plist";
+NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 NSString *const kOGSceneControllerPortalsKey = @"Portals";
 NSString *const kOGSceneControllerNextLevelIndexKey = @"Next Level Index";
@@ -29,12 +29,12 @@ NSString *const kOGSceneControllerStorySceneName = @"Story Scene Name";
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 /* temporary code */
-NSString *const kOGLevelControllerDragControl = @"drag";
-NSString *const kOGLevelControllerTapContinueControl = @"tapContinue";
-NSString *const kOGLevelControllerTapStopControl = @"tapStop";
+NSString *const kOGLevelManagerDragControl = @"drag";
+NSString *const kOGLevelManagerTapContinueControl = @"tapContinue";
+NSString *const kOGLevelManagerTapStopControl = @"tapStop";
 /* temporary code */
 
-@interface OGLevelController () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
+@interface OGLevelManager () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
 @property (nonatomic, copy, readwrite) NSString *currentSceneName;
@@ -43,7 +43,7 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
 
 @end
 
-@implementation OGLevelController
+@implementation OGLevelManager
 
 - (instancetype)init
 {
@@ -51,30 +51,30 @@ NSString *const kOGLevelControllerTapStopControl = @"tapStop";
     
     if (self)
     {
-        _controlType = kOGLevelControllerTapStopControl;
+        _controlType = kOGLevelManagerTapStopControl;
     }
     
     return self;
 }
 
-+ (OGLevelController *)sharedInstance
++ (OGLevelManager *)sharedInstance
 {
-    static OGLevelController *levelController = nil;
+    static OGLevelManager *levelManager = nil;
     static dispatch_once_t dispatchOnceToken = 0;
     
     dispatch_once(&dispatchOnceToken, ^()
                   {
-                      levelController = [[OGLevelController alloc] init];
-                      [levelController loadLevelMap];
+                      levelManager = [[OGLevelManager alloc] init];
+                      [levelManager loadLevelMap];
                   });
     
-    return levelController;
+    return levelManager;
 }
 
 - (void)loadLevelMap
 {
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGSceneControllerLevelMapName
-                                                          ofType:kOGSceneControllerLevelMapExtension];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGLevelManagerLevelMapName
+                                                          ofType:kOGPropertyFileExtension];
     
     NSArray *plistData = [NSArray arrayWithContentsOfFile:plistPath];
     

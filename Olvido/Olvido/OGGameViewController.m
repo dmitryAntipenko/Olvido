@@ -9,14 +9,14 @@
 #import "OGGameViewController.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGSceneManager.h"
 #import "OGGameScene.h"
 
 @interface OGGameViewController ()
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
-@property (nonatomic, strong) OGLevelController *levelController;
+@property (nonatomic, strong) OGLevelManager *levelManager;
 
 @end
 
@@ -37,8 +37,8 @@
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];
     
-    self.levelController = [OGLevelController sharedInstance];
-    self.levelController.sceneManager = self.sceneManager;
+    self.levelManager = [OGLevelManager sharedInstance];
+    self.levelManager.sceneManager = self.sceneManager;
 }
 
 - (BOOL)shouldAutorotate

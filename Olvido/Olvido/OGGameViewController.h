@@ -8,8 +8,6 @@
 
 #import <GameplayKit/GameplayKit.h>
 
-@class OGLevelController;
-
 @interface OGGameViewController : UIViewController
 
 @end

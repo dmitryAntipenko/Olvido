@@ -65,7 +65,7 @@
 		EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982551DD101ED00DCFE00 /* OGEnemyConfiguration.m */; };
 		EA49827D1DD229E900DCFE00 /* OGCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA49827C1DD229E900DCFE00 /* OGCameraController.m */; };
 		EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F41DC0D26000FCF126 /* OGGameScene.m */; };
-		EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGLevelController.m */; };
+		EA5870F81DC0D8D400FCF126 /* OGLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F71DC0D8D400FCF126 /* OGLevelManager.m */; };
 		EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */; };
 		EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */; };
 		EA67C48B1DC0FE7C00EC4297 /* OGStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EA67C48A1DC0FE7C00EC4297 /* OGStatusBar.m */; };
@@ -202,8 +202,8 @@
 		EA49827C1DD229E900DCFE00 /* OGCameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGCameraController.m; sourceTree = "<group>"; };
 		EA5870F31DC0D26000FCF126 /* OGGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameScene.h; sourceTree = "<group>"; };
 		EA5870F41DC0D26000FCF126 /* OGGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGameScene.m; sourceTree = "<group>"; };
-		EA5870F61DC0D8D400FCF126 /* OGLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelController.h; sourceTree = "<group>"; };
-		EA5870F71DC0D8D400FCF126 /* OGLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelController.m; sourceTree = "<group>"; };
+		EA5870F61DC0D8D400FCF126 /* OGLevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevelManager.h; sourceTree = "<group>"; };
+		EA5870F71DC0D8D400FCF126 /* OGLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelManager.m; sourceTree = "<group>"; };
 		EA5870F91DC0EC8F00FCF126 /* OGInventoryComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryComponent.h; sourceTree = "<group>"; };
 		EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventoryComponent.m; sourceTree = "<group>"; };
 		EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGColliderType.m; sourceTree = "<group>"; };
@@ -525,8 +525,8 @@
 			children = (
 				EA0D272C1DB147C100CEFB8A /* OGGameSceneDelegate.h */,
 				2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */,
-				EA5870F61DC0D8D400FCF126 /* OGLevelController.h */,
-				EA5870F71DC0D8D400FCF126 /* OGLevelController.m */,
+				EA5870F61DC0D8D400FCF126 /* OGLevelManager.h */,
+				EA5870F71DC0D8D400FCF126 /* OGLevelManager.m */,
 			);
 			name = LevelController;
 			sourceTree = "<group>";
@@ -864,7 +864,7 @@
 				1B3005CD1DD367E4000B0FBB /* OGSceneLoaderInitialState.m in Sources */,
 				EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */,
 				1B7C44BF1DD20FB0004F89EC /* OGSceneLoader.m in Sources */,
-				EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */,
+				EA5870F81DC0D8D400FCF126 /* OGLevelManager.m in Sources */,
 				1B657EAC1DD4AF0E000832C8 /* OGLoadingScene.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,
 				215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */,
