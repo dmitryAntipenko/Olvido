@@ -9,6 +9,8 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGSceneLoaderState.h"
 
+extern NSString *const kOGSceneLoaderDidCompleteNotification;
+
 @interface OGSceneLoaderResourcesReadyState : OGSceneLoaderState
 
 @end

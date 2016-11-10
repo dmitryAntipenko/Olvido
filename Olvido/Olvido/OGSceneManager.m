@@ -14,6 +14,7 @@
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGLoadingScene.h"
 
 NSString *const kOGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
@@ -25,7 +26,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 @property (nonatomic, strong) OGBaseScene *currentScene;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
-@property (nonatomic, strong) OGBaseScene *loadingScene;
+@property (nonatomic, strong) OGLoadingScene *loadingScene;
 
 @end
 
@@ -47,12 +48,12 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
             __block NSMutableArray *mutableSceneLoaders = [NSMutableArray array];
             
             [configuration enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop)
-            {
-                OGSceneMetadata *sceneMetadata = [OGSceneMetadata sceneMetaDataWithSceneConfiguration:obj
-                                                                                           identifier:idx];
-                OGSceneLoader *sceneLoader = [OGSceneLoader sceneLoaderWithMetadata:sceneMetadata];
-                [mutableSceneLoaders addObject:sceneLoader];
-            }];
+             {
+                 OGSceneMetadata *sceneMetadata = [OGSceneMetadata sceneMetaDataWithSceneConfiguration:obj
+                                                                                            identifier:idx];
+                 OGSceneLoader *sceneLoader = [OGSceneLoader sceneLoaderWithMetadata:sceneMetadata];
+                 [mutableSceneLoaders addObject:sceneLoader];
+             }];
             
             _sceneLoaders = [mutableSceneLoaders copy];
         }
@@ -90,6 +91,8 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     {
         [sceneLoader asynchronouslyLoadSceneForPresentation];
         sceneLoader.requestedForPresentation = YES;
+        
+        [self presentLoadingSceneWithSceneLoader:sceneLoader];
     }
 }
 
@@ -108,11 +111,16 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     return result;
 }
 
-- (void)presentLoadingScene
+- (void)presentLoadingSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
     if (!self.loadingScene)
     {
+        self.loadingScene = [OGLoadingScene loadingSceneWithSceneLoader:sceneLoader];
+        self.loadingScene.sceneManager = self;
         
+        SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
+        
+        [self.view presentScene:self.loadingScene transition:transition];
     }
 }
 

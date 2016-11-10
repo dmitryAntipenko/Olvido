@@ -9,8 +9,11 @@
 #import "OGBaseScene.h"
 
 @class OGSceneLoader;
+@class OGSceneManager;
 
 @interface OGLoadingScene : OGBaseScene
+
+@property (nonatomic, weak) OGSceneManager *sceneManager;
 
 + (instancetype)loadingSceneWithSceneLoader:(OGSceneLoader *)sceneLoader;
 
