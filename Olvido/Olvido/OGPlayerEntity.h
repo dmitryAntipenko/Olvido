@@ -7,11 +7,9 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-<<<<<<< HEAD
 #import "OGResourceLoadable.h"
-=======
 #import "OGContactNotifiableType.h"
->>>>>>> vicrattlehead_sandbox
+
 
 @class OGHealthComponent;
 @class OGAnimationComponent;
@@ -23,11 +21,7 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-<<<<<<< HEAD
-@interface OGPlayerEntity : GKEntity <OGResourceLoadable>
-=======
-@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
->>>>>>> vicrattlehead_sandbox
+@interface OGPlayerEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;

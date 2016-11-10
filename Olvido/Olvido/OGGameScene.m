@@ -103,10 +103,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
-<<<<<<< HEAD
-=======
                              [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
->>>>>>> vicrattlehead_sandbox
                              [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              nil];
         

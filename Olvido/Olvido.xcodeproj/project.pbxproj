@@ -31,6 +31,8 @@
 		1B657EAC1DD4AF0E000832C8 /* OGLoadingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B657EAB1DD4AF0E000832C8 /* OGLoadingScene.m */; };
 		1B657EAF1DD4E8DC000832C8 /* OGLoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B657EAE1DD4E8DC000832C8 /* OGLoadOperation.m */; };
 		1B657EB11DD4F42E000832C8 /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B657EB01DD4F42E000832C8 /* LevelsMap.plist */; };
+		1B657EB21DD50505000832C8 /* OGGameSceneConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982511DD0F48400DCFE00 /* OGGameSceneConfiguration.m */; };
+		1B657EB31DD50505000832C8 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		1B7C44B71DD1BB9B004F89EC /* OGSceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C44B61DD1BB9B004F89EC /* OGSceneManager.m */; };
 		1B7C44BA1DD1E5BF004F89EC /* OGSceneMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C44B91DD1E5BF004F89EC /* OGSceneMetadata.m */; };
 		1B7C44BC1DD20BAC004F89EC /* ScenesConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C44BB1DD20BAC004F89EC /* ScenesConfiguration.plist */; };
@@ -39,7 +41,6 @@
 		1BB539351DD4655F00B550E1 /* OGLoadSceneOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB539341DD4655F00B550E1 /* OGLoadSceneOperation.m */; };
 		1BB539381DD46D1300B550E1 /* OGLoadResourcesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB539371DD46D1300B550E1 /* OGLoadResourcesOperation.m */; };
 		1BB5393B1DD47F4E00B550E1 /* OGSceneLoaderState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB5393A1DD47F4E00B550E1 /* OGSceneLoaderState.m */; };
-		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
@@ -57,7 +58,6 @@
 		EA05FA091DD4FB7A00FAC81A /* OGPlayerEntityAppearState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05F9FF1DD4FA6C00FAC81A /* OGPlayerEntityAppearState.h */; };
 		EA05FA0A1DD4FB7A00FAC81A /* OGPlayerEntityAttackState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA011DD4FA6C00FAC81A /* OGPlayerEntityAttackState.h */; };
 		EA05FA0B1DD4FB7A00FAC81A /* OGPlayerEntityControlledState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA031DD4FA6C00FAC81A /* OGPlayerEntityControlledState.h */; };
-		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CE3231DBA8E680087842D /* OGMessageComponent.m */; };
 		EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAAD81DCCC06800E36855 /* OGTouchControlInputNode.m */; };
@@ -66,7 +66,6 @@
 		EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */; };
 		EA49824A1DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982491DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m */; };
 		EA49824F1DD0F2ED00DCFE00 /* Level1.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA49824E1DD0F2ED00DCFE00 /* Level1.plist */; };
-		EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982511DD0F48400DCFE00 /* OGGameSceneConfiguration.m */; };
 		EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982551DD101ED00DCFE00 /* OGEnemyConfiguration.m */; };
 		EA49827D1DD229E900DCFE00 /* OGCameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA49827C1DD229E900DCFE00 /* OGCameraController.m */; };
 		EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5870F41DC0D26000FCF126 /* OGGameScene.m */; };
@@ -807,7 +806,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -859,6 +858,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B657EB21DD50505000832C8 /* OGGameSceneConfiguration.m in Sources */,
+				1B657EB31DD50505000832C8 /* OGOrientationComponent.m in Sources */,
 				EA05FA091DD4FB7A00FAC81A /* OGPlayerEntityAppearState.h in Sources */,
 				EA05FA0A1DD4FB7A00FAC81A /* OGPlayerEntityAttackState.h in Sources */,
 				EA05FA0B1DD4FB7A00FAC81A /* OGPlayerEntityControlledState.h in Sources */,
@@ -873,12 +874,8 @@
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
-				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B7C44B71DD1BB9B004F89EC /* OGSceneManager.m in Sources */,
-				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
 				EA5F12081DD4EC38006D4129 /* OGDoorEntityClosedState.m in Sources */,
-				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
-				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				1B657EAF1DD4E8DC000832C8 /* OGLoadOperation.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
@@ -1053,11 +1050,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1071,11 +1068,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
