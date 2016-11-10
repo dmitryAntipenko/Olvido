@@ -20,7 +20,6 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
 @interface OGSceneLoader ()
 
 @property (nonatomic, strong, readwrite) OGBaseScene *scene;
-@property (nonatomic, strong) NSProgress *progress;
 
 @end
 

@@ -8,6 +8,7 @@
 
 #import "OGSceneMetadata.h"
 
+NSString *const kOGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
 NSString *const kOGSceneMetadataClassNameKey = @"ClassName";
 NSString *const kOGSceneMetadataFileNameKey = @"FileName";
 
@@ -29,6 +30,25 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
+                
+                NSArray<NSString *> *onDemandResourcesClassesNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
+                
+                NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
+                
+                if (onDemandResourcesClassesNames)
+                {
+                    for (NSString *resourceLoadableClassName in onDemandResourcesClassesNames)
+                    {
+                        Class loadableClass = NSClassFromString(resourceLoadableClassName);
+                        
+                        if ([loadableClass conformsToProtocol:@protocol(OGResourceLoadable)])
+                        {
+                            [mutableLoadableClasses addObject:loadableClass];
+                        }
+                    }
+                }
+                
+                _loadableClasses = [mutableLoadableClasses copy];
             }
             else
             {

@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "OGResourceLoadable.h"
+
 @interface OGSceneMetadata : NSObject
 
 @property (nonatomic, unsafe_unretained, readonly) NSUInteger  identifier;
 @property (nonatomic, unsafe_unretained, readonly) Class sceneClass;
 @property (nonatomic, strong, readonly) NSString *fileName;
+@property (nonatomic, strong, readonly) NSArray<Class<OGResourceLoadable>> *loadableClasses;
 
 + (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 

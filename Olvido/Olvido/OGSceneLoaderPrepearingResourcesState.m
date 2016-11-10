@@ -10,6 +10,10 @@
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
+#import "OGLoadSceneOperation.h"
+
+NSUInteger const kOGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
+NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 @interface OGSceneLoaderPrepearingResourcesState ()
 
@@ -22,7 +26,7 @@
 
 - (void)didEnterWithPreviousState:(GKState *)state
 {
-//    [self load]
+    //    [self load]
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
@@ -38,6 +42,17 @@
 - (void)loadResourcesAsunchronously
 {
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
+    
+    self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count
+                     + kOGSceneLoaderPrepearingResourcesStateSceneFileUnitCount];
+    
+    if (self.sceneLoader.progress)
+    {
+        [self.sceneLoader.progress addChild:self.progress
+                       withPendingUnitCount: kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+    }
+    
+    
 }
 
 - (void)cancel
