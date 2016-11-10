@@ -8,6 +8,10 @@
 
 #import "OGBaseScene.h"
 
+@class OGSceneLoader;
+
 @interface OGLoadingScene : OGBaseScene
+
++ (instancetype)loadingSceneWithSceneLoader:(OGSceneLoader *)sceneLoader;
 
 @end

@@ -7,11 +7,35 @@
 //
 
 #import "OGLoadingScene.h"
+#import "OGSceneLoader.h"
 
 CGFloat const kOGLoadingSceneLoadingBarOptimalScaleFactor = 0.2;
 CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.2;
 
+@interface OGLoadingScene ()
+
+@property (nonatomic, strong) OGSceneLoader *sceneLoader;
+
+@end
+
 @implementation OGLoadingScene
+
++ (instancetype)loadingSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
+{
+    return [[OGLoadingScene alloc] initWithSceneLoader:sceneLoader];
+}
+
+- (instancetype)initWithSceneLoader:(OGSceneLoader *)sceneLoader
+{
+    self = [self init];
+    
+    if (self)
+    {
+        _sceneLoader = sceneLoader;
+    }
+    
+    return self;
+}
 
 - (void)didMoveToView:(SKView *)view
 {
