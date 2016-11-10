@@ -20,9 +20,7 @@
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;
 
-- (void)asynchronouslyLoadSceneForPresentation;
-
-- (void)loadResources;
+- (NSProgress *)asynchronouslyLoadSceneForPresentation;
 
 - (void)purgeResources;
 

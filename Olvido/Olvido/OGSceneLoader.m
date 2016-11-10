@@ -14,9 +14,13 @@
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 
+NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
+NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
+
 @interface OGSceneLoader ()
 
 @property (nonatomic, strong, readwrite) OGBaseScene *scene;
+@property (nonatomic, strong) NSProgress *progress;
 
 @end
 
@@ -31,7 +35,6 @@
         if (self)
         {
             _metadata = metadata;
-            
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
                                                                      [OGSceneLoaderInitialState state],
                                                                      [OGSceneLoaderPrepearingResourcesState state],
@@ -53,68 +56,28 @@
     return [[OGSceneLoader alloc] initWithMetadata:metadata];
 }
 
-- (void)asynchronouslyLoadSceneForPresentation;
+- (NSProgress *)asynchronouslyLoadSceneForPresentation;
 {
-//    [self.stateMachine enterState:[OGSceneLoader class]];
-//    
-//    if (self.stateMachine.currentState.class == [OGSceneLoaderBeforePreloadState class])
-//    {
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0x0), ^
-//                       {
-//                           NSString *path = [[NSBundle mainBundle] pathForResource:self.metadata.name ofType:kOGSceneFileExtension];
-//                           self.scene = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-//                           
-//                           if (self.scene)
-//                           {
-//                               dispatch_async(dispatch_get_main_queue(), ^
-//                                              {
-//                                                  [self preloadingSuccessful];
-//                                              });
-//                           }
-//                           else
-//                           {
-//                               dispatch_async(dispatch_get_main_queue(), ^
-//                                              {
-//                                                  [self preloadingFailure];
-//                                              });
-//                           }
-//                       });
-//    }
+    if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    {
+        self.progress = [NSProgress progressWithTotalUnitCount:kOGSceneLoaderProgressTotalCountWhenResourcesReady];
+    }
+    else if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
+    {
+        self.progress = [NSProgress progressWithTotalUnitCount:kOGSceneLoaderProgressTotalCountWhenResourcesAvailable];
+        [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
+    }
+    
+    return self.progress;
 }
-
-- (void)loadResources
-{
-//    [self.stateMachine enterState:[OGSceneLoaderPreloadingState class]];
-//    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:self.metadata.name ofType:kOGSceneFileExtension];
-//    self.scene = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-//    
-//    if (self.scene)
-//    {
-//        [self preloadingSuccessful];
-//    }
-//    else
-//    {
-//        [self preloadingFailure];
-//    }
-}
-
-//- (void)preloadingSuccessful
-//{
-//    [self.stateMachine enterState:[OGSceneLoaderPreloadSuccessfulState class]];
-//}
-//
-//- (void)preloadingFailure
-//{
-//    [self.stateMachine enterState:[OGSceneLoaderErrorState class]];
-//}
 
 - (void)purgeResources
 {
-    if (self.scene && !self.scene.view)
-    {
-        self.scene = nil;
-    }
+    [self.progress cancel];
+    
+    [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+    
+    self.scene = nil;
 }
 
 @end
