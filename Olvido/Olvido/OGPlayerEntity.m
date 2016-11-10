@@ -20,6 +20,10 @@
 #import "OGPlayerEntityConfiguration.h"
 #import "OGAnimationState.h"
 
+#import "OGPlayerEntityAppearState.h"
+#import "OGplayerEntityControlledState.h"
+#import "OGplayerEntityAttackState.h"
+
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
 NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
@@ -64,19 +68,23 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         _input.enabled = YES;
         [self addComponent:_input];
         
-        _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
-        //[self addComponent:_intelligence];
+        OGPlayerEntityAppearState *appearState = [[OGPlayerEntityAppearState alloc] initWithPlayerEntity:self];
+        OGPlayerEntityControlledState *controlledState = [[OGPlayerEntityControlledState alloc] initWithPlayerEntity:self];
+        OGPlayerEntityAttackState *attackState = [[OGPlayerEntityAttackState alloc] initWithPlayerEntity:self];
+        
+        NSArray *states = @[appearState, controlledState, attackState];
+        
+        _intelligence = [[OGIntelligenceComponent alloc] initWithStates:states];
+        [self addComponent:_intelligence];
         
         if (sOGPlayerEntityAnimations)
         {
             _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:sOGPlayerEntityAnimations];
-            //rewrite in Player Intelligence Component when write intelligenceComponent
-            _animation.spriteNode = ((SKSpriteNode *)[_render.node children][0]);
+            [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
         }
         else
         {
-            [NSException raise:@"Exception.OGPlayerNode" format:@"Attempt to access sOGPlayerEntityAnimations before they have been loaded"];
             return nil;
         }
         
@@ -103,11 +111,6 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     
     [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
     {
-        if (error)
-        {
-            [NSException raise:@"Exception.OGPlayerNode" format:@"One or more texture atlases could not be found. Error:%@", error];
-        }
-        
         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
         
         for (NSUInteger i = 0; i < kOGDirectionCount; i++)
@@ -120,6 +123,13 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         sOGPlayerEntityAppearTextures = appearTextures;
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        
+        animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
+                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle
+                                                                                                            animationState:kOGAnimationStateIdle
+                                                                                                            bodyActionName:nil
+                                                                                                     repeatTexturesForever:YES
+                                                                                                             playBackwards:NO];
         
         animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
                                                                                                            imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk

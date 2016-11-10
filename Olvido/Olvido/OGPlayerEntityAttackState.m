@@ -57,7 +57,7 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
     
     self.elapsedTime = 0.0;
     
-    //self.animationComponent.requestedAnimationState = kOGAnimationStateAttack
+    self.animationComponent.requestedAnimationState = kOGAnimationStateAttack;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -84,15 +84,7 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
 {
     if (!_animationComponent)
     {
-        OGAnimationComponent *animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
-        if (animationComponent)
-        {
-            _animationComponent = animationComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityControlledState" format:@"A OGPlayerEntityControlledState's entity must have an AnimationComponent."];
-        }
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
     }
     
     return _animationComponent;

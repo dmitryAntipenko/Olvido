@@ -11,7 +11,7 @@
 
 @interface OGOrientationComponent : GKComponent
 
-@property (nonatomic, assign) CGFloat zRotation;
-@property (nonatomic, assign, readonly) OGDirection direction;
+@property (nonatomic, assign) OGDirection direction;
 
++ (OGDirection)directionWithVectorX:(CGFloat)vectorX;
 @end

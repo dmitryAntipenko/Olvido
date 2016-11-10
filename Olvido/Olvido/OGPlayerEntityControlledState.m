@@ -44,13 +44,13 @@
     [super didEnterWithPreviousState:previousState];
     
     [self.inputComponent setEnabled:YES];
+    
+    self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     [super updateWithDeltaTime:seconds];
-    
-    self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
@@ -62,15 +62,7 @@
 {
     if (!_animationComponent)
     {
-        OGAnimationComponent *animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
-        if (animationComponent)
-        {
-            _animationComponent = animationComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityControlledState" format:@"A OGPlayerEntityControlledState's entity must have an AnimationComponent."];
-        }
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
     }
     
     return _animationComponent;
@@ -80,15 +72,7 @@
 {
     if (!_movementComponent)
     {
-        OGMovementComponent *movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
-        if (movementComponent)
-        {
-            _movementComponent = movementComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityControlledState" format:@"A OGPlayerEntityControlledState's entity must have an MovementComponent."];
-        }
+        _movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
     }
     
     return _movementComponent;
@@ -96,17 +80,9 @@
 
 - (OGInputComponent *)inputComponent
 {
-    if (!_animationComponent)
+    if (!_inputComponent)
     {
-        OGInputComponent *inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
-        if (inputComponent)
-        {
-            _inputComponent = inputComponent;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGPlayerEntityControlledState" format:@"A OGPlayerEntityControlledState's entity must have an InputComponent."];
-        }
+        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
     }
     
     return _inputComponent;

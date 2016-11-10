@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSDictionary *animations;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
+@property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
 
 - (instancetype)initWithTextureSize:(CGSize)textureSize
                          animations:(NSDictionary *)animations;

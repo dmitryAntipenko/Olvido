@@ -10,39 +10,19 @@
 
 @implementation OGOrientationComponent
 
-- (instancetype)init
++ (OGDirection)directionWithVectorX:(CGFloat)vectorX
 {
-    self = [super init];
+    OGDirection direction;
     
-    if (self)
+    if (vectorX > 0)
     {
-        _zRotation = 0.0;
-    }
-    
-    return self;
-}
-
-- (OGDirection)directionWithZRotation:(CGFloat)zRotation
-{
-    OGDirection result;
-    
-    CGFloat degreeZRotation = GLKMathRadiansToDegrees(zRotation);
-    
-    if (degreeZRotation >= 90.0 && degreeZRotation <= 270.0)
-    {
-        result = OGDirectionLeft;
+        direction = kOGDirectionRight;
     }
     else
     {
-        result = OGDirectionRight;
+        direction = kOGDirectionLeft;
     }
     
-    return result;
+    return direction;
 }
-
-- (OGDirection)direction
-{
-    return [self directionWithZRotation:self.zRotation];
-}
-
 @end

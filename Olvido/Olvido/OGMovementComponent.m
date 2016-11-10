@@ -13,6 +13,8 @@
 
 #import "OGConstants.h"
 
+#import "OGAnimation.h"
+
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
 CGFloat const kOGMovementComponentDefaultSpeed = 40;
 
@@ -42,25 +44,79 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
 {
     [super didAddToEntity];
     
-    self.renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
+   // self.renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     [super updateWithDeltaTime:seconds];
     
-    SKNode *node = self.renderComponent.node;
-    OGOrientationComponent *orientationComponent = self.orientationComponent;
+    if ([self animationStateCanBeOverwrittenWithAnimationState:self.animationComponent.currentAnimation.animationState])
+    {
+        if (self.displacementVector.dx != 0)
+            {
+            OGDirection direction = [OGOrientationComponent directionWithVectorX:self.displacementVector.dx];
+            if (self.orientationComponent.direction != direction)
+            {
+                self.orientationComponent.direction = direction;
+        
+                self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+            }
+        }
+        else if (self.displacementVector.dx == 0 && self.displacementVector.dy == 0)
+        {
+            self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
+        }
+    }
     
-    OGAnimationState animationState;
     
+    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
+                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
     
+    [self.renderComponent.node.physicsBody applyForce:force];
+}
+
+- (BOOL)animationStateCanBeOverwrittenWithAnimationState:(OGAnimationState)animationState
+{
+    BOOL result = NO;
     
+    if (animationState == kOGAnimationStateNone || animationState == kOGAnimationStateIdle
+        || animationState == kOGAnimationStateAttack || animationState == kOGAnimationStateWalkForward)
+    {
+        result = YES;
+    }
     
-//    CGVector force = CGVectorMake(kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dx,
-//                                  kOGMovementComponentDefaultSpeed * self.speedFactor * self.displacementVector.dy);
-//    
-//    [self.renderComponent.node.physicsBody applyForce:force];
+    return result;
+}
+
+- (OGRenderComponent *)renderComponent
+{
+    if (!_renderComponent)
+    {
+        _renderComponent = (OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]];
+    }
+    
+    return _renderComponent;
+}
+
+- (OGAnimationComponent *)animationComponent
+{
+    if (!_animationComponent)
+    {
+        _animationComponent = (OGAnimationComponent *) [self.entity componentForClass:[OGAnimationComponent class]];
+    }
+    
+    return _animationComponent;
+}
+
+- (OGOrientationComponent *)orientationComponent
+{
+    if (!_orientationComponent)
+    {
+        _orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
+    }
+    
+    return _orientationComponent;
 }
 
 @end

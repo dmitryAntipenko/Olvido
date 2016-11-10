@@ -16,8 +16,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 
 @interface OGAnimationComponent ()
 
-@property (nonatomic, strong) OGAnimation *currentAnimation;
 @property (nonatomic, assign) NSTimeInterval elapsedAnimationDuration;
+@property (nonatomic, strong, readwrite) OGAnimation *currentAnimation;
 
 @end
 
@@ -45,8 +45,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 {
     self.elapsedAnimationDuration += deltaTime;
     
-    if (self.currentAnimation == nil && self.currentAnimation.animationState != animationState
-        && self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
+    if (self.currentAnimation == nil || self.currentAnimation.animationState != animationState
+        || self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
     {
         OGAnimation *animation = self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]];
         
@@ -113,10 +113,6 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         {
             [self runAnimationForAnimationStateWithAnimationState:self.requestedAnimationState direction:orientationComponent.direction deltaTime:deltaTime];
             self.requestedAnimationState = kOGAnimationStateNone;
-        }
-        else
-        {
-            [NSException raise:@"Exception.OGAnimationComponent" format:@"An AnimationComponent's entity must have an OrientationComponent."];
         }
     }
 }
