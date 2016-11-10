@@ -34,7 +34,7 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
                                                                      [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
                                                                      ]];
             
-            [_stateMachine enterState:[OGSceneLoaderInitialState class]];
+            [_stateMachine enterState:OGSceneLoaderInitialState.self];
         }
     }
     else
@@ -47,7 +47,7 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata
 {
-    return [[OGSceneLoader alloc] initWithMetadata:metadata];
+    return [[self alloc] initWithMetadata:metadata];
 }
 
 - (NSProgress *)asynchronouslyLoadSceneForPresentation;

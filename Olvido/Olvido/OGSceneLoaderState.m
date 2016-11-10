@@ -12,7 +12,7 @@
 
 + (instancetype)stateWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
-    return [[OGSceneLoaderState alloc] initWithSceneLoader:sceneLoader];
+    return [[self alloc] initWithSceneLoader:sceneLoader];
 }
 
 - (instancetype)initWithSceneLoader:(OGSceneLoader *)sceneLoader
