@@ -16,6 +16,8 @@
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
 
+#import "OGColliderType.h"
+
 #import "OGPlayerEntityConfiguration.h"
 
 @interface OGPlayerEntity ()
@@ -33,12 +35,13 @@
     if (self)
     {
         _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
+        [self loadMiscellaneousAssets];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
-                                                      colliderType:_playerConfiguration.colliderType];
+                                                      colliderType:[OGColliderType player]];
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
@@ -68,6 +71,12 @@
     }
     
     return self;
+}
+
+- (void)loadMiscellaneousAssets
+{
+    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
 }
 
 @end

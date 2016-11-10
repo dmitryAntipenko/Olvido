@@ -16,19 +16,4 @@
     return 30.0;
 }
 
-- (struct OGColliderType)colliderType
-{
-    struct OGColliderType result;
-    
-    result.categoryBitMask = kOGCollisionBitMaskEnemy;
-    result.collisionBitMask = kOGCollisionBitMaskObstacle;
-    result.contactTestBitMask = kOGCollisionBitMaskPlayer | kOGCollisionBitMaskObstacle;
-    result.angularDamping = 0.0;
-    result.linearDamping = 0.0;
-    result.restitution = 0.8;
-    result.friction = 0.2;
-    
-    return result;
-}
-
 @end

@@ -14,11 +14,16 @@
 @property (nonatomic, assign) NSUInteger collisionBitMask;
 @property (nonatomic, assign) NSUInteger contactTestBitMask;
 
++ (OGColliderType *)colliderTypeWithCategoryBitMask:(NSUInteger)bitmask;
+
 + (OGColliderType *)player;
 + (OGColliderType *)enemy;
++ (OGColliderType *)obstacle;
 
-+ (NSDictionary *)sOGDefinedCollisions;
-+ (NSDictionary *)sOGRequestedContactNotifications;
++ (NSMutableDictionary *)definedCollisions;
++ (NSMutableDictionary *)requestedContactNotifications;
+
+- (BOOL)notifyOnContactWith:(OGColliderType *)colliderType;
 
 @end
 

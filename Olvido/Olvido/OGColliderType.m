@@ -20,7 +20,29 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
 
 #pragma mark - Shared Instances
 
-+ (OGColliderType *)sharedInstanceWithCategoryBitMask:(NSUInteger)bitmask
++ (OGColliderType *)colliderTypeWithCategoryBitMask:(NSUInteger)bitmask
+{
+    OGColliderType *result = nil;
+    
+    switch (bitmask)
+    {
+        case kOGCollisionBitMaskPlayer:
+            result = [OGColliderType player];
+            break;
+            
+        case kOGCollisionBitMaskEnemy:
+            result = [OGColliderType enemy];
+            break;
+            
+        case kOGCollisionBitMaskObstacle:
+            result = [OGColliderType obstacle];
+            break;
+    }
+    
+    return result;
+}
+
++ (OGColliderType *)player
 {
     static OGColliderType *colliderType = nil;
     static dispatch_once_t dispatchOnceToken = 0;
@@ -28,25 +50,43 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
     dispatch_once(&dispatchOnceToken, ^()
     {
         colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = bitmask;
+        colliderType.categoryBitMask = kOGCollisionBitMaskPlayer;
     });
     
     return colliderType;
 }
 
-+ (OGColliderType *)player
-{
-    return [OGColliderType sharedInstanceWithCategoryBitMask:kOGCollisionBitMaskPlayer];
-}
-
 + (OGColliderType *)enemy
 {
-    return [OGColliderType sharedInstanceWithCategoryBitMask:kOGCollisionBitMaskEnemy];
+    static OGColliderType *colliderType = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
+    
+    dispatch_once(&dispatchOnceToken, ^()
+    {
+        colliderType = [[self alloc] init];
+        colliderType.categoryBitMask = kOGCollisionBitMaskEnemy;
+    });
+    
+    return colliderType;
+}
+
++ (OGColliderType *)obstacle
+{
+    static OGColliderType *colliderType = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
+    
+    dispatch_once(&dispatchOnceToken, ^()
+    {
+        colliderType = [[self alloc] init];
+        colliderType.categoryBitMask = kOGCollisionBitMaskObstacle;
+    });
+    
+    return colliderType;
 }
 
 #pragma mark - Lazy getters
 
-+ (NSDictionary *)sOGDefinedCollisions
++ (NSDictionary *)definedCollisions
 {
     if (!sOGDefinedCollisions)
     {
@@ -56,7 +96,7 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
     return sOGDefinedCollisions;
 }
 
-+ (NSDictionary *)sOGRequestedContactNotifications
++ (NSDictionary *)requestedContactNotifications
 {
     if (!sOGRequestedContactNotifications)
     {
@@ -70,7 +110,7 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
 
 - (NSUInteger)findBitMaskInDictionary:(NSDictionary *)dictionary
 {
-    __block NSUInteger result;
+    __block NSUInteger result = 0;
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(OGColliderType *key, NSArray *obj, BOOL *stop)
      {
@@ -96,6 +136,21 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
 - (NSUInteger)contactTestBitMask
 {
     return [self findBitMaskInDictionary:sOGRequestedContactNotifications];
+}
+
+#pragma mark - Notifying
+
+- (BOOL)notifyOnContactWith:(OGColliderType *)colliderType
+{
+    NSArray<OGColliderType *> *requestedContacts = [OGColliderType requestedContactNotifications][self];
+    BOOL result = NO;
+    
+    if ([requestedContacts containsObject:colliderType])
+    {
+        result = YES;
+    }
+    
+    return result;
 }
 
 #pragma mark - CopyWithZone
