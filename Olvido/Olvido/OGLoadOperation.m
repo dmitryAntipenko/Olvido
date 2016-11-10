@@ -25,9 +25,4 @@
     return self.state == canceledState;
 }
 
-- (BOOL)isConcurrent
-{
-    return YES;
-}
-
 @end

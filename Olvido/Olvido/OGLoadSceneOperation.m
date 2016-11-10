@@ -47,7 +47,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
     return [[OGLoadSceneOperation alloc] initWithSceneMetadata:sceneMetadata];
 }
 
-- (void)start
+- (void)main
 {
     if (!self.isCancelled)
     {
@@ -62,7 +62,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
             [self.scene createCamera];
             
             self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
-
+            
             self.state = finishedState;
         }
     }

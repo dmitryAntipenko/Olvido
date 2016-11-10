@@ -37,7 +37,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
     return [[OGLoadResourcesOperation alloc] initWithLoadableClass:loadableClass];
 }
 
-- (void)start
+- (void)main
 {
     if (!self.isCancelled)
     {
