@@ -30,12 +30,13 @@
     if (self)
     {
         _enemyConfiguration = [[OGEnemyEntityConfiguration alloc] init];
+        [self loadMiscellaneousAssets];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_enemyConfiguration.physicsBodyRadius]
-                                                      colliderType:_enemyConfiguration.colliderType];
+                                                      colliderType:[OGColliderType enemy]];
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
@@ -53,4 +54,19 @@
     
     return self;
 }
+
+- (void)loadMiscellaneousAssets
+{
+    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
+
+    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
+}
+
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    NSLog(@"test");
+}
+
 @end

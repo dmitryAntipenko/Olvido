@@ -13,6 +13,7 @@
 #import "OGGameSceneConfiguration.h"
 #import "OGEnemyConfiguration.h"
 #import "OGCameraController.h"
+#import "OGContactNotifiableType.h"
 
 #import "OGPlayerEntity.h"
 #import "OGEnemyEntity.h"
@@ -208,11 +209,25 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
     SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
-    if ((bodyA.categoryBitMask == kOGCollisionBitMaskPlayer && bodyB.categoryBitMask == kOGCollisionBitMaskPortal)
-        || (bodyB.categoryBitMask == kOGCollisionBitMaskPlayer && bodyA.categoryBitMask == kOGCollisionBitMaskPortal))
+    GKEntity *entityA = bodyA.node.entity;
+    GKEntity *entityB = bodyB.node.entity;
+    
+    OGColliderType *colliderTypeA = [OGColliderType colliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
+    OGColliderType *colliderTypeB = [OGColliderType colliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
+    
+    BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
+    BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
+
+    if ([entityA conformsToProtocol:@protocol(OGContactNotifiableType)] && aNeedsCallback)
     {
-        self.currentRoom = [self childNodeWithName:@"room2"];
-        [self.cameraController moveCameraToNode:self.currentRoom];
+        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityA;
+        [entity contactWithEntityDidBegin:entityB];
+    }
+
+    if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
+    {
+        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityB;
+        [entity contactWithEntityDidBegin:entityA];
     }
 }
 

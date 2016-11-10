@@ -17,6 +17,8 @@
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 
+#import "OGColliderType.h"
+
 #import "OGPlayerEntityConfiguration.h"
 #import "OGAnimationState.h"
 
@@ -40,12 +42,13 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
     if (self)
     {
         _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
+        [self loadMiscellaneousAssets];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
-                                                      colliderType:_playerConfiguration.colliderType];
+                                                      colliderType:[OGColliderType player]];
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
@@ -90,6 +93,7 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
     return self;
 }
 
+<<<<<<< HEAD
 + (BOOL)resourcesNeedLoading
 {
     return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
@@ -153,6 +157,12 @@ static NSDictionary *sOGPlayerEntityAppearTextures;
 + (CGSize)textureSize
 {
     return CGSizeMake(120.0, 120.0);
+=======
+- (void)loadMiscellaneousAssets
+{
+    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
+>>>>>>> vicrattlehead_sandbox
 }
 
 @end
