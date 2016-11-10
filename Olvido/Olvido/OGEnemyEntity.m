@@ -69,4 +69,9 @@
     NSLog(@"test");
 }
 
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    
+}
+
 @end

@@ -14,8 +14,12 @@
 #import "OGPhysicsComponent.h"
 #import "OGLockComponent.h"
 
+#import "OGPlayerEntity.h"
+
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
+#import "OGDoorEntityLockedState.h"
+#import "OGDoorEntityUnlockedState.h"
 
 @implementation OGDoorEntity
 
@@ -25,6 +29,8 @@
     
     if (self)
     {
+        [OGDoorEntity loadMiscellaneousAssets];
+        
         _render = [[OGRenderComponent alloc] init];
         _render.node = spriteNode;
         [self addComponent:_render];
@@ -37,7 +43,9 @@
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
             [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
-            [[OGDoorEntityOpenedState alloc] initWithDoorEntity:self]
+            [[OGDoorEntityOpenedState alloc] initWithDoorEntity:self],
+            [[OGDoorEntityLockedState alloc] initWithDoorEntity:self],
+            [[OGDoorEntityUnlockedState alloc] initWithDoorEntity:self]
         ]];
         
         [self addComponent:_intelligence];
@@ -50,6 +58,41 @@
     }
     
     return self;
+}
+
+- (void)lock
+{
+    self.lockComponent.locked = YES;
+}
+
+- (void)unlock
+{
+    self.lockComponent.locked = NO;
+}
+
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    if ([entity isKindOfClass:OGPlayerEntity.self])
+    {
+        NSLog(@"open mf");
+        
+    }
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    
+}
+
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
+{
+    [OGDoorEntity loadMiscellaneousAssets];
+}
+
++ (void)loadMiscellaneousAssets
+{
+    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
 }
 
 @end

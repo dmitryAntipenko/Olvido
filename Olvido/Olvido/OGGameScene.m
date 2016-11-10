@@ -240,7 +240,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)pause
 {
-//    [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;

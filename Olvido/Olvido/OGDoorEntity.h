@@ -25,4 +25,9 @@
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode NS_DESIGNATED_INITIALIZER;
 
++ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
+
+- (void)lock;
+- (void)unlock;
+
 @end

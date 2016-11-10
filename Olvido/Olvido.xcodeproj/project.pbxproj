@@ -82,6 +82,8 @@
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
+		EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */; };
+		EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -223,6 +225,10 @@
 		EAA490C51DA7BE52007734F0 /* OGConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConstants.h; sourceTree = "<group>"; };
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
 		EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGGameOverScreen.sks; sourceTree = "<group>"; };
+		EAF7F1061DD515A30067D76D /* OGDoorEntityLockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityLockedState.h; sourceTree = "<group>"; };
+		EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityLockedState.m; sourceTree = "<group>"; };
+		EAF7F1091DD515B10067D76D /* OGDoorEntityUnlockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityUnlockedState.h; sourceTree = "<group>"; };
+		EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityUnlockedState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,6 +568,10 @@
 				EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */,
 				EA05FA0C1DD5013700FAC81A /* OGDoorEntityState.h */,
 				EA05FA0D1DD5013700FAC81A /* OGDoorEntityState.m */,
+				EAF7F1061DD515A30067D76D /* OGDoorEntityLockedState.h */,
+				EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */,
+				EAF7F1091DD515B10067D76D /* OGDoorEntityUnlockedState.h */,
+				EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */,
 			);
 			name = "IntelligenceComponent States (DoorEntity)";
 			sourceTree = "<group>";
@@ -771,6 +781,7 @@
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */,
 				EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */,
+				EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
@@ -808,6 +819,7 @@
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */,
+				EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */,
 				EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */,
 				EA5870F81DC0D8D400FCF126 /* OGLevelController.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,

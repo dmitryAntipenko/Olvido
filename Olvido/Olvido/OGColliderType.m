@@ -9,12 +9,8 @@
 #import "OGColliderType.h"
 #import "OGCollisionBitMask.h"
 
-static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGDefinedCollisions;
-static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRequestedContactNotifications;
-
-//@interface OGColliderType ()
-//
-//@end
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions;
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications;
 
 @implementation OGColliderType
 
@@ -104,7 +100,7 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
 
 #pragma mark - Lazy getters
 
-+ (NSDictionary *)definedCollisions
++ (NSMutableDictionary *)definedCollisions
 {
     if (!sOGDefinedCollisions)
     {
@@ -114,7 +110,7 @@ static NSMutableDictionary<OGColliderType *, NSArray<OGColliderType *> *> *sOGRe
     return sOGDefinedCollisions;
 }
 
-+ (NSDictionary *)requestedContactNotifications
++ (NSMutableDictionary *)requestedContactNotifications
 {
     if (!sOGRequestedContactNotifications)
     {

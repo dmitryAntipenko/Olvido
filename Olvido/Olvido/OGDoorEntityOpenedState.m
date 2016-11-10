@@ -8,6 +8,9 @@
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
+#import "OGDoorEntityLockedState.h"
+#import "OGDoorEntityUnlockedState.h"
+#import "OGCollisionBitMask.h"
 
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
@@ -17,12 +20,18 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     self.lockComponent.closed = NO;
+    
+    //[OGColliderType definedCollisions][self.lockComponent.target.entity];
+    
+//    self.renderComponent.node.physicsBody.categoryBitMask = kOGCollisionBitMaskDefault;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityClosedState.self;
+    return stateClass == OGDoorEntityClosedState.self
+    || stateClass == OGDoorEntityLockedState.self
+    || stateClass == OGDoorEntityLockedState.self;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -43,6 +52,13 @@
             {
                 [self.stateMachine enterState:OGDoorEntityClosedState.self];
             }
+        }
+    }
+    else
+    {
+        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        {
+            [self.stateMachine enterState:OGDoorEntityLockedState.self];
         }
     }
 }

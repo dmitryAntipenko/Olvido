@@ -8,9 +8,13 @@
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
+#import "OGDoorEntityLockedState.h"
+#import "OGDoorEntityUnlockedState.h"
 
+#import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 
 @implementation OGDoorEntityClosedState
 
@@ -22,7 +26,9 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityOpenedState.self;
+    return stateClass == OGDoorEntityOpenedState.self
+    || stateClass == OGDoorEntityLockedState.self
+    || stateClass == OGDoorEntityLockedState.self;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -43,6 +49,13 @@
             {
                 [self.stateMachine enterState:OGDoorEntityOpenedState.self];
             }
+        }
+    }
+    else
+    {
+        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        {
+            [self.stateMachine enterState:OGDoorEntityLockedState.self];
         }
     }
 }
