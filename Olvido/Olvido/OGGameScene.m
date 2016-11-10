@@ -88,10 +88,10 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
         _entities = [[NSMutableSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
-                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.class],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.class],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              nil];
         
         _statusBar = [[OGStatusBar alloc] init];

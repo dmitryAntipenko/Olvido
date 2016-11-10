@@ -32,7 +32,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGBeforeStartLevelState class]);
+    result = (result || stateClass == OGBeforeStartLevelState.self);
     
     return result;
 }

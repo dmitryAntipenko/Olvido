@@ -35,9 +35,9 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGPauseLevelState class]);
-    result = (result || stateClass == [OGCompleteLevelState class]);
-    result = (result || stateClass == [OGDeathLevelState class]);
+    result = (result || stateClass == OGPauseLevelState.self);
+    result = (result || stateClass == OGCompleteLevelState.self);
+    result = (result || stateClass == OGDeathLevelState.self);
     
     return result;
 }

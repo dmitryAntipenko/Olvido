@@ -33,7 +33,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGGameLevelState class]);
+    result = (result || stateClass == OGGameLevelState.self);
     
     return result;
 }
