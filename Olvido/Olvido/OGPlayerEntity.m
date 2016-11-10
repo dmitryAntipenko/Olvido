@@ -169,12 +169,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     return CGSizeMake(120.0, 120.0);
 }
 
-<<<<<<< HEAD
-
-- (void)loadMiscellaneousAssets
-=======
 + (void)loadMiscellaneousAssets
->>>>>>> PlayerIntelligence
 {
     NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
