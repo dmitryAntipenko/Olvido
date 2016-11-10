@@ -175,4 +175,9 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
 }
 
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    
+}
+
 @end
