@@ -7,11 +7,8 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGDoorEntityState.h"
 
-@class OGDoorEntity;
-
-@interface OGDoorEntityClosedState : GKState
-
-- (instancetype)initWithDoorEntity:(OGDoorEntity *)entity;
+@interface OGDoorEntityClosedState : OGDoorEntityState
 
 @end

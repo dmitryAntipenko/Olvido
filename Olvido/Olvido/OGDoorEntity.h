@@ -25,7 +25,4 @@
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode NS_DESIGNATED_INITIALIZER;
 
-- (void)close;
-- (void)open;
-
 @end

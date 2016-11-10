@@ -45,23 +45,11 @@
         _animation = [[OGAnimationComponent alloc] init];
         [self addComponent:_animation];
         
-        _lockComponent = [[OGLockComponent alloc] init];        
+        _lockComponent = [[OGLockComponent alloc] init];
         [self addComponent:_lockComponent];
     }
     
     return self;
-}
-
-- (void)close
-{
-    self.lockComponent.closed = YES;
-    ((SKSpriteNode *) self.render.node).color = [SKColor blueColor];
-}
-
-- (void)open
-{
-    self.lockComponent.closed = NO;
-    ((SKSpriteNode *) self.render.node).color = [SKColor clearColor];
 }
 
 @end

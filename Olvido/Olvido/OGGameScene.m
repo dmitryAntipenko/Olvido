@@ -75,15 +75,13 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
-        [OGPlayerEntity loadResourcesWithCompletionHandler:^{
-            NSLog(@"Success! Animation loaded!");
+        [OGPlayerEntity loadResourcesWithCompletionHandler:^()
+        {
             _player = [[OGPlayerEntity alloc] init];
         }];
 
         _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
-        _cameraController = [[OGCameraController alloc] init];
-        //_player = [[OGPlayerEntity alloc] init];
-        
+        _cameraController = [[OGCameraController alloc] init];        
 
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
              [OGStoryConclusionLevelState stateWithLevelScene:self],
