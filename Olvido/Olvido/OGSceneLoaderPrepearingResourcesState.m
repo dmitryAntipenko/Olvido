@@ -8,8 +8,19 @@
 
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoader.h"
+
+@interface OGSceneLoaderPrepearingResourcesState ()
+
+@property (nonatomic, weak) OGSceneLoader *sceneLoader;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, strong) NSProgress *progress;
+
+@end
 
 @implementation OGSceneLoaderPrepearingResourcesState
+
+
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
