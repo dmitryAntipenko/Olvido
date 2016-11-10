@@ -26,7 +26,12 @@ NSString *const kOGSceneLoaderDidCompleteNotification = @"sceneLoaderDidComplete
 {
     self.sceneLoader.progress = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kOGSceneLoaderDidCompleteNotification object:self.sceneLoader];
+    [self.sceneLoader.delegate sceneLoaderDidComplete:self.sceneLoader];
+}
+
+- (void)willExitWithNextState:(GKState *)nextState
+{
+    self.sceneLoader.scene = nil;
 }
 
 @end

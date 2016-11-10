@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <GameplayKit/GameplayKit.h>
+#import "OGSceneLoaderDelegate.h"
 
 @class OGSceneMetadata;
 @class OGBaseScene;
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) OGBaseScene *scene;
 @property (nonatomic, strong) NSProgress *progress;
 @property (nonatomic, unsafe_unretained) BOOL requestedForPresentation;
+@property (nonatomic, weak) id <OGSceneLoaderDelegate> delegate;
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;
 

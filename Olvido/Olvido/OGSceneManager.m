@@ -15,13 +15,14 @@
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGLoadingScene.h"
+#import "OGSceneLoaderDelegate.h"
 
 NSString *const kOGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
 NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
-@interface OGSceneManager ()
+@interface OGSceneManager () <OGSceneLoaderDelegate>
 
 @property (nonatomic, strong) OGBaseScene *currentScene;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
@@ -52,13 +53,17 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
                  OGSceneMetadata *sceneMetadata = [OGSceneMetadata sceneMetaDataWithSceneConfiguration:obj
                                                                                             identifier:idx];
                  OGSceneLoader *sceneLoader = [OGSceneLoader sceneLoaderWithMetadata:sceneMetadata];
+                 sceneLoader.delegate = self;
                  [mutableSceneLoaders addObject:sceneLoader];
              }];
             
             _sceneLoaders = [mutableSceneLoaders copy];
+            _view = view;
         }
-        
-        _view = view;
+        else
+        {
+            self = nil;
+        }
     }
     
     return self;
@@ -122,6 +127,11 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
         
         [self.view presentScene:self.loadingScene transition:transition];
     }
+}
+
+- (void)sceneLoaderDidComplete:(OGSceneLoader *)sceneLoader
+{
+    //
 }
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader

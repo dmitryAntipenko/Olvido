@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class OGSceneLoader;
+
 @protocol OGSceneLoaderDelegate <NSObject>
 
-- (void)sceneLoadingSuccessful:(OGSceneLoader *)sceneLoader;
-
-- (void)sceneLoadingFailure:(OGSceneLoader *)sceneLoader;
+- (void)sceneLoaderDidComplete:(OGSceneLoader *)sceneLoader;
 
 @end
