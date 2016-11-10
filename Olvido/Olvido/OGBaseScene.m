@@ -10,4 +10,9 @@
 
 @implementation OGBaseScene
 
+- (void)createCamera
+{
+    
+}
+
 @end

@@ -12,7 +12,7 @@
 
 @property (nonatomic, unsafe_unretained, readonly) NSUInteger  identifier;
 @property (nonatomic, unsafe_unretained, readonly) Class sceneClass;
-@property (nonatomic, strong, readonly) NSString *name;
+@property (nonatomic, strong, readonly) NSString *fileName;
 
 + (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 

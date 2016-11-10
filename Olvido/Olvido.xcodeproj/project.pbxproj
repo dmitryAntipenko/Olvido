@@ -340,13 +340,13 @@
 			isa = PBXGroup;
 			children = (
 				1BB5392F1DD4642300B550E1 /* LoadingOperations */,
+				1B7C44C41DD254D2004F89EC /* SceneLoaderStates */,
 				1B7C44B51DD1BB9B004F89EC /* OGSceneManager.h */,
 				1B7C44B61DD1BB9B004F89EC /* OGSceneManager.m */,
 				1B7C44BD1DD20FB0004F89EC /* OGSceneLoader.h */,
 				1B7C44BE1DD20FB0004F89EC /* OGSceneLoader.m */,
 				1B7C44B81DD1E5BF004F89EC /* OGSceneMetadata.h */,
 				1B7C44B91DD1E5BF004F89EC /* OGSceneMetadata.m */,
-				1B7C44C41DD254D2004F89EC /* SceneLoaderStates */,
 				1B7C44C01DD21195004F89EC /* OGSceneManagerDelegate.h */,
 				1B3005C91DD340E7000B0FBB /* OGSceneLoaderDelegate.h */,
 				1B3005CA1DD35EA0000B0FBB /* OGResourceLoadableType.h */,
@@ -455,7 +455,6 @@
 				2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */,
 				EA5870F61DC0D8D400FCF126 /* OGLevelController.h */,
 				EA5870F71DC0D8D400FCF126 /* OGLevelController.m */,
-				EA976D051D9EDBF8003B77FC /* Scenes */,
 			);
 			name = LevelController;
 			sourceTree = "<group>";
@@ -561,6 +560,7 @@
 				1B7C44B41DD1B9DC004F89EC /* SceneManager */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
+				EA976D051D9EDBF8003B77FC /* Scenes */,
 				EA0D27281DB1475000CEFB8A /* LevelController */,
 				EA9EAAC41DCC9CE400E36855 /* Entities */,
 				EA0D27271DB1473A00CEFB8A /* Components */,

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>Type</key>
-		<string>SceneTypeMenu</string>
-		<key>Name</key>
+		<key>ClassName</key>
+		<string>OGMainMenuScene</string>
+		<key>FileName</key>
 		<string>OGMainMenuScene</string>
 	</dict>
 	<dict>
-		<key>Type</key>
-		<string>SceneTypeStory</string>
-		<key>Name</key>
+		<key>ClassName</key>
+		<string>OGStoryScene1</string>
+		<key>FileName</key>
 		<string>OGStoryScene1</string>
 	</dict>
 	<dict>
-		<key>Type</key>
-		<string>SceneTypeLevel</string>
-		<key>Name</key>
+		<key>ClassName</key>
+		<string>OGLevelScene1</string>
+		<key>FileName</key>
 		<string>OGLevelScene1</string>
 	</dict>
 </array>

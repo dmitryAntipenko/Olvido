@@ -10,4 +10,6 @@
 
 @interface OGBaseScene : SKScene
 
+- (void)createCamera;
+
 @end

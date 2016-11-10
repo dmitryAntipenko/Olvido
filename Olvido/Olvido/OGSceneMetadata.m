@@ -8,13 +8,8 @@
 
 #import "OGSceneMetadata.h"
 
-NSString *const kOGSceneMetadataIdentifierKey = @"Identifier";
-NSString *const kOGSceneMetadataSceneTypeKey = @"Type";
-NSString *const kOGSceneMetadataSceneNameKey = @"Name";
-
-NSString *const kOGSceneMetadataSceneTypeLevel = @"SceneTypeLevel";
-NSString *const kOGSceneMetadataSceneTypeMenu = @"SceneTypeMenu";
-NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
+NSString *const kOGSceneMetadataClassNameKey = @"ClassName";
+NSString *const kOGSceneMetadataFileNameKey = @"FileName";
 
 @implementation OGSceneMetadata
 
@@ -26,13 +21,13 @@ NSString *const kOGSceneMetadataSceneTypeStory = @"SceneTypeStory";
         
         if (self)
         {
-            NSString *sceneClass = [configuration objectForKey:kOGSceneMetadataSceneTypeKey];
-            NSString *name = [configuration objectForKey:kOGSceneMetadataSceneNameKey];
+            NSString *className = [configuration objectForKey:kOGSceneMetadataClassNameKey];
+            NSString *fileName = [configuration objectForKey:kOGSceneMetadataFileNameKey];
             
-            if (sceneClass && name)
+            if (className && fileName)
             {
-                _sceneClass = NSClassFromString(sceneClass);
-                _name = name;
+                _sceneClass = NSClassFromString(className);
+                _fileName = fileName;
                 _identifier = identifier;
             }
             else
