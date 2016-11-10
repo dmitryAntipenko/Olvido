@@ -26,7 +26,6 @@
 		1B3005D01DD36801000B0FBB /* OGSceneLoaderPrepearingResourcesState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3005CF1DD36801000B0FBB /* OGSceneLoaderPrepearingResourcesState.m */; };
 		1B3005D31DD36838000B0FBB /* OGSceneLoaderResourcesReadyState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3005D21DD36838000B0FBB /* OGSceneLoaderResourcesReadyState.m */; };
 		1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B36E4C71DC618100080D80B /* OGPauseScreen.sks */; };
-		1B36E4D01DC633300080D80B /* OGAnimationState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4CF1DC633300080D80B /* OGAnimationState.m */; };
 		1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */; };
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
 		1B7C44B71DD1BB9B004F89EC /* OGSceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C44B61DD1BB9B004F89EC /* OGSceneManager.m */; };
@@ -38,12 +37,14 @@
 		1BB539381DD46D1300B550E1 /* OGLoadResourcesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB539371DD46D1300B550E1 /* OGLoadResourcesOperation.m */; };
 		1BB5393B1DD47F4E00B550E1 /* OGSceneLoaderState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB5393A1DD47F4E00B550E1 /* OGSceneLoaderState.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
+		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
 		215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */; };
 		215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BDF1DC25D3F000DF29F /* OGShopMenuScene.m */; };
 		215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE11DC25D53000DF29F /* OGShopMenuScene.sks */; };
 		215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */; };
 		215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */; };
+		2171E5531DD0EF6100C8675E /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2171E5521DD0EF6100C8675E /* Player.xcassets */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		EA00D19B1DBA142100B6AC1B /* OGShootingComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */; };
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
@@ -122,8 +123,6 @@
 		1B3005D11DD36838000B0FBB /* OGSceneLoaderResourcesReadyState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSceneLoaderResourcesReadyState.h; sourceTree = "<group>"; };
 		1B3005D21DD36838000B0FBB /* OGSceneLoaderResourcesReadyState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSceneLoaderResourcesReadyState.m; sourceTree = "<group>"; };
 		1B36E4C71DC618100080D80B /* OGPauseScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGPauseScreen.sks; sourceTree = "<group>"; };
-		1B36E4CE1DC633300080D80B /* OGAnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationState.h; sourceTree = "<group>"; };
-		1B36E4CF1DC633300080D80B /* OGAnimationState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationState.m; sourceTree = "<group>"; };
 		1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationComponent.h; sourceTree = "<group>"; };
 		1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationComponent.m; sourceTree = "<group>"; };
 		1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZPositionEnum.m; sourceTree = "<group>"; };
@@ -143,9 +142,13 @@
 		1BB539371DD46D1300B550E1 /* OGLoadResourcesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadResourcesOperation.m; sourceTree = "<group>"; };
 		1BB539391DD47F4E00B550E1 /* OGSceneLoaderState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSceneLoaderState.h; sourceTree = "<group>"; };
 		1BB5393A1DD47F4E00B550E1 /* OGSceneLoaderState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSceneLoaderState.m; sourceTree = "<group>"; };
+		210CC8021DD0FB4D00824E84 /* OGDirection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGDirection.h; sourceTree = "<group>"; };
 		2154A6031DBE562E00E414F3 /* OGGameSceneStoryDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGGameSceneStoryDelegate.h; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
+		215A3C201DCFA12100D5C609 /* OGAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimation.h; sourceTree = "<group>"; };
+		215A3C211DCFA12100D5C609 /* OGAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimation.m; sourceTree = "<group>"; };
+		215A3C231DCFABCD00D5C609 /* OGAnimationState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAnimationState.h; sourceTree = "<group>"; };
 		215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInitialLevel.h; sourceTree = "<group>"; };
 		215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInitialLevel.m; sourceTree = "<group>"; };
 		215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGInitialLevel.sks; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		215C4BE41DC269AC000DF29F /* OGSettingsMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSettingsMenuScene.h; sourceTree = "<group>"; };
 		215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSettingsMenuScene.m; sourceTree = "<group>"; };
 		215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGSettingsMenuScene.sks; sourceTree = "<group>"; };
+		2171E5521DD0EF6100C8675E /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		EA00D1991DBA142100B6AC1B /* OGShootingComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShootingComponent.h; sourceTree = "<group>"; };
 		EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShootingComponent.m; sourceTree = "<group>"; };
@@ -334,10 +338,12 @@
 		1B36E4D11DC639490080D80B /* AnimationComponent */ = {
 			isa = PBXGroup;
 			children = (
-				1B36E4CE1DC633300080D80B /* OGAnimationState.h */,
-				1B36E4CF1DC633300080D80B /* OGAnimationState.m */,
 				1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */,
 				1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */,
+				215A3C201DCFA12100D5C609 /* OGAnimation.h */,
+				215A3C211DCFA12100D5C609 /* OGAnimation.m */,
+				215A3C231DCFABCD00D5C609 /* OGAnimationState.h */,
+				210CC8021DD0FB4D00824E84 /* OGDirection.h */,
 			);
 			name = AnimationComponent;
 			sourceTree = "<group>";
@@ -429,6 +435,14 @@
 				215C4BE51DC269AC000DF29F /* OGSettingsMenuScene.m */,
 			);
 			name = SettingsMenu;
+			sourceTree = "<group>";
+		};
+		2171E5541DD0EFFE00C8675E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2171E5521DD0EF6100C8675E /* Player.xcassets */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
@@ -568,6 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				1B7C44B41DD1B9DC004F89EC /* SceneManager */,
+				2171E5541DD0EFFE00C8675E /* Assets */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
 				EA976D051D9EDBF8003B77FC /* Scenes */,
@@ -714,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */,
+				2171E5531DD0EF6100C8675E /* Player.xcassets in Resources */,
 				215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */,
 				1B27EAA81DC0CEA200E9CA23 /* OGMapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
@@ -796,6 +812,7 @@
 				EA5870FB1DC0EC8F00FCF126 /* OGInventoryComponent.m in Sources */,
 				EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */,
 				1BB539381DD46D1300B550E1 /* OGLoadResourcesOperation.m in Sources */,
+				215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,9 +935,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -936,9 +954,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

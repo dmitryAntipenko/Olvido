@@ -28,4 +28,8 @@
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 
+@property (nonatomic, strong) NSDictionary *animations;
+@property (nonatomic, strong) NSDictionary *appearTextures;
+
+- (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 @end
