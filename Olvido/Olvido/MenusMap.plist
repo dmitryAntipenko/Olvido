@@ -3,8 +3,10 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>Name</key>
+		<string>MainMenu</string>
 		<key>SceneIdentifier</key>
-		<string>2</string>
+		<string>0</string>
 	</dict>
 </array>
 </plist>

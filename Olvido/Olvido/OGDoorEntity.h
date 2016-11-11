@@ -33,6 +33,7 @@
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 
 - (void)lock;
+
 - (void)unlock;
 
 @end

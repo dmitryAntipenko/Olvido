@@ -14,4 +14,5 @@
 @property (nonatomic, assign) OGDirection direction;
 
 + (OGDirection)directionWithVectorX:(CGFloat)vectorX;
+
 @end

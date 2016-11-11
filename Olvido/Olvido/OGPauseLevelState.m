@@ -13,18 +13,6 @@
 
 @implementation OGPauseLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
-{
-    OGPauseLevelState *state = nil;
-    
-    if (scene)
-    {
-        state = [[OGPauseLevelState alloc] initWithLevelScene:scene];
-    }
-    
-    return state;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene pauseWithPauseScreen];

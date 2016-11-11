@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>ClassName</key>
+		<string>OGMainMenuScene</string>
+		<key>FileName</key>
+		<string>OGMainMenuScene</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>OGStoryScene1</string>
+		<key>FileName</key>
+		<string>OGStoryScene1</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>OGInitialLevel</string>
+		<key>FileName</key>
+		<string>OGInitialLevel</string>
+		<key>OnDemandResources</key>
+		<array>
+			<string>OGPlayerEntity</string>
+		</array>
+	</dict>
+</array>
+</plist>
