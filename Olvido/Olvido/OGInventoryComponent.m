@@ -12,40 +12,69 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 @interface OGInventoryComponent ()
 
-@property (nonatomic, strong, readwrite) NSMutableArray<OGSpriteNode *> *mutableInventory;
+@property (nonatomic, unsafe_unretained, readonly, getter=isFull) BOOL full;
+@property (nonatomic, strong) NSMutableArray<id <OGInventoryItem>> *mutableInventoryItems;
 
 @end
 
 @implementation OGInventoryComponent
 
+- (instancetype)initWithCapacity:(NSUInteger)capacity
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _capacity = capacity;
+        _mutableInventoryItems = [NSMutableArray arrayWithCapacity:capacity];
+    }
+    
+    return self;
+}
+
+- (instancetype)init
+{
+    return [self initWithCapacity:kOGInventoryComponentDefaultCapacity];
+}
+
 - (void)didAddToEntity
 {
-    NSMutableArray *inventory = [[NSMutableArray alloc] init];
-    self.mutableInventory = inventory;
-    
-    self.capacity = kOGInventoryComponentDefaultCapacity;
+
 }
 
-- (void)addItem:(OGSpriteNode *)item
-{
-    if (self.mutableInventory.count < self.capacity && item)
-    {
-        [self.mutableInventory addObject:item];
-    }
-}
-
-- (void)removeItem:(OGSpriteNode *)item
+- (void)addItem:(id <OGInventoryItem>)item
 {
     if (item)
     {
-        [self.mutableInventory removeObject:item];
+        if (!self.isFull)
+        {
+            [self.mutableInventoryItems addObject:item];
+            [item didTaken];
+        }
+        else
+        {
+            //do some
+        }
     }
 }
 
-- (NSArray<OGSpriteNode *> *)inventory
+- (void)removeItem:(id <OGInventoryItem>)item
 {
-    return [self.mutableInventory copy];
+    if (item && [self.mutableInventoryItems containsObject:item])
+    {
+        [self.mutableInventoryItems removeObject:item];
+        [item didThrown];
+    }
 }
 
+- (BOOL)isFull
+{
+    return self.mutableInventoryItems.count < self.capacity;
+}
+
+- (NSArray<id<OGInventoryItem>> *)inventoryItems
+{
+    return [self.mutableInventoryItems copy];
+}
 
 @end

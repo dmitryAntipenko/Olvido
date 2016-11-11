@@ -170,6 +170,7 @@
 		1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ScenesConfiguration.plist; sourceTree = "<group>"; };
 		1B7F24AE1DD5D916004918C8 /* OGMenuBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMenuBaseScene.h; sourceTree = "<group>"; };
 		1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMenuBaseScene.m; sourceTree = "<group>"; };
+		1B7F24B31DD61F98004918C8 /* OGInventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryItem.h; sourceTree = "<group>"; };
 		210CC8021DD0FB4D00824E84 /* OGDirection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGDirection.h; sourceTree = "<group>"; };
 		210CC8031DD3532000824E84 /* OGOrientationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGOrientationComponent.h; sourceTree = "<group>"; };
 		210CC8041DD3532000824E84 /* OGOrientationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGOrientationComponent.m; sourceTree = "<group>"; };
@@ -457,6 +458,16 @@
 			name = SceneLoaderStates;
 			sourceTree = "<group>";
 		};
+		1B7F24B21DD61E2D004918C8 /* ImventoryComponent */ = {
+			isa = PBXGroup;
+			children = (
+				EA5870F91DC0EC8F00FCF126 /* OGInventoryComponent.h */,
+				EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */,
+				1B7F24B31DD61F98004918C8 /* OGInventoryItem.h */,
+			);
+			name = ImventoryComponent;
+			sourceTree = "<group>";
+		};
 		210C996F1DB8E39E00704C62 /* StoryLevelScenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +529,7 @@
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1B7F24B21DD61E2D004918C8 /* ImventoryComponent */,
 				EA5F12041DD4EBEB006D4129 /* Intelligence Component */,
 				1B36E4D11DC639490080D80B /* AnimationComponent */,
 				1B2388DC1DB4C47D00A9092B /* MovementControlComponents */,
@@ -529,8 +541,6 @@
 				EA00D19A1DBA142100B6AC1B /* OGShootingComponent.m */,
 				EA3CE3221DBA8E680087842D /* OGMessageComponent.h */,
 				EA3CE3231DBA8E680087842D /* OGMessageComponent.m */,
-				EA5870F91DC0EC8F00FCF126 /* OGInventoryComponent.h */,
-				EA5870FA1DC0EC8F00FCF126 /* OGInventoryComponent.m */,
 				EA9EAAC81DCC9D1400E36855 /* OGRenderComponent.h */,
 				EA9EAAC91DCC9D1400E36855 /* OGRenderComponent.m */,
 				EA9EAACB1DCC9E3100E36855 /* OGInputComponent.h */,

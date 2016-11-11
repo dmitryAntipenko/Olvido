@@ -7,15 +7,19 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-
-@class OGSpriteNode;
+#import "OGInventoryItem.h"
 
 @interface OGInventoryComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable NSUInteger capacity;
-@property (nonatomic, strong, readonly) NSArray<OGSpriteNode *> *inventory;
+@property (nonatomic, unsafe_unretained, readonly) NSUInteger capacity;
+@property (nonatomic, strong, readonly) NSArray<id <OGInventoryItem>> *inventoryItems;
 
-- (void)addItem:(OGSpriteNode *)item;
-- (void)removeItem:(OGSpriteNode *)item;
+- (instancetype)initWithCapacity:(NSUInteger)capacity;
+
+- (void)addItem:(id <OGInventoryItem>)item;
+
+- (void)removeItem:(id <OGInventoryItem>)item;
+
+- (BOOL)isFull;
 
 @end
