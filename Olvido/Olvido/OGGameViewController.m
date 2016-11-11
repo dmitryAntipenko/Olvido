@@ -42,7 +42,7 @@
     self.levelManager = [OGLevelManager sharedInstance];
     self.levelManager.sceneManager = self.sceneManager;
     
-    self.menuManager = [OGMenuManager menuManager];
+    self.menuManager = [OGMenuManager sharedInstance];
     self.menuManager.sceneManager = self.sceneManager;
 }
 

@@ -59,7 +59,7 @@ NSString *const kOGLevelManagerTapStopControl = @"tapStop";
     return self;
 }
 
-+ (OGLevelManager *)sharedInstance
++ (instancetype)sharedInstance
 {
     static OGLevelManager *levelManager = nil;
     static dispatch_once_t dispatchOnceToken = 0;

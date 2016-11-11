@@ -23,23 +23,25 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 
 @implementation OGMenuManager
 
-+ (instancetype)menuManager
++ (instancetype)sharedInstance;
 {
-    return [[self alloc] init];
+    static OGMenuManager *menuManager = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
+    
+    dispatch_once(&dispatchOnceToken, ^()
+                  {
+                      menuManager = [[OGMenuManager alloc] init];
+                      [menuManager loadMenuMap];
+                  });
+    
+    return menuManager;
 }
 
-- (instancetype)init
+- (void)loadMenuMap
 {
-    self = [super init];
-    
-    if (self)
-    {
-        NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGMenuManagerMenusMapName
-                                                              ofType:kOGPropertyFileExtension];
-        _menusMap = [NSArray arrayWithContentsOfFile:plistPath];
-    }
-    
-    return self;
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGMenuManagerMenusMapName
+                                                          ofType:kOGPropertyFileExtension];
+    self.menusMap = [NSArray arrayWithContentsOfFile:plistPath];
 }
 
 - (void)loadMainMenu
