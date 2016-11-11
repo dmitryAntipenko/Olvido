@@ -19,11 +19,11 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 @property (nonatomic, strong) SKTexture *touchedTexture;
 @property (nonatomic, strong) SKTexture *preTouchedTexture;
+
 @property (nonatomic, strong) SKColor *touchedColor;
 @property (nonatomic, strong) SKColor *preTouchedColor;
 
 @end
-
 @implementation OGButtonNode
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
