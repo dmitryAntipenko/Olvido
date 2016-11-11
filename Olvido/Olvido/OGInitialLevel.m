@@ -18,7 +18,6 @@
 
 - (void)didMoveToView:(SKView *)view
 {
-    self.scene.scaleMode = SKSceneScaleModeAspectFit;
     
 //    for (OGSpriteNode *sprite in self.spriteNodes)
 //    {

@@ -42,6 +42,7 @@
 		1B7F24A71DD5D074004918C8 /* OGSceneMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24961DD5D074004918C8 /* OGSceneMetadata.m */; };
 		1B7F24A81DD5D074004918C8 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24971DD5D074004918C8 /* Player.xcassets */; };
 		1B7F24A91DD5D074004918C8 /* ScenesConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */; };
+		1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */; };
 		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
@@ -172,6 +173,8 @@
 		1B7F24961DD5D074004918C8 /* OGSceneMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSceneMetadata.m; sourceTree = "<group>"; };
 		1B7F24971DD5D074004918C8 /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ScenesConfiguration.plist; sourceTree = "<group>"; };
+		1B7F24AE1DD5D916004918C8 /* OGMenuBaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMenuBaseScene.h; sourceTree = "<group>"; };
+		1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMenuBaseScene.m; sourceTree = "<group>"; };
 		210CC8021DD0FB4D00824E84 /* OGDirection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGDirection.h; sourceTree = "<group>"; };
 		210CC8031DD3532000824E84 /* OGOrientationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGOrientationComponent.h; sourceTree = "<group>"; };
 		210CC8041DD3532000824E84 /* OGOrientationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGOrientationComponent.m; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				215C4BDD1DC2576E000DF29F /* ShopMenu */,
 				1B27EAA61DC0CE8F00E9CA23 /* MapMenu */,
 				1B27EA9A1DC0909F00E9CA23 /* MainMenu */,
+				1B7F24AE1DD5D916004918C8 /* OGMenuBaseScene.h */,
+				1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -925,6 +930,7 @@
 				EA9EAAD41DCCA76600E36855 /* OGPlayerEntityConfiguration.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
+				1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */,
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EAA51DC0BCF300E9CA23 /* OGTapAndStopMovementControlComponent.m in Sources */,
