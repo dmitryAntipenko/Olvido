@@ -8,5 +8,23 @@
 		<key>SceneIdentifier</key>
 		<string>0</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>MapMenu</string>
+		<key>SceneIdentifier</key>
+		<string>1</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>SettingsMenu</string>
+		<key>SceneIdentifier</key>
+		<string>2</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>ShopMenu</string>
+		<key>SceneIdentifier</key>
+		<string>3</string>
+	</dict>
 </array>
 </plist>

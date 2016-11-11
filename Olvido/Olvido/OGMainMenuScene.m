@@ -9,6 +9,7 @@
 #import "OGMainMenuScene.h"
 #import "OGButtonNode.h"
 #import "OGConstants.h"
+#import "OGMenuManager.h"
 
 NSString *const kOGMainMenuSceneSettingsButtonNodeName = @"SettingsButton";
 NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
@@ -17,25 +18,13 @@ NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
-    NSString *sceneFilePath = nil;
-    
     if ([button.name isEqualToString:kOGMainMenuSceneSettingsButtonNodeName])
     {
-        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGSettingsMenuSceneFileName ofType:kOGSceneFileExtension];
+        [self.menuManager loadMenuWithName:kOGSettingsMenuName];
     }
     else if ([button.name isEqualToString:kOGMainMenuSceneMapMenuButtonNodeName])
     {
-        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
-    }
-    
-    if (sceneFilePath)
-    {
-        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-        
-        if (nextScene)
-        {
-            [self.view presentScene:nextScene];
-        }
+        [self.menuManager loadMenuWithName:kOGMapMenuName];
     }
 }
 

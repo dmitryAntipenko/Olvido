@@ -39,22 +39,22 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
-    NSString *sceneFilePath = nil;
-    
-    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
-    {
-        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-    }
-    
-    if (sceneFilePath)
-    {
-        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-        
-        if (nextScene)
-        {
-            [self.view presentScene:nextScene];
-        }
-    }
+//    NSString *sceneFilePath = nil;
+//    
+//    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
+//    {
+//        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+//    }
+//    
+//    if (sceneFilePath)
+//    {
+//        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
+//        
+//        if (nextScene)
+//        {
+//            [self.view presentScene:nextScene];
+//        }
+//    }
 }
 
 @end
