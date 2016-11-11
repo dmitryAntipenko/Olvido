@@ -326,19 +326,19 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)onMenuButtonClick
 {
-    NSString *sceneFilePath = nil;
-    
-    sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
-    
-    if (sceneFilePath)
-    {
-        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-        
-        if (nextScene)
-        {
-            [self.view presentScene:nextScene];
-        }
-    }
+//    NSString *sceneFilePath = nil;
+//    
+//    sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
+//    
+//    if (sceneFilePath)
+//    {
+//        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
+//        
+//        if (nextScene)
+//        {
+//            [self.view presentScene:nextScene];
+//        }
+//    }
 }
 
 #pragma mark - Update

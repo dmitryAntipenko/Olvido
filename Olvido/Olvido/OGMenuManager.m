@@ -10,7 +10,7 @@
 #import "OGSceneManager.h"
 #import "OGConstants.h"
 
-NSString *const kOGMenuManagerMenuNameKey = @"MenuName";
+NSString *const kOGMenuManagerMenuNameKey = @"Name";
 NSString *const kOGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
 NSString *const kOGMenuManagerMenusMapName = @"MenusMap";
 NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;

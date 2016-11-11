@@ -10,6 +10,24 @@
 	</dict>
 	<dict>
 		<key>ClassName</key>
+		<string>OGMapMenuScene</string>
+		<key>FileName</key>
+		<string>OGMapMenuScene</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>OGSettingsMenuScene</string>
+		<key>FileName</key>
+		<string>OGSettingsMenuScene</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
+		<string>OGShopMenuScene</string>
+		<key>FileName</key>
+		<string>OGShopMenuScene</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
 		<string>OGStoryScene1</string>
 		<key>FileName</key>
 		<string>OGStoryScene1</string>

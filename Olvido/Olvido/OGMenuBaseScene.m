@@ -7,6 +7,7 @@
 //
 
 #import "OGMenuBaseScene.h"
+#import "OGMenuManager.h"
 
 @implementation OGMenuBaseScene
 
@@ -16,7 +17,19 @@
     
     if (self)
     {
-        
+        _menuManager = [OGMenuManager sharedInstance];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if(self)
+    {
+        _menuManager = [OGMenuManager sharedInstance];
     }
     
     return self;

@@ -33,6 +33,11 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
     if (!_touchedTexture)
     {
         _touchedTexture = [SKTexture textureWithImageNamed:[self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey]];
+        
+        if (!_touchedTexture)
+        {
+            _touchedTexture = self.texture;
+        }
     }
     
     return _touchedTexture;
