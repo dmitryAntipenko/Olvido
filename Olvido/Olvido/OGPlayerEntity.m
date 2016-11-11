@@ -148,7 +148,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     }];
 }
 
-- (void)purgeResources
++ (void)purgeResources
 {
     sOGPlayerEntityAppearTextures = nil;
     sOGPlayerEntityAnimations = nil;

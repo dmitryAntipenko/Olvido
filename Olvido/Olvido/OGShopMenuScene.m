@@ -12,13 +12,7 @@
 
 NSString *const kOGShopMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 
-
 @implementation OGShopMenuScene
-
-- (void)didMoveToView:(SKView *)view
-{
-    self.scaleMode = SKSceneScaleModeAspectFit;
-}
 
 - (void)onButtonClick:(OGButtonNode *)button
 {

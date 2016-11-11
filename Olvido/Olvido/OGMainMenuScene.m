@@ -15,11 +15,6 @@ NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 
 @implementation OGMainMenuScene
 
-- (void)didMoveToView:(SKView *)view
-{
-    self.scaleMode = SKSceneScaleModeAspectFit;
-}
-
 - (void)onButtonClick:(OGButtonNode *)button
 {
     NSString *sceneFilePath = nil;

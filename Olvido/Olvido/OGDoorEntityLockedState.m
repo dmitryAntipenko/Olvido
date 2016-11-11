@@ -28,7 +28,7 @@
     NSMutableArray *contactColliders = [OGColliderType definedCollisions][targetColliderType];
     [contactColliders addObject:doorColliderType];
     
-    targetPhysicsBody.collisionBitMask = targetColliderType.collisionBitMask;
+    targetPhysicsBody.collisionBitMask = (uint32_t)targetColliderType.collisionBitMask;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
