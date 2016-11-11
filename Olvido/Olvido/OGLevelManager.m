@@ -30,12 +30,6 @@ NSString *const kOGSceneControllerStorySceneName = @"Story Scene Name";
 
 CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
-/* temporary code */
-NSString *const kOGLevelManagerDragControl = @"drag";
-NSString *const kOGLevelManagerTapContinueControl = @"tapContinue";
-NSString *const kOGLevelManagerTapStopControl = @"tapStop";
-/* temporary code */
-
 @interface OGLevelManager () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
@@ -46,18 +40,6 @@ NSString *const kOGLevelManagerTapStopControl = @"tapStop";
 @end
 
 @implementation OGLevelManager
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _controlType = kOGLevelManagerTapStopControl;
-    }
-    
-    return self;
-}
 
 + (instancetype)sharedInstance
 {

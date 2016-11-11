@@ -12,12 +12,6 @@
 @class OGStoryScene;
 @class OGSceneManager;
 
-/* temporary code */
-extern NSString *const kOGLevelManagerDragControl;
-extern NSString *const kOGLevelManagerTapContinueControl;
-extern NSString *const kOGLevelManagerTapStopControl;
-/* temporary code */
-
 @interface OGLevelManager : NSObject
 
 @property (nonatomic, weak) SKView *view;
@@ -27,11 +21,6 @@ extern NSString *const kOGLevelManagerTapStopControl;
 @property (nonatomic, strong, readonly) OGGameScene *currentGameScene;
 @property (nonatomic, strong, readonly) OGStoryScene *currentStoryScene;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
-
-/* temporary code */
-@property (nonatomic, copy) NSString *controlType;
-@property (nonatomic, assign) BOOL godMode;
-/* temporary code */
 
 + (OGLevelManager *)sharedInstance;
 
