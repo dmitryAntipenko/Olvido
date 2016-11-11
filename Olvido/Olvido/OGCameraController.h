@@ -15,6 +15,7 @@
 @property (nonatomic, assign, getter=isLocked) BOOL locked;
 
 - (void)moveCameraToNode:(SKNode *)node;
+
 - (void)update;
 
 @end

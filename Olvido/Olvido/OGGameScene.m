@@ -51,6 +51,8 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
+CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
+
 @interface OGGameScene ()
 
 @property (nonatomic, strong) SKNode *currentRoom;
@@ -176,7 +178,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
             door.transitionDelegate = self;
             
             door.lockComponent.target = self.player.render.node;
-            door.lockComponent.openDistance = 100.0;
+            door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
             door.lockComponent.closed = YES;
             door.lockComponent.locked = NO;
             
