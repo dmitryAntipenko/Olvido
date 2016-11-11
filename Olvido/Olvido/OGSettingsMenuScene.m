@@ -10,6 +10,7 @@
 #import "OGLevelManager.h"
 #import "OGConstants.h"
 #import "OGButtonNode.h"
+#import "OGMenuManager.h"
 
 NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
@@ -39,22 +40,10 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
-//    NSString *sceneFilePath = nil;
-//    
-//    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
-//    {
-//        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-//    }
-//    
-//    if (sceneFilePath)
-//    {
-//        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-//        
-//        if (nextScene)
-//        {
-//            [self.view presentScene:nextScene];
-//        }
-//    }
+    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
+    {
+        [self.menuManager loadMenuWithName:kOGMainMenuName];
+    }
 }
 
 @end
