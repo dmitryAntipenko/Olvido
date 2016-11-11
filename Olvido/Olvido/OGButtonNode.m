@@ -8,8 +8,10 @@
 
 #import "OGButtonNode.h"
 #import "OGConstants.h"
+#import "SKColor+OGConstantColors.h"
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
+NSString *const kOGButtonNodeUserDataTouchedColorKey = @"touchedColor";
 NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
 NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
@@ -17,6 +19,8 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 @property (nonatomic, strong) SKTexture *touchedTexture;
 @property (nonatomic, strong) SKTexture *preTouchedTexture;
+@property (nonatomic, strong) SKColor *touchedColor;
+@property (nonatomic, strong) SKColor *preTouchedColor;
 
 @end
 
@@ -25,16 +29,23 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.preTouchedTexture = self.texture;
+    self.preTouchedColor = self.color;
+    
     self.texture = self.touchedTexture;
+    self.color = self.touchedColor;
 }
 
 - (SKTexture *)touchedTexture
 {
     if (!_touchedTexture)
     {
-        _touchedTexture = [SKTexture textureWithImageNamed:[self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey]];
+        NSString *touchedTextureName = [self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey];
         
-        if (!_touchedTexture)
+        if (touchedTextureName)
+        {
+            _touchedTexture = [SKTexture textureWithImageNamed:touchedTextureName];
+        }
+        else
         {
             _touchedTexture = self.texture;
         }
@@ -43,9 +54,29 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
     return _touchedTexture;
 }
 
+- (UIColor *)touchedColor
+{
+    if (!_touchedColor)
+    {
+        NSString *touchedColorHexString = [self.userData objectForKey:kOGButtonNodeUserDataTouchedColorKey];
+        
+        if (touchedColorHexString)
+        {
+            _touchedColor = [SKColor colorWithString:touchedColorHexString];
+        }
+        else
+        {
+            _touchedColor = self.color;
+        }
+    }
+    
+    return _touchedColor;
+}
+
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.texture = self.preTouchedTexture;
+    self.color = self.preTouchedColor;
     
     CGPoint touchlocation = [touches.anyObject locationInNode:self.parent];
     
