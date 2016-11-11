@@ -475,6 +475,13 @@
 			name = Chapter1;
 			sourceTree = "<group>";
 		};
+		215A8A661DD5E96A00C5C90D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,6 +589,7 @@
 		EA49824B1DD0F28200DCFE00 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				215A8A661DD5E96A00C5C90D /* Fonts */,
 				210CC8121DD5D7EE00824E84 /* Player.xcassets */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA49824C1DD0F29C00DCFE00 /* Scenes */,

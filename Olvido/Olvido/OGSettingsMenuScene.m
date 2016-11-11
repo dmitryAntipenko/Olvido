@@ -52,6 +52,7 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
         
         if (nextScene)
         {
+            nextScene.scaleMode = SKSceneScaleModeAspectFit;
             [self.view presentScene:nextScene];
         }
     }

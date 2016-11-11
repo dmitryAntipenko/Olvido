@@ -44,6 +44,7 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
         
         if (nextScene)
         {
+            nextScene.scaleMode = SKSceneScaleModeAspectFit;
             [self.view presentScene:nextScene];
         }
     }

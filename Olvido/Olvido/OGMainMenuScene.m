@@ -34,6 +34,7 @@ NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
         
         if (nextScene)
         {
+            nextScene.scaleMode = SKSceneScaleModeAspectFit;
             [self.view presentScene:nextScene];
         }
     }
