@@ -34,7 +34,7 @@
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
-    view.showsNodeCount = YES;
+    view.showsNodeCount = YES;    
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];

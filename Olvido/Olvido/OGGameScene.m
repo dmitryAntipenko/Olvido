@@ -126,22 +126,14 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
     [self createSceneContents];
-    
-    SKCameraNode *camera = [[SKCameraNode alloc] init];
-    self.camera = camera;
-    self.cameraController.camera = camera;
-    [self addChild:camera];
-    
-    
+
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
     self.player.render.node.position = playerInitialNode.position;
-    
+
+    [self createCameraNode];
     [self createStatusBar];
-    self.cameraController.target = self.player.render.node;
-    
-    [self.cameraController moveCameraToNode:self.currentRoom];
     
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
@@ -150,6 +142,18 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
+}
+
+- (void)createCameraNode
+{
+    SKCameraNode *camera = [[SKCameraNode alloc] init];
+    self.camera = camera;
+    self.cameraController.camera = camera;
+    [self addChild:camera];
+    
+    self.cameraController.target = self.player.render.node;
+    
+    [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
 - (void)createSceneContents
@@ -185,8 +189,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
             NSString *sourceNodeName = doorNode.userData[@"source"];
             NSString *destinationNodeName = doorNode.userData[@"destination"];
             
-            door.transition.destination = (destinationNodeName  ) ? [self childNodeWithName:destinationNodeName] : nil;
-            door.transition.source = (sourceNodeName) ? [self childNodeWithName:sourceNodeName] : nil;
+            door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
+            door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
             
             [self addEntity:door];
         }
@@ -236,6 +240,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 - (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
 {
     SKNode *destinationNode = component.destination;
+    
+    self.currentRoom = component.destination;
     
     [self.cameraController moveCameraToNode:destinationNode];
     
@@ -290,7 +296,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 - (void)resume
 {
-    //    [self.playerControlComponent resume];
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;

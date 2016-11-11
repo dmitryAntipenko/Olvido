@@ -11,6 +11,8 @@
 
 NSString *const kOGCameraControllerRailsNodeName = @"camera_rails";
 NSString *const kOGCameraControllerRailsResetPointsNodeName = @"rails_reset_points";
+NSString *const kOGCameraControllerSpawnPointsNodeName = @"spawn_points";
+NSString *const kOGCameraControllerMoveActionKey = @"camera_move_action";
 
 @interface OGCameraController ()
 
@@ -34,6 +36,7 @@ NSString *const kOGCameraControllerRailsResetPointsNodeName = @"rails_reset_poin
 - (void)moveCameraToNode:(SKNode *)node
 {
     [self resetCameraRails];
+    [self.camera removeActionForKey:kOGCameraControllerMoveActionKey];
     
     SKSpriteNode *cameraRails = (SKSpriteNode *) [node childNodeWithName:kOGCameraControllerRailsNodeName];
     self.rails = cameraRails;
@@ -50,10 +53,14 @@ NSString *const kOGCameraControllerRailsResetPointsNodeName = @"rails_reset_poin
     }
     
     SKAction *cameraMovement = [SKAction moveTo:newPosition duration:1.0];
-    [self.camera runAction:cameraMovement completion:^()
-     {
-         self.locked = NO;
-     }];
+    SKAction *completionBlock = [SKAction runBlock:^()
+    {
+        self.locked = NO;
+    }];
+    
+    SKAction *cameraMovementSequence = [SKAction sequence:@[cameraMovement, completionBlock]];
+    
+    [self.camera runAction:cameraMovementSequence withKey:kOGCameraControllerMoveActionKey];
 }
 
 - (void)update
