@@ -16,6 +16,7 @@
 
 NSUInteger const kOGLevelManagerInitialLevelIndex = 0;
 
+NSString *const kOGLevelManagerSceneIdentifierKey = @"SceneIdentifier";
 NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 NSString *const kOGSceneControllerPortalsKey = @"Portals";
@@ -155,7 +156,7 @@ NSString *const kOGLevelManagerTapStopControl = @"tapStop";
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
 //        NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
-    NSUInteger sceneIdentifier = [self.levelMap[identifier.integerValue][@"SceneIdentifier"] integerValue];
+    NSUInteger sceneIdentifier = [self.levelMap[identifier.integerValue][kOGLevelManagerSceneIdentifierKey] integerValue];
     [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifier];
 //    GKScene *sceneFile = [GKScene sceneWithFileNamed:className];
 //    OGGameScene *scene = (OGGameScene *)sceneFile.rootNode;

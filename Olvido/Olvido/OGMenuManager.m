@@ -10,12 +10,14 @@
 #import "OGSceneManager.h"
 #import "OGConstants.h"
 
+NSString *const kOGMenuManagerMenuNameKey = @"MenuName";
+NSString *const kOGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
 NSString *const kOGMenuManagerMenusMapName = @"MenusMap";
-NSUInteger const kOGMenuManagermainMenuIdentifier = 0;
+NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 
 @interface OGMenuManager ()
 
-@property (nonatomic, strong) NSArray *menusMap;
+@property (nonatomic, strong) NSArray<NSDictionary *> *menusMap;
 
 @end
 
@@ -42,17 +44,36 @@ NSUInteger const kOGMenuManagermainMenuIdentifier = 0;
 
 - (void)loadMainMenu
 {
-    [self loadMenuWithIdentifier:kOGMenuManagermainMenuIdentifier];
+    [self loadMenuWithIdentifier:kOGMenuManagerMainMenuIdentifier];
 }
 
 - (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier
 {
-    
+    NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][kOGMenuManagerSceneIdentifierKey] integerValue];
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
 }
 
 - (void)loadMenuWithName:(NSString *)menuName
 {
+    __block NSUInteger sceneIdentifer = 0;
     
+    if (menuName)
+    {
+        [self.menusMap enumerateObjectsUsingBlock:^(NSDictionary *menuAsDictionary, NSUInteger idx, BOOL * _Nonnull stop)
+         {
+             if ([menuAsDictionary[kOGMenuManagerMenuNameKey] isEqualToString:menuName])
+             {
+                 sceneIdentifer = [menuAsDictionary[kOGMenuManagerSceneIdentifierKey] integerValue];
+                 *stop = YES;
+             }
+         }];
+    }
+    else
+    {
+        sceneIdentifer = kOGMenuManagerMainMenuIdentifier;
+    }
+    
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
 }
 
 @end
