@@ -80,20 +80,17 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     {
         _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
         _cameraController = [[OGCameraController alloc] init];
-
-        [OGPlayerEntity loadResourcesWithCompletionHandler:^()
-         {
-            _player = [[OGPlayerEntity alloc] init];
-        }];
-
+        
+        _player = [[OGPlayerEntity alloc] init];
+        
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-             [OGStoryConclusionLevelState stateWithLevelScene:self],
-             [OGBeforeStartLevelState stateWithLevelScene:self],
-             [OGGameLevelState stateWithLevelScene:self],
-             [OGPauseLevelState stateWithLevelScene:self],
-             [OGCompleteLevelState stateWithLevelScene:self],
-             [OGDeathLevelState stateWithLevelScene:self]
-        ]];
+                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
+                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                 [OGGameLevelState stateWithLevelScene:self],
+                                                                 [OGPauseLevelState stateWithLevelScene:self],
+                                                                 [OGCompleteLevelState stateWithLevelScene:self],
+                                                                 [OGDeathLevelState stateWithLevelScene:self]
+                                                                 ]];
         
         _entities = [[NSMutableSet alloc] init];
         
@@ -132,7 +129,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.camera = camera;
     self.cameraController.camera = camera;
     [self addChild:camera];
-
+    
     
     [self addEntity:self.player];
     
@@ -143,7 +140,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     self.cameraController.target = self.player.render.node;
     
     [self.cameraController moveCameraToNode:self.currentRoom];
-
+    
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
@@ -258,13 +255,13 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
     BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
-
+    
     if ([entityA conformsToProtocol:@protocol(OGContactNotifiableType)] && aNeedsCallback)
     {
         id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityA;
         [entity contactWithEntityDidBegin:entityB];
     }
-
+    
     if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
     {
         id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityB;
@@ -291,7 +288,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)resume
 {
-//    [self.playerControlComponent resume];
+    //    [self.playerControlComponent resume];
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
@@ -353,7 +350,7 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
-
+    
     for (GKComponentSystem *componentSystem in self.componentSystems)
     {
         [componentSystem updateWithDeltaTime:deltaTime];
