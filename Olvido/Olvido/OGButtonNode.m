@@ -10,6 +10,8 @@
 #import "OGConstants.h"
 #import "SKColor+OGConstantColors.h"
 
+NSString *const kOGButtonNodeUserDataTouchedBlendFactorKey = @"touchedBlendFactor";
+NSString *const kOGButtonNodeUserDataTouchedAlphaKey = @"touchedAlpha";
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 NSString *const kOGButtonNodeUserDataTouchedColorKey = @"touchedColor";
 NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
@@ -19,20 +21,28 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 @property (nonatomic, strong) SKTexture *touchedTexture;
 @property (nonatomic, strong) SKTexture *preTouchedTexture;
+@property (nonatomic, unsafe_unretained) CGFloat preTouchedAlpha;
+@property (nonatomic, unsafe_unretained) CGFloat preTouchedBlendFactor;
+
 @property (nonatomic, strong) SKColor *touchedColor;
 @property (nonatomic, strong) SKColor *preTouchedColor;
+@property (nonatomic, unsafe_unretained) CGFloat touchedAlpha;
+@property (nonatomic, unsafe_unretained) CGFloat touchedBlendFactor;
 
 @end
-
 @implementation OGButtonNode
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     self.preTouchedTexture = self.texture;
     self.preTouchedColor = self.color;
+    self.preTouchedAlpha = self.alpha;
+    self.preTouchedBlendFactor = self.colorBlendFactor;
     
     self.texture = self.touchedTexture;
     self.color = self.touchedColor;
+    self.alpha = self.touchedAlpha;
+    self.colorBlendFactor = self.touchedBlendFactor;
 }
 
 - (SKTexture *)touchedTexture
@@ -71,6 +81,52 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
     }
     
     return _touchedColor;
+}
+
+- (CGFloat)touchedAlpha
+{
+    static BOOL initialized = NO;
+    
+    if (!initialized)
+    {
+        NSString *touchedAlphaString = [self.userData objectForKey:kOGButtonNodeUserDataTouchedAlphaKey];
+        
+        if (touchedAlphaString)
+        {
+            _touchedAlpha = [touchedAlphaString doubleValue];
+        }
+        else
+        {
+            _touchedAlpha = self.alpha;
+        }
+        
+        initialized = YES;
+    }
+    
+    return _touchedAlpha;
+}
+
+- (CGFloat)touchedBlendFactor
+{
+    static BOOL initialized = NO;
+    
+    if (!initialized)
+    {
+        NSString *touchedBlendFactor = [self.userData objectForKey:kOGButtonNodeUserDataTouchedBlendFactorKey];
+        
+        if (touchedBlendFactor)
+        {
+            _touchedBlendFactor = [touchedBlendFactor doubleValue];
+        }
+        else
+        {
+            _touchedBlendFactor = self.colorBlendFactor;
+        }
+        
+        initialized = YES;
+    }
+    
+    return _touchedBlendFactor;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
