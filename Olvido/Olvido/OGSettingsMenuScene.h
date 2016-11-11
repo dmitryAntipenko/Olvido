@@ -11,10 +11,4 @@
 
 @interface OGSettingsMenuScene : OGMenuBaseScene
 
-- (void)activateDrag;
-- (void)activateTapContinue;
-- (void)activateTapStop;
-
-- (void)changeGodMode;
-
 @end
