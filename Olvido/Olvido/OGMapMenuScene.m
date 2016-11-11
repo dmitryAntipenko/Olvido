@@ -10,6 +10,7 @@
 #import "OGLevelManager.h"
 #import "OGButtonNode.h"
 #import "OGConstants.h"
+#import "OGMenuManager.h"
 
 NSString *const kOGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
@@ -27,26 +28,14 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
-//    NSString *sceneFilePath = nil;
-//    
-//    if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
-//    {
-//        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-//    }
-//    else if ([button.name isEqualToString:kOGMapMenuSceneShopButtonNodeName])
-//    {
-//        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGShopMenuSceneFileName ofType:kOGSceneFileExtension];
-//    }
-//    
-//    if (sceneFilePath)
-//    {
-//        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-//        
-//        if (nextScene)
-//        {
-//            [self.view presentScene:nextScene];
-//        }
-//    }
+    if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
+    {
+        [self.menuManager loadMenuWithName:kOGMainMenuName];
+    }
+    else if ([button.name isEqualToString:kOGMapMenuSceneShopButtonNodeName])
+    {
+        [self.menuManager loadMenuWithName:kOGShopMenuName];
+    }
 }
 
 @end
