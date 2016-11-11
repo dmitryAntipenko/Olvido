@@ -8,40 +8,56 @@
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
+#import "OGDoorEntityLockedState.h"
+#import "OGDoorEntityUnlockedState.h"
+
 #import "OGDoorEntity.h"
-
-@interface OGDoorEntityClosedState ()
-
-@property (nonatomic, strong) OGDoorEntity *doorEntity;
-
-@end
+#import "OGLockComponent.h"
+#import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 
 @implementation OGDoorEntityClosedState
 
-- (instancetype)initWithDoorEntity:(OGDoorEntity *)entity
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _doorEntity = entity;
-    }
-    
-    return self;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    [self.doorEntity close];
+    self.lockComponent.closed = YES;
+    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    BOOL result = NO;
+    return stateClass == OGDoorEntityOpenedState.self
+    || stateClass == OGDoorEntityLockedState.self
+    || stateClass == OGDoorEntityLockedState.self;
+}
+
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    [super updateWithDeltaTime:seconds];
     
-    result = (result || stateClass == [OGDoorEntityOpenedState class]);
-    
-    return result;
+    if (!self.lockComponent.isLocked)
+    {
+        SKNode *target = self.lockComponent.target;
+        SKNode *doorNode = self.renderComponent.node;
+        
+        CGFloat distance = hypot(doorNode.position.x - target.position.x,
+                                 doorNode.position.y - target.position.y);
+        
+        if (self.lockComponent.isClosed && distance < self.lockComponent.openDistance)
+        {
+            if ([self.stateMachine canEnterState:OGDoorEntityOpenedState.self])
+            {
+                [self.stateMachine enterState:OGDoorEntityOpenedState.self];
+            }
+        }
+    }
+    else
+    {
+        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        {
+            [self.stateMachine enterState:OGDoorEntityLockedState.self];
+        }
+    }
 }
 
 @end

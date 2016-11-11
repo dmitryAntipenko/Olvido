@@ -171,11 +171,16 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
 }
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
     
 }

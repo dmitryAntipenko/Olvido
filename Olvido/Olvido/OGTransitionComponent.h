@@ -1,5 +1,5 @@
 //
-//  OGDoorEntityClosedState.h
+//  OGTransitionComponent.h
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 11/10/16.
@@ -7,8 +7,10 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGDoorEntityState.h"
 
-@interface OGDoorEntityClosedState : OGDoorEntityState
+@interface OGTransitionComponent : GKComponent
+
+@property (nonatomic, strong) SKNode *source;
+@property (nonatomic, strong) SKNode *destination;
 
 @end

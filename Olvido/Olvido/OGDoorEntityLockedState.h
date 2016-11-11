@@ -1,5 +1,5 @@
 //
-//  OGDoorEntityClosedState.h
+//  OGDoorEntityLockedState.h
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 11/10/16.
@@ -9,6 +9,6 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGDoorEntityState.h"
 
-@interface OGDoorEntityClosedState : OGDoorEntityState
+@interface OGDoorEntityLockedState : OGDoorEntityState
 
 @end

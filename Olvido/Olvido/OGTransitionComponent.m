@@ -1,14 +1,13 @@
 //
-//  OGDoorEntityClosedState.h
+//  OGTransitionComponent.m
 //  Olvido
 //
 //  Created by Дмитрий Антипенко on 11/10/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <GameplayKit/GameplayKit.h>
-#import "OGDoorEntityState.h"
+#import "OGTransitionComponent.h"
 
-@interface OGDoorEntityClosedState : OGDoorEntityState
+@implementation OGTransitionComponent
 
 @end
