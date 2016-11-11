@@ -15,11 +15,6 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 @implementation OGSettingsMenuScene
 
-- (void)didMoveToView:(SKView *)view
-{
-    self.scaleMode = SKSceneScaleModeAspectFit;
-}
-
 /* temporary code */
 - (void)activateDrag
 {
@@ -57,6 +52,7 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
         
         if (nextScene)
         {
+            nextScene.scaleMode = SKSceneScaleModeAspectFill;
             [self.view presentScene:nextScene];
         }
     }

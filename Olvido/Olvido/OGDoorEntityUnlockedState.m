@@ -27,7 +27,7 @@
     OGColliderType *doorColliderType = [OGColliderType door];
     [[OGColliderType definedCollisions][targetColliderType] removeObject:doorColliderType];
     
-    targetPhysicsBody.collisionBitMask = targetColliderType.collisionBitMask;
+    targetPhysicsBody.collisionBitMask = (uint32_t)targetColliderType.collisionBitMask;
     
     if ([self.stateMachine canEnterState:OGDoorEntityClosedState.self])
     {

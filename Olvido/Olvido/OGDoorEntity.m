@@ -24,7 +24,14 @@
 
 @implementation OGDoorEntity
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+- (instancetype)init
+{
+    self = [self initWithSpriteNode:nil];
+    
+    return self;
+}
+
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
     self = [super init];
     

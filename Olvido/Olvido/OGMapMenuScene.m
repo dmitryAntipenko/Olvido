@@ -16,11 +16,6 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 @implementation OGMapMenuScene
 
-- (void)didMoveToView:(SKView *)view
-{
-    self.scaleMode = SKSceneScaleModeAspectFit;
-}
-
 - (void)startGame
 {
     OGLevelController *levelController = [OGLevelController sharedInstance];
@@ -49,6 +44,7 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
         
         if (nextScene)
         {
+            nextScene.scaleMode = SKSceneScaleModeAspectFill;
             [self.view presentScene:nextScene];
         }
     }

@@ -40,9 +40,6 @@
 		EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */; };
 		EA05FA061DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA021DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m */; };
 		EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA041DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m */; };
-		EA05FA091DD4FB7A00FAC81A /* OGPlayerEntityAppearState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05F9FF1DD4FA6C00FAC81A /* OGPlayerEntityAppearState.h */; };
-		EA05FA0A1DD4FB7A00FAC81A /* OGPlayerEntityAttackState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA011DD4FA6C00FAC81A /* OGPlayerEntityAttackState.h */; };
-		EA05FA0B1DD4FB7A00FAC81A /* OGPlayerEntityControlledState.h in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA031DD4FA6C00FAC81A /* OGPlayerEntityControlledState.h */; };
 		EA05FA0F1DD507FA00FAC81A /* OGDoorEntityClosedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F12071DD4EC38006D4129 /* OGDoorEntityClosedState.m */; };
 		EA05FA101DD507FA00FAC81A /* OGDoorEntityState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA0D1DD5013700FAC81A /* OGDoorEntityState.m */; };
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
@@ -399,14 +396,6 @@
 			name = SettingsMenu;
 			sourceTree = "<group>";
 		};
-		2171E5541DD0EFFE00C8675E /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				2171E5521DD0EF6100C8675E /* Player.xcassets */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
 		EA05FA081DD4FA7100FAC81A /* IntelligenceComponent States (PlayerEntity) */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +476,8 @@
 		EA49824B1DD0F28200DCFE00 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
+				2171E5521DD0EF6100C8675E /* Player.xcassets */,
 				EA49824C1DD0F29C00DCFE00 /* Scenes */,
 			);
 			name = Assets;
@@ -615,7 +606,6 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				2171E5541DD0EFFE00C8675E /* Assets */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
 				EA0D27281DB1475000CEFB8A /* LevelController */,
@@ -632,7 +622,6 @@
 				EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */,
 				EA976CCD1D9C253B003B77FC /* Main.storyboard */,
 				EA49824B1DD0F28200DCFE00 /* Assets */,
-				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA976C951D9AAEE3003B77FC /* Info.plist */,
 				EA976C7F1D9AAEE2003B77FC /* Supporting Files */,
 			);
@@ -787,9 +776,6 @@
 				EAF7F1111DD523B30067D76D /* OGDoorEntity.m in Sources */,
 				EA05FA0F1DD507FA00FAC81A /* OGDoorEntityClosedState.m in Sources */,
 				EA05FA101DD507FA00FAC81A /* OGDoorEntityState.m in Sources */,
-				EA05FA091DD4FB7A00FAC81A /* OGPlayerEntityAppearState.h in Sources */,
-				EA05FA0A1DD4FB7A00FAC81A /* OGPlayerEntityAttackState.h in Sources */,
-				EA05FA0B1DD4FB7A00FAC81A /* OGPlayerEntityControlledState.h in Sources */,
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				EA49824A1DD0F14B00DCFE00 /* OGEnemyEntityConfiguration.m in Sources */,

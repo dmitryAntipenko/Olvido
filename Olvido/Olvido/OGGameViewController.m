@@ -34,6 +34,7 @@
     NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
     OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
     
+    mainMenuScene.scaleMode = SKSceneScaleModeAspectFill;
     [view presentScene:mainMenuScene];
 }
 
