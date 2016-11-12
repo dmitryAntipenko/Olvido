@@ -9,14 +9,16 @@
 #import "OGTouchControlInputNode.h"
 #import "OGThumbStickNodeDelegate.h"
 #import "OGThumbStickNode.h"
+#import "OGActionButtonNode.h"
+#import "OGActionButtonNodeDelegate.h"
 
-@interface OGTouchControlInputNode () <OGThumbStickNodeDelegate>
+@interface OGTouchControlInputNode () <OGThumbStickNodeDelegate, OGActionButtonNodeDelegate>
 
-@property (nonatomic, strong) OGThumbStickNode *leftThumbStick;
-@property (nonatomic, strong) OGThumbStickNode *rightThumbStick;
+@property (nonatomic, strong) OGThumbStickNode *thumbStick;
+@property (nonatomic, strong) OGActionButtonNode *actionButton;
 
-@property (nonatomic, strong) NSMutableSet<UITouch *> *leftControlTouches;
-@property (nonatomic, strong) NSMutableSet<UITouch *> *rightControlTouches;
+@property (nonatomic, strong) NSMutableSet<UITouch *> *controlTouches;
+@property (nonatomic, strong) NSMutableSet<UITouch *> *actionButtonTouches;
 
 @property (nonatomic, assign) CGFloat centerDividerWidth;
 @property (nonatomic, assign) BOOL shouldHideThumbStickNodes;
@@ -36,20 +38,20 @@
         CGFloat initialVerticalOffset = -size.height;
         CGFloat initialHorizontalOffset = frame.size.width / 2.0 - size.width;
         
-        _leftControlTouches = [NSMutableSet set];
-        _rightControlTouches = [NSMutableSet set];
+        _controlTouches = [NSMutableSet set];
+        _actionButtonTouches = [NSMutableSet set];
         
-        _leftThumbStick = [[OGThumbStickNode alloc] initWithSize:size];
-        _leftThumbStick.position = CGPointMake(-initialHorizontalOffset, initialVerticalOffset);
+        _thumbStick = [[OGThumbStickNode alloc] initWithSize:size];
+        _thumbStick.position = CGPointMake(-initialHorizontalOffset, initialVerticalOffset);
         
-        _rightThumbStick = [[OGThumbStickNode alloc] initWithSize:size];
-        _rightThumbStick.position = CGPointMake(initialHorizontalOffset, initialVerticalOffset);
+        _actionButton = [[OGActionButtonNode alloc] initWithSize:size];
+        _actionButton.position = CGPointMake(initialHorizontalOffset, initialVerticalOffset);
         
-        _rightThumbStick.thumbStickNodeDelegate = self;
-        _leftThumbStick.thumbStickNodeDelegate = self;
+        _actionButton.actionButtonNodeDelegate = self;
+        _thumbStick.thumbStickNodeDelegate = self;
         
-        [self addChild:_leftThumbStick];
-        [self addChild:_rightThumbStick];
+        [self addChild:_thumbStick];
+        [self addChild:_actionButton];
     }
     
     return self;
@@ -59,8 +61,8 @@
 {
     _shouldHideThumbStickNodes = shouldHideThumbStickNodes;
     
-    self.leftThumbStick.hidden = _shouldHideThumbStickNodes;
-    self.rightThumbStick.hidden = _shouldHideThumbStickNodes;
+    self.thumbStick.hidden = _shouldHideThumbStickNodes;
+    self.actionButton.hidden = _shouldHideThumbStickNodes;
 }
 
 - (BOOL)isUserInteractionEnabled
@@ -70,20 +72,19 @@
 
 - (void)thumbStickNode:(OGThumbStickNode *)node didUpdateXValue:(CGFloat)xValue yValue:(CGFloat)yValue
 {
-    if (node == self.leftThumbStick)
+    if (node == self.thumbStick)
     {
         CGVector displacement = CGVectorMake(xValue, yValue);
         [self.inputSourceDelegate didUpdateDisplacement:displacement];
     }
-    else if (node == self.rightThumbStick)
-    {
-        // do something
-    }
 }
 
-- (void)thumbStickNode:(OGThumbStickNode *)node isPressed:(BOOL)pressed
+- (void)actionButtonNode:(OGActionButtonNode *)node isPressed:(BOOL)pressed
 {
-    // do something
+    if (node == self.actionButton)
+    {
+        NSLog(@"right");
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -104,16 +105,16 @@
         NSSet *set = [NSSet setWithObject:touch];
         if (touchPoint.x < 0.0)
         {
-            [self.leftControlTouches unionSet:set];
-            self.leftThumbStick.position = [self pointByCheckingControlOffset:touchPoint];
-            [self.leftThumbStick touchesBegan:set withEvent:event];
+            [self.controlTouches unionSet:set];
+            self.thumbStick.position = [self pointByCheckingControlOffset:touchPoint];
+            [self.thumbStick touchesBegan:set withEvent:event];
             
         }
         else
         {
-            [self.rightControlTouches unionSet:set];
-            self.rightThumbStick.position = [self pointByCheckingControlOffset:touchPoint];
-            [self.rightThumbStick touchesBegan:set withEvent:event];
+            [self.actionButtonTouches unionSet:set];
+            self.actionButton.position = [self pointByCheckingControlOffset:touchPoint];
+            [self.actionButton touchesBegan:set withEvent:event];
         }
     }
 }
@@ -122,44 +123,64 @@
 {
     [super touchesMoved:touches withEvent:event];
     
-    NSMutableSet *movedLeftTouches = [NSMutableSet setWithSet:touches];
-    [movedLeftTouches intersectSet:self.leftControlTouches];
-    [self.leftThumbStick touchesMoved:movedLeftTouches withEvent:event];
-    
-    NSMutableSet *movedRightTouches = [NSMutableSet setWithSet:touches];
-    [movedRightTouches intersectSet:self.rightControlTouches];
-    [self.rightThumbStick touchesMoved:movedRightTouches withEvent:event];
+    for (UITouch *touch in touches)
+    {
+        CGPoint touchPoint = [touch locationInNode:self];
+        
+        if (touchPoint.x < 0.0)
+        {
+            NSMutableSet *movedLeftTouches = [NSMutableSet setWithSet:touches];
+            [movedLeftTouches intersectSet:self.controlTouches];
+            [self.thumbStick touchesMoved:movedLeftTouches withEvent:event];
+        }
+        else
+        {
+            NSMutableSet *movedRightTouches = [NSMutableSet setWithSet:touches];
+            [movedRightTouches intersectSet:self.actionButtonTouches];
+            [self.actionButton touchesMoved:movedRightTouches withEvent:event];
+        }
+    }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
-    
-    NSMutableSet *endedLeftTouches = [NSMutableSet setWithObject:touches];
-    [endedLeftTouches intersectSet:self.leftControlTouches];
-    [self.leftThumbStick touchesEnded:endedLeftTouches withEvent:event];
-    [self.leftControlTouches minusSet:endedLeftTouches];
-
-    NSMutableSet *endedRightTouches = [NSMutableSet setWithObject:touches];
-    [endedRightTouches intersectSet:self.rightControlTouches];
-    [self.rightThumbStick touchesEnded:endedRightTouches withEvent:event];
-    [self.rightControlTouches minusSet:endedRightTouches];
+   
+    for (UITouch *touch in touches)
+    {
+        CGPoint touchPoint = [touch locationInNode:self];
+        
+        if (touchPoint.x < 0.0)
+        {
+            NSMutableSet *endedLeftTouches = [NSMutableSet setWithObject:touches];
+            [endedLeftTouches intersectSet:self.controlTouches];
+            [self.thumbStick touchesEnded:endedLeftTouches withEvent:event];
+            [self.controlTouches minusSet:endedLeftTouches];
+        }
+        else
+        {
+            NSMutableSet *endedRightTouches = [NSMutableSet setWithObject:touches];
+            [endedRightTouches intersectSet:self.actionButtonTouches];
+            [self.actionButton touchesEnded:endedRightTouches withEvent:event];
+            [self.actionButtonTouches minusSet:endedRightTouches];
+        }
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesCancelled:touches withEvent:event];
     
-    [self.leftThumbStick resetTouchPad];
-    [self.rightThumbStick resetTouchPad];
+    [self.thumbStick resetTouchPad];
+    [self.actionButton resetButton];
     
-    [self.leftControlTouches removeAllObjects];
-    [self.rightControlTouches removeAllObjects];
+    [self.controlTouches removeAllObjects];
+    [self.actionButtonTouches removeAllObjects];
 }
 
 - (CGPoint)pointByCheckingControlOffset:(CGPoint)suggestedPoint
 {
-    CGSize controlSize = self.leftThumbStick.size;
+    CGSize controlSize = self.thumbStick.size;
     CGSize sceneSize = self.scene.size;
     
     CGFloat minX = -sceneSize.width / 2 + controlSize.width / 1.5;
