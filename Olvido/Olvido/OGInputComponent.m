@@ -8,10 +8,12 @@
 
 #import "OGInputComponent.h"
 #import "OGMovementComponent.h"
+#import "OGWeaponComponent.h"
 
 @interface OGInputComponent ()
 
 @property (nonatomic, assign) CGVector displacement;
+@property (nonatomic, assign, getter=isPressed) BOOL pressed;
 
 @end
 
@@ -27,6 +29,16 @@
     }
 }
 
+- (void)didPressed:(BOOL)pressed
+{
+    self.pressed = pressed;
+    
+    if (self.isEnabled)
+    {
+        [self applyInputState];
+    }
+}
+
 - (void)applyInputState
 {
     OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:OGMovementComponent.self];
@@ -34,6 +46,13 @@
     if (movementComponent)
     {
         movementComponent.displacementVector = self.displacement;
+    }
+    
+    OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:OGWeaponComponent.self];
+    
+    if (weaponComponent)
+    {
+        weaponComponent.shouldAttach = self.pressed;
     }
 }
 

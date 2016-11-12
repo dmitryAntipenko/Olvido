@@ -7,7 +7,12 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGAttacking.h"
 
 @interface OGWeaponComponent : GKComponent
+
+@property (nonatomic, strong) id<OGAttacking> weapon;
+@property (nonatomic, assign) BOOL shouldAttack;
+@property (nonatomic, assign) CGFloat attackSpeed;
 
 @end

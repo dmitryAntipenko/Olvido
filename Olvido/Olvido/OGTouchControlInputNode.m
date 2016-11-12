@@ -83,7 +83,7 @@
 {
     if (node == self.actionButton)
     {
-        NSLog(@"right");
+        [self.inputSourceDelegate didPressed:YES];
     }
 }
 
