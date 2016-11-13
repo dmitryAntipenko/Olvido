@@ -124,49 +124,29 @@
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
-    
-    for (UITouch *touch in touches)
-    {
-        CGPoint touchPoint = [touch locationInNode:self];
-        
-        if (touchPoint.x < 0.0)
-        {
-            NSMutableSet *movedLeftTouches = [NSMutableSet setWithSet:touches];
-            [movedLeftTouches intersectSet:self.leftControlTouches];
-            [self.leftThumbStick touchesMoved:movedLeftTouches withEvent:event];
-        }
-        else
-        {
-            NSMutableSet *movedRightTouches = [NSMutableSet setWithSet:touches];
-            [movedRightTouches intersectSet:self.rightControlTouches];
-            [self.rightThumbStick touchesMoved:movedRightTouches withEvent:event];
-        }
-    }
+
+    NSMutableSet *movedLeftTouches = [NSMutableSet setWithSet:touches];
+    [movedLeftTouches intersectSet:self.leftControlTouches];
+    [self.leftThumbStick touchesMoved:movedLeftTouches withEvent:event];
+
+    NSMutableSet *movedRightTouches = [NSMutableSet setWithSet:touches];
+    [movedRightTouches intersectSet:self.rightControlTouches];
+    [self.rightThumbStick touchesMoved:movedRightTouches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
    
-    for (UITouch *touch in touches)
-    {
-        CGPoint touchPoint = [touch locationInNode:self];
-        
-        if (touchPoint.x < 0.0)
-        {
-            NSMutableSet *endedLeftTouches = [NSMutableSet setWithObject:touches];
-            [endedLeftTouches intersectSet:self.leftControlTouches];
-            [self.leftThumbStick touchesEnded:endedLeftTouches withEvent:event];
-            [self.leftControlTouches minusSet:endedLeftTouches];
-        }
-        else
-        {
-            NSMutableSet *endedRightTouches = [NSMutableSet setWithObject:touches];
-            [endedRightTouches intersectSet:self.rightControlTouches];
-            [self.rightThumbStick touchesEnded:endedRightTouches withEvent:event];
-            [self.rightControlTouches minusSet:endedRightTouches];
-        }
-    }
+    NSMutableSet *endedLeftTouches = [NSMutableSet setWithSet:touches];
+    [endedLeftTouches intersectSet:self.leftControlTouches];
+    [self.leftThumbStick touchesEnded:endedLeftTouches withEvent:event];
+    [self.leftControlTouches minusSet:endedLeftTouches];
+
+    NSMutableSet *endedRightTouches = [NSMutableSet setWithSet:touches];
+    [endedRightTouches intersectSet:self.rightControlTouches];
+    [self.rightThumbStick touchesEnded:endedRightTouches withEvent:event];
+    [self.rightControlTouches minusSet:endedRightTouches];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

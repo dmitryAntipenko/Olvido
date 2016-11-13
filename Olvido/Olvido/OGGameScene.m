@@ -119,7 +119,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 {
     [super didMoveToView:view];
     
-    self.currentRoom = [self childNodeWithName:@"room3"];
+    self.currentRoom = [self childNodeWithName:@"room1"];
     
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;

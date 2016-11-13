@@ -23,7 +23,7 @@ static SKTexture *sOGBulletEntityTexture;
     if (self)
     {
         _render = [[OGRenderComponent alloc] init];
-        
+            
         SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithTexture:sOGBulletEntityTexture];
         bulletSprite.physicsBody = [SKPhysicsBody bodyWithTexture:sOGBulletEntityTexture size:sOGBulletEntityTexture.size];
         

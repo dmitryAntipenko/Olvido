@@ -90,12 +90,18 @@ CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
+    
+    if (touches.count == 0)
+    {
+        return;
+    }
+    
     [self resetTouchPad];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [super touchesCancelled:touches withEvent:event];
+    [super touchesCancelled:touches withEvent:event];    
     [self resetTouchPad];
 }
 
@@ -105,7 +111,7 @@ CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
     
     SKAction *restoreToCenter = [SKAction moveTo:CGPointZero duration:0.2];
     [self.touchPad runAction:restoreToCenter];
-    
+        
     [self.thumbStickNodeDelegate thumbStickNode:self isPressed:NO];
     [self.thumbStickNodeDelegate thumbStickNode:self didUpdateXValue:0.0 yValue:0.0];
 }

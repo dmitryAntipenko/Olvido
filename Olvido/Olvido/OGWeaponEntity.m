@@ -65,7 +65,7 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
                                                          cosf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed);
             
             OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
-                                            withRotation:vectorAngle];                        
+                                            withRotation:vectorAngle];
             
             [ownerRenderComponent.node.scene addChild:bullet.render.node];
             [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
@@ -75,11 +75,10 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
             {
                 if (bulletNode)
                 {
-                    [bulletNode removeFromParent];                    
+                    [bulletNode removeFromParent];
                     self.allowsAttacking = YES;
                 }
-            }];
-            
+            }];            
         }
     }
 }
