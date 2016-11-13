@@ -22,7 +22,7 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-@interface OGPlayerEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType>
+@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
 @property (nonatomic, strong) OGInventory *inventory;
 @property (nonatomic, strong) OGRenderComponent *render;
@@ -35,11 +35,5 @@
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
-
-+ (NSDictionary *)sOGPlayerEntityAnimations;
-+ (NSDictionary *)sOGPlayerEntityAppearTextures;
-+ (CGSize)textureSize;
 
 @end

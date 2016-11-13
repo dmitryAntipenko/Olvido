@@ -8,6 +8,7 @@
 
 #import "OGPlayerEntityAppearState.h"
 #import "OGPlayerEntity.h"
+#import "OGPlayerEntity+OGPlayerEntityResources.h"
 
 #import "OGAnimationComponent.h"
 #import "OGRenderComponent.h"

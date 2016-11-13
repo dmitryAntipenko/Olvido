@@ -74,11 +74,11 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     loadSceneOperation.completionBlock = ^
     {
         dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           self.sceneLoader.scene = weakLoadSceneOperation.scene;
-                           
-                           [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                       });
+        {
+            self.sceneLoader.scene = weakLoadSceneOperation.scene;
+
+            [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+        });
     };
     
     for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
