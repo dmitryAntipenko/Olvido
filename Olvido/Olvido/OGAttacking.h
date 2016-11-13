@@ -9,6 +9,7 @@
 @protocol OGAttacking <NSObject>
 
 - (void)attack;
+- (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed;
 - (BOOL)canAttack;
 
 @end

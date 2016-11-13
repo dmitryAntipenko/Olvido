@@ -12,6 +12,7 @@
 @protocol OGThumbStickNodeDelegate
 
 - (void)thumbStickNode:(SKSpriteNode *)node didUpdateXValue:(CGFloat)xValue yValue:(CGFloat)yValue;
+- (void)thumbStickNode:(SKSpriteNode *)node isPressed:(BOOL)pressed;
 
 @end
 

@@ -13,6 +13,7 @@
 @interface OGInputComponent ()
 
 @property (nonatomic, assign) CGVector displacement;
+@property (nonatomic, assign) CGVector attackDisplacement;
 @property (nonatomic, assign, getter=isPressed) BOOL pressed;
 
 @end
@@ -22,6 +23,16 @@
 - (void)didUpdateDisplacement:(CGVector)displacement
 {
     self.displacement = displacement;
+    
+    if (self.isEnabled)
+    {
+        [self applyInputState];
+    }
+}
+
+- (void)didUpdateAttackDisplacement:(CGVector)displacement
+{
+    self.attackDisplacement = displacement;
     
     if (self.isEnabled)
     {
@@ -53,7 +64,7 @@
     if (weaponComponent)
     {
         weaponComponent.shouldAttack = self.pressed;
-        weaponComponent.attackDirection = self.displacement;
+        weaponComponent.attackDirection = self.attackDisplacement;
     }
 }
 

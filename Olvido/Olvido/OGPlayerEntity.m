@@ -120,6 +120,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         if (renderComponent)
         {
             self.weaponComponent.weapon = (OGWeaponEntity *) entity;
+            self.weaponComponent.weapon.owner = self;
             [self.inventory addItem:(id<OGInventoryItemProtocol>) entity];
             [renderComponent.node removeFromParent];
             
@@ -151,6 +152,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         self.canTakeWeapon = NO;
         [self.inventory removeItem:self.weaponComponent.weapon];
+        self.weaponComponent.weapon.owner = nil;
         self.weaponComponent.weapon = nil;
     }
 }

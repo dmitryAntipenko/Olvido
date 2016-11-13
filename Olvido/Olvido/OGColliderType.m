@@ -38,6 +38,10 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
             result = [OGColliderType weapon];
             break;
             
+        case kOGCollisionBitMaskBullet:
+            result = [OGColliderType bullet];
+            break;
+            
         case kOGCollisionBitMaskDoor:
             result = [OGColliderType door];
             break;
@@ -111,6 +115,20 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     {
         colliderType = [[self alloc] init];
         colliderType.categoryBitMask = kOGCollisionBitMaskWeapon;
+    });
+    
+    return colliderType;
+}
+
++ (OGColliderType *)bullet
+{
+    static OGColliderType *colliderType = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
+    
+    dispatch_once(&dispatchOnceToken, ^()
+    {
+        colliderType = [[self alloc] init];
+        colliderType.categoryBitMask = kOGCollisionBitMaskBullet;
     });
     
     return colliderType;

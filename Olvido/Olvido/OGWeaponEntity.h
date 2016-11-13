@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
 
+@property (nonatomic, weak) GKEntity *owner;
+
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGAnimationComponent *animation;

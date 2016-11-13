@@ -57,7 +57,7 @@ CGFloat const kOGWeaponComponentDefaultAttackSpeed = 1.0;
 {
     if (self.weapon && self.shouldAttack && [self.weapon canAttack])
     {
-        [self.weapon attack];
+        [self.weapon attackWithVector:self.attackDirection speed:self.attackSpeed];
     }
 }
 
