@@ -6,7 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <GameplayKit/GameplayKit.h>
 #import "OGInventoryItemProtocol.h"
 
 @interface OGInventory : NSObject
@@ -15,5 +15,7 @@
 
 - (void)addItem:(id<OGInventoryItemProtocol>)item;
 - (void)removeItem:(id<OGInventoryItemProtocol>)item;
+
+- (GKEntity *)findItemWithIdentifier:(NSString *)identifier;
 
 @end

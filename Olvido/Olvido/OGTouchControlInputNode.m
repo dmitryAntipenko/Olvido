@@ -83,7 +83,7 @@
 {
     if (node == self.actionButton)
     {
-        [self.inputSourceDelegate didPressed:YES];
+        [self.inputSourceDelegate didPressed:pressed];
     }
 }
 

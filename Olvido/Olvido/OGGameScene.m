@@ -18,6 +18,7 @@
 #import "OGPlayerEntity.h"
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
+#import "OGWeaponEntity.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -26,6 +27,7 @@
 #import "OGAnimationComponent.h"
 #import "OGMessageComponent.h"
 #import "OGTransitionComponent.h"
+#import "OGWeaponComponent.h"
 
 #import "OGStatusBar.h"
 
@@ -37,9 +39,6 @@
 #import "OGDeathLevelState.h"
 
 #import "OGLevelManager.h"
-#import "OGTapMovementControlComponent.h"
-#import "OGTapAndStopMovementControlComponent.h"
-#import "OGDragMovementControlComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
 
@@ -102,6 +101,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
                              nil];
         
         _statusBar = [[OGStatusBar alloc] init];
@@ -119,7 +119,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 {
     [super didMoveToView:view];
     
-    self.currentRoom = [self childNodeWithName:@"room1"];
+    self.currentRoom = [self childNodeWithName:@"room3"];
     
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
@@ -128,9 +128,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     [self createSceneContents];
 
     [self addEntity:self.player];
-    
-    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_position"];
-    self.player.render.node.position = playerInitialNode.position;
 
     [self createCameraNode];
     [self createStatusBar];
@@ -196,7 +193,20 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
         }
     }
     
+    [self createSceneItems];
     [self createStatusBar];
+}
+
+- (void)createSceneItems
+{
+    SKNode *items = [self childNodeWithName:@"items"];
+    NSArray *weapons = [items childNodeWithName:@"weapon"].children;
+    
+    for (SKSpriteNode *weapon in weapons)
+    {
+        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weapon];
+        [self addEntity:shootingWeapon];
+    }
 }
 
 - (void)addEntity:(GKEntity *)entity
@@ -252,6 +262,22 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
+    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
+    {
+        [notifiable contactWithEntityDidBegin:entity];
+    }];
+}
+
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
+     {
+         [notifiable contactWithEntityDidEnd:entity];
+     }];
+}
+
+- (void)handleContact:(SKPhysicsContact *)contact contactCallback:(void (^)(id<OGContactNotifiableType>, GKEntity *))callback
+{
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
     SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
@@ -266,16 +292,16 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     if ([entityA conformsToProtocol:@protocol(OGContactNotifiableType)] && aNeedsCallback)
     {
-        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityA;
-        [entity contactWithEntityDidBegin:entityB];
+        callback((id<OGContactNotifiableType>) entityA, entityB);
     }
     
     if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
     {
-        id<OGContactNotifiableType> entity = (id<OGContactNotifiableType>) entityB;
-        [entity contactWithEntityDidBegin:entityA];
+        callback((id<OGContactNotifiableType>) entityB, entityA);
     }
 }
+
+#pragma mark - Scene Management
 
 - (void)pause
 {

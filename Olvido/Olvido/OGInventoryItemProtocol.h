@@ -8,6 +8,7 @@
 
 @protocol OGInventoryItemProtocol <NSObject>
 
-
+- (NSString *)inventoryIdentifier;
+- (SKNode *)itemNode;
 
 @end

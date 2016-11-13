@@ -9,5 +9,6 @@
 @protocol OGAttacking <NSObject>
 
 - (void)attack;
+- (BOOL)canAttack;
 
 @end

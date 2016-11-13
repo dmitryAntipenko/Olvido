@@ -46,7 +46,7 @@ CGFloat const kOGWeaponComponentDefaultAttackSpeed = 1.0;
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)
-    {
+    {   
         _animationComponent = (OGAnimationComponent *) [self.entity componentForClass:[OGAnimationComponent class]];
     }
     
@@ -55,7 +55,7 @@ CGFloat const kOGWeaponComponentDefaultAttackSpeed = 1.0;
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    if (self.weapon && self.shouldAttack)
+    if (self.weapon && self.shouldAttack && [self.weapon canAttack])
     {
         [self.weapon attack];
     }

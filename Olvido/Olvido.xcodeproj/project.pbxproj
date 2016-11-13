@@ -95,6 +95,7 @@
 		EAF7F1151DD782850067D76D /* OGInventory.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1141DD782850067D76D /* OGInventory.m */; };
 		EAF7F1191DD785FE0067D76D /* OGWeaponComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */; };
 		EAF7F11C1DD7878D0067D76D /* OGActionButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */; };
+		EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -273,6 +274,8 @@
 		EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGActionButtonNode.m; sourceTree = "<group>"; };
 		EAF7F11D1DD788C30067D76D /* OGActionButtonNodeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGActionButtonNodeDelegate.h; sourceTree = "<group>"; };
 		EAF7F11F1DD79C370067D76D /* OGAttacking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAttacking.h; sourceTree = "<group>"; };
+		EAF7F1211DD7A4A60067D76D /* OGWeaponEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponEntity.h; sourceTree = "<group>"; };
+		EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponEntity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -739,6 +742,7 @@
 		EA9EAAC41DCC9CE400E36855 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EAF7F1201DD7A4720067D76D /* Weapon */,
 				EA4982431DCFB12C00DCFE00 /* Player */,
 				EA4982441DCFB44000DCFE00 /* Enemy */,
 				EA5F12001DD4E25E006D4129 /* Door */,
@@ -801,6 +805,15 @@
 				EAF7F11F1DD79C370067D76D /* OGAttacking.h */,
 			);
 			name = "Weapon Component";
+			sourceTree = "<group>";
+		};
+		EAF7F1201DD7A4720067D76D /* Weapon */ = {
+			isa = PBXGroup;
+			children = (
+				EAF7F1211DD7A4A60067D76D /* OGWeaponEntity.h */,
+				EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */,
+			);
+			name = Weapon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -906,6 +919,7 @@
 				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
+				EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA9EAAD41DCCA76600E36855 /* OGPlayerEntityConfiguration.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,

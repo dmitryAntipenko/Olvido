@@ -52,7 +52,8 @@
     
     if (weaponComponent)
     {
-        weaponComponent.shouldAttach = self.pressed;
+        weaponComponent.shouldAttack = self.pressed;
+        weaponComponent.attackDirection = self.displacement;
     }
 }
 

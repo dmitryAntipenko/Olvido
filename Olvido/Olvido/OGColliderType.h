@@ -20,6 +20,7 @@
 + (OGColliderType *)enemy;
 + (OGColliderType *)obstacle;
 + (OGColliderType *)door;
++ (OGColliderType *)weapon;
 
 + (NSMutableDictionary *)definedCollisions;
 + (NSMutableDictionary *)requestedContactNotifications;

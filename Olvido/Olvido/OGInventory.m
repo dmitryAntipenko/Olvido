@@ -10,7 +10,7 @@
 
 @interface OGInventory ()
 
-@property (nonatomic, strong) NSMutableArray<id<OGInventoryItemProtocol>> *mutableItems;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id<OGInventoryItemProtocol>> *mutableItems;
 
 @end
 
@@ -22,7 +22,7 @@
     
     if (self)
     {
-        _mutableItems = [[NSMutableArray alloc] init];
+        _mutableItems = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -30,17 +30,22 @@
 
 - (NSArray<id<OGInventoryItemProtocol>> *)items
 {
-    return _mutableItems;
+    return _mutableItems.allValues;
 }
 
 - (void)addItem:(id<OGInventoryItemProtocol>)item
 {
-    [self.mutableItems addObject:item];
+    [self.mutableItems setObject:item forKey:[item inventoryIdentifier]];
 }
 
 - (void)removeItem:(id<OGInventoryItemProtocol>)item
 {
-    [self.mutableItems removeObject:item];
+    [self.mutableItems removeObjectForKey:[item inventoryIdentifier]];
+}
+
+- (id<OGInventoryItemProtocol>)findItemWithIdentifier:(NSString *)identifier
+{
+    return self.mutableItems[identifier];
 }
 
 @end

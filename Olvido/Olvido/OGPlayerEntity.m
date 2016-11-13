@@ -16,6 +16,9 @@
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
+#import "OGWeaponComponent.h"
+#import "OGInventory.h"
+#import "OGInventoryItemProtocol.h"
 
 #import "OGColliderType.h"
 
@@ -35,6 +38,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 @interface OGPlayerEntity ()
 
 @property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
+@property (nonatomic, assign) BOOL canTakeWeapon;
 
 @end
 
@@ -46,6 +50,8 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     
     if (self)
     {
+        _inventory = [[OGInventory alloc] init];
+        
         _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
         
         _render = [[OGRenderComponent alloc] init];
@@ -96,6 +102,11 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
         [self addComponent:_messageComponent];
+        
+        _weaponComponent = [[OGWeaponComponent alloc] init];
+        [self addComponent:_weaponComponent];
+        
+        _canTakeWeapon = YES;
     }
     
     return self;
@@ -173,11 +184,55 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 {
     NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
+    
+    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType weapon]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType player]];
 }
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
+    if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
+    {
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+     
+        [self dropCurrentWeaponAtPoint:renderComponent.node.position];
+        
+        if (renderComponent)
+        {
+            self.weaponComponent.weapon = (OGWeaponEntity *) entity;
+            [self.inventory addItem:(id<OGInventoryItemProtocol>) entity];
+            [renderComponent.node removeFromParent];
+            
+            SKAction *takeWeaponDelay = [SKAction waitForDuration:1.0];
+            [self.render.node runAction:takeWeaponDelay completion:^()
+            {
+                self.canTakeWeapon = YES;
+            }];
+        }
+    }
+}
+
+- (void)dropCurrentWeaponAtPoint:(CGPoint)point
+{
+    if (self.weaponComponent.weapon)
+    {
+        SKSpriteNode *weaponNode = (SKSpriteNode *) self.weaponComponent.weapon.render.node;
+        
+        CGPoint playerPosition = self.render.node.position;
+        
+        weaponNode.position = point;
+        
+        [self.render.node.scene addChild:weaponNode];
+        
+        //CGVector dropVector = CGVectorMake(weaponNode.position.x - playerPosition.x,
+          //                                 weaponNode.position.y - playerPosition.y);
+        
+        //[weaponNode.physicsBody applyImpulse:dropVector];
+        
+        self.canTakeWeapon = NO;
+        [self.inventory removeItem:self.weaponComponent.weapon];
+        self.weaponComponent.weapon = nil;
+    }
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
