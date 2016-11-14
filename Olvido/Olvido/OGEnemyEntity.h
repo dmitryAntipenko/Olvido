@@ -9,6 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
 
+@class OGEnemyConfiguration;
 @class OGHealthComponent;
 @class OGAnimationComponent;
 @class OGIntelligenceComponent;
@@ -24,5 +25,7 @@
 @property (nonatomic, strong) OGAnimationComponent *animation;
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGIntelligenceComponent *intelligence;
+
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration;
 
 @end

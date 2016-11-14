@@ -2,9 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>StartRoom</key>
+	<string>room1</string>
+	<key>Player</key>
+	<dict>
+		<key>CurrentHealth</key>
+		<integer>3</integer>
+		<key>PhysicsBodyRadius</key>
+		<integer>30</integer>
+		<key>MessageShowDistance</key>
+		<integer>30</integer>
+		<key>MaxHealth</key>
+		<integer>3</integer>
+	</dict>
 	<key>Enemies</key>
 	<array>
 		<dict>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
 			<key>InitialVector</key>
 			<dict>
 				<key>dx</key>

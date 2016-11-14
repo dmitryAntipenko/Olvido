@@ -23,7 +23,7 @@
 
 #import "OGColliderType.h"
 
-#import "OGPlayerEntityConfiguration.h"
+#import "OGPlayerConfiguration.h"
 #import "OGAnimationState.h"
 
 #import "OGPlayerEntityAppearState.h"
@@ -34,14 +34,13 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 
 @interface OGPlayerEntity ()
 
-@property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
 @end
 
 @implementation OGPlayerEntity
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration
 {
     self = [super init];
     
@@ -49,12 +48,10 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     {
         _inventory = [[OGInventory alloc] init];
         
-        _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
-        
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
+        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType player]];
         [self addComponent:_physics];
         
@@ -62,8 +59,8 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         _render.node.physicsBody.allowsRotation = NO;
         
         _health = [[OGHealthComponent alloc] init];
-        _health.maxHealth = _playerConfiguration.maxHealth;
-        _health.currentHealth = _playerConfiguration.currentHealth;
+        _health.maxHealth = configuration.maxHealth;
+        _health.currentHealth = configuration.currentHealth;
         [self addComponent:_health];
         
         _movement = [[OGMovementComponent alloc] init];
@@ -97,7 +94,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         [self addComponent:_orientation];
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
-        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
+        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:configuration.messageShowDistance];
         [self addComponent:_messageComponent];
         
         _weaponComponent = [[OGWeaponComponent alloc] init];

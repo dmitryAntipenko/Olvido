@@ -10,7 +10,7 @@
 #import "OGSceneMetadata.h"
 #import "OGBaseScene.h"
 
-NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
+NSUInteger const kOGLoadSceneOperationProgressTotalUnitCount = 1;
 
 @interface OGLoadSceneOperation ()
 
@@ -31,7 +31,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         if (self)
         {
             _sceneMetadata = sceneMetadata;
-            _progress = [NSProgress progressWithTotalUnitCount:kOGLOadSceneOperationProgressTotalUnitCount];
+            _progress = [NSProgress progressWithTotalUnitCount:kOGLoadSceneOperationProgressTotalUnitCount];
         }
     }
     else
@@ -61,7 +61,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
             
             [self.scene createCamera];
             
-            self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
+            self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
             
             [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
             self.state = finishedState;

@@ -47,10 +47,10 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     static dispatch_once_t dispatchOnceToken = 0;
     
     dispatch_once(&dispatchOnceToken, ^()
-                  {
-                      levelManager = [[OGLevelManager alloc] init];
-                      [levelManager loadLevelMap];
-                  });
+    {
+        levelManager = [[OGLevelManager alloc] init];
+        [levelManager loadLevelMap];
+    });
     
     return levelManager;
 }

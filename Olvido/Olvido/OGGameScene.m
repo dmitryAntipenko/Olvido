@@ -42,6 +42,8 @@
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
 
+NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
+
 NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
 
 NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
@@ -82,8 +84,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
         _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
         _cameraController = [[OGCameraController alloc] init];
         
-        _player = [[OGPlayerEntity alloc] init];
-        
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
                                                                  [OGStoryConclusionLevelState stateWithLevelScene:self],
                                                                  [OGBeforeStartLevelState stateWithLevelScene:self],
@@ -119,18 +119,14 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 {
     [super didMoveToView:view];
     
-    self.currentRoom = [self childNodeWithName:@"room1"];
-    
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
     [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
+    self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
     [self createSceneContents];
 
-    [self addEntity:self.player];
-
     [self createCameraNode];
-    [self createStatusBar];
     
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
@@ -139,6 +135,16 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
+}
+
+#pragma mark - Scene Creation
+
+- (void)createSceneContents
+{
+    [self createPlayer];
+    [self createEnemies];
+    [self createDoors];
+    [self createSceneItems];
 }
 
 - (void)createCameraNode
@@ -153,22 +159,31 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
-- (void)createSceneContents
+- (void)createPlayer
 {
+    OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
+    self.player = player;
     [self addEntity:self.player];
-    SKNode *playerInitialNode = [self childNodeWithName:@"player_initial_point"];
-    self.player.render.node.position = playerInitialNode.position;
     
+    SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
+    self.player.render.node.position = playerInitialNode.position;
+}
+
+- (void)createEnemies
+{
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] init];
+        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration];
         [self addEntity:enemy];
         SKNode *enemyInitialNode = [self childNodeWithName:enemyConfiguration.initialPointName];
         enemy.render.node.position = enemyInitialNode.position;
         
         enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
     }
-    
+}
+
+- (void)createDoors
+{
     NSArray<SKNode *> *doorNodes = [self childNodeWithName:@"doors"].children;
     
     for (SKNode *doorNode in doorNodes)
@@ -192,9 +207,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
             [self addEntity:door];
         }
     }
-    
-    [self createSceneItems];
-    [self createStatusBar];
 }
 
 - (void)createSceneItems
@@ -230,18 +242,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     if (intelligenceComponent)
     {
         [intelligenceComponent enterInitialState];
-    }
-}
-
-- (void)createStatusBar
-{
-    SKSpriteNode *statusBar = (SKSpriteNode *) [self childNodeWithName:kOGGameSceneStatusBarSpriteName];
-    
-    if (statusBar)
-    {
-        self.statusBar.statusBarSprite = statusBar;
-        self.statusBar.healthComponent = self.player.health;
-        [self.statusBar createContents];
     }
 }
 
@@ -381,6 +381,5 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
         [componentSystem updateWithDeltaTime:deltaTime];
     }
 }
-
 
 @end

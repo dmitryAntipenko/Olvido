@@ -8,11 +8,16 @@
 
 #import "OGGameSceneConfiguration.h"
 #import "OGEnemyConfiguration.h"
+#import "OGPlayerConfiguration.h"
 
 NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
+NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
+NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
 
 @interface OGGameSceneConfiguration ()
 
+@property (nonatomic, copy, readwrite) NSString *startRoom;
+@property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
 
 @end
@@ -36,6 +41,14 @@ NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
     NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"plist"];
     
     NSDictionary *configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
+    
+    self.startRoom = configurationDictionary[kOGGameSceneConfigurationStartRoomKey];
+    
+    NSDictionary *playerConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationPlayerKey];
+    
+    OGPlayerConfiguration *playerConfiguration = [[OGPlayerConfiguration alloc] initWithDictionary:playerConfigurationDictionary];
+    self.playerConfiguration = playerConfiguration;
+    
     NSArray *enemiesConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationEnemiesKey];
     
     for (NSDictionary *enemyDictionary in enemiesConfigurationDictionary)

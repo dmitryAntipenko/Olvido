@@ -8,12 +8,16 @@
 
 #import "OGEnemyConfiguration.h"
 
+NSString *const kOGEnemyConfigurationInitialPointKey = @"InitialPoint";
+NSString *const kOGEnemyConfigurationInitialVectorKey = @"InitialVector";
+NSString *const kOGEnemyConfigurationInitialVectorDXKey = @"dx";
+NSString *const kOGEnemyConfigurationInitialVectorDYKey = @"dy";
+NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+
 @interface OGEnemyConfiguration ()
 
 @property (nonatomic, copy, readwrite) NSString *initialPointName;
 @property (nonatomic, assign, readwrite) CGVector initialVector;
-
-@property (nonatomic, copy) NSDictionary *configurationDictionary;
 
 @end
 
@@ -27,17 +31,17 @@
         
         if (self)
         {
-            _initialPointName = dictionary[@"InitialPoint"];
+            _initialPointName = dictionary[kOGEnemyConfigurationInitialPointKey];
             
-            CGFloat dx = [dictionary[@"InitialVector"][@"dx"] floatValue];
-            CGFloat dy = [dictionary[@"InitialVector"][@"dy"] floatValue];
+            CGFloat dx = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDXKey] floatValue];
+            CGFloat dy = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDYKey] floatValue];
             _initialVector = CGVectorMake(dx, dy);
+            
+            _physicsBodyRadius = [dictionary[kOGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
         }
     }
     
     return self;
 }
-
-
 
 @end

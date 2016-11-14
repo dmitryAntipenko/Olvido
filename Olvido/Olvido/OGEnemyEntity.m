@@ -7,6 +7,7 @@
 //
 
 #import "OGEnemyEntity.h"
+#import "OGEnemyConfiguration.h"
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGMovementComponent.h"
@@ -14,29 +15,20 @@
 #import "OGPhysicsComponent.h"
 #import "OGAttacking.h"
 
-#import "OGEnemyEntityConfiguration.h"
-
-@interface OGEnemyEntity ()
-
-@property (nonatomic, strong) OGEnemyEntityConfiguration *enemyConfiguration;
-
-@end
-
 @implementation OGEnemyEntity
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
 {
     self = [super init];
     
     if (self)
     {
-        _enemyConfiguration = [[OGEnemyEntityConfiguration alloc] init];
         [self loadMiscellaneousAssets];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_enemyConfiguration.physicsBodyRadius]
+        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType enemy]];
         [self addComponent:_physics];
         

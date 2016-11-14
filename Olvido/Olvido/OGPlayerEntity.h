@@ -10,6 +10,7 @@
 #import "OGResourceLoadable.h"
 #import "OGContactNotifiableType.h"
 
+@class OGPlayerConfiguration;
 @class OGInventory;
 @class OGWeaponComponent;
 @class OGHealthComponent;
@@ -35,5 +36,7 @@
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+
+- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
 
 @end
