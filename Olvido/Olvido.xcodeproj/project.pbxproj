@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B0E44E81DD9FB0B008F0F7B /* OGInventoryBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */; };
 		1B2388DB1DB4BDD000A9092B /* OGDragMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DA1DB4BDD000A9092B /* OGDragMovementControlComponent.m */; };
 		1B2388DF1DB4C4A000A9092B /* OGMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388DE1DB4C4A000A9092B /* OGMovementControlComponent.m */; };
 		1B2388E21DB4C97700A9092B /* OGTapMovementControlComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2388E11DB4C97700A9092B /* OGTapMovementControlComponent.m */; };
@@ -101,6 +102,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B0E44E61DD9FB0B008F0F7B /* OGInventoryBarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryBarNode.h; sourceTree = "<group>"; };
+		1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventoryBarNode.m; sourceTree = "<group>"; };
 		1B2388D91DB4BDD000A9092B /* OGDragMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDragMovementControlComponent.h; sourceTree = "<group>"; };
 		1B2388DA1DB4BDD000A9092B /* OGDragMovementControlComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDragMovementControlComponent.m; sourceTree = "<group>"; };
 		1B2388DD1DB4C4A000A9092B /* OGMovementControlComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementControlComponent.h; sourceTree = "<group>"; };
@@ -699,6 +702,8 @@
 				EA49823B1DCF77BB00DCFE00 /* OGThumbStickNode.h */,
 				EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */,
 				EA49823E1DCF787E00DCFE00 /* OGThumbStickNodeDelegate.h */,
+				1B0E44E61DD9FB0B008F0F7B /* OGInventoryBarNode.h */,
+				1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -917,6 +922,7 @@
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
 				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
+				1B0E44E81DD9FB0B008F0F7B /* OGInventoryBarNode.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA9EAAD41DCCA76600E36855 /* OGPlayerEntityConfiguration.m in Sources */,

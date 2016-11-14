@@ -28,6 +28,7 @@
 #import "OGTransitionComponent.h"
 
 #import "OGStatusBar.h"
+#import "OGInventoryBarNode.h"
 
 #import "OGBeforeStartLevelState.h"
 #import "OGStoryConclusionLevelState.h"
@@ -62,6 +63,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
@@ -82,6 +84,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     if (self)
     {
+        _inventoryBarNode = [OGInventoryBarNode node];
+        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
         _cameraController = [[OGCameraController alloc] init];
@@ -151,14 +155,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
     
-    
-    
     [self.stateMachine enterState:[OGGameLevelState class]];
-}
-
-- (void)createInventoryBar
-{
-    
 }
 
 - (void)createSceneContents
