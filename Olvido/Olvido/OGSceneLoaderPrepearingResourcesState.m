@@ -69,8 +69,8 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     
     [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     
-    __block OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     __weak typeof(self) weakSelf = self;
+    __block OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
     loadSceneOperation.completionBlock = ^
     {
@@ -79,10 +79,9 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                            if (weakSelf)
                            {
                                typeof(weakSelf) strongSelf = weakSelf;
-                               typeof(weakLoadSceneOperation) strongLoadSceneOperation = weakLoadSceneOperation;
                                
-                               strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                               [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                               strongSelf.sceneLoader.scene = weakLoadSceneOperation.scene;
+                               [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
                            }
                        });
     };

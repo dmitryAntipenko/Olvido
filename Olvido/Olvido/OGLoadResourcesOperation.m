@@ -49,14 +49,13 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
         {
             if ([self.loadableClass resourcesNeedLoading])
             {
-                __weak typeof(self) weakSelf = self;
+                __block typeof(self) weakSelf = self;
                 
                 [self.loadableClass loadResourcesWithCompletionHandler:^
                  {
                      if (weakSelf)
                      {
-                         typeof(weakSelf) strongSelf = weakSelf;
-                         [strongSelf finish];
+                         [weakSelf finish];
                      }
                  }];
             }
@@ -71,6 +70,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 - (void)finish
 {
     self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+    
     [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
     self.state = finishedState;
     [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];

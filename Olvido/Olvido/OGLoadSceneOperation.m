@@ -9,6 +9,8 @@
 #import "OGLoadSceneOperation.h"
 #import "OGSceneMetadata.h"
 #import "OGBaseScene.h"
+#import "OGConstants.h"
+#import "OGGameScene.h"
 
 NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
 
@@ -57,9 +59,13 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            self.scene = [self.sceneMetadata.sceneClass nodeWithFileNamed:self.sceneMetadata.fileName];
+            GKScene *gkScene = [GKScene sceneWithFileNamed:self.sceneMetadata.fileName];
             
+            self.scene = (OGBaseScene *)gkScene.rootNode;
+        
             [self.scene createCamera];
+        
+            self.scene.graphs = gkScene.graphs;
             
             self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
             

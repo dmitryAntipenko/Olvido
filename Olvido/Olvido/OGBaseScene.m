@@ -15,4 +15,9 @@
     self.scaleMode = SKSceneScaleModeAspectFit;
 }
 
+- (void)setGraphs:(NSDictionary<NSString *,GKGraph *> *)graphs
+{
+    
+}
+
 @end

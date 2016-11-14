@@ -75,6 +75,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 @implementation OGGameScene
 
 @synthesize name = _name;
+@synthesize graphs = _graphs;
 
 #pragma mark - Initializer
 
@@ -407,6 +408,13 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     {
         [componentSystem updateWithDeltaTime:deltaTime];
     }
+}
+
+#pragma mark - Setters
+
+-(void)setGraphs:(NSDictionary<NSString *,GKGraph *> *)graphs
+{
+    _graphs = [graphs copy];
 }
 
 @end
