@@ -70,20 +70,25 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     
     __weak typeof(self) weakSelf = self;
-    __block OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
+    __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
     loadSceneOperation.completionBlock = ^
     {
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           if (weakSelf)
+        if (weakLoadSceneOperation)
+        {
+            OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
+            
+            dispatch_async(dispatch_get_main_queue(), ^
                            {
-                               typeof(weakSelf) strongSelf = weakSelf;
-                               
-                               strongSelf.sceneLoader.scene = weakLoadSceneOperation.scene;
-                               [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
-                           }
-                       });
+                               if (weakSelf)
+                               {
+                                   typeof(weakSelf) strongSelf = weakSelf;
+                                   
+                                   strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
+                                   [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
+                               }
+                           });
+        }
     };
     
     for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
