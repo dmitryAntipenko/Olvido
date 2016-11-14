@@ -7,6 +7,8 @@
 //
 
 #import "OGInventoryComponent.h"
+#import "OGMessageComponent.h"
+#import "OGRenderComponent.h"
 
 NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
@@ -39,7 +41,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 - (void)didAddToEntity
 {
-
+    
 }
 
 - (void)addItem:(id <OGInventoryItem>)item
@@ -53,7 +55,13 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
         }
         else
         {
-            //do some
+            //            OGMessageComponent *messageComponent = (OGMessageComponent *)[self.entity componentForClass:OGMessageComponent.self];
+            //            OGRenderComponent *renderComponent = (OGRenderComponent *)[self.entity componentForClass:OGRenderComponent.self];
+            //
+            //            if (messageComponent && renderComponent)
+            //            {
+            //                [messageComponent ]
+            //            }
         }
     }
 }
@@ -65,6 +73,18 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
         [self.mutableInventoryItems removeObject:item];
         [item didThrown];
     }
+}
+
+- (BOOL)containsItem:(id <OGInventoryItem>)item
+{
+    BOOL result = NO;
+    
+    if (item)
+    {
+        result = [self.mutableInventoryItems containsObject:item];
+    }
+    
+    return result;
 }
 
 - (BOOL)isFull

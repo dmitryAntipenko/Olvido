@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B0E44E81DD9FB0B008F0F7B /* OGInventoryBarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */; };
+		1B0E44F01DDA1015008F0F7B /* OGInventoryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0E44EF1DDA1015008F0F7B /* OGInventoryComponent.m */; };
 		1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B27EA9B1DC090BE00E9CA23 /* OGMainMenuScene.sks */; };
 		1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */; };
 		1B27EAA21DC0934300E9CA23 /* OGMainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAA11DC0934300E9CA23 /* OGMainMenuScene.m */; };
@@ -104,6 +105,8 @@
 /* Begin PBXFileReference section */
 		1B0E44E61DD9FB0B008F0F7B /* OGInventoryBarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryBarNode.h; sourceTree = "<group>"; };
 		1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventoryBarNode.m; sourceTree = "<group>"; };
+		1B0E44EE1DDA1015008F0F7B /* OGInventoryComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryComponent.h; sourceTree = "<group>"; };
+		1B0E44EF1DDA1015008F0F7B /* OGInventoryComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventoryComponent.m; sourceTree = "<group>"; };
 		1B27EA9B1DC090BE00E9CA23 /* OGMainMenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGMainMenuScene.sks; sourceTree = "<group>"; };
 		1B27EA9D1DC092DA00E9CA23 /* OGButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGButtonNode.h; sourceTree = "<group>"; };
 		1B27EA9E1DC092DA00E9CA23 /* OGButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGButtonNode.m; sourceTree = "<group>"; };
@@ -453,6 +456,8 @@
 		1B7F24B21DD61E2D004918C8 /* InventoryComponent */ = {
 			isa = PBXGroup;
 			children = (
+				1B0E44EE1DDA1015008F0F7B /* OGInventoryComponent.h */,
+				1B0E44EF1DDA1015008F0F7B /* OGInventoryComponent.m */,
 				1B7F24B31DD61F98004918C8 /* OGInventoryItem.h */,
 			);
 			name = InventoryComponent;
@@ -966,6 +971,7 @@
 				1B7F24A01DD5D074004918C8 /* OGMenuManager.m in Sources */,
 				1B7F24A71DD5D074004918C8 /* OGSceneMetadata.m in Sources */,
 				1B7F24A11DD5D074004918C8 /* OGSceneLoader.m in Sources */,
+				1B0E44F01DDA1015008F0F7B /* OGInventoryComponent.m in Sources */,
 				1B7F249E1DD5D074004918C8 /* OGLoadResourcesOperation.m in Sources */,
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,

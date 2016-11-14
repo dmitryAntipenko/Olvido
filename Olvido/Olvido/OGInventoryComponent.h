@@ -20,6 +20,8 @@
 
 - (void)removeItem:(id <OGInventoryItem>)item;
 
+- (BOOL)containsItem:(id <OGInventoryItem>)item;
+
 - (BOOL)isFull;
 
 @end
