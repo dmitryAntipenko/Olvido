@@ -12,10 +12,12 @@
 #import "OGBullet.h"
 #import "OGDeadBulletsManager.h"
 #import "OGWeaponComponent.h"
+#import "OGMovementComponent.h"
 
 NSString *const kOGWeaponEntityDefaultInventoryIdentifier = @"weapon";
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
+CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 @interface OGWeaponEntity ()
 
@@ -104,16 +106,35 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
     return (OGWeaponComponent *) [self.owner componentForClass:OGWeaponComponent.self];
 }
 
-#pragma mark - OGInventoryItemProtocol
+#pragma mark - OGInventoryItem
 
-- (NSString *)inventoryIdentifier
+- (void)didThrown
 {
-    return kOGWeaponEntityDefaultInventoryIdentifier;
+    SKSpriteNode *weaponNode = (SKSpriteNode *) self.render.node;
+    
+    OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:OGMovementComponent.self];
+    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
+    
+    weaponNode.position = ownerNode.position;
+    
+    [ownerNode.scene addChild:weaponNode];
+    
+    CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * kOGWeaponEntityThrowingFactor,
+                                       -ownerMovement.displacementVector.dy * kOGWeaponEntityThrowingFactor);
+    
+    [weaponNode.physicsBody applyImpulse:dropVector];
+    
+    self.owner = nil;
 }
 
-- (SKNode *)itemNode
+- (SKTexture *)texture
 {
-    return self.render.node;
+    return ((SKSpriteNode *)self.render.node).texture;
+}
+
+- (NSString *)identifier
+{
+    return kOGWeaponEntityDefaultInventoryIdentifier;
 }
 
 @end

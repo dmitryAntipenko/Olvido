@@ -36,6 +36,20 @@ NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
     return self;
 }
 
++ (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
+{
+    OGGameSceneConfiguration *configuration = nil;
+    
+    configuration = [[self alloc] init];
+    
+    if (configuration && fileName)
+    {
+        [configuration loadConfigurationWithFileName:fileName];
+    }
+    
+    return configuration;
+}
+
 - (void)loadConfigurationWithFileName:(NSString *)fileName
 {
     NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"plist"];

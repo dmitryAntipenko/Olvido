@@ -17,8 +17,8 @@
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGWeaponComponent.h"
-#import "OGInventory.h"
-#import "OGInventoryItemProtocol.h"
+#import "OGInventoryItem.h"
+#import "OGInventoryComponent.h"
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
 
 #import "OGColliderType.h"
@@ -34,6 +34,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 
 @interface OGPlayerEntity ()
 
+@property (nonatomic, strong) NSTimer *bulletSpawnTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
 @end
@@ -46,7 +47,8 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     
     if (self)
     {
-        _inventory = [[OGInventory alloc] init];
+        _inventoryComponent = [OGInventoryComponent inventoryComponent];
+        [self addComponent:_inventoryComponent];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
@@ -110,47 +112,29 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
     {
+        OGWeaponEntity *weaponEntity = (OGWeaponEntity *)entity;
+        
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
      
-        [self dropCurrentWeaponAtPoint:renderComponent.node.position];
+        [self.inventoryComponent removeItem:self.weaponComponent.weapon];
+        self.canTakeWeapon = NO;
         
         if (renderComponent)
         {
             self.weaponComponent.weapon = (OGWeaponEntity *) entity;
             self.weaponComponent.weapon.owner = self;
-            [self.inventory addItem:(id<OGInventoryItemProtocol>) entity];
+            
             [renderComponent.node removeFromParent];
             
-            SKAction *takeWeaponDelay = [SKAction waitForDuration:kOGPlayerEntityWeaponDropDelay];
-            [self.render.node runAction:takeWeaponDelay completion:^()
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
             {
                 self.canTakeWeapon = YES;
+                [timer invalidate];
+                timer = nil;
             }];
         }
-    }
-}
-
-- (void)dropCurrentWeaponAtPoint:(CGPoint)point
-{
-    if (self.weaponComponent.weapon)
-    {
-        SKSpriteNode *weaponNode = (SKSpriteNode *) self.weaponComponent.weapon.render.node;
         
-        CGPoint playerPosition = self.render.node.position;
-        
-        weaponNode.position = point;
-        
-        [self.render.node.scene addChild:weaponNode];
-        
-        CGVector dropVector = CGVectorMake(weaponNode.position.x - playerPosition.x,
-                                           weaponNode.position.y - playerPosition.y);
-        
-        [weaponNode.physicsBody applyImpulse:dropVector];
-        
-        self.canTakeWeapon = NO;
-        [self.inventory removeItem:self.weaponComponent.weapon];
-        self.weaponComponent.weapon.owner = nil;
-        self.weaponComponent.weapon = nil;
+        [self.inventoryComponent addItem:weaponEntity];
     }
 }
 

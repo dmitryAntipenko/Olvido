@@ -13,6 +13,8 @@
 #import "OGPhysicsComponent.h"
 #import "OGDeadBulletsManager.h"
 
+NSString *const kOGBulletTextureName = @"Bullet";
+
 static SKTexture *sOGBulletEntityTexture;
 
 @implementation OGBullet
@@ -42,8 +44,8 @@ static SKTexture *sOGBulletEntityTexture;
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    [[OGDeadBulletsManager sharedManager] removeItem:self];
     [self.render.node removeFromParent];
+    [[OGDeadBulletsManager sharedManager] removeItem:self];
 }
 
 #pragma mark - Resources
@@ -57,7 +59,7 @@ static SKTexture *sOGBulletEntityTexture;
 {
     [OGBullet loadMiscelaneousAssets];
     
-    sOGBulletEntityTexture = [SKTexture textureWithImageNamed:@"Bullet"];
+    sOGBulletEntityTexture = [SKTexture textureWithImageNamed:kOGBulletTextureName];
     
     handler();
 }

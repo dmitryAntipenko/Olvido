@@ -35,39 +35,46 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
-    self = [super init];
-    
-    if (self)
+    if (spriteNode)
     {
-        [OGDoorEntity loadMiscellaneousAssets];
+        self = [super init];
         
-        _render = [[OGRenderComponent alloc] init];
-        _render.node = spriteNode;
-        [self addComponent:_render];
-        
-        SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
-        trigger.entity = self;
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
-                                                      colliderType:[OGColliderType door]];
-        [self addComponent:_physics];        
-        
-        _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
-            [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
-            [[OGDoorEntityOpenedState alloc] initWithDoorEntity:self],
-            [[OGDoorEntityLockedState alloc] initWithDoorEntity:self],
-            [[OGDoorEntityUnlockedState alloc] initWithDoorEntity:self]
-        ]];
-        
-        [self addComponent:_intelligence];
-        
-        _animation = [[OGAnimationComponent alloc] init];
-        [self addComponent:_animation];
-        
-        _lockComponent = [[OGLockComponent alloc] init];
-        [self addComponent:_lockComponent];
-        
-        _transition = [[OGTransitionComponent alloc] init];
-        [self addComponent:_transition];
+        if (self)
+        {
+            [OGDoorEntity loadMiscellaneousAssets];
+            
+            _render = [[OGRenderComponent alloc] init];
+            _render.node = spriteNode;
+            [self addComponent:_render];
+            
+            SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
+            trigger.entity = self;
+            _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
+                                                          colliderType:[OGColliderType door]];
+            [self addComponent:_physics];        
+            
+            _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
+                [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
+                [[OGDoorEntityOpenedState alloc] initWithDoorEntity:self],
+                [[OGDoorEntityLockedState alloc] initWithDoorEntity:self],
+                [[OGDoorEntityUnlockedState alloc] initWithDoorEntity:self]
+            ]];
+            
+            [self addComponent:_intelligence];
+            
+            _animation = [[OGAnimationComponent alloc] init];
+            [self addComponent:_animation];
+            
+            _lockComponent = [[OGLockComponent alloc] init];
+            [self addComponent:_lockComponent];
+            
+            _transition = [[OGTransitionComponent alloc] init];
+            [self addComponent:_transition];
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;

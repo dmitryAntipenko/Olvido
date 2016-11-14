@@ -25,11 +25,18 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    
-    if(self)
+    if (aDecoder)
     {
-        _menuManager = [OGMenuManager sharedInstance];
+        self = [super initWithCoder:aDecoder];
+        
+        if(self)
+        {
+            _menuManager = [OGMenuManager sharedInstance];
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;

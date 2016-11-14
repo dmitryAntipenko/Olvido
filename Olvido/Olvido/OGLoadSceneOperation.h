@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameplayKit/GameplayKit.h>
 #import "OGLoadOperation.h"
 
 @class OGSceneMetadata;

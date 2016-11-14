@@ -29,10 +29,10 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
         {
             _metadata = metadata;
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
-                                                                     [OGSceneLoaderInitialState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
-                                                                     ]];
+                [OGSceneLoaderInitialState stateWithSceneLoader:self],
+                [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
+                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
+            ]];
             
             [_stateMachine enterState:OGSceneLoaderInitialState.self];
         }

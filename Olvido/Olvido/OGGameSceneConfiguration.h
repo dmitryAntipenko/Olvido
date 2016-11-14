@@ -17,6 +17,6 @@
 @property (nonatomic, strong, readonly) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readonly) NSArray<OGEnemyConfiguration *> *enemiesConfiguration;
 
-- (void)loadConfigurationWithFileName:(NSString *)fileName;
++ (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
 
 @end

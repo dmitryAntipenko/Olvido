@@ -22,17 +22,6 @@ NSString *const kOGCameraControllerMoveActionKey = @"camera_move_action";
 
 @implementation OGCameraController
 
-- (void)centerAtPoint:(CGPoint)point
-{
-    self.camera.position = point;
-}
-
-- (void)lockAtPoint:(CGPoint)point
-{
-    [self centerAtPoint:point];
-    self.locked = YES;
-}
-
 - (void)moveCameraToNode:(SKNode *)node
 {
     [self resetCameraRails];
@@ -53,19 +42,12 @@ NSString *const kOGCameraControllerMoveActionKey = @"camera_move_action";
     }
     
     SKAction *cameraMovement = [SKAction moveTo:newPosition duration:1.0];
-    SKAction *completionBlock = [SKAction runBlock:^()
-    {
-        self.locked = NO;
-    }];
-    
-    SKAction *cameraMovementSequence = [SKAction sequence:@[cameraMovement, completionBlock]];
-    
-    [self.camera runAction:cameraMovementSequence withKey:kOGCameraControllerMoveActionKey];
+    [self.camera runAction:cameraMovement withKey:kOGCameraControllerMoveActionKey];
 }
 
 - (void)update
 {
-    if (!self.isLocked)
+    if (self.rails)
     {
         CGPoint targetPositionInRails = [self.rails convertPoint:self.target.position
                                                         fromNode:self.rails.scene];

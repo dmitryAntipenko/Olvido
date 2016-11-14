@@ -8,13 +8,13 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGAttacking.h"
-#import "OGInventoryItemProtocol.h"
+#import "OGInventoryItem.h"
 
 @class OGAnimationComponent;
 @class OGRenderComponent;
 @class OGPhysicsComponent;
 
-@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItemProtocol>
+@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
 

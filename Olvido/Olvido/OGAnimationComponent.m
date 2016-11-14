@@ -27,13 +27,20 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 - (instancetype)initWithTextureSize:(CGSize)textureSize
                          animations:(NSDictionary *)animations
 {
-    self = [self init];
-    
-    if (self)
+    if (animations && textureSize.width != 0.0 && textureSize.height != 0.0)
     {
-        _animations = animations;
-        _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil size:textureSize];
-        _elapsedAnimationDuration = 0.0;
+        self = [self init];
+        
+        if (self)
+        {
+            _animations = animations;
+            _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil size:textureSize];
+            _elapsedAnimationDuration = 0.0;
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;

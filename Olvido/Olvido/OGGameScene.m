@@ -28,8 +28,9 @@
 #import "OGMessageComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
+#import "OGInventoryComponent.h"
 
-#import "OGStatusBar.h"
+#import "OGInventoryBarNode.h"
 
 #import "OGBeforeStartLevelState.h"
 #import "OGStoryConclusionLevelState.h"
@@ -42,9 +43,13 @@
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
 
-NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
+NSString *const kOGGameSceneDoorsNodeName = @"doors";
+NSString *const kOGGameSceneItemsNodeName = @"items";
+NSString *const kOGGameSceneWeaponNodeName = @"weapon";
+NSString *const kOGGameSceneSourceNodeName = @"source";
+NSString *const kOGGameSceneDestinationNodeName = @"destination";
 
-NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
+NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
 NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
@@ -56,6 +61,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 @interface OGGameScene ()
 
+@property (nonatomic, strong) OGPlayerEntity *player;
+
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 
@@ -63,6 +70,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
@@ -73,6 +81,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 @implementation OGGameScene
 
+@synthesize name = _name;
+
 #pragma mark - Initializer
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -81,17 +91,20 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     if (self)
     {
-        _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
+        _inventoryBarNode = [OGInventoryBarNode node];
+        
+        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
+        
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
-                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                 [OGGameLevelState stateWithLevelScene:self],
-                                                                 [OGPauseLevelState stateWithLevelScene:self],
-                                                                 [OGCompleteLevelState stateWithLevelScene:self],
-                                                                 [OGDeathLevelState stateWithLevelScene:self]
-                                                                 ]];
+            [OGStoryConclusionLevelState stateWithLevelScene:self],
+            [OGBeforeStartLevelState stateWithLevelScene:self],
+            [OGGameLevelState stateWithLevelScene:self],
+            [OGPauseLevelState stateWithLevelScene:self],
+            [OGCompleteLevelState stateWithLevelScene:self],
+            [OGDeathLevelState stateWithLevelScene:self]
+        ]];
         
         _entities = [[NSMutableSet alloc] init];
         
@@ -103,8 +116,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
                              nil];
-        
-        _statusBar = [[OGStatusBar alloc] init];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
@@ -121,20 +132,25 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
-    [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
     self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
     [self createSceneContents];
 
     [self createCameraNode];
+    [self createInventoryBar];
     
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
+}
+
+- (CGSize)thumbStickNodeSize
+{
+    return CGSizeMake(200.0, 200.0);
 }
 
 #pragma mark - Scene Creation
@@ -184,7 +200,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 - (void)createDoors
 {
-    NSArray<SKNode *> *doorNodes = [self childNodeWithName:@"doors"].children;
+    NSArray<SKNode *> *doorNodes = [self childNodeWithName:kOGGameSceneDoorsNodeName].children;
     
     for (SKNode *doorNode in doorNodes)
     {
@@ -198,8 +214,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
             door.lockComponent.closed = YES;
             door.lockComponent.locked = NO;
             
-            NSString *sourceNodeName = doorNode.userData[@"source"];
-            NSString *destinationNodeName = doorNode.userData[@"destination"];
+            NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
+            NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];
             
             door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
             door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
@@ -209,10 +225,22 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     }
 }
 
+- (void)createInventoryBar
+{
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    
+    if (self.camera)
+    {
+        [self.camera addChild:self.inventoryBarNode];
+    }
+    
+    [self.inventoryBarNode update];
+}
+
 - (void)createSceneItems
 {
-    SKNode *items = [self childNodeWithName:@"items"];
-    NSArray *weapons = [items childNodeWithName:@"weapon"].children;
+    SKNode *items = [self childNodeWithName:kOGGameSceneItemsNodeName];
+    NSArray *weapons = [items childNodeWithName:kOGGameSceneWeaponNodeName].children;
     
     for (SKSpriteNode *weapon in weapons)
     {
@@ -347,23 +375,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     {
         [self addChild:self.gameOverScreenNode];
     }
-}
-
-- (void)onMenuButtonClick
-{
-//    NSString *sceneFilePath = nil;
-//    
-//    sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
-//    
-//    if (sceneFilePath)
-//    {
-//        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-//        
-//        if (nextScene)
-//        {
-//            [self.view presentScene:nextScene];
-//        }
-//    }
 }
 
 #pragma mark - Update
