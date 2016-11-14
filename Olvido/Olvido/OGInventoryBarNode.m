@@ -91,7 +91,7 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
         
         __weak typeof(self) weakSelf = self;
         
-        [self.inventoryComponent.inventoryItems enumerateObjectsUsingBlock:^(id<OGInventoryItem> item, NSUInteger idx, BOOL * _Nonnull stop)
+        [self.inventoryComponent.inventoryItems enumerateObjectsUsingBlock:^(id<OGInventoryItem>  item, NSUInteger idx, BOOL * _Nonnull stop) 
          {
              if (weakSelf)
              {

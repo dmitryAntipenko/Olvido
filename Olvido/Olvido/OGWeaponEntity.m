@@ -120,6 +120,11 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
     return ((SKSpriteNode *)self.render.node).texture;
 }
 
+- (NSString *)identifier
+{
+    return kOGWeaponEntityDefaultInventoryIdentifier;
+}
+
 //- (NSString *)inventoryIdentifier
 //{
 //    return kOGWeaponEntityDefaultInventoryIdentifier;

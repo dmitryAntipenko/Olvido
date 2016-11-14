@@ -17,7 +17,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 @interface OGInventoryComponent ()
 
 @property (nonatomic, unsafe_unretained, readonly, getter=isFull) BOOL full;
-@property (nonatomic, strong) NSMutableArray<id <OGInventoryItem>> *mutableInventoryItems;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id <OGInventoryItem>> *mutableInventoryItems;
 
 @end
 
@@ -41,7 +41,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
     if (self)
     {
         _capacity = capacity;
-        _mutableInventoryItems = [NSMutableArray arrayWithCapacity:capacity];
+        _mutableInventoryItems = [NSMutableDictionary dictionaryWithCapacity:capacity];
     }
     
     return self;
@@ -65,7 +65,8 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
     {
         if (!self.isFull)
         {
-            [self.mutableInventoryItems addObject:item];
+            [self.mutableInventoryItems setObject:item forKey:item.identifier];
+//            [self.mutableInventoryItems addObject:item];
             [item didTaken];
         }
         else
@@ -87,9 +88,9 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 {
     [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
     
-    if (item && [self.mutableInventoryItems containsObject:item])
+    if (item && [self.mutableInventoryItems objectForKey:item.identifier])
     {
-        [self.mutableInventoryItems removeObject:item];
+        [self.mutableInventoryItems removeObjectForKey:item.identifier];
         [item didThrown];
     }
     
@@ -102,7 +103,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
     
     if (item)
     {
-        result = [self.mutableInventoryItems containsObject:item];
+        result = [self.mutableInventoryItems objectForKey:item.identifier] != nil;
     }
     
     return result;
@@ -115,7 +116,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 - (NSArray<id<OGInventoryItem>> *)inventoryItems
 {
-    return [self.mutableInventoryItems copy];
+    return self.mutableInventoryItems.allValues;
 }
 
 @end
