@@ -10,6 +10,8 @@
 
 @protocol OGInventoryItem <NSObject>
 
+@property (nonatomic, strong, readonly) SKTexture *texture;
+
 - (void)didTaken;
 
 - (void)didThrown;

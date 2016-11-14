@@ -48,6 +48,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     if (self)
     {
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
+        [self addComponent:_inventoryComponent];
         
         _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
         

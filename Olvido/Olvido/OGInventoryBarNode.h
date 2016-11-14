@@ -14,4 +14,6 @@
 
 + (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent;
 
+- (void)update;
+
 @end

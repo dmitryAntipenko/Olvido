@@ -28,6 +28,7 @@
 #import "OGMessageComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
+#import "OGInventoryComponent.h"
 
 #import "OGStatusBar.h"
 #import "OGInventoryBarNode.h"
@@ -137,6 +138,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
     [self createCameraNode];
     [self createStatusBar];
+    [self createInventoryBar];
     
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:CGSizeMake(200.0, 200.0)];
     inputNode.size = self.size;
@@ -200,7 +202,18 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     }
     
     [self createSceneItems];
-    [self createStatusBar];
+}
+
+- (void)createInventoryBar
+{
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    
+    if (self.camera)
+    {
+        [self.camera addChild:self.inventoryBarNode];
+    }
+    
+    [self.inventoryBarNode update];
 }
 
 - (void)createSceneItems
