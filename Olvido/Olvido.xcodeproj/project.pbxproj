@@ -98,6 +98,7 @@
 		EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */; };
 		EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1251DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m */; };
 		EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1281DD800C30067D76D /* OGBullet.m */; };
+		EAF7F12C1DDA234D0067D76D /* OGDeadBulletsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -282,6 +283,8 @@
 		EAF7F1251DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OGPlayerEntity+OGPlayerEntityResources.m"; sourceTree = "<group>"; };
 		EAF7F1271DD800C30067D76D /* OGBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBullet.h; sourceTree = "<group>"; };
 		EAF7F1281DD800C30067D76D /* OGBullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBullet.m; sourceTree = "<group>"; };
+		EAF7F12A1DDA234D0067D76D /* OGDeadBulletsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDeadBulletsManager.h; sourceTree = "<group>"; };
+		EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeadBulletsManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -822,6 +825,8 @@
 				EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */,
 				EAF7F1271DD800C30067D76D /* OGBullet.h */,
 				EAF7F1281DD800C30067D76D /* OGBullet.m */,
+				EAF7F12A1DDA234D0067D76D /* OGDeadBulletsManager.h */,
+				EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */,
 			);
 			name = Weapon;
 			sourceTree = "<group>";
@@ -926,6 +931,7 @@
 				EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */,
 				EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
+				EAF7F12C1DDA234D0067D76D /* OGDeadBulletsManager.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
 				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,

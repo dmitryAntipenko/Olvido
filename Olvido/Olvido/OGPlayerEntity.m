@@ -157,9 +157,4 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     }
 }
 
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
-}
-
 @end

@@ -98,11 +98,6 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
     }
 }
 
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
-}
-
 - (void)swapTriggerPosition
 {
     SKNode *trigger = [self.render.node childNodeWithName:kOGDoorEntityTriggerNodeName];
@@ -122,6 +117,16 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 {
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
+}
+
++ (BOOL)resourcesNeedLoading
+{
+    return YES;
+}
+
++ (void)purgeResources
+{
+    return;
 }
 
 @end

@@ -11,13 +11,11 @@
 #import "OGResourceLoadable.h"
 
 @class OGRenderComponent;
-@class OGAnimationComponent;
 @class OGPhysicsComponent;
 
 @interface OGBullet : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGRenderComponent *render;
-//@property (nonatomic, strong) OGAnimationComponent *animation;
 
 @end

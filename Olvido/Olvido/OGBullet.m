@@ -1,4 +1,4 @@
-//
+ //
 //  OGBullet.m
 //  Olvido
 //
@@ -11,6 +11,7 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGDeadBulletsManager.h"
 
 static SKTexture *sOGBulletEntityTexture;
 
@@ -41,13 +42,8 @@ static SKTexture *sOGBulletEntityTexture;
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    NSLog(@"%@: removing from scene", self);
+    [[OGDeadBulletsManager sharedManager] removeItem:self];
     [self.render.node removeFromParent];
-}
-
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
 }
 
 #pragma mark - Resources
@@ -73,13 +69,8 @@ static SKTexture *sOGBulletEntityTexture;
 
 + (void)loadMiscelaneousAssets
 {
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    NSArray *contactColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy], nil];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType bullet]];
-}
-
-- (void)dealloc
-{
-    NSLog(@"%@: dealloc", self);
 }
 
 @end

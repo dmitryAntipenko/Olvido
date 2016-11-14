@@ -10,6 +10,7 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGBullet.h"
+#import "OGDeadBulletsManager.h"
 #import "OGWeaponComponent.h"
 
 NSString *const kOGWeaponEntityDefaultInventoryIdentifier = @"weapon";
@@ -20,6 +21,7 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
 
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 @property (nonatomic, assign) BOOL allowsAttacking;
+@property (nonatomic, strong) NSTimer *bulletSpawnTimer;
 
 @end
 
@@ -67,18 +69,17 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
             OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
                                             withRotation:vectorAngle];
             
-            [ownerRenderComponent.node.scene addChild:bullet.render.node];
-            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
+            [[OGDeadBulletsManager sharedManager] addItem:bullet];
             
-            SKNode *bulletNode = bullet.render.node;
-            [bulletNode runAction:[SKAction waitForDuration:kOGWeaponEntityDefaultBulletLifetime] completion:^()
+            [ownerRenderComponent.node.scene addChild:bullet.render.node];
+            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];            
+            
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletLifetime repeats:NO block:^(NSTimer *timer)
             {
-                if (bulletNode)
-                {
-                    [bulletNode removeFromParent];
-                    self.allowsAttacking = YES;
-                }
-            }];            
+                self.allowsAttacking = YES;
+                [timer invalidate];
+                timer = nil;
+            }];
         }
     }
 }

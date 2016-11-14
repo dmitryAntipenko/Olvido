@@ -268,14 +268,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     }];
 }
 
-- (void)didEndContact:(SKPhysicsContact *)contact
-{
-    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
-     {
-         [notifiable contactWithEntityDidEnd:entity];
-     }];
-}
-
 - (void)handleContact:(SKPhysicsContact *)contact contactCallback:(void (^)(id<OGContactNotifiableType>, GKEntity *))callback
 {
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
