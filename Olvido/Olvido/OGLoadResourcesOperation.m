@@ -49,9 +49,15 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
         {
             if ([self.loadableClass resourcesNeedLoading])
             {
+                __weak typeof(self) weakSelf = self;
+                
                 [self.loadableClass loadResourcesWithCompletionHandler:^
                  {
-                     [self finish];
+                     if (weakSelf)
+                     {
+                         typeof(weakSelf) strongSelf = weakSelf;
+                         [strongSelf finish];
+                     }
                  }];
             }
             else

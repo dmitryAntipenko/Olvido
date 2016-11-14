@@ -46,7 +46,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
         {
             NSArray *configuration = [NSArray arrayWithContentsOfFile:pathForScenesConfiguration];
             
-            __block NSMutableArray *mutableSceneLoaders = [NSMutableArray array];
+            __weak NSMutableArray *mutableSceneLoaders = [NSMutableArray array];
             
             [configuration enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop)
              {
