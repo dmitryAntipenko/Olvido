@@ -12,6 +12,7 @@
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGAttacking.h"
 
 #import "OGEnemyEntityConfiguration.h"
 
@@ -66,7 +67,7 @@
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
+
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity

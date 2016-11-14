@@ -14,6 +14,8 @@
 @protocol OGContactNotifiableType <NSObject>
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity;
+
+@optional
 - (void)contactWithEntityDidEnd:(GKEntity *)entity;
 
 @end

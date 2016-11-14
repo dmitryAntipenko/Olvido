@@ -10,7 +10,8 @@
 #import "OGResourceLoadable.h"
 #import "OGContactNotifiableType.h"
 
-
+@class OGInventory;
+@class OGWeaponComponent;
 @class OGHealthComponent;
 @class OGAnimationComponent;
 @class OGIntelligenceComponent;
@@ -21,8 +22,9 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-@interface OGPlayerEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType>
+@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
+@property (nonatomic, strong) OGInventory *inventory;
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGInputComponent *input;
@@ -32,11 +34,6 @@
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
-
-+ (NSDictionary *)sOGPlayerEntityAnimations;
-+ (NSDictionary *)sOGPlayerEntityAppearTextures;
-+ (CGSize)textureSize;
+@property (nonatomic, strong) OGWeaponComponent *weaponComponent;
 
 @end

@@ -16,7 +16,7 @@
 #import "OGAnimation.h"
 
 CGFloat const kOGMovementComponentDefaultSpeedFactor = 1.0;
-CGFloat const kOGMovementComponentDefaultSpeed = 40;
+CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
 
 @interface OGMovementComponent ()
 
@@ -64,8 +64,8 @@ CGFloat const kOGMovementComponentDefaultSpeed = 40;
     }
     
     CGPoint oldPosition = self.renderComponent.node.position;
-    CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * 5.0,
-                                      oldPosition.y + self.displacementVector.dy * self.speedFactor * 5.0);
+    CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * kOGMovementComponentDefaultSpeed,
+                                      oldPosition.y + self.displacementVector.dy * self.speedFactor * kOGMovementComponentDefaultSpeed);
     
     self.renderComponent.node.position = newPosition;
 }

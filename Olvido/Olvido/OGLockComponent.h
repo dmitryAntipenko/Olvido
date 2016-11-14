@@ -15,4 +15,7 @@
 @property (nonatomic, assign, getter=isClosed) BOOL closed;
 @property (nonatomic, assign) CGFloat openDistance;
 
+- (void)addCheckingSelector:(SEL)selector withTarget:(id)target;
+- (void)removeCheckingSelector;
+
 @end

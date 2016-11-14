@@ -20,6 +20,8 @@
 + (OGColliderType *)enemy;
 + (OGColliderType *)obstacle;
 + (OGColliderType *)door;
++ (OGColliderType *)weapon;
++ (OGColliderType *)bullet;
 
 + (NSMutableDictionary *)definedCollisions;
 + (NSMutableDictionary *)requestedContactNotifications;
@@ -27,16 +29,3 @@
 - (BOOL)notifyOnContactWith:(OGColliderType *)colliderType;
 
 @end
-
-//struct OGColliderType
-//{
-//    uint32_t categoryBitMask;
-//    uint32_t collisionBitMask;
-//    uint32_t contactTestBitMask;
-//    NSUInteger angularDamping;
-//    NSUInteger linearDamping;
-//    NSUInteger friction;
-//    NSUInteger restitution;
-//};
-
-//extern const struct OGColliderType colliderType;

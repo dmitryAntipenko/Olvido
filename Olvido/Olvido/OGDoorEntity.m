@@ -22,6 +22,8 @@
 #import "OGDoorEntityLockedState.h"
 #import "OGDoorEntityUnlockedState.h"
 
+NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
+
 @implementation OGDoorEntity
 
 - (instancetype)init
@@ -43,11 +45,11 @@
         _render.node = spriteNode;
         [self addComponent:_render];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
+        SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
+        trigger.entity = self;
+        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
                                                       colliderType:[OGColliderType door]];
-        [self addComponent:_physics];
-        
-        _render.node.physicsBody = _physics.physicsBody;
+        [self addComponent:_physics];        
         
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
             [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
@@ -86,7 +88,9 @@
     if ([entity isKindOfClass:OGPlayerEntity.self])
     {
         [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transition completion:^()
-        {
+         {
+            [self swapTriggerPosition];
+             
             SKNode *temp = self.transition.destination;
             self.transition.destination = self.transition.source;
             self.transition.source = temp;
@@ -97,6 +101,16 @@
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
     
+}
+
+- (void)swapTriggerPosition
+{
+    SKNode *trigger = [self.render.node childNodeWithName:kOGDoorEntityTriggerNodeName];
+    
+    CGPoint newTriggerPosition = CGPointMake(-trigger.position.x, -trigger.position.y);
+    
+    SKAction *move = [SKAction moveTo:newTriggerPosition duration:0.0];
+    [trigger runAction:move];
 }
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler

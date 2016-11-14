@@ -20,10 +20,6 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     self.lockComponent.closed = NO;
-    
-    //[OGColliderType definedCollisions][self.lockComponent.target.entity];
-    
-//    self.renderComponent.node.physicsBody.categoryBitMask = kOGCollisionBitMaskDefault;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
 }
 
