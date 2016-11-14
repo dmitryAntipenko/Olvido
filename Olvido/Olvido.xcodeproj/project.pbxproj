@@ -94,7 +94,6 @@
 		EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */; };
 		EAF7F10E1DD51F0E0067D76D /* OGTransitionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10D1DD51F0E0067D76D /* OGTransitionComponent.m */; };
 		EAF7F1111DD523B30067D76D /* OGDoorEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F12021DD4E292006D4129 /* OGDoorEntity.m */; };
-		EAF7F1151DD782850067D76D /* OGInventory.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1141DD782850067D76D /* OGInventory.m */; };
 		EAF7F1191DD785FE0067D76D /* OGWeaponComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */; };
 		EAF7F11C1DD7878D0067D76D /* OGActionButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */; };
 		EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */; };
@@ -274,9 +273,6 @@
 		EAF7F10C1DD51F0E0067D76D /* OGTransitionComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponent.h; sourceTree = "<group>"; };
 		EAF7F10D1DD51F0E0067D76D /* OGTransitionComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTransitionComponent.m; sourceTree = "<group>"; };
 		EAF7F1101DD51FA90067D76D /* OGTransitionComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponentDelegate.h; sourceTree = "<group>"; };
-		EAF7F1131DD782850067D76D /* OGInventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventory.h; sourceTree = "<group>"; };
-		EAF7F1141DD782850067D76D /* OGInventory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInventory.m; sourceTree = "<group>"; };
-		EAF7F1161DD782A20067D76D /* OGInventoryItemProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGInventoryItemProtocol.h; sourceTree = "<group>"; };
 		EAF7F1171DD785FE0067D76D /* OGWeaponComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponent.h; sourceTree = "<group>"; };
 		EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponent.m; sourceTree = "<group>"; };
 		EAF7F11A1DD7878D0067D76D /* OGActionButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGActionButtonNode.h; sourceTree = "<group>"; };
@@ -365,7 +361,6 @@
 		1B28BEAB1DC893A000EC0BBD /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				EAF7F1121DD7826E0067D76D /* Inventory */,
 				210C996F1DB8E39E00704C62 /* StoryLevelScenes */,
 				EA4982531DD101CF00DCFE00 /* Configuration */,
 				EA5F11FF1DD4D59F006D4129 /* Camera */,
@@ -815,16 +810,6 @@
 			name = "Transition Component";
 			sourceTree = "<group>";
 		};
-		EAF7F1121DD7826E0067D76D /* Inventory */ = {
-			isa = PBXGroup;
-			children = (
-				EAF7F1131DD782850067D76D /* OGInventory.h */,
-				EAF7F1141DD782850067D76D /* OGInventory.m */,
-				EAF7F1161DD782A20067D76D /* OGInventoryItemProtocol.h */,
-			);
-			name = Inventory;
-			sourceTree = "<group>";
-		};
 		EAF7F11E1DD79B920067D76D /* Weapon Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -1005,7 +990,6 @@
 				EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
 				EA9EAACA1DCC9D1400E36855 /* OGRenderComponent.m in Sources */,
-				EAF7F1151DD782850067D76D /* OGInventory.m in Sources */,
 				EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */,
 				215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */,
 			);

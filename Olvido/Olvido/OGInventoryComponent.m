@@ -21,6 +21,17 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 @implementation OGInventoryComponent
 
++ (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity
+{
+    return [[self alloc] initWithCapacity:capacity];
+}
+
++ (instancetype)inventoryComponent
+{
+    return [[self alloc] init];
+}
+
+
 - (instancetype)initWithCapacity:(NSUInteger)capacity
 {
     self = [super init];
@@ -89,7 +100,7 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 - (BOOL)isFull
 {
-    return self.mutableInventoryItems.count < self.capacity;
+    return self.mutableInventoryItems.count >= self.capacity;
 }
 
 - (NSArray<id<OGInventoryItem>> *)inventoryItems

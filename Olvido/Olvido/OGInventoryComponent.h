@@ -14,7 +14,9 @@
 @property (nonatomic, unsafe_unretained, readonly) NSUInteger capacity;
 @property (nonatomic, strong, readonly) NSArray<id <OGInventoryItem>> *inventoryItems;
 
-- (instancetype)initWithCapacity:(NSUInteger)capacity;
++ (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity;
+
++ (instancetype)inventoryComponent;
 
 - (void)addItem:(id <OGInventoryItem>)item;
 

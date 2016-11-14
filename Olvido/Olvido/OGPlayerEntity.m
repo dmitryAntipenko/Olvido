@@ -17,8 +17,8 @@
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGWeaponComponent.h"
-#import "OGInventory.h"
-#import "OGInventoryItemProtocol.h"
+#import "OGInventoryItem.h"
+#import "OGInventoryComponent.h"
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
 
 #import "OGColliderType.h"
@@ -47,7 +47,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     
     if (self)
     {
-        _inventory = [[OGInventory alloc] init];
+        _inventoryComponent = [OGInventoryComponent inventoryComponent];
         
         _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
         
@@ -113,6 +113,8 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
     {
+        OGWeaponEntity *weaponEntity = (OGWeaponEntity *)entity;
+        
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
      
         [self dropCurrentWeaponAtPoint:renderComponent.node.position];
@@ -121,7 +123,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         {
             self.weaponComponent.weapon = (OGWeaponEntity *) entity;
             self.weaponComponent.weapon.owner = self;
-            [self.inventory addItem:(id<OGInventoryItemProtocol>) entity];
+            
             [renderComponent.node removeFromParent];
             
             SKAction *takeWeaponDelay = [SKAction waitForDuration:kOGPlayerEntityWeaponDropDelay];
@@ -130,6 +132,8 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
                 self.canTakeWeapon = YES;
             }];
         }
+        
+        [self.inventoryComponent addItem:weaponEntity];
     }
 }
 
@@ -151,7 +155,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         [weaponNode.physicsBody applyImpulse:dropVector];
         
         self.canTakeWeapon = NO;
-        [self.inventory removeItem:self.weaponComponent.weapon];
+        [self.inventoryComponent removeItem:self.weaponComponent.weapon];
         self.weaponComponent.weapon.owner = nil;
         self.weaponComponent.weapon = nil;
     }

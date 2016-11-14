@@ -103,16 +103,26 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
     return (OGWeaponComponent *) [self.owner componentForClass:OGWeaponComponent.self];
 }
 
-#pragma mark - OGInventoryItemProtocol
+#pragma mark - OGInventoryItem
 
-- (NSString *)inventoryIdentifier
+- (void)didTaken
 {
-    return kOGWeaponEntityDefaultInventoryIdentifier;
+    NSLog(@"did taken");
 }
 
-- (SKNode *)itemNode
+- (void)didThrown
 {
-    return self.render.node;
+    NSLog(@"did thrown");
 }
+
+//- (NSString *)inventoryIdentifier
+//{
+//    return kOGWeaponEntityDefaultInventoryIdentifier;
+//}
+//
+//- (SKNode *)itemNode
+//{
+//    return self.render.node;
+//}
 
 @end

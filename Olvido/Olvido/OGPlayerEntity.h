@@ -10,7 +10,7 @@
 #import "OGResourceLoadable.h"
 #import "OGContactNotifiableType.h"
 
-@class OGInventory;
+@class OGInventoryComponent;
 @class OGWeaponComponent;
 @class OGHealthComponent;
 @class OGAnimationComponent;
@@ -24,7 +24,7 @@
 
 @interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
-@property (nonatomic, strong) OGInventory *inventory;
+@property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGInputComponent *input;
