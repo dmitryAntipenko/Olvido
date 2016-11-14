@@ -9,7 +9,9 @@
 #import "OGInventoryComponent.h"
 #import "OGMessageComponent.h"
 #import "OGRenderComponent.h"
+#import "OGInventoryObserver.h"
 
+NSString *const kOGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
 NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 @interface OGInventoryComponent ()
@@ -57,6 +59,8 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 - (void)addItem:(id <OGInventoryItem>)item
 {
+    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    
     if (item)
     {
         if (!self.isFull)
@@ -75,15 +79,21 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
             //            }
         }
     }
+    
+    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (void)removeItem:(id <OGInventoryItem>)item
 {
+    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    
     if (item && [self.mutableInventoryItems containsObject:item])
     {
         [self.mutableInventoryItems removeObject:item];
         [item didThrown];
     }
+    
+    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (BOOL)containsItem:(id <OGInventoryItem>)item

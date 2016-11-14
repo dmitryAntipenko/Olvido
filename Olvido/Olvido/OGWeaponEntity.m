@@ -115,6 +115,11 @@ CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
     NSLog(@"did thrown");
 }
 
+- (SKTexture *)texture
+{
+    return ((SKSpriteNode *)self.render.node).texture;
+}
+
 //- (NSString *)inventoryIdentifier
 //{
 //    return kOGWeaponEntityDefaultInventoryIdentifier;

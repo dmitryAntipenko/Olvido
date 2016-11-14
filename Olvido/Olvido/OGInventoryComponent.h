@@ -9,6 +9,8 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGInventoryItem.h"
 
+extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
+
 @interface OGInventoryComponent : GKComponent
 
 @property (nonatomic, unsafe_unretained, readonly) NSUInteger capacity;
