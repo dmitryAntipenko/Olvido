@@ -72,6 +72,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 
 @implementation OGGameScene
 
+@synthesize name = _name;
+
 #pragma mark - Initializer
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -80,7 +82,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     if (self)
     {
-        _sceneConfiguration = [[OGGameSceneConfiguration alloc] init];
+        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
+        
         _cameraController = [[OGCameraController alloc] init];
         
         _player = [[OGPlayerEntity alloc] init];
@@ -123,7 +126,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
-    [self.sceneConfiguration loadConfigurationWithFileName:self.name];
     
     [self createSceneContents];
     
@@ -149,7 +151,14 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
     
+    
+    
     [self.stateMachine enterState:[OGGameLevelState class]];
+}
+
+- (void)createInventoryBar
+{
+    
 }
 
 - (void)createSceneContents
@@ -191,8 +200,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
             [self addEntity:door];
         }
     }
-    
-    [self createStatusBar];
 }
 
 - (void)addEntity:(GKEntity *)entity
@@ -358,6 +365,5 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
         [componentSystem updateWithDeltaTime:deltaTime];
     }
 }
-
 
 @end
