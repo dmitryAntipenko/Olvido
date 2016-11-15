@@ -59,7 +59,7 @@
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-
+    NSLog(@"attack player");
 }
 
 @end

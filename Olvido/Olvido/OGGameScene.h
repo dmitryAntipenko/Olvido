@@ -19,8 +19,6 @@
 @property (nonatomic, copy) NSNumber *identifier;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 
-- (void)addEntity:(GKEntity *)entity;
-
 - (void)pause;
 
 - (void)restart;
