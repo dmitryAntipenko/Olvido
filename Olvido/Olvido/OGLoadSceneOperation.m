@@ -11,6 +11,7 @@
 #import "OGBaseScene.h"
 #import "OGConstants.h"
 #import "OGGameScene.h"
+#import "GKScene+OGFactory.h"
 
 NSUInteger const kOGLoadSceneOperationProgressTotalUnitCount = 1;
 NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
@@ -60,21 +61,11 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
         }
         else
         {
-            GKScene *gkScene = [GKScene sceneWithFileNamed:self.sceneMetadata.fileName];
+            GKScene *gkScene = [GKScene sceneWithMetadata:self.sceneMetadata];
             
             self.scene = (OGBaseScene *)gkScene.rootNode;
         
             [self.scene createCamera];
-        
-            if (gkScene.graphs.count > 0)
-            {
-                if (!self.scene.userData)
-                {
-                    self.scene.userData = [[NSMutableDictionary alloc] init];
-                }
-                
-                [self.scene.userData setObject:gkScene.graphs forKey:kOGLoadSceneOperationGraphsKey];
-            }
             
             self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
             
