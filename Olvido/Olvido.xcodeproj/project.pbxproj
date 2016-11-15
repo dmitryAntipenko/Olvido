@@ -437,6 +437,7 @@
 		1B7F24AC1DD5D119004918C8 /* LoadOperations */ = {
 			isa = PBXGroup;
 			children = (
+				1B2E87361DDB0E300022CAB6 /* GKScene */,
 				1B7F247E1DD5D074004918C8 /* OGLoadOperation.h */,
 				1B7F247F1DD5D074004918C8 /* OGLoadOperation.m */,
 				1B7F24801DD5D074004918C8 /* OGLoadResourcesOperation.h */,
@@ -762,7 +763,6 @@
 		EA976D051D9EDBF8003B77FC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				1B2E87361DDB0E300022CAB6 /* GKScene */,
 				1B7F247C1DD5D074004918C8 /* OGLoadingScene.h */,
 				1B7F247D1DD5D074004918C8 /* OGLoadingScene.m */,
 				1B7F24781DD5D074004918C8 /* OGBaseScene.h */,

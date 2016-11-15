@@ -14,10 +14,13 @@
 @property (nonatomic, strong, readonly) NSString *identifier;
 
 - (SKTexture *)texture;
+
 - (NSString *)identifier;
 
 @optional
+
 - (void)didTaken;
+
 - (void)didThrown;
 
 @end
