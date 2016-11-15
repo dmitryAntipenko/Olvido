@@ -21,4 +21,6 @@
 
 - (instancetype)initWithDoorEntity:(OGDoorEntity *)entity;
 
+- (BOOL)isTargetNearDoor;
+
 @end

@@ -57,7 +57,7 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
-CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
+CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 @interface OGGameScene ()
 
@@ -235,7 +235,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
         [self.camera addChild:self.inventoryBarNode];
     }
     
-    [self.inventoryBarNode update];
+    [self.inventoryBarNode updateConstraints];
 }
 
 - (void)createSceneItems
@@ -246,9 +246,12 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     for (SKSpriteNode *weapon in weapons)
     {
         OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weapon];
+        shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
     }
 }
+
+#pragma mark - Entity Adding
 
 - (void)addEntity:(GKEntity *)entity
 {
@@ -272,6 +275,20 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     {
         [intelligenceComponent enterInitialState];
     }
+}
+
+- (void)removeEntity:(GKEntity *)entity
+{
+    SKNode *node = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    
+    [node removeFromParent];
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem removeComponentWithEntity:entity];
+    }
+    
+    [self.entities removeObject:entity];
 }
 
 #pragma mark - TransitionComponentDelegate

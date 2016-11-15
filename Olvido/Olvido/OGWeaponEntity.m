@@ -10,7 +10,6 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGBullet.h"
-#import "OGDeadBulletsManager.h"
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
 
@@ -71,9 +70,10 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
             OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
                                             withRotation:vectorAngle];
             
-            [[OGDeadBulletsManager sharedManager] addItem:bullet];
+            bullet.delegate = self.delegate;
+            [self.delegate addEntity:bullet];
             
-            [ownerRenderComponent.node.scene addChild:bullet.render.node];
+            //[ownerRenderComponent.node.scene addChild:bullet.render.node];
             [bullet.physics.physicsBody applyImpulse:bulletMovementVector];            
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletLifetime repeats:NO block:^(NSTimer *timer)

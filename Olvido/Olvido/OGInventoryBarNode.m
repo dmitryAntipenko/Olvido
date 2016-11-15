@@ -81,7 +81,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 
 #pragma mark - Update
 
-- (void)update
+- (void)updateConstraints
 {
     [self updateInventoryBarSize];
     [self updateInventoryBarItems];

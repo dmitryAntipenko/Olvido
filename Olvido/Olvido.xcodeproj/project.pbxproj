@@ -21,7 +21,6 @@
 		1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EABF1DC0F6F000E9CA23 /* OGCompleteLevelState.m */; };
 		1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */; };
 		1B2E873B1DDB0EE40022CAB6 /* GKScene+OGFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */; };
-		1B2E873E1DDB0F920022CAB6 /* OGGKGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B2E873D1DDB0F920022CAB6 /* OGGKGameScene.m */; };
 		1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B36E4C71DC618100080D80B /* OGPauseScreen.sks */; };
 		1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */; };
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
@@ -98,7 +97,6 @@
 		EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */; };
 		EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1251DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m */; };
 		EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1281DD800C30067D76D /* OGBullet.m */; };
-		EAF7F12C1DDA234D0067D76D /* OGDeadBulletsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */; };
 		EAF7F12F1DDA306C0067D76D /* OGPlayerConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F12E1DDA306C0067D76D /* OGPlayerConfiguration.m */; };
 /* End PBXBuildFile section */
 
@@ -131,8 +129,6 @@
 		1B27EAC21DC0F6FD00E9CA23 /* OGDeathLevelState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeathLevelState.m; sourceTree = "<group>"; };
 		1B2E87391DDB0EE40022CAB6 /* GKScene+OGFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GKScene+OGFactory.h"; sourceTree = "<group>"; };
 		1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GKScene+OGFactory.m"; sourceTree = "<group>"; };
-		1B2E873C1DDB0F920022CAB6 /* OGGKGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGKGameScene.h; sourceTree = "<group>"; };
-		1B2E873D1DDB0F920022CAB6 /* OGGKGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGKGameScene.m; sourceTree = "<group>"; };
 		1B36E4C71DC618100080D80B /* OGPauseScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGPauseScreen.sks; sourceTree = "<group>"; };
 		1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationComponent.h; sourceTree = "<group>"; };
 		1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationComponent.m; sourceTree = "<group>"; };
@@ -236,6 +232,7 @@
 		EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLockComponent.m; sourceTree = "<group>"; };
 		EA70E5201DB3F4620034116D /* OGMovementComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementComponent.h; sourceTree = "<group>"; };
 		EA70E5211DB3F4620034116D /* OGMovementComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementComponent.m; sourceTree = "<group>"; };
+		EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEntityManaging.h; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -284,8 +281,6 @@
 		EAF7F1251DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OGPlayerEntity+OGPlayerEntityResources.m"; sourceTree = "<group>"; };
 		EAF7F1271DD800C30067D76D /* OGBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBullet.h; sourceTree = "<group>"; };
 		EAF7F1281DD800C30067D76D /* OGBullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBullet.m; sourceTree = "<group>"; };
-		EAF7F12A1DDA234D0067D76D /* OGDeadBulletsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDeadBulletsManager.h; sourceTree = "<group>"; };
-		EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDeadBulletsManager.m; sourceTree = "<group>"; };
 		EAF7F12D1DDA306C0067D76D /* OGPlayerConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerConfiguration.h; sourceTree = "<group>"; };
 		EAF7F12E1DDA306C0067D76D /* OGPlayerConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -370,19 +365,9 @@
 				215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */,
 				EA5870F31DC0D26000FCF126 /* OGGameScene.h */,
 				EA5870F41DC0D26000FCF126 /* OGGameScene.m */,
+				EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */,
 			);
 			name = Game;
-			sourceTree = "<group>";
-		};
-		1B2E87361DDB0E300022CAB6 /* GKScene */ = {
-			isa = PBXGroup;
-			children = (
-				1B2E87391DDB0EE40022CAB6 /* GKScene+OGFactory.h */,
-				1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */,
-				1B2E873C1DDB0F920022CAB6 /* OGGKGameScene.h */,
-				1B2E873D1DDB0F920022CAB6 /* OGGKGameScene.m */,
-			);
-			name = GKScene;
 			sourceTree = "<group>";
 		};
 		1B36E4C91DC624010080D80B /* Screens */ = {
@@ -437,7 +422,8 @@
 		1B7F24AC1DD5D119004918C8 /* LoadOperations */ = {
 			isa = PBXGroup;
 			children = (
-				1B2E87361DDB0E300022CAB6 /* GKScene */,
+				1B2E87391DDB0EE40022CAB6 /* GKScene+OGFactory.h */,
+				1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */,
 				1B7F247E1DD5D074004918C8 /* OGLoadOperation.h */,
 				1B7F247F1DD5D074004918C8 /* OGLoadOperation.m */,
 				1B7F24801DD5D074004918C8 /* OGLoadResourcesOperation.h */,
@@ -838,8 +824,6 @@
 				EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */,
 				EAF7F1271DD800C30067D76D /* OGBullet.h */,
 				EAF7F1281DD800C30067D76D /* OGBullet.m */,
-				EAF7F12A1DDA234D0067D76D /* OGDeadBulletsManager.h */,
-				EAF7F12B1DDA234D0067D76D /* OGDeadBulletsManager.m */,
 			);
 			name = Weapon;
 			sourceTree = "<group>";
@@ -876,7 +860,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 93L4B89BM9;
+						DevelopmentTeam = Z8D3NJ2X9W;
 					};
 				};
 			};
@@ -943,7 +927,6 @@
 				EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */,
 				EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
-				EAF7F12C1DDA234D0067D76D /* OGDeadBulletsManager.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
 				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
@@ -972,7 +955,6 @@
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
-				1B2E873E1DDB0F920022CAB6 /* OGGKGameScene.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				EAF7F10E1DD51F0E0067D76D /* OGTransitionComponent.m in Sources */,
@@ -1126,11 +1108,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1144,11 +1126,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 93L4B89BM9;
+				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
