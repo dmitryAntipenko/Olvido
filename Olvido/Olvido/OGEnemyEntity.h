@@ -8,6 +8,7 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
+#import "OGResourceLoadable.h"
 
 @class OGHealthComponent;
 @class OGAnimationComponent;
@@ -16,7 +17,14 @@
 @class OGMovementComponent;
 @class OGPhysicsComponent;
 
-@interface OGEnemyEntity : GKEntity <OGContactNotifiableType>
+typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
+{
+    kOGEnemyEntityMandateFollowPath = 0,
+    kOGEnemyEntityMandateHunt,
+    kOGEnemyEntityMandateAttack
+};
+
+@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;
@@ -25,4 +33,12 @@
 @property (nonatomic, strong) OGMovementComponent *movement;
 @property (nonatomic, strong) OGIntelligenceComponent *intelligence;
 
+@property (nonatomic, strong) GKAgent2D *agent;
+
++ (CGSize)textureSize;
++ (NSDictionary *)sOGEnemyEntityAnimations;
+
+- (instancetype)initWithPoints:(NSArray<NSValue *> *)points NS_DESIGNATED_INITIALIZER;
+
+- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
 @end

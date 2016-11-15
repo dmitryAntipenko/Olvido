@@ -26,8 +26,8 @@
 #import "OGplayerEntityControlledState.h"
 #import "OGplayerEntityAttackState.h"
 
-NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
-NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
+NSString *const kOGPlayerEntityAtlasNamesPlayerIdle = @"PlayerBotIdle";
+NSString *const kOGPlayerEntityAtlasNamesPlayerWalk = @"PlayerBotWalk";
 
 static NSDictionary<NSString *, NSDictionary *> *sOGPlayerEntityAnimations;
 static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
@@ -106,12 +106,12 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
     return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
 }
 
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
++ (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler
 {
     [OGPlayerEntity loadMiscellaneousAssets];
     
-    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
-                                  kOGPlayerEntityAtlasNamesPlayerBotWalk];
+    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerIdle,
+                                  kOGPlayerEntityAtlasNamesPlayerWalk];
     
     [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
     {
@@ -121,7 +121,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         {
             appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
                                                                                                                  atlas:foundAtlases[0]
-                                                                                                       imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
+                                                                                                       imageIdentifier:kOGPlayerEntityAtlasNamesPlayerIdle];
         }
         
         sOGPlayerEntityAppearTextures = appearTextures;
@@ -129,14 +129,14 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
         animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle
+                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerIdle
                                                                                                             animationState:kOGAnimationStateIdle
                                                                                                             bodyActionName:nil
                                                                                                      repeatTexturesForever:YES
                                                                                                              playBackwards:NO];
         
         animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk
+                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerWalk
                                                                                                             animationState:kOGAnimationStateWalkForward
                                                                                                             bodyActionName:nil
                                                                                                      repeatTexturesForever:YES

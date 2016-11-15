@@ -20,6 +20,8 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
 }

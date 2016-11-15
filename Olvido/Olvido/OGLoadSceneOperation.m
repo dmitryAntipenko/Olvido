@@ -58,7 +58,6 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         else
         {
             self.scene = [self.sceneMetadata.sceneClass nodeWithFileNamed:self.sceneMetadata.fileName];
-            
             [self.scene createCamera];
             
             self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;

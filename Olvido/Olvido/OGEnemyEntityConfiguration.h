@@ -13,4 +13,6 @@
 
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 
++ (NSTimeInterval)maxPredictionTimeForObstacleAvoidance;
++ (CGFloat)pathfindingGraphBufferRadius;
 @end

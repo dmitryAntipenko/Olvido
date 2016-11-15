@@ -6,7 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import <GameplayKit/GameplayKit.h>
 #import "OGGameSceneDelegate.h"
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
@@ -29,6 +29,13 @@
 @property (nonatomic, strong) OGStatusBar *statusBar;
 
 @property (nonatomic, strong) OGPlayerEntity *player;
+
+@property (nonatomic, strong) GKObstacleGraph *obstaclesGraph;
+
+@property (nonatomic, strong, readonly) NSArray<SKSpriteNode *> *obstacleSpriteNodes;
+@property (nonatomic, strong, readonly) NSArray<GKPolygonObstacle *> *polygonObstacles;
+
+@property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
 
 - (void)pause;
 - (void)restart;

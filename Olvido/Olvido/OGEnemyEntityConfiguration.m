@@ -16,4 +16,14 @@
     return 30.0;
 }
 
++ (NSTimeInterval)maxPredictionTimeForObstacleAvoidance
+{
+    return 1.0;
+}
+
++ (CGFloat)pathfindingGraphBufferRadius
+{
+    return 30.0;
+}
+
 @end

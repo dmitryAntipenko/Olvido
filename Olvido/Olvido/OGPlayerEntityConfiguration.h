@@ -17,6 +17,5 @@
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, assign, readonly) CGFloat messageShowDistance;
 
-
 @end
 

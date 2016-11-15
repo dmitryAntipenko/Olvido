@@ -33,8 +33,6 @@
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
 
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
-
 + (NSDictionary *)sOGPlayerEntityAnimations;
 + (NSDictionary *)sOGPlayerEntityAppearTextures;
 + (CGSize)textureSize;
