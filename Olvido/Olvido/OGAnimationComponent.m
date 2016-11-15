@@ -35,6 +35,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         {
             _animations = animations;
             _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil size:textureSize];
+//            _spriteNode.position = CGPointMake(0, 20);
             _elapsedAnimationDuration = 0.0;
         }
     }
