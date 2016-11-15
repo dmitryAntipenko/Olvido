@@ -21,6 +21,6 @@ extern NSString *const kOGLoadOperationKeyPathForisExecutingValue;
 
 @interface OGLoadOperation : NSOperation
 
-@property (nonatomic, unsafe_unretained) OGLoadOperationState state;
+@property (nonatomic, assign) OGLoadOperationState state;
 
 @end

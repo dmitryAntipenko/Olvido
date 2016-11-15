@@ -13,7 +13,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 @interface OGLoadResourcesOperation ()
 
-@property (nonatomic, unsafe_unretained) Class<OGResourceLoadable> loadableClass;
+@property (nonatomic, assign) Class<OGResourceLoadable> loadableClass;
 
 @end
 
@@ -50,10 +50,15 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
         {
             if ([self.loadableClass resourcesNeedLoading])
             {
+                __block typeof(self) weakSelf = self;
+                
                 [self.loadableClass loadResourcesWithCompletionHandler:^
-                {
-                    [self finish];
-                }];
+                 {
+                     if (weakSelf)
+                     {
+                         [weakSelf finish];
+                     }
+                 }];
             }
             else
             {
@@ -66,6 +71,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 - (void)finish
 {
     self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+    
     [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
     self.state = finishedState;
     [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];

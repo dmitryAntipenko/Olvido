@@ -39,6 +39,7 @@
 		<string>OGInitialLevel</string>
 		<key>OnDemandResources</key>
 		<array>
+			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>
 		</array>
 	</dict>

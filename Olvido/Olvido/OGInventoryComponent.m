@@ -7,45 +7,107 @@
 //
 
 #import "OGInventoryComponent.h"
+#import "OGMessageComponent.h"
+#import "OGRenderComponent.h"
 
+NSString *const kOGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
 NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 
 @interface OGInventoryComponent ()
 
-@property (nonatomic, strong, readwrite) NSMutableArray<OGSpriteNode *> *mutableInventory;
+@property (nonatomic, assign, readonly, getter=isFull) BOOL full;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, id <OGInventoryItem>> *mutableInventoryItems;
 
 @end
 
 @implementation OGInventoryComponent
 
-- (void)didAddToEntity
++ (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity
 {
-    NSMutableArray *inventory = [[NSMutableArray alloc] init];
-    self.mutableInventory = inventory;
+    return [[self alloc] initWithCapacity:capacity];
+}
+
++ (instancetype)inventoryComponent
+{
+    return [[self alloc] init];
+}
+
+
+- (instancetype)initWithCapacity:(NSUInteger)capacity
+{
+    self = [super init];
     
-    self.capacity = kOGInventoryComponentDefaultCapacity;
-}
-
-- (void)addItem:(OGSpriteNode *)item
-{
-    if (self.mutableInventory.count < self.capacity && item)
+    if (self)
     {
-        [self.mutableInventory addObject:item];
+        _capacity = capacity;
+        _mutableInventoryItems = [NSMutableDictionary dictionaryWithCapacity:capacity];
     }
+    
+    return self;
 }
 
-- (void)removeItem:(OGSpriteNode *)item
+- (instancetype)init
 {
+    return [self initWithCapacity:kOGInventoryComponentDefaultCapacity];
+}
+
+- (void)addItem:(id <OGInventoryItem>)item
+{
+    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    
     if (item)
     {
-        [self.mutableInventory removeObject:item];
+        if (!self.isFull)
+        {
+            [self.mutableInventoryItems setObject:item forKey:item.identifier];
+            
+            if ([item respondsToSelector:@selector(didTaken)])
+            {
+                [item didTaken];
+            }
+        }
     }
+    
+    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
-- (NSArray<OGSpriteNode *> *)inventory
+- (void)removeItem:(id <OGInventoryItem>)item
 {
-    return [self.mutableInventory copy];
+    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    
+    if (item && [self.mutableInventoryItems objectForKey:item.identifier])
+    {
+        [self.mutableInventoryItems removeObjectForKey:item.identifier];
+        
+        if ([item respondsToSelector:@selector(didThrown)])
+        {
+            [item didThrown];
+        }
+    }
+    
+    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
+- (BOOL)containsItem:(id <OGInventoryItem>)item
+{
+    BOOL result = NO;
+    
+    if (item)
+    {
+        result = [self.mutableInventoryItems objectForKey:item.identifier] != nil;
+    }
+    
+    return result;
+}
+
+- (BOOL)isFull
+{
+    return self.mutableInventoryItems.count >= self.capacity;
+}
+
+- (NSArray<id<OGInventoryItem>> *)inventoryItems
+{
+    return self.mutableInventoryItems.allValues;
+}
 
 @end

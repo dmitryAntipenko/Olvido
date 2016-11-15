@@ -6,9 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#ifndef OGDirection_h
-#define OGDirection_h
-
 typedef NS_ENUM(NSUInteger, OGDirection)
 {
     kOGDirectionRight,
@@ -21,5 +18,3 @@ static NSString *const kOGDirectionDescription[] = {
 };
 
 static NSInteger const kOGDirectionCount = 2;
-
-#endif /* OGDirection_h */

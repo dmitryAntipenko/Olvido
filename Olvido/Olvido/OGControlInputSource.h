@@ -12,6 +12,8 @@
 @protocol OGControlInputSourceDelegate <NSObject>
 
 - (void)didUpdateDisplacement:(CGVector)displacement;
+- (void)didUpdateAttackDisplacement:(CGVector)displacement;
+- (void)didPressed:(BOOL)pressed;
 
 @end
 

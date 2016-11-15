@@ -68,22 +68,26 @@
     return YES;
 }
 
-- (void)thumbStickNode:(OGThumbStickNode *)node didUpdateXValue:(CGFloat)xValue yValue:(CGFloat)yValue
+- (void)thumbStickNode:(SKSpriteNode *)node isPressed:(BOOL)pressed
 {
-    if (node == self.leftThumbStick)
+    if (node == self.rightThumbStick)
     {
-        CGVector displacement = CGVectorMake(xValue, yValue);
-        [self.inputSourceDelegate didUpdateDisplacement:displacement];
-    }
-    else if (node == self.rightThumbStick)
-    {
-        // do something
+        [self.inputSourceDelegate didPressed:pressed];
     }
 }
 
-- (void)thumbStickNode:(OGThumbStickNode *)node isPressed:(BOOL)pressed
+- (void)thumbStickNode:(OGThumbStickNode *)node didUpdateXValue:(CGFloat)xValue yValue:(CGFloat)yValue
 {
-    // do something
+    CGVector displacement = CGVectorMake(xValue, yValue);
+    
+    if (node == self.leftThumbStick)
+    {
+        [self.inputSourceDelegate didUpdateDisplacement:displacement];
+    }
+    else
+    {
+        [self.inputSourceDelegate didUpdateAttackDisplacement:displacement];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -106,8 +110,7 @@
         {
             [self.leftControlTouches unionSet:set];
             self.leftThumbStick.position = [self pointByCheckingControlOffset:touchPoint];
-            [self.leftThumbStick touchesBegan:set withEvent:event];
-            
+            [self.leftThumbStick touchesBegan:set withEvent:event];            
         }
         else
         {
@@ -121,11 +124,11 @@
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
-    
+
     NSMutableSet *movedLeftTouches = [NSMutableSet setWithSet:touches];
     [movedLeftTouches intersectSet:self.leftControlTouches];
     [self.leftThumbStick touchesMoved:movedLeftTouches withEvent:event];
-    
+
     NSMutableSet *movedRightTouches = [NSMutableSet setWithSet:touches];
     [movedRightTouches intersectSet:self.rightControlTouches];
     [self.rightThumbStick touchesMoved:movedRightTouches withEvent:event];
@@ -134,13 +137,13 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [super touchesEnded:touches withEvent:event];
-    
-    NSMutableSet *endedLeftTouches = [NSMutableSet setWithObject:touches];
+   
+    NSMutableSet *endedLeftTouches = [NSMutableSet setWithSet:touches];
     [endedLeftTouches intersectSet:self.leftControlTouches];
     [self.leftThumbStick touchesEnded:endedLeftTouches withEvent:event];
     [self.leftControlTouches minusSet:endedLeftTouches];
 
-    NSMutableSet *endedRightTouches = [NSMutableSet setWithObject:touches];
+    NSMutableSet *endedRightTouches = [NSMutableSet setWithSet:touches];
     [endedRightTouches intersectSet:self.rightControlTouches];
     [self.rightThumbStick touchesEnded:endedRightTouches withEvent:event];
     [self.rightControlTouches minusSet:endedRightTouches];
@@ -151,7 +154,7 @@
     [super touchesCancelled:touches withEvent:event];
     
     [self.leftThumbStick resetTouchPad];
-    [self.rightThumbStick resetTouchPad];
+    [self.leftThumbStick resetTouchPad];
     
     [self.leftControlTouches removeAllObjects];
     [self.rightControlTouches removeAllObjects];

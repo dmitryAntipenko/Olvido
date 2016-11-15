@@ -38,14 +38,8 @@
     [super updateWithDeltaTime:seconds];
     
     if (!self.lockComponent.isLocked)
-    {
-        SKNode *target = self.lockComponent.target;
-        SKNode *doorNode = self.renderComponent.node;
-        
-        CGFloat distance = hypot(doorNode.position.x - target.position.x,
-                                 doorNode.position.y - target.position.y);
-        
-        if (self.lockComponent.isClosed && distance < self.lockComponent.openDistance)
+    {        
+        if (self.lockComponent.isClosed && [self isTargetNearDoor])
         {
             if ([self.stateMachine canEnterState:OGDoorEntityOpenedState.self])
             {

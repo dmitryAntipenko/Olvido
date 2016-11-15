@@ -15,9 +15,9 @@ typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
     kOGCollisionBitMaskPlayer = 0x01 << 1,      //2
     kOGCollisionBitMaskEnemy = 0x01 << 2,       //4
     kOGCollisionBitMaskObstacle = 0x01 << 3,    //8
-    kOGCollisionBitMaskCoin = 0x01 << 4,        //16
-    kOGCollisionBitMaskPortal = 0x01 << 5,      //32
-    kOGCollisionBitMaskKey = 0x01 << 6          //64
+    kOGCollisionBitMaskWeapon = 0x01 << 4,        //16
+    kOGCollisionBitMaskDoor = 0x01 << 5,      //32
+    kOGCollisionBitMaskBullet = 0x01 << 6          //64
 };
 
 #endif /* Header_h */

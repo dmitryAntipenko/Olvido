@@ -11,24 +11,11 @@
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
 
-@class OGPlayerEntity;
-@class OGMovementControlComponent;
-@class OGTransitionComponent;
-@class OGAccessComponent;
-@class OGStatusBar;
-@class OGHealthComponent;
-@class OGInventoryComponent;
-@class OGAnimationComponent;
-
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate>
 
 @property (nonatomic, copy) NSNumber *identifier;
 
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
-
-@property (nonatomic, strong) OGStatusBar *statusBar;
-
-@property (nonatomic, strong) OGPlayerEntity *player;
 
 @property (nonatomic, strong) GKObstacleGraph *obstaclesGraph;
 

@@ -45,4 +45,15 @@
     return _renderComponent;
 }
 
+- (BOOL)isTargetNearDoor
+{
+    CGRect targetRect = self.lockComponent.target.calculateAccumulatedFrame;
+    CGRect doorNodeRect = self.renderComponent.node.calculateAccumulatedFrame;
+    CGFloat minOpenDistance = self.lockComponent.openDistance;
+    
+    CGRect enlargedTargetRect = CGRectInset(targetRect, -minOpenDistance, -minOpenDistance);
+    
+    return CGRectIntersectsRect(enlargedTargetRect, doorNodeRect);
+}
+
 @end

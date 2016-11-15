@@ -8,6 +8,7 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
+#import "OGResourceLoadable.h"
 #import "OGTransitionComponentDelegate.h"
 
 @class OGRenderComponent;
@@ -17,7 +18,7 @@
 @class OGLockComponent;
 @class OGTransitionComponent;
 
-@interface OGDoorEntity : GKEntity <OGContactNotifiableType>
+@interface OGDoorEntity : GKEntity <OGContactNotifiableType, OGResourceLoadable>
 
 @property (nonatomic, weak) id<OGTransitionComponentDelegate> transitionDelegate;
 
@@ -33,7 +34,6 @@
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 
 - (void)lock;
-
 - (void)unlock;
 
 @end

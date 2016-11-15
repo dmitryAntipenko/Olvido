@@ -26,9 +26,9 @@
         {
             _physicsBody = body;
             
-            _physicsBody.categoryBitMask = (uint32_t)type.categoryBitMask;
-            _physicsBody.collisionBitMask = (uint32_t)type.collisionBitMask;
-            _physicsBody.contactTestBitMask = (uint32_t)type.contactTestBitMask;
+            _physicsBody.categoryBitMask = (uint32_t) type.categoryBitMask;
+            _physicsBody.collisionBitMask = (uint32_t) type.collisionBitMask;
+            _physicsBody.contactTestBitMask = (uint32_t) type.contactTestBitMask;
         }
     }
     

@@ -10,6 +10,7 @@
 
 @interface OGEnemyConfiguration : NSObject
 
+@property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, copy, readonly) NSString *initialPointName;
 @property (nonatomic, assign, readonly) CGVector initialVector;
 

@@ -6,9 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#ifndef OGAnimationState_h
-#define OGAnimationState_h
-
 typedef NS_ENUM(NSUInteger, OGAnimationState)
 {
     kOGAnimationStateNone,
@@ -24,5 +21,3 @@ static NSString *const kOGAnimationStateDescription[] = {
     [kOGAnimationStateWalkForward] = @"walkForward",
     [kOGAnimationStateAttack] = @"atack"
 };
-
-#endif /* OGAnimationState_h */

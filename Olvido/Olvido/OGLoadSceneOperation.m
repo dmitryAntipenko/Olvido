@@ -9,8 +9,11 @@
 #import "OGLoadSceneOperation.h"
 #import "OGSceneMetadata.h"
 #import "OGBaseScene.h"
+#import "OGConstants.h"
+#import "OGGameScene.h"
 
-NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
+NSUInteger const kOGLoadSceneOperationProgressTotalUnitCount = 1;
+NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
 
 @interface OGLoadSceneOperation ()
 
@@ -31,7 +34,7 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         if (self)
         {
             _sceneMetadata = sceneMetadata;
-            _progress = [NSProgress progressWithTotalUnitCount:kOGLOadSceneOperationProgressTotalUnitCount];
+            _progress = [NSProgress progressWithTotalUnitCount:kOGLoadSceneOperationProgressTotalUnitCount];
         }
     }
     else
@@ -57,10 +60,22 @@ NSUInteger const kOGLOadSceneOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            self.scene = [self.sceneMetadata.sceneClass nodeWithFileNamed:self.sceneMetadata.fileName];
-            [self.scene createCamera];
+            GKScene *gkScene = [GKScene sceneWithFileNamed:self.sceneMetadata.fileName];
             
-            self.progress.completedUnitCount = kOGLOadSceneOperationProgressTotalUnitCount;
+            self.scene = (OGBaseScene *) gkScene.rootNode;
+            [self.scene createCamera];
+        
+            if (gkScene.graphs.count > 0)
+            {
+                if (!self.scene.userData)
+                {
+                    self.scene.userData = [[NSMutableDictionary alloc] init];
+                }
+                
+                [self.scene.userData setObject:gkScene.graphs forKey:kOGLoadSceneOperationGraphsKey];
+            }
+            
+            self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
             
             [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
             self.state = finishedState;

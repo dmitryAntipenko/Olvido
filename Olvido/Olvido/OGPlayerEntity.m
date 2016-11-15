@@ -16,42 +16,44 @@
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
+#import "OGWeaponComponent.h"
+#import "OGInventoryItem.h"
+#import "OGInventoryComponent.h"
+#import "OGPlayerEntity+OGPlayerEntityResources.h"
 
 #import "OGColliderType.h"
 
-#import "OGPlayerEntityConfiguration.h"
+#import "OGPlayerConfiguration.h"
 #import "OGAnimationState.h"
 
 #import "OGPlayerEntityAppearState.h"
 #import "OGplayerEntityControlledState.h"
 #import "OGplayerEntityAttackState.h"
 
-NSString *const kOGPlayerEntityAtlasNamesPlayerIdle = @"PlayerBotIdle";
-NSString *const kOGPlayerEntityAtlasNamesPlayerWalk = @"PlayerBotWalk";
-
-static NSDictionary<NSString *, NSDictionary *> *sOGPlayerEntityAnimations;
-static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
+CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 
 @interface OGPlayerEntity ()
 
-@property (nonatomic, strong) OGPlayerEntityConfiguration *playerConfiguration;
+@property (nonatomic, strong) NSTimer *bulletSpawnTimer;
+@property (nonatomic, assign) BOOL canTakeWeapon;
 
 @end
 
 @implementation OGPlayerEntity
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration
 {
     self = [super init];
     
     if (self)
     {
-        _playerConfiguration = [[OGPlayerEntityConfiguration alloc] init];
+        _inventoryComponent = [OGInventoryComponent inventoryComponent];
+        [self addComponent:_inventoryComponent];
         
         _render = [[OGRenderComponent alloc] init];
         [self addComponent:_render];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_playerConfiguration.physicsBodyRadius]
+        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType player]];
         [self addComponent:_physics];
         
@@ -59,8 +61,8 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         _render.node.physicsBody.allowsRotation = NO;
         
         _health = [[OGHealthComponent alloc] init];
-        _health.maxHealth = _playerConfiguration.maxHealth;
-        _health.currentHealth = _playerConfiguration.currentHealth;
+        _health.maxHealth = configuration.maxHealth;
+        _health.currentHealth = configuration.currentHealth;
         [self addComponent:_health];
         
         _movement = [[OGMovementComponent alloc] init];
@@ -79,9 +81,9 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         _intelligence = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligence];
         
-        if (sOGPlayerEntityAnimations)
+        if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
-            _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:sOGPlayerEntityAnimations];
+            _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:[OGPlayerEntity sOGPlayerEntityAnimations]];
             [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
         }
@@ -94,95 +96,46 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
         [self addComponent:_orientation];
         
         SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node.children.firstObject;
-        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:_playerConfiguration.messageShowDistance];
+        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:configuration.messageShowDistance];
         [self addComponent:_messageComponent];
+        
+        _weaponComponent = [[OGWeaponComponent alloc] init];
+        [self addComponent:_weaponComponent];
+        
+        _canTakeWeapon = YES;
     }
     
     return self;
 }
 
-+ (BOOL)resourcesNeedLoading
-{
-    return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
-}
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler
-{
-    [OGPlayerEntity loadMiscellaneousAssets];
-    
-    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerIdle,
-                                  kOGPlayerEntityAtlasNamesPlayerWalk];
-    
-    [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
-    {
-        NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
-        
-        for (NSUInteger i = 0; i < kOGDirectionCount; i++)
-        {
-            appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
-                                                                                                                 atlas:foundAtlases[0]
-                                                                                                       imageIdentifier:kOGPlayerEntityAtlasNamesPlayerIdle];
-        }
-        
-        sOGPlayerEntityAppearTextures = appearTextures;
-        
-        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
-        
-        animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerIdle
-                                                                                                            animationState:kOGAnimationStateIdle
-                                                                                                            bodyActionName:nil
-                                                                                                     repeatTexturesForever:YES
-                                                                                                             playBackwards:NO];
-        
-        animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-                                                                                                           imageIdentifier:kOGPlayerEntityAtlasNamesPlayerWalk
-                                                                                                            animationState:kOGAnimationStateWalkForward
-                                                                                                            bodyActionName:nil
-                                                                                                     repeatTexturesForever:YES
-                                                                                                             playBackwards:NO];
-        
-        sOGPlayerEntityAnimations = animations;
-        
-        completionHandler();
-    }];
-}
-
-+ (void)purgeResources
-{
-    sOGPlayerEntityAppearTextures = nil;
-    sOGPlayerEntityAnimations = nil;
-}
-
-+ (NSDictionary *)sOGPlayerEntityAnimations
-{
-    return sOGPlayerEntityAnimations;
-}
-
-+ (NSDictionary *)sOGPlayerEntityAppearTextures
-{
-    return sOGPlayerEntityAppearTextures;
-}
-
-+ (CGSize)textureSize
-{
-    return CGSizeMake(120.0, 120.0);
-}
-
-+ (void)loadMiscellaneousAssets
-{
-    NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
-    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
-}
-
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
-}
-
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
+    if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
+    {
+        OGWeaponEntity *weaponEntity = (OGWeaponEntity *)entity;
+        
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+     
+        [self.inventoryComponent removeItem:self.weaponComponent.weapon];
+        self.canTakeWeapon = NO;
+        
+        if (renderComponent)
+        {
+            self.weaponComponent.weapon = (OGWeaponEntity *) entity;
+            self.weaponComponent.weapon.owner = self;
+            
+            [renderComponent.node removeFromParent];
+            
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
+            {
+                self.canTakeWeapon = YES;
+                [timer invalidate];
+                timer = nil;
+            }];
+        }
+        
+        [self.inventoryComponent addItem:weaponEntity];
+    }
 }
 
 @end

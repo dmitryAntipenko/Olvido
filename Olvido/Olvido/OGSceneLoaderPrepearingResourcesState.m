@@ -67,16 +67,26 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     
     [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     
-    __block OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
+    __weak typeof(self) weakSelf = self;
+    __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
     loadSceneOperation.completionBlock = ^
     {
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           self.sceneLoader.scene = weakLoadSceneOperation.scene;
-                           
-                           [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                       });
+        if (weakLoadSceneOperation)
+        {
+            OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
+            
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+                if (weakSelf)
+                {
+                    typeof(weakSelf) strongSelf = weakSelf;
+
+                    strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
+                    [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
+                }
+            });
+        }
     };
     
     for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
@@ -98,10 +108,17 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     [self.operationQueue cancelAllOperations];
     self.sceneLoader.scene = nil;
     
+    __weak typeof(self) weakSelf = self;
+    
     dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [self.stateMachine enterState:OGSceneLoaderInitialState.self];
-                   });
+    {
+        if (weakSelf)
+        {
+            typeof(weakSelf) strongSelf = weakSelf;
+
+            [strongSelf.stateMachine enterState:OGSceneLoaderInitialState.self];
+        }
+    });
 }
 
 @end

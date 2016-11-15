@@ -47,10 +47,10 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     static dispatch_once_t dispatchOnceToken = 0;
     
     dispatch_once(&dispatchOnceToken, ^()
-                  {
-                      levelManager = [[OGLevelManager alloc] init];
-                      [levelManager loadLevelMap];
-                  });
+    {
+        levelManager = [[OGLevelManager alloc] init];
+        [levelManager loadLevelMap];
+    });
     
     return levelManager;
 }
@@ -137,38 +137,8 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
-//        NSString *className = self.levelMap[identifier.integerValue][kOGSceneControllerClassNameKey];
     NSUInteger sceneIdentifier = [self.levelMap[identifier.integerValue][kOGLevelManagerSceneIdentifierKey] integerValue];
     [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifier];
-//    GKScene *sceneFile = [GKScene sceneWithFileNamed:className];
-//    OGGameScene *scene = (OGGameScene *)sceneFile.rootNode;
-//
-//    scene.identifier = identifier;
-//    scene.sceneDelegate = self;
-//    
-//    //    for (GKEntity *entity in sceneFile.entities)
-//    //    {
-//    //        GKSKNodeComponent *nodeComponent = (GKSKNodeComponent *) [entity componentForClass:[GKSKNodeComponent class]];
-//    //
-//    //        OGSpriteNode *spriteNode = (OGSpriteNode *) nodeComponent.node;
-//    //        spriteNode.entity = (GKEntity *) nodeComponent.entity;
-//    //
-//    ////        [scene addSpriteNode:spriteNode];
-//    //    }
-//    
-//    scene.scaleMode = SKSceneScaleModeAspectFit;
-//    self.currentGameScene = scene;
-//    self.currentSceneName = className;
-//    
-//    NSString *storySceneName = self.levelMap[identifier.integerValue][kOGSceneControllerStorySceneName];
-//    GKScene *storySceneFile = [GKScene sceneWithFileNamed:storySceneName];
-//    OGStoryScene *storyScene = (OGStoryScene *)storySceneFile.rootNode;
-//    
-//    storyScene.sceneDelegate = self;
-//    storyScene.scaleMode = SKSceneScaleModeAspectFit;
-//    
-//    self.currentStoryScene = storyScene;
 }
-
 
 @end

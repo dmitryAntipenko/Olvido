@@ -12,8 +12,8 @@
 
 @interface OGSceneMetadata : NSObject
 
-@property (nonatomic, unsafe_unretained, readonly) NSUInteger  identifier;
-@property (nonatomic, unsafe_unretained, readonly) Class sceneClass;
+@property (nonatomic, assign, readonly) NSUInteger  identifier;
+@property (nonatomic, assign, readonly) Class sceneClass;
 @property (nonatomic, strong, readonly) NSString *fileName;
 @property (nonatomic, strong, readonly) NSArray<Class<OGResourceLoadable>> *loadableClasses;
 

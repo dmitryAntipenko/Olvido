@@ -22,10 +22,6 @@
     [super didEnterWithPreviousState:previousState];
     
     self.lockComponent.closed = NO;
-    
-    //[OGColliderType definedCollisions][self.lockComponent.target.entity];
-    
-//    self.renderComponent.node.physicsBody.categoryBitMask = kOGCollisionBitMaskDefault;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
 }
 
@@ -41,14 +37,8 @@
     [super updateWithDeltaTime:seconds];
     
     if (!self.lockComponent.isLocked)
-    {
-        SKNode *target = self.lockComponent.target;
-        SKNode *doorNode = self.renderComponent.node;
-        
-        CGFloat distance = hypot(doorNode.position.x - target.position.x,
-                                 doorNode.position.y - target.position.y);
-        
-        if (!self.lockComponent.isClosed && distance >= self.lockComponent.openDistance)
+    {        
+        if (!self.lockComponent.isClosed && ![self isTargetNearDoor])
         {
             if ([self.stateMachine canEnterState:OGDoorEntityClosedState.self])
             {

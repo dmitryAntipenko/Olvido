@@ -6,9 +6,9 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import <GameplayKit/GameplayKit.h>
 
-@interface OGBaseScene : SKScene
+@interface OGBaseScene : SKScene <GKSceneRootNodeType>
 
 - (void)createCamera;
 

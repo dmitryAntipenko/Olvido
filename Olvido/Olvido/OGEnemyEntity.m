@@ -7,11 +7,13 @@
 //
 
 #import "OGEnemyEntity.h"
+#import "OGEnemyConfiguration.h"
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGAttacking.h"
 
 #import "OGEnemyEntityConfiguration.h"
 
@@ -33,7 +35,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 @implementation OGEnemyEntity
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
 {
     return [self initWithPoints:nil];
 }
@@ -46,13 +48,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     {
         _points = points;
         
-        _enemyConfiguration = [[OGEnemyEntityConfiguration alloc] init];
-        
-        _render = [[OGRenderComponent alloc] init];
-        [self addComponent:_render];
-        
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_enemyConfiguration.physicsBodyRadius]
-                                                      colliderType:[OGColliderType enemy]];
+//        _enemyConfiguration = [[OGEnemyEntityConfiguration alloc] init];
+//        [self loadMiscellaneousAssets];
+//        
+//        _render = [[OGRenderComponent alloc] init];
+//        [self addComponent:_render];
+//        
+//        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
+//                                                      colliderType:[OGColliderType enemy]];
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
@@ -123,12 +126,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
-}
 
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
 }
 
 + (CGSize)textureSize

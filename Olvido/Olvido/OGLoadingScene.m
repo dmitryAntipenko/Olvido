@@ -27,11 +27,18 @@ CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
 
 - (instancetype)initWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
-    self = [self init];
-    
-    if (self)
+    if (sceneLoader)
     {
-        _sceneLoader = sceneLoader;
+        self = [self init];
+        
+        if (self)
+        {
+            _sceneLoader = sceneLoader;
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;
@@ -44,7 +51,8 @@ CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
     SKSpriteNode *background = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor]
                                                             size:CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height)];
     
-    background.position = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+    background.position = CGPointMake(self.view.frame.size.width / 2.0,
+                                      self.view.frame.size.height / 2.0);
     
     CGSize loadingBarSize = [self calculateLoadingBarSize];
     SKSpriteNode *loadingBarNode = [SKSpriteNode spriteNodeWithColor:[SKColor whiteColor]

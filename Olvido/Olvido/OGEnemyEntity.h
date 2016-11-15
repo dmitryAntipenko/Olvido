@@ -10,6 +10,7 @@
 #import "OGContactNotifiableType.h"
 #import "OGResourceLoadable.h"
 
+@class OGEnemyConfiguration;
 @class OGHealthComponent;
 @class OGAnimationComponent;
 @class OGIntelligenceComponent;
@@ -36,9 +37,13 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 @property (nonatomic, strong) GKAgent2D *agent;
 
 + (CGSize)textureSize;
+
 + (NSDictionary *)sOGEnemyEntityAnimations;
 
-- (instancetype)initWithPoints:(NSArray<NSValue *> *)points NS_DESIGNATED_INITIALIZER;
+//- (instancetype)initWithPoints:(NSArray<NSValue *> *)points NS_DESIGNATED_INITIALIZER;
 
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
+
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration;
+
 @end

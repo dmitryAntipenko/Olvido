@@ -12,9 +12,9 @@
 
 @property (nonatomic, strong) SKCameraNode *camera;
 @property (nonatomic, weak) SKNode *target;
-@property (nonatomic, assign, getter=isLocked) BOOL locked;
 
 - (void)moveCameraToNode:(SKNode *)node;
+
 - (void)update;
 
 @end
