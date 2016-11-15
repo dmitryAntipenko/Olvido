@@ -17,11 +17,15 @@ extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
 @property (nonatomic, strong, readonly) NSArray<id <OGInventoryItem>> *inventoryItems;
 
 + (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity;
+
 + (instancetype)inventoryComponent;
 
 - (void)addItem:(id <OGInventoryItem>)item;
+
 - (void)removeItem:(id <OGInventoryItem>)item;
+
 - (BOOL)containsItem:(id <OGInventoryItem>)item;
+
 - (BOOL)isFull;
 
 @end

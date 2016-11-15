@@ -16,13 +16,17 @@
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate>
 
 @property (nonatomic, copy) NSNumber *identifier;
-
+@property (nonatomic, copy) NSDictionary<NSString *, GKGraph *> *graphs;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 
 - (void)pause;
+
 - (void)restart;
+
 - (void)resume;
+
 - (void)pauseWithPauseScreen;
+
 - (void)gameOver;
 
 - (void)runStoryConclusion;
