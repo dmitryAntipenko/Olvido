@@ -62,7 +62,7 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
         {
             GKScene *gkScene = [GKScene sceneWithFileNamed:self.sceneMetadata.fileName];
             
-            self.scene = (OGBaseScene *)gkScene.rootNode;
+            self.scene = (OGBaseScene *) gkScene.rootNode;
         
             [self.scene createCamera];
         

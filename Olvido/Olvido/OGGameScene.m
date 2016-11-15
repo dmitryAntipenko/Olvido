@@ -57,7 +57,7 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
-CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
+CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 @interface OGGameScene ()
 
