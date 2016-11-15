@@ -33,7 +33,7 @@
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    [super updateWithDeltaTime:seconds];
+    [super updateWithDeltaTime:seconds];    
     
     if (!self.lockComponent.isLocked)
     {        

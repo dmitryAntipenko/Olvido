@@ -14,6 +14,6 @@
 
 + (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent;
 
-- (void)update;
+- (void)updateConstraints;
 
 @end

@@ -7,30 +7,27 @@
 //
 
 #import "GKScene+OGFactory.h"
-#import "OGGKGameScene.h"
-#import "OGGKGameScene.h"
 #import "OGSceneMetadata.h"
 #import "OGGameScene.h"
 
+NSString *const kGKSceneGraphsKey = @"Graphs";
+
 @implementation GKScene (OGFactory)
 
-+ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata;
++ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata
 {
-    GKScene *result = nil;
+    GKScene *gkScene = [self sceneWithFileNamed:metadata.fileName];
     
-    if (metadata)
+    SKScene *gameScene = (SKScene *)gkScene.rootNode;
+    
+    if (!gameScene.userData)
     {
-        if ([metadata.sceneClass isSubclassOfClass:OGGameScene.self])
-        {
-            result = [OGGKGameScene sceneWithFileNamed:metadata.fileName];
-        }
-        else
-        {
-            result = [self sceneWithFileNamed:metadata.fileName];
-        }
+        gameScene.userData = [NSMutableDictionary dictionary];
     }
     
-    return result;
+    [gameScene.userData setObject:gkScene.graphs forKey:kGKSceneGraphsKey];
+    
+    return gkScene;
 }
 
 @end

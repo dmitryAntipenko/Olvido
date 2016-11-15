@@ -10,14 +10,16 @@
 #import "OGGameSceneDelegate.h"
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
+#import "OGEntityManaging.h"
 
 @class OGStatusBar;
 
-@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate>
+@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
-@property (nonatomic, copy) NSDictionary<NSString *, GKGraph *> *graphs;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
+
+- (void)addEntity:(GKEntity *)entity;
 
 - (void)pause;
 
