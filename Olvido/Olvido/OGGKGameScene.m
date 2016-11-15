@@ -11,8 +11,6 @@
 
 @implementation OGGKGameScene
 
-@synthesize rootNode = _rootNode;
-
 + (instancetype)sceneWithFileNamed:(NSString *)filename
 {
     OGGKGameScene *gkScene = [super sceneWithFileNamed:filename];
