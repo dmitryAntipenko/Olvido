@@ -128,7 +128,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                                                  atlas:(SKTextureAtlas *)atlas
                                        imageIdentifier:(NSString *)imageIdentifier
 {
-    NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, direction];
+    NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, (unsigned long)direction];
     NSString *filter = @"SELF BEGINSWITH %@";
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, structure];
@@ -189,7 +189,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     for (NSUInteger i = 0; i < kOGDirectionCount; i++)
     {
-        NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, i];
+        NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, (unsigned long)i];
         NSString *filter = @"SELF BEGINSWITH %@";
 
         NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, structure];

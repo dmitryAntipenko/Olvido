@@ -12,10 +12,10 @@
 
 NSString *const kOGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
 NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
+NSUInteger const kOGInventoryComponentEmptyCount = 0;
 
 @interface OGInventoryComponent ()
 
-@property (nonatomic, assign, readonly, getter=isFull) BOOL full;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, id <OGInventoryItem>> *mutableInventoryItems;
 
 @end
@@ -103,6 +103,11 @@ NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
 - (BOOL)isFull
 {
     return self.mutableInventoryItems.count >= self.capacity;
+}
+
+- (BOOL)isEmpty
+{
+    return self.mutableInventoryItems.count == kOGInventoryComponentEmptyCount;
 }
 
 - (NSArray<id<OGInventoryItem>> *)inventoryItems

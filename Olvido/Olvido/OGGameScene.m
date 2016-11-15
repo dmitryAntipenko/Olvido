@@ -228,6 +228,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
 - (void)createInventoryBar
 {
     self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    self.inventoryBarNode.playerEntity = self.player;
     
     if (self.camera)
     {
@@ -391,6 +392,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 100.0;
     {
         [componentSystem updateWithDeltaTime:deltaTime];
     }
+    
+    [self.inventoryBarNode checkPlayerPosition];
 }
 
 @end
