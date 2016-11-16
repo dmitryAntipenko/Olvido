@@ -90,6 +90,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     if (self.currentStorySceneIdentifier)
     {
         [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue];
+        [self.sceneManager prepareSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
     }
     else
     {
