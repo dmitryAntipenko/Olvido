@@ -73,6 +73,7 @@
 		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
+		EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */; };
@@ -233,6 +234,8 @@
 		EA70E5201DB3F4620034116D /* OGMovementComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementComponent.h; sourceTree = "<group>"; };
 		EA70E5211DB3F4620034116D /* OGMovementComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementComponent.m; sourceTree = "<group>"; };
 		EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEntityManaging.h; sourceTree = "<group>"; };
+		EA8EF7001DDC9B4D008CF3A4 /* OGKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKey.h; sourceTree = "<group>"; };
+		EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGKey.m; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -774,6 +777,8 @@
 				EA4982431DCFB12C00DCFE00 /* Player */,
 				EA4982441DCFB44000DCFE00 /* Enemy */,
 				EA5F12001DD4E25E006D4129 /* Door */,
+				EA8EF7001DDC9B4D008CF3A4 /* OGKey.h */,
+				EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -962,6 +967,7 @@
 				1B7F249E1DD5D074004918C8 /* OGLoadResourcesOperation.m in Sources */,
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
+				EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,

@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGCollisionBitMask.h"
 
 @interface OGColliderType : NSObject <NSCopying>
 
@@ -14,7 +15,7 @@
 @property (nonatomic, assign) NSUInteger collisionBitMask;
 @property (nonatomic, assign) NSUInteger contactTestBitMask;
 
-+ (OGColliderType *)colliderTypeWithCategoryBitMask:(NSUInteger)bitmask;
++ (OGColliderType *)colliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
 
 + (OGColliderType *)player;
 + (OGColliderType *)enemy;
@@ -22,6 +23,7 @@
 + (OGColliderType *)door;
 + (OGColliderType *)weapon;
 + (OGColliderType *)bullet;
++ (OGColliderType *)key;
 
 + (NSMutableDictionary *)definedCollisions;
 + (NSMutableDictionary *)requestedContactNotifications;

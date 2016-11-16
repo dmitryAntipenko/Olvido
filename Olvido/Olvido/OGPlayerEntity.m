@@ -34,7 +34,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 
 @interface OGPlayerEntity ()
 
-@property (nonatomic, strong) NSTimer *bulletSpawnTimer;
+@property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
 @end
@@ -46,7 +46,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     self = [super init];
     
     if (self)
-    {
+    {        
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
         [self addComponent:_inventoryComponent];
         
@@ -112,29 +112,34 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
     {
-        OGWeaponEntity *weaponEntity = (OGWeaponEntity *)entity;
-        
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
-     
         [self.inventoryComponent removeItem:self.weaponComponent.weapon];
         self.canTakeWeapon = NO;
         
-        if (renderComponent)
-        {
-            self.weaponComponent.weapon = (OGWeaponEntity *) entity;
-            self.weaponComponent.weapon.owner = self;
-            
-            [renderComponent.node removeFromParent];
-            
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-            {
-                self.canTakeWeapon = YES;
-                [timer invalidate];
-                timer = nil;
-            }];
-        }
+        self.weaponComponent.weapon = (OGWeaponEntity *) entity;
+        self.weaponComponent.weapon.owner = self;
         
-        [self.inventoryComponent addItem:weaponEntity];
+        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
+        {
+            self.canTakeWeapon = YES;
+            [timer invalidate];
+            timer = nil;
+        }];
+    }
+    
+    if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
+    {
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+        [renderComponent.node removeFromParent];
+        [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
+    }
+}
+
+- (void)dealloc
+{
+    if (_weaponTakeDelayTimer)
+    {
+        [_weaponTakeDelayTimer invalidate];
+        _weaponTakeDelayTimer = nil;
     }
 }
 

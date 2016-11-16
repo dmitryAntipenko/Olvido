@@ -12,8 +12,6 @@
 #import "OGTransitionComponentDelegate.h"
 #import "OGEntityManaging.h"
 
-@class OGStatusBar;
-
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;

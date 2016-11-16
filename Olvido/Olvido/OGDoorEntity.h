@@ -29,11 +29,14 @@
 @property (nonatomic, strong) OGLockComponent *lockComponent;
 @property (nonatomic, strong) OGTransitionComponent *transition;
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 
 - (void)lock;
 - (void)unlock;
+
+- (void)addKeyName:(NSString *)keyName;
+- (void)removeKeyName:(NSString *)keyName;
 
 @end

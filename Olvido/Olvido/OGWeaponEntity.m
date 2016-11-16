@@ -13,7 +13,6 @@
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
 
-NSString *const kOGWeaponEntityDefaultInventoryIdentifier = @"weapon";
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
@@ -133,7 +132,16 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 - (NSString *)identifier
 {
-    return kOGWeaponEntityDefaultInventoryIdentifier;
+    return self.render.node.name;
+}
+
+- (void)dealloc
+{
+    if (_bulletSpawnTimer)
+    {
+        [_bulletSpawnTimer invalidate];
+        _bulletSpawnTimer = nil;
+    }
 }
 
 @end
