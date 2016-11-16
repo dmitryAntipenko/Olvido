@@ -31,10 +31,10 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 
 @implementation OGEnemyBehavior
 
-+ (NSDictionary *)behaviorAndPathPointsWithAgent:(GKAgent2D *)agent
-                                    huntingAgent:(GKAgent2D *)huntingAgent
-                                      pathRadius:(CGFloat)pathRadius
-                                           scene:(OGGameScene *)scene;
++ (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent
+                     huntingAgent:(GKAgent2D *)huntingAgent
+                       pathRadius:(CGFloat)pathRadius
+                            scene:(OGGameScene *)scene;
 {
     OGEnemyBehavior *enemyBehavior = [[OGEnemyBehavior alloc] init];
     [enemyBehavior addTargetSpeedGoalWithSpeed:agent.maxSpeed];
@@ -69,19 +69,27 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         [enemyBehavior setWeight:kOGEnemyBehaviorCohesionWeight forGoal:cohesionGoal];
     }
     
-    CGPoint agentPosition = CGPointMake(agent.position.x, agent.position.y);
-    CGPoint huntingAgentPosition = CGPointMake(huntingAgent.position.x, huntingAgent.position.y);
+    return enemyBehavior;
+}
+
++ (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent
+                         endPoint:(CGPoint)endPoint
+                       pathRadius:(CGFloat)pathRadius
+                            scene:(OGGameScene *)scene
+{
+    OGEnemyBehavior *enemyBehavior = [[OGEnemyBehavior alloc] init];
     
-    NSArray<NSValue *> *pathPoints = [enemyBehavior addGoalsToFollowPathWithStartPoint:agentPosition
-                                                                              endPoint:huntingAgentPosition
-                                                                            pathRadius:pathRadius
-                                                                                 scene:scene];
+    [enemyBehavior addTargetSpeedGoalWithSpeed:agent.maxSpeed];
+    [enemyBehavior addAvoidObstaclesGoalWithScene:scene];
     
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    result[kOGEnemyBehaviorBehaviorKey] = enemyBehavior;
-    result[kOGEnemyBehaviorPathPointsKey] = pathPoints;
+    CGPoint startPoint = CGPointMake(agent.position.x, agent.position.y);
     
-    return result;
+    [enemyBehavior addGoalsToFollowPathWithStartPoint:startPoint
+                                             endPoint:endPoint
+                                           pathRadius:pathRadius
+                                                scene:scene];
+    
+    return enemyBehavior;
 }
 
 + (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent

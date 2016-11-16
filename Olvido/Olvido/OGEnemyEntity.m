@@ -30,12 +30,12 @@ CGFloat const kOGEnemyEntityMaximumSpeed = 300;
 CGFloat const kOGEnemyEntityMaximumAcceleration = 50;
 CGFloat const kOGEnemyEntityAgentMass = 0.25;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
+CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
 static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 @interface OGEnemyEntity ()
 
-@property (nonatomic, assign) OGEnemyEntityMandate mandate;
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
 
 @property (nonatomic, assign, readonly) CGSize textureSize;
@@ -232,10 +232,23 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
             }
             case kOGEnemyEntityMandateHunt:
             {
+//                result = [OGEnemyBehavior behaviorWithAgent:self.agent
+//                                               huntingAgent:<#(GKAgent2D *)#>
+//                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+//                                                      scene:self];
                 break;
             }
             case kOGEnemyEntityMandateAttack:
             {
+                break;
+            }
+            case kOGEnemyEntityMandateReturnToPositionOnPath:
+            {
+                CGPoint closestPoint = [self closestPointOnPathWithGraph:self.graph];
+                result = [OGEnemyBehavior behaviorWithAgent:self.agent
+                                                   endPoint:closestPoint
+                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                      scene:(OGGameScene *)scene];
                 break;
             }
             default:
@@ -247,10 +260,61 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return result;
 }
 
+- (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph
+{
+    CGPoint enemyPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
+    
+    NSUInteger nodesCounter = [graph.nodes count];
+    
+    CGPoint result = ((SKNode *)graph.nodes[0]).position;
+    
+    for (NSUInteger i = 0; i < nodesCounter; i++)
+    {
+        if (i != nodesCounter)
+        {
+            CGFloat distance = [self distanceBetweenStartPoint:enemyPosition endPoint:result];
+            CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+            
+            result = (distance < nextDistance) ? result : ((SKNode *)graph.nodes[i+1]).position;
+        }
+    }
+    
+    return result;
+}
+
+- (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph
+{
+    CGPoint enemyPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
+    
+    NSUInteger nodesCounter = [graph.nodes count];
+    
+    CGFloat result = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[0]).position];
+    
+    for (NSUInteger i = 0; i < nodesCounter; i++)
+    {
+        if (i != nodesCounter)
+        {
+            CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+            
+            result = (result < nextDistance) ? result : nextDistance;
+        }
+    }
+
+    return result;
+}
+
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent
 {
-    CGFloat deltaX = self.agent.position.x - otherAgent.position.x;
-    CGFloat deltaY = self.agent.position.y - otherAgent.position.y;
+    CGPoint agentPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
+    CGPoint otherAgentPosition = CGPointMake(otherAgent.position.x, otherAgent.position.y);
+    
+    return [self distanceBetweenStartPoint:agentPosition endPoint:otherAgentPosition];
+}
+
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
+{
+    CGFloat deltaX = startPoint.x - endPoint.x;
+    CGFloat deltaY = startPoint.y - endPoint.y;
     
     return hypot(deltaX, deltaY);
 }

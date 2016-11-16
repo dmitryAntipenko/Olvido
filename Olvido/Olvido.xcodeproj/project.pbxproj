@@ -49,6 +49,12 @@
 		215A8A6D1DD9ED1D00C5C90D /* OGEnemyBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A6C1DD9ED1D00C5C90D /* OGEnemyBehavior.m */; };
 		215A8A6F1DDB678B00C5C90D /* Level1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 215A8A6E1DDB678B00C5C90D /* Level1.plist */; };
 		215A8A721DDB790E00C5C90D /* OGEnemyEntityAgentControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A711DDB790E00C5C90D /* OGEnemyEntityAgentControlledState.m */; };
+		215A8A761DDCB17B00C5C90D /* OGEntitySnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A751DDCB17B00C5C90D /* OGEntitySnapshot.m */; };
+		215A8A791DDCB2D900C5C90D /* OGEntityDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A781DDCB2D900C5C90D /* OGEntityDistance.m */; };
+		215A8A7C1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A7B1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m */; };
+		215A8A7F1DDCC25400C5C90D /* OGPlayerNearRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A7E1DDCC25400C5C90D /* OGPlayerNearRule.m */; };
+		215A8A821DDCC5A200C5C90D /* OGPlayerMediumRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A811DDCC5A200C5C90D /* OGPlayerMediumRule.m */; };
+		215A8A851DDCC66000C5C90D /* OGPlayerFarRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A8A841DDCC66000C5C90D /* OGPlayerFarRule.m */; };
 		215C4BDA1DC0ED06000DF29F /* OGInitialLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */; };
 		215C4BDC1DC0ED1B000DF29F /* OGInitialLevel.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */; };
 		215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 215C4BDF1DC25D3F000DF29F /* OGShopMenuScene.m */; };
@@ -188,6 +194,18 @@
 		215A8A6E1DDB678B00C5C90D /* Level1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level1.plist; sourceTree = "<group>"; };
 		215A8A701DDB790E00C5C90D /* OGEnemyEntityAgentControlledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityAgentControlledState.h; sourceTree = "<group>"; };
 		215A8A711DDB790E00C5C90D /* OGEnemyEntityAgentControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityAgentControlledState.m; sourceTree = "<group>"; };
+		215A8A741DDCB17B00C5C90D /* OGEntitySnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEntitySnapshot.h; sourceTree = "<group>"; };
+		215A8A751DDCB17B00C5C90D /* OGEntitySnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEntitySnapshot.m; sourceTree = "<group>"; };
+		215A8A771DDCB2D900C5C90D /* OGEntityDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEntityDistance.h; sourceTree = "<group>"; };
+		215A8A781DDCB2D900C5C90D /* OGEntityDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEntityDistance.m; sourceTree = "<group>"; };
+		215A8A7A1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGFuzzyEnemyRule.h; sourceTree = "<group>"; };
+		215A8A7B1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGFuzzyEnemyRule.m; sourceTree = "<group>"; };
+		215A8A7D1DDCC25400C5C90D /* OGPlayerNearRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerNearRule.h; sourceTree = "<group>"; };
+		215A8A7E1DDCC25400C5C90D /* OGPlayerNearRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerNearRule.m; sourceTree = "<group>"; };
+		215A8A801DDCC5A200C5C90D /* OGPlayerMediumRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerMediumRule.h; sourceTree = "<group>"; };
+		215A8A811DDCC5A200C5C90D /* OGPlayerMediumRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerMediumRule.m; sourceTree = "<group>"; };
+		215A8A831DDCC66000C5C90D /* OGPlayerFarRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerFarRule.h; sourceTree = "<group>"; };
+		215A8A841DDCC66000C5C90D /* OGPlayerFarRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerFarRule.m; sourceTree = "<group>"; };
 		215C4BD81DC0ED06000DF29F /* OGInitialLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInitialLevel.h; sourceTree = "<group>"; };
 		215C4BD91DC0ED06000DF29F /* OGInitialLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGInitialLevel.m; sourceTree = "<group>"; };
 		215C4BDB1DC0ED1B000DF29F /* OGInitialLevel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGInitialLevel.sks; sourceTree = "<group>"; };
@@ -503,6 +521,25 @@
 			name = Behaviors;
 			sourceTree = "<group>";
 		};
+		215A8A731DDCB13B00C5C90D /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				215A8A741DDCB17B00C5C90D /* OGEntitySnapshot.h */,
+				215A8A751DDCB17B00C5C90D /* OGEntitySnapshot.m */,
+				215A8A771DDCB2D900C5C90D /* OGEntityDistance.h */,
+				215A8A781DDCB2D900C5C90D /* OGEntityDistance.m */,
+				215A8A7A1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.h */,
+				215A8A7B1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m */,
+				215A8A7D1DDCC25400C5C90D /* OGPlayerNearRule.h */,
+				215A8A7E1DDCC25400C5C90D /* OGPlayerNearRule.m */,
+				215A8A801DDCC5A200C5C90D /* OGPlayerMediumRule.h */,
+				215A8A811DDCC5A200C5C90D /* OGPlayerMediumRule.m */,
+				215A8A831DDCC66000C5C90D /* OGPlayerFarRule.h */,
+				215A8A841DDCC66000C5C90D /* OGPlayerFarRule.m */,
+			);
+			name = Rules;
+			sourceTree = "<group>";
+		};
 		215C4BD71DC0EC9B000DF29F /* Level1 - InitialLevel */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,6 +779,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				215A8A731DDCB13B00C5C90D /* Rules */,
 				215A8A6A1DD9ECE100C5C90D /* Behaviors */,
 				1B7F24AA1DD5D0C1004918C8 /* SceneManager */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
@@ -984,6 +1022,7 @@
 				1B7F24A11DD5D074004918C8 /* OGSceneLoader.m in Sources */,
 				1B0E44F01DDA1015008F0F7B /* OGInventoryComponent.m in Sources */,
 				1B7F249E1DD5D074004918C8 /* OGLoadResourcesOperation.m in Sources */,
+				215A8A7F1DDCC25400C5C90D /* OGPlayerNearRule.m in Sources */,
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
@@ -991,11 +1030,14 @@
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				EAF7F10E1DD51F0E0067D76D /* OGTransitionComponent.m in Sources */,
 				1B27EAB11DC0E2DE00E9CA23 /* OGLevelState.m in Sources */,
+				215A8A761DDCB17B00C5C90D /* OGEntitySnapshot.m in Sources */,
 				EAF7F1191DD785FE0067D76D /* OGWeaponComponent.m in Sources */,
 				1B7F24A51DD5D074004918C8 /* OGSceneLoaderState.m in Sources */,
 				EA49827D1DD229E900DCFE00 /* OGCameraController.m in Sources */,
+				215A8A821DDCC5A200C5C90D /* OGPlayerMediumRule.m in Sources */,
 				1B7F249D1DD5D074004918C8 /* OGLoadOperation.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
+				215A8A791DDCB2D900C5C90D /* OGEntityDistance.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1B7F24A61DD5D074004918C8 /* OGSceneManager.m in Sources */,
 				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,
@@ -1006,6 +1048,7 @@
 				1B2E873B1DDB0EE40022CAB6 /* GKScene+OGFactory.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				EAF7F12F1DDA306C0067D76D /* OGPlayerConfiguration.m in Sources */,
+				215A8A7C1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m in Sources */,
 				EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */,
 				EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */,
 				1B7F249C1DD5D074004918C8 /* OGLoadingScene.m in Sources */,
@@ -1014,6 +1057,7 @@
 				1B7F24A21DD5D074004918C8 /* OGSceneLoaderInitialState.m in Sources */,
 				215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */,
 				EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */,
+				215A8A851DDCC66000C5C90D /* OGPlayerFarRule.m in Sources */,
 				EA9EAACD1DCC9E3100E36855 /* OGInputComponent.m in Sources */,
 				EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,

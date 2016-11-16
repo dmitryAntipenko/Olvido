@@ -11,13 +11,18 @@
 
 @interface OGEnemyBehavior : GKBehavior
 
-+ (NSDictionary *)behaviorAndPathPointsWithAgent:(GKAgent2D *)agent
-                                    huntingAgent:(GKAgent2D *)huntingAgent
-                                      pathRadius:(CGFloat)pathRadius
-                                           scene:(OGGameScene *)scene;
++ (NSDictionary *)behaviorWithAgent:(GKAgent2D *)agent
+                       huntingAgent:(GKAgent2D *)huntingAgent
+                         pathRadius:(CGFloat)pathRadius
+                              scene:(OGGameScene *)scene;
+
 + (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent
                             graph:(GKGraph *)graph
                        pathRadius:(CGFloat)pathRadius
                             scene:(OGGameScene *)scene;
 
++ (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent
+                         endPoint:(CGPoint)endPoint
+                       pathRadius:(CGFloat)pathRadius
+                            scene:(OGGameScene *)scene;
 @end

@@ -56,6 +56,11 @@
     
     if (self.timeSinceBehaviorUpdate >= kOGEnemyEntityBehaviorUpdateWaitDuration)
     {
+        if ([self.enemyEntity closestDistanceToAgentWithGraph:self.enemyEntity.graph] >= kOGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+        {
+            self.enemyEntity.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+        }
+    
         self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
         
         self.timeSinceBehaviorUpdate = 0.0;

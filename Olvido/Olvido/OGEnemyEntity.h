@@ -23,12 +23,14 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
     kOGEnemyEntityMandateFollowPath = 0,
     kOGEnemyEntityMandateHunt,
-    kOGEnemyEntityMandateAttack
+    kOGEnemyEntityMandateAttack,
+    kOGEnemyEntityMandateReturnToPositionOnPath
 };
 
 extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
 extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
 extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
+extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 
 @interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate>
 
@@ -43,6 +45,8 @@ extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 @property (nonatomic, strong) GKAgent2D *agent;
 @property (nonatomic, strong) GKGraph *graph;
 
+@property (nonatomic, assign) OGEnemyEntityMandate mandate;
+
 + (NSDictionary *)sOGEnemyEntityAnimations;
 
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
@@ -51,5 +55,8 @@ extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
+- (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph;
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
+- (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph;
 
 @end

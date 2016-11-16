@@ -47,6 +47,9 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     
     if (self)
     {
+        _agent = [[GKAgent2D alloc] init];
+        _agent.radius = configuration.physicsBodyRadius;
+        
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
         [self addComponent:_inventoryComponent];
         
@@ -136,6 +139,13 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         [self.inventoryComponent addItem:weaponEntity];
     }
+}
+
+- (void)updateAgentPositionToMatchNodePosition
+{
+    CGPoint position = self.render.node.position;
+    
+    self.agent.position = (vector_float2){position.x, position.y};
 }
 
 @end

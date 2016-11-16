@@ -200,7 +200,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, counter];
+        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
         
         OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
@@ -426,6 +426,14 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     for (GKComponentSystem *componentSystem in self.componentSystems)
     {
         [componentSystem updateWithDeltaTime:deltaTime];
+    }
+}
+
+- (void)didFinishUpdate
+{
+    if (((OGRenderComponent *) [self.player componentForClass:OGRenderComponent.self]).node)
+    {
+        [self.player updateAgentPositionToMatchNodePosition];
     }
 }
 
