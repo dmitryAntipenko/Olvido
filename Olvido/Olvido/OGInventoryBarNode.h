@@ -19,8 +19,6 @@
 
 - (void)updateConstraints;
 
-- (void)hide;
-
 - (void)checkPlayerPosition;
 
 @end

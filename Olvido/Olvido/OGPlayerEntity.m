@@ -84,6 +84,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
             _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            _animation.spriteNode.anchorPoint = CGPointMake(0.5, 0.2);
             [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
         }

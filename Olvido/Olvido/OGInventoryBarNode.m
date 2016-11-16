@@ -208,9 +208,9 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^
-                  {
-                      _parentFrame = [self.parent calculateAccumulatedFrame];
-                  });
+        {
+            _parentFrame = [self.parent calculateAccumulatedFrame];
+        });
     
     return _parentFrame;
 }
