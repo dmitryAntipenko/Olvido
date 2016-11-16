@@ -29,10 +29,10 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
     static dispatch_once_t dispatchOnceToken = 0;
     
     dispatch_once(&dispatchOnceToken, ^()
-                  {
-                      menuManager = [[OGMenuManager alloc] init];
-                      [menuManager loadMenuMap];
-                  });
+    {
+        menuManager = [[OGMenuManager alloc] init];
+        [menuManager loadMenuMap];
+    });
     
     return menuManager;
 }

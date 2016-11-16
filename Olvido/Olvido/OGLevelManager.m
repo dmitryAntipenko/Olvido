@@ -14,28 +14,17 @@
 #import "OGConstants.h"
 #import "OGsceneManager.h"
 
-NSUInteger const kOGLevelManagerInitialLevelIndex = 0;
-
-NSString *const kOGLevelManagerSceneIdentifierKey = @"SceneIdentifier";
+NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
+NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
 NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
-
-NSString *const kOGSceneControllerPortalsKey = @"Portals";
-NSString *const kOGSceneControllerNextLevelIndexKey = @"Next Level Index";
-NSString *const kOGSceneControllerPortalIdentifierKey = @"Identifier";
-NSString *const kOGSceneControllerClassNameKey = @"Class Name";
-NSString *const kOGSceneControllerPortalColorKey = @"Color";
-NSString *const kOGSceneControllerEnemiesCountKey = @"Enemies Count";
-
-NSString *const kOGSceneControllerStorySceneName = @"Story Scene Name";
-
-CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 @interface OGLevelManager () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
 @property (nonatomic, copy, readwrite) NSString *currentSceneName;
-@property (nonatomic, strong, readwrite) OGGameScene *currentGameScene;
-@property (nonatomic, strong, readwrite) OGStoryScene *currentStoryScene;
+
+@property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
+@property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
 
 @end
 
@@ -65,50 +54,23 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
     self.levelMap = plistData;
 }
 
-- (NSNumber *)nextLevelIdentifierWithPortalIdentifier:(NSNumber *)identifier inLevel:(NSNumber *)levelIdentifier
-{
-    NSDictionary *level = self.levelMap[levelIdentifier.integerValue];
-    NSArray *portals = level[kOGSceneControllerPortalsKey];
-    NSNumber *result = 0;
-    
-    for (NSDictionary *portalDictionary in portals)
-    {
-        if ([portalDictionary[kOGSceneControllerPortalIdentifierKey] integerValue] == identifier.integerValue)
-        {
-            result = portalDictionary[kOGSceneControllerNextLevelIndexKey];
-            break;
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark - GameSceneDelegate methods
 
-//- (void)gameSceneDidCallFinish
-//{
-//    NSNumber *portalIdentifier = @(self.currentGameScene.transitionComponent.identifier);
-//    NSNumber *nextLevelId = [self nextLevelIdentifierWithPortalIdentifier:portalIdentifier
-//                                                                  inLevel:self.currentGameScene.identifier];
-//
-//    [self loadLevelWithIdentifier:nextLevelId];
-//
-//    if (self.currentGameScene)
-//    {
-//        SKTransition *transition = [SKTransition doorwayWithDuration:kOGSceneControllerTransitionDuration];
-//        [self.view presentScene:self.currentGameScene transition:transition];
-//    }
-//}
+- (void)gameSceneDidCallFinish
+{
+    [NSException raise:NSInternalInconsistencyException
+                format:@"Not implemented %@", NSStringFromSelector(_cmd)];
+}
 
 - (void)gameSceneDidCallRestart
 {
-    [self loadLevelWithIdentifier:self.currentGameScene.identifier];
+    [self loadLevelWithIdentifier:self.currentGameSceneIdentifier];
     [self runGameScene];
 }
 
 #pragma mark - GameSceneStoreDelegate method
 
-- (void)gameSceneDidFinishRunStory
+- (void)storySceneDidCallFinish
 {
     [self runGameScene];
 }
@@ -116,18 +78,18 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 #pragma mark - Loading and Running levels
 
 - (void)runGameScene
-{
-    if (self.currentGameScene)
+{ 
+    if (self.currentGameSceneIdentifier)
     {
-        [self.view presentScene:self.currentGameScene];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
     }
 }
 
 - (void)runStoryScene
 {
-    if (self.currentStoryScene)
+    if (self.currentStorySceneIdentifier)
     {
-        [self.view presentScene:self.currentStoryScene];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue];
     }
     else
     {
@@ -137,8 +99,10 @@ CGFloat const kOGSceneControllerTransitionDuration = 1.0;
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
-    NSUInteger sceneIdentifier = [self.levelMap[identifier.integerValue][kOGLevelManagerSceneIdentifierKey] integerValue];
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifier];
+    self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
+    self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
+    
+    [self runStoryScene];
 }
 
 @end
