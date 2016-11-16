@@ -56,11 +56,18 @@
     
     if (self.timeSinceBehaviorUpdate >= kOGEnemyEntityBehaviorUpdateWaitDuration)
     {
-        if ([self.enemyEntity closestDistanceToAgentWithGraph:self.enemyEntity.graph] >= kOGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+        
+        if (self.enemyEntity.mandate == kOGEnemyEntityMandateReturnToPositionOnPath)
         {
-            self.enemyEntity.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+            CGPoint enemyPosition = CGPointMake(self.enemyEntity.agent.position.x, self.enemyEntity.agent.position.y);
+            
+            if ([self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath]
+                <= kOGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+            {
+                self.enemyEntity.mandate = kOGEnemyEntityMandateFollowPath;
+            }
         }
-    
+        
         self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
         
         self.timeSinceBehaviorUpdate = 0.0;

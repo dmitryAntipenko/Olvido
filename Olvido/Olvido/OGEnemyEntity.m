@@ -34,8 +34,8 @@ NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSString *const kOGEnemyEntityAtlasNamesEnemyIdle = @"EnemyIdle";
 NSString *const kOGEnemyEntityAtlasNamesEnemyWalk = @"EnemyWalk";
 CGFloat const kOGEnemyEntityPatrolPathRadius = 10.0;
-CGFloat const kOGEnemyEntityMaximumSpeed = 300;
-CGFloat const kOGEnemyEntityMaximumAcceleration = 50;
+CGFloat const kOGEnemyEntityMaximumSpeed = 250;
+CGFloat const kOGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const kOGEnemyEntityAgentMass = 0.25;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
@@ -52,7 +52,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 @property (nonatomic, assign) CGFloat lastPositionX;
 
 @property (nonatomic, weak) GKAgent2D *huntAgent;
-@property (nonatomic, assign) CGPoint closestPointOnPath;
 @end
 
 @implementation OGEnemyEntity
@@ -284,14 +283,15 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     
     NSUInteger nodesCounter = [graph.nodes count];
     
-    CGPoint result = ((SKNode *)graph.nodes[0]).position;
+    CGPoint result = CGPointMake(((GKGraphNode2D *)graph.nodes[0]).position.x, ((GKGraphNode2D *)graph.nodes[0]).position.y);
     
     for (NSUInteger i = 0; i < nodesCounter - 1; i++)
     {
         CGFloat distance = [self distanceBetweenStartPoint:enemyPosition endPoint:result];
-        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+        CGPoint nextNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[i+1]).position.x, ((GKGraphNode2D *)graph.nodes[i+1]).position.y);
+        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:nextNodePosition];
         
-        result = (distance < nextDistance) ? result : ((SKNode *)graph.nodes[i+1]).position;
+        result = (distance < nextDistance) ? result : nextNodePosition;
     }
     
     return result;
@@ -303,11 +303,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     
     NSUInteger nodesCounter = [graph.nodes count];
     
-    CGFloat result = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[0]).position];
+    CGPoint firstNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[0]).position.x, ((GKGraphNode2D *)graph.nodes[0]).position.y);
+    
+    CGFloat result = [self distanceBetweenStartPoint:enemyPosition endPoint:firstNodePosition];
     
     for (NSUInteger i = 0; i < nodesCounter - 1; i++)
     {
-        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+        CGPoint nextNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[i+1]).position.x, ((GKGraphNode2D *)graph.nodes[i+1]).position.y);
+        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:nextNodePosition];
         
         result = (result < nextDistance) ? result : nextDistance;
     }
@@ -323,7 +326,8 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return [self distanceBetweenStartPoint:agentPosition endPoint:otherAgentPosition];
 }
 
-- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint
+                            endPoint:(CGPoint)endPoint
 {
     CGFloat deltaX = startPoint.x - endPoint.x;
     CGFloat deltaY = startPoint.y - endPoint.y;

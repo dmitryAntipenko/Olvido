@@ -49,6 +49,7 @@ extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 @property (nonatomic, strong) GKGraph *graph;
 
 @property (nonatomic, assign) OGEnemyEntityMandate mandate;
+@property (nonatomic, assign) CGPoint closestPointOnPath;
 
 + (NSDictionary *)sOGEnemyEntityAnimations;
 

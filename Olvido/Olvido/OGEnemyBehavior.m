@@ -24,7 +24,7 @@ CGFloat const kOGEnemyBehaviorCohesionRadius = 50.0;
 CGFloat const kOGEnemyBehaviorCohesionAngle = (CGFloat) M_PI_2;
 CGFloat const kOGEnemyBehaviorCohesionWeight = 1.667;
 
-NSTimeInterval const kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 10.0;
+NSTimeInterval const kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 1.0;
 
 NSString *const kOGEnemyBehaviorBehaviorKey = @"behavior";
 NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
@@ -66,6 +66,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         GKGoal *cohesionGoal = [GKGoal goalToCohereWithAgents:agentsToFlockWith
                                                   maxDistance:kOGEnemyBehaviorCohesionRadius
                                                      maxAngle:kOGEnemyBehaviorCohesionAngle];
+        
         [enemyBehavior setWeight:kOGEnemyBehaviorCohesionWeight forGoal:cohesionGoal];
     }
     
@@ -99,7 +100,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 {
     OGEnemyBehavior *enemyBehavior = [[OGEnemyBehavior alloc] init];
     [enemyBehavior addTargetSpeedGoalWithSpeed:agent.maxSpeed];
-    [enemyBehavior addAvoidObstaclesGoalWithScene:scene];
+    //[enemyBehavior addAvoidObstaclesGoalWithScene:scene];
     
     GKPath *path = [GKPath pathWithGraphNodes:graph.nodes radius:pathRadius];
     path.cyclical = YES;
@@ -186,8 +187,6 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     return pointNode;
 }
 
-
-#warning
 - (NSArray<NSValue *> *)addGoalsToFollowPathWithStartPoint:(CGPoint)startPoint
                                                   endPoint:(CGPoint)endPoint
                                                 pathRadius:(CGFloat)pathRadius
@@ -218,8 +217,6 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         
         [scene.obstaclesGraph removeNodes:@[startNode, endNode]];
     }
-    
-    
     
     return result;
 }
