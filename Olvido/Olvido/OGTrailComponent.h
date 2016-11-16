@@ -12,8 +12,8 @@
 
 @property (nonatomic, strong) SKNode *targetNode;
 
-- (instancetype)initWithTexture:(SKTexture *)trailTexture;
+- (instancetype)initWithTexture:(SKTexture *)trailTexture size:(CGSize)size;
 
-+ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture;
++ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture  size:(CGSize)size;
 
 @end

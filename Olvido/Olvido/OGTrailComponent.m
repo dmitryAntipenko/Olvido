@@ -9,33 +9,19 @@
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
 
-
-
-typedef NS_ENUM(NSUInteger, OGTrailComponentImageVerticalAligment)
-{
-    kOGTrailComponentImageAligmentTop = 0x00 << 0,
-    kOGTrailComponentImageAligmentBottom = 0x01 << 0
-};
-
-typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
-{
-    kOGTrailComponentImageAligmentLeft = 0x00 << 1,
-    kOGTrailComponentImageAligmentRight = 0x01 << 1
-};
-
 @interface OGTrailComponent ()
 
-@property (nonatomic, strong) SKTexture *trailTexture;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, assign) CGPoint lastPosition;
-@property (nonatomic, assign) CGPoint currentPosition;
+@property (nonatomic, assign, readonly) CGPoint currentPosition;
 @property (nonatomic, strong) UIImage *trailImage;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
-@property (nonatomic, assign) OGTrailComponentImageVerticalAligment trailImageVerticalAligment;
-@property (nonatomic, assign) OGTrailComponentImageHorizontalAligment trailImageHorizontalAligment;
+@property (nonatomic, assign) CGFloat trailImageVerticalResize;
+@property (nonatomic, assign) CGFloat trailImageHorizontalResize;
 @property (nonatomic, assign) CGSize trailTextureSize;
-
+@property (nonatomic, strong) UIImage *trailTextureImage;
 @property (nonatomic, assign) CGRect accumulatedRect;
+@property (nonatomic, assign) CGPoint trailSpriteNodePosition;
 
 @end
 
@@ -43,7 +29,7 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
 
 @synthesize  renderComponent = _renderComponent;
 
-- (instancetype)initWithTexture:(SKTexture *)trailTexture
+- (instancetype)initWithTexture:(SKTexture *)trailTexture size:(CGSize)size
 {
     if (trailTexture)
     {
@@ -51,8 +37,11 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
         
         if (self)
         {
-            _trailTexture = trailTexture;
             _trailImage = [[UIImage alloc] init];
+            _trailTextureImage = [UIImage imageWithCGImage:trailTexture.CGImage];
+            _spriteNode = [SKSpriteNode spriteNodeWithColor:[[SKColor whiteColor] colorWithAlphaComponent:0.0] size:size];
+            _spriteNode.anchorPoint = CGPointMake(0.0, 0.0);
+            _trailTextureSize = size;
         }
     }
     else
@@ -63,9 +52,9 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
     return self;
 }
 
-+ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture
++ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture  size:(CGSize)size
 {
-    return [[self alloc] initWithTexture:trailTexture];
+    return [[self alloc] initWithTexture:trailTexture size:size];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -74,52 +63,66 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
     
     if (!CGPointEqualToPoint(currentPosition, self.lastPosition))
     {
-        [self drawTrailAtPoint:currentPosition];
+        [self updateTrail];
         self.lastPosition = currentPosition;
     }
 }
 
-- (void)drawTrailAtPoint:(CGPoint )point
+- (void)updateTrail
 {
-    SKSpriteNode *newNode = [SKSpriteNode spriteNodeWithTexture:self.trailTexture size:CGSizeMake(64, 64)];
-    newNode.position = point;
-    newNode.zPosition = self.renderComponent.node.zPosition - 1;
-    
     [self updateAccumulatedrectWithCurrentPosition];
     [self updateTrailImage];
     
-//    [self addChild:sprite];
-//    
-//    UIImage *image = UIIMage
-//    
-//    [self.targetNode addChild:newNode];
+    self.spriteNode.texture = [SKTexture textureWithImage:self.trailImage];
+    self.spriteNode.size = self.trailImage.size;
+    self.spriteNode.position = self.trailSpriteNodePosition;
 }
 
 - (void)updateTrailImage
 {
-    UIGraphicsBeginImageContext(CGSizeMake(self.accumulatedRect.size.width + self.trailTexture.size.width,
-                                           self.accumulatedRect.size.height + self.trailTexture.size.height));
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    UIGraphicsBeginImageContext(CGSizeMake(self.accumulatedRect.size.width + self.trailTextureSize.width,
+                                           self.accumulatedRect.size.height + self.trailTextureSize.height));
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    UIGraphicsPushContext(context);
     
     CGFloat imageX = 0.0;
     CGFloat imageY = 0.0;
     
-    if (self.trailImageHorizontalAligment == kOGTrailComponentImageAligmentRight)
+    CGFloat newTrailPartX = self.trailTextureSize.width / 2;
+    CGFloat newTrailPartY = self.trailTextureSize.height / 2;
+    
+    if (self.trailImageHorizontalResize < 0)
     {
-        imageX = self.accumulatedRect.size.width - self.trailImage.size.width;
+        imageX -= self.trailImageHorizontalResize;
+    }
+    else
+    {
+        newTrailPartX = self.trailImage.size.width + self.trailImageHorizontalResize;
     }
     
-    if (self.trailImageVerticalAligment == kOGTrailComponentImageAligmentTop)
+    if (self.trailImageVerticalResize < 0)
     {
-        imageY = self.accumulatedRect.size.height - self.trailImage.size.height;
+        imageY = self.trailImageVerticalResize;
+    }
+    else
+    {
+        newTrailPartY = self.trailImage.size.height + self.trailImageVerticalResize;
     }
     
     [self.trailImage drawAtPoint:CGPointMake(imageX, imageY)];
-    CGContextDrawImage(ctx, self.trailTextureSize, self.trailTexture.CGImage);//size texture have to be configured
+    [self.trailTextureImage drawInRect:CGRectMake(newTrailPartX,
+                                                  newTrailPartY,
+                                                  self.trailTextureSize.width,
+                                                  self.trailTextureSize.height)];
     
-    UIImage *textureImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsPopContext();
     
+    UIImage *newTrailImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
+    self.trailImage = newTrailImage;
+    
 }
 
 - (void)updateAccumulatedrectWithCurrentPosition
@@ -135,31 +138,42 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
         
         if (currentPosition.x < x)
         {
-            width += x - currentPosition.x;
-            x = currentPosition.x;
+            self.trailImageHorizontalResize = currentPosition.x - x;
             
-            self.trailImageHorizontalAligment = kOGTrailComponentImageAligmentLeft;
+            width -= self.trailImageHorizontalResize;
+            x = currentPosition.x;
         }
         else if (currentPosition.x > x + width)
         {
-            width = currentPosition.x - x;
+            self.trailImageHorizontalResize = currentPosition.x - width - x;
             
-            self.trailImageHorizontalAligment = kOGTrailComponentImageAligmentLeft;
+            width = currentPosition.x - x;
+        }
+        else
+        {
+            self.trailImageHorizontalResize = 0.0;
         }
         
         if (currentPosition.y < y)
         {
-            height += y - currentPosition.y;
-            y = currentPosition.y;
+            self.trailImageVerticalResize = currentPosition.y - y;
             
-            self.trailImageVerticalAligment = kOGTrailComponentImageAligmentBottom;
+            height -= self.trailImageVerticalResize;
+            y = currentPosition.y;
         }
         else if (currentPosition.y > y + height)
         {
+            self.trailImageVerticalResize = currentPosition.y - height - y;
+            
             height = currentPosition.y - y;
-        
-            self.trailImageVerticalAligment = kOGTrailComponentImageAligmentTop;
         }
+        else
+        {
+            self.trailImageVerticalResize = 0.0;
+        }
+        
+        self.trailSpriteNodePosition = CGPointMake(x - self.trailTextureSize.width / 2,
+                                                   y - self.trailTextureSize.height / 2);
         
         self.accumulatedRect = CGRectMake(x, y, width, height);
     }
@@ -192,7 +206,13 @@ typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
     _targetNode = targetNode;
     
     CGPoint currentPosition = self.currentPosition;
+    
+    self.trailSpriteNodePosition = currentPosition;
     self.accumulatedRect = CGRectMake(currentPosition.x, currentPosition.y, 0.0, 0.0);
+    
+    self.spriteNode.position = currentPosition;
+    self.spriteNode.zPosition = self.renderComponent.node.zPosition - 1;
+    [targetNode addChild:self.spriteNode];
 }
 
 @end
