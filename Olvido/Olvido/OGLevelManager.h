@@ -17,16 +17,11 @@
 @property (nonatomic, weak) SKView *view;
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
-@property (nonatomic, copy, readonly) NSString *currentSceneName;
-@property (nonatomic, strong, readonly) OGGameScene *currentGameScene;
-@property (nonatomic, strong, readonly) OGStoryScene *currentStoryScene;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
 
 + (OGLevelManager *)sharedInstance;
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;
-- (void)runGameScene;
-- (void)runStoryScene;
 
 @end

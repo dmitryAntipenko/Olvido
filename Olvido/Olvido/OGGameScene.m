@@ -130,6 +130,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 {
     [super didMoveToView:view];
     
+    self.sceneDelegate = (id<OGGameSceneDelegate>) [OGLevelManager sharedInstance];
+    
     self.physicsWorld.contactDelegate = self;
     self.lastUpdateTimeInterval = 0.0;
     

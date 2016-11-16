@@ -28,15 +28,15 @@
 	</dict>
 	<dict>
 		<key>ClassName</key>
-		<string>OGStoryScene1</string>
+		<string>OGStoryScene</string>
 		<key>FileName</key>
-		<string>OGStoryScene1</string>
+		<string>OGChapter1</string>
 	</dict>
 	<dict>
 		<key>ClassName</key>
 		<string>OGInitialLevel</string>
 		<key>FileName</key>
-		<string>OGInitialLevel</string>
+		<string>Level1</string>
 		<key>OnDemandResources</key>
 		<array>
 			<string>OGBullet</string>
