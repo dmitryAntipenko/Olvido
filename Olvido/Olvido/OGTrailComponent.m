@@ -8,15 +8,34 @@
 
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
+
+
+
+typedef NS_ENUM(NSUInteger, OGTrailComponentImageVerticalAligment)
+{
+    kOGTrailComponentImageAligmentTop = 0x00 << 0,
+    kOGTrailComponentImageAligmentBottom = 0x01 << 0
+};
+
+typedef NS_ENUM(NSUInteger, OGTrailComponentImageHorizontalAligment)
+{
+    kOGTrailComponentImageAligmentLeft = 0x00 << 1,
+    kOGTrailComponentImageAligmentRight = 0x01 << 1
+};
+
 @interface OGTrailComponent ()
 
 @property (nonatomic, strong) SKTexture *trailTexture;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, assign) CGPoint lastPosition;
 @property (nonatomic, assign) CGPoint currentPosition;
-@property (nonatomic, strong) UIImage *trail;
+@property (nonatomic, strong) UIImage *trailImage;
+@property (nonatomic, strong) SKSpriteNode *spriteNode;
+@property (nonatomic, assign) OGTrailComponentImageVerticalAligment trailImageVerticalAligment;
+@property (nonatomic, assign) OGTrailComponentImageHorizontalAligment trailImageHorizontalAligment;
+@property (nonatomic, assign) CGSize trailTextureSize;
 
-@property (nonatomic, assign) CGRect trailAccumulatedRect;
+@property (nonatomic, assign) CGRect accumulatedRect;
 
 @end
 
@@ -33,7 +52,7 @@
         if (self)
         {
             _trailTexture = trailTexture;
-            _trail = [[UIImage alloc] init];
+            _trailImage = [[UIImage alloc] init];
         }
     }
     else
@@ -42,49 +61,6 @@
     }
     
     return self;
-}
-
-- (void)didAddToEntity
-{
-    if (self.targetNode)
-    {
-        self.lastPosition = self.currentPosition;
-    }
-}
-
-- (void)calculateAccumulatedrectWithCurrentPosition:(CGPoint)currentPosition
-{
-    if (!CGRectContainsPoint(self.trailAccumulatedRect, currentPosition))
-    {
-        CGFloat x = self.trailAccumulatedRect.origin.x;
-        CGFloat y = self.trailAccumulatedRect.origin.y;
-        CGFloat width = self.trailAccumulatedRect.size.width;
-        CGFloat height = self.trailAccumulatedRect.size.height;
-        
-        if (currentPosition.x < x)
-        {
-            width += x - currentPosition.x;
-            x = currentPosition.x;
-        }
-        else if (currentPosition.x > x + width)
-        {
-            width = currentPosition.x - x;
-        }
-        
-        if (currentPosition.y < y)
-        {
-            height += y - currentPosition.y;
-            y = currentPosition.y;
-        }
-        else if (currentPosition.y > y + height)
-        {
-            height = currentPosition.y - y;
-        }
-        
-        
-        
-        self.trailAccumulatedRect = CGRectMake(x, y, width, height);
-    }
 }
 
 + (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture
@@ -109,20 +85,84 @@
     newNode.position = point;
     newNode.zPosition = self.renderComponent.node.zPosition - 1;
     
-    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [self updateAccumulatedrectWithCurrentPosition];
+    [self updateTrailImage];
+    
+//    [self addChild:sprite];
+//    
+//    UIImage *image = UIIMage
+//    
+//    [self.targetNode addChild:newNode];
+}
+
+- (void)updateTrailImage
+{
+    UIGraphicsBeginImageContext(CGSizeMake(self.accumulatedRect.size.width + self.trailTexture.size.width,
+                                           self.accumulatedRect.size.height + self.trailTexture.size.height));
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[SKColor yellowColor] setFill];
-    CGContextFillEllipseInRect(ctx, CGRectMake(64, 64, 128, 128));
+    
+    CGFloat imageX = 0.0;
+    CGFloat imageY = 0.0;
+    
+    if (self.trailImageHorizontalAligment == kOGTrailComponentImageAligmentRight)
+    {
+        imageX = self.accumulatedRect.size.width - self.trailImage.size.width;
+    }
+    
+    if (self.trailImageVerticalAligment == kOGTrailComponentImageAligmentTop)
+    {
+        imageY = self.accumulatedRect.size.height - self.trailImage.size.height;
+    }
+    
+    [self.trailImage drawAtPoint:CGPointMake(imageX, imageY)];
+    CGContextDrawImage(ctx, self.trailTextureSize, self.trailTexture.CGImage);//size texture have to be configured
     
     UIImage *textureImage = UIGraphicsGetImageFromCurrentImageContext();
-    SKTexture *texture = [SKTexture textureWithImage:textureImage];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:texture];
     
-    [self addChild:sprite];
+    UIGraphicsEndImageContext();
+}
+
+- (void)updateAccumulatedrectWithCurrentPosition
+{
+    CGPoint currentPosition = self.currentPosition;
     
-    UIImage *image = UIIMage
-    
-    [self.targetNode addChild:newNode];
+    if (!CGRectContainsPoint(self.accumulatedRect, currentPosition))
+    {
+        CGFloat x = self.accumulatedRect.origin.x;
+        CGFloat y = self.accumulatedRect.origin.y;
+        CGFloat width = self.accumulatedRect.size.width;
+        CGFloat height = self.accumulatedRect.size.height;
+        
+        if (currentPosition.x < x)
+        {
+            width += x - currentPosition.x;
+            x = currentPosition.x;
+            
+            self.trailImageHorizontalAligment = kOGTrailComponentImageAligmentLeft;
+        }
+        else if (currentPosition.x > x + width)
+        {
+            width = currentPosition.x - x;
+            
+            self.trailImageHorizontalAligment = kOGTrailComponentImageAligmentLeft;
+        }
+        
+        if (currentPosition.y < y)
+        {
+            height += y - currentPosition.y;
+            y = currentPosition.y;
+            
+            self.trailImageVerticalAligment = kOGTrailComponentImageAligmentBottom;
+        }
+        else if (currentPosition.y > y + height)
+        {
+            height = currentPosition.y - y;
+        
+            self.trailImageVerticalAligment = kOGTrailComponentImageAligmentTop;
+        }
+        
+        self.accumulatedRect = CGRectMake(x, y, width, height);
+    }
 }
 
 - (CGPoint)currentPosition
@@ -139,12 +179,20 @@
 
 - (OGRenderComponent *)renderComponent
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (!_renderComponent)
+    {
         _renderComponent = (OGRenderComponent *)[self.entity componentForClass:OGRenderComponent.self];
-    });
+    }
     
     return _renderComponent;
+}
+
+- (void)setTargetNode:(SKNode *)targetNode
+{
+    _targetNode = targetNode;
+    
+    CGPoint currentPosition = self.currentPosition;
+    self.accumulatedRect = CGRectMake(currentPosition.x, currentPosition.y, 0.0, 0.0);
 }
 
 @end
