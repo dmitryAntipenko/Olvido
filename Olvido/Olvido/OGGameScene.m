@@ -48,6 +48,7 @@ NSString *const kOGGameSceneItemsNodeName = @"items";
 NSString *const kOGGameSceneWeaponNodeName = @"weapon";
 NSString *const kOGGameSceneSourceNodeName = @"source";
 NSString *const kOGGameSceneDestinationNodeName = @"destination";
+NSString *const kOGGameSceneDoorLockedKey = @"locked";
 
 NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -211,10 +212,12 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
             OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
             door.transitionDelegate = self;
             
+            BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
+            
             door.lockComponent.target = self.player.render.node;
             door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
             door.lockComponent.closed = YES;
-            door.lockComponent.locked = NO;
+            door.lockComponent.locked = doorLocked;
             
             NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
             NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];

@@ -32,7 +32,9 @@
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
-    view.showsNodeCount = YES;    
+    view.showsNodeCount = YES;
+    view.showsPhysics = YES;
+    view.showsFields = YES;
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];

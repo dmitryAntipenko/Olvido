@@ -19,16 +19,14 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     self.lockComponent.closed = YES;
-    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor redColor];
     
-    SKPhysicsBody *targetPhysicsBody = self.lockComponent.target.physicsBody;
+    SKNode *doorNode = self.renderComponent.node;
+    doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorNode.calculateAccumulatedFrame.size];
+    doorNode.physicsBody.dynamic = NO;
     
-    OGColliderType *targetColliderType = [OGColliderType colliderTypeWithCategoryBitMask:targetPhysicsBody.categoryBitMask];
     OGColliderType *doorColliderType = [OGColliderType door];
-    NSMutableArray *contactColliders = [OGColliderType definedCollisions][targetColliderType];
-    [contactColliders addObject:doorColliderType];
-    
-    targetPhysicsBody.collisionBitMask = (uint32_t)targetColliderType.collisionBitMask;
+    doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
