@@ -9,6 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
 #import "OGResourceLoadable.h"
+#import "OGRulesComponentDelegate.h"
 
 @class OGEnemyConfiguration;
 @class OGHealthComponent;
@@ -18,6 +19,7 @@
 @class OGMovementComponent;
 @class OGPhysicsComponent;
 @class OGOrientationComponent;
+@class OGRulesComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -32,7 +34,7 @@ extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
 extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 
-@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate>
+@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate, OGRulesComponentDelegate>
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -41,6 +43,7 @@ extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 @property (nonatomic, strong) OGMovementComponent *movementComponent;
 @property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong) OGRulesComponent *rulesComponent;
 
 @property (nonatomic, strong) GKAgent2D *agent;
 @property (nonatomic, strong) GKGraph *graph;

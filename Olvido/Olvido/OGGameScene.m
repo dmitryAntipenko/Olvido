@@ -43,6 +43,9 @@
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
 
+#import "OGEntitySnapshot.h"
+#import "OGLevelStateSnapshot.h"
+
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
 NSString *const kOGGameSceneWeaponNodeName = @"weapon";
@@ -80,9 +83,10 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
-@property (nonatomic, strong) NSMutableSet<GKEntity *> *mutableEntities;
+@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
+@property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
 @end
 
 @implementation OGGameScene
@@ -112,7 +116,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
             [OGDeathLevelState stateWithLevelScene:self]
         ]];
         
-        _mutableEntities = [[NSMutableSet alloc] init];
+        _mutableEntities = [[NSMutableArray alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
                              [[GKComponentSystem alloc] initWithComponentClass:GKAgent2D.self],
@@ -408,6 +412,20 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     }
 }
 
+#pragma mark - Snapshot
+
+- (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity
+{
+    if (self.levelSnapshot == nil)
+    {
+        self.levelSnapshot = [[OGLevelStateSnapshot alloc] initWithScene:self];
+    }
+    
+    NSUInteger index = [self.levelSnapshot.snapshot[kOGLevelStateSnapshotEntitiesKey] indexOfObject:entity];
+    
+    return [self.levelSnapshot.snapshot[kOGLevelStateSnapshotDistancesKey] objectAtIndex:index];
+}
+
 #pragma mark - Update
 
 - (void)update:(NSTimeInterval)currentTime
@@ -419,6 +437,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     {
         self.lastUpdateTimeInterval = currentTime;
     }
+    
+    self.levelSnapshot = nil;
     
     CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;        
@@ -454,9 +474,9 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
 }
 
-- (NSSet<GKEntity *> *)entities
+- (NSArray<GKEntity *> *)entities
 {
-    return (NSSet<GKEntity *> *)self.mutableEntities;
+    return (NSArray<GKEntity *> *)self.mutableEntities;
 }
 
 - (GKObstacleGraph *)obstaclesGraph

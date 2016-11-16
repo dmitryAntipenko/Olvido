@@ -186,6 +186,8 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     return pointNode;
 }
 
+
+#warning
 - (NSArray<NSValue *> *)addGoalsToFollowPathWithStartPoint:(CGPoint)startPoint
                                                   endPoint:(CGPoint)endPoint
                                                 pathRadius:(CGFloat)pathRadius
@@ -196,7 +198,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     GKGraphNode2D *startNode = [self connectedNodeWithPoint:startPoint onObstacleGraphInScene:scene];
     GKGraphNode2D *endNode = [self connectedNodeWithPoint:endPoint onObstacleGraphInScene:scene];
     
-    if (endNode || endNode)
+    if (startNode && endNode)
     {
         NSArray *pathNodes = [scene.obstaclesGraph findPathFromNode:startNode toNode:endNode];
         
@@ -213,9 +215,11 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
                 [result addObject:[NSValue valueWithCGPoint:position]];
             }
         }
+        
+        [scene.obstaclesGraph removeNodes:@[startNode, endNode]];
     }
     
-    [scene.obstaclesGraph removeNodes:@[startNode, endNode]];
+    
     
     return result;
 }

@@ -13,12 +13,20 @@
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGRulesComponent.h"
 #import "OGAttacking.h"
 #import "OGEnemyBehavior.h"
 #import "OGOrientationComponent.h"
 #import "OGEnemyEntityAgentControlledState.h"
+#import "OGEntitySnapshot.h"
 
-#import <objc/runtime.h>
+#import "OGPlayerNearRule.h"
+#import "OGPlayerMediumRule.h"
+#import "OGPlayerFarRule.h"
+
+#import "OGEntityDistance.h"
+
+#import "OGPlayerEntity.h"
 
 CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius = 30.0;
 NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
@@ -42,6 +50,9 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 @property (nonatomic, assign, readonly) CGPoint agentOffset;
 
 @property (nonatomic, assign) CGFloat lastPositionX;
+
+@property (nonatomic, weak) GKAgent2D *huntAgent;
+@property (nonatomic, assign) CGPoint closestPointOnPath;
 @end
 
 @implementation OGEnemyEntity
@@ -103,6 +114,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         [_renderComponent.node addChild:_animationComponent.spriteNode];
         
         _lastPositionX = _renderComponent.node.position.x;
+        
+        OGPlayerNearRule *playerNearRule = [[OGPlayerNearRule alloc] init];
+        OGPlayerMediumRule *playerMediumRule = [[OGPlayerMediumRule alloc] init];
+        OGPlayerFarRule *playerFarRule = [[OGPlayerFarRule alloc] init];
+        
+        _rulesComponent = [[OGRulesComponent alloc] initWithRules:@[playerNearRule, playerMediumRule, playerFarRule]];
+        [self addComponent:_rulesComponent];
+        _rulesComponent.delegate = self;
     }
     
     return self;
@@ -232,10 +251,10 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
             }
             case kOGEnemyEntityMandateHunt:
             {
-//                result = [OGEnemyBehavior behaviorWithAgent:self.agent
-//                                               huntingAgent:<#(GKAgent2D *)#>
-//                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
-//                                                      scene:self];
+                result = [OGEnemyBehavior behaviorWithAgent:self.agent
+                                               huntingAgent:self.huntAgent
+                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                      scene:(OGGameScene *)scene];
                 break;
             }
             case kOGEnemyEntityMandateAttack:
@@ -244,9 +263,8 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
             }
             case kOGEnemyEntityMandateReturnToPositionOnPath:
             {
-                CGPoint closestPoint = [self closestPointOnPathWithGraph:self.graph];
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
-                                                   endPoint:closestPoint
+                                                   endPoint:self.closestPointOnPath
                                                  pathRadius:kOGEnemyEntityPatrolPathRadius
                                                       scene:(OGGameScene *)scene];
                 break;
@@ -268,15 +286,12 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     
     CGPoint result = ((SKNode *)graph.nodes[0]).position;
     
-    for (NSUInteger i = 0; i < nodesCounter; i++)
+    for (NSUInteger i = 0; i < nodesCounter - 1; i++)
     {
-        if (i != nodesCounter)
-        {
-            CGFloat distance = [self distanceBetweenStartPoint:enemyPosition endPoint:result];
-            CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
-            
-            result = (distance < nextDistance) ? result : ((SKNode *)graph.nodes[i+1]).position;
-        }
+        CGFloat distance = [self distanceBetweenStartPoint:enemyPosition endPoint:result];
+        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+        
+        result = (distance < nextDistance) ? result : ((SKNode *)graph.nodes[i+1]).position;
     }
     
     return result;
@@ -290,14 +305,11 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     
     CGFloat result = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[0]).position];
     
-    for (NSUInteger i = 0; i < nodesCounter; i++)
+    for (NSUInteger i = 0; i < nodesCounter - 1; i++)
     {
-        if (i != nodesCounter)
-        {
-            CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
-            
-            result = (result < nextDistance) ? result : nextDistance;
-        }
+        CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:((SKNode *)graph.nodes[i+1]).position];
+        
+        result = (result < nextDistance) ? result : nextDistance;
     }
 
     return result;
@@ -327,6 +339,54 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 - (CGPoint)agentOffset
 {
     return CGPointMake(0.0, -25.0);
+}
+
+- (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
+{
+    OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
+    
+    NSArray<NSNumber *> *huntPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
+    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObject:@([ruleSystem minimumGradeForFacts:huntPlayerRawMinimumGradeForFacts])];
+    
+    CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
+    
+    if (huntPlayer > 0.0)
+    {
+        OGPlayerEntity *player = (OGPlayerEntity *) ((OGEntityDistance *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey]).target;
+        
+        if (player.agent)
+        {
+            self.huntAgent = player.agent;
+            self.mandate = kOGEnemyEntityMandateHunt;
+        }
+    }
+    else
+    {
+        if (self.mandate != kOGEnemyEntityMandateFollowPath)
+        {
+            self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
+            self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+        }
+    }
+}
+
+- (CGFloat)maxWithArray:(NSArray<NSNumber *> *)array defaultValue:(CGFloat)defaultValue
+{
+    CGFloat result = defaultValue;
+    
+    NSUInteger arrayCounter = array.count;
+    
+    if (arrayCounter != 0)
+    {
+        result = (result > array[0].floatValue) ? result : array[0].floatValue;
+    }
+    
+    for (NSUInteger i = 0; i < arrayCounter - 1; i++)
+    {
+        result = (result > array[i+1].floatValue) ? result : array[i+1].floatValue;
+    }
+    
+    return result;
 }
 
 @end

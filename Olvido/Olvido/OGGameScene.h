@@ -12,6 +12,8 @@
 #import "OGTransitionComponentDelegate.h"
 #import "OGEntityManaging.h"
 
+@class OGEntitySnapshot;
+
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
@@ -22,7 +24,7 @@
 @property (nonatomic, strong, readonly) NSArray<SKSpriteNode *> *obstacleSpriteNodes;
 @property (nonatomic, strong, readonly) NSArray<GKPolygonObstacle *> *polygonObstacles;
 
-@property (nonatomic, strong, readonly) NSSet<GKEntity *> *entities;
+@property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
 
 - (void)pause;
 
@@ -35,5 +37,7 @@
 - (void)gameOver;
 
 - (void)runStoryConclusion;
+
+- (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity;
 
 @end
