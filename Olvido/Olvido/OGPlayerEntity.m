@@ -5,6 +5,8 @@
 //  Created by Дмитрий Антипенко on 11/4/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
+#import "OGTrailComponent.h"
+
 
 #import "OGPlayerEntity.h"
 #import "OGRenderComponent.h"
@@ -104,10 +106,18 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         [self addComponent:_weaponComponent];
         
         _canTakeWeapon = YES;
+        
+        //TEMPORARY CODE//
+        
+        OGTrailComponent *trailComponent = [OGTrailComponent trailComponentWithTexture:[SKTexture textureWithImageNamed:@"slime"]];
+//        trailComponent.targetNode = _render.node.parent;
+        [self addComponent:trailComponent];
+        
+        //TEMPORARY CODE//
     }
     
     return self;
-}
+} 
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGTrailComponent.h"
+
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
@@ -42,6 +44,7 @@
 #import "OGLevelManager.h"
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
+#import "OGZPositionEnum.m"
 
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
@@ -115,6 +118,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGTrailComponent.self],
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
@@ -185,6 +189,13 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
     self.player.render.node.position = playerInitialNode.position;
+    
+    //TEMPORERY CODE//
+    
+    self.player.render.node.zPosition = OGZPositionCategoryPhysicsWorld;
+    ((OGTrailComponent *)[self.player componentForClass:OGTrailComponent.self]).targetNode = self;
+    
+    //TEMPORERY CODE//
 }
 
 - (void)createEnemies

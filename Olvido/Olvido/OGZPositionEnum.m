@@ -10,9 +10,10 @@
 
 typedef NS_ENUM(NSInteger, OGZPositionCategory)
 {
-    OGZPositionCategoryBackground = -200,
-    OGZPositionCategoryPhysicsWorld = -100,
-    OGZPositionCategoryAbovePhysicsWorld = 0,
-    OGZPositionCategoryUnderForeground = 100,
-    OGZPositionCategoryForeground = 200
+    OGZPositionCategoryBackground = 0,
+    OGZPositionCategoryUnderPhysicsWorld = 1000,
+    OGZPositionCategoryPhysicsWorld = 2000,
+    OGZPositionCategoryAbovePhysicsWorld = 3000,
+    OGZPositionCategoryUnderForeground = 4000,
+    OGZPositionCategoryForeground = 5000
 };
