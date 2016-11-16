@@ -10,11 +10,11 @@
 #import "OGGameSceneDelegate.h"
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
+#import "OGEntityManaging.h"
 
-@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate>
+@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
-
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 
 @property (nonatomic, strong) GKObstacleGraph *obstaclesGraph;
@@ -22,12 +22,16 @@
 @property (nonatomic, strong, readonly) NSArray<SKSpriteNode *> *obstacleSpriteNodes;
 @property (nonatomic, strong, readonly) NSArray<GKPolygonObstacle *> *polygonObstacles;
 
-@property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
+@property (nonatomic, strong, readonly) NSSet<GKEntity *> *entities;
 
 - (void)pause;
+
 - (void)restart;
+
 - (void)resume;
+
 - (void)pauseWithPauseScreen;
+
 - (void)gameOver;
 
 - (void)runStoryConclusion;

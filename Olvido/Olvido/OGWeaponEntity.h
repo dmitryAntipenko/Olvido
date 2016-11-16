@@ -9,6 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGAttacking.h"
 #import "OGInventoryItem.h"
+#import "OGEntityManaging.h"
 
 @class OGAnimationComponent;
 @class OGRenderComponent;
@@ -17,6 +18,8 @@
 @interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
+
+@property (nonatomic, weak) id<OGEntityManaging> delegate;
 
 @property (nonatomic, weak) GKEntity *owner;
 

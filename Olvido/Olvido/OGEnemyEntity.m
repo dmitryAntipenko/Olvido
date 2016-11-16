@@ -14,64 +14,144 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGAttacking.h"
+#import "OGEnemyBehavior.h"
+#import "OGOrientationComponent.h"
+#import "OGEnemyEntityAgentControlledState.h"
 
-#import "OGEnemyEntityConfiguration.h"
+#import <objc/runtime.h>
+
+CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius = 30.0;
+NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 
 NSString *const kOGEnemyEntityAtlasNamesEnemyIdle = @"EnemyIdle";
 NSString *const kOGEnemyEntityAtlasNamesEnemyWalk = @"EnemyWalk";
-CGFloat const kOGEnemyEntityPatrolPathRadius = 10;
+CGFloat const kOGEnemyEntityPatrolPathRadius = 10.0;
+CGFloat const kOGEnemyEntityMaximumSpeed = 300;
+CGFloat const kOGEnemyEntityMaximumAcceleration = 50;
+CGFloat const kOGEnemyEntityAgentMass = 0.25;
+NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
 static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 @interface OGEnemyEntity ()
 
-@property (nonatomic, strong) OGEnemyEntityConfiguration *enemyConfiguration;
-@property (nonatomic, strong) NSArray<NSValue *> *points;
-
 @property (nonatomic, assign) OGEnemyEntityMandate mandate;
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
 
+@property (nonatomic, assign, readonly) CGSize textureSize;
+@property (nonatomic, assign, readonly) CGPoint agentOffset;
+
+@property (nonatomic, assign) CGFloat lastPositionX;
 @end
 
 @implementation OGEnemyEntity
 
-- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
+- (instancetype)init
 {
-    return [self initWithPoints:nil];
+    return [self initWithConfiguration:nil graph:nil];
 }
 
-- (instancetype)initWithPoints:(NSArray<NSValue *> *)points
+
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
+                                graph:(GKGraph *)graph
 {
     self = [super init];
     
     if (self)
     {
-        _points = points;
+        _graph = graph;
         
-//        _enemyConfiguration = [[OGEnemyEntityConfiguration alloc] init];
-//        [self loadMiscellaneousAssets];
-//        
-//        _render = [[OGRenderComponent alloc] init];
-//        [self addComponent:_render];
-//        
-//        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
-//                                                      colliderType:[OGColliderType enemy]];
-        [self addComponent:_physics];
+        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
         
-        _render.node.physicsBody = _physics.physicsBody;
-        _render.node.physicsBody.allowsRotation = NO;
+        _renderComponent = [[OGRenderComponent alloc] init];
         
-        _movement = [[OGMovementComponent alloc] init];
-        [self addComponent:_movement];
+        _renderComponent.node.position = position;
         
-        _intelligence = [[OGIntelligenceComponent alloc] initWithStates:nil];
-        //[self addComponent:_intelligence];
+        [self addComponent:_renderComponent];
+
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
+                                                               colliderType:[OGColliderType enemy]];
+        [self addComponent:_physicsComponent];
         
-        _animation = [[OGAnimationComponent alloc] init];
-        [self addComponent:_animation];
+        _orientationComponent = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientationComponent];
+        
+        _mandate = kOGEnemyEntityMandateFollowPath;
+        
+        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
+        _renderComponent.node.physicsBody.allowsRotation = NO;
+        
+        _agent = [[GKAgent2D alloc] init];
+        _agent.delegate = self;
+        
+        _agent.position = (vector_float2){_renderComponent.node.position.x, _renderComponent.node.position.y};
+        _agent.maxSpeed = kOGEnemyEntityMaximumSpeed;
+        _agent.maxAcceleration = kOGEnemyEntityMaximumAcceleration;
+        _agent.mass = kOGEnemyEntityAgentMass;
+        _agent.radius = configuration.physicsBodyRadius;
+        _agent.behavior = [[GKBehavior alloc] init];
+        [self addComponent:_agent];
+        
+        OGEnemyEntityAgentControlledState *controlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[controlledState]];
+        [self addComponent:_intelligenceComponent];
+
+        _animationComponent = [[OGAnimationComponent alloc] initWithTextureSize:[self textureSize] animations:[OGEnemyEntity sOGEnemyEntityAnimations]];
+        [self addComponent:_animationComponent];
+
+        [_renderComponent.node addChild:_animationComponent.spriteNode];
+        
+        _lastPositionX = _renderComponent.node.position.x;
     }
     
     return self;
+}
+
+- (void)agentWillUpdate:(GKAgent *)agent
+{
+    [self updateAgentPositionToMatchNodePosition];
+}
+
+- (void)agentDidUpdate:(GKAgent *)agent
+{
+    if (self.intelligenceComponent && self.orientationComponent)
+    {
+        if ([self.intelligenceComponent.stateMachine.currentState isMemberOfClass:OGEnemyEntityAgentControlledState.self])
+        {
+            self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+            [self updateNodePositionToMatchAgentPosition];
+        }
+        else
+        {
+            [self updateAgentPositionToMatchNodePosition];
+        }
+        
+        if (_renderComponent.node.position.x != self.lastPositionX)
+        {
+            CGFloat differenceX = self.lastPositionX - _renderComponent.node.position.x;
+            self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+            
+            self.lastPositionX = _renderComponent.node.position.x;
+        }
+    }
+}
+
+- (void)updateAgentPositionToMatchNodePosition
+{
+    OGRenderComponent *renderComponent = self.renderComponent;
+    self.agent.position = (vector_float2){renderComponent.node.position.x + self.agentOffset.x, renderComponent.node.position.y + self.agentOffset.y};
+}
+
+- (void)updateNodePositionToMatchAgentPosition
+{
+    GKAgent2D *agent = self.agent;
+    self.renderComponent.node.position = CGPointMake(agent.position.x - self.agentOffset.x, agent.position.y - self.agentOffset.y);
+}
+
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    
 }
 
 + (BOOL)resourcesNeedLoading
@@ -124,16 +204,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
 }
 
-- (void)contactWithEntityDidBegin:(GKEntity *)entity
-{
-
-}
-
-+ (CGSize)textureSize
-{
-    return CGSizeMake(120.0, 120.0);
-}
-
 + (NSDictionary *)sOGEnemyEntityAnimations
 {
     return sOGEnemyEntityAnimations;
@@ -150,13 +220,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         result = [[GKBehavior alloc] init];
     }
     else{
-        
-        CGFloat radius;
     
         switch (self.mandate) {
             case kOGEnemyEntityMandateFollowPath:
             {
-                radius = kOGEnemyEntityPatrolPathRadius;
+                result = [OGEnemyBehavior behaviorWithAgent:self.agent
+                                                      graph:self.graph
+                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                      scene:(OGGameScene *)scene];
                 break;
             }
             case kOGEnemyEntityMandateHunt:
@@ -176,16 +247,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return result;
 }
 
-- (GKAgent2D *)agent
-{
-    if (!_agent)
-    {
-        _agent = (GKAgent2D *)[self componentForClass:GKAgent2D.self];
-    }
-    
-    return _agent;
-}
-
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent
 {
     CGFloat deltaX = self.agent.position.x - otherAgent.position.x;
@@ -194,5 +255,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return hypot(deltaX, deltaY);
 }
 
+- (CGSize)textureSize
+{
+    return CGSizeMake(80.0, 100.0);
+}
+
+- (CGPoint)agentOffset
+{
+    return CGPointMake(0.0, -25.0);
+}
 
 @end

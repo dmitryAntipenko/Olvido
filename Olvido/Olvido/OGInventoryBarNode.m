@@ -55,7 +55,28 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
     return [[self alloc] initWithInventoryComponent:inventoryComponent];
 }
 
-- (void)update
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kOGInventoryComponentInventoryItemsKeyPath])
+    {
+        [self updateInventoryBarItems];
+    }
+}
+
+- (void)dealloc
+{
+    [_inventoryComponent removeObserver:self forKeyPath:kOGInventoryComponentInventoryItemsKeyPath];
+}
+
+#pragma mark - Update
+
+- (void)updateConstraints
+{
+    [self updateInventoryBarSize];
+    [self updateInventoryBarItems];
+}
+
+- (void)updateInventoryBarSize
 {
     CGSize frameSize = CGSizeZero;
     
@@ -86,63 +107,47 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
     self.zPosition = OGZPositionCategoryForeground;
     
     self.itemSizeLength = height;
-    [self updateItems];
 }
 
-- (void)updateItems
+- (void)updateInventoryBarItems
 {
     [self removeAllChildren];
     
     if (self.inventoryComponent)
     {
-        __weak typeof(self) weakSelf = self;
-        
-        [self.inventoryComponent.inventoryItems enumerateObjectsUsingBlock:^(id<OGInventoryItem>  item, NSUInteger idx, BOOL * _Nonnull stop) 
+        [self.inventoryComponent.inventoryItems enumerateObjectsUsingBlock:^(id<OGInventoryItem>  item, NSUInteger idx, BOOL * _Nonnull stop)
          {
-             if (weakSelf)
-             {
-                 typeof(weakSelf) strongSelf = weakSelf;
-                 
-                 SKTexture *itemTexture = item.texture;
-                 
-                 CGSize itemSize = CGSizeZero;
-                 
-                 if (itemTexture && itemTexture.size.width > 0 && itemTexture.size.height > 0)
-                 {
-                     CGFloat widthHeightFactor = itemTexture.size.width / itemTexture.size.height;
-                     
-                     if (widthHeightFactor > 1)
-                     {
-                         itemSize = CGSizeMake(self.itemSizeLength, self.itemSizeLength / widthHeightFactor);
-                     }
-                     else
-                     {
-                         itemSize = CGSizeMake(self.itemSizeLength * widthHeightFactor, self.itemSizeLength);
-                     }
-                     
-                     SKSpriteNode *itemNode = [SKSpriteNode spriteNodeWithTexture:itemTexture size:itemSize];
-                     CGFloat xPosition = (self.itemSizeLength - self.size.width) / 2 + self.itemSizeLength * idx;
-                     
-                     itemNode.position = CGPointMake(xPosition, kOGInventoryBarNodeDefaultItemNodeYPosition);
-                     
-                     [strongSelf addChild:itemNode];
-                 }
-             }
+             [self updateCellWithItem:item index:idx];
          }];
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+- (void)updateCellWithItem:(id<OGInventoryItem>)item index:(NSUInteger)index
 {
-    if ([keyPath isEqualToString:kOGInventoryComponentInventoryItemsKeyPath])
+    SKTexture *itemTexture = item.texture;
+    
+    CGSize itemSize = CGSizeZero;
+    
+    if (itemTexture && itemTexture.size.width > 0 && itemTexture.size.height > 0)
     {
-        [self updateItems];
+        CGFloat widthHeightFactor = itemTexture.size.width / itemTexture.size.height;
+        
+        if (widthHeightFactor > 1)
+        {
+            itemSize = CGSizeMake(self.itemSizeLength, self.itemSizeLength / widthHeightFactor);
+        }
+        else
+        {
+            itemSize = CGSizeMake(self.itemSizeLength * widthHeightFactor, self.itemSizeLength);
+        }
+        
+        SKSpriteNode *itemNode = [SKSpriteNode spriteNodeWithTexture:itemTexture size:itemSize];
+        CGFloat xPosition = (self.itemSizeLength - self.size.width) / 2 + self.itemSizeLength * index;
+        
+        itemNode.position = CGPointMake(xPosition, kOGInventoryBarNodeDefaultItemNodeYPosition);
+        
+        [self addChild:itemNode];
     }
-}
-
-- (void)dealloc
-{
-    [_inventoryComponent removeObserver:self forKeyPath:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
 @end

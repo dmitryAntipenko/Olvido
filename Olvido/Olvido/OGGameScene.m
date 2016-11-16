@@ -17,7 +17,6 @@
 
 #import "OGPlayerEntity.h"
 #import "OGEnemyEntity.h"
-#import "OGEnemyEntityConfiguration.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
 #import "OGRenderComponent.h"
@@ -49,6 +48,8 @@ NSString *const kOGGameSceneItemsNodeName = @"items";
 NSString *const kOGGameSceneWeaponNodeName = @"weapon";
 NSString *const kOGGameSceneSourceNodeName = @"source";
 NSString *const kOGGameSceneDestinationNodeName = @"destination";
+NSString *const kOGGameSceneUserDataGraphs = @"Graphs";
+NSString *const kOGGameSceneUserDataGraph = @"Graph_";
 
 NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -57,8 +58,6 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 
 NSString *const kOGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const kOGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
-NSString *const kOGGameSceneDoorNodeUserDataSource = @"source";
-NSString *const kOGGameSceneDoorNodeUserDataDestination = @"destination";
 NSString *const kOGGameSceneObstacleName = @"obstacle";
 
 CGFloat const kOGGameScenePauseSpeed = 0.0;
@@ -116,6 +115,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
         _mutableEntities = [[NSMutableSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
+                             [[GKComponentSystem alloc] initWithComponentClass:GKAgent2D.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
@@ -196,15 +196,19 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 - (void)createEnemies
 {
+    NSUInteger counter = 0;
+    
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration];
-        [self addEntity:enemy];
-
-        SKNode *enemyInitialNode = [self childNodeWithName:enemyConfiguration.initialPointName];
-        enemy.render.node.position = enemyInitialNode.position;
+        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, counter];
+        GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
         
-        enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
+        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
+                                                                      graph:graph];
+    
+        [self addEntity:enemy];
+        
+        counter++;
     }
 }
 
@@ -244,7 +248,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
         [self.camera addChild:self.inventoryBarNode];
     }
     
-    [self.inventoryBarNode update];
+    [self.inventoryBarNode updateConstraints];
 }
 
 - (void)createSceneItems
@@ -255,9 +259,12 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     for (SKSpriteNode *weapon in weapons)
     {
         OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weapon];
+        shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
     }
 }
+
+#pragma mark - Entity Adding
 
 - (void)addEntity:(GKEntity *)entity
 {
@@ -281,6 +288,20 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     {
         [intelligenceComponent enterInitialState];
     }
+}
+
+- (void)removeEntity:(GKEntity *)entity
+{
+    SKNode *node = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    
+    [node removeFromParent];
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem removeComponentWithEntity:entity];
+    }
+    
+    [self.mutableEntities removeObject:entity];
 }
 
 #pragma mark - TransitionComponentDelegate
@@ -394,8 +415,13 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     [super update:currentTime];
     [self.cameraController update];
     
+    if (self.lastUpdateTimeInterval == 0)
+    {
+        self.lastUpdateTimeInterval = currentTime;
+    }
+    
     CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
-    self.lastUpdateTimeInterval = currentTime;
+    self.lastUpdateTimeInterval = currentTime;        
     
     for (GKComponentSystem *componentSystem in self.componentSystems)
     {
@@ -420,9 +446,9 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
 }
 
-- (NSArray<GKEntity *> *)entities
+- (NSSet<GKEntity *> *)entities
 {
-    return (NSArray<GKEntity *> *)self.mutableEntities;
+    return (NSSet<GKEntity *> *)self.mutableEntities;
 }
 
 - (GKObstacleGraph *)obstaclesGraph
@@ -430,7 +456,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     if (!_obstaclesGraph)
     {
         _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
-                                               bufferRadius:[OGEnemyEntityConfiguration pathfindingGraphBufferRadius]];
+                                                        bufferRadius:kOGEnemyEntityPathfindingGraphBufferRadius];
     }
     
     return _obstaclesGraph;

@@ -8,7 +8,6 @@
 
 #import "OGEnemyBehavior.h"
 #import "OGGameScene.h"
-#import "OGEnemyEntityConfiguration.h"
 #import "OGEnemyEntity.h"
 
 CGFloat const kOGEnemyBehaviorAgentSearchDistanceForFlocking = 50.0;
@@ -25,7 +24,7 @@ CGFloat const kOGEnemyBehaviorCohesionRadius = 50.0;
 CGFloat const kOGEnemyBehaviorCohesionAngle = (CGFloat) M_PI_2;
 CGFloat const kOGEnemyBehaviorCohesionWeight = 1.667;
 
-NSTimeInterval const kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 1.0;
+NSTimeInterval const kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 10.0;
 
 NSString *const kOGEnemyBehaviorBehaviorKey = @"behavior";
 NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
@@ -86,7 +85,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 }
 
 + (GKBehavior *)behaviorWithAgent:(GKAgent2D *)agent
-                 patrolPathPoints:(NSArray<NSValue *> *)patrolPathPoints
+                            graph:(GKGraph *)graph
                        pathRadius:(CGFloat)pathRadius
                             scene:(OGGameScene *)scene
 {
@@ -94,39 +93,18 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     [enemyBehavior addTargetSpeedGoalWithSpeed:agent.maxSpeed];
     [enemyBehavior addAvoidObstaclesGoalWithScene:scene];
     
-    vector_float2 *points;
+    GKPath *path = [GKPath pathWithGraphNodes:graph.nodes radius:pathRadius];
+    path.cyclical = YES;
     
-    
-    //GKPath *path = [GKPath pathWithPoints: count:[patrolPathPoints count] radius:pathRadius cyclical:YES];
+    [enemyBehavior addFollowAndStayOnPathGoalsWithPath:path];
     
     return enemyBehavior;
 }
 
-//static func behavior(forAgent agent: GKAgent2D, patrollingPathWithPoints patrolPathPoints: [CGPoint], pathRadius: Float, inScene scene: LevelScene) -> GKBehavior {
-//    let behavior = TaskBotBehavior()
-//    
-//    // Add basic goals to reach the `TaskBot`'s maximum speed and avoid obstacles.
-//    behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
-//    behavior.addAvoidObstaclesGoal(forScene: scene)
-//    
-//    // Convert the patrol path to an array of `float2`s.
-//    
-//    let pathVectorPoints = patrolPathPoints.map { float2($0) }
-//    
-//    // Create a cyclical (closed) `GKPath` from the provided path points with the requested path radius.
-//    // GKPath(points: &pathVectorPoints, radius: <#T##Float#>, cyclical: <#T##Bool#>)
-//    let path = GKPath(points: pathVectorPoints, radius: pathRadius, cyclical: true)
-//    
-//    // Add "follow path" and "stay on path" goals for this path.
-//    behavior.addFollowAndStayOnPathGoals(for: path)
-//    
-//    return behavior
-//}
-
 - (NSArray<GKPolygonObstacle *> *)extrudedObstaclesContainingPoint:(CGPoint)point
                                                              scene:(OGGameScene *)scene
 {
-    CGFloat extrusionRadius = (CGFloat) [OGEnemyEntityConfiguration pathfindingGraphBufferRadius] + 5.0;
+    CGFloat extrusionRadius = (CGFloat) kOGEnemyEntityPathfindingGraphBufferRadius + 5.0;
     
     NSMutableArray<GKPolygonObstacle *> *result = [NSMutableArray array];
     
@@ -242,7 +220,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 - (void)addAvoidObstaclesGoalWithScene:(OGGameScene *)scene
 {
     [self setWeight:1.0 forGoal:[GKGoal goalToAvoidObstacles:scene.polygonObstacles
-                                           maxPredictionTime:[OGEnemyEntityConfiguration maxPredictionTimeForObstacleAvoidance]]];
+                                           maxPredictionTime:kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance]];
 }
 
 - (void)addFollowAndStayOnPathGoalsWithPath:(GKPath *)path

@@ -17,6 +17,7 @@
 @class OGRenderComponent;
 @class OGMovementComponent;
 @class OGPhysicsComponent;
+@class OGOrientationComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -25,25 +26,30 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
     kOGEnemyEntityMandateAttack
 };
 
-@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType>
+extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
+extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
+extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGHealthComponent *health;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGMovementComponent *movement;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
+@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate>
+
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGMovementComponent *movementComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @property (nonatomic, strong) GKAgent2D *agent;
-
-+ (CGSize)textureSize;
+@property (nonatomic, strong) GKGraph *graph;
 
 + (NSDictionary *)sOGEnemyEntityAnimations;
 
-//- (instancetype)initWithPoints:(NSArray<NSValue *> *)points NS_DESIGNATED_INITIALIZER;
-
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
+- (GKBehavior *)behaviorForCurrentMandate;
 
-- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration;
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
+                                graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
+
 
 @end

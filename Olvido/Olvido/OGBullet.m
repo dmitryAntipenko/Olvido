@@ -11,7 +11,6 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
-#import "OGDeadBulletsManager.h"
 
 NSString *const kOGBulletTextureName = @"Bullet";
 
@@ -43,9 +42,8 @@ static SKTexture *sOGBulletEntityTexture;
 #pragma mark - Contact Handling
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
-{
-    [self.render.node removeFromParent];
-    [[OGDeadBulletsManager sharedManager] removeItem:self];
+{    
+    [self.delegate removeEntity:self];
 }
 
 #pragma mark - Resources
