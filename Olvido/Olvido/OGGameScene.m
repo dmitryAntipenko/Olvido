@@ -10,6 +10,7 @@
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
+#import "OGZPositionEnum.m"
 #import "OGGameSceneConfiguration.h"
 #import "OGEnemyConfiguration.h"
 #import "OGCameraController.h"
@@ -152,6 +153,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     inputNode.position = CGPointZero;
+    inputNode.zPosition = kOGZPositionHUD;
     [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];

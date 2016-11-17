@@ -12,6 +12,7 @@
 #import "OGBullet.h"
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
+#import "OGSoundComponent.h"
 
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
@@ -44,6 +45,9 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
                                                       colliderType:[OGColliderType weapon]];
         [self addComponent:_physics];
         
+        _sound = [[OGSoundComponent alloc] init];
+        [self addComponent:_sound];
+        
         _allowsAttacking = YES;
     }
     
@@ -72,7 +76,10 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
             bullet.delegate = self.delegate;
             [self.delegate addEntity:bullet];
             
-            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];            
+            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
+            
+            self.sound.target = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
+            [self.sound playSoundOnce:@"laser_shot.mp3"];
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
@@ -105,6 +112,11 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 }
 
 #pragma mark - OGInventoryItem
+
+- (void)didTaken
+{
+    [self.render.node removeFromParent];
+}
 
 - (void)didThrown
 {

@@ -14,6 +14,7 @@
 @class OGAnimationComponent;
 @class OGRenderComponent;
 @class OGPhysicsComponent;
+@class OGSoundComponent;
 
 @interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGAnimationComponent *animation;
+@property (nonatomic, strong) OGSoundComponent *sound;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite;
 

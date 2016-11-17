@@ -124,12 +124,13 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
             [timer invalidate];
             timer = nil;
         }];
+        
+        [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }
     
-    if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
+    if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
+        && ![entity conformsToProtocol:@protocol(OGAttacking)])
     {
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
-        [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }
 }

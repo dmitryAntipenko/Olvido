@@ -24,7 +24,7 @@
     SKNode *doorNode = self.renderComponent.node;
     CGSize doorPhysicsBodySize = ((SKSpriteNode *) doorNode).size;
     doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorPhysicsBodySize];
-    doorNode.physicsBody.dynamic = YES;
+    doorNode.physicsBody.dynamic = NO;
     
     OGColliderType *doorColliderType = [OGColliderType door];
     doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
