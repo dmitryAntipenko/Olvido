@@ -7,10 +7,16 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGGameSceneDelegate.h"
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
 #import "OGEntityManaging.h"
+
+@protocol OGGameSceneDelegate <NSObject>
+
+- (void)gameSceneDidCallFinish;
+- (void)gameSceneDidCallRestart;
+
+@end
 
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 

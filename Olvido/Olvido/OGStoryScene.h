@@ -7,8 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGGameSceneStoryDelegate.h"
 #import "OGBaseScene.h"
+
+@protocol OGGameSceneStoryDelegate <NSObject>
+
+- (void)storySceneDidCallFinish;
+
+@end
 
 @interface OGStoryScene : OGBaseScene
 

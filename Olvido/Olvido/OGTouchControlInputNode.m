@@ -7,7 +7,6 @@
 //
 
 #import "OGTouchControlInputNode.h"
-#import "OGThumbStickNodeDelegate.h"
 #import "OGThumbStickNode.h"
 
 @interface OGTouchControlInputNode () <OGThumbStickNodeDelegate>

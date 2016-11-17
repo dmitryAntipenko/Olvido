@@ -13,6 +13,7 @@
 NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
+NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
 
 @interface OGGameSceneConfiguration ()
 
@@ -52,7 +53,7 @@ NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
 
 - (void)loadConfigurationWithFileName:(NSString *)fileName
 {
-    NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"plist"];
+    NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:kOGGameSceneConfigurationFileExtension];
     
     NSDictionary *configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
     

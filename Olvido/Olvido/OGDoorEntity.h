@@ -9,6 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
 #import "OGResourceLoadable.h"
+#import "OGTransitionComponent.h"
 #import "OGTransitionComponentDelegate.h"
 
 @class OGRenderComponent;
