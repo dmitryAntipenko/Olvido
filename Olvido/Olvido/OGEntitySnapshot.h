@@ -18,7 +18,7 @@ extern NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey;
                         proximityFactor:(CGFloat)proximityFactor NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong, readonly) NSArray<OGEntityDistance *> *entityDistances;
-@property (nonatomic, strong) NSDictionary *playerTarget;
+@property (nonatomic, strong, readonly) NSDictionary *playerTarget;
 @property (nonatomic, assign) CGFloat proximityFactor;
 
 @end

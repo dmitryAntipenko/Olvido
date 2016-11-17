@@ -43,7 +43,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
     if (self)
     {
         _timeSinceRulesUpdate = 0.0;
-        [_ruleSystem addRulesFromArray:rules];
+        [self.ruleSystem addRulesFromArray:rules];
     }
     
     return self;
@@ -51,7 +51,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
 
 - (GKRuleSystem *)ruleSystem
 {
-    if (_ruleSystem)
+    if (!_ruleSystem)
     {
         _ruleSystem = [[GKRuleSystem alloc] init];
     }
@@ -73,8 +73,9 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
             OGEntitySnapshot *entitySnapshot = [scene entitySnapshotWithEntity:self.entity];
             
             [self.ruleSystem reset];
-            self.ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot] = entitySnapshot;
             
+            self.ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot] = entitySnapshot;
+
             [self.ruleSystem evaluate];
             
             

@@ -70,6 +70,14 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         [enemyBehavior setWeight:kOGEnemyBehaviorCohesionWeight forGoal:cohesionGoal];
     }
     
+    CGPoint agentPosition = CGPointMake(agent.position.x, agent.position.y);
+    CGPoint huntingAgentPosition = CGPointMake(huntingAgent.position.x, huntingAgent.position.y);
+    
+    [enemyBehavior addGoalsToFollowPathWithStartPoint:agentPosition
+                                             endPoint:huntingAgentPosition
+                                           pathRadius:pathRadius
+                                                scene:scene];
+    
     return enemyBehavior;
 }
 
@@ -100,7 +108,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 {
     OGEnemyBehavior *enemyBehavior = [[OGEnemyBehavior alloc] init];
     [enemyBehavior addTargetSpeedGoalWithSpeed:agent.maxSpeed];
-    //[enemyBehavior addAvoidObstaclesGoalWithScene:scene];
+    [enemyBehavior addAvoidObstaclesGoalWithScene:scene];
     
     GKPath *path = [GKPath pathWithGraphNodes:graph.nodes radius:pathRadius];
     path.cyclical = YES;
@@ -156,7 +164,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         }
     }
     
-    if ([result count] == 0)
+    if (result.count == 0)
     {
         result = nil;
     }
@@ -170,14 +178,14 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     
     [scene.obstaclesGraph connectNodeUsingObstacles:pointNode];
     
-    if ([pointNode.connectedNodes count] == 0)
+    if (pointNode.connectedNodes.count == 0 && scene.obstaclesGraph.nodes.count != 1)
     {
         [scene.obstaclesGraph removeNodes:@[pointNode]];
         
         NSArray<GKPolygonObstacle *> *intersectingObstacles = [self extrudedObstaclesContainingPoint:point scene:scene];
         [scene.obstaclesGraph connectNodeUsingObstacles:pointNode ignoringBufferRadiusOfObstacles:intersectingObstacles];
         
-        if ([pointNode.connectedNodes count] == 0)
+        if (pointNode.connectedNodes.count == 0)
         {
             [scene.obstaclesGraph removeNodes:@[pointNode]];
             pointNode = nil;

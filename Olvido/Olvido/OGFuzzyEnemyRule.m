@@ -25,6 +25,8 @@ NSString *const kOGFuzzyEnemyRuleSystemStateSnapshot = @"snapshot";
     if (self)
     {
         _fact = fact;
+        
+        self.salience = INT_MAX;
     }
     
     return self;
@@ -52,6 +54,16 @@ NSString *const kOGFuzzyEnemyRuleSystemStateSnapshot = @"snapshot";
 - (void)performActionWithSystem:(GKRuleSystem *)system
 {
     [system assertFact:@(self.fact) grade:[self grade]];
+}
+
+- (OGEntitySnapshot *)snapshot
+{
+    if (!_snapshot)
+    {
+        _snapshot = [[OGEntitySnapshot alloc] init];
+    }
+    
+    return _snapshot;
 }
 
 @end

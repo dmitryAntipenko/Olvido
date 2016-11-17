@@ -46,6 +46,8 @@
 #import "OGEntitySnapshot.h"
 #import "OGLevelStateSnapshot.h"
 
+#import "OGRulesComponent.h"
+
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
 NSString *const kOGGameSceneWeaponNodeName = @"weapon";
@@ -126,6 +128,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
                              [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
                              [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGRulesComponent.self],
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
@@ -423,7 +426,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     NSUInteger index = [self.levelSnapshot.snapshot[kOGLevelStateSnapshotEntitiesKey] indexOfObject:entity];
     
-    return [self.levelSnapshot.snapshot[kOGLevelStateSnapshotDistancesKey] objectAtIndex:index];
+    return [self.levelSnapshot.snapshot[kOGLevelStateSnapshotSnapshotsKey] objectAtIndex:index];
 }
 
 #pragma mark - Update

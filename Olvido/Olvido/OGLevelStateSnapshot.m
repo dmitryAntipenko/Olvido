@@ -9,15 +9,18 @@
 #import "OGLevelStateSnapshot.h"
 #import "OGGameScene.h"
 #import "OGEntityDistance.h"
+#import "OGEntitySnapshot.h"
 
 NSString *const kOGLevelStateSnapshotEntitiesKey = @"entities";
 NSString *const kOGLevelStateSnapshotDistancesKey = @"distances";
+NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
 
 @interface OGLevelStateSnapshot ()
 
 @property (nonatomic, strong) NSMutableDictionary *mutableSnapshot;
 @property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray<OGEntityDistance *> *> *mutableDistances;
+@property (nonatomic, strong) NSMutableArray<OGEntitySnapshot *> *mutableSnapshots;
 @end
 
 @implementation OGLevelStateSnapshot
@@ -28,23 +31,27 @@ NSString *const kOGLevelStateSnapshotDistancesKey = @"distances";
     
     if (self)
     {
-        _mutableDistances = [NSMutableArray arrayWithCapacity:scene.entities.count];
+        _mutableDistances = [NSMutableArray array];
+        _mutableEntities = [NSMutableArray array];
+        _mutableSnapshots = [NSMutableArray array];
         
         for (GKEntity *entity in scene.entities)
         {
-            [_mutableEntities addObject:entity];
-            
-            [_mutableDistances addObject:[NSMutableArray array]];
+            if ([entity componentForClass:GKAgent2D.self])
+            {
+                [_mutableEntities addObject:entity];
+                [_mutableDistances addObject:[NSMutableArray array]];
+            }
         }
         
-        for (GKEntity *entity in scene.entities)
+        for (GKEntity *entity in _mutableEntities)
         {
-            NSUInteger index = [scene.entities indexOfObject:entity];
+            NSUInteger index = [_mutableEntities indexOfObject:entity];
             GKAgent2D *sourceAgent = (GKAgent2D *) [entity componentForClass:GKAgent2D.self];
-           
-            for (NSUInteger i = index + 1; i < [scene.entities indexOfObject:scene.entities.lastObject]; i++)
+
+            for (NSUInteger i = index + 1; i <= [_mutableEntities indexOfObject:_mutableEntities.lastObject]; i++)
             {
-                GKEntity *targetEntity = scene.entities[i];
+                GKEntity *targetEntity = _mutableEntities[i];
                 GKAgent2D *targetAgent = (GKAgent2D *) [targetEntity componentForClass:GKAgent2D.self];
                
                 CGFloat dx = targetAgent.position.x - sourceAgent.position.x;
@@ -63,31 +70,22 @@ NSString *const kOGLevelStateSnapshotDistancesKey = @"distances";
             }
         }
         
+        for (GKEntity *entity in _mutableEntities)
+        {
+            NSUInteger index = [_mutableEntities indexOfObject:entity];
+            NSArray<OGEntityDistance *> *distances = [_mutableDistances objectAtIndex:index];
+            OGEntitySnapshot *entitySnapshot = [[OGEntitySnapshot alloc] initWithEntityDistances:distances proximityFactor:900];
+            
+            [_mutableSnapshots addObject:entitySnapshot];
+        }
+        
+        _mutableSnapshot = [NSMutableDictionary dictionary];
         _mutableSnapshot[kOGLevelStateSnapshotEntitiesKey] = _mutableEntities;
         _mutableSnapshot[kOGLevelStateSnapshotDistancesKey] = _mutableDistances;
+        _mutableSnapshot[kOGLevelStateSnapshotSnapshotsKey] = _mutableSnapshots;
     }
     
     return self;
-}
-
-- (NSMutableArray<GKEntity *> *)mutableEntities
-{
-    if (!_mutableEntities)
-    {
-        _mutableEntities = [[NSMutableArray alloc] init];
-    }
-    
-    return _mutableEntities;
-}
-
-- (NSMutableDictionary *)mutableSnapshot
-{
-    if (!_mutableSnapshot)
-    {
-        _mutableSnapshot = [[NSMutableDictionary alloc] init];
-    }
-    
-    return _mutableSnapshot;
 }
 
 - (NSDictionary *)snapshot

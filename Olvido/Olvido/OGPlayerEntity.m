@@ -49,6 +49,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     {
         _agent = [[GKAgent2D alloc] init];
         _agent.radius = configuration.physicsBodyRadius;
+        [self addComponent:_agent];
         
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
         [self addComponent:_inventoryComponent];

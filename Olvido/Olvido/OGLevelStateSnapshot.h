@@ -11,6 +11,7 @@
 
 extern NSString *const kOGLevelStateSnapshotEntitiesKey;
 extern NSString *const kOGLevelStateSnapshotDistancesKey;
+extern NSString *const kOGLevelStateSnapshotSnapshotsKey;
 
 @interface OGLevelStateSnapshot : GKComponent
 

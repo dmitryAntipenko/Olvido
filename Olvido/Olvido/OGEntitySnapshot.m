@@ -24,7 +24,7 @@ NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
 
 - (instancetype)init
 {
-    return [self initWithEntityDistances:[NSArray array] proximityFactor:0];
+    return [self initWithEntityDistances:[NSArray array] proximityFactor:0.0];
 }
 
 - (instancetype)initWithEntityDistances:(NSArray<OGEntityDistance *> *)entityDistances
@@ -36,7 +36,7 @@ NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
     {
         _proximityFactor = proximityFactor;
         _mutableEntityDistances = (NSMutableArray<OGEntityDistance *> *)entityDistances;
-        _playerTarget = [NSMutableDictionary dictionary];
+        _mutablePlayerTarget = [NSMutableDictionary dictionary];
         
         for (OGEntityDistance *entityDistance in _mutableEntityDistances)
         {
@@ -55,12 +55,12 @@ NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
 
 - (NSArray<OGEntityDistance *> *)entityDistances
 {
-    return (NSArray<OGEntityDistance *> *)self.mutableEntityDistances;
+    return (NSArray<OGEntityDistance *> *) self.mutableEntityDistances;
 }
 
-- (NSDictionary *)playerBotTarget
+- (NSDictionary *)playerTarget
 {
-    return (NSDictionary *)self.mutablePlayerTarget;
+    return (NSDictionary *) self.mutablePlayerTarget;
 }
 
 @end

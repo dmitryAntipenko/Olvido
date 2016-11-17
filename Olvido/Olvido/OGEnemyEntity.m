@@ -237,9 +237,10 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     {
         result = [[GKBehavior alloc] init];
     }
-    else{
-    
-        switch (self.mandate) {
+    else
+    {
+        switch (self.mandate)
+        {
             case kOGEnemyEntityMandateFollowPath:
             {
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
@@ -349,14 +350,16 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 {
     OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
     
-    NSArray<NSNumber *> *huntPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
-    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObject:@([ruleSystem minimumGradeForFacts:huntPlayerRawMinimumGradeForFacts])];
+    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
+    
+    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObjects:@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts]),
+                                          nil];
     
     CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
     
     if (huntPlayer > 0.0)
     {
-        OGPlayerEntity *player = (OGPlayerEntity *) ((OGEntityDistance *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey]).target;
+        OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey];
         
         if (player.agent)
         {
