@@ -14,8 +14,7 @@
 #import "OGPhysicsComponent.h"
 #import "OGLockComponent.h"
 #import "OGTransitionComponent.h"
-
-#import "OGPlayerEntity.h"
+#import "OGInventoryComponent.h"
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
@@ -24,14 +23,13 @@
 
 NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 
-@implementation OGDoorEntity
+@interface OGDoorEntity ()
 
-- (instancetype)init
-{
-    self = [self initWithSpriteNode:nil];
-    
-    return self;
-}
+@property (nonatomic, strong) NSMutableArray<NSString *> *keyIdentifiers;
+
+@end
+
+@implementation OGDoorEntity
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
@@ -41,7 +39,7 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
         
         if (self)
         {
-            [OGDoorEntity loadMiscellaneousAssets];
+            _keyIdentifiers = [NSMutableArray array];
             
             _render = [[OGRenderComponent alloc] init];
             _render.node = spriteNode;            
@@ -92,16 +90,32 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    if ([entity isKindOfClass:OGPlayerEntity.self])
+    if ([entity isKindOfClass:self.lockComponent.target.entity.class])
     {
-        [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transition completion:^()
-         {
-            [self swapTriggerPosition];
-             
-            SKNode *temp = self.transition.destination;
-            self.transition.destination = self.transition.source;
-            self.transition.source = temp;
-        }];
+        if (!self.lockComponent.isLocked)
+        {
+            [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transition completion:^()
+             {
+                [self swapTriggerPosition];
+                 
+                SKNode *temp = self.transition.destination;
+                self.transition.destination = self.transition.source;
+                self.transition.source = temp;
+            }];
+        }
+        else
+        {
+            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:OGInventoryComponent.self];
+            
+            for (NSString *identifier in self.keyIdentifiers)
+            {
+                if ([inventory containsItemWithIdentifier:identifier])
+                {
+                    self.lockComponent.locked = NO;
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -115,9 +129,27 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
     [trigger runAction:move];
 }
 
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
+- (void)addKeyName:(NSString *)keyName
+{
+    if (keyName)
+    {
+        [self.keyIdentifiers addObject:keyName];
+    }
+}
+
+- (void)removeKeyName:(NSString *)keyName
+{
+    if (keyName)
+    {
+        [self.keyIdentifiers removeObject:keyName];
+    }
+}
+
++ (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
     [OGDoorEntity loadMiscellaneousAssets];
+    
+    handler();
 }
 
 + (void)loadMiscellaneousAssets

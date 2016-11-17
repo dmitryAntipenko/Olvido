@@ -32,11 +32,10 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
     return [[self alloc] init];
 }
 
-
 - (instancetype)initWithCapacity:(NSUInteger)capacity
 {
     self = [super init];
-    
+            
     if (self)
     {
         _capacity = capacity;
@@ -98,6 +97,11 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
     }
     
     return result;
+}
+
+- (BOOL)containsItemWithIdentifier:(NSString *)identifier
+{
+    return self.mutableInventoryItems[identifier] != nil;
 }
 
 - (BOOL)isFull

@@ -7,7 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGActionButtonNodeDelegate.h"
+
+@protocol OGActionButtonNodeDelegate <NSObject>
+
+- (void)actionButtonNode:(SKSpriteNode *)node isPressed:(BOOL)pressed;
+
+@end
 
 @interface OGActionButtonNode : SKSpriteNode
 

@@ -16,9 +16,6 @@
 #import "OGContactNotifiableType.h"
 
 #import "OGPlayerEntity.h"
-#import "OGEnemyEntity.h"
-#import "OGDoorEntity.h"
-#import "OGWeaponEntity.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -29,6 +26,12 @@
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryComponent.h"
+
+#import "OGPlayerEntity.h"
+#import "OGEnemyEntity.h"
+#import "OGDoorEntity.h"
+#import "OGWeaponEntity.h"
+#import "OGKey.h"
 
 #import "OGInventoryBarNode.h"
 
@@ -51,6 +54,7 @@
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
 NSString *const kOGGameSceneWeaponNodeName = @"weapon";
+NSString *const kOGGameSceneKeysNodeName = @"keys";
 NSString *const kOGGameSceneSourceNodeName = @"source";
 NSString *const kOGGameSceneDestinationNodeName = @"destination";
 NSString *const kOGGameSceneUserDataGraphs = @"Graphs";
@@ -58,6 +62,8 @@ NSString *const kOGGameSceneUserDataGraph = @"Graph_";
 NSString *const kOGGameSceneDoorLockedKey = @"locked";
 
 NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
+
+NSString *const kOGGameSceneDoorKeyPrefix = @"key";
 
 NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
@@ -71,13 +77,13 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
-@interface OGGameScene ()
+NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
-@property (nonatomic, strong) OGPlayerEntity *player;
+@interface OGGameScene ()
 
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
-
+@property (nonatomic, strong) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
@@ -86,7 +92,11 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
-@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
+
+//@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
+
+@property (nonatomic, strong) NSMutableOrderedSet<GKEntity *> *mutableEntities;
+
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
@@ -118,8 +128,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
             [OGCompleteLevelState stateWithLevelScene:self],
             [OGDeathLevelState stateWithLevelScene:self]
         ]];
-        
-        _mutableEntities = [[NSMutableArray alloc] init];
+
+        _mutableEntities = [[NSMutableOrderedSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
                              [[GKComponentSystem alloc] initWithComponentClass:GKAgent2D.self],
@@ -191,7 +201,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
     self.cameraController.target = self.player.render.node;
     
-    [self.cameraController moveCameraToNode:self.currentRoom];
+    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
 }
 
 - (void)createPlayer
@@ -245,6 +255,14 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
             door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
             door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
             
+            for (NSString *key in doorNode.userData.allKeys)
+            {
+                if ([key hasPrefix:kOGGameSceneDoorKeyPrefix])
+                {
+                    [door addKeyName:doorNode.userData[key]];
+                }
+            }
+            
             [self addEntity:door];
         }
     }
@@ -267,12 +285,19 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 {
     SKNode *items = [self childNodeWithName:kOGGameSceneItemsNodeName];
     NSArray *weapons = [items childNodeWithName:kOGGameSceneWeaponNodeName].children;
+    NSArray *keys = [items childNodeWithName:kOGGameSceneKeysNodeName].children;
     
-    for (SKSpriteNode *weapon in weapons)
+    for (SKSpriteNode *weaponSprite in weapons)
     {
-        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weapon];
+        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weaponSprite];
         shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
+    }
+    
+    for (SKSpriteNode *keySprite in keys)
+    {
+        OGKey *key = [[OGKey alloc] initWithSpriteNode:keySprite];
+        [self addEntity:key];
     }
 }
 
@@ -324,7 +349,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode];
+    [self.cameraController moveCameraToNode:destinationNode duration:1.0];
     
     completion();
 }
@@ -340,15 +365,15 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 }
 
 - (void)handleContact:(SKPhysicsContact *)contact contactCallback:(void (^)(id<OGContactNotifiableType>, GKEntity *))callback
-{
+{    
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
     SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
     GKEntity *entityA = bodyA.node.entity;
     GKEntity *entityB = bodyB.node.entity;
     
-    OGColliderType *colliderTypeA = [OGColliderType colliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
-    OGColliderType *colliderTypeB = [OGColliderType colliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
+    OGColliderType *colliderTypeA = [OGColliderType existingColliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
+    OGColliderType *colliderTypeB = [OGColliderType existingColliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
     
     BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
     BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
@@ -461,9 +486,39 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 - (void)didFinishUpdate
 {
+    [super didFinishUpdate];
+    
     if (((OGRenderComponent *) [self.player componentForClass:OGRenderComponent.self]).node)
     {
         [self.player updateAgentPositionToMatchNodePosition];
+    }
+    
+    [self.mutableEntities sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
+     {
+         OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:OGRenderComponent.self];
+         OGRenderComponent *renderComponentB = (OGRenderComponent *) [objB componentForClass:OGRenderComponent.self];
+         NSComparisonResult result = NSOrderedSame;
+         
+         if (renderComponentA.node.position.y > renderComponentB.node.position.y)
+         {
+             result = NSOrderedAscending;
+         }
+         else
+         {
+             result = NSOrderedDescending;
+         }
+         
+         return result;
+     }];
+    
+    NSUInteger characterZPosition = kOGGameSceneZSpacePerCharacter;
+    
+    for (GKEntity *entity in self.entities)
+    {
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+        renderComponent.node.zPosition = characterZPosition;
+        
+        characterZPosition += kOGGameSceneZSpacePerCharacter;
     }
 }
 
@@ -486,7 +541,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 - (NSArray<GKEntity *> *)entities
 {
-    return (NSArray<GKEntity *> *)self.mutableEntities;
+    return self.mutableEntities.array;
 }
 
 - (GKObstacleGraph *)obstaclesGraph

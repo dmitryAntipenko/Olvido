@@ -7,12 +7,18 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGGameSceneDelegate.h"
 #import "OGBaseScene.h"
 #import "OGTransitionComponentDelegate.h"
 #import "OGEntityManaging.h"
 
 @class OGEntitySnapshot;
+
+@protocol OGGameSceneDelegate <NSObject>
+
+- (void)gameSceneDidCallFinish;
+- (void)gameSceneDidCallRestart;
+
+@end
 
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 

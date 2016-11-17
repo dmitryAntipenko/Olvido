@@ -7,8 +7,6 @@
 //
 
 #import "OGLevelManager.h"
-#import "OGGameSceneDelegate.h"
-#import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
 #import "OGConstants.h"

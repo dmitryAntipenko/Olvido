@@ -40,6 +40,7 @@
 		<key>OnDemandResources</key>
 		<array>
 			<string>OGEnemyEntity</string>
+			<string>OGDoorEntity</string>
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>
 		</array>

@@ -7,7 +7,6 @@
 //
 
 #import "OGTouchControlInputNode.h"
-#import "OGThumbStickNodeDelegate.h"
 #import "OGThumbStickNode.h"
 
 @interface OGTouchControlInputNode () <OGThumbStickNodeDelegate>
@@ -154,7 +153,7 @@
     [super touchesCancelled:touches withEvent:event];
     
     [self.leftThumbStick resetTouchPad];
-    [self.leftThumbStick resetTouchPad];
+    [self.rightThumbStick resetTouchPad];
     
     [self.leftControlTouches removeAllObjects];
     [self.rightControlTouches removeAllObjects];

@@ -23,48 +23,39 @@
 - (void)didUpdateDisplacement:(CGVector)displacement
 {
     self.displacement = displacement;
-    
-    if (self.isEnabled)
-    {
-        [self applyInputState];
-    }
+    [self applyInputState];
 }
 
 - (void)didUpdateAttackDisplacement:(CGVector)displacement
 {
     self.attackDisplacement = displacement;
-    
-    if (self.isEnabled)
-    {
-        [self applyInputState];
-    }
+    [self applyInputState];
 }
 
 - (void)didPressed:(BOOL)pressed
 {
     self.pressed = pressed;
-    
-    if (self.isEnabled)
-    {
-        [self applyInputState];
-    }
+    [self applyInputState];
 }
 
 - (void)applyInputState
 {
-    OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:OGMovementComponent.self];
-    
-    if (movementComponent)
+    if (self.isEnabled)
     {
-        movementComponent.displacementVector = self.displacement;
-    }
-    
-    OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:OGWeaponComponent.self];
-    
-    if (weaponComponent)
-    {
-        weaponComponent.shouldAttack = self.pressed;
-        weaponComponent.attackDirection = self.attackDisplacement;
+        OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:OGMovementComponent.self];
+        
+        if (movementComponent)
+        {
+            movementComponent.displacementVector = self.displacement;
+        }
+        
+        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:OGWeaponComponent.self];
+        
+        if (weaponComponent)
+        {
+            weaponComponent.shouldAttack = self.pressed;
+            weaponComponent.attackDirection = self.attackDisplacement;
+        }
     }
 }
 
