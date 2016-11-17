@@ -3,7 +3,9 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>SceneIdentifier</key>
+		<key>StorySceneIdentifier</key>
+		<string>4</string>
+		<key>GameSceneIdentifier</key>
 		<string>5</string>
 	</dict>
 </array>

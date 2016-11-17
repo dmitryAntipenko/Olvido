@@ -38,7 +38,7 @@
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    [super updateWithDeltaTime:seconds];
+    [super updateWithDeltaTime:seconds];        
     
     [self.stateMachine updateWithDeltaTime:seconds];
 }

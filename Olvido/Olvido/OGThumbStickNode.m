@@ -10,6 +10,8 @@
 
 CGFloat const kOGThumbStickNodeDefaultAlpha = 0.2;
 CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
+CGFloat const kOGThumbStickNodeRestoreDuration = 0.2;
+NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
 
 @interface OGThumbStickNode ()
 
@@ -30,7 +32,7 @@ CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
     _center = CGPointMake(size.width / 2.0 - touchPadLength, size.height / 2.0 - touchPadLength);
     
     CGSize touchPadSize = CGSizeMake(touchPadLength, touchPadLength);
-    SKTexture *touchPadTexture = [SKTexture textureWithImageNamed:@"ControlPad"];
+    SKTexture *touchPadTexture = [SKTexture textureWithImageNamed:kOGThumbStickNodeTextureName];
     
     self = [super initWithTexture:touchPadTexture color:[SKColor clearColor] size:size];
     
@@ -109,7 +111,7 @@ CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
 {
     self.alpha = kOGThumbStickNodeDefaultAlpha;
     
-    SKAction *restoreToCenter = [SKAction moveTo:CGPointZero duration:0.2];
+    SKAction *restoreToCenter = [SKAction moveTo:CGPointZero duration:kOGThumbStickNodeRestoreDuration];
     [self.touchPad runAction:restoreToCenter];
         
     [self.thumbStickNodeDelegate thumbStickNode:self isPressed:NO];

@@ -10,21 +10,32 @@
 #import "OGInventoryComponent.h"
 #import "OGZPositionEnum.m"
 #import "OGRenderComponent.h"
+#import "OGPlayerEntity.h"
 
 CGFloat const kOGInventoryBarNodeMaxHeight = 256;
 CGFloat const kOGInventoryBarNodeMaxWidthFactor = 0.5;
 CGFloat const kOGInventoryBarNodeDesiredHeightFactor = 0.0625;
 CGFloat const kOGInventoryBarNodeDefaultXPosition = 0.0;
 CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
+CGFloat const kOGInventoryBarNodeHidingTimeInterval = 0.2;
+CGFloat const kOGInventoryBarNodeHidingDx = 0.0;
+NSString *const kOGInventoryBarNodeHidingActionKey = @"HidingAction";
+NSString *const kOGInventoryBarNodeShowingActionKey = @"ShowingAction";
+CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 
 @interface OGInventoryBarNode ()
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, assign) CGFloat itemSizeLength;
+@property (nonatomic, assign) CGRect hideTrigger;
+@property (nonatomic, assign, readonly) CGRect parentFrame;
+@property (nonatomic, assign) BOOL customHidden;
 
 @end
 
 @implementation OGInventoryBarNode
+
+@synthesize parentFrame = _parentFrame;
 
 - (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
 {
@@ -107,6 +118,11 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
     self.zPosition = OGZPositionCategoryForeground;
     
     self.itemSizeLength = height;
+    
+    self.hideTrigger = CGRectMake(self.position.x - self.size.width / 2 - kOGInventoryBarNodeHidingZoneWidth,
+                                  self.position.y - self.size.height / 2,
+                                  self.size.width + 2 * kOGInventoryBarNodeHidingZoneWidth,
+                                  self.size.height + kOGInventoryBarNodeHidingZoneWidth);
 }
 
 - (void)updateInventoryBarItems
@@ -117,12 +133,12 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
     {
         [self.inventoryComponent.inventoryItems enumerateObjectsUsingBlock:^(id<OGInventoryItem>  item, NSUInteger idx, BOOL * _Nonnull stop)
          {
-             [self updateCellWithItem:item index:idx];
+             [self updateCellWithItem:item atIndex:idx];
          }];
     }
 }
 
-- (void)updateCellWithItem:(id<OGInventoryItem>)item index:(NSUInteger)index
+- (void)updateCellWithItem:(id<OGInventoryItem>)item atIndex:(NSUInteger)index
 {
     SKTexture *itemTexture = item.texture;
     
@@ -148,6 +164,55 @@ CGFloat const kOGInventoryBarNodeDefaultItemNodeYPosition = 0.0;
         
         [self addChild:itemNode];
     }
+}
+
+- (void)hide
+{
+    [self removeActionForKey:kOGInventoryBarNodeShowingActionKey];
+    
+    SKAction *hidingAction = [SKAction moveToY: -(self.parentFrame.size.height + self.size.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
+    
+    [self runAction:hidingAction withKey:kOGInventoryBarNodeHidingActionKey];
+    
+    self.customHidden = YES;
+}
+
+- (void)show
+{
+    [self removeActionForKey:kOGInventoryBarNodeHidingActionKey];
+    
+    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.parentFrame.size.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
+    [self runAction:showingAction withKey:kOGInventoryBarNodeShowingActionKey];
+    
+    self.customHidden = NO;
+}
+
+- (void)checkPlayerPosition
+{
+    CGPoint playerPosition = [self.playerEntity.render.node.parent convertPoint:self.playerEntity.render.node.position toNode:self.parent];
+    
+    if (CGRectContainsPoint(self.hideTrigger, playerPosition))
+    {
+        if (!self.customHidden)
+        {
+            [self hide];
+        }
+    }
+    else if (self.customHidden)
+    {
+        [self show];
+    }
+}
+
+- (CGRect)parentFrame
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^
+                  {
+                      _parentFrame = [self.parent calculateAccumulatedFrame];
+                  });
+    
+    return _parentFrame;
 }
 
 @end

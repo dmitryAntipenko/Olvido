@@ -23,13 +23,8 @@
     self.lockComponent.closed = NO;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
     
-    SKPhysicsBody *targetPhysicsBody = self.lockComponent.target.physicsBody;
-    
-    OGColliderType *targetColliderType = [OGColliderType colliderTypeWithCategoryBitMask:targetPhysicsBody.categoryBitMask];
-    OGColliderType *doorColliderType = [OGColliderType door];
-    [[OGColliderType definedCollisions][targetColliderType] removeObject:doorColliderType];
-    
-    targetPhysicsBody.collisionBitMask = (uint32_t)targetColliderType.collisionBitMask;
+    SKNode *doorNode = self.renderComponent.node;    
+    doorNode.physicsBody = nil;
     
     if ([self.stateMachine canEnterState:OGDoorEntityClosedState.self])
     {

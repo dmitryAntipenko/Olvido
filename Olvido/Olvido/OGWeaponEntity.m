@@ -15,7 +15,7 @@
 
 NSString *const kOGWeaponEntityDefaultInventoryIdentifier = @"weapon";
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const kOGWeaponEntityDefaultBulletLifetime = 0.3;
+CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 @interface OGWeaponEntity ()
@@ -73,10 +73,9 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
             bullet.delegate = self.delegate;
             [self.delegate addEntity:bullet];
             
-            //[ownerRenderComponent.node.scene addChild:bullet.render.node];
             [bullet.physics.physicsBody applyImpulse:bulletMovementVector];            
             
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletLifetime repeats:NO block:^(NSTimer *timer)
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
                 self.allowsAttacking = YES;
                 [timer invalidate];

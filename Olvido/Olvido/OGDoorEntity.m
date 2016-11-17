@@ -44,7 +44,7 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
             [OGDoorEntity loadMiscellaneousAssets];
             
             _render = [[OGRenderComponent alloc] init];
-            _render.node = spriteNode;
+            _render.node = spriteNode;            
             [self addComponent:_render];
             
             SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];

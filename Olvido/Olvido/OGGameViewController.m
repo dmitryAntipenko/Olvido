@@ -17,8 +17,6 @@
 @interface OGGameViewController ()
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
-@property (nonatomic, strong) OGLevelManager *levelManager;
-@property (nonatomic, strong) OGMenuManager *menuManager;
 
 @end
 
@@ -34,16 +32,16 @@
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
-    view.showsNodeCount = YES;    
+    view.showsNodeCount = YES;
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
     [self.sceneManager transitionToInitialScene];
     
-    self.levelManager = [OGLevelManager sharedInstance];
-    self.levelManager.sceneManager = self.sceneManager;
+    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
+    levelManager.sceneManager = self.sceneManager;
     
-    self.menuManager = [OGMenuManager sharedInstance];
-    self.menuManager.sceneManager = self.sceneManager;
+    OGMenuManager *menuManager = [OGMenuManager sharedInstance];
+    menuManager.sceneManager = self.sceneManager;
 }
 
 - (BOOL)shouldAutorotate

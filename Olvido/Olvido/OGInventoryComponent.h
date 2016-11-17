@@ -13,6 +13,8 @@ extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
 
 @interface OGInventoryComponent : GKComponent
 
+@property (nonatomic, assign, readonly, getter=isFull) BOOL full;
+@property (nonatomic, assign, readonly, getter=isEmpty) BOOL empty;
 @property (nonatomic, assign, readonly) NSUInteger capacity;
 @property (nonatomic, strong, readonly) NSArray<id <OGInventoryItem>> *inventoryItems;
 
@@ -27,5 +29,7 @@ extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
 - (BOOL)containsItem:(id <OGInventoryItem>)item;
 
 - (BOOL)isFull;
+
+- (BOOL)isEmpty;
 
 @end
