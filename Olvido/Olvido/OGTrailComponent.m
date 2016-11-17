@@ -59,14 +59,14 @@
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    static NSTimeInterval myInterval = 0;
-    
-    myInterval += seconds;
-    
-    if (myInterval > 0.5)
-    {
-        myInterval = 0.0;
-        
+//    static NSTimeInterval myInterval = 0;
+//    
+//    myInterval += seconds;
+//    
+//    if (myInterval > 0.5)
+//    {
+//        myInterval = 0.0;
+//        
         CGPoint currentPosition = self.currentPosition;
         
         if (!CGPointEqualToPoint(currentPosition, self.lastPosition))
@@ -74,7 +74,7 @@
             [self updateTrail];
             self.lastPosition = currentPosition;
         }
-    }
+//    }
 }
 
 - (void)updateTrail
@@ -92,60 +92,46 @@
     CGSize newImageSize = CGSizeMake(self.accumulatedRect.size.width + self.trailTextureSize.width,
                                      self.accumulatedRect.size.height + self.trailTextureSize.height);
     
-    CGFloat imageX = 0.0;
-    CGFloat imageY = 0.0;
+    CGFloat newImagePositionX = 0.0;
+    CGFloat newImagePositionY = 0.0;
     
-    CGFloat newTrailPartX = 0.0;
-    CGFloat newTrailPartY = 0.0;
+    CGFloat newTrailPartPositionX = 0.0;
+    CGFloat newTrailPartPositionY = 0.0;
     
     if (self.trailImageHorizontalResize < 0)
     {
-        imageX -= self.trailImageHorizontalResize;
+        newImagePositionX -= self.trailImageHorizontalResize;
     }
     else
     {
-        newTrailPartX = self.trailImageHorizontalResize;
+        newTrailPartPositionX = self.trailImageHorizontalResize;
     }
+    
     
     if (self.trailImageVerticalResize < 0)
     {
-        imageY -= self.trailImageVerticalResize;
+        newTrailPartPositionY = newImageSize.height - self.trailTextureSize.height;
+    }
+    else if (self.trailImageVerticalResize < self.accumulatedRect.size.height)
+    {
+        newTrailPartPositionY = newImageSize.height - self.trailTextureSize.height - self.self.trailImageVerticalResize;
     }
     else
     {
-        newTrailPartY = self.trailImageVerticalResize;
+        newImagePositionY = newImageSize.height - self.trailImage.size.height;
     }
-    
-//    UIImageOrientation flippedOrientation = UIImageOrientationUpMirrored;
-    self.trailImage = [UIImage imageWithCGImage:self.trailImage.CGImage scale:1.0 orientation:UIImageOrientationUpMirrored];
-    
     
     UIGraphicsBeginImageContext(newImageSize);
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-//    UIGraphicsPushContext(context);
+    [self.trailImage drawAtPoint:CGPointMake(newImagePositionX, newImagePositionY)];
     
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    transform = CGAffineTransformScale(transform, 1.0f, -1.0f);
-    transform = CGAffineTransformTranslate(transform, 0.0f, -(newImageSize.height));
-    CGContextConcatCTM(context, transform);
-    
-    //    [self.trailImage drawInRect:CGRectMake(imageX, imageX, self.trailImage.size.width, self.trailImage.size.height)];
-    
-    [self.trailImage drawAtPoint:CGPointMake(imageX, imageY)];
-    
-    [self.trailTextureImage drawInRect:CGRectMake(newTrailPartX,
-                                                  newTrailPartY,
+    [self.trailTextureImage drawInRect:CGRectMake(newTrailPartPositionX,
+                                                  newTrailPartPositionY,
                                                   self.trailTextureSize.width,
                                                   self.trailTextureSize.height)];
-    //DEBUG//
-    [[UIBezierPath bezierPathWithRect:CGRectMake(0, 0, newImageSize.width, newImageSize.height)] stroke];
-    //    NSLog(@"%@ , %@", NSStringFromCGPoint(self.currentPosition), NSStringFromCGPoint(self.spriteNode.position));
-    //    //DEBUG//
-    
-//    UIGraphicsPopContext();
     
     UIImage *newTrailImage = UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
     
     self.trailImage = newTrailImage;
