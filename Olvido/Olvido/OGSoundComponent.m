@@ -6,21 +6,20 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGSoundComponent.h"
 #import <AVFoundation/AVFoundation.h>
+#import "OGSoundComponent.h"
+#import "OGRenderComponent.h"
+
+NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAction";
 
 @implementation OGSoundComponent
 
 - (void)playSoundOnce:(NSString *)soundName
-{
-    SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:soundName];
-    node.autoplayLooped = NO;    
+{    
+    [self.target removeActionForKey:kOGSoundComponentActionKey];
     
-    [self.target addChild:node];
-    
-    [node runAction:[SKAction play]];
-    
-    //[node removeFromParent];
+    SKAction *playAction = [SKAction playSoundFileNamed:soundName waitForCompletion:NO];
+    [self.target runAction:playAction withKey:kOGSoundComponentActionKey];
 }
 
 @end

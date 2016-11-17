@@ -75,8 +75,7 @@
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
 		EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */; };
 		EA8EF7111DDE07E1008CF3A4 /* OGSoundComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8EF7101DDE07E1008CF3A4 /* OGSoundComponent.m */; };
-		EA8EF7151DDE12B8008CF3A4 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA8EF7141DDE12B8008CF3A4 /* Sounds.xcassets */; };
-		EA8EF7181DDE16F4008CF3A4 /* laser_shot.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA8EF7171DDE16F4008CF3A4 /* laser_shot.mp3 */; };
+		EA8EF71C1DDE3F16008CF3A4 /* shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = EA8EF71B1DDE3F16008CF3A4 /* shot.wav */; };
 		EA976C811D9AAEE2003B77FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C801D9AAEE2003B77FC /* main.m */; };
 		EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C831D9AAEE2003B77FC /* OGAppDelegate.m */; };
 		EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */; };
@@ -239,8 +238,8 @@
 		EA8EF70A1DDDFC3D008CF3A4 /* OGTransitionComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponentDelegate.h; sourceTree = "<group>"; };
 		EA8EF70F1DDE07E1008CF3A4 /* OGSoundComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSoundComponent.h; sourceTree = "<group>"; };
 		EA8EF7101DDE07E1008CF3A4 /* OGSoundComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSoundComponent.m; sourceTree = "<group>"; };
-		EA8EF7141DDE12B8008CF3A4 /* Sounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sounds.xcassets; sourceTree = "<group>"; };
-		EA8EF7171DDE16F4008CF3A4 /* laser_shot.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = laser_shot.mp3; sourceTree = "<group>"; };
+		EA8EF71B1DDE3F16008CF3A4 /* shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shot.wav; sourceTree = "<group>"; };
+		EA8EF71D1DDE4233008CF3A4 /* steps.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = steps.m4a; sourceTree = "<group>"; };
 		EA976C7C1D9AAEE2003B77FC /* Olvido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Olvido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA976C801D9AAEE2003B77FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAppDelegate.h; sourceTree = "<group>"; };
@@ -594,7 +593,6 @@
 			isa = PBXGroup;
 			children = (
 				EA8EF7161DDE16EB008CF3A4 /* SFX */,
-				EA8EF7141DDE12B8008CF3A4 /* Sounds.xcassets */,
 				210CC8121DD5D7EE00824E84 /* Player.xcassets */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
 				EA49824C1DD0F29C00DCFE00 /* Scenes */,
@@ -712,7 +710,8 @@
 		EA8EF7161DDE16EB008CF3A4 /* SFX */ = {
 			isa = PBXGroup;
 			children = (
-				EA8EF7171DDE16F4008CF3A4 /* laser_shot.mp3 */,
+				EA8EF71D1DDE4233008CF3A4 /* steps.m4a */,
+				EA8EF71B1DDE3F16008CF3A4 /* shot.wav */,
 			);
 			name = SFX;
 			sourceTree = "<group>";
@@ -915,9 +914,8 @@
 				215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */,
 				1B27EAA81DC0CEA200E9CA23 /* OGMapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
-				EA8EF7181DDE16F4008CF3A4 /* laser_shot.mp3 in Resources */,
-				EA8EF7151DDE12B8008CF3A4 /* Sounds.xcassets in Resources */,
 				1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */,
+				EA8EF71C1DDE3F16008CF3A4 /* shot.wav in Resources */,
 				215C4BDC1DC0ED1B000DF29F /* Level1.sks in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,

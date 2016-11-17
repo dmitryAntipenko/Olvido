@@ -54,6 +54,13 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
     return self;
 }
 
+- (void)setOwner:(GKEntity *)owner
+{
+    _owner = owner;
+    
+    self.sound.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
+}
+
 #pragma mark - OGAttacking
 
 - (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed
@@ -78,8 +85,7 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
             
             [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
             
-            self.sound.target = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
-            [self.sound playSoundOnce:@"laser_shot.mp3"];
+            [self.sound playSoundOnce:@"shot"];
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
