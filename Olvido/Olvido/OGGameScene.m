@@ -66,6 +66,8 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
+NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
+
 @interface OGGameScene ()
 
 @property (nonatomic, strong) SKNode *currentRoom;
@@ -79,7 +81,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 
-@property (nonatomic, strong) NSMutableSet<GKEntity *> *entities;
+@property (nonatomic, strong) NSMutableOrderedSet<GKEntity *> *entities;
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @end
@@ -111,7 +113,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
             [OGDeathLevelState stateWithLevelScene:self]
         ]];
         
-        _entities = [[NSMutableSet alloc] init];
+        _entities = [[NSMutableOrderedSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
                              [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
@@ -179,7 +181,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     self.cameraController.target = self.player.render.node;
     
-    [self.cameraController moveCameraToNode:self.currentRoom];
+    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
 }
 
 - (void)createPlayer
@@ -323,7 +325,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode];
+    [self.cameraController moveCameraToNode:destinationNode duration:1.0];
     
     completion();
 }
@@ -346,8 +348,8 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     GKEntity *entityA = bodyA.node.entity;
     GKEntity *entityB = bodyB.node.entity;
     
-    OGColliderType *colliderTypeA = [OGColliderType colliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
-    OGColliderType *colliderTypeB = [OGColliderType colliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
+    OGColliderType *colliderTypeA = [OGColliderType existingColliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
+    OGColliderType *colliderTypeB = [OGColliderType existingColliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
     
     BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
     BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
@@ -435,6 +437,39 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     }
     
     [self.inventoryBarNode checkPlayerPosition];
+}
+
+- (void)didFinishUpdate
+{
+    [super didFinishUpdate];
+    
+    [self.entities sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
+    {
+        OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:OGRenderComponent.self];
+        OGRenderComponent *renderComponentB = (OGRenderComponent *) [objB componentForClass:OGRenderComponent.self];
+        NSComparisonResult result = NSOrderedSame;
+        
+        if (renderComponentA.node.position.y > renderComponentB.node.position.y)
+        {
+            result = NSOrderedAscending;
+        }
+        else
+        {
+            result = NSOrderedDescending;
+        }
+        
+        return result;
+    }];
+    
+    NSUInteger characterZPosition = kOGGameSceneZSpacePerCharacter;
+    
+    for (GKEntity *entity in self.entities)
+    {
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+        renderComponent.node.zPosition = characterZPosition;
+        
+        characterZPosition += kOGGameSceneZSpacePerCharacter;
+    }
 }
 
 @end

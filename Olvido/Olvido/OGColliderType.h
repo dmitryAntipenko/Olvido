@@ -15,15 +15,15 @@
 @property (nonatomic, assign) NSUInteger collisionBitMask;
 @property (nonatomic, assign) NSUInteger contactTestBitMask;
 
-+ (OGColliderType *)colliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
++ (instancetype)player;
++ (instancetype)enemy;
++ (instancetype)obstacle;
++ (instancetype)door;
++ (instancetype)weapon;
++ (instancetype)bullet;
++ (instancetype)key;
 
-+ (OGColliderType *)player;
-+ (OGColliderType *)enemy;
-+ (OGColliderType *)obstacle;
-+ (OGColliderType *)door;
-+ (OGColliderType *)weapon;
-+ (OGColliderType *)bullet;
-+ (OGColliderType *)key;
++ (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
 
 + (NSMutableDictionary *)definedCollisions;
 + (NSMutableDictionary *)requestedContactNotifications;

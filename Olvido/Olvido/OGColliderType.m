@@ -13,10 +13,15 @@ char *const kOGColliderTypeQueueName = "ZEOUniversity.Olvido.InitQueue";
 
 static NSMutableDictionary<NSNumber *, OGColliderType *> *sOGColliderTypes = nil;
 
-static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions;
-static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications;
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions = nil;
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications = nil;;
 
 @implementation OGColliderType
+
++ (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask
+{
+    return sOGColliderTypes[@(bitmask)];
+}
 
 #pragma mark - Shared Instances
 

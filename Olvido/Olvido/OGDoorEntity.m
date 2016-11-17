@@ -145,11 +145,11 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
     }
 }
 
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
++ (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
     [OGDoorEntity loadMiscellaneousAssets];
     
-    completionHandler();
+    handler();
 }
 
 + (void)loadMiscellaneousAssets
