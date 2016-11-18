@@ -16,7 +16,7 @@
 
 
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
+CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 static NSMutableArray *sOGWeaponEntitySoundNames = nil;

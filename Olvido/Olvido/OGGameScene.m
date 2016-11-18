@@ -6,6 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
@@ -69,7 +70,9 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
-@interface OGGameScene ()
+@interface OGGameScene () <AVAudioPlayerDelegate>
+
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
@@ -114,6 +117,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
             [OGDeathLevelState stateWithLevelScene:self]
         ]];
         
+        NSDataAsset *dataAsset = [[NSDataAsset alloc] initWithName:_sceneConfiguration.backgroundMusic];        
+        NSError *audioError = nil;
+        _audioPlayer = [[AVAudioPlayer alloc] initWithData:dataAsset.data error:&audioError];
+        
+        if (audioError)
+        {
+            self = nil;
+            return self;
+        }
+        
         _entities = [[NSMutableOrderedSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
@@ -157,6 +170,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
+    
+    [self.audioPlayer play];
 }
 
 - (CGSize)thumbStickNodeSize
@@ -330,6 +345,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.cameraController moveCameraToNode:destinationNode duration:1.0];
     
     completion();
+}
+
+#pragma mark - Audio Player Delegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (flag)
+    {
+        [player play];
+    }
 }
 
 #pragma mark - Contact handling

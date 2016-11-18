@@ -10,7 +10,7 @@
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
 #import "OGConstants.h"
-#import "OGsceneManager.h"
+#import "OGSceneManager.h"
 
 NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
 NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <AVFoundation/AVFoundation.h>
 #import "OGSoundComponent.h"
 #import "OGRenderComponent.h"
 
@@ -40,23 +39,6 @@ NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAc
     }
     
     return self;
-}
-
-- (void)didAddToEntity
-{
-    [super didAddToEntity];
-    
-    
-}
-
-- (NSMutableDictionary<NSString *, SKAction *> *)actions
-{
-    if (!_actions)
-    {
-        _actions = [NSMutableDictionary dictionary];
-    }
-    
-    return _actions;
 }
 
 - (void)playSoundOnce:(NSString *)soundName

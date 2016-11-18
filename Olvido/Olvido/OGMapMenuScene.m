@@ -20,7 +20,7 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 - (void)startGame
 {
     OGLevelManager *levelManager = [OGLevelManager sharedInstance];
-    levelManager.view = self.view;
+    levelManager.view = self.view;    
     [levelManager loadLevelWithIdentifier:@0];    
 }
 
