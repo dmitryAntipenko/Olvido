@@ -26,7 +26,8 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
     if (self)
     {
         _loadableClass = loadableClass;
-        _progress = [NSProgress progressWithTotalUnitCount:kOGLoadResourcesOperationProgressTotalUnitCount];
+        _progress =  [[NSProgress alloc] init];
+        _progress.totalUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
     }
     
     return self;

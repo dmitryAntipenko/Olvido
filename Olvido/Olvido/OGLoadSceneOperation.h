@@ -6,7 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <GameplayKit/GameplayKit.h>
 #import "OGLoadOperation.h"
 

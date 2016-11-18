@@ -12,8 +12,8 @@
 #import "OGBullet.h"
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
+#import "OGZPositionEnum.m"
 
-NSString *const kOGWeaponEntityDefaultInventoryIdentifier = @"weapon";
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
@@ -39,6 +39,7 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         
         _render = [[OGRenderComponent alloc] init];
         _render.node = sprite;
+        _render.node.zPosition = OGZPositionCategoryPhysicsWorld;
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
@@ -133,7 +134,16 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 - (NSString *)identifier
 {
-    return kOGWeaponEntityDefaultInventoryIdentifier;
+    return self.render.node.name;
+}
+
+- (void)dealloc
+{
+    if (_bulletSpawnTimer)
+    {
+        [_bulletSpawnTimer invalidate];
+        _bulletSpawnTimer = nil;
+    }
 }
 
 @end

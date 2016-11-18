@@ -18,15 +18,19 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor redColor];
     
     SKNode *doorNode = self.renderComponent.node;
-    doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorNode.calculateAccumulatedFrame.size];
-    doorNode.physicsBody.dynamic = NO;
+    CGSize doorPhysicsBodySize = ((SKSpriteNode *) doorNode).size;
+    doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorPhysicsBodySize];
+    doorNode.physicsBody.dynamic = YES;
     
     OGColliderType *doorColliderType = [OGColliderType door];
     doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
+    doorNode.physicsBody.contactTestBitMask = (uint32_t) doorColliderType.contactTestBitMask;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

@@ -10,6 +10,8 @@
 
 @interface OGIntelligenceComponent : GKComponent
 
+@property (nonatomic, strong) GKStateMachine *stateMachine;
+
 - (instancetype)initWithStates:(NSArray<GKState *> *)states;
 - (void)enterInitialState;
 

@@ -23,7 +23,7 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
+@interface OGPlayerEntity : GKEntity <OGContactNotifiableType, GKAgentDelegate>
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, strong) OGRenderComponent *render;
@@ -36,7 +36,8 @@
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+@property (nonatomic, strong) GKAgent2D *agent;
 
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
-
+- (void)updateAgentPositionToMatchNodePosition;
 @end

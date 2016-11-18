@@ -7,8 +7,15 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGThumbStickNodeDelegate.h"
+//#import "OGThumbStickNodeDelegate.h"
 #import "OGGUINode.h"
+
+@protocol OGThumbStickNodeDelegate
+
+- (void)thumbStickNode:(SKSpriteNode *)node didUpdateXValue:(CGFloat)xValue yValue:(CGFloat)yValue;
+- (void)thumbStickNode:(SKSpriteNode *)node isPressed:(BOOL)pressed;
+
+@end
 
 @interface OGThumbStickNode : OGGUINode
 

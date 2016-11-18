@@ -108,16 +108,12 @@ CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
     if (_targetNode)
     {
         self.emitter.targetNode = targetNode;
-        
-        if (self.texture)
-        {
-            [self play];
-        }
     }
     else
     {
-        [self pause];
+        self.emitter.targetNode = self.renderComponent.node.scene;
     }
+
 }
 
 - (void)setTextureSize:(CGSize)textureSize
@@ -130,7 +126,7 @@ CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
     _texture = texture;
     self.emitter.particleTexture = texture;
     
-    if (texture && self.targetNode )
+    if (texture)
     {
         [self play];
     }

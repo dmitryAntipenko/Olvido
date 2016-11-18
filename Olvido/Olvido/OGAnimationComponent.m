@@ -52,8 +52,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 {
     self.elapsedAnimationDuration += deltaTime;
     
-    if (self.currentAnimation == nil || self.currentAnimation.animationState != animationState
-        || self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
+    if ((self.currentAnimation == nil || self.currentAnimation.animationState != animationState || self.currentAnimation.direction != direction)
+        && self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
     {
         OGAnimation *animation = self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]];
         

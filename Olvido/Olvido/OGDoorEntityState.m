@@ -15,7 +15,7 @@
 
 - (instancetype)initWithDoorEntity:(OGDoorEntity *)entity
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {
