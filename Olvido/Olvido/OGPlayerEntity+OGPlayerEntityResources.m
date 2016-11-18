@@ -88,7 +88,7 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 
 + (void)loadMiscellaneousAssets
 {
-    NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
+    NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], nil];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
     
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType weapon]];

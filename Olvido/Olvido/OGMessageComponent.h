@@ -10,6 +10,8 @@
 
 @interface OGMessageComponent : GKComponent
 
+@property (nonatomic, strong) GKInspectable NSString *tset;
+
 - (instancetype)initWithTarget:(SKSpriteNode *)target minShowDistance:(CGFloat)distance;
 
 - (void)addMessage:(NSString *)message forSprite:(SKSpriteNode *)sprite;

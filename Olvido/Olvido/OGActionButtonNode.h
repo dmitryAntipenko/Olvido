@@ -8,8 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGActionButtonNodeDelegate.h"
+#import "OGGUINode.h"
 
-@interface OGActionButtonNode : SKSpriteNode
+@interface OGActionButtonNode : OGGUINode
 
 @property (nonatomic, weak) id<OGActionButtonNodeDelegate> actionButtonNodeDelegate;
 

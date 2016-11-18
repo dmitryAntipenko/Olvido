@@ -7,11 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGGUINode.h"
 
 @class OGInventoryComponent;
 @class OGPlayerEntity;
 
-@interface OGInventoryBarNode : SKSpriteNode
+@interface OGInventoryBarNode : OGGUINode
 
 @property (nonatomic, strong) OGPlayerEntity *playerEntity;
 
