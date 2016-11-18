@@ -8,183 +8,58 @@
 
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
+#import "OGZPositionEnum.m"
+
+NSString *const kOGTrailComponentParticleFileName = @"SlimeTrail";
+CGFloat const kOGTrailComponentParticleBirthratePlay = 20.0;
+CGFloat const kOGTrailComponentParticleBirthratePause = 0.0;
 
 @interface OGTrailComponent ()
 
-@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
-@property (nonatomic, assign) CGPoint lastPosition;
-@property (nonatomic, assign, readonly) CGPoint currentPosition;
-@property (nonatomic, strong) UIImage *trailImage;
-@property (nonatomic, strong) SKSpriteNode *spriteNode;
-@property (nonatomic, assign) CGFloat trailImageVerticalResize;
-@property (nonatomic, assign) CGFloat trailImageHorizontalResize;
-@property (nonatomic, assign) CGSize trailTextureSize;
-@property (nonatomic, strong) UIImage *trailTextureImage;
-@property (nonatomic, assign) CGRect accumulatedRect;
-@property (nonatomic, assign) CGPoint trailSpriteNodePosition;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) SKEmitterNode *emitter;
+@property (nonatomic, assign, getter=isReady) BOOL ready;
 
 @end
 
 @implementation OGTrailComponent
 
-@synthesize  renderComponent = _renderComponent;
+@synthesize renderComponent = _renderComponent;
 
-- (instancetype)initWithTexture:(SKTexture *)trailTexture size:(CGSize)size
+- (instancetype)init
 {
-    if (trailTexture)
+    self = [super init];
+    
+    if (self)
     {
-        self = [self init];
-        
-        if (self)
-        {
-            _trailImage = [[UIImage alloc] init];
-            _trailTextureImage = [UIImage imageWithCGImage:trailTexture.CGImage];
-            _spriteNode = [SKSpriteNode spriteNodeWithTexture:trailTexture size:size];
-            //            _spriteNode.anchorPoint = CGPointMake(0.0, 0.0);
-            _trailTextureSize = size;
-        }
-    }
-    else
-    {
-        self = nil;
+        _emitter = [SKEmitterNode node];
+        _emitter.particleAlpha = 1.0;
+        _emitter.particleSpeed = 0.0;
+        _emitter.particleLifetime = 30.0;
+        _emitter.particleAlphaRange = 0.0;
+        _emitter.emissionAngleRange = 0.0;
+        _emitter.particleScaleRange = 0.0;
+        _emitter.particleLifetimeRange = 0.0;
+        _emitter.particleBirthRate = 0.0;
     }
     
     return self;
 }
 
-+ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture  size:(CGSize)size
+- (void)didAddToEntity
 {
-    return [[self alloc] initWithTexture:trailTexture size:size];
+    self.renderComponent = (OGRenderComponent *)[self.entity componentForClass:OGRenderComponent.self];
+    
+    if (self.renderComponent)
+    {
+        [self.renderComponent.node addChild:self.emitter];
+        self.emitter.particleZPosition = OGZPositionCategoryUnderPhysicsWorld;
+    }
 }
 
-- (void)updateWithDeltaTime:(NSTimeInterval)seconds
++ (instancetype)trailComponent
 {
-//    static NSTimeInterval myInterval = 0;
-//    
-//    myInterval += seconds;
-//    
-//    if (myInterval > 0.5)
-//    {
-//        myInterval = 0.0;
-//        
-        CGPoint currentPosition = self.currentPosition;
-        
-        if (!CGPointEqualToPoint(currentPosition, self.lastPosition))
-        {
-            [self updateTrail];
-            self.lastPosition = currentPosition;
-        }
-//    }
-}
-
-- (void)updateTrail
-{
-    [self updateAccumulatedRect];
-    [self updateTrailImage];
-    
-    self.spriteNode.texture = [SKTexture textureWithImage:self.trailImage];
-    self.spriteNode.size = self.trailImage.size;
-    self.spriteNode.position = self.trailSpriteNodePosition;
-}
-
-- (void)updateTrailImage
-{
-    CGSize newImageSize = CGSizeMake(self.accumulatedRect.size.width + self.trailTextureSize.width,
-                                     self.accumulatedRect.size.height + self.trailTextureSize.height);
-    
-    CGFloat newImagePositionX = 0.0;
-    CGFloat newImagePositionY = 0.0;
-    
-    CGFloat newTrailPartPositionX = 0.0;
-    CGFloat newTrailPartPositionY = 0.0;
-    
-    if (self.trailImageHorizontalResize < 0)
-    {
-        newImagePositionX -= self.trailImageHorizontalResize;
-    }
-    else
-    {
-        newTrailPartPositionX = self.trailImageHorizontalResize;
-    }
-    
-    
-    if (self.trailImageVerticalResize < 0)
-    {
-        newTrailPartPositionY = newImageSize.height - self.trailTextureSize.height;
-    }
-    else if (self.trailImageVerticalResize < self.accumulatedRect.size.height)
-    {
-        newTrailPartPositionY = newImageSize.height - self.trailTextureSize.height - self.self.trailImageVerticalResize;
-    }
-    else
-    {
-        newImagePositionY = newImageSize.height - self.trailImage.size.height;
-    }
-    
-    UIGraphicsBeginImageContext(newImageSize);
-    
-    [self.trailImage drawAtPoint:CGPointMake(newImagePositionX, newImagePositionY)];
-    
-    [self.trailTextureImage drawInRect:CGRectMake(newTrailPartPositionX,
-                                                  newTrailPartPositionY,
-                                                  self.trailTextureSize.width,
-                                                  self.trailTextureSize.height)];
-    
-    UIImage *newTrailImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    self.trailImage = newTrailImage;
-}
-
-- (void)updateAccumulatedRect
-{
-    CGPoint currentPosition = self.currentPosition;
-    
-    CGFloat x = self.accumulatedRect.origin.x;
-    CGFloat y = self.accumulatedRect.origin.y;
-    CGFloat width = self.accumulatedRect.size.width;
-    CGFloat height = self.accumulatedRect.size.height;
-    
-    self.trailImageHorizontalResize = currentPosition.x - x;
-    self.trailImageVerticalResize = currentPosition.y - y;
-    
-    if (self.trailImageHorizontalResize < 0)
-    {
-        width -= self.trailImageHorizontalResize;
-        x = currentPosition.x;
-    }
-    else if (self.trailImageHorizontalResize > width)
-    {
-        width = self.trailImageHorizontalResize;
-    }
-    
-    if (self.trailImageVerticalResize < 0)
-    {
-        height -= self.trailImageVerticalResize;
-        y = currentPosition.y;
-    }
-    else if (self.trailImageVerticalResize > height)
-    {
-        height = self.trailImageVerticalResize;
-    }
-    
-    self.trailSpriteNodePosition = CGPointMake(x + width / 2,
-                                               y + height / 2);
-    
-    self.accumulatedRect = CGRectMake(x, y, width, height);
-}
-
-- (CGPoint)currentPosition
-{
-    CGPoint result = CGPointZero;
-    
-    if (self.targetNode)
-    {
-        result =  [self.targetNode convertPoint:self.renderComponent.node.position fromNode:self.renderComponent.node.parent];
-    }
-    
-    return result;
+    return [[self alloc] init];
 }
 
 - (OGRenderComponent *)renderComponent
@@ -197,18 +72,53 @@
     return _renderComponent;
 }
 
+- (void)pause
+{
+    self.emitter.particleBirthRate = kOGTrailComponentParticleBirthratePause;
+}
+
+- (void)play
+{
+    self.emitter.particleBirthRate = kOGTrailComponentParticleBirthratePlay;
+}
+
 - (void)setTargetNode:(SKNode *)targetNode
 {
     _targetNode = targetNode;
     
-    CGPoint currentPosition = self.currentPosition;
+    if (_targetNode)
+    {
+        self.emitter.targetNode = targetNode;
+        
+        if (self.texture)
+        {
+            [self play];
+        }
+    }
+    else
+    {
+        [self pause];
+    }
+}
+
+- (void)setTextureSize:(CGSize)textureSize
+{
+    self.emitter.particleSize = textureSize;
+}
+
+- (void)setTexture:(SKTexture *)texture
+{
+    _texture = texture;
+    self.emitter.particleTexture = texture;
     
-    self.trailSpriteNodePosition = currentPosition;
-    self.accumulatedRect = CGRectMake(currentPosition.x, currentPosition.y, 0.0, 0.0);
-    
-    self.spriteNode.position = currentPosition;
-    self.spriteNode.zPosition = self.renderComponent.node.zPosition - 1;
-    [targetNode addChild:self.spriteNode];
+    if (texture && self.targetNode )
+    {
+        [self play];
+    }
+    else
+    {
+        [self pause];
+    }
 }
 
 @end

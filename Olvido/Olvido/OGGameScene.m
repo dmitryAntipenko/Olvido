@@ -195,6 +195,7 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     self.player.render.node.zPosition = OGZPositionCategoryPhysicsWorld;
     ((OGTrailComponent *)[self.player componentForClass:OGTrailComponent.self]).targetNode = self;
     
+    
     //TEMPORERY CODE//
 }
 

@@ -11,9 +11,13 @@
 @interface OGTrailComponent : GKComponent
 
 @property (nonatomic, strong) SKNode *targetNode;
+@property (nonatomic, strong) SKTexture *texture;
+@property (nonatomic, assign) CGSize textureSize;
 
-- (instancetype)initWithTexture:(SKTexture *)trailTexture size:(CGSize)size;
++ (instancetype)trailComponent;
 
-+ (instancetype)trailComponentWithTexture:(SKTexture *)trailTexture  size:(CGSize)size;
+- (void)pause;
+
+- (void)play;
 
 @end

@@ -109,8 +109,10 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         //TEMPORARY CODE//
         
-        OGTrailComponent *trailComponent = [OGTrailComponent trailComponentWithTexture:[SKTexture textureWithImageNamed:@"slime"] size:CGSizeMake(64, 64)];
-//        trailComponent.targetNode = _render.node.parent;
+        OGTrailComponent *trailComponent = [OGTrailComponent trailComponent];
+        
+        trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
+        trailComponent.textureSize = CGSizeMake(64, 64);
         [self addComponent:trailComponent];
         
         //TEMPORARY CODE//
