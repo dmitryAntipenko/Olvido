@@ -189,14 +189,6 @@ CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
     self.player.render.node.position = playerInitialNode.position;
-    
-    //TEMPORERY CODE//
-    
-    self.player.render.node.zPosition = OGZPositionCategoryPhysicsWorld;
-    ((OGTrailComponent *)[self.player componentForClass:OGTrailComponent.self]).targetNode = self;
-    
-    
-    //TEMPORERY CODE//
 }
 
 - (void)createEnemies
