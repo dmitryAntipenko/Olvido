@@ -25,7 +25,6 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
     kOGEnemyEntityMandateFollowPath = 0,
     kOGEnemyEntityMandateHunt,
-    kOGEnemyEntityMandateAttack,
     kOGEnemyEntityMandateReturnToPositionOnPath
 };
 
@@ -33,6 +32,7 @@ extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
 extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
 extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
+extern NSUInteger const kOGEnemyEntityDealGamage;
 
 @interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate, OGRulesComponentDelegate>
 
@@ -50,6 +50,7 @@ extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 
 @property (nonatomic, assign) OGEnemyEntityMandate mandate;
 @property (nonatomic, assign) CGPoint closestPointOnPath;
+@property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
 
 + (NSDictionary *)sOGEnemyEntityAnimations;
 

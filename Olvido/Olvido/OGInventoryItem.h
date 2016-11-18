@@ -13,10 +13,6 @@
 @property (nonatomic, strong, readonly) SKTexture *texture;
 @property (nonatomic, strong, readonly) NSString *identifier;
 
-- (SKTexture *)texture;
-
-- (NSString *)identifier;
-
 @optional
 
 - (void)didTaken;

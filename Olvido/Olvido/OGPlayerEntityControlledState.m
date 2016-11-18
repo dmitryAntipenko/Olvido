@@ -58,6 +58,17 @@
     return stateClass == OGPlayerEntityAttackState.self;
 }
 
+- (void)willExitWithNextState:(GKState *)nextState
+{
+    [super willExitWithNextState:nextState];
+    
+    [self.inputComponent setEnabled:NO];
+    
+    OGMovementComponent *movementComponent = self.movementComponent;
+    
+    movementComponent.displacementVector = CGVectorMake(0, 0);
+}
+
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)
@@ -72,7 +83,7 @@
 {
     if (!_movementComponent)
     {
-        _movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
+        _movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:OGMovementComponent.self];
     }
     
     return _movementComponent;

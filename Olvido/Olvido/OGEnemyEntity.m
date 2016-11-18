@@ -17,7 +17,11 @@
 #import "OGAttacking.h"
 #import "OGEnemyBehavior.h"
 #import "OGOrientationComponent.h"
+
 #import "OGEnemyEntityAgentControlledState.h"
+#import "OGEnemyEntityPreAttackState.h"
+#import "OGEnemyEntityAttackState.h"
+
 #import "OGEntitySnapshot.h"
 
 #import "OGPlayerNearRule.h"
@@ -39,6 +43,9 @@ CGFloat const kOGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const kOGEnemyEntityAgentMass = 0.25;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
+NSUInteger const kOGEnemyEntityDealGamage = 1.0;
+
+NSTimeInterval const kOGEnemyEntityDelayBetweenAttacks = 2.0;
 
 static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
@@ -51,7 +58,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 @property (nonatomic, assign) CGFloat lastPositionX;
 
-@property (nonatomic, weak) GKAgent2D *huntAgent;
+@property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
 @end
 
 @implementation OGEnemyEntity
@@ -102,9 +109,11 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         _agent.behavior = [[GKBehavior alloc] init];
         [self addComponent:_agent];
         
-        OGEnemyEntityAgentControlledState *controlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
 
-        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[controlledState]];
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState]];
         [self addComponent:_intelligenceComponent];
 
         _animationComponent = [[OGAnimationComponent alloc] initWithTextureSize:[self textureSize] animations:[OGEnemyEntity sOGEnemyEntityAnimations]];
@@ -257,10 +266,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
                                                       scene:(OGGameScene *)scene];
                 break;
             }
-            case kOGEnemyEntityMandateAttack:
-            {
-                break;
-            }
             case kOGEnemyEntityMandateReturnToPositionOnPath:
             {
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
@@ -369,10 +374,22 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     }
     else
     {
+        self.huntAgent = nil;
         if (self.mandate != kOGEnemyEntityMandateFollowPath)
         {
             self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
             self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+        }
+    }
+    
+    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) [self.intelligenceComponent.stateMachine currentState];
+    if ([agentControlledState isMemberOfClass:OGEnemyEntityAgentControlledState.self]
+        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
+        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
+    {
+        if ([self.intelligenceComponent.stateMachine canEnterState:OGEnemyEntityPreAttackState.self])
+        {
+            [self.intelligenceComponent.stateMachine enterState:OGEnemyEntityPreAttackState.self];
         }
     }
 }

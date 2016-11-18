@@ -61,7 +61,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         GKGoal *alignmentGoal = [GKGoal goalToAlignWithAgents:agentsToFlockWith
                                                   maxDistance:kOGEnemyBehaviorAlignmentRadius
                                                      maxAngle:kOGEnemyBehaviorAlignmentAngle];
-        [enemyBehavior setWeight:kOGEnemyBehaviorAlignmentWeight forGoal:alignmentGoal];
+        [enemyBehavior setWeight:kOGEnemyBehaviorAlignmentWeight forGoal:alignmentGoal];    
         
         GKGoal *cohesionGoal = [GKGoal goalToCohereWithAgents:agentsToFlockWith
                                                   maxDistance:kOGEnemyBehaviorCohesionRadius

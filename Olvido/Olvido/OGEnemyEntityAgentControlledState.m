@@ -10,13 +10,12 @@
 #import "OGEnemyEntity.h"
 #import "OGOrientationComponent.h"
 
+#import "OGEnemyEntityPreAttackState.h"
+
 @interface OGEnemyEntityAgentControlledState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
-
-@property (nonatomic, assign) NSTimeInterval elapsedTime;
 @property (nonatomic, assign) NSTimeInterval timeSinceBehaviorUpdate;
-
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @end
@@ -79,6 +78,11 @@
     [super willExitWithNextState:nextState];
     
     self.enemyEntity.agent.behavior = [[GKBehavior alloc] init];
+}
+
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return stateClass == OGEnemyEntityPreAttackState.self;
 }
 
 - (OGOrientationComponent *)orientationComponent
