@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) SKNode *target;
 
+- (instancetype)initWithSoundNames:(NSArray *)names;
+
 - (void)playSoundOnce:(NSString *)soundName;
 
 @end

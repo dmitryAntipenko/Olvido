@@ -14,9 +14,12 @@
 #import "OGMovementComponent.h"
 #import "OGSoundComponent.h"
 
+
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
+
+static NSMutableArray *sOGWeaponEntitySoundNames = nil;
 
 @interface OGWeaponEntity ()
 
@@ -44,8 +47,8 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
                                                       colliderType:[OGColliderType weapon]];
         [self addComponent:_physics];
-        
-        _sound = [[OGSoundComponent alloc] init];
+            
+        _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
         [self addComponent:_sound];
         
         _allowsAttacking = YES;
@@ -59,6 +62,11 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
     _owner = owner;
     
     self.sound.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
+}
+
++ (NSMutableArray *)sOGWeaponEntitySoundNames
+{
+    return sOGWeaponEntitySoundNames;
 }
 
 #pragma mark - OGAttacking
@@ -160,6 +168,26 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         [_bulletSpawnTimer invalidate];
         _bulletSpawnTimer = nil;
     }
+}
+
+#pragma mark - Resources
+
++ (void)loadResourcesWithCompletionHandler:(void (^)())handler
+{
+    sOGWeaponEntitySoundNames = [NSMutableArray array];
+    [sOGWeaponEntitySoundNames addObject:@"shot"];
+    
+    handler();
+}
+
++ (BOOL)resourcesNeedLoading
+{
+    return sOGWeaponEntitySoundNames == nil;
+}
+
++ (void)purgeResources
+{
+    sOGWeaponEntitySoundNames = nil;
 }
 
 @end

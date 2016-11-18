@@ -12,14 +12,57 @@
 
 NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAction";
 
+@interface OGSoundComponent ()
+
+@property (nonatomic, strong) NSMutableDictionary<NSString *, SKAction *> *actions;
+
+@end
+
 @implementation OGSoundComponent
+
+- (instancetype)initWithSoundNames:(NSArray<NSString *> *)names
+{
+    if (names)
+    {
+        self = [super init];
+        
+        _actions = [NSMutableDictionary dictionary];
+        
+        for (NSString *name in names)
+        {
+            SKAction *action = [SKAction playSoundFileNamed:name waitForCompletion:NO];
+            [_actions setObject:action forKey:name];
+        }
+    }
+    else
+    {
+        self = nil;
+    }
+    
+    return self;
+}
+
+- (void)didAddToEntity
+{
+    [super didAddToEntity];
+    
+    
+}
+
+- (NSMutableDictionary<NSString *, SKAction *> *)actions
+{
+    if (!_actions)
+    {
+        _actions = [NSMutableDictionary dictionary];
+    }
+    
+    return _actions;
+}
 
 - (void)playSoundOnce:(NSString *)soundName
 {    
-    [self.target removeActionForKey:kOGSoundComponentActionKey];
-    
-    SKAction *playAction = [SKAction playSoundFileNamed:soundName waitForCompletion:NO];
-    [self.target runAction:playAction withKey:kOGSoundComponentActionKey];
+    [self.target removeActionForKey:kOGSoundComponentActionKey];                
+    [self.target runAction:self.actions[soundName] withKey:kOGSoundComponentActionKey];
 }
 
 @end
