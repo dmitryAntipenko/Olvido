@@ -406,15 +406,6 @@
 			name = AnimationComponent;
 			sourceTree = "<group>";
 		};
-		1B513B1C1DDEFB5F0038ED6D /* TrailComponent */ = {
-			isa = PBXGroup;
-			children = (
-				1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */,
-				1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */,
-			);
-			name = TrailComponent;
-			sourceTree = "<group>";
-		};
 		1B7F24AA1DD5D0C1004918C8 /* SceneManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,7 +531,6 @@
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1B513B1C1DDEFB5F0038ED6D /* TrailComponent */,
 				1B7F24B21DD61E2D004918C8 /* InventoryComponent */,
 				EA5F12041DD4EBEB006D4129 /* Intelligence Component */,
 				1B36E4D11DC639490080D80B /* AnimationComponent */,
@@ -562,6 +552,8 @@
 				EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */,
 				210CC8031DD3532000824E84 /* OGOrientationComponent.h */,
 				210CC8041DD3532000824E84 /* OGOrientationComponent.m */,
+				1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */,
+				1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
