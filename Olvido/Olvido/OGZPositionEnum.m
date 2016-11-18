@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, OGZPositionCategory)
     OGZPositionCategoryBackground = 0,
     OGZPositionCategoryUnderPhysicsWorld = 1000,
     OGZPositionCategoryPhysicsWorld = 2000,
-    OGZPositionCategoryAbovePhysicsWorld = 3000,
-    OGZPositionCategoryUnderForeground = 4000,
+    OGZPositionCategoryAbovePhysicsWorld = 4000,
+    OGZPositionCategoryUnderForeground = 4500,
     OGZPositionCategoryForeground = 5000
 };

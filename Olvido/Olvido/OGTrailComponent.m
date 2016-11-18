@@ -16,13 +16,14 @@ CGFloat const kOGTrailComponentParticleBirthratePause = 0.0;
 CGFloat const kOGTrailComponentParticleAlphaRange = 0.2;
 CGFloat const kOGTrailComponentParticleAlpha = 0.5;
 CGFloat const kOGTrailComponentParticleSpeed = 0.0;
-CGFloat const kOGTrailComponentParticleLifeTime = 20.0;
+CGFloat const kOGTrailComponentParticleLifeTime = 10.0;
 CGFloat const kOGTrailComponentParticleAngleRange = 0.0;
 CGFloat const kOGTrailComponentParticleScale = 0.6;
 CGFloat const kOGTrailComponentParticleScaleRange = 0.6;
 CGFloat const kOGTrailComponentParticlePsoitionRangeDx = 32.0;
 CGFloat const kOGTrailComponentParticlePsoitionRangeDy = 32.0;
 CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
+CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 
 
 @interface OGTrailComponent ()
@@ -45,6 +46,7 @@ CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
     if (self)
     {
         _emitter = [SKEmitterNode node];
+        _emitter.particleAlphaSpeed = kOGTrailComponentParticleAlphaSpeed;
         _emitter.particleAlphaRange = kOGTrailComponentParticleAlphaRange;
         _emitter.particleAlpha = kOGTrailComponentParticleAlpha;
         _emitter.particleSpeed = kOGTrailComponentParticleSpeed;

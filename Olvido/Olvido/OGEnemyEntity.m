@@ -78,7 +78,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         _renderComponent = [[OGRenderComponent alloc] init];
         
         _renderComponent.node.position = position;
-        _renderComponent.node.zPosition = OGZPositionCategoryPhysicsWorld;
         
         [self addComponent:_renderComponent];
         
@@ -93,7 +92,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
         _renderComponent.node.physicsBody.allowsRotation = NO;
-        _renderComponent.node.zPosition = OGZPositionCategoryPhysicsWorld;
         
         _agent = [[GKAgent2D alloc] init];
         _agent.delegate = self;

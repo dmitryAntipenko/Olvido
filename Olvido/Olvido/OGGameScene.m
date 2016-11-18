@@ -200,6 +200,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     SKCameraNode *camera = [[SKCameraNode alloc] init];
     self.camera = camera;
+    self.camera.zPosition = OGZPositionCategoryForeground;
     self.cameraController.camera = camera;
     [self addChild:camera];
 

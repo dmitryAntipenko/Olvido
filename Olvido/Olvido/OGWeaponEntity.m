@@ -39,7 +39,6 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         
         _render = [[OGRenderComponent alloc] init];
         _render.node = sprite;
-        _render.node.zPosition = OGZPositionCategoryPhysicsWorld;
         [self addComponent:_render];
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody

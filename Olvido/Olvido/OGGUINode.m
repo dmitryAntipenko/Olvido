@@ -13,9 +13,9 @@
 
 @synthesize zPosition = _zPosition;
 
-- (instancetype)init
+- (instancetype)initWithTexture:(SKTexture *)texture color:(UIColor *)color size:(CGSize)size
 {
-    self = [super init];
+    self = [super initWithTexture:texture color:color size:size];
     
     if (self)
     {
