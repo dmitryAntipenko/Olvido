@@ -11,8 +11,18 @@
 #import "OGZPositionEnum.m"
 
 NSString *const kOGTrailComponentParticleFileName = @"SlimeTrail";
-CGFloat const kOGTrailComponentParticleBirthratePlay = 20.0;
+CGFloat const kOGTrailComponentParticleBirthratePlay = 60.0;
 CGFloat const kOGTrailComponentParticleBirthratePause = 0.0;
+CGFloat const kOGTrailComponentParticleAlphaRange = 0.2;
+CGFloat const kOGTrailComponentParticleAlpha = 0.8;
+CGFloat const kOGTrailComponentParticleSpeed = 0.0;
+CGFloat const kOGTrailComponentParticleLifeTime = 30.0;
+CGFloat const kOGTrailComponentParticleAngleRange = 0.0;
+CGFloat const kOGTrailComponentParticlePsoitionRangeDx = 20.0;
+CGFloat const kOGTrailComponentParticlePsoitionRangeDy = 20.0;
+CGFloat const kOGTrailComponentParticleScaleRange = 0.8;
+CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
+
 
 @interface OGTrailComponent ()
 
@@ -33,14 +43,15 @@ CGFloat const kOGTrailComponentParticleBirthratePause = 0.0;
     if (self)
     {
         _emitter = [SKEmitterNode node];
-        _emitter.particleAlpha = 1.0;
-        _emitter.particleSpeed = 0.0;
-        _emitter.particleLifetime = 30.0;
-        _emitter.particleAlphaRange = 0.0;
-        _emitter.emissionAngleRange = 0.0;
-        _emitter.particleScaleRange = 0.0;
-        _emitter.particleLifetimeRange = 0.0;
-        _emitter.particleBirthRate = 0.0;
+        _emitter.particleAlphaRange = kOGTrailComponentParticleAlphaRange;
+        _emitter.particleAlpha = kOGTrailComponentParticleAlpha;
+        _emitter.particleSpeed = kOGTrailComponentParticleSpeed;
+        _emitter.particleLifetime = kOGTrailComponentParticleLifeTime;
+        _emitter.emissionAngleRange = kOGTrailComponentParticleAngleRange;
+        _emitter.particlePositionRange = CGVectorMake(kOGTrailComponentParticlePsoitionRangeDx, kOGTrailComponentParticlePsoitionRangeDy);
+        _emitter.particleScaleRange = kOGTrailComponentParticleScaleRange;
+        _emitter.particleLifetimeRange = kOGTrailComponentParticleLifeTimeRange;
+        _emitter.particleBirthRate = kOGTrailComponentParticleBirthratePause;
     }
     
     return self;
