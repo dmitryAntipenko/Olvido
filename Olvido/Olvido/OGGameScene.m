@@ -7,6 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import "OGAudioManager.h"
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
@@ -72,7 +73,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, strong) OGAudioManager *audioManager;
 
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
@@ -101,11 +102,12 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self = [super initWithCoder:aDecoder];
     
     if (self)
-    {
-        _inventoryBarNode = [OGInventoryBarNode node];
-        
+    {        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
+        _audioManager = [OGAudioManager audioManager];
+        
+        _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
@@ -116,16 +118,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
             [OGCompleteLevelState stateWithLevelScene:self],
             [OGDeathLevelState stateWithLevelScene:self]
         ]];
-        
-        NSDataAsset *dataAsset = [[NSDataAsset alloc] initWithName:_sceneConfiguration.backgroundMusic];        
-        NSError *audioError = nil;
-        _audioPlayer = [[AVAudioPlayer alloc] initWithData:dataAsset.data error:&audioError];
-        
-        if (audioError)
-        {
-            self = nil;
-            return self;
-        }
         
         _entities = [[NSMutableOrderedSet alloc] init];
         
@@ -154,24 +146,18 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.sceneDelegate = (id<OGGameSceneDelegate>) [OGLevelManager sharedInstance];
     
     self.physicsWorld.contactDelegate = self;
-    self.lastUpdateTimeInterval = 0.0;
     
     self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
     [self createSceneContents];
 
     [self createCameraNode];
     [self createInventoryBar];
-    
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
-    inputNode.size = self.size;
-    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
-    inputNode.position = CGPointZero;
-    inputNode.zPosition = kOGZPositionHUD;
-    [self.camera addChild:inputNode];
+    [self createTouchControlInputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
     
-    [self.audioPlayer play];
+    [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
+    self.audioManager.musicPlayerDelegate = self;
 }
 
 - (CGSize)thumbStickNodeSize
@@ -187,6 +173,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self createEnemies];
     [self createDoors];
     [self createSceneItems];
+}
+
+- (void)createTouchControlInputNode
+{
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
+    inputNode.size = self.size;
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    inputNode.position = CGPointZero;
+    inputNode.zPosition = kOGZPositionHUD;
+    [self.camera addChild:inputNode];
 }
 
 - (void)createCameraNode

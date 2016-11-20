@@ -74,6 +74,8 @@
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
 		EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */; };
+		EA8CAF0C1DE1F43200CDB848 /* OGAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */; };
+		EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */; };
 		EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */; };
 		EA8EF7111DDE07E1008CF3A4 /* OGSoundComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8EF7101DDE07E1008CF3A4 /* OGSoundComponent.m */; };
 		EA8EF71C1DDE3F16008CF3A4 /* shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = EA8EF71B1DDE3F16008CF3A4 /* shot.wav */; };
@@ -235,6 +237,9 @@
 		EA70E5211DB3F4620034116D /* OGMovementComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementComponent.m; sourceTree = "<group>"; };
 		EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEntityManaging.h; sourceTree = "<group>"; };
 		EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sounds.xcassets; sourceTree = "<group>"; };
+		EA8CAF0A1DE1F43200CDB848 /* OGAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAudioManager.h; sourceTree = "<group>"; };
+		EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAudioManager.m; sourceTree = "<group>"; };
+		EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenuSmoke.sks; sourceTree = "<group>"; };
 		EA8EF7001DDC9B4D008CF3A4 /* OGKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKey.h; sourceTree = "<group>"; };
 		EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGKey.m; sourceTree = "<group>"; };
 		EA8EF70A1DDDFC3D008CF3A4 /* OGTransitionComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGTransitionComponentDelegate.h; sourceTree = "<group>"; };
@@ -710,6 +715,15 @@
 			name = Nodes;
 			sourceTree = "<group>";
 		};
+		EA8CAF091DE1F41700CDB848 /* AudioManager */ = {
+			isa = PBXGroup;
+			children = (
+				EA8CAF0A1DE1F43200CDB848 /* OGAudioManager.h */,
+				EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */,
+			);
+			name = AudioManager;
+			sourceTree = "<group>";
+		};
 		EA8EF7161DDE16EB008CF3A4 /* SFX */ = {
 			isa = PBXGroup;
 			children = (
@@ -738,6 +752,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				EA8CAF091DE1F41700CDB848 /* AudioManager */,
 				1B7F24AA1DD5D0C1004918C8 /* SceneManager */,
 				1B27EAAD1DC0E2C000E9CA23 /* StateMachines */,
 				EA70E52C1DB3F4770034116D /* Nodes */,
@@ -809,6 +824,7 @@
 		EAC384151DB43A2800235B27 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */,
 				1B7F24771DD5D074004918C8 /* MenusMap.plist */,
 				1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */,
 				EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */,
@@ -924,6 +940,7 @@
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */,
 				210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */,
+				EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
 				1B7F24A91DD5D074004918C8 /* ScenesConfiguration.plist in Resources */,
 				EA49824F1DD0F2ED00DCFE00 /* Level1.plist in Resources */,
@@ -1005,6 +1022,7 @@
 				EAF7F12F1DDA306C0067D76D /* OGPlayerConfiguration.m in Sources */,
 				EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */,
 				EA4982561DD101ED00DCFE00 /* OGEnemyConfiguration.m in Sources */,
+				EA8CAF0C1DE1F43200CDB848 /* OGAudioManager.m in Sources */,
 				1B7F249C1DD5D074004918C8 /* OGLoadingScene.m in Sources */,
 				1B7F249A1DD5D074004918C8 /* OGBaseScene.m in Sources */,
 				2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */,

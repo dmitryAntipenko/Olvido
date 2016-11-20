@@ -8,6 +8,7 @@
 
 #import "OGMenuBaseScene.h"
 #import "OGMenuManager.h"
+#import "OGButtonNode.h"
 
 @implementation OGMenuBaseScene
 
@@ -40,6 +41,12 @@
     }
     
     return self;
+}
+
+
+- (void)onButtonClick:(OGButtonNode *)button
+{
+    [self.menuManager.audioManager playSoundEffect:@"button_touch"];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "OGGameViewController.h"
+#import "OGAudioManager.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
 #import "OGLevelManager.h"
@@ -35,13 +36,15 @@
     view.showsNodeCount = YES;
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
-    [self.sceneManager transitionToInitialScene];
+    //[self.sceneManager transitionToInitialScene];
     
     OGLevelManager *levelManager = [OGLevelManager sharedInstance];
     levelManager.sceneManager = self.sceneManager;
     
     OGMenuManager *menuManager = [OGMenuManager sharedInstance];
     menuManager.sceneManager = self.sceneManager;
+    
+    [menuManager loadMainMenu];
 }
 
 - (BOOL)shouldAutorotate

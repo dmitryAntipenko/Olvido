@@ -12,7 +12,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 @implementation OGHealthComponent
 
-- (void)setCurrentHealth:(NSUInteger)newHealth
+- (void)setCurrentHealth:(NSInteger)newHealth
 {
     if (newHealth > self.maxHealth)
     {
@@ -28,7 +28,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
     }
 }
 
-- (void)restoreHealth:(NSUInteger)health
+- (void)restoreHealth:(NSInteger)health
 {
     self.currentHealth += health;
 }
@@ -38,9 +38,9 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
     self.currentHealth = self.maxHealth;
 }
 
-- (void)dealDamage:(NSUInteger)damage
+- (void)dealDamage:(NSInteger)damage
 {
-    self.currentHealth -= damage;
+    self.currentHealth -= damage;    
 }
 
 - (void)kill

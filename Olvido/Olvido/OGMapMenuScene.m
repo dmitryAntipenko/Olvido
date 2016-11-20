@@ -20,12 +20,15 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 - (void)startGame
 {
     OGLevelManager *levelManager = [OGLevelManager sharedInstance];
-    levelManager.view = self.view;    
+    levelManager.view = self.view;
+    [self.menuManager.audioManager stopMusic];
     [levelManager loadLevelWithIdentifier:@0];    
 }
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
+    [super onButtonClick:button];
+    
     if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
     {
         [self.menuManager loadMenuWithName:kOGMainMenuName];

@@ -25,12 +25,15 @@ NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAc
     {
         self = [super init];
         
+        if (self)
+        {
         _actions = [NSMutableDictionary dictionary];
         
-        for (NSString *name in names)
-        {
-            SKAction *action = [SKAction playSoundFileNamed:name waitForCompletion:NO];
-            [_actions setObject:action forKey:name];
+            for (NSString *name in names)
+            {
+                SKAction *action = [SKAction playSoundFileNamed:name waitForCompletion:NO];
+                [_actions setObject:action forKey:name];
+            }
         }
     }
     else
