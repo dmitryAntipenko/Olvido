@@ -94,7 +94,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
-
+@property (nonatomic, assign) NSTimeInterval pausedTimeInterval;
 
 //@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
 
@@ -103,6 +103,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
+
 
 @end
 
@@ -148,7 +149,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
+        _pauseScreenNode.zPosition = OGZPositionCategoryForeground;
+        
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
+        _gameOverScreenNode.zPosition = OGZPositionCategoryForeground;
     }
     
     return self;
@@ -401,16 +405,22 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)pause
 {
-    [super pause];
+    [self pauseWithoutPauseScreen];
+    [self showPauseScreen];
+}
+
+- (void)pauseWithoutPauseScreen
+{
+    self.paused = YES;
     
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
+    
+    self.pausedTimeInterval = NSTimeIntervalSince1970;
 }
 
-- (void)pauseWithPauseScreen
+- (void)showPauseScreen
 {
-    [self pause];
-    
     if (!self.pauseScreenNode.parent)
     {
         [self addChild:self.pauseScreenNode];
@@ -419,7 +429,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)resume
 {
-    [super resume];
+    self.paused = NO;
     
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
@@ -432,6 +442,11 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (self.gameOverScreenNode.parent)
     {
         [self.gameOverScreenNode removeFromParent];
+    }
+    
+    if (self.pausedTimeInterval != 0.0)
+    {
+        self.lastUpdateTimeInterval = NSTimeIntervalSince1970 - self.pausedTimeInterval;
     }
 }
 

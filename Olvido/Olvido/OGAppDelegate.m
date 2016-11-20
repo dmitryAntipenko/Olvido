@@ -9,6 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGAppDelegate.h"
 #import "OGGameViewController.h"
+#import "OGBaseScene.h"
 
 NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
@@ -35,6 +36,14 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
     return YES;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    //    [self.gameViewController.currentManager pause];
+}
 
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    //    [self.gameViewController.currentManager resume];
+}
 
 @end

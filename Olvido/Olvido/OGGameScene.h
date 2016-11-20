@@ -34,7 +34,7 @@
 
 - (void)restart;
 
-- (void)pauseWithPauseScreen;
+- (void)pauseWithoutPauseScreen;
 
 - (void)gameOver;
 
