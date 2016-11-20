@@ -17,6 +17,8 @@
 @interface OGGameViewController ()
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, strong) OGLevelManager *levelManager;
+@property (nonatomic, strong) OGMenuManager *menuManager;
 
 @end
 

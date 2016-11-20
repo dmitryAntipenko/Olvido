@@ -9,6 +9,7 @@
 #import "OGMenuManager.h"
 #import "OGSceneManager.h"
 #import "OGConstants.h"
+#import "OGMenuBaseScene.h"
 
 NSString *const kOGMenuManagerMenuNameKey = @"Name";
 NSString *const kOGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
@@ -18,6 +19,7 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 @interface OGMenuManager ()
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *menusMap;
+@property (nonatomic, strong) OGMenuBaseScene *currentScene;
 
 @end
 
@@ -52,7 +54,12 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 - (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier
 {
     NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][kOGMenuManagerSceneIdentifierKey] integerValue];
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer completionHandler:nil];
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer
+                                     completionHandler:^(OGBaseScene *scene)
+     {
+         self.currentScene = (OGMenuBaseScene *)scene;
+         self.currentScene.menuManager = self;
+     }];
 }
 
 - (void)loadMenuWithName:(NSString *)menuName

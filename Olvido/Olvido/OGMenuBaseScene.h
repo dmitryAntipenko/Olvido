@@ -12,6 +12,6 @@
 
 @interface OGMenuBaseScene : OGBaseScene
 
-@property (nonatomic, strong, readonly) OGMenuManager *menuManager;
+@property (nonatomic, weak) OGMenuManager *menuManager;
 
 @end

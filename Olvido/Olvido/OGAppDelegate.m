@@ -44,7 +44,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-//    [[OGLevelManager sharedInstance] resume];
+    [[OGLevelManager sharedInstance] resume];
 }
 
 @end

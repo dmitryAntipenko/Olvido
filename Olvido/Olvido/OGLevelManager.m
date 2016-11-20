@@ -88,6 +88,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
                                          completionHandler:^(OGBaseScene *scene)
         {
             self.currentScene = (OGGameScene *)scene;
+            self.currentScene.sceneDelegate = self;
         }];
     }
 }
