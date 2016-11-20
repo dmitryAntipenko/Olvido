@@ -24,7 +24,8 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 @interface OGSceneManager () <OGSceneLoaderDelegate>
 
-@property (nonatomic, strong, readwrite) OGBaseScene *currentScene;
+@property (nonatomic, strong) OGSceneLoader *currentSceneLoader;
+//@property (nonatomic, strong, readwrite) OGBaseScene *currentScene;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
 @property (nonatomic, strong) OGLoadingScene *loadingScene;
@@ -60,6 +61,8 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
             
             _sceneLoaders = [mutableSceneLoaders copy];
             _view = view;
+            
+            _transitionCompletion = nil;
         }
         else
         {
@@ -138,11 +141,19 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     {
         [self presentSceneWithSceneLoader:sceneLoader];
         self.loadingScene = nil;
+        
+        sceneLoader.requestedForPresentation = NO;
     }
 }
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
+    if (self.currentSceneLoader != sceneLoader)
+    {
+        [self.currentSceneLoader purgeResources];
+        self.currentSceneLoader = sceneLoader;
+    }
+    
     if (self.transitionCompletion)
     {
         self.transitionCompletion(sceneLoader.scene);

@@ -12,7 +12,7 @@
 
 @interface OGLevelState : GKState
 
-@property (nonatomic, strong, readonly) OGGameScene *scene;
+@property (nonatomic, weak, readonly) OGGameScene *scene;
 
 - (instancetype)initWithLevelScene:(OGGameScene *)scene;
 

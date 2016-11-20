@@ -10,7 +10,8 @@
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
 #import "OGConstants.h"
-#import "OGsceneManager.h"
+#import "OGSceneManager.h"
+#import "OGMenuManager.h"
 
 #import "OGPauseLevelState.h"
 #import "OGGameLevelState.h"
@@ -27,8 +28,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 @property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
 @property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
 
-@property (nonatomic, strong) OGGameScene *currentGameScene;
-@property (nonatomic, strong) OGStoryScene *currentStoryScene;
+@property (nonatomic, weak) OGGameScene *currentGameScene;
+@property (nonatomic, weak) OGStoryScene *currentStoryScene;
 
 @end
 
@@ -109,6 +110,9 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
+    self.currentStoryScene = nil;
+    self.currentGameScene = nil;
+    
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
     
@@ -138,7 +142,9 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)exitToMenu
 {
-    //some actions for level restarting
+    self.currentGameScene = nil;
+    
+    [self.menuManager loadMenuWithName:kOGMapMenuName];
 }
 
 @end

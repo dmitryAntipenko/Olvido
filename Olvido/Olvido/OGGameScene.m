@@ -602,4 +602,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     return _obstaclesGraph;
 }
+
+- (void)dealloc
+{
+    
+}
+
 @end

@@ -19,7 +19,7 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 @interface OGMenuManager ()
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *menusMap;
-@property (nonatomic, strong) OGMenuBaseScene *currentScene;
+@property (nonatomic, weak) OGMenuBaseScene *currentScene;
 
 @end
 
@@ -58,6 +58,8 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 
 - (void)loadMenuWithName:(NSString *)menuName
 {
+    self.currentScene = nil;
+    
     __block NSUInteger menuIdentifier = 0;
     
     if (menuName)
