@@ -58,7 +58,7 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 
 - (void)loadMenuWithName:(NSString *)menuName
 {
-    __block NSUInteger sceneIdentifer = 0;
+    __block NSUInteger menuIdentifier = 0;
     
     if (menuName)
     {
@@ -66,17 +66,17 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
          {
              if ([menuAsDictionary[kOGMenuManagerMenuNameKey] isEqualToString:menuName])
              {
-                 sceneIdentifer = [menuAsDictionary[kOGMenuManagerSceneIdentifierKey] integerValue];
+                 menuIdentifier = idx;
                  *stop = YES;
              }
          }];
     }
     else
     {
-        sceneIdentifer = kOGMenuManagerMainMenuIdentifier;
+        menuIdentifier = kOGMenuManagerMainMenuIdentifier;
     }
     
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer completionHandler:nil];
+    [self loadMenuWithIdentifier:menuIdentifier];
 }
 
 @end

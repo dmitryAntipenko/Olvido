@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class OGSceneManager;
+@class OGLevelManager;
 
 @interface OGMenuManager : NSObject
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, weak) OGLevelManager *levelManager;
 
 + (instancetype)menuManager;
 

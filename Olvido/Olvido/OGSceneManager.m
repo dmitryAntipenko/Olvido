@@ -143,14 +143,14 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
-    SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
-    [self.view presentScene:sceneLoader.scene transition:transition];
-    
     if (self.transitionCompletion)
     {
         self.transitionCompletion(sceneLoader.scene);
         self.transitionCompletion = nil;
     }
+    
+    SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
+    [self.view presentScene:sceneLoader.scene transition:transition];
 }
 
 - (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;

@@ -37,6 +37,10 @@
     
     self.menuManager = [OGMenuManager menuManager];
     self.menuManager.sceneManager = self.sceneManager;
+    
+    self.menuManager.levelManager = self.levelManager;
+    self.levelManager.menuManager = self.menuManager;
+    
     [self.menuManager loadMainMenu];
 }
 

@@ -27,7 +27,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 @property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
 @property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
 
-@property (nonatomic, strong) OGGameScene *currentScene;
+@property (nonatomic, strong) OGGameScene *currentGameScene;
+@property (nonatomic, strong) OGStoryScene *currentStoryScene;
 
 @end
 
@@ -81,8 +82,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
         [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue
                                          completionHandler:^(OGBaseScene *scene)
          {
-             self.currentScene = (OGGameScene *)scene;
-             self.currentScene.sceneDelegate = self;
+             self.currentGameScene = (OGGameScene *)scene;
+             self.currentGameScene.sceneDelegate = self;
          }];
     }
 }
@@ -91,7 +92,13 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentStorySceneIdentifier)
     {
-        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue completionHandler:nil];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue
+                                         completionHandler:^(OGBaseScene *scene)
+         {
+             self.currentStoryScene = (OGStoryScene *)scene;
+             self.currentStoryScene.sceneDelegate = self;
+         }];
+        
         [self.sceneManager prepareSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
     }
     else
@@ -110,17 +117,17 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)pause
 {
-    if (self.currentScene)
+    if (self.currentGameScene)
     {
-        [self.currentScene.stateMachine enterState:OGPauseLevelState.self];
+        [self.currentGameScene.stateMachine enterState:OGPauseLevelState.self];
     }
 }
 
 - (void)resume
 {
-    if (self.currentScene)
+    if (self.currentGameScene)
     {
-        [self.currentScene.stateMachine enterState:OGGameLevelState.self];
+        [self.currentGameScene.stateMachine enterState:OGGameLevelState.self];
     }
 }
 

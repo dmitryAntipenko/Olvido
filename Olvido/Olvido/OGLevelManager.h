@@ -11,6 +11,7 @@
 @class OGGameScene;
 @class OGStoryScene;
 @class OGSceneManager;
+@class OGMenuManager;
 
 @interface OGLevelManager : NSObject
 
@@ -18,6 +19,7 @@
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, weak) OGMenuManager *menuManager;
 
 + (instancetype)levelManager;
 
