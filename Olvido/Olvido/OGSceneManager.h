@@ -23,8 +23,8 @@
 
 - (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier;
 
-- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier;
+- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier completionHandler:(void (^)(OGBaseScene *scene))completion;
 
-- (void)transitionToInitialScene;
+- (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;
 
 @end

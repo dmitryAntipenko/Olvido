@@ -24,6 +24,7 @@
 
 @property (nonatomic, copy) NSNumber *identifier;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
+@property (nonatomic, strong) GKStateMachine *stateMachine;
 
 @property (nonatomic, strong) GKObstacleGraph *obstaclesGraph;
 

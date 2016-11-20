@@ -12,6 +12,9 @@
 #import "OGConstants.h"
 #import "OGsceneManager.h"
 
+#import "OGPauseLevelState.h"
+#import "OGGameLevelState.h"
+
 NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
 NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
 NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
@@ -23,6 +26,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 @property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
 @property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
+
+@property (nonatomic, strong) OGGameScene *currentScene;
 
 @end
 
@@ -79,7 +84,11 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 { 
     if (self.currentGameSceneIdentifier)
     {
-        [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue
+                                         completionHandler:^(OGBaseScene *scene)
+        {
+            self.currentScene = (OGGameScene *)scene;
+        }];
     }
 }
 
@@ -87,7 +96,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentStorySceneIdentifier)
     {
-        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue completionHandler:nil];
         [self.sceneManager prepareSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
     }
     else
@@ -102,6 +111,22 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
     
     [self runStoryScene];
+}
+
+- (void)pause
+{
+    if (self.currentScene)
+    {
+        [self.currentScene.stateMachine enterState:OGPauseLevelState.self];
+    }
+}
+
+- (void)resume
+{
+    if (self.currentScene)
+    {
+        [self.currentScene.stateMachine enterState:OGGameLevelState.self];
+    }
 }
 
 @end

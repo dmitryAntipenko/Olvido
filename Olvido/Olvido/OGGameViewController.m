@@ -36,13 +36,13 @@
     view.showsPhysics = YES;
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
-    [self.sceneManager transitionToInitialScene];
     
     OGLevelManager *levelManager = [OGLevelManager sharedInstance];
     levelManager.sceneManager = self.sceneManager;
     
     OGMenuManager *menuManager = [OGMenuManager sharedInstance];
     menuManager.sceneManager = self.sceneManager;
+    [menuManager loadMainMenu];
 }
 
 - (BOOL)shouldAutorotate

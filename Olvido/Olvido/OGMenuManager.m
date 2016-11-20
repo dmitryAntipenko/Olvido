@@ -52,7 +52,7 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 - (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier
 {
     NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][kOGMenuManagerSceneIdentifierKey] integerValue];
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer completionHandler:nil];
 }
 
 - (void)loadMenuWithName:(NSString *)menuName
@@ -75,7 +75,7 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
         sceneIdentifer = kOGMenuManagerMainMenuIdentifier;
     }
     
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer completionHandler:nil];
 }
 
 @end

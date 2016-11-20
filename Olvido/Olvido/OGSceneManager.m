@@ -28,6 +28,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
 @property (nonatomic, strong) OGLoadingScene *loadingScene;
+@property (nonatomic, strong) void (^transitionCompletion)(OGBaseScene *scene);
 
 @end
 
@@ -84,8 +85,10 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     }
 }
 
-- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier
+- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier completionHandler:(void (^)(OGBaseScene *scene))completion;
 {
+    self.transitionCompletion = completion;
+    
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
     if (sceneLoader.stateMachine.currentState.class == OGSceneLoaderResourcesReadyState.self)
@@ -142,11 +145,17 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 {
     SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
+    
+    if (self.transitionCompletion)
+    {
+        self.transitionCompletion(sceneLoader.scene);
+        self.transitionCompletion = nil;
+    }
 }
 
-- (void)transitionToInitialScene
+- (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;
 {
-    [self transitionToSceneWithIdentifier:kOGSceneManagerInitialSceneIdentifier];
+    [self transitionToSceneWithIdentifier:kOGSceneManagerInitialSceneIdentifier completionHandler:completion];
 }
 
 @end

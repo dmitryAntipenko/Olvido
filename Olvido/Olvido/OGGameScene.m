@@ -88,7 +88,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, strong) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
-@property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
@@ -405,14 +404,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)pause
 {
+    [super pause];
+    
     [self pauseWithoutPauseScreen];
     [self showPauseScreen];
 }
 
 - (void)pauseWithoutPauseScreen
 {
-    self.paused = YES;
-    
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     
@@ -429,7 +428,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)resume
 {
-    self.paused = NO;
+    [super resume];
     
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
@@ -496,7 +495,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         self.lastUpdateTimeInterval = currentTime;
     }
     
-    if (!self.isPaused)
+    if (!self.paused)
     {
         self.levelSnapshot = nil;
         

@@ -24,4 +24,7 @@
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;
 
+- (void)pause;
+- (void)resume;
+
 @end
