@@ -12,4 +12,8 @@
 
 - (void)createCamera;
 
+- (void)pause;
+
+- (void)resume;
+
 @end

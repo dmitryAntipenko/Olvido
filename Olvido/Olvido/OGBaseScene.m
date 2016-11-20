@@ -15,4 +15,15 @@
     self.scaleMode = SKSceneScaleModeAspectFit;
 }
 
+- (void)pause
+{
+    self.paused = YES;
+}
+
+
+- (void)resume
+{
+    self.paused = NO;
+}
+
 @end

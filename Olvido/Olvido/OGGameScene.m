@@ -103,6 +103,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
+
 @end
 
 @implementation OGGameScene
@@ -124,14 +125,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-            [OGStoryConclusionLevelState stateWithLevelScene:self],
-            [OGBeforeStartLevelState stateWithLevelScene:self],
-            [OGGameLevelState stateWithLevelScene:self],
-            [OGPauseLevelState stateWithLevelScene:self],
-            [OGCompleteLevelState stateWithLevelScene:self],
-            [OGDeathLevelState stateWithLevelScene:self]
-        ]];
-
+                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
+                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                 [OGGameLevelState stateWithLevelScene:self],
+                                                                 [OGPauseLevelState stateWithLevelScene:self],
+                                                                 [OGCompleteLevelState stateWithLevelScene:self],
+                                                                 [OGDeathLevelState stateWithLevelScene:self]
+                                                                 ]];
+        
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
@@ -165,10 +166,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.lastUpdateTimeInterval = 0.0;
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
-
+    
     self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
     [self createSceneContents];
-
+    
     [self createCameraNode];
     [self createInventoryBar];
     
@@ -203,7 +204,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.camera.zPosition = OGZPositionCategoryForeground;
     self.cameraController.camera = camera;
     [self addChild:camera];
-
+    
     self.cameraController.target = self.player.render.node;
     
     [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
@@ -230,7 +231,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         
         OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
                                                                       graph:graph];
-    
+        
         enemy.trailComponent.targetNode = self;
         
         [self addEntity:enemy];
@@ -366,13 +367,13 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
     [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
-    {
-        [notifiable contactWithEntityDidBegin:entity];
-    }];
+     {
+         [notifiable contactWithEntityDidBegin:entity];
+     }];
 }
 
 - (void)handleContact:(SKPhysicsContact *)contact contactCallback:(void (^)(id<OGContactNotifiableType>, GKEntity *))callback
-{    
+{
     SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
     SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
@@ -400,9 +401,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)pause
 {
+    [super pause];
+    
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
-    self.paused = YES;
 }
 
 - (void)pauseWithPauseScreen
@@ -417,9 +419,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)resume
 {
+    [super resume];
+    
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
-    self.paused = NO;
     
     if (self.pauseScreenNode.parent)
     {
@@ -478,17 +481,20 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         self.lastUpdateTimeInterval = currentTime;
     }
     
-    self.levelSnapshot = nil;
-    
-    CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
-    self.lastUpdateTimeInterval = currentTime;        
-    
-    for (GKComponentSystem *componentSystem in self.componentSystems)
+    if (!self.isPaused)
     {
-        [componentSystem updateWithDeltaTime:deltaTime];
+        self.levelSnapshot = nil;
+        
+        CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
+        self.lastUpdateTimeInterval = currentTime;
+        
+        for (GKComponentSystem *componentSystem in self.componentSystems)
+        {
+            [componentSystem updateWithDeltaTime:deltaTime];
+        }
+        
+        [self.inventoryBarNode checkPlayerPosition];
     }
-    
-    [self.inventoryBarNode checkPlayerPosition];
 }
 
 - (void)didFinishUpdate
@@ -536,9 +542,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     NSMutableArray<SKSpriteNode *> *result = nil;
     
     [self enumerateChildNodesWithName:kOGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-    {
-        [result addObject:(SKSpriteNode *)node];
-    }];
+     {
+         [result addObject:(SKSpriteNode *)node];
+     }];
     
     return result;
 }

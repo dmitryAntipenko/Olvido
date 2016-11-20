@@ -32,11 +32,7 @@
 
 @property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
 
-- (void)pause;
-
 - (void)restart;
-
-- (void)resume;
 
 - (void)pauseWithPauseScreen;
 
