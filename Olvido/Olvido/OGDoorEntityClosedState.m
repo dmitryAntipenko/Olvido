@@ -14,7 +14,7 @@
 #import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
+#import "OGSoundComponent.h"
 
 @implementation OGDoorEntityClosedState
 
@@ -22,6 +22,11 @@
 {
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+    
+    if (previousState)
+    {
+        [self.doorEntity.sound playSoundOnce:@"door_open"];
+    }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

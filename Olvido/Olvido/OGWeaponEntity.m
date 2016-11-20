@@ -19,7 +19,7 @@ CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
-static NSMutableArray *sOGWeaponEntitySoundNames = nil;
+static NSArray *sOGWeaponEntitySoundNames = nil;
 
 @interface OGWeaponEntity ()
 
@@ -64,7 +64,7 @@ static NSMutableArray *sOGWeaponEntitySoundNames = nil;
     self.sound.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
 }
 
-+ (NSMutableArray *)sOGWeaponEntitySoundNames
++ (NSArray *)sOGWeaponEntitySoundNames
 {
     return sOGWeaponEntitySoundNames;
 }
@@ -174,8 +174,7 @@ static NSMutableArray *sOGWeaponEntitySoundNames = nil;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
-    sOGWeaponEntitySoundNames = [NSMutableArray array];
-    [sOGWeaponEntitySoundNames addObject:@"shot"];
+    sOGWeaponEntitySoundNames = @[@"shot"];
     
     handler();
 }

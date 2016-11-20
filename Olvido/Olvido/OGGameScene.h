@@ -24,15 +24,10 @@
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 
 - (void)pause;
-
 - (void)restart;
-
 - (void)resume;
-
 - (void)pauseWithPauseScreen;
-
 - (void)gameOver;
-
 - (void)runStoryConclusion;
 
 @end

@@ -74,6 +74,8 @@
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
 		EA84DBD91DE21BEC0044B2EE /* OGShadowComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */; };
+		EA84DBDF1DE231180044B2EE /* SKColor+OGConstantColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA84DBDD1DE231180044B2EE /* SKColor+OGConstantColors.m */; };
+		EA84DBE11DE240740044B2EE /* door_open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EA84DBE01DE240740044B2EE /* door_open.mp3 */; };
 		EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */; };
 		EA8CAF0C1DE1F43200CDB848 /* OGAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */; };
 		EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */; };
@@ -86,8 +88,6 @@
 		EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA976C901D9AAEE2003B77FC /* Assets.xcassets */; };
 		EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976CCB1D9C253B003B77FC /* LaunchScreen.storyboard */; };
 		EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA976CCD1D9C253B003B77FC /* Main.storyboard */; };
-		EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */; };
-		EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA976D0B1D9FDF76003B77FC /* OGTimer.m */; };
 		EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAAC61DCC9CFE00E36855 /* OGPlayerEntity.m */; };
 		EA9EAACA1DCC9D1400E36855 /* OGRenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAAC91DCC9D1400E36855 /* OGRenderComponent.m */; };
 		EA9EAACD1DCC9E3100E36855 /* OGInputComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAACC1DCC9E3100E36855 /* OGInputComponent.m */; };
@@ -239,6 +239,9 @@
 		EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEntityManaging.h; sourceTree = "<group>"; };
 		EA84DBD71DE21BEC0044B2EE /* OGShadowComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShadowComponent.h; sourceTree = "<group>"; };
 		EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShadowComponent.m; sourceTree = "<group>"; };
+		EA84DBDC1DE231180044B2EE /* SKColor+OGConstantColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+OGConstantColors.h"; sourceTree = "<group>"; };
+		EA84DBDD1DE231180044B2EE /* SKColor+OGConstantColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+OGConstantColors.m"; sourceTree = "<group>"; };
+		EA84DBE01DE240740044B2EE /* door_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = door_open.mp3; sourceTree = "<group>"; };
 		EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sounds.xcassets; sourceTree = "<group>"; };
 		EA8CAF0A1DE1F43200CDB848 /* OGAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAudioManager.h; sourceTree = "<group>"; };
 		EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAudioManager.m; sourceTree = "<group>"; };
@@ -260,10 +263,6 @@
 		EA976C951D9AAEE3003B77FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA976CCC1D9C253B003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA976CCE1D9C253B003B77FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		EA976CFF1D9ED6BF003B77FC /* SKColor+OGConstantColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKColor+OGConstantColors.h"; sourceTree = "<group>"; };
-		EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKColor+OGConstantColors.m"; sourceTree = "<group>"; };
-		EA976D0A1D9FDF76003B77FC /* OGTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTimer.h; sourceTree = "<group>"; };
-		EA976D0B1D9FDF76003B77FC /* OGTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTimer.m; sourceTree = "<group>"; };
 		EA9EAAC51DCC9CFE00E36855 /* OGPlayerEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntity.h; sourceTree = "<group>"; };
 		EA9EAAC61DCC9CFE00E36855 /* OGPlayerEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntity.m; sourceTree = "<group>"; };
 		EA9EAAC81DCC9D1400E36855 /* OGRenderComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGRenderComponent.h; sourceTree = "<group>"; };
@@ -741,6 +740,7 @@
 		EA8EF7161DDE16EB008CF3A4 /* SFX */ = {
 			isa = PBXGroup;
 			children = (
+				EA84DBE01DE240740044B2EE /* door_open.mp3 */,
 				EA8EF71D1DDE4233008CF3A4 /* steps.m4a */,
 				EA8EF71B1DDE3F16008CF3A4 /* shot.wav */,
 			);
@@ -837,14 +837,12 @@
 		EAC384151DB43A2800235B27 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EA84DBDC1DE231180044B2EE /* SKColor+OGConstantColors.h */,
+				EA84DBDD1DE231180044B2EE /* SKColor+OGConstantColors.m */,
 				EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */,
 				1B7F24771DD5D074004918C8 /* MenusMap.plist */,
 				1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */,
 				EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */,
-				EA976CFF1D9ED6BF003B77FC /* SKColor+OGConstantColors.h */,
-				EA976D001D9ED6BF003B77FC /* SKColor+OGConstantColors.m */,
-				EA976D0A1D9FDF76003B77FC /* OGTimer.h */,
-				EA976D0B1D9FDF76003B77FC /* OGTimer.m */,
 				EAA490C51DA7BE52007734F0 /* OGConstants.h */,
 				EAA490C61DA7BE64007734F0 /* OGConstants.m */,
 				1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */,
@@ -949,6 +947,7 @@
 				1B27EA9C1DC090BE00E9CA23 /* OGMainMenuScene.sks in Resources */,
 				EA8EF71C1DDE3F16008CF3A4 /* shot.wav in Resources */,
 				215C4BDC1DC0ED1B000DF29F /* Level1.sks in Resources */,
+				EA84DBE11DE240740044B2EE /* door_open.mp3 in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */,
@@ -993,12 +992,10 @@
 				EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,
-				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,
 				1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */,
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
-				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
 				EA84DBD91DE21BEC0044B2EE /* OGShadowComponent.m in Sources */,
 				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,
 				EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */,
@@ -1008,6 +1005,7 @@
 				1B7F249B1DD5D074004918C8 /* OGLevelManager.m in Sources */,
 				1B7F24A01DD5D074004918C8 /* OGMenuManager.m in Sources */,
 				1B7F24A71DD5D074004918C8 /* OGSceneMetadata.m in Sources */,
+				EA84DBDF1DE231180044B2EE /* SKColor+OGConstantColors.m in Sources */,
 				1B7F24A11DD5D074004918C8 /* OGSceneLoader.m in Sources */,
 				1B0E44F01DDA1015008F0F7B /* OGInventoryComponent.m in Sources */,
 				1B7F249E1DD5D074004918C8 /* OGLoadResourcesOperation.m in Sources */,

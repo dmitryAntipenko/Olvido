@@ -15,6 +15,7 @@
 #import "OGLockComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGSoundComponent.h"
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
@@ -22,6 +23,8 @@
 #import "OGDoorEntityUnlockedState.h"
 
 NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
+
+static NSArray *sOGDoorEntitySoundNames = nil;
 
 @interface OGDoorEntity ()
 
@@ -68,6 +71,10 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
             
             _transition = [[OGTransitionComponent alloc] init];
             [self addComponent:_transition];
+            
+            _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNames];
+            _sound.target = _render.node;
+            [self addComponent:_sound];
         }
     }
     else
@@ -148,6 +155,8 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
     [OGDoorEntity loadMiscellaneousAssets];
+    
+    sOGDoorEntitySoundNames = @[@"door_open"];
     
     handler();
 }
