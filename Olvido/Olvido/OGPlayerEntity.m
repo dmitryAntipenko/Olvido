@@ -7,6 +7,7 @@
 //
 
 #import "OGPlayerEntity.h"
+#import "OGShadowComponent.h"
 #import "OGRenderComponent.h"
 #import "OGHealthComponent.h"
 #import "OGIntelligenceComponent.h"
@@ -31,6 +32,8 @@
 #import "OGplayerEntityAttackState.h"
 
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
+NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
+CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 @interface OGPlayerEntity ()
 
@@ -59,6 +62,13 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         _render.node.physicsBody = _physics.physicsBody;
         _render.node.physicsBody.allowsRotation = NO;
+        
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGPlayerEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, kOGPlayerEntityShadowYOffset);
+        _shadow = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        [self addComponent:_shadow];
+        
+        [_render.node addChild:_shadow.node];
         
         _health = [[OGHealthComponent alloc] init];
         _health.maxHealth = configuration.maxHealth;

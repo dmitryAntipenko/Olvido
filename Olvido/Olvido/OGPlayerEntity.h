@@ -11,6 +11,7 @@
 #import "OGContactNotifiableType.h"
 
 @class OGPlayerConfiguration;
+@class OGShadowComponent;
 @class OGInventoryComponent;
 @class OGWeaponComponent;
 @class OGHealthComponent;
@@ -25,6 +26,7 @@
 
 @interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
 
+@property (nonatomic, strong) OGShadowComponent *shadow;
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, strong) OGRenderComponent *render;
 @property (nonatomic, strong) OGPhysicsComponent *physics;

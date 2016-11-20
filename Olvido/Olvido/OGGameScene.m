@@ -29,6 +29,7 @@
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGShadowComponent.h"
 
 #import "OGPlayerEntity.h"
 #import "OGEnemyEntity.h"
@@ -306,6 +307,13 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (renderNode && !renderNode.parent)
     {
         [self addChild:renderNode];
+        
+        SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:OGShadowComponent.self]).node;
+        
+        if (shadowNode)
+        {
+            shadowNode.zPosition = kOGZPositionCategoryShadows;         
+        }
     }
     
     OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.self];

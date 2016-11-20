@@ -73,6 +73,7 @@
 		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
 		EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70E5211DB3F4620034116D /* OGMovementComponent.m */; };
+		EA84DBD91DE21BEC0044B2EE /* OGShadowComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */; };
 		EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */; };
 		EA8CAF0C1DE1F43200CDB848 /* OGAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */; };
 		EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA8CAF0D1DE2120700CDB848 /* MainMenuSmoke.sks */; };
@@ -236,6 +237,8 @@
 		EA70E5201DB3F4620034116D /* OGMovementComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMovementComponent.h; sourceTree = "<group>"; };
 		EA70E5211DB3F4620034116D /* OGMovementComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMovementComponent.m; sourceTree = "<group>"; };
 		EA834AC01DDB564B00364CC2 /* OGEntityManaging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGEntityManaging.h; sourceTree = "<group>"; };
+		EA84DBD71DE21BEC0044B2EE /* OGShadowComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShadowComponent.h; sourceTree = "<group>"; };
+		EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShadowComponent.m; sourceTree = "<group>"; };
 		EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sounds.xcassets; sourceTree = "<group>"; };
 		EA8CAF0A1DE1F43200CDB848 /* OGAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAudioManager.h; sourceTree = "<group>"; };
 		EA8CAF0B1DE1F43200CDB848 /* OGAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAudioManager.m; sourceTree = "<group>"; };
@@ -563,6 +566,8 @@
 				210CC8041DD3532000824E84 /* OGOrientationComponent.m */,
 				EA8EF70F1DDE07E1008CF3A4 /* OGSoundComponent.h */,
 				EA8EF7101DDE07E1008CF3A4 /* OGSoundComponent.m */,
+				EA84DBD71DE21BEC0044B2EE /* OGShadowComponent.h */,
+				EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -715,6 +720,15 @@
 			name = Nodes;
 			sourceTree = "<group>";
 		};
+		EA84DBD61DE21BC70044B2EE /* Key */ = {
+			isa = PBXGroup;
+			children = (
+				EA8EF7001DDC9B4D008CF3A4 /* OGKey.h */,
+				EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */,
+			);
+			name = Key;
+			sourceTree = "<group>";
+		};
 		EA8CAF091DE1F41700CDB848 /* AudioManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -805,8 +819,7 @@
 				EA4982431DCFB12C00DCFE00 /* Player */,
 				EA4982441DCFB44000DCFE00 /* Enemy */,
 				EA5F12001DD4E25E006D4129 /* Door */,
-				EA8EF7001DDC9B4D008CF3A4 /* OGKey.h */,
-				EA8EF7011DDC9B4D008CF3A4 /* OGKey.m */,
+				EA84DBD61DE21BC70044B2EE /* Key */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -986,6 +999,7 @@
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA976D011D9ED6BF003B77FC /* SKColor+OGConstantColors.m in Sources */,
+				EA84DBD91DE21BEC0044B2EE /* OGShadowComponent.m in Sources */,
 				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,
 				EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */,
 				1B27EABD1DC0F6DE00E9CA23 /* OGPauseLevelState.m in Sources */,

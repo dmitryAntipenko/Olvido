@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, OGZPositionCategory)
 {
     kOGZPositionCategoryBackground = -200,
     kOGZPositionCategoryPhysicsWorld = -100,
+    kOGZPositionCategoryShadows = -50,
     kOGZPositionCategoryAbovePhysicsWorld = 0,
     kOGZPositionCategoryUnderForeground = 100,
     kOGZPositionCategoryForeground = 200,
