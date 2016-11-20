@@ -25,16 +25,10 @@ NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
 
 @implementation OGMenuManager
 
-+ (instancetype)sharedInstance;
++ (instancetype)menuManager
 {
-    static OGMenuManager *menuManager = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        menuManager = [[OGMenuManager alloc] init];
-        [menuManager loadMenuMap];
-    });
+    OGMenuManager *menuManager = [[OGMenuManager alloc] init];
+    [menuManager loadMenuMap];
     
     return menuManager;
 }

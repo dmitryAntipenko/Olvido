@@ -19,7 +19,7 @@
 @property (nonatomic, copy, readonly) NSArray *levelMap;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
 
-+ (OGLevelManager *)sharedInstance;
++ (instancetype)levelManager;
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;

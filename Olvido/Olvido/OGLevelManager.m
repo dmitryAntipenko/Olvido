@@ -33,16 +33,10 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 @implementation OGLevelManager
 
-+ (instancetype)sharedInstance
++ (instancetype)levelManager;
 {
-    static OGLevelManager *levelManager = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        levelManager = [[OGLevelManager alloc] init];
-        [levelManager loadLevelMap];
-    });
+    OGLevelManager *levelManager = [[OGLevelManager alloc] init];
+    [levelManager loadLevelMap];
     
     return levelManager;
 }
@@ -81,15 +75,15 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 #pragma mark - Loading and Running levels
 
 - (void)runGameScene
-{ 
+{
     if (self.currentGameSceneIdentifier)
     {
         [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue
                                          completionHandler:^(OGBaseScene *scene)
-        {
-            self.currentScene = (OGGameScene *)scene;
-            self.currentScene.sceneDelegate = self;
-        }];
+         {
+             self.currentScene = (OGGameScene *)scene;
+             self.currentScene.sceneDelegate = self;
+         }];
     }
 }
 

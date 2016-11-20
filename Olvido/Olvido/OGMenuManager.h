@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
 
-+ (instancetype)sharedInstance;
++ (instancetype)menuManager;
 
 - (void)loadMainMenu;
 
