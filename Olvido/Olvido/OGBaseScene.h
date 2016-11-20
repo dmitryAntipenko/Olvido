@@ -10,6 +10,8 @@
 
 @interface OGBaseScene : SKScene <GKSceneRootNodeType>
 
+@property (nonatomic, assign) BOOL customPaused;
+
 - (void)createCamera;
 
 - (void)pause;

@@ -36,6 +36,7 @@
 #import "OGKey.h"
 
 #import "OGInventoryBarNode.h"
+#import "OGButtonNode.h"
 
 #import "OGBeforeStartLevelState.h"
 #import "OGStoryConclusionLevelState.h"
@@ -74,6 +75,10 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 NSString *const kOGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const kOGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
 NSString *const kOGGameSceneObstacleName = @"obstacle";
+
+NSString *const kOGGameScenePauseScreenResumeButtonName = @"ResumeButton";
+NSString *const kOGGameScenePauseScreenRestartButtonName = @"RestartButton";
+NSString *const kOGGameScenePauseScreenMenuButtonName = @"MenuButton";
 
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
@@ -493,7 +498,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         self.lastUpdateTimeInterval = currentTime;
     }
     
-    if (!self.paused)
+    if (!self.customPaused)
     {
         self.levelSnapshot = nil;
         
@@ -569,6 +574,22 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (NSArray<GKEntity *> *)entities
 {
     return self.mutableEntities.array;
+}
+
+- (void)onButtonClick:(OGButtonNode *)buttonNode
+{
+    if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenResumeButtonName])
+    {
+        [self.sceneDelegate resume];
+    }
+    else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenRestartButtonName])
+    {
+        [self.sceneDelegate restart];
+    }
+    else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenMenuButtonName])
+    {
+        [self.sceneDelegate exitToMenu];
+    }
 }
 
 - (GKObstacleGraph *)obstaclesGraph

@@ -17,13 +17,13 @@
 
 - (void)pause
 {
-    self.paused = YES;
+    self.customPaused = YES;
 }
 
 
 - (void)resume
 {
-    self.paused = NO;
+    self.customPaused = NO;
 }
 
 @end

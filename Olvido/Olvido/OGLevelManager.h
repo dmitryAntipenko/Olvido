@@ -7,13 +7,14 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGGameSceneDelegate.h"
 
 @class OGGameScene;
 @class OGStoryScene;
 @class OGSceneManager;
 @class OGMenuManager;
 
-@interface OGLevelManager : NSObject
+@interface OGLevelManager : NSObject <OGGameSceneDelegate>
 
 @property (nonatomic, weak) SKView *view;
 
@@ -25,8 +26,5 @@
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;
-
-- (void)pause;
-- (void)resume;
 
 @end

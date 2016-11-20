@@ -19,7 +19,7 @@ NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
 NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
 NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
-@interface OGLevelManager () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
+@interface OGLevelManager () <OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
 @property (nonatomic, copy, readwrite) NSString *currentSceneName;
@@ -129,6 +129,16 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     {
         [self.currentGameScene.stateMachine enterState:OGGameLevelState.self];
     }
+}
+
+- (void)restart
+{
+    //some actions for level restarting
+}
+
+- (void)exitToMenu
+{
+    //some actions for level restarting
 }
 
 @end
