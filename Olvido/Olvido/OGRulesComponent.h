@@ -13,8 +13,8 @@ extern NSString *const kOGRulesComponentRuleSystemStateSnapshot;
 
 @interface OGRulesComponent : GKComponent
 
-- (instancetype)initWithRules:(NSArray<GKRule *> *)rules;
-
 @property (nonatomic, weak) id<OGRulesComponentDelegate> delegate;
+
+- (instancetype)initWithRules:(NSArray<GKRule *> *)rules;
 
 @end

@@ -7,9 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGContactNotifiableType.h"
-#import "OGResourceLoadable.h"
-#import "OGRulesComponentDelegate.h"
 
 @class OGEnemyConfiguration;
 @class OGHealthComponent;
@@ -34,7 +31,7 @@ extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 extern NSUInteger const kOGEnemyEntityDealGamage;
 
-@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate, OGRulesComponentDelegate>
+@interface OGEnemyEntity : GKEntity
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -46,22 +43,23 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
 
 @property (nonatomic, strong) GKAgent2D *agent;
+@property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
+
 @property (nonatomic, strong) GKGraph *graph;
 
 @property (nonatomic, assign) OGEnemyEntityMandate mandate;
+
 @property (nonatomic, assign) CGPoint closestPointOnPath;
-@property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
-
-+ (NSDictionary *)sOGEnemyEntityAnimations;
-
-- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
-- (GKBehavior *)behaviorForCurrentMandate;
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
+- (GKBehavior *)behaviorForCurrentMandate;
+
 - (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph;
-- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 - (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph;
+
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
+- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
 
 @end

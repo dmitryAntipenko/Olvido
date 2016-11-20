@@ -7,10 +7,9 @@
 //
 
 #import "OGPlayerEntity.h"
+#import "OGResourceLoadable.h"
 
 @interface OGPlayerEntity (OGPlayerEntityResources) <OGResourceLoadable>
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
 
 + (NSDictionary *)sOGPlayerEntityAnimations;
 + (NSDictionary *)sOGPlayerEntityAppearTextures;

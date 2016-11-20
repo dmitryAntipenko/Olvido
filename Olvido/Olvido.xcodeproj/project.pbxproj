@@ -65,6 +65,7 @@
 		215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 215C4BE71DC269D6000DF29F /* OGSettingsMenuScene.sks */; };
 		2177AF0C1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF0B1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m */; };
 		2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */; };
+		2177AF141DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF131DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */; };
 		EA05FA061DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA021DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m */; };
@@ -228,6 +229,9 @@
 		2177AF0B1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityPreAttackState.m; sourceTree = "<group>"; };
 		2177AF0D1DDF405600A21B75 /* OGEnemyEntityAttackState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityAttackState.h; sourceTree = "<group>"; };
 		2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityAttackState.m; sourceTree = "<group>"; };
+		2177AF111DE1F72200A21B75 /* OGHealthComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGHealthComponentDelegate.h; sourceTree = "<group>"; };
+		2177AF121DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OGEnemyEntity+OGEnemyEntityResources.h"; sourceTree = "<group>"; };
+		2177AF131DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OGEnemyEntity+OGEnemyEntityResources.m"; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		EA05F9FF1DD4FA6C00FAC81A /* OGPlayerEntityAppearState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAppearState.h; sourceTree = "<group>"; };
 		EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAppearState.m; sourceTree = "<group>"; };
@@ -610,6 +614,16 @@
 			name = SettingsMenu;
 			sourceTree = "<group>";
 		};
+		2177AF101DE1F6F600A21B75 /* HealthComponent */ = {
+			isa = PBXGroup;
+			children = (
+				EA2389BF1DBA63C600E5B01F /* OGHealthComponent.h */,
+				EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */,
+				2177AF111DE1F72200A21B75 /* OGHealthComponentDelegate.h */,
+			);
+			name = HealthComponent;
+			sourceTree = "<group>";
+		};
 		EA05FA081DD4FA7100FAC81A /* IntelligenceComponent States (PlayerEntity) */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +640,7 @@
 		EA0D27271DB1473A00CEFB8A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2177AF101DE1F6F600A21B75 /* HealthComponent */,
 				215A8A861DDCC79400C5C90D /* RulesComponent */,
 				1B7F24B21DD61E2D004918C8 /* InventoryComponent */,
 				EA5F12041DD4EBEB006D4129 /* Intelligence Component */,
@@ -634,8 +649,6 @@
 				EAF7F11E1DD79B920067D76D /* Weapon Component */,
 				EA70E5201DB3F4620034116D /* OGMovementComponent.h */,
 				EA70E5211DB3F4620034116D /* OGMovementComponent.m */,
-				EA2389BF1DBA63C600E5B01F /* OGHealthComponent.h */,
-				EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */,
 				EA3CE3221DBA8E680087842D /* OGMessageComponent.h */,
 				EA3CE3231DBA8E680087842D /* OGMessageComponent.m */,
 				EA9EAAC81DCC9D1400E36855 /* OGRenderComponent.h */,
@@ -677,6 +690,8 @@
 			children = (
 				EA4982451DCFB44E00DCFE00 /* OGEnemyEntity.h */,
 				EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */,
+				2177AF121DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.h */,
+				2177AF131DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.m */,
 			);
 			name = Enemy;
 			sourceTree = "<group>";
@@ -1047,6 +1062,7 @@
 				1B0E44E81DD9FB0B008F0F7B /* OGInventoryBarNode.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
 				EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */,
+				2177AF141DE1FDE600A21B75 /* OGEnemyEntity+OGEnemyEntityResources.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,
 				EA976D0C1D9FDF76003B77FC /* OGTimer.m in Sources */,

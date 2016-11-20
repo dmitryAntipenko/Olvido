@@ -7,14 +7,17 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGHealthComponentDelegate.h"
 
 @interface OGHealthComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable NSUInteger currentHealth;
-@property (nonatomic, assign) GKInspectable NSUInteger maxHealth;
+@property (nonatomic, assign) GKInspectable NSInteger currentHealth;
+@property (nonatomic, assign) GKInspectable NSInteger maxHealth;
 
-- (void)dealDamage:(NSUInteger)damage;
-- (void)restoreHealth:(NSUInteger)health;
+@property (nonatomic, weak) id<OGHealthComponentDelegate> delegate;
+
+- (void)dealDamage:(NSInteger)damage;
+- (void)restoreHealth:(NSInteger)health;
 - (void)kill;
 - (void)restoreFullHealth;
 

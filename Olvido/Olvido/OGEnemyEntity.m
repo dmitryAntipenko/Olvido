@@ -7,7 +7,9 @@
 //
 
 #import "OGEnemyEntity.h"
+#import "OGEnemyEntity+OGEnemyEntityResources.h"
 #import "OGEnemyConfiguration.h"
+
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGMovementComponent.h"
@@ -17,57 +19,55 @@
 #import "OGAttacking.h"
 #import "OGEnemyBehavior.h"
 #import "OGOrientationComponent.h"
+#import "OGHealthComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityAttackState.h"
 
 #import "OGEntitySnapshot.h"
+#import "OGEntityDistance.h"
 
 #import "OGPlayerNearRule.h"
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
 
-#import "OGEntityDistance.h"
-
 #import "OGPlayerEntity.h"
 
-CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius = 30.0;
-NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
+#import "OGRulesComponentDelegate.h"
+#import "OGHealthComponentDelegate.h"
+#import "OGContactNotifiableType.h"
 
-NSString *const kOGEnemyEntityAtlasNamesEnemyIdle = @"EnemyIdle";
-NSString *const kOGEnemyEntityAtlasNamesEnemyWalk = @"EnemyWalk";
+NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
+NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
+NSTimeInterval const kOGEnemyEntityDelayBetweenAttacks = 1.0;
+
+CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius = 30.0;
 CGFloat const kOGEnemyEntityPatrolPathRadius = 10.0;
-CGFloat const kOGEnemyEntityMaximumSpeed = 250;
+CGFloat const kOGEnemyEntityWalkMaxSpeed = 50;
+CGFloat const kOGEnemyEntityHuntMaxSpeed = 500;
 CGFloat const kOGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const kOGEnemyEntityAgentMass = 0.25;
-NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
+
 NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
-NSTimeInterval const kOGEnemyEntityDelayBetweenAttacks = 2.0;
-
-static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
-
-@interface OGEnemyEntity ()
+@interface OGEnemyEntity () <OGContactNotifiableType, OGRulesComponentDelegate, OGHealthComponentDelegate, GKAgentDelegate>
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
-
-@property (nonatomic, assign, readonly) CGSize textureSize;
 @property (nonatomic, assign, readonly) CGPoint agentOffset;
-
 @property (nonatomic, assign) CGFloat lastPositionX;
-
 @property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
+
 @end
 
 @implementation OGEnemyEntity
 
+#pragma mark - Inits
 - (instancetype)init
 {
     return [self initWithConfiguration:nil graph:nil];
 }
-
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
@@ -90,6 +90,12 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
                                                                colliderType:[OGColliderType enemy]];
         [self addComponent:_physicsComponent];
         
+        _healthComponent = [[OGHealthComponent alloc] init];
+        _healthComponent.maxHealth = 10.0;
+        _healthComponent.currentHealth = 10.0;
+        
+        [self addComponent:_healthComponent];
+        
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
         
@@ -100,9 +106,8 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         
         _agent = [[GKAgent2D alloc] init];
         _agent.delegate = self;
-        
         _agent.position = (vector_float2){_renderComponent.node.position.x, _renderComponent.node.position.y};
-        _agent.maxSpeed = kOGEnemyEntityMaximumSpeed;
+        _agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
         _agent.maxAcceleration = kOGEnemyEntityMaximumAcceleration;
         _agent.mass = kOGEnemyEntityAgentMass;
         _agent.radius = configuration.physicsBodyRadius;
@@ -116,7 +121,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState]];
         [self addComponent:_intelligenceComponent];
 
-        _animationComponent = [[OGAnimationComponent alloc] initWithTextureSize:[self textureSize] animations:[OGEnemyEntity sOGEnemyEntityAnimations]];
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGEnemyEntity sOGEnemyEntityAnimations]];
         [self addComponent:_animationComponent];
 
         [_renderComponent.node addChild:_animationComponent.spriteNode];
@@ -135,6 +140,13 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return self;
 }
 
+#pragma mark - OGHealthComponentDelegate Protocol Methods
+- (void)entityWillDie
+{
+    [self removeComponentForClass:self.agent.class];
+}
+
+#pragma mark - GKAgentDelegate Protocol Methods
 - (void)agentWillUpdate:(GKAgent *)agent
 {
     [self updateAgentPositionToMatchNodePosition];
@@ -146,7 +158,17 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     {
         if ([self.intelligenceComponent.stateMachine.currentState isMemberOfClass:OGEnemyEntityAgentControlledState.self])
         {
-            self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+            if (self.mandate == kOGEnemyEntityMandateHunt)
+            {
+                self.animationComponent.requestedAnimationState = kOGAnimationStateRun;
+                self.agent.maxSpeed = kOGEnemyEntityHuntMaxSpeed;
+            }
+            else
+            {
+                self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+                self.agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
+            }
+            
             [self updateNodePositionToMatchAgentPosition];
         }
         else
@@ -164,78 +186,57 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     }
 }
 
-- (void)updateAgentPositionToMatchNodePosition
-{
-    OGRenderComponent *renderComponent = self.renderComponent;
-    self.agent.position = (vector_float2){renderComponent.node.position.x + self.agentOffset.x, renderComponent.node.position.y + self.agentOffset.y};
-}
-
-- (void)updateNodePositionToMatchAgentPosition
-{
-    GKAgent2D *agent = self.agent;
-    self.renderComponent.node.position = CGPointMake(agent.position.x - self.agentOffset.x, agent.position.y - self.agentOffset.y);
-}
-
+#pragma mark - OGContactNotifiableType Protocol Methods
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     
 }
 
-+ (BOOL)resourcesNeedLoading
+#pragma mark - OGRulesComponentDelegate Protocol Methods
+- (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
-    return sOGEnemyEntityAnimations == nil;
-}
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler
-{
-    [OGEnemyEntity loadMiscellaneousAssets];
+    OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
     
-    NSArray *enemyAtlasNames = @[kOGEnemyEntityAtlasNamesEnemyIdle,
-                                 kOGEnemyEntityAtlasNamesEnemyWalk];
+    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
     
-    [SKTextureAtlas preloadTextureAtlasesNamed:enemyAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
+    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObjects:@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts]),
+                                          nil];
+    
+    CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
+    self.huntAgent = nil;
+    
+    if (huntPlayer > 0.0)
     {
-        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey];
         
-        animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-                                                                                                    imageIdentifier:kOGEnemyEntityAtlasNamesEnemyIdle
-                                                                                                     animationState:kOGAnimationStateIdle
-                                                                                                     bodyActionName:nil
-                                                                                              repeatTexturesForever:YES
-                                                                                                      playBackwards:NO];
-        
-        animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-                                                                                                           imageIdentifier:kOGEnemyEntityAtlasNamesEnemyWalk
-                                                                                                            animationState:kOGAnimationStateWalkForward
-                                                                                                            bodyActionName:nil
-                                                                                                     repeatTexturesForever:YES
-                                                                                                             playBackwards:NO];
-        
-        sOGEnemyEntityAnimations = animations;
-        
-        completionHandler();
-    }];
+        if (player.agent)
+        {
+            self.huntAgent = player.agent;
+            self.mandate = kOGEnemyEntityMandateHunt;
+        }
+    }
+    else
+    {
+        if (self.mandate != kOGEnemyEntityMandateFollowPath)
+        {
+            self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
+            self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+        }
+    }
+    
+    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) self.intelligenceComponent.stateMachine.currentState;
+    if ([agentControlledState isMemberOfClass:OGEnemyEntityAgentControlledState.self]
+        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
+        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
+    {
+        if ([self.intelligenceComponent.stateMachine canEnterState:OGEnemyEntityPreAttackState.self])
+        {
+            [self.intelligenceComponent.stateMachine enterState:OGEnemyEntityPreAttackState.self];
+        }
+    }
 }
 
-+ (void)purgeResources
-{
-    sOGEnemyEntityAnimations = nil;
-}
-
-+ (void)loadMiscellaneousAssets
-{
-    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
-    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
-
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
-    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
-}
-
-+ (NSDictionary *)sOGEnemyEntityAnimations
-{
-    return sOGEnemyEntityAnimations;
-}
-
+#pragma mark - Other Methods
 - (GKBehavior *)behaviorForCurrentMandate
 {
     GKBehavior *result = nil;
@@ -283,6 +284,26 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return result;
 }
 
+- (CGFloat)maxWithArray:(NSArray<NSNumber *> *)array defaultValue:(CGFloat)defaultValue
+{
+    CGFloat result = defaultValue;
+    
+    NSUInteger arrayCounter = array.count;
+    
+    if (arrayCounter != 0)
+    {
+        result = (result > array[0].floatValue) ? result : array[0].floatValue;
+    }
+    
+    for (NSUInteger i = 0; i < arrayCounter - 1; i++)
+    {
+        result = (result > array[i+1].floatValue) ? result : array[i+1].floatValue;
+    }
+    
+    return result;
+}
+
+#pragma mark count with graph
 - (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph
 {
     CGPoint enemyPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
@@ -324,6 +345,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return result;
 }
 
+#pragma mark count distance
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent
 {
     CGPoint agentPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
@@ -341,76 +363,22 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
     return hypot(deltaX, deltaY);
 }
 
-- (CGSize)textureSize
+#pragma mark updates
+- (void)updateAgentPositionToMatchNodePosition
 {
-    return CGSizeMake(80.0, 100.0);
+    OGRenderComponent *renderComponent = self.renderComponent;
+    self.agent.position = (vector_float2){renderComponent.node.position.x + self.agentOffset.x, renderComponent.node.position.y + self.agentOffset.y};
 }
 
+- (void)updateNodePositionToMatchAgentPosition
+{
+    GKAgent2D *agent = self.agent;
+    self.renderComponent.node.position = CGPointMake(agent.position.x - self.agentOffset.x, agent.position.y - self.agentOffset.y);
+}
+
+#pragma mark - Getters
 - (CGPoint)agentOffset
 {
     return CGPointMake(0.0, -25.0);
 }
-
-- (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
-{
-    OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
-    
-    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
-    
-    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObjects:@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts]),
-                                          nil];
-    
-    CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
-    
-    if (huntPlayer > 0.0)
-    {
-        OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey];
-        
-        if (player.agent)
-        {
-            self.huntAgent = player.agent;
-            self.mandate = kOGEnemyEntityMandateHunt;
-        }
-    }
-    else
-    {
-        self.huntAgent = nil;
-        if (self.mandate != kOGEnemyEntityMandateFollowPath)
-        {
-            self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
-            self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
-        }
-    }
-    
-    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) [self.intelligenceComponent.stateMachine currentState];
-    if ([agentControlledState isMemberOfClass:OGEnemyEntityAgentControlledState.self]
-        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
-        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
-    {
-        if ([self.intelligenceComponent.stateMachine canEnterState:OGEnemyEntityPreAttackState.self])
-        {
-            [self.intelligenceComponent.stateMachine enterState:OGEnemyEntityPreAttackState.self];
-        }
-    }
-}
-
-- (CGFloat)maxWithArray:(NSArray<NSNumber *> *)array defaultValue:(CGFloat)defaultValue
-{
-    CGFloat result = defaultValue;
-    
-    NSUInteger arrayCounter = array.count;
-    
-    if (arrayCounter != 0)
-    {
-        result = (result > array[0].floatValue) ? result : array[0].floatValue;
-    }
-    
-    for (NSUInteger i = 0; i < arrayCounter - 1; i++)
-    {
-        result = (result > array[i+1].floatValue) ? result : array[i+1].floatValue;
-    }
-    
-    return result;
-}
-
 @end
