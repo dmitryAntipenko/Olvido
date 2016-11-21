@@ -423,7 +423,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     if (!self.pauseScreenNode.parent)
     {
-        [self addChild:self.pauseScreenNode];
+        [self.camera addChild:self.pauseScreenNode];
     }
 }
 
