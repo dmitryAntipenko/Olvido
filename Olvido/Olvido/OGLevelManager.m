@@ -159,7 +159,18 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)clearCurrentScene
 {
+    if (self.currentGameScene)
+    {
+        self.currentGameScene.sceneDelegate = nil;
+    }
+    
     self.currentStoryScene = nil;
+    
+    if (self.currentStoryScene)
+    {
+        self.currentStoryScene.sceneDelegate = nil;
+    }
+    
     self.currentGameScene = nil;
 }
 

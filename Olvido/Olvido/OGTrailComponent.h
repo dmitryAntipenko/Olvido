@@ -10,7 +10,7 @@
 
 @interface OGTrailComponent : GKComponent
 
-@property (nonatomic, strong) SKNode *targetNode;
+@property (nonatomic, weak) SKNode *targetNode;
 @property (nonatomic, strong) SKTexture *texture;
 @property (nonatomic, assign) CGSize textureSize;
 
