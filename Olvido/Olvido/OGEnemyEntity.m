@@ -156,7 +156,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 {
     if (self.intelligenceComponent && self.orientationComponent)
     {
-        if ([self.intelligenceComponent.stateMachine.currentState isMemberOfClass:OGEnemyEntityAgentControlledState.self])
+        if ([self.intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]])
         {
             if (self.mandate == kOGEnemyEntityMandateHunt)
             {
@@ -225,13 +225,13 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     }
     
     OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) self.intelligenceComponent.stateMachine.currentState;
-    if ([agentControlledState isMemberOfClass:OGEnemyEntityAgentControlledState.self]
+    if ([agentControlledState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
         && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
         && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
     {
-        if ([self.intelligenceComponent.stateMachine canEnterState:OGEnemyEntityPreAttackState.self])
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
         {
-            [self.intelligenceComponent.stateMachine enterState:OGEnemyEntityPreAttackState.self];
+            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
         }
     }
 }
@@ -241,7 +241,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 {
     GKBehavior *result = nil;
     
-    SKScene *scene = ((OGRenderComponent *) [self componentForClass:OGRenderComponent.self]).node.scene;
+    SKScene *scene = ((OGRenderComponent *) [self componentForClass:[OGRenderComponent class]]).node.scene;
     
     if (!scene)
     {

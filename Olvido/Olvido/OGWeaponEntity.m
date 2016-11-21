@@ -56,7 +56,7 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 {
     if (vector.dx != 0.0 && vector.dy != 0.0)
     {
-        OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self];
+        OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]];
         
         if (ownerRenderComponent)
         {
@@ -101,7 +101,7 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 - (OGWeaponComponent *)weaponComponent
 {
-    return (OGWeaponComponent *) [self.owner componentForClass:OGWeaponComponent.self];
+    return (OGWeaponComponent *) [self.owner componentForClass:[OGWeaponComponent class]];
 }
 
 #pragma mark - OGInventoryItem
@@ -110,8 +110,8 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 {
     SKSpriteNode *weaponNode = (SKSpriteNode *) self.render.node;
     
-    OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:OGMovementComponent.self];
-    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
+    OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:[OGMovementComponent class]];
+    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
     
     weaponNode.position = ownerNode.position;
     
@@ -127,7 +127,7 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 - (SKTexture *)texture
 {
-    return ((SKSpriteNode *)self.render.node).texture;
+    return ((SKSpriteNode *) self.render.node).texture;
 }
 
 - (NSString *)identifier

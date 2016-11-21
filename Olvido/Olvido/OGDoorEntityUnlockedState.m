@@ -26,15 +26,15 @@
     SKNode *doorNode = self.renderComponent.node;    
     doorNode.physicsBody = nil;
     
-    if ([self.stateMachine canEnterState:OGDoorEntityClosedState.self])
+    if ([self.stateMachine canEnterState:[OGDoorEntityClosedState class]])
     {
-        [self.stateMachine enterState:OGDoorEntityClosedState.self];
+        [self.stateMachine enterState:[OGDoorEntityClosedState class]];
     }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityClosedState.self;
+    return stateClass == [OGDoorEntityClosedState class];
 }
 
 @end

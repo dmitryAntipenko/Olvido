@@ -114,7 +114,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     if (self.requestedAnimationState != kOGAnimationStateNone)
     {
-        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:OGOrientationComponent.self];
+        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
         
         if (orientationComponent)
         {

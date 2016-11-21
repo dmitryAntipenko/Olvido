@@ -136,7 +136,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
     
     if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
     {
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }

@@ -105,7 +105,7 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
         }
         else
         {
-            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:OGInventoryComponent.self];
+            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:[OGInventoryComponent class]];
             
             for (NSString *identifier in self.keyIdentifiers)
             {

@@ -28,9 +28,9 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityOpenedState.self
-    || stateClass == OGDoorEntityLockedState.self
-    || stateClass == OGDoorEntityLockedState.self;
+    return stateClass == [OGDoorEntityOpenedState class]
+    || stateClass == [OGDoorEntityLockedState class]
+    || stateClass == [OGDoorEntityLockedState class];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -41,17 +41,17 @@
     {        
         if (self.lockComponent.isClosed && [self isTargetNearDoor])
         {
-            if ([self.stateMachine canEnterState:OGDoorEntityOpenedState.self])
+            if ([self.stateMachine canEnterState:[OGDoorEntityOpenedState class]])
             {
-                [self.stateMachine enterState:OGDoorEntityOpenedState.self];
+                [self.stateMachine enterState:[OGDoorEntityOpenedState class]];
             }
         }
     }
     else
     {
-        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        if ([self.stateMachine canEnterState:[OGDoorEntityLockedState class]])
         {
-            [self.stateMachine enterState:OGDoorEntityLockedState.self];
+            [self.stateMachine enterState:[OGDoorEntityLockedState class]];
         }
     }
 }

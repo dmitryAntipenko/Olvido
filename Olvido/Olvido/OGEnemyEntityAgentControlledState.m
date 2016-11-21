@@ -82,14 +82,14 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGEnemyEntityPreAttackState.self;
+    return stateClass == [OGEnemyEntityPreAttackState class];
 }
 
 - (OGOrientationComponent *)orientationComponent
 {
     if (!_orientationComponent)
     {
-        _orientationComponent = (OGOrientationComponent *) [self.enemyEntity componentForClass:OGOrientationComponent.self];
+        _orientationComponent = (OGOrientationComponent *) [self.enemyEntity componentForClass:[OGOrientationComponent class]];
     }
     
     return _orientationComponent;

@@ -56,23 +56,23 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
     
     if (self.elapsedTime >= kOGEnemyEntityPreAttackStatePreAttackStateDuration)
     {
-        if ([self.stateMachine canEnterState:OGEnemyEntityAttackState.self])
+        if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
         {
-            [self.stateMachine enterState:OGEnemyEntityAttackState.self];
+            [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
         }
     }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGEnemyEntityAttackState.self || stateClass == OGEnemyEntityAgentControlledState.self;
+    return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityAgentControlledState class];
 }
 
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)
     {
-        _animationComponent = (OGAnimationComponent *) [self.enemyEntity componentForClass:OGAnimationComponent.self];
+        _animationComponent = (OGAnimationComponent *) [self.enemyEntity componentForClass:[OGAnimationComponent class]];
     }
     
     return _animationComponent;

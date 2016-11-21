@@ -55,7 +55,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGPlayerEntityAttackState.self;
+    return stateClass == [OGPlayerEntityAttackState class];
 }
 
 - (void)willExitWithNextState:(GKState *)nextState
@@ -73,7 +73,7 @@
 {
     if (!_animationComponent)
     {
-        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:[OGAnimationComponent class]];
     }
     
     return _animationComponent;
@@ -83,7 +83,7 @@
 {
     if (!_movementComponent)
     {
-        _movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:OGMovementComponent.self];
+        _movementComponent = (OGMovementComponent *) [self.playerEntity componentForClass:[OGMovementComponent class]];
     }
     
     return _movementComponent;
@@ -93,7 +93,7 @@
 {
     if (!_inputComponent)
     {
-        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
+        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:[OGInputComponent class]];
     }
     
     return _inputComponent;

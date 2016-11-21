@@ -44,7 +44,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     
     for (GKEntity *entity in scene.entities)
     {
-        if (entity && [entity isKindOfClass:OGEnemyEntity.self] && ((OGEnemyEntity *) entity).agent != agent
+        if (entity && [entity isKindOfClass:[OGEnemyEntity class]] && ((OGEnemyEntity *) entity).agent != agent
             && [((OGEnemyEntity *) entity) distanceToAgentWithOtherAgent:agent] <= kOGEnemyBehaviorAgentSearchDistanceForFlocking)
         {
             [agentsToFlockWith addObject:((OGEnemyEntity *) entity).agent];

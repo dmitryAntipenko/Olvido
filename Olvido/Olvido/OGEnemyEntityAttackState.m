@@ -60,17 +60,17 @@
 {
     [super updateWithDeltaTime:seconds];
     
-    if ([self.stateMachine canEnterState:OGEnemyEntityAgentControlledState.self])
+    if ([self.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
     {
-        [self.stateMachine enterState:OGEnemyEntityAgentControlledState.self];
+        [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
     }
 }
 
 - (void)applyDamageWithEntity:(GKEntity *)entity
 {
-    if ([entity isMemberOfClass:OGPlayerEntity.self])
+    if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
-        OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:OGHealthComponent.self];
+        OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
         [healthComponent dealDamage:kOGEnemyEntityDealGamage];
     }
 }
@@ -80,7 +80,7 @@
 {
     if (!_movementComponent)
     {
-        _movementComponent = (OGMovementComponent *) [self.enemyEntity componentForClass:OGMovementComponent.self];
+        _movementComponent = (OGMovementComponent *) [self.enemyEntity componentForClass:[OGMovementComponent class]];
     }
     
     return _movementComponent;
@@ -90,7 +90,7 @@
 {
     if (!_physicsComponent)
     {
-        _physicsComponent = (OGPhysicsComponent *) [self.enemyEntity componentForClass:OGPhysicsComponent.self];
+        _physicsComponent = (OGPhysicsComponent *) [self.enemyEntity componentForClass:[OGPhysicsComponent class]];
     }
     
     return _physicsComponent;

@@ -14,14 +14,14 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-//    [self.scene restart];
+
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
     BOOL result = NO;
     
-    result = (result || stateClass == OGGameLevelState.self);
+    result = (result || stateClass == [OGGameLevelState class]);
     
     return result;
 }
