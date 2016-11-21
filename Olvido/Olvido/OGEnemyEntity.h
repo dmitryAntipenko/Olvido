@@ -8,16 +8,11 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+#import "OGContactNotifiableType.h"
+#import "OGRulesComponentDelegate.h"
+
 @class OGEnemyConfiguration;
-@class OGHealthComponent;
-@class OGAnimationComponent;
-@class OGIntelligenceComponent;
-@class OGRenderComponent;
-@class OGMovementComponent;
-@class OGPhysicsComponent;
-@class OGOrientationComponent;
 @class OGRulesComponent;
-@class OGTrailComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -26,24 +21,19 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
     kOGEnemyEntityMandateReturnToPositionOnPath
 };
 
-extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
 extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
 extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
+
 extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
+extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
+
 extern NSUInteger const kOGEnemyEntityDealGamage;
 
-@interface OGEnemyEntity : GKEntity
+extern NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey;
 
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGHealthComponent *healthComponent;
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
-@property (nonatomic, strong) OGMovementComponent *movementComponent;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
-@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType>
+
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
-@property (nonatomic, strong) OGTrailComponent *trailComponent;
-
 @property (nonatomic, strong) GKAgent2D *agent;
 @property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
 
@@ -53,7 +43,7 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 
 @property (nonatomic, assign) CGPoint closestPointOnPath;
 
-- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
+- (instancetype)initWithConfiguration:(NSDictionary *)configuration
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
 - (GKBehavior *)behaviorForCurrentMandate;
@@ -63,5 +53,7 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 
 - (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
+
++ (void)loadMiscellaneousAssets;
 
 @end

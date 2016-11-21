@@ -39,7 +39,7 @@
 		<string>Level1</string>
 		<key>OnDemandResources</key>
 		<array>
-			<string>OGEnemyEntity</string>
+			<string>OGZombie</string>
 			<string>OGDoorEntity</string>
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>

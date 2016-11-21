@@ -13,7 +13,7 @@
 #import "OGEnemyEntityAttackState.h"
 #import "OGEnemyEntityAgentControlledState.h"
 
-NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
+NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 
 @interface OGEnemyEntityPreAttackState ()
 

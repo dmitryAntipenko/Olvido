@@ -1,14 +1,29 @@
 //
-//  OGEnemyEntity+OGEnemyEntityResources.m
+//  OGZombieMan.m
 //  Olvido
 //
-//  Created by Александр Песоцкий on 11/20/16.
+//  Created by Александр Песоцкий on 11/21/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGEnemyEntity+OGEnemyEntityResources.h"
+#import "OGZombie.h"
+#import "OGEnemyConfiguration.h"
+
 #import "OGAnimationComponent.h"
-#import "OGColliderType.h"
+#import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
+#import "OGHealthComponent.h"
+#import "OGOrientationComponent.h"
+#import "OGIntelligenceComponent.h"
+#import "OGTrailComponent.h"
+
+#import "OGHealthComponentDelegate.h"
+
+#import "OGEnemyEntityAgentControlledState.h"
+#import "OGEnemyEntityPreAttackState.h"
+#import "OGEnemyEntityAttackState.h"
+
+NSTimeInterval const kOGEnemyEntityDelayBetweenAttacks = 1.0;
 
 NSString *const kOGEnemyEntityAtlasNamesEnemyIdle = @"EnemyIdle";
 NSString *const kOGEnemyEntityAtlasNamesEnemyWalk = @"EnemyWalk";
@@ -16,13 +31,108 @@ NSString *const kOGEnemyEntityAtlasNamesEnemyRun = @"EnemyRun";
 NSString *const kOGEnemyEntityAtlasNamesEnemyAttack = @"EnemyAttack";
 NSString *const kOGEnemyEntityAtlasNamesEnemyDead = @"EnemyDead";
 
-static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
+static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 
-@implementation OGEnemyEntity (OGEnemyEntityResources)
+@interface OGZombie () <OGHealthComponentDelegate>
 
+@property (nonatomic, assign) CGFloat lastPositionX;
+
+@end
+
+@implementation OGZombie
+
+- (instancetype)initWithConfiguration:(NSDictionary *)configuration
+                                graph:(GKGraph *)graph
+{
+    self = [super initWithConfiguration:configuration graph:graph];
+    
+    if (self)
+    {
+        CGFloat physicsBodyRadius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
+        
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius]
+                                                               colliderType:[OGColliderType enemy]];
+        [self addComponent:_physicsComponent];
+        
+        _healthComponent = [[OGHealthComponent alloc] init];
+        _healthComponent.maxHealth = 10.0;
+        _healthComponent.currentHealth = 10.0;
+        
+        [self addComponent:_healthComponent];
+        
+        _orientationComponent = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientationComponent];
+        
+        
+        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
+        
+        _renderComponent = [[OGRenderComponent alloc] init];
+        _renderComponent.node.position = position;
+        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
+        _renderComponent.node.physicsBody.allowsRotation = NO;
+        [self addComponent:_renderComponent];
+        
+        _lastPositionX = _renderComponent.node.position.x;
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
+        [self addComponent:_animationComponent];
+        
+        [self.renderComponent.node addChild:_animationComponent.spriteNode];
+        
+        OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
+
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState]];
+        [self addComponent:_intelligenceComponent];
+        
+        //TEMPORARY
+        _trailComponent = [OGTrailComponent trailComponent];
+        _trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
+        _trailComponent.textureSize = CGSizeMake(64.0, 64.0);
+        [self addComponent:_trailComponent];
+        //TEMPORARY
+    }
+    
+    return self;
+}
+
+#pragma mark - OGRulesComponentDelegate Protocol Methods
+- (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
+{
+    [super rulesComponentWithRulesComponent:rulesComponent ruleSystem:ruleSystem];
+    
+    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) self.intelligenceComponent.stateMachine.currentState;
+
+    if ([agentControlledState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
+        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
+        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
+    {
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
+        {
+            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+        }
+    }
+}
+
+#pragma mark - GKAgentDelegate Protocol Methods
+- (void)agentDidUpdate:(GKAgent *)agent
+{
+    [super agentDidUpdate:agent];
+    
+    if (self.renderComponent.node.position.x != self.lastPositionX)
+    {
+        CGFloat differenceX = self.lastPositionX - _renderComponent.node.position.x;
+        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+
+        self.lastPositionX = _renderComponent.node.position.x;
+    }
+}
+
+#pragma mark - OGResourceLoadable Protocol Methods
 + (BOOL)resourcesNeedLoading
 {
-    return sOGEnemyEntityAnimations == nil;
+    return sOGZombieAnimations == nil;
 }
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler
@@ -74,7 +184,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
                                                                                                repeatTexturesForever:NO
                                                                                                        playBackwards:NO];
          
-         sOGEnemyEntityAnimations = animations;
+         sOGZombieAnimations = animations;
          
          completionHandler();
      }];
@@ -82,21 +192,19 @@ static NSDictionary<NSString *, NSDictionary *> *sOGEnemyEntityAnimations;
 
 + (void)purgeResources
 {
-    sOGEnemyEntityAnimations = nil;
+    sOGZombieAnimations = nil;
 }
 
-+ (void)loadMiscellaneousAssets
+#pragma mark - OGHealthComponentDelegate Protocol Methods
+- (void)entityWillDie
 {
-    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
-    [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
-    
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
-    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
+    [self removeComponentForClass:self.agent.class];
 }
 
-+ (NSDictionary *)sOGEnemyEntityAnimations
+#pragma mark - Getters
++ (NSDictionary *)sOGZombieAnimations
 {
-    return sOGEnemyEntityAnimations;
+    return sOGZombieAnimations;
 }
 
 @end

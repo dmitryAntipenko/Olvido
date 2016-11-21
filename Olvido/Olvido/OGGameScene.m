@@ -6,8 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGTrailComponent.h"
-
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
@@ -17,7 +15,6 @@
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
 
-#import "OGPlayerEntity.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -28,8 +25,11 @@
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGTrailComponent.h"
+#import "OGRulesComponent.h"
 
 #import "OGPlayerEntity.h"
+#import "OGZombie.h"
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
@@ -46,14 +46,11 @@
 #import "OGDeathLevelState.h"
 
 #import "OGLevelManager.h"
-#import "OGAnimationComponent.h"
-#import "OGAnimationState.h"
+
 #import "OGZPositionEnum.m"
 
-#import "OGEntitySnapshot.h"
 #import "OGLevelStateSnapshot.h"
-
-#import "OGRulesComponent.h"
+#import "OGEntitySnapshot.h"
 
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
@@ -79,6 +76,8 @@ NSString *const kOGGameSceneObstacleName = @"obstacle";
 NSString *const kOGGameScenePauseScreenResumeButtonName = @"ResumeButton";
 NSString *const kOGGameScenePauseScreenRestartButtonName = @"RestartButton";
 NSString *const kOGGameScenePauseScreenMenuButtonName = @"MenuButton";
+
+NSString *const kOGGameSceneEnemyConfigurationEnemyTypeKey = @"Type";
 
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
@@ -228,16 +227,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     NSUInteger counter = 0;
     
-    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
+    for (NSDictionary *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
         NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
         
-        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
-                                                                      graph:graph];
-        
-        enemy.trailComponent.targetNode = self;
-        
+        Class enemyClass = NSClassFromString(enemyConfiguration[kOGGameSceneEnemyConfigurationEnemyTypeKey]);
+        OGEnemyEntity *enemy = [[enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
+
         [self addEntity:enemy];
         
         counter++;

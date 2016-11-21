@@ -59,9 +59,9 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
     {
         self.timeSinceRulesUpdate = 0.0;
         
-        if ([self.entity isMemberOfClass:[OGEnemyEntity class]])
+        if ([self.entity isKindOfClass:[OGEnemyEntity class]])
         {
-            OGGameScene *scene = (OGGameScene *) ((OGEnemyEntity *) self.entity).renderComponent.node.scene;
+            OGGameScene *scene = (OGGameScene *) ((OGRenderComponent *) [self.entity componentForClass:[OGRenderComponent class]]).node.scene;
             OGEntitySnapshot *entitySnapshot = [scene entitySnapshotWithEntity:self.entity];
             
             [self.ruleSystem reset];
