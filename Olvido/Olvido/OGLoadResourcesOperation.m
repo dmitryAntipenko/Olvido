@@ -54,10 +54,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
                 
                 [self.loadableClass loadResourcesWithCompletionHandler:^
                  {
-                     if (weakSelf)
-                     {
-                         [weakSelf finish];
-                     }
+                     [weakSelf finish];
                  }];
             }
             else
@@ -71,10 +68,6 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 - (void)finish
 {
     self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
-    
-    [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
-    self.state = finishedState;
-    [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
 }
 
 @end

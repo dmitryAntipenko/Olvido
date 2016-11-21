@@ -14,19 +14,19 @@ NSString *const kOGLoadOperationKeyPathForisExecutingValue = @"isExecuting";
 
 @implementation OGLoadOperation
 
-- (BOOL)isExecuting
-{
-    return self.state == executingState;
-}
-
-- (BOOL)isFinished
-{
-    return self.state == finishedState;
-}
-
-- (BOOL)isCancelled
-{
-    return self.state == canceledState;
-}
+//- (BOOL)isExecuting
+//{
+//    return self.state == executingState;
+//}
+//
+//- (BOOL)isFinished
+//{
+//    return self.state == finishedState;
+//}
+//
+//- (BOOL)isCancelled
+//{
+//    return self.state == canceledState;
+//}
 
 @end

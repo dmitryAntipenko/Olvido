@@ -9,7 +9,7 @@
 #import "OGResourceLoadable.h"
 #import "OGLoadOperation.h"
 
-@interface OGLoadResourcesOperation : OGLoadOperation
+@interface OGLoadResourcesOperation : NSOperation
 
 @property (nonatomic, strong, readonly) NSProgress *progress;
 

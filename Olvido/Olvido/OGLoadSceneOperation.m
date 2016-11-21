@@ -67,10 +67,6 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
             [self.scene createCamera];
             
             self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
-            
-            [self willChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
-            self.state = finishedState;
-            [self didChangeValueForKey:kOGLoadOperationKeyPathForIsFinishedValue];
         }
     }
 }

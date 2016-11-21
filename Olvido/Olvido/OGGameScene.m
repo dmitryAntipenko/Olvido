@@ -165,7 +165,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 #pragma mark - Scene contents
 
 - (void)didMoveToView:(SKView *)view
-{
+{   
     [super didMoveToView:view];
     
     self.physicsWorld.contactDelegate = self;

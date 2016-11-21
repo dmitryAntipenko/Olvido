@@ -80,11 +80,18 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentGameSceneIdentifier)
     {
+        __weak typeof(self) weakSelf = self;
+        
         [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue
                                          completionHandler:^(OGBaseScene *scene)
          {
-             self.currentGameScene = (OGGameScene *)scene;
-             self.currentGameScene.sceneDelegate = self;
+             if (weakSelf)
+             {
+                 typeof(weakSelf) strongSelf = weakSelf;
+                 
+                 strongSelf.currentGameScene = (OGGameScene *)scene;
+                 strongSelf.currentGameScene.sceneDelegate = self;
+             }
          }];
     }
 }
@@ -110,13 +117,17 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
+    [self loadSceneIdentifiersWithLevelIdentifier:identifier];
+    [self runStoryScene];
+}
+
+- (void)loadSceneIdentifiersWithLevelIdentifier:(NSNumber *)identifier;
+{
     self.currentStoryScene = nil;
     self.currentGameScene = nil;
     
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
-    
-    [self runStoryScene];
 }
 
 - (void)pause
@@ -137,7 +148,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)restart
 {
-    //some actions for level restarting
+    self.currentGameScene = nil;
+    [self runGameScene];
 }
 
 - (void)exitToMenu

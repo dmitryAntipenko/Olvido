@@ -70,8 +70,6 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
     [self.progress cancel];
     
     [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
-    
-    self.scene = nil;
 }
 
 @end
