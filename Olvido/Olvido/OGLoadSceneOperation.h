@@ -7,7 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGLoadOperation.h"
 
 @class OGSceneMetadata;
 @class OGBaseScene;

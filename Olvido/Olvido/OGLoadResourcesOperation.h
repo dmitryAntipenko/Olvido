@@ -7,7 +7,6 @@
 //
 
 #import "OGResourceLoadable.h"
-#import "OGLoadOperation.h"
 
 @interface OGLoadResourcesOperation : NSOperation
 

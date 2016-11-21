@@ -30,7 +30,6 @@
 		1B7F249A1DD5D074004918C8 /* OGBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24791DD5D074004918C8 /* OGBaseScene.m */; };
 		1B7F249B1DD5D074004918C8 /* OGLevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F247B1DD5D074004918C8 /* OGLevelManager.m */; };
 		1B7F249C1DD5D074004918C8 /* OGLoadingScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F247D1DD5D074004918C8 /* OGLoadingScene.m */; };
-		1B7F249D1DD5D074004918C8 /* OGLoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F247F1DD5D074004918C8 /* OGLoadOperation.m */; };
 		1B7F249E1DD5D074004918C8 /* OGLoadResourcesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24811DD5D074004918C8 /* OGLoadResourcesOperation.m */; };
 		1B7F249F1DD5D074004918C8 /* OGLoadSceneOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24831DD5D074004918C8 /* OGLoadSceneOperation.m */; };
 		1B7F24A01DD5D074004918C8 /* OGMenuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24851DD5D074004918C8 /* OGMenuManager.m */; };
@@ -158,8 +157,6 @@
 		1B7F247B1DD5D074004918C8 /* OGLevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevelManager.m; sourceTree = "<group>"; };
 		1B7F247C1DD5D074004918C8 /* OGLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadingScene.h; sourceTree = "<group>"; };
 		1B7F247D1DD5D074004918C8 /* OGLoadingScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadingScene.m; sourceTree = "<group>"; };
-		1B7F247E1DD5D074004918C8 /* OGLoadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadOperation.h; sourceTree = "<group>"; };
-		1B7F247F1DD5D074004918C8 /* OGLoadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadOperation.m; sourceTree = "<group>"; };
 		1B7F24801DD5D074004918C8 /* OGLoadResourcesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadResourcesOperation.h; sourceTree = "<group>"; };
 		1B7F24811DD5D074004918C8 /* OGLoadResourcesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadResourcesOperation.m; sourceTree = "<group>"; };
 		1B7F24821DD5D074004918C8 /* OGLoadSceneOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadSceneOperation.h; sourceTree = "<group>"; };
@@ -474,8 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				1B2E873F1DDB61160022CAB6 /* LoadSceneOperation */,
-				1B7F247E1DD5D074004918C8 /* OGLoadOperation.h */,
-				1B7F247F1DD5D074004918C8 /* OGLoadOperation.m */,
 				1B7F24801DD5D074004918C8 /* OGLoadResourcesOperation.h */,
 				1B7F24811DD5D074004918C8 /* OGLoadResourcesOperation.m */,
 			);
@@ -1085,7 +1080,6 @@
 				1B7F24A51DD5D074004918C8 /* OGSceneLoaderState.m in Sources */,
 				EA49827D1DD229E900DCFE00 /* OGCameraController.m in Sources */,
 				215A8A821DDCC5A200C5C90D /* OGPlayerMediumRule.m in Sources */,
-				1B7F249D1DD5D074004918C8 /* OGLoadOperation.m in Sources */,
 				EA976C8C1D9AAEE2003B77FC /* OGGameViewController.m in Sources */,
 				215A8A791DDCB2D900C5C90D /* OGEntityDistance.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
