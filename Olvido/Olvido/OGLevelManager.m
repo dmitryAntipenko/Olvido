@@ -28,8 +28,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 @property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
 @property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
 
-@property (nonatomic, weak) OGGameScene *currentGameScene;
-@property (nonatomic, weak) OGStoryScene *currentStoryScene;
+@property (nonatomic, strong) OGGameScene *currentGameScene;
+@property (nonatomic, strong) OGStoryScene *currentStoryScene;
 
 @end
 
@@ -48,9 +48,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGLevelManagerLevelMapName
                                                           ofType:kOGPropertyFileExtension];
     
-    NSArray *plistData = [NSArray arrayWithContentsOfFile:plistPath];
-    
-    self.levelMap = plistData;
+    self.levelMap = [NSArray arrayWithContentsOfFile:plistPath];
 }
 
 #pragma mark - GameSceneDelegate methods
@@ -117,14 +115,15 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
+    [self clearCurrentScene];
+    
     [self loadSceneIdentifiersWithLevelIdentifier:identifier];
     [self runStoryScene];
 }
 
 - (void)loadSceneIdentifiersWithLevelIdentifier:(NSNumber *)identifier;
 {
-    self.currentStoryScene = nil;
-    self.currentGameScene = nil;
+    [self clearCurrentScene];
     
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
@@ -148,15 +147,20 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)restart
 {
-    self.currentGameScene = nil;
+    [self clearCurrentScene];
     [self runGameScene];
 }
 
 - (void)exitToMenu
 {
-    self.currentGameScene = nil;
-    
+    [self clearCurrentScene];
     [self.menuManager loadMenuWithName:kOGMapMenuName];
+}
+
+- (void)clearCurrentScene
+{
+    self.currentStoryScene = nil;
+    self.currentGameScene = nil;
 }
 
 @end

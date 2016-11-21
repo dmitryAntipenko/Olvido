@@ -100,8 +100,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 @property (nonatomic, assign) NSTimeInterval pausedTimeInterval;
 
-//@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
-
 @property (nonatomic, strong) NSMutableOrderedSet<GKEntity *> *mutableEntities;
 
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;

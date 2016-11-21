@@ -407,17 +407,6 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
-		1B2E873F1DDB61160022CAB6 /* LoadSceneOperation */ = {
-			isa = PBXGroup;
-			children = (
-				1B2E87391DDB0EE40022CAB6 /* GKScene+OGFactory.h */,
-				1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */,
-				1B7F24821DD5D074004918C8 /* OGLoadSceneOperation.h */,
-				1B7F24831DD5D074004918C8 /* OGLoadSceneOperation.m */,
-			);
-			name = LoadSceneOperation;
-			sourceTree = "<group>";
-		};
 		1B36E4C91DC624010080D80B /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,7 +459,10 @@
 		1B7F24AC1DD5D119004918C8 /* LoadOperations */ = {
 			isa = PBXGroup;
 			children = (
-				1B2E873F1DDB61160022CAB6 /* LoadSceneOperation */,
+				1B2E87391DDB0EE40022CAB6 /* GKScene+OGFactory.h */,
+				1B2E873A1DDB0EE40022CAB6 /* GKScene+OGFactory.m */,
+				1B7F24821DD5D074004918C8 /* OGLoadSceneOperation.h */,
+				1B7F24831DD5D074004918C8 /* OGLoadSceneOperation.m */,
 				1B7F24801DD5D074004918C8 /* OGLoadResourcesOperation.h */,
 				1B7F24811DD5D074004918C8 /* OGLoadResourcesOperation.m */,
 			);
