@@ -133,7 +133,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentGameScene)
     {
-        [self.currentGameScene.stateMachine enterState:OGPauseLevelState.self];
+        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
     }
 }
 
@@ -141,7 +141,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentGameScene)
     {
-        [self.currentGameScene.stateMachine enterState:OGGameLevelState.self];
+        [self.currentGameScene.stateMachine enterState:[OGGameLevelState class]];
     }
 }
 

@@ -64,7 +64,7 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 
 - (void)didAddToEntity
 {
-    self.renderComponent = (OGRenderComponent *)[self.entity componentForClass:OGRenderComponent.self];
+    self.renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
     
     if (self.renderComponent)
     {
@@ -87,7 +87,7 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 {
     if (!_renderComponent)
     {
-        _renderComponent = (OGRenderComponent *)[self.entity componentForClass:OGRenderComponent.self];
+        _renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
     }
     
     return _renderComponent;
