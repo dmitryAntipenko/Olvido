@@ -35,7 +35,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityUnlockedState.self;
+    return stateClass == [OGDoorEntityUnlockedState class];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -44,9 +44,9 @@
     
     if (!self.lockComponent.isLocked)
     {
-        if ([self.stateMachine canEnterState:OGDoorEntityUnlockedState.self])
+        if ([self.stateMachine canEnterState:[OGDoorEntityUnlockedState class]])
         {
-            [self.stateMachine enterState:OGDoorEntityUnlockedState.self];
+            [self.stateMachine enterState:[OGDoorEntityUnlockedState class]];
         }
     }
 }

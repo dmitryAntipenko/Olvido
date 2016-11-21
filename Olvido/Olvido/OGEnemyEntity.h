@@ -7,9 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGContactNotifiableType.h"
-#import "OGResourceLoadable.h"
-#import "OGRulesComponentDelegate.h"
 
 @class OGEnemyConfiguration;
 @class OGHealthComponent;
@@ -26,7 +23,6 @@ typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
     kOGEnemyEntityMandateFollowPath = 0,
     kOGEnemyEntityMandateHunt,
-    kOGEnemyEntityMandateAttack,
     kOGEnemyEntityMandateReturnToPositionOnPath
 };
 
@@ -34,8 +30,9 @@ extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
 extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
 extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
 extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
+extern NSUInteger const kOGEnemyEntityDealGamage;
 
-@interface OGEnemyEntity : GKEntity <OGResourceLoadable, OGContactNotifiableType, GKAgentDelegate, OGRulesComponentDelegate>
+@interface OGEnemyEntity : GKEntity
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -48,21 +45,23 @@ extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 @property (nonatomic, strong) OGTrailComponent *trailComponent;
 
 @property (nonatomic, strong) GKAgent2D *agent;
+@property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
+
 @property (nonatomic, strong) GKGraph *graph;
 
 @property (nonatomic, assign) OGEnemyEntityMandate mandate;
+
 @property (nonatomic, assign) CGPoint closestPointOnPath;
-
-+ (NSDictionary *)sOGEnemyEntityAnimations;
-
-- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
-- (GKBehavior *)behaviorForCurrentMandate;
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
+- (GKBehavior *)behaviorForCurrentMandate;
+
 - (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph;
-- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 - (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph;
+
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
+- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
 
 @end

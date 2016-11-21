@@ -40,7 +40,7 @@ NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
         
         for (OGEntityDistance *entityDistance in _mutableEntityDistances)
         {
-            if ([entityDistance.target isMemberOfClass:OGPlayerEntity.self])
+            if ([entityDistance.target isMemberOfClass:[OGPlayerEntity class]])
             {
                 _mutablePlayerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey] = entityDistance.target;
                 _mutablePlayerTarget[kOGEntitySnapshotPlayerBotTargetDistanceKey] = @(entityDistance.distance);

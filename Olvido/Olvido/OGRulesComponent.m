@@ -24,6 +24,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
 
 @implementation OGRulesComponent
 
+#pragma mark - Inits
 - (instancetype)init
 {
     self = [super init];
@@ -49,16 +50,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
     return self;
 }
 
-- (GKRuleSystem *)ruleSystem
-{
-    if (!_ruleSystem)
-    {
-        _ruleSystem = [[GKRuleSystem alloc] init];
-    }
-    
-    return _ruleSystem;
-}
-
+#pragma mark - Update
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     self.timeSinceRulesUpdate += seconds;
@@ -67,7 +59,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
     {
         self.timeSinceRulesUpdate = 0.0;
         
-        if ([self.entity isMemberOfClass:OGEnemyEntity.self])
+        if ([self.entity isMemberOfClass:[OGEnemyEntity class]])
         {
             OGGameScene *scene = (OGGameScene *) ((OGEnemyEntity *) self.entity).renderComponent.node.scene;
             OGEntitySnapshot *entitySnapshot = [scene entitySnapshotWithEntity:self.entity];
@@ -75,7 +67,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
             [self.ruleSystem reset];
             
             self.ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot] = entitySnapshot;
-
+            
             [self.ruleSystem evaluate];
             
             
@@ -85,6 +77,17 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
             }
         }
     }
+}
+
+#pragma mark - Getters
+- (GKRuleSystem *)ruleSystem
+{
+    if (!_ruleSystem)
+    {
+        _ruleSystem = [[GKRuleSystem alloc] init];
+    }
+    
+    return _ruleSystem;
 }
 
 @end

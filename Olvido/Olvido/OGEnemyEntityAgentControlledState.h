@@ -11,6 +11,8 @@
 
 @interface OGEnemyEntityAgentControlledState : GKState
 
+@property (nonatomic, assign) NSTimeInterval elapsedTime;
+
 - (instancetype)initWithEnemyEntity:(OGEnemyEntity *)enemyEntity;
 
 @end

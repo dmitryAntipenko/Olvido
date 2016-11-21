@@ -139,15 +139,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
-                             [[GKComponentSystem alloc] initWithComponentClass:GKAgent2D.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGTrailComponent.self],
-                             [[GKComponentSystem alloc] initWithComponentClass:OGRulesComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:[GKAgent2D class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGAnimationComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGMovementComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGIntelligenceComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGLockComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGMessageComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGWeaponComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGTrailComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGRulesComponent class]],
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
@@ -163,7 +163,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 #pragma mark - Scene contents
 
 - (void)didMoveToView:(SKView *)view
-{   
+{
     [super didMoveToView:view];
     
     self.physicsWorld.contactDelegate = self;
@@ -238,7 +238,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         
         enemy.trailComponent.targetNode = self;
         
-        [self addEntity:enemy];      
+        [self addEntity:enemy];
         
         counter++;
     }
@@ -250,7 +250,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     for (SKNode *doorNode in doorNodes)
     {
-        if ([doorNode isKindOfClass:SKSpriteNode.self])
+        if ([doorNode isKindOfClass:[SKSpriteNode class]])
         {
             OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
             door.transitionDelegate = self;
@@ -324,14 +324,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         [componentSystem addComponentWithEntity:entity];
     }
     
-    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
     
     if (renderNode && !renderNode.parent)
     {
         [self addChild:renderNode];
     }
     
-    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.self];
+    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:[OGIntelligenceComponent class]];
     
     if (intelligenceComponent)
     {
@@ -341,7 +341,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)removeEntity:(GKEntity *)entity
 {
-    SKNode *node = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    SKNode *node = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
     
     [node removeFromParent];
     
@@ -516,15 +516,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     [super didFinishUpdate];
     
-    if (((OGRenderComponent *) [self.player componentForClass:OGRenderComponent.self]).node)
+    if (((OGRenderComponent *) [self.player componentForClass:[OGRenderComponent class]]).node)
     {
         [self.player updateAgentPositionToMatchNodePosition];
     }
     
     [self.mutableEntities sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
      {
-         OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:OGRenderComponent.self];
-         OGRenderComponent *renderComponentB = (OGRenderComponent *) [objB componentForClass:OGRenderComponent.self];
+         OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:[OGRenderComponent class]];
+         OGRenderComponent *renderComponentB = (OGRenderComponent *) [objB componentForClass:[OGRenderComponent class]];
          NSComparisonResult result = NSOrderedSame;
          
          if (renderComponentA.node.position.y > renderComponentB.node.position.y)
@@ -543,7 +543,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     for (GKEntity *entity in self.entities)
     {
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:OGRenderComponent.self];
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;
         
         characterZPosition += kOGGameSceneZSpacePerCharacter;

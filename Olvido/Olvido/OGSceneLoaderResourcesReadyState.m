@@ -15,7 +15,7 @@ NSString *const kOGSceneLoaderDidCompleteNotification = @"sceneLoaderDidComplete
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGSceneLoaderInitialState.self;
+    return stateClass == [OGSceneLoaderInitialState class];
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState

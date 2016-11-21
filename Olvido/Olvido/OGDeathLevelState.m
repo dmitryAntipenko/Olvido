@@ -21,7 +21,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == OGBeforeStartLevelState.self);
+    result = (result || stateClass == [OGBeforeStartLevelState class]);
     
     return result;
 }

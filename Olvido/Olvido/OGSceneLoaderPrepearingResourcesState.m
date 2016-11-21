@@ -47,7 +47,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGSceneLoaderResourcesReadyState.self;
+    return stateClass == [OGSceneLoaderResourcesReadyState class];
 }
 
 - (void)loadResourcesAsunchronously
@@ -83,7 +83,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                     typeof(weakSelf) strongSelf = weakSelf;
 
                     strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                    [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
+                    [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
                 }
             });
         }
@@ -116,7 +116,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
         {
             typeof(weakSelf) strongSelf = weakSelf;
 
-            [strongSelf.stateMachine enterState:OGSceneLoaderInitialState.self];
+            [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
     });
 }

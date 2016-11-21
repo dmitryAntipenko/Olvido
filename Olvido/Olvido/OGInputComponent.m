@@ -42,14 +42,14 @@
 {
     if (self.isEnabled)
     {
-        OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:OGMovementComponent.self];
+        OGMovementComponent *movementComponent = (OGMovementComponent *) [self.entity componentForClass:[OGMovementComponent class]];
         
         if (movementComponent)
         {
             movementComponent.displacementVector = self.displacement;
         }
         
-        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:OGWeaponComponent.self];
+        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:[OGWeaponComponent class]];
         
         if (weaponComponent)
         {

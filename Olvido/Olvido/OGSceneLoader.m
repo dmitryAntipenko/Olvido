@@ -34,7 +34,7 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
                 [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
             ]];
             
-            [_stateMachine enterState:OGSceneLoaderInitialState.self];
+            [_stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
     }
     else

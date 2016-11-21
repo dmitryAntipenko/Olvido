@@ -37,7 +37,7 @@ NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
         
         for (GKEntity *entity in scene.entities)
         {
-            if ([entity componentForClass:GKAgent2D.self])
+            if ([entity componentForClass:[GKAgent2D class]])
             {
                 [_mutableEntities addObject:entity];
                 [_mutableDistances addObject:[NSMutableArray array]];
@@ -47,12 +47,12 @@ NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
         for (GKEntity *entity in _mutableEntities)
         {
             NSUInteger index = [_mutableEntities indexOfObject:entity];
-            GKAgent2D *sourceAgent = (GKAgent2D *) [entity componentForClass:GKAgent2D.self];
+            GKAgent2D *sourceAgent = (GKAgent2D *) [entity componentForClass:[GKAgent2D class]];
 
             for (NSUInteger i = index + 1; i <= [_mutableEntities indexOfObject:_mutableEntities.lastObject]; i++)
             {
                 GKEntity *targetEntity = _mutableEntities[i];
-                GKAgent2D *targetAgent = (GKAgent2D *) [targetEntity componentForClass:GKAgent2D.self];
+                GKAgent2D *targetAgent = (GKAgent2D *) [targetEntity componentForClass:[GKAgent2D class]];
                
                 CGFloat dx = targetAgent.position.x - sourceAgent.position.x;
                 CGFloat dy = targetAgent.position.y - sourceAgent.position.y;
