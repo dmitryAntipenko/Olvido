@@ -9,12 +9,14 @@
 #import "OGGameViewController.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
-#import "OGLevelController.h"
-
+#import "OGLevelManager.h"
+#import "OGSceneManager.h"
 #import "OGGameScene.h"
-#import "OGSpriteNode.h"
+#import "OGMenuManager.h"
 
 @interface OGGameViewController ()
+
+@property (nonatomic, strong) OGSceneManager *sceneManager;
 
 @end
 
@@ -26,16 +28,20 @@
     
     SKView *view = (SKView *) self.view;
     
-    view.multipleTouchEnabled = NO;
+    view.multipleTouchEnabled = YES;
     
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
-    NSString *pathForSceneFile = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
-    OGMainMenuScene *mainMenuScene = [NSKeyedUnarchiver unarchiveObjectWithFile:pathForSceneFile];
+    self.sceneManager = [OGSceneManager sceneManagerWithView:view];
+    [self.sceneManager transitionToInitialScene];
     
-    [view presentScene:mainMenuScene];
+    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
+    levelManager.sceneManager = self.sceneManager;
+    
+    OGMenuManager *menuManager = [OGMenuManager sharedInstance];
+    menuManager.sceneManager = self.sceneManager;
 }
 
 - (BOOL)shouldAutorotate

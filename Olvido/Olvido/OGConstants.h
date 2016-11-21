@@ -19,18 +19,23 @@ extern CGFloat const kOGGameSceneStatusBarPositionOffset;
 extern CGFloat const kOGGameSceneStatusBarYOffset;
 extern CGFloat const kOGGameSceneStatusBarDuration;
 
+extern NSString *const kOGPropertyFileExtension;
 extern NSString *const kOGSceneFileExtension;
-extern NSString *const kOGMainMenuSceneFileName;
 
 extern NSString *const kOGPlayerSpriteName;
 extern NSString *const kOGPortalSpriteName;
 extern NSString *const kOGEnemySpriteName;
 extern NSString *const kOGObstacleSpriteName;
 
-extern NSString *const kOGMainMenuSceneFileName;
-extern NSString *const kOGMapMenuSceneFileName;
-extern NSString *const kOGSettingsMenuSceneFileName;
-extern NSString *const kOGShopMenuSceneFileName;
+//extern NSString *const kOGMainMenuSceneFileName;
+//extern NSString *const kOGMapMenuSceneFileName;
+//extern NSString *const kOGSettingsMenuSceneFileName;
+//extern NSString *const kOGShopMenuSceneFileName;
+
+extern NSString *const kOGMainMenuName;
+extern NSString *const kOGMapMenuName;
+extern NSString *const kOGSettingsMenuName;
+extern NSString *const kOGShopMenuName;
 
 @interface OGConstants : NSObject
 

@@ -11,18 +11,6 @@
 
 @implementation OGCompleteLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
-{
-    OGCompleteLevelState *state = nil;
-    
-    if (scene)
-    {
-        state = [[OGCompleteLevelState alloc] initWithLevelScene:scene];
-    }
-    
-    return state;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     
@@ -32,7 +20,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGBeforeStartLevelState class]);
+    result = (result || stateClass == OGBeforeStartLevelState.self);
     
     return result;
 }

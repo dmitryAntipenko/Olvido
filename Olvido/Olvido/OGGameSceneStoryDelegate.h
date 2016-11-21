@@ -11,7 +11,7 @@
 
 @protocol OGGameSceneStoryDelegate <NSObject>
 
-- (void)gameSceneDidFinishRunStory;
+- (void)storySceneDidCallFinish;
 
 @end
 

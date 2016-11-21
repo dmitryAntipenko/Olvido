@@ -12,12 +12,12 @@
 typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
 {
     kOGCollisionBitMaskDefault = 0x0,
-    kOGCollisionBitMaskPlayer = 0x01 << 1,
-    kOGCollisionBitMaskEnemy = 0x01 << 2,
-    kOGCollisionBitMaskObstacle = 0x01 << 3,
-    kOGCollisionBitMaskCoin = 0x01 << 4,
-    kOGCollisionBitMaskPortal = 0x01 << 5,
-    kOGCollisionBitMaskKey = 0x01 << 6
+    kOGCollisionBitMaskPlayer = 0x01 << 1,      //2
+    kOGCollisionBitMaskEnemy = 0x01 << 2,       //4
+    kOGCollisionBitMaskObstacle = 0x01 << 3,    //8
+    kOGCollisionBitMaskWeapon = 0x01 << 4,        //16
+    kOGCollisionBitMaskDoor = 0x01 << 5,      //32
+    kOGCollisionBitMaskBullet = 0x01 << 6          //64
 };
 
 #endif /* Header_h */

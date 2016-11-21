@@ -12,18 +12,6 @@
 
 @implementation OGDeathLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
-{
-    OGDeathLevelState *state = nil;
-    
-    if (scene)
-    {
-        state = [[OGDeathLevelState alloc] initWithLevelScene:scene];
-    }
-    
-    return state;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene gameOver];
@@ -33,7 +21,7 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGBeforeStartLevelState class]);
+    result = (result || stateClass == OGBeforeStartLevelState.self);
     
     return result;
 }

@@ -7,7 +7,8 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGMenuBaseScene.h"
 
-@interface OGMainMenuScene : SKScene
+@interface OGMainMenuScene : OGMenuBaseScene
 
 @end

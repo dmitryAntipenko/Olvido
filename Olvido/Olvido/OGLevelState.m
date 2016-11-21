@@ -19,11 +19,18 @@
 
 - (instancetype)initWithLevelScene:(OGGameScene *)scene
 {
-    self = [self init];
-    
-    if (self)
+    if (scene)
     {
-        _scene = scene;
+        self = [self init];
+        
+        if (self)
+        {
+            _scene = scene;
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;
@@ -31,8 +38,7 @@
 
 + (instancetype)stateWithLevelScene:(OGGameScene *)scene
 {
-    return [[OGLevelState alloc] initWithLevelScene:scene];
+    return [[self alloc] initWithLevelScene:scene];
 }
-
 
 @end

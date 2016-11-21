@@ -2,7 +2,7 @@
 //  OGTransitionComponent.h
 //  Olvido
 //
-//  Created by Дмитрий Антипенко on 10/16/16.
+//  Created by Дмитрий Антипенко on 11/10/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 @interface OGTransitionComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable NSUInteger identifier;
-@property (nonatomic, getter=isClosed) GKInspectable BOOL closed;
+@property (nonatomic, strong) SKNode *source;
+@property (nonatomic, strong) SKNode *destination;
 
 @end

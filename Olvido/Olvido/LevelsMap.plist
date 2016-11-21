@@ -3,57 +3,10 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>Identifier</key>
-		<string>0</string>
-		<key>Portals</key>
-		<array>
-			<dict>
-				<key>Color</key>
-				<string>0x3498db</string>
-				<key>Next Level Index</key>
-				<integer>1</integer>
-				<key>Identifier</key>
-				<integer>0</integer>
-			</dict>
-		</array>
-		<key>Class Name</key>
-		<string>OGInitialLevel</string>
-		<key>Story Scene Name</key>
-		<string>OGChapter1</string>
-	</dict>
-	<dict>
-		<key>Identifier</key>
-		<string>1</string>
-		<key>Portals</key>
-		<array>
-			<dict>
-				<key>Color</key>
-				<string>0xecf0f1</string>
-				<key>Next Level Index</key>
-				<integer>2</integer>
-				<key>Location</key>
-				<integer>0</integer>
-			</dict>
-		</array>
-		<key>Class Name</key>
-		<string>OGBigLevel</string>
-	</dict>
-	<dict>
-		<key>Identifier</key>
-		<string>2</string>
-		<key>Portals</key>
-		<array>
-			<dict>
-				<key>Color</key>
-				<string>0xf1c40f</string>
-				<key>Next Level Index</key>
-				<string>5</string>
-				<key>Location</key>
-				<integer>0</integer>
-			</dict>
-		</array>
-		<key>Class Name</key>
-		<string>OGDarkLevel</string>
+		<key>StorySceneIdentifier</key>
+		<string>4</string>
+		<key>GameSceneIdentifier</key>
+		<string>5</string>
 	</dict>
 </array>
 </plist>

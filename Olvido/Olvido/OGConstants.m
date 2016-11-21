@@ -1,4 +1,4 @@
- //
+//
 //  OGConstants.m
 //  Olvido
 //
@@ -17,11 +17,12 @@ CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
 CGFloat const kOGGameSceneStatusBarDuration = 0.2;
 
+NSString *const kOGPropertyFileExtension = @"plist";
 NSString *const kOGSceneFileExtension = @"sks";
-NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
-NSString *const kOGMapMenuSceneFileName = @"OGMapMenuScene";
-NSString *const kOGSettingsMenuSceneFileName = @"OGSettingsMenuScene";
-NSString *const kOGShopMenuSceneFileName = @"OGShopMenuScene";
+//NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
+//NSString *const kOGMapMenuSceneFileName = @"OGMapMenuScene";
+//NSString *const kOGSettingsMenuSceneFileName = @"OGSettingsMenuScene";
+//NSString *const kOGShopMenuSceneFileName = @"OGShopMenuScene";
 
 CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
 
@@ -31,6 +32,12 @@ NSString *const kOGPlayerSpriteName = @"Player";
 NSString *const kOGEnemySpriteName = @"Enemy";
 NSString *const kOGPortalSpriteName = @"Door";
 NSString *const kOGObstacleSpriteName = @"Obstacle";
+
+NSString *const kOGMainMenuName = @"MainMenu";
+NSString *const kOGMapMenuName = @"MapMenu";
+NSString *const kOGSettingsMenuName = @"SettingsMenu";
+NSString *const kOGShopMenuName = @"ShopMenu";
+
 
 @implementation OGConstants
 

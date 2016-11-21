@@ -7,17 +7,30 @@
 //
 
 #import "OGGameScene.h"
-#import "OGContactType.h"
 #import "OGCollisionBitMask.h"
-#import "OGSpriteNode.h"
+#import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
+#import "OGGameSceneConfiguration.h"
+#import "OGEnemyConfiguration.h"
+#import "OGCameraController.h"
+#import "OGContactNotifiableType.h"
 
+#import "OGPlayerEntity.h"
+#import "OGEnemyEntity.h"
+#import "OGDoorEntity.h"
+#import "OGWeaponEntity.h"
+#import "OGRenderComponent.h"
+#import "OGLockComponent.h"
+#import "OGPhysicsComponent.h"
+#import "OGMovementComponent.h"
+#import "OGIntelligenceComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGMessageComponent.h"
 #import "OGTransitionComponent.h"
-#import "OGAccessComponent.h"
-#import "OGHealthComponent.h"
+#import "OGWeaponComponent.h"
 #import "OGInventoryComponent.h"
 
-#import "OGStatusBar.h"
+#import "OGInventoryBarNode.h"
 
 #import "OGBeforeStartLevelState.h"
 #import "OGStoryConclusionLevelState.h"
@@ -26,14 +39,18 @@
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
 
-#import "OGLevelController.h"
-#import "OGTapMovementControlComponent.h"
-#import "OGTapAndStopMovementControlComponent.h"
-#import "OGDragMovementControlComponent.h"
+#import "OGLevelManager.h"
 #import "OGAnimationComponent.h"
 #import "OGAnimationState.h"
 
-NSString *const kOGGameSceneStatusBarSpriteName = @"StatusBar";
+NSString *const kOGGameSceneDoorsNodeName = @"doors";
+NSString *const kOGGameSceneItemsNodeName = @"items";
+NSString *const kOGGameSceneWeaponNodeName = @"weapon";
+NSString *const kOGGameSceneSourceNodeName = @"source";
+NSString *const kOGGameSceneDestinationNodeName = @"destination";
+NSString *const kOGGameSceneDoorLockedKey = @"locked";
+
+NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
 NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
@@ -41,16 +58,33 @@ NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
+CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
+
 @interface OGGameScene ()
 
-@property (nonatomic, strong) NSMutableArray<OGSpriteNode *> *mutableSpriteNodes;
+@property (nonatomic, strong) OGPlayerEntity *player;
+
+@property (nonatomic, strong) SKNode *currentRoom;
+@property (nonatomic, strong) OGCameraController *cameraController;
+
+@property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
+
+@property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
+
+@property (nonatomic, strong) NSMutableSet<GKEntity *> *entities;
+@property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @end
 
 @implementation OGGameScene
+
+@synthesize name = _name;
+
+#pragma mark - Initializer
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -58,17 +92,31 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     
     if (self)
     {
-        _mutableSpriteNodes = [[NSMutableArray alloc] init];
-        _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
-                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                 [OGGameLevelState stateWithLevelScene:self],
-                                                                 [OGPauseLevelState stateWithLevelScene:self],
-                                                                 [OGCompleteLevelState stateWithLevelScene:self],
-                                                                 [OGDeathLevelState stateWithLevelScene:self]
-                                                                 ]];
+        _inventoryBarNode = [OGInventoryBarNode node];
         
-        _statusBar = [[OGStatusBar alloc] init];
+        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
+        
+        _cameraController = [[OGCameraController alloc] init];
+        
+        _stateMachine = [[GKStateMachine alloc] initWithStates:@[
+            [OGStoryConclusionLevelState stateWithLevelScene:self],
+            [OGBeforeStartLevelState stateWithLevelScene:self],
+            [OGGameLevelState stateWithLevelScene:self],
+            [OGPauseLevelState stateWithLevelScene:self],
+            [OGCompleteLevelState stateWithLevelScene:self],
+            [OGDeathLevelState stateWithLevelScene:self]
+        ]];
+        
+        _entities = [[NSMutableSet alloc] init];
+        
+        _componentSystems = [[NSMutableArray alloc] initWithObjects:
+                             [[GKComponentSystem alloc] initWithComponentClass:OGAnimationComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMovementComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGIntelligenceComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGLockComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGMessageComponent.self],
+                             [[GKComponentSystem alloc] initWithComponentClass:OGWeaponComponent.self],
+                             nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
@@ -77,252 +125,229 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     return self;
 }
 
+#pragma mark - Scene contents
+
 - (void)didMoveToView:(SKView *)view
 {
+    [super didMoveToView:view];
+    
+    self.sceneDelegate = (id<OGGameSceneDelegate>) [OGLevelManager sharedInstance];
+    
     self.physicsWorld.contactDelegate = self;
+    self.lastUpdateTimeInterval = 0.0;
     
-    for (OGSpriteNode *sprite in self.spriteNodes)
-    {
-        if ([sprite.name isEqualToString:kOGPlayerSpriteName])
-        {
-            OGLevelController *levelController = [OGLevelController sharedInstance];
-            
-            if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
-            {
-                OGTapMovementControlComponent *tapMovementComponent = [[OGTapMovementControlComponent alloc] init];
-                tapMovementComponent.speedFactor = 1.0;
-                [sprite.entity addComponent:tapMovementComponent];
-                
-            }
-            else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
-            {
-                OGTapAndStopMovementControlComponent *tapAndStopMovementComponent = [[OGTapAndStopMovementControlComponent alloc] init];
-                tapAndStopMovementComponent.speedFactor = 1.0;
-                [sprite.entity addComponent:tapAndStopMovementComponent];
-                
-            }
-            else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
-            {
-                OGDragMovementControlComponent *dragMovementComponent = [[OGDragMovementControlComponent alloc] init];
-                [sprite.entity addComponent:dragMovementComponent];
-                
-            }
-            
-        }
-        else if ([sprite.name isEqualToString:kOGEnemySpriteName])
-        {
-            OGAnimationState *animationState = [OGAnimationState animationStateWithName:@"mooving"
-                                                                               textures:@[
-                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 1"],
-                                                                                          [SKTexture textureWithImageNamed:@"Zombie Right 2"]
-                                                                                          ]
-                                                                        validNextStates:nil];
-            
-            OGAnimationComponent *animationComponent = (OGAnimationComponent *)[sprite.entity componentForClass:[OGAnimationComponent class]];
-            [animationComponent playNextAnimationState:animationState];
-        }
-    }
+    self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
+    [self createSceneContents];
+
+    [self createCameraNode];
+    [self createInventoryBar];
     
-    [self createStatusBar];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
+    inputNode.size = self.size;
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    inputNode.position = CGPointZero;
+    [self.camera addChild:inputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
-    
-    [super didMoveToView:view];
 }
 
-- (void)createStatusBar
+- (CGSize)thumbStickNodeSize
 {
-    SKSpriteNode *statusBar = (SKSpriteNode *) [self childNodeWithName:kOGGameSceneStatusBarSpriteName];
+    return CGSizeMake(200.0, 200.0);
+}
+
+#pragma mark - Scene Creation
+
+- (void)createSceneContents
+{
+    [self createPlayer];
+    [self createEnemies];
+    [self createDoors];
+    [self createSceneItems];
+}
+
+- (void)createCameraNode
+{
+    SKCameraNode *camera = [[SKCameraNode alloc] init];
+    self.camera = camera;
+    self.cameraController.camera = camera;
+    [self addChild:camera];
     
-    if (statusBar)
+    self.cameraController.target = self.player.render.node;
+    
+    [self.cameraController moveCameraToNode:self.currentRoom];
+}
+
+- (void)createPlayer
+{
+    OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
+    self.player = player;
+    [self addEntity:self.player];
+    
+    SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
+    self.player.render.node.position = playerInitialNode.position;
+}
+
+- (void)createEnemies
+{
+    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        self.statusBar.statusBarSprite = statusBar;
-        self.statusBar.healthComponent = self.healthComponent;
-        [self.statusBar createContents];
+        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration];
+        [self addEntity:enemy];
+        SKNode *enemyInitialNode = [self childNodeWithName:enemyConfiguration.initialPointName];
+        enemy.render.node.position = enemyInitialNode.position;
+        
+        enemy.physics.physicsBody.velocity = enemyConfiguration.initialVector;
     }
 }
 
-#pragma mark - Getters & Setters
-
-- (OGSpriteNode *)playerNode
+- (void)createDoors
 {
-    return (OGSpriteNode *) [self childNodeWithName:kOGPlayerSpriteName];
-}
-
-- (OGSpriteNode *)portalNode
-{
-    return (OGSpriteNode *) [self childNodeWithName:kOGPortalSpriteName];
-}
-
-- (OGAnimationComponent *)playerAnimationComponent
-{
-    return (OGAnimationComponent *) [self.playerNode.entity componentForClass:[OGAnimationComponent class]];
-}
-
-- (OGHealthComponent *)healthComponent
-{
-    return (OGHealthComponent *) [self.playerNode.entity componentForClass:[OGHealthComponent class]];
-}
-
-- (OGInventoryComponent *)inventoryComponent
-{
-    return (OGInventoryComponent *) [self.playerNode.entity componentForClass:[OGInventoryComponent class]];
-}
-
-- (OGMovementControlComponent *)playerControlComponent
-{
-    OGLevelController *levelController = [OGLevelController sharedInstance];
+    NSArray<SKNode *> *doorNodes = [self childNodeWithName:kOGGameSceneDoorsNodeName].children;
     
-    id class = Nil;
+    for (SKNode *doorNode in doorNodes)
+    {
+        if ([doorNode isKindOfClass:SKSpriteNode.self])
+        {
+            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            door.transitionDelegate = self;
+            
+            BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
+            
+            door.lockComponent.target = self.player.render.node;
+            door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
+            door.lockComponent.closed = YES;
+            door.lockComponent.locked = doorLocked;
+            
+            NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
+            NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];
+            
+            door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
+            door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
+            
+            [self addEntity:door];
+        }
+    }
+}
+
+- (void)createInventoryBar
+{
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    self.inventoryBarNode.playerEntity = self.player;
     
-    if ([levelController.controlType isEqualToString:kOGLevelControllerTapContinueControl])
+    if (self.camera)
     {
-        class = [OGTapMovementControlComponent class];
-    }
-    else if ([levelController.controlType isEqualToString:kOGLevelControllerTapStopControl])
-    {
-        class = [OGTapAndStopMovementControlComponent class];
-    }
-    else if ([levelController.controlType isEqualToString:kOGLevelControllerDragControl])
-    {
-        class = [OGDragMovementControlComponent class];
+        [self.camera addChild:self.inventoryBarNode];
     }
     
-    return (OGMovementControlComponent *) [self.playerNode.entity componentForClass:class];
+    [self.inventoryBarNode updateConstraints];
 }
 
-- (OGAccessComponent *)accessComponent
+- (void)createSceneItems
 {
-    return (OGAccessComponent *) [self.portalNode.entity componentForClass:[OGAccessComponent class]];
-}
-
-- (OGTransitionComponent *)transitionComponent
-{
-    return (OGTransitionComponent *) [self.portalNode.entity componentForClass:[OGTransitionComponent class]];
-}
-
-- (NSArray *)spriteNodes
-{
-    return [self.mutableSpriteNodes copy];
-}
-
-- (void)addSpriteNode:(OGSpriteNode *)spriteNode
-{
-    if (spriteNode)
+    SKNode *items = [self childNodeWithName:kOGGameSceneItemsNodeName];
+    NSArray *weapons = [items childNodeWithName:kOGGameSceneWeaponNodeName].children;
+    
+    for (SKSpriteNode *weapon in weapons)
     {
-        [self.mutableSpriteNodes addObject:spriteNode];
+        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weapon];
+        shootingWeapon.delegate = self;
+        [self addEntity:shootingWeapon];
     }
+}
+
+#pragma mark - Entity Adding
+
+- (void)addEntity:(GKEntity *)entity
+{
+    [self.entities addObject:entity];
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem addComponentWithEntity:entity];
+    }
+    
+    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    
+    if (renderNode && !renderNode.parent)
+    {
+        [self addChild:renderNode];
+    }
+    
+    OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:OGIntelligenceComponent.self];
+    
+    if (intelligenceComponent)
+    {
+        [intelligenceComponent enterInitialState];
+    }
+}
+
+- (void)removeEntity:(GKEntity *)entity
+{
+    SKNode *node = ((OGRenderComponent *) [entity componentForClass:OGRenderComponent.self]).node;
+    
+    [node removeFromParent];
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
+    {
+        [componentSystem removeComponentWithEntity:entity];
+    }
+    
+    [self.entities removeObject:entity];
+}
+
+#pragma mark - TransitionComponentDelegate
+
+- (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
+{
+    SKNode *destinationNode = component.destination;
+    
+    self.currentRoom = component.destination;
+    
+    [self.cameraController moveCameraToNode:destinationNode];
+    
+    completion();
 }
 
 #pragma mark - Contact handling
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    OGSpriteNode *touchedBody = nil;
-    OGContactType contactType = [self contactType:contact withBody:&touchedBody];
+    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
+    {
+        [notifiable contactWithEntityDidBegin:entity];
+    }];
+}
+
+- (void)handleContact:(SKPhysicsContact *)contact contactCallback:(void (^)(id<OGContactNotifiableType>, GKEntity *))callback
+{
+    SKPhysicsBody *bodyA = contact.bodyA.node.physicsBody;
+    SKPhysicsBody *bodyB = contact.bodyB.node.physicsBody;
     
-    if (contactType == kOGContactTypeGameOver)
+    GKEntity *entityA = bodyA.node.entity;
+    GKEntity *entityB = bodyB.node.entity;
+    
+    OGColliderType *colliderTypeA = [OGColliderType colliderTypeWithCategoryBitMask:bodyA.categoryBitMask];
+    OGColliderType *colliderTypeB = [OGColliderType colliderTypeWithCategoryBitMask:bodyB.categoryBitMask];
+    
+    BOOL aNeedsCallback = [colliderTypeA notifyOnContactWith:colliderTypeB];
+    BOOL bNeedsCallback = [colliderTypeB notifyOnContactWith:colliderTypeA];
+    
+    if ([entityA conformsToProtocol:@protocol(OGContactNotifiableType)] && aNeedsCallback)
     {
-        [self.healthComponent dealDamage:1];
-        [self.statusBar healthDidChange];
+        callback((id<OGContactNotifiableType>) entityA, entityB);
     }
-    else if (contactType == kOGContactTypePlayerDidGrantAccess)
+    
+    if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
     {
-        [self.accessComponent grantAccessWithCompletionBlock:^()
-         {
-             self.transitionComponent.closed = NO;
-             [touchedBody removeFromParent];
-         }];
-    }
-    else if (contactType == kOGContactTypePlayerDidTouchPortal && !self.transitionComponent.isClosed)
-    {
-        [self.sceneDelegate gameSceneDidCallFinish];
+        callback((id<OGContactNotifiableType>) entityB, entityA);
     }
 }
 
-- (OGContactType)contactType:(SKPhysicsContact *)contact withBody:(SKNode **)body
-{
-    SKPhysicsBody *bodyA = nil;
-    SKPhysicsBody *bodyB = nil;
-    OGContactType result = kOGContactTypeNone;
-    
-    [self contact:contact toBodyA:&bodyA bodyB:&bodyB];
-    
-    if (bodyA.categoryBitMask == kOGCollisionBitMaskEnemy
-        && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        result = kOGContactTypeGameOver;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskPlayer
-             && bodyB.categoryBitMask == kOGCollisionBitMaskEnemy)
-    {
-        result = kOGContactTypeGameOver;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskCoin)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidGetCoin;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskCoin)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidGetCoin;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskPortal)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidTouchPortal;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskPortal)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidTouchPortal;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskObstacle
-             && bodyA.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidTouchObstacle;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskObstacle
-             && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidTouchObstacle;
-    }
-    else if (bodyB.categoryBitMask == kOGCollisionBitMaskKey
-             && bodyA.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyB.node;
-        result = kOGContactTypePlayerDidGrantAccess;
-    }
-    else if (bodyA.categoryBitMask == kOGCollisionBitMaskKey
-             && bodyB.categoryBitMask == kOGCollisionBitMaskPlayer)
-    {
-        *body = bodyA.node;
-        result = kOGContactTypePlayerDidGrantAccess;
-    }
-    
-    return result;
-}
-
-- (void)contact:(SKPhysicsContact *)contact toBodyA:(SKPhysicsBody **)bodyA bodyB:(SKPhysicsBody **)bodyB
-{
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        *bodyA = contact.bodyA;
-        *bodyB = contact.bodyB;
-    }
-    else
-    {
-        *bodyA = contact.bodyB;
-        *bodyB = contact.bodyA;
-    }
-}
+#pragma mark - Scene Management
 
 - (void)pause
 {
-    [self.playerControlComponent pause];
     self.physicsWorld.speed = kOGGameScenePauseSpeed;
     self.speed = kOGGameScenePauseSpeed;
     self.paused = YES;
@@ -340,7 +365,6 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
 
 - (void)resume
 {
-    [self.playerControlComponent resume];
     self.physicsWorld.speed = kOGGameScenePlayeSpeed;
     self.speed = kOGGameScenePlayeSpeed;
     self.paused = NO;
@@ -376,32 +400,22 @@ CGFloat const kOGGameScenePlayeSpeed = 1.0;
     }
 }
 
-- (void)onMenuButtonClick
-{
-    NSString *sceneFilePath = nil;
-    
-    sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMapMenuSceneFileName ofType:kOGSceneFileExtension];
-    
-    if (sceneFilePath)
-    {
-        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-        
-        if (nextScene)
-        {
-            [self.view presentScene:nextScene];
-        }
-    }
-}
+#pragma mark - Update
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if (self.healthComponent.currentHealth <= 0)
+    [super update:currentTime];
+    [self.cameraController update];
+    
+    CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
+    self.lastUpdateTimeInterval = currentTime;
+    
+    for (GKComponentSystem *componentSystem in self.componentSystems)
     {
-        [self.stateMachine enterState:[OGDeathLevelState class]];
+        [componentSystem updateWithDeltaTime:deltaTime];
     }
     
-    [super update:currentTime];
+    [self.inventoryBarNode checkPlayerPosition];
 }
-
 
 @end

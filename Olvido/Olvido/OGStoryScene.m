@@ -7,24 +7,31 @@
 //
 
 #import "OGStoryScene.h"
+#import "OGLevelManager.h"
 
 NSString *const kOGStorySceneDarknessNode = @"Darkness";
 
 @implementation OGStoryScene
 
+- (void)didMoveToView:(SKView *)view
+{
+    [super didMoveToView:view];
+    
+    self.sceneDelegate = (id<OGGameSceneStoryDelegate>) [OGLevelManager sharedInstance];
+}
+
 - (void)update:(NSTimeInterval)currentTime
 {
     if (![self childNodeWithName:kOGStorySceneDarknessNode].hasActions)
     {
-        [self.sceneDelegate gameSceneDidFinishRunStory];
+        [self.sceneDelegate storySceneDidCallFinish];
     }
 }
 
 - (void)skipStory
 {
     self.scene.paused = YES;
-    [self.sceneDelegate gameSceneDidFinishRunStory];
+    [self.sceneDelegate storySceneDidCallFinish];
 }
-
 
 @end

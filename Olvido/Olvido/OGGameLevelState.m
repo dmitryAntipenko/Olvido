@@ -14,18 +14,6 @@
 
 @implementation OGGameLevelState
 
-+ (instancetype)stateWithLevelScene:(OGGameScene *)scene
-{
-    OGGameLevelState *state = nil;
-    
-    if (scene)
-    {
-        state = [[OGGameLevelState alloc] initWithLevelScene:scene];
-    }
-    
-    return state;
-}
-
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [self.scene resume];
@@ -35,9 +23,9 @@
 {
     BOOL result = NO;
     
-    result = (result || stateClass == [OGPauseLevelState class]);
-    result = (result || stateClass == [OGCompleteLevelState class]);
-    result = (result || stateClass == [OGDeathLevelState class]);
+    result = (result || stateClass == OGPauseLevelState.self);
+    result = (result || stateClass == OGCompleteLevelState.self);
+    result = (result || stateClass == OGDeathLevelState.self);
     
     return result;
 }

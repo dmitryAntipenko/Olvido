@@ -7,50 +7,32 @@
 //
 
 #import "OGMapMenuScene.h"
-#import "OGLevelController.h"
+#import "OGLevelManager.h"
 #import "OGButtonNode.h"
 #import "OGConstants.h"
+#import "OGMenuManager.h"
 
 NSString *const kOGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 @implementation OGMapMenuScene
 
-- (void)didMoveToView:(SKView *)view
-{
-    self.scaleMode = SKSceneScaleModeAspectFit;
-}
-
 - (void)startGame
 {
-    OGLevelController *levelController = [OGLevelController sharedInstance];
-    levelController.view = self.view;
-    [levelController loadLevelWithIdentifier:@0];
-    
-    [levelController runStoryScene];
+    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
+    levelManager.view = self.view;
+    [levelManager loadLevelWithIdentifier:@0];    
 }
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
-    NSString *sceneFilePath = nil;
-    
     if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
     {
-        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGMainMenuSceneFileName ofType:kOGSceneFileExtension];
+        [self.menuManager loadMenuWithName:kOGMainMenuName];
     }
     else if ([button.name isEqualToString:kOGMapMenuSceneShopButtonNodeName])
     {
-        sceneFilePath = [[NSBundle mainBundle] pathForResource:kOGShopMenuSceneFileName ofType:kOGSceneFileExtension];
-    }
-    
-    if (sceneFilePath)
-    {
-        SKScene *nextScene = [NSKeyedUnarchiver unarchiveObjectWithFile:sceneFilePath];
-        
-        if (nextScene)
-        {
-            [self.view presentScene:nextScene];
-        }
+        [self.menuManager loadMenuWithName:kOGShopMenuName];
     }
 }
 
