@@ -236,7 +236,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
                                                                       graph:graph];
         
-//        enemy.trailComponent.targetNode = self;
+        enemy.trailComponent.targetNode = self;
         
         [self addEntity:enemy];      
         
@@ -599,16 +599,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     }
     
     return _obstaclesGraph;
-}
-
-- (void)willMoveFromView:(SKView *)view
-{
-    
-}
-
-- (void)dealloc
-{
-    
 }
 
 @end
