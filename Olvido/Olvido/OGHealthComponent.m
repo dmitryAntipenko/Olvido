@@ -40,7 +40,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 - (void)dealDamage:(NSInteger)damage
 {
-    self.currentHealth -= damage;
+    self.currentHealth -= damage;    
 }
 
 - (void)kill

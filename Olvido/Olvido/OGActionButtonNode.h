@@ -7,9 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-//#import "OGActionButtonNodeDelegate.h"
-#import "OGGUINode.h"
-
 
 @protocol OGActionButtonNodeDelegate <NSObject>
 
@@ -17,7 +14,7 @@
 
 @end
 
-@interface OGActionButtonNode : OGGUINode
+@interface OGActionButtonNode : SKSpriteNode
 
 @property (nonatomic, weak) id<OGActionButtonNodeDelegate> actionButtonNodeDelegate;
 

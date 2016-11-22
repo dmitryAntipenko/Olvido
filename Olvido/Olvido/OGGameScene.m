@@ -6,10 +6,13 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+#import "OGAudioManager.h"
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
+#import "OGZPositionEnum.m"
 #import "OGGameSceneConfiguration.h"
 #import "OGEnemyConfiguration.h"
 #import "OGCameraController.h"
@@ -27,6 +30,7 @@
 #import "OGInventoryComponent.h"
 #import "OGTrailComponent.h"
 #import "OGRulesComponent.h"
+#import "OGShadowComponent.h"
 
 #import "OGPlayerEntity.h"
 #import "OGZombie.h"
@@ -80,13 +84,15 @@ NSString *const kOGGameScenePauseScreenMenuButtonName = @"MenuButton";
 NSString *const kOGGameSceneEnemyConfigurationEnemyTypeKey = @"Type";
 
 CGFloat const kOGGameScenePauseSpeed = 0.0;
-CGFloat const kOGGameScenePlayeSpeed = 1.0;
+CGFloat const kOGGameScenePlaySpeed = 1.0;
 
 CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
 
 NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
-@interface OGGameScene ()
+@interface OGGameScene () <AVAudioPlayerDelegate>
+
+@property (nonatomic, strong) OGAudioManager *audioManager;
 
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
@@ -105,7 +111,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
 
-
 @end
 
 @implementation OGGameScene
@@ -119,21 +124,22 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self = [super initWithCoder:aDecoder];
     
     if (self)
-    {
-        _inventoryBarNode = [OGInventoryBarNode node];
-        
+    {        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
+        _audioManager = [OGAudioManager audioManager];
+        
+        _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
-                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
-                                                                 [OGGameLevelState stateWithLevelScene:self],
-                                                                 [OGPauseLevelState stateWithLevelScene:self],
-                                                                 [OGCompleteLevelState stateWithLevelScene:self],
-                                                                 [OGDeathLevelState stateWithLevelScene:self]
-                                                                 ]];
+            [OGStoryConclusionLevelState stateWithLevelScene:self],
+            [OGBeforeStartLevelState stateWithLevelScene:self],
+            [OGGameLevelState stateWithLevelScene:self],
+            [OGPauseLevelState stateWithLevelScene:self],
+            [OGCompleteLevelState stateWithLevelScene:self],
+            [OGDeathLevelState stateWithLevelScene:self]
+        ]];
         
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
         
@@ -159,6 +165,41 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     return self;
 }
 
+#pragma mark - Getters
+
+- (NSArray<SKSpriteNode *> *)obstacleSpriteNodes
+{
+    NSMutableArray<SKSpriteNode *> *result = nil;
+    
+    [self enumerateChildNodesWithName:kOGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
+     {
+         [result addObject:(SKSpriteNode *)node];
+     }];
+    
+    return result;
+}
+
+- (NSArray<GKPolygonObstacle *> *)polygonObstacles
+{
+    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
+}
+
+- (NSArray<GKEntity *> *)entities
+{
+    return self.mutableEntities.array;
+}
+
+- (GKObstacleGraph *)obstaclesGraph
+{
+    if (!_obstaclesGraph)
+    {
+        _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
+                                                        bufferRadius:kOGEnemyEntityPathfindingGraphBufferRadius];
+    }
+    
+    return _obstaclesGraph;
+}
+
 #pragma mark - Scene contents
 
 - (void)didMoveToView:(SKView *)view
@@ -166,7 +207,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [super didMoveToView:view];
     
     self.physicsWorld.contactDelegate = self;
-    self.lastUpdateTimeInterval = 0.0;
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
@@ -175,14 +215,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     [self createCameraNode];
     [self createInventoryBar];
-    
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
-    inputNode.size = self.size;
-    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
-    inputNode.position = CGPointZero;
-    [self.camera addChild:inputNode];
+    [self createTouchControlInputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
+    
+    [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
+    self.audioManager.musicPlayerDelegate = self;
+    
+    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
 }
 
 - (CGSize)thumbStickNodeSize
@@ -200,6 +240,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self createSceneItems];
 }
 
+- (void)createTouchControlInputNode
+{
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
+    inputNode.size = self.size;
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    inputNode.position = CGPointZero;
+    [self.camera addChild:inputNode];
+}
+
 - (void)createCameraNode
 {
     SKCameraNode *camera = [[SKCameraNode alloc] init];
@@ -209,8 +258,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self addChild:camera];
     
     self.cameraController.target = self.player.render.node;
-    
-    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
 }
 
 - (void)createPlayer
@@ -234,7 +281,12 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         
         Class enemyClass = NSClassFromString(enemyConfiguration[kOGGameSceneEnemyConfigurationEnemyTypeKey]);
         OGEnemyEntity *enemy = [[enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
-
+        
+        
+        if ([enemy isMemberOfClass:[OGZombie class]])
+        {
+            ((OGZombie *) enemy).trailComponent.targetNode = self;
+        }
         [self addEntity:enemy];
         
         counter++;
@@ -326,6 +378,13 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (renderNode && !renderNode.parent)
     {
         [self addChild:renderNode];
+        
+        SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]).node;
+        
+        if (shadowNode)
+        {
+            shadowNode.zPosition = OGZPositionCategoryShadows;
+        }
     }
     
     OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:[OGIntelligenceComponent class]];
@@ -361,6 +420,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.cameraController moveCameraToNode:destinationNode duration:1.0];
     
     completion();
+}
+
+#pragma mark - Audio Player Delegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (flag)
+    {
+        [player play];
+    }
 }
 
 #pragma mark - Contact handling
@@ -428,8 +497,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     [super resume];
     
-    self.physicsWorld.speed = kOGGameScenePlayeSpeed;
-    self.speed = kOGGameScenePlayeSpeed;
+    self.physicsWorld.speed = kOGGameScenePlaySpeed;
+    self.speed = kOGGameScenePlaySpeed;
     
     if (self.pauseScreenNode.parent)
     {
@@ -544,32 +613,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         renderComponent.node.zPosition = characterZPosition;
         
         characterZPosition += kOGGameSceneZSpacePerCharacter;
-        
-        
     }
 }
 
-- (NSArray<SKSpriteNode *> *)obstacleSpriteNodes
-{
-    NSMutableArray<SKSpriteNode *> *result = nil;
-    
-    [self enumerateChildNodesWithName:kOGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-     {
-         [result addObject:(SKSpriteNode *)node];
-     }];
-    
-    return result;
-}
-
-- (NSArray<GKPolygonObstacle *> *)polygonObstacles
-{
-    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
-}
-
-- (NSArray<GKEntity *> *)entities
-{
-    return self.mutableEntities.array;
-}
+#pragma mark - Button Click Handling
 
 - (void)onButtonClick:(OGButtonNode *)buttonNode
 {
@@ -585,17 +632,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     {
         [self.sceneDelegate exitToMenu];
     }
-}
-
-- (GKObstacleGraph *)obstaclesGraph
-{
-    if (!_obstaclesGraph)
-    {
-        _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
-                                                        bufferRadius:kOGEnemyEntityPathfindingGraphBufferRadius];
-    }
-    
-    return _obstaclesGraph;
 }
 
 @end

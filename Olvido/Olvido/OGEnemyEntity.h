@@ -24,8 +24,8 @@
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
     kOGEnemyEntityMandateFollowPath = 0,
-    kOGEnemyEntityMandateHunt,
-    kOGEnemyEntityMandateReturnToPositionOnPath
+    kOGEnemyEntityMandateHunt = 1,
+    kOGEnemyEntityMandateReturnToPositionOnPath = 2
 };
 
 extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;

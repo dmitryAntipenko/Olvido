@@ -8,38 +8,13 @@
 
 #import "OGMenuBaseScene.h"
 #import "OGMenuManager.h"
+#import "OGButtonNode.h"
 
 @implementation OGMenuBaseScene
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    
-//    if (self)
-//    {
-//        _menuManager = [OGMenuManager sharedInstance];
-//    }
-//    
-//    return self;
-//}
-//
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder
-//{
-//    if (aDecoder)
-//    {
-//        self = [super initWithCoder:aDecoder];
-//        
-//        if(self)
-//        {
-//            _menuManager = [OGMenuManager sharedInstance];
-//        }
-//    }
-//    else
-//    {
-//        self = nil;
-//    }
-//    
-//    return self;
-//}
+- (void)onButtonClick:(OGButtonNode *)button
+{
+    [self.menuManager.audioManager playSoundEffect:@"button_touch"];
+}
 
 @end

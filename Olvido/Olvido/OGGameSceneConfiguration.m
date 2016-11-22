@@ -13,9 +13,11 @@ NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
 NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
+NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
 
 @interface OGGameSceneConfiguration ()
 
+@property (nonatomic, copy, readwrite) NSString *backgroundMusic;
 @property (nonatomic, copy, readwrite) NSString *startRoom;
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<NSDictionary *> *mutableEnemiesConfiguration;
@@ -57,6 +59,7 @@ NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
     NSDictionary *configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
     
     self.startRoom = configurationDictionary[kOGGameSceneConfigurationStartRoomKey];
+    self.backgroundMusic = configurationDictionary[kOGGameSceneConfigurationBackgroundMusicKey];
     
     NSDictionary *playerConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationPlayerKey];
     

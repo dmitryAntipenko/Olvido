@@ -91,7 +91,8 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
         
-        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
+        GKGraphNode2D *initialNode = (GKGraphNode2D *) [graph nodes][0];
+        CGPoint position = CGPointMake(initialNode.position.x, initialNode.position.y);
         
         _renderComponent = [[OGRenderComponent alloc] init];
         _renderComponent.node.position = position;
@@ -111,7 +112,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
         _agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
         _agent.maxAcceleration = kOGEnemyEntityMaximumAcceleration;
         _agent.mass = kOGEnemyEntityAgentMass;
-        _agent.radius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
+        _agent.radius = physicsBodyRadius;
         _agent.behavior = [[GKBehavior alloc] init];
         [self addComponent:_agent];
 
@@ -213,11 +214,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     
     SKScene *scene = ((OGRenderComponent *) [self componentForClass:[OGRenderComponent class]]).node.scene;
     
-    if (!scene)
-    {
-        result = [[GKBehavior alloc] init];
-    }
-    else
+    if (scene)
     {
         switch (self.mandate)
         {
@@ -247,8 +244,11 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
             }
             default:
                 break;
-        }
-        
+        }        
+    }
+    else
+    {
+        result = [[GKBehavior alloc] init];
     }
     
     return result;

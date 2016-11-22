@@ -7,6 +7,7 @@
 //
 
 #import "OGGameViewController.h"
+#import "OGAudioManager.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
 #import "OGLevelManager.h"
@@ -27,6 +28,7 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
+    
     view.showsPhysics = YES;
     /* DEBUG OPTIONS */
     

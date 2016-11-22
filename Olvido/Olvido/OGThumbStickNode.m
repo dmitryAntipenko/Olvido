@@ -8,7 +8,7 @@
 
 #import "OGThumbStickNode.h"
 
-CGFloat const kOGThumbStickNodeDefaultAlpha = 0.2;
+CGFloat const kOGThumbStickNodeDefaultAlpha = 0.05;
 CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
 CGFloat const kOGThumbStickNodeRestoreDuration = 0.2;
 NSString *const kOGThumbStickNodeTextureName = @"ControlPad";

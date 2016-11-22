@@ -114,8 +114,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
     }
     
     self.size = CGSizeMake(width, height);
-    self.position = CGPointMake(kOGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);
-    self.zPosition = OGZPositionCategoryForeground;
+    self.position = CGPointMake(kOGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);    
     
     self.itemSizeLength = height;
     
