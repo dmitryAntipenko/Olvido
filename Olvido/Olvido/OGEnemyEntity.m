@@ -14,6 +14,9 @@
 #import "OGRulesComponent.h"
 #import "OGEnemyBehavior.h"
 #import "OGOrientationComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGPhysicsComponent.h"
+#import "OGHealthComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -30,6 +33,8 @@
 #import "OGZPositionEnum.m"
 
 #import "OGColliderType.h"
+
+#import "OGZombie.h"
 
 NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
@@ -70,6 +75,34 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     if (self)
     {
         _graph = graph;
+        
+        CGFloat physicsBodyRadius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
+        
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius]
+                                                               colliderType:[OGColliderType enemy]];
+        [self addComponent:_physicsComponent];
+        
+        _healthComponent = [[OGHealthComponent alloc] init];
+        _healthComponent.maxHealth = 10.0;
+        _healthComponent.currentHealth = 10.0;
+        
+        [self addComponent:_healthComponent];
+        
+        _orientationComponent = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientationComponent];
+        
+        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
+        
+        _renderComponent = [[OGRenderComponent alloc] init];
+        _renderComponent.node.position = position;
+        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
+        _renderComponent.node.physicsBody.allowsRotation = NO;
+        [self addComponent:_renderComponent];
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
+        [self addComponent:_animationComponent];
+        
+        [self.renderComponent.node addChild:_animationComponent.spriteNode];
         
         _mandate = kOGEnemyEntityMandateFollowPath;
  
@@ -165,6 +198,12 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
             self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
         }
     }
+}
+
+#pragma mark - OGHealthComponentDelegate Protocol Methods
+- (void)entityWillDie
+{
+    [self removeComponentForClass:self.agent.class];
 }
 
 #pragma mark - Other Methods

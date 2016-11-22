@@ -17,7 +17,7 @@
 #import "OGDirection.h"
 #import "OGPlayerEntityControlledState.h"
 
-CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
+CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
 
 @interface OGPlayerEntityAppearState ()
 

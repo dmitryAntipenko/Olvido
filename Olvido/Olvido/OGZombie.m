@@ -11,13 +11,10 @@
 
 #import "OGAnimationComponent.h"
 #import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGTrailComponent.h"
-
-#import "OGHealthComponentDelegate.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -33,7 +30,7 @@ NSString *const kOGEnemyEntityAtlasNamesEnemyDead = @"EnemyDead";
 
 static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 
-@interface OGZombie () <OGHealthComponentDelegate>
+@interface OGZombie ()
 
 @property (nonatomic, assign) CGFloat lastPositionX;
 
@@ -48,36 +45,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     
     if (self)
     {
-        CGFloat physicsBodyRadius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
-        
-        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius]
-                                                               colliderType:[OGColliderType enemy]];
-        [self addComponent:_physicsComponent];
-        
-        _healthComponent = [[OGHealthComponent alloc] init];
-        _healthComponent.maxHealth = 10.0;
-        _healthComponent.currentHealth = 10.0;
-        
-        [self addComponent:_healthComponent];
-        
-        _orientationComponent = [[OGOrientationComponent alloc] init];
-        [self addComponent:_orientationComponent];
-        
-        
-        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
-        
-        _renderComponent = [[OGRenderComponent alloc] init];
-        _renderComponent.node.position = position;
-        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
-        _renderComponent.node.physicsBody.allowsRotation = NO;
-        [self addComponent:_renderComponent];
-        
-        _lastPositionX = _renderComponent.node.position.x;
-        
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
-        [self addComponent:_animationComponent];
-        
-        [self.renderComponent.node addChild:_animationComponent.spriteNode];
+        _lastPositionX = self.renderComponent.node.position.x;
         
         OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
         OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
@@ -122,10 +90,10 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     
     if (self.renderComponent.node.position.x != self.lastPositionX)
     {
-        CGFloat differenceX = self.lastPositionX - _renderComponent.node.position.x;
+        CGFloat differenceX = self.lastPositionX - self.renderComponent.node.position.x;
         self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
 
-        self.lastPositionX = _renderComponent.node.position.x;
+        self.lastPositionX = self.renderComponent.node.position.x;
     }
 }
 

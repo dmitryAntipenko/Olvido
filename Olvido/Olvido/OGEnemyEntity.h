@@ -10,9 +10,16 @@
 
 #import "OGContactNotifiableType.h"
 #import "OGRulesComponentDelegate.h"
+#import "OGHealthComponentDelegate.h"
 
 @class OGEnemyConfiguration;
+
 @class OGRulesComponent;
+@class OGRenderComponent;
+@class OGPhysicsComponent;
+@class OGOrientationComponent;
+@class OGAnimationComponent;
+@class OGHealthComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -31,7 +38,13 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 
 extern NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey;
 
-@interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType>
+@interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType, OGHealthComponentDelegate>
+
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
 @property (nonatomic, strong) GKAgent2D *agent;
