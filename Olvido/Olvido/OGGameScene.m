@@ -90,8 +90,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) OGAudioManager *audioManager;
-
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, strong) OGPlayerEntity *player;
@@ -124,8 +122,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (self)
     {        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
-        
-        _audioManager = [OGAudioManager audioManager];
         
         _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
@@ -518,7 +514,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)restart
 {
-    [self.sceneDelegate gameSceneDidCallRestart];
+    [self.sceneDelegate didCallRestart];
 }
 
 - (void)runStoryConclusion
@@ -621,15 +617,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenResumeButtonName])
     {
-        [self.sceneDelegate resume];
+        [self.sceneDelegate didCallResume];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenRestartButtonName])
     {
-        [self.sceneDelegate restart];
+        [self.sceneDelegate didCallRestart];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenMenuButtonName])
     {
-        [self.sceneDelegate exitToMenu];
+        [self.sceneDelegate didCallExit];
     }
 }
 

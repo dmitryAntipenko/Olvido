@@ -10,13 +10,12 @@
 
 @protocol OGGameSceneDelegate <NSObject>
 
-- (void)pause;
-- (void)resume;
-- (void)restart;
+- (void)didCallPause;
+- (void)didCallResume;
 
-- (void)exitToMenu;
+- (void)didCallExit;
 
-- (void)gameSceneDidCallFinish;
-- (void)gameSceneDidCallRestart;
+- (void)didCallFinish;
+- (void)didCallRestart;
 
 @end

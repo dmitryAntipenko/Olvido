@@ -15,6 +15,12 @@
 #import "OGGameScene.h"
 #import "OGMenuManager.h"
 
+@interface OGGameViewController ()
+
+@property (nonatomic, strong) OGAudioManager *audioManager;
+
+@end
+
 @implementation OGGameViewController
 
 - (void)viewDidLoad
@@ -31,12 +37,15 @@
     /* DEBUG OPTIONS */
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
+    self.audioManager = [OGAudioManager audioManager];
     
     self.levelManager = [OGLevelManager levelManager];
     self.levelManager.sceneManager = self.sceneManager;
+    self.levelManager.audioManager = self.audioManager;
     
     self.menuManager = [OGMenuManager menuManager];
     self.menuManager.sceneManager = self.sceneManager;
+    self.menuManager.audioManager = self.audioManager;
     
     self.menuManager.levelManager = self.levelManager;
     self.levelManager.menuManager = self.menuManager;
