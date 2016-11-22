@@ -52,7 +52,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
             SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
             trigger.entity = self;
             _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
-                                                          colliderType:[OGColliderType door]];
+                                                          colliderType:[OGColliderType doorTrigger]];
             [self addComponent:_physics];        
             
             _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
@@ -165,8 +165,8 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 + (void)loadMiscellaneousAssets
 {
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType doorTrigger]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
-    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType lockedDoor]];
 }
 
 + (BOOL)resourcesNeedLoading

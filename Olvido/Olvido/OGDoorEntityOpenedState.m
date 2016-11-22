@@ -25,6 +25,7 @@
     
     self.lockComponent.closed = NO;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
+    self.renderComponent.node.physicsBody.categoryBitMask = 0;
     
     [self.doorEntity.sound playSoundOnce:@"door_open"];
 }

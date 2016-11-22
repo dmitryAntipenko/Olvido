@@ -107,6 +107,7 @@
 		EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAACF1DCC9E3E00E36855 /* OGIntelligenceComponent.m */; };
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */; };
+		EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
 		EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */; };
 		EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */; };
@@ -319,6 +320,7 @@
 		EAA490C51DA7BE52007734F0 /* OGConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGConstants.h; sourceTree = "<group>"; };
 		EAA490C61DA7BE64007734F0 /* OGConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGConstants.m; sourceTree = "<group>"; };
 		EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGGameOverScreen.sks; sourceTree = "<group>"; };
+		EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shooting_sfx.wav; sourceTree = "<group>"; };
 		EAF7F1061DD515A30067D76D /* OGDoorEntityLockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityLockedState.h; sourceTree = "<group>"; };
 		EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityLockedState.m; sourceTree = "<group>"; };
 		EAF7F1091DD515B10067D76D /* OGDoorEntityUnlockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityUnlockedState.h; sourceTree = "<group>"; };
@@ -830,6 +832,7 @@
 		EA8EF7161DDE16EB008CF3A4 /* SFX */ = {
 			isa = PBXGroup;
 			children = (
+				EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */,
 				EA84DBE01DE240740044B2EE /* door_open.mp3 */,
 				EA8EF71D1DDE4233008CF3A4 /* steps.m4a */,
 				EA8EF71B1DDE3F16008CF3A4 /* shot.wav */,
@@ -1044,6 +1047,7 @@
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */,
+				EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */,
 				210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */,
 				EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */,
 				215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */,

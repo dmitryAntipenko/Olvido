@@ -71,9 +71,9 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoor];
 }
 
-+ (instancetype)lockedDoor
++ (instancetype)doorTrigger
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskLockedDoor];
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoorTrigger];
 }
 
 + (instancetype)weapon
