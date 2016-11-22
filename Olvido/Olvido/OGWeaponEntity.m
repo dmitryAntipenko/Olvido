@@ -127,7 +127,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 #pragma mark - OGInventoryItem
 
-- (void)didTaken
+- (void)wasTaken
 {
     [self.render.node removeFromParent];
 }

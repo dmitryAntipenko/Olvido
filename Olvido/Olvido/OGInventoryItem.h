@@ -15,8 +15,7 @@
 
 @optional
 
-- (void)didTaken;
-
+- (void)wasTaken;
 - (void)didThrown;
 
 @end
