@@ -20,10 +20,58 @@
 	<key>Enemies</key>
 	<array>
 		<dict>
+			<key>MaxHealth</key>
+			<integer>10</integer>
+			<key>Type</key>
+			<string>OGZombie</string>
 			<key>PhysicsBodyRadius</key>
 			<integer>30</integer>
 		</dict>
 		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
 			<key>PhysicsBodyRadius</key>
 			<integer>30</integer>
 		</dict>

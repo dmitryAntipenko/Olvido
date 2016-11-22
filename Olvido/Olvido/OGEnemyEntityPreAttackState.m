@@ -13,13 +13,14 @@
 #import "OGEnemyEntityAttackState.h"
 #import "OGEnemyEntityAgentControlledState.h"
 
-NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
+NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 
 @interface OGEnemyEntityPreAttackState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
+@property (nonatomic, assign) NSTimeInterval elapsedTimeForAnimation;
 
 @property (nonatomic, strong) OGAnimationComponent *animationComponent;
 
@@ -35,6 +36,7 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
     {
         _enemyEntity = enemyEntity;
         _elapsedTime = 0.0;
+        _elapsedTimeForAnimation = 0.0;
     }
     
     return self;
@@ -45,7 +47,7 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
-    self.animationComponent.requestedAnimationState = kOGAnimationStateAttack;
+    self.elapsedTimeForAnimation = 0.0;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -56,6 +58,8 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.6;
     
     if (self.elapsedTime >= kOGEnemyEntityPreAttackStatePreAttackStateDuration)
     {
+        self.animationComponent.requestedAnimationState = kOGAnimationStateAttack;
+
         if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
         {
             [self.stateMachine enterState:[OGEnemyEntityAttackState class]];

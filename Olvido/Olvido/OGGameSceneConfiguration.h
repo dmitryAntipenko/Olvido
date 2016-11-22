@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class OGEnemyConfiguration;
 @class OGPlayerConfiguration;
+@class OGEnemyConfiguration;
 
 @interface OGGameSceneConfiguration : NSObject
 

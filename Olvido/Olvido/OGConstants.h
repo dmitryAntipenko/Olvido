@@ -27,11 +27,6 @@ extern NSString *const kOGPortalSpriteName;
 extern NSString *const kOGEnemySpriteName;
 extern NSString *const kOGObstacleSpriteName;
 
-//extern NSString *const kOGMainMenuSceneFileName;
-//extern NSString *const kOGMapMenuSceneFileName;
-//extern NSString *const kOGSettingsMenuSceneFileName;
-//extern NSString *const kOGShopMenuSceneFileName;
-
 extern NSString *const kOGMainMenuName;
 extern NSString *const kOGMapMenuName;
 extern NSString *const kOGSettingsMenuName;
@@ -43,6 +38,8 @@ extern NSString *const kOGShopMenuName;
 + (CGVector)randomVectorWithLength:(CGFloat)length;
 + (CGVector)randomVector;
 
++ (CGSize)thumbStickNodeSize;
++ (CGFloat)thumbStickNodeRadius;
 @end
 
 #endif /* OGConstants_h */

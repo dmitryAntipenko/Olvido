@@ -68,4 +68,14 @@ NSString *const kOGShopMenuName = @"ShopMenu";
     return CGVectorMake(cosf(angle), sinf(angle));
 }
 
++ (CGSize)thumbStickNodeSize
+{
+    return CGSizeMake(200.0, 200.0);
+}
+
++ (CGFloat)thumbStickNodeRadius
+{
+    return [OGConstants thumbStickNodeSize].width / 2.0;
+}
+
 @end

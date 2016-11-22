@@ -8,7 +8,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "OGAudioManager.h"
-#import "OGTrailComponent.h"
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
 #import "OGTouchControlInputNode.h"
@@ -19,7 +18,6 @@
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
 
-#import "OGPlayerEntity.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -30,9 +28,12 @@
 #import "OGTransitionComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGTrailComponent.h"
+#import "OGRulesComponent.h"
 #import "OGShadowComponent.h"
 
 #import "OGPlayerEntity.h"
+#import "OGZombie.h"
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
@@ -49,14 +50,11 @@
 #import "OGDeathLevelState.h"
 
 #import "OGLevelManager.h"
-#import "OGAnimationComponent.h"
-#import "OGAnimationState.h"
+
 #import "OGZPositionEnum.m"
 
-#import "OGEntitySnapshot.h"
 #import "OGLevelStateSnapshot.h"
-
-#import "OGRulesComponent.h"
+#import "OGEntitySnapshot.h"
 
 NSString *const kOGGameSceneDoorsNodeName = @"doors";
 NSString *const kOGGameSceneItemsNodeName = @"items";
@@ -225,11 +223,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
-- (CGSize)thumbStickNodeSize
-{
-    return CGSizeMake(200.0, 200.0);
-}
-
 #pragma mark - Scene Creation
 
 - (void)createSceneContents
@@ -242,7 +235,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createTouchControlInputNode
 {
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     inputNode.position = CGPointZero;
@@ -278,11 +271,13 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     {
         NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
+    
+        OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
         
-        OGEnemyEntity *enemy = [[OGEnemyEntity alloc] initWithConfiguration:enemyConfiguration
-                                                                      graph:graph];
-        
-        enemy.trailComponent.targetNode = self;        
+        if ([enemy isMemberOfClass:[OGZombie class]])
+        {
+            ((OGZombie *) enemy).trailComponent.targetNode = self;
+        }
         
         [self addEntity:enemy];
         
@@ -376,7 +371,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     {
         [self addChild:renderNode];
         
-        SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:OGShadowComponent.self]).node;
+        SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]).node;
         
         if (shadowNode)
         {
@@ -436,6 +431,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
      {
          [notifiable contactWithEntityDidBegin:entity];
+     }];
+}
+
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
+     {
+         [notifiable contactWithEntityDidEnd:entity];
      }];
 }
 

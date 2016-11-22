@@ -7,8 +7,8 @@
 //
 
 #import "OGGameSceneConfiguration.h"
-#import "OGEnemyConfiguration.h"
 #import "OGPlayerConfiguration.h"
+#import "OGEnemyConfiguration.h"
 
 NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
