@@ -18,6 +18,8 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor redColor];
     
@@ -26,14 +28,14 @@
     doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorPhysicsBodySize];
     doorNode.physicsBody.dynamic = NO;
     
-    OGColliderType *doorColliderType = [OGColliderType door];
+    OGColliderType *doorColliderType = [OGColliderType lockedDoor];
     doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
     doorNode.physicsBody.contactTestBitMask = (uint32_t) doorColliderType.contactTestBitMask;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityUnlockedState.self;
+    return stateClass == [OGDoorEntityUnlockedState class];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -42,9 +44,9 @@
     
     if (!self.lockComponent.isLocked)
     {
-        if ([self.stateMachine canEnterState:OGDoorEntityUnlockedState.self])
+        if ([self.stateMachine canEnterState:[OGDoorEntityUnlockedState class]])
         {
-            [self.stateMachine enterState:OGDoorEntityUnlockedState.self];
+            [self.stateMachine enterState:[OGDoorEntityUnlockedState class]];
         }
     }
 }

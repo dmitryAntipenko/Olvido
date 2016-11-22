@@ -7,7 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGContactNotifiableType.h"
 
 @class OGEnemyConfiguration;
 @class OGHealthComponent;
@@ -16,16 +15,53 @@
 @class OGRenderComponent;
 @class OGMovementComponent;
 @class OGPhysicsComponent;
+@class OGOrientationComponent;
+@class OGRulesComponent;
+@class OGTrailComponent;
 
-@interface OGEnemyEntity : GKEntity <OGContactNotifiableType>
+typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
+{
+    kOGEnemyEntityMandateFollowPath = 0,
+    kOGEnemyEntityMandateHunt = 1,
+    kOGEnemyEntityMandateReturnToPositionOnPath = 2
+};
 
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGHealthComponent *health;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGMovementComponent *movement;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
+extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
+extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
+extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
+extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
+extern NSUInteger const kOGEnemyEntityDealGamage;
 
-- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration;
+@interface OGEnemyEntity : GKEntity
+
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGMovementComponent *movementComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong) OGRulesComponent *rulesComponent;
+@property (nonatomic, strong) OGTrailComponent *trailComponent;
+
+@property (nonatomic, strong) GKAgent2D *agent;
+@property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
+
+@property (nonatomic, strong) GKGraph *graph;
+
+@property (nonatomic, assign) OGEnemyEntityMandate mandate;
+
+@property (nonatomic, assign) CGPoint closestPointOnPath;
+
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
+                                graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
+
+- (GKBehavior *)behaviorForCurrentMandate;
+
+- (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph;
+- (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph;
+
+- (CGFloat)distanceBetweenStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
+- (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent;
 
 @end

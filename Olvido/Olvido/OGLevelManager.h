@@ -7,19 +7,22 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGGameSceneDelegate.h"
 
 @class OGGameScene;
 @class OGStoryScene;
 @class OGSceneManager;
+@class OGMenuManager;
 
-@interface OGLevelManager : NSObject
+@interface OGLevelManager : NSObject <OGGameSceneDelegate>
 
 @property (nonatomic, weak) SKView *view;
 
 @property (nonatomic, copy, readonly) NSArray *levelMap;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, weak) OGMenuManager *menuManager;
 
-+ (OGLevelManager *)sharedInstance;
++ (instancetype)levelManager;
 
 - (void)loadLevelMap;
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier;

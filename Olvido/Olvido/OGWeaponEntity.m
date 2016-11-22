@@ -13,7 +13,7 @@
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
 #import "OGSoundComponent.h"
-
+#import "OGZPositionEnum.m"
 
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
@@ -75,7 +75,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 {
     if (vector.dx != 0.0 && vector.dy != 0.0)
     {
-        OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self];
+        OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]];
         
         if (ownerRenderComponent)
         {
@@ -122,7 +122,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 - (OGWeaponComponent *)weaponComponent
 {
-    return (OGWeaponComponent *) [self.owner componentForClass:OGWeaponComponent.self];
+    return (OGWeaponComponent *) [self.owner componentForClass:[OGWeaponComponent class]];
 }
 
 #pragma mark - OGInventoryItem
@@ -136,8 +136,8 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 {
     SKSpriteNode *weaponNode = (SKSpriteNode *) self.render.node;
     
-    OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:OGMovementComponent.self];
-    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
+    OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:[OGMovementComponent class]];
+    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
     
     weaponNode.position = ownerNode.position;
     
@@ -153,7 +153,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 - (SKTexture *)texture
 {
-    return ((SKSpriteNode *)self.render.node).texture;
+    return ((SKSpriteNode *) self.render.node).texture;
 }
 
 - (NSString *)identifier

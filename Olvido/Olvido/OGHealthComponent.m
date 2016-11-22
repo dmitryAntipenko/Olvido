@@ -20,7 +20,7 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
     }
     else if (newHealth < kOGHealthComponentMinHealth)
     {
-        _currentHealth = kOGHealthComponentMinHealth;
+        [self kill];
     }
     else
     {
@@ -46,6 +46,11 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 - (void)kill
 {
     self.currentHealth = kOGHealthComponentMinHealth;
+    
+    if (self.delegate)
+    {
+        [self.delegate entityWillDie];
+    }
 }
 
 @end

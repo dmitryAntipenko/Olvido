@@ -7,6 +7,7 @@
 //
 
 #import "OGRenderComponent.h"
+#import "OGZPositionEnum.m"
 
 @implementation OGRenderComponent
 
@@ -27,6 +28,7 @@
     [super didAddToEntity];
     
     self.node.entity = self.entity;
+    self.node.zPosition = OGZPositionCategoryPhysicsWorld;
 }
 
 - (void)willRemoveFromEntity

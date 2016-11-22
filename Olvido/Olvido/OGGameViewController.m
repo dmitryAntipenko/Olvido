@@ -15,12 +15,6 @@
 #import "OGGameScene.h"
 #import "OGMenuManager.h"
 
-@interface OGGameViewController ()
-
-@property (nonatomic, strong) OGSceneManager *sceneManager;
-
-@end
-
 @implementation OGGameViewController
 
 - (void)viewDidLoad
@@ -35,16 +29,21 @@
     view.showsFPS = YES;
     view.showsNodeCount = YES;
     
+    view.showsPhysics = YES;
+    /* DEBUG OPTIONS */
+    
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
-    //[self.sceneManager transitionToInitialScene];
     
-    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
-    levelManager.sceneManager = self.sceneManager;
+    self.levelManager = [OGLevelManager levelManager];
+    self.levelManager.sceneManager = self.sceneManager;
     
-    OGMenuManager *menuManager = [OGMenuManager sharedInstance];
-    menuManager.sceneManager = self.sceneManager;
+    self.menuManager = [OGMenuManager menuManager];
+    self.menuManager.sceneManager = self.sceneManager;
     
-    [menuManager loadMainMenu];
+    self.menuManager.levelManager = self.levelManager;
+    self.levelManager.menuManager = self.menuManager;
+    
+    [self.menuManager loadMainMenu];
 }
 
 - (BOOL)shouldAutorotate

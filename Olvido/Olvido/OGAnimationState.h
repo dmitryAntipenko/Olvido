@@ -11,7 +11,9 @@ typedef NS_ENUM(NSUInteger, OGAnimationState)
     kOGAnimationStateNone,
     kOGAnimationStateIdle,
     kOGAnimationStateWalkForward,
-    kOGAnimationStateAttack
+    kOGAnimationStateRun,
+    kOGAnimationStateAttack,
+    kOGAnimationStateDead
 };
 
 
@@ -19,5 +21,7 @@ static NSString *const kOGAnimationStateDescription[] = {
     [kOGAnimationStateNone] = @"none",
     [kOGAnimationStateIdle] = @"idle",
     [kOGAnimationStateWalkForward] = @"walkForward",
-    [kOGAnimationStateAttack] = @"atack"
+    [kOGAnimationStateRun] = @"run",
+    [kOGAnimationStateAttack] = @"attack",
+    [kOGAnimationStateDead] = @"dead"
 };

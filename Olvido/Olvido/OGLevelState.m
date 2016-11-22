@@ -9,12 +9,6 @@
 #import "OGLevelState.h"
 #import "OGGameScene.h"
 
-@interface OGLevelState ()
-
-@property (nonatomic, strong, readwrite) OGGameScene *scene;
-
-@end
-
 @implementation OGLevelState
 
 - (instancetype)initWithLevelScene:(OGGameScene *)scene

@@ -6,6 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGZPositionEnum.m"
 #import "OGDoorEntity.h"
 #import "OGColliderType.h"
 #import "OGRenderComponent.h"
@@ -45,7 +46,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
             _keyIdentifiers = [NSMutableArray array];
             
             _render = [[OGRenderComponent alloc] init];
-            _render.node = spriteNode;            
+            _render.node = spriteNode;
             [self addComponent:_render];
             
             SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
@@ -112,7 +113,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
         }
         else
         {
-            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:OGInventoryComponent.self];
+            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:[OGInventoryComponent class]];
             
             for (NSString *identifier in self.keyIdentifiers)
             {
@@ -165,6 +166,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 {
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType lockedDoor]];
 }
 
 + (BOOL)resourcesNeedLoading

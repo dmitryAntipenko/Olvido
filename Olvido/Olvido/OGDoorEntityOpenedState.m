@@ -21,6 +21,8 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.lockComponent.closed = NO;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
     
@@ -29,9 +31,9 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityClosedState.self
-    || stateClass == OGDoorEntityLockedState.self
-    || stateClass == OGDoorEntityLockedState.self;
+    return stateClass == [OGDoorEntityClosedState class]
+    || stateClass == [OGDoorEntityLockedState class]
+    || stateClass == [OGDoorEntityLockedState class];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -42,17 +44,17 @@
     {        
         if (!self.lockComponent.isClosed && ![self isTargetNearDoor])
         {
-            if ([self.stateMachine canEnterState:OGDoorEntityClosedState.self])
+            if ([self.stateMachine canEnterState:[OGDoorEntityClosedState class]])
             {
-                [self.stateMachine enterState:OGDoorEntityClosedState.self];
+                [self.stateMachine enterState:[OGDoorEntityClosedState class]];
             }
         }
     }
     else
     {
-        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        if ([self.stateMachine canEnterState:[OGDoorEntityLockedState class]])
         {
-            [self.stateMachine enterState:OGDoorEntityLockedState.self];
+            [self.stateMachine enterState:[OGDoorEntityLockedState class]];
         }
     }
 }

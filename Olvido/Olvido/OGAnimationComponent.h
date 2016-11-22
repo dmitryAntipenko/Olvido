@@ -19,8 +19,7 @@
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
 @property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
 
-- (instancetype)initWithTextureSize:(CGSize)textureSize
-                         animations:(NSDictionary *)animations;
+- (instancetype)initWithAnimations:(NSDictionary *)animations;
 
 - (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
                                               direction:(OGDirection)direction

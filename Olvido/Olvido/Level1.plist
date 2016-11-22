@@ -11,7 +11,7 @@
 		<key>CurrentHealth</key>
 		<integer>3</integer>
 		<key>PhysicsBodyRadius</key>
-		<integer>40</integer>
+		<integer>30</integer>
 		<key>MessageShowDistance</key>
 		<integer>30</integer>
 		<key>MaxHealth</key>
@@ -22,15 +22,10 @@
 		<dict>
 			<key>PhysicsBodyRadius</key>
 			<integer>30</integer>
-			<key>InitialVector</key>
-			<dict>
-				<key>dx</key>
-				<string>150</string>
-				<key>dy</key>
-				<string>-150</string>
-			</dict>
-			<key>InitialPoint</key>
-			<string>enemy_initial_point_01</string>
+		</dict>
+		<dict>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
 		</dict>
 	</array>
 </dict>

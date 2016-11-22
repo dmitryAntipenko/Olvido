@@ -114,8 +114,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
     }
     
     self.size = CGSizeMake(width, height);
-    self.position = CGPointMake(kOGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);
-    self.zPosition = kOGZPositionHUD;
+    self.position = CGPointMake(kOGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);    
     
     self.itemSizeLength = height;
     
@@ -208,9 +207,9 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^
-                  {
-                      _parentFrame = [self.parent calculateAccumulatedFrame];
-                  });
+        {
+            _parentFrame = [self.parent calculateAccumulatedFrame];
+        });
     
     return _parentFrame;
 }

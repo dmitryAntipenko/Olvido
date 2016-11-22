@@ -8,6 +8,8 @@
 
 #import "OGPlayerEntity.h"
 #import "OGShadowComponent.h"
+#import "OGPlayerEntity+OGPlayerEntityResources.h"
+#import "OGPlayerConfiguration.h"
 #import "OGRenderComponent.h"
 #import "OGHealthComponent.h"
 #import "OGIntelligenceComponent.h"
@@ -20,22 +22,22 @@
 #import "OGWeaponComponent.h"
 #import "OGInventoryItem.h"
 #import "OGInventoryComponent.h"
-#import "OGPlayerEntity+OGPlayerEntityResources.h"
 
 #import "OGColliderType.h"
 
-#import "OGPlayerConfiguration.h"
 #import "OGAnimationState.h"
-
 #import "OGPlayerEntityAppearState.h"
 #import "OGplayerEntityControlledState.h"
 #import "OGplayerEntityAttackState.h"
+
+#import "OGContactNotifiableType.h"
+#import "OGHealthComponentDelegate.h"
 
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
 CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
-@interface OGPlayerEntity ()
+@interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
@@ -49,7 +51,11 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
     self = [super init];
     
     if (self)
-    {        
+    {
+        _agent = [[GKAgent2D alloc] init];
+        _agent.radius = configuration.physicsBodyRadius;
+        [self addComponent:_agent];
+        
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
         [self addComponent:_inventoryComponent];
         
@@ -73,6 +79,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _health = [[OGHealthComponent alloc] init];
         _health.maxHealth = configuration.maxHealth;
         _health.currentHealth = configuration.currentHealth;
+        _health.delegate = self;
         [self addComponent:_health];
         
         _movement = [[OGMovementComponent alloc] init];
@@ -93,7 +100,8 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         
         if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
-            _animation = [[OGAnimationComponent alloc] initWithTextureSize:[OGPlayerEntity textureSize] animations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            
             [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
         }
@@ -141,6 +149,8 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
     if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
         && ![entity conformsToProtocol:@protocol(OGAttacking)])
     {
+        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
+        [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }
 }
@@ -152,6 +162,18 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         [_weaponTakeDelayTimer invalidate];
         _weaponTakeDelayTimer = nil;
     }
+}
+
+- (void)updateAgentPositionToMatchNodePosition
+{
+    CGPoint position = self.render.node.position;
+    
+    self.agent.position = (vector_float2){position.x, position.y};
+}
+
+- (void)entityWillDie
+{
+    
 }
 
 @end

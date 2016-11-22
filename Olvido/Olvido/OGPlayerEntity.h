@@ -7,8 +7,6 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGResourceLoadable.h"
-#import "OGContactNotifiableType.h"
 
 @class OGPlayerConfiguration;
 @class OGShadowComponent;
@@ -24,7 +22,7 @@
 @class OGMessageComponent;
 @class OGOrientationComponent;
 
-@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
+@interface OGPlayerEntity : GKEntity
 
 @property (nonatomic, strong) OGShadowComponent *shadow;
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
@@ -38,7 +36,10 @@
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientation;
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+@property (nonatomic, strong) GKAgent2D *agent;
 
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
+
+- (void)updateAgentPositionToMatchNodePosition;
 
 @end

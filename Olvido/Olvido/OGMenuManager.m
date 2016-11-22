@@ -11,6 +11,7 @@
 #import "OGAudioManager.h"
 #import "OGSceneManager.h"
 #import "OGConstants.h"
+#import "OGMenuBaseScene.h"
 
 NSString *const kOGMenuManagerMenuNameKey = @"Name";
 NSString *const kOGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
@@ -23,21 +24,16 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
 
 @property (nonatomic, strong, readwrite) OGAudioManager *audioManager;
 @property (nonatomic, strong) NSArray<NSDictionary *> *menusMap;
+@property (nonatomic, weak) OGMenuBaseScene *currentScene;
 
 @end
 
 @implementation OGMenuManager
 
-+ (instancetype)sharedInstance;
++ (instancetype)menuManager
 {
-    static OGMenuManager *menuManager = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        menuManager = [[OGMenuManager alloc] init];
-        [menuManager loadMenuMap];
-    });
+    OGMenuManager *menuManager = [[OGMenuManager alloc] init];
+    [menuManager loadMenuMap];
     
     return menuManager;
 }
@@ -69,12 +65,20 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
 - (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier
 {
     NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][kOGMenuManagerSceneIdentifierKey] integerValue];
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
+    
+    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer
+                                     completionHandler:^(OGBaseScene *scene)
+     {
+         self.currentScene = (OGMenuBaseScene *)scene;
+         self.currentScene.menuManager = self;
+     }];
 }
 
 - (void)loadMenuWithName:(NSString *)menuName
 {
-    __block NSUInteger sceneIdentifer = 0;
+    self.currentScene = nil;
+    
+    __block NSUInteger menuIdentifier = 0;
     
     if (menuName)
     {
@@ -82,14 +86,14 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
          {
              if ([menuAsDictionary[kOGMenuManagerMenuNameKey] isEqualToString:menuName])
              {
-                 sceneIdentifer = [menuAsDictionary[kOGMenuManagerSceneIdentifierKey] integerValue];
+                 menuIdentifier = idx;
                  *stop = YES;
              }
          }];
     }
     else
     {
-        sceneIdentifer = kOGMenuManagerMainMenuIdentifier;
+        menuIdentifier = kOGMenuManagerMainMenuIdentifier;
     }
     
     if (!self.audioManager.isMusicPlaying)
@@ -98,7 +102,7 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
         self.audioManager.musicPlayerDelegate = self;
     }
     
-    [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer];
+    [self loadMenuWithIdentifier:menuIdentifier];
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag

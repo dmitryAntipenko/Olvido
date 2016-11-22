@@ -68,23 +68,23 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
     
     if (self.elapsedTime > kOGPlayerEntityAttackStateAttackDuration)
     {
-        if ([self.stateMachine canEnterState:OGPlayerEntityControlledState.self])
+        if ([self.stateMachine canEnterState:[OGPlayerEntityControlledState class]])
         {
-            [self.stateMachine enterState:OGPlayerEntityControlledState.self];
+            [self.stateMachine enterState:[OGPlayerEntityControlledState class]];
         }
     }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGPlayerEntityControlledState.self;
+    return stateClass == [OGPlayerEntityControlledState class];
 }
 
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)
     {
-        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:[OGAnimationComponent class]];
     }
     
     return _animationComponent;
