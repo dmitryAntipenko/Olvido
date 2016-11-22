@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-//#import "OGThumbStickNodeDelegate.h"
 #import "OGGUINode.h"
 
 @protocol OGThumbStickNodeDelegate

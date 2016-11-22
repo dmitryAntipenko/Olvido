@@ -8,16 +8,20 @@
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntity.h"
+
 #import "OGOrientationComponent.h"
+#import "OGAnimationComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
 
 @interface OGEnemyEntityAgentControlledState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
-@property (nonatomic, assign) NSTimeInterval timeSinceBehaviorUpdate;
-@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
+@property (nonatomic, assign) NSTimeInterval timeSinceBehaviorUpdate;
+
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
 @end
 
 @implementation OGEnemyEntityAgentControlledState
@@ -55,7 +59,6 @@
     
     if (self.timeSinceBehaviorUpdate >= kOGEnemyEntityBehaviorUpdateWaitDuration)
     {
-        
         if (self.enemyEntity.mandate == kOGEnemyEntityMandateReturnToPositionOnPath)
         {
             CGPoint enemyPosition = CGPointMake(self.enemyEntity.agent.position.x, self.enemyEntity.agent.position.y);
@@ -70,6 +73,15 @@
         self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
         
         self.timeSinceBehaviorUpdate = 0.0;
+        
+        if (self.enemyEntity.mandate == kOGEnemyEntityMandateHunt)
+        {
+            self.animationComponent.requestedAnimationState = kOGAnimationStateRun;
+        }
+        else
+        {
+            self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+        }
     }
 }
 
@@ -85,6 +97,7 @@
     return stateClass == [OGEnemyEntityPreAttackState class];
 }
 
+#pragma mark - Getters
 - (OGOrientationComponent *)orientationComponent
 {
     if (!_orientationComponent)
@@ -94,5 +107,16 @@
     
     return _orientationComponent;
 }
+
+- (OGAnimationComponent *)animationComponent
+{
+    if (!_animationComponent)
+    {
+        _animationComponent = (OGAnimationComponent *) [self.enemyEntity componentForClass:[OGAnimationComponent class]];
+    }
+    
+    return _animationComponent;
+}
+
 
 @end

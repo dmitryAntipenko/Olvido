@@ -64,8 +64,6 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 
 - (void)didAddToEntity
 {
-    self.renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
-    
     if (self.renderComponent)
     {
         [self.renderComponent.node addChild:self.emitter];
@@ -80,17 +78,10 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    
-}
-
-- (OGRenderComponent *)renderComponent
-{
-    if (!_renderComponent)
+    if (self.renderComponent.node.parent && !self.emitter.targetNode)
     {
-        _renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
+        self.emitter.targetNode = self.renderComponent.node.parent;
     }
-    
-    return _renderComponent;
 }
 
 - (void)pause
@@ -103,19 +94,14 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
     self.emitter.particleBirthRate = kOGTrailComponentParticleBirthratePlay;
 }
 
-- (void)setTargetNode:(SKNode *)targetNode
+- (OGRenderComponent *)renderComponent
 {
-    _targetNode = targetNode;
+    if (!_renderComponent)
+    {
+        _renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
+    }
     
-    if (_targetNode)
-    {
-        self.emitter.targetNode = targetNode;
-    }
-    else
-    {
-        self.emitter.targetNode = self.renderComponent.node.scene;
-    }
-
+    return _renderComponent;
 }
 
 - (void)setTextureSize:(CGSize)textureSize
