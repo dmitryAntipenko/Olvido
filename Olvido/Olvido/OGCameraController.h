@@ -13,8 +13,6 @@
 @property (nonatomic, strong) SKCameraNode *camera;
 @property (nonatomic, weak) SKNode *target;
 
-- (void)moveCameraToNode:(SKNode *)node duration:(CGFloat)duration;
-
-- (void)update;
+- (void)moveCameraToNode:(SKNode *)node;
 
 @end

@@ -222,7 +222,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
     self.audioManager.musicPlayerDelegate = self;
     
-    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
+    [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
 - (CGSize)thumbStickNodeSize
@@ -414,7 +414,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode duration:1.0];
+    [self.cameraController moveCameraToNode:destinationNode];
     
     completion();
 }
@@ -552,7 +552,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
-    [self.cameraController update];
     
     if (self.lastUpdateTimeInterval == 0)
     {
