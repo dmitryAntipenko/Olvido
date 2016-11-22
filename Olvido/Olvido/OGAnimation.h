@@ -20,6 +20,7 @@
 @property (nonatomic, strong) SKAction *bodyAction;
 @property (nonatomic, strong, readonly) NSArray<SKTexture *> *offsetTextures;
 @property (nonatomic, assign) OGDirection direction;
+@property (nonatomic, assign) NSTimeInterval timePerFrame;
 
 - (instancetype)initWithAnimationState:(OGAnimationState)animationState
                              direction:(OGDirection)direction
@@ -27,7 +28,8 @@
                            frameOffset:(NSInteger)frameOffset
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         bodyActionName:(NSString *)bodyActionName
-                            bodyAction:(SKAction *)bodyAction;
+                            bodyAction:(SKAction *)bodyAction
+                          timePerFrame:(NSTimeInterval)timePerFrame;
 
 + (instancetype)animationWithAnimationState:(OGAnimationState)animationState
                                   direction:(OGDirection)direction
@@ -35,5 +37,6 @@
                                 frameOffset:(NSInteger)frameOffset
                       repeatTexturesForever:(BOOL)repeatTexturesForever
                              bodyActionName:(NSString *)bodyActionName
-                                 bodyAction:(SKAction *)bodyAction;
+                                 bodyAction:(SKAction *)bodyAction
+                               timePerFrame:(NSTimeInterval)timePerFrame;
 @end

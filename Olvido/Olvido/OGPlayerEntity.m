@@ -64,7 +64,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType player]];
-        _physics.physicsBody.dynamic = NO;
+        _physics.physicsBody.mass = 1.0;
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;

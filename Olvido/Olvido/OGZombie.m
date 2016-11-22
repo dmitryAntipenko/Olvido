@@ -153,35 +153,40 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
                                                                                                       animationState:kOGAnimationStateIdle
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:YES
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
                                                                                                             imageIdentifier:kOGEnemyEntityAtlasNamesEnemyWalk
                                                                                                              animationState:kOGAnimationStateWalkForward
                                                                                                              bodyActionName:nil
                                                                                                       repeatTexturesForever:YES
-                                                                                                              playBackwards:NO];
+                                                                                                              playBackwards:NO
+                                                                                                               timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateRun]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[2]
                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyRun
                                                                                                      animationState:kOGAnimationStateRun
                                                                                                      bodyActionName:nil
                                                                                               repeatTexturesForever:YES
-                                                                                                      playBackwards:NO];
+                                                                                                      playBackwards:NO
+                                                                                                       timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateAttack]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[3]
                                                                                                        imageIdentifier:kOGEnemyEntityAtlasNamesEnemyAttack
                                                                                                         animationState:kOGAnimationStateAttack
                                                                                                         bodyActionName:nil
                                                                                                  repeatTexturesForever:YES
-                                                                                                         playBackwards:NO];
+                                                                                                         playBackwards:NO
+                                                                                                          timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateDead]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[4]
                                                                                                      imageIdentifier:kOGEnemyEntityAtlasNamesEnemyDead
                                                                                                       animationState:kOGAnimationStateDead
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:NO
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          sOGZombieAnimations = animations;
          

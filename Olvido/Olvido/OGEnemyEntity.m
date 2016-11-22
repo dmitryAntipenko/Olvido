@@ -75,6 +75,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
+        _physicsComponent.physicsBody.mass = 1.0;
         [self addComponent:_physicsComponent];
         
         _healthComponent = [[OGHealthComponent alloc] init];

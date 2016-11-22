@@ -19,6 +19,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 @property (nonatomic, assign) NSTimeInterval elapsedAnimationDuration;
 @property (nonatomic, strong, readwrite) OGAnimation *currentAnimation;
 
+@property (nonatomic, assign) NSTimeInterval currentTimePerFrame;
+
 @end
 
 @implementation OGAnimationComponent
@@ -52,7 +54,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 {
     self.elapsedAnimationDuration += deltaTime;
     
-    if ((self.currentAnimation == nil || self.currentAnimation.animationState != animationState || self.currentAnimation.direction != direction)
+    if ((self.currentAnimation == nil || self.currentAnimation.animationState != animationState
+         || self.currentAnimation.direction != direction || self.currentTimePerFrame != self.currentAnimation.timePerFrame)
         && self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
     {
         OGAnimation *animation = self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]];
@@ -83,12 +86,16 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
             if (self.currentAnimation && animationState == self.currentAnimation.animationState)
             {
                 NSUInteger numberOfFramesInCurrentAnimation = self.currentAnimation.textures.count;
-                NSInteger numberOfFramesPlayedSinceCurrentAnimationBegan = (NSInteger) (self.elapsedAnimationDuration / kOGAnimationComponentTimePerFrame);
+                NSInteger numberOfFramesPlayedSinceCurrentAnimationBegan = (NSInteger) (self.elapsedAnimationDuration / self.currentAnimation.timePerFrame);
                 
                 animation.frameOffset = (self.currentAnimation.frameOffset + numberOfFramesPlayedSinceCurrentAnimationBegan + 1) % numberOfFramesInCurrentAnimation;
             }
             
-            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures timePerFrame:kOGAnimationComponentTimePerFrame resize:YES restore:YES];
+            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures
+                                                       timePerFrame:animation.timePerFrame
+                                                             resize:YES
+                                                            restore:YES];
+            
             if (animation.isRepeatedTexturesForever)
             {
                 texturesAction = [SKAction repeatActionForever:animateAction];
@@ -102,6 +109,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         [self.spriteNode runAction:texturesAction withKey:kOGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
+        self.currentTimePerFrame = self.currentAnimation.timePerFrame;
         
         self.elapsedAnimationDuration = 0.0;
     }
@@ -179,6 +187,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                        bodyActionName:(NSString *)bodyActionName
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
+                         timePerFrame:(NSTimeInterval)timePerFrame
 {
     SKAction *bodyAction = nil;
     if (bodyActionName)
@@ -208,7 +217,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                                                                               frameOffset:0
                                                                     repeatTexturesForever:repeatTexturesForever
                                                                            bodyActionName:bodyActionName
-                                                                               bodyAction:bodyAction];
+                                                                               bodyAction:bodyAction
+                                                                             timePerFrame:timePerFrame];
     }
     
     return animations;

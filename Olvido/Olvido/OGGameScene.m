@@ -223,11 +223,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
 }
 
-- (CGSize)thumbStickNodeSize
-{
-    return CGSizeMake(200.0, 200.0);
-}
-
 #pragma mark - Scene Creation
 
 - (void)createSceneContents
@@ -240,7 +235,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createTouchControlInputNode
 {
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
     inputNode.position = CGPointZero;

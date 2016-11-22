@@ -50,14 +50,16 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
                                                                                                       animationState:kOGAnimationStateIdle
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:YES
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
                                                                                                             imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk
                                                                                                              animationState:kOGAnimationStateWalkForward
                                                                                                              bodyActionName:nil
                                                                                                       repeatTexturesForever:YES
-                                                                                                              playBackwards:NO];
+                                                                                                              playBackwards:NO
+                                                                                                               timePerFrame:0.1];
          
          sOGPlayerEntityAnimations = animations;
          

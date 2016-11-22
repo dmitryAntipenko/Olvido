@@ -10,6 +10,11 @@
 #import "OGMovementComponent.h"
 #import "OGWeaponComponent.h"
 
+#import "OGAnimationComponent.h"
+#import "OGAnimation.h"
+
+#import "OGConstants.h"
+
 @interface OGInputComponent ()
 
 @property (nonatomic, assign) CGVector displacement;
@@ -55,6 +60,16 @@
         {
             weaponComponent.shouldAttack = self.pressed;
             weaponComponent.attackDirection = self.attackDisplacement;
+        }
+        
+        OGAnimationComponent *animationComponent = (OGAnimationComponent *) [self.entity componentForClass:[OGAnimationComponent class]];
+        
+        if (animationComponent.currentAnimation.animationState == kOGAnimationStateWalkForward)
+        {
+            CGFloat k = hypot(self.displacement.dx, self.displacement.dy) / [OGConstants thumbStickNodeRadius];
+            
+            animationComponent.currentAnimation.timePerFrame = 0.1 * k;
+            animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
         }
     }
 }
