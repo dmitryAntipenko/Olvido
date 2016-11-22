@@ -8,6 +8,7 @@
 
 #import "OGGameSceneConfiguration.h"
 #import "OGPlayerConfiguration.h"
+#import "OGEnemyConfiguration.h"
 
 NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
@@ -20,7 +21,7 @@ NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic"
 @property (nonatomic, copy, readwrite) NSString *backgroundMusic;
 @property (nonatomic, copy, readwrite) NSString *startRoom;
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
-@property (nonatomic, strong, readwrite) NSMutableArray<NSDictionary *> *mutableEnemiesConfiguration;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
 
 @end
 
@@ -70,11 +71,12 @@ NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic"
     
     for (NSDictionary *enemyDictionary in enemiesConfigurationDictionary)
     {
-        [self.mutableEnemiesConfiguration addObject:enemyDictionary];
+        OGEnemyConfiguration *enemyConfiguration = [[OGEnemyConfiguration alloc] initWithDictionary:enemyDictionary];
+        [self.mutableEnemiesConfiguration addObject:enemyConfiguration];
     }
 }
 
-- (NSArray<NSDictionary *> *)enemiesConfiguration
+- (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
     return self.mutableEnemiesConfiguration;
 }

@@ -10,18 +10,17 @@
 #import "OGEnemyEntity.h"
 #import "OGPlayerEntity.h"
 
-#import "OGMovementComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGAnimation.h"
 #import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
-
-#import "OGEnemyEntityAgentControlledState.h"
 
 @interface OGEnemyEntityAttackState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
-@property (nonatomic, strong) OGMovementComponent *movementComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
 
 @property (nonatomic, assign) CGPoint targetPosition;
 
@@ -56,16 +55,6 @@
     }
 }
 
-- (void)updateWithDeltaTime:(NSTimeInterval)seconds
-{
-    [super updateWithDeltaTime:seconds];
-    
-    if ([self.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
-    {
-        [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
-    }
-}
-
 - (void)applyDamageWithEntity:(GKEntity *)entity
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
@@ -76,16 +65,6 @@
 }
 
 #pragma mark - setters
-- (OGMovementComponent *)movementComponent
-{
-    if (!_movementComponent)
-    {
-        _movementComponent = (OGMovementComponent *) [self.enemyEntity componentForClass:[OGMovementComponent class]];
-    }
-    
-    return _movementComponent;
-}
-
 - (OGPhysicsComponent *)physicsComponent
 {
     if (!_physicsComponent)
@@ -94,6 +73,16 @@
     }
     
     return _physicsComponent;
+}
+
+- (OGAnimationComponent *)animationComponent
+{
+    if (!_animationComponent)
+    {
+        _animationComponent = (OGAnimationComponent *) [self.enemyEntity componentForClass:[OGAnimationComponent class]];
+    }
+    
+    return _animationComponent;
 }
 
 @end

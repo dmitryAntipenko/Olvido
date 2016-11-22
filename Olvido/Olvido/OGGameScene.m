@@ -81,8 +81,6 @@ NSString *const kOGGameScenePauseScreenResumeButtonName = @"ResumeButton";
 NSString *const kOGGameScenePauseScreenRestartButtonName = @"RestartButton";
 NSString *const kOGGameScenePauseScreenMenuButtonName = @"MenuButton";
 
-NSString *const kOGGameSceneEnemyConfigurationEnemyTypeKey = @"Type";
-
 CGFloat const kOGGameScenePauseSpeed = 0.0;
 CGFloat const kOGGameScenePlaySpeed = 1.0;
 
@@ -274,19 +272,18 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     NSUInteger counter = 0;
     
-    for (NSDictionary *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
+    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
         NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
-        
-        Class enemyClass = NSClassFromString(enemyConfiguration[kOGGameSceneEnemyConfigurationEnemyTypeKey]);
-        OGEnemyEntity *enemy = [[enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
-        
+    
+        OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
         
         if ([enemy isMemberOfClass:[OGZombie class]])
         {
             ((OGZombie *) enemy).trailComponent.targetNode = self;
         }
+        
         [self addEntity:enemy];
         
         counter++;
@@ -439,6 +436,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
      {
          [notifiable contactWithEntityDidBegin:entity];
+     }];
+}
+
+- (void)didEndContact:(SKPhysicsContact *)contact
+{
+    [self handleContact:contact contactCallback:^(id<OGContactNotifiableType> notifiable, GKEntity *entity)
+     {
+         [notifiable contactWithEntityDidEnd:entity];
      }];
 }
 

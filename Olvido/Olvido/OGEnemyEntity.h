@@ -36,8 +36,6 @@ extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
 
 extern NSUInteger const kOGEnemyEntityDealGamage;
 
-extern NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey;
-
 @interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType, OGHealthComponentDelegate>
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
@@ -56,7 +54,7 @@ extern NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey;
 
 @property (nonatomic, assign) CGPoint closestPointOnPath;
 
-- (instancetype)initWithConfiguration:(NSDictionary *)configuration
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
 - (GKBehavior *)behaviorForCurrentMandate;

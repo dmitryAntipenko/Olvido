@@ -7,6 +7,7 @@
 //
 
 #import "OGZombie.h"
+#import "OGPlayerEntity.h"
 #import "OGEnemyConfiguration.h"
 
 #import "OGAnimationComponent.h"
@@ -15,6 +16,7 @@
 #import "OGOrientationComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGTrailComponent.h"
+#import "OGPhysicsComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -33,12 +35,13 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 @interface OGZombie ()
 
 @property (nonatomic, assign) CGFloat lastPositionX;
+@property (nonatomic, weak) SKPhysicsBody *huntContactBody;
 
 @end
 
 @implementation OGZombie
 
-- (instancetype)initWithConfiguration:(NSDictionary *)configuration
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
     self = [super initWithConfiguration:configuration graph:graph];
@@ -70,15 +73,39 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 {
     [super rulesComponentWithRulesComponent:rulesComponent ruleSystem:ruleSystem];
     
-    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) self.intelligenceComponent.stateMachine.currentState;
-
-    if ([agentControlledState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
-        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
-        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
+    GKState *currentState = self.intelligenceComponent.stateMachine.currentState;
+   
+    if ([currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
+        && self.huntAgent && self.huntContactBody)
     {
-        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
+        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:(self.agent.position.x - self.huntAgent.position.x)];
+        [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+    }
+}
+
+#pragma mark - OGContactNotifiableType Protocol Methods
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    [super contactWithEntityDidBegin:entity];
+    
+    if ([entity isMemberOfClass:[OGPlayerEntity class]] && !self.huntContactBody)
+    {
+        self.huntContactBody = ((OGPlayerEntity *) entity).physics.physicsBody;
+        self.agent.behavior = nil;
+        [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+    }
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    [super contactWithEntityDidEnd:entity];
+    
+    if ([entity isMemberOfClass:[OGPlayerEntity class]])
+    {
+        self.huntContactBody = nil;
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
         {
-            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
         }
     }
 }
@@ -91,7 +118,11 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     if (self.renderComponent.node.position.x != self.lastPositionX)
     {
         CGFloat differenceX = self.lastPositionX - self.renderComponent.node.position.x;
-        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+        
+        if (differenceX != 0 && !self.huntContactBody)
+        {
+            self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+        }
 
         self.lastPositionX = self.renderComponent.node.position.x;
     }
@@ -142,7 +173,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
                                                                                                        imageIdentifier:kOGEnemyEntityAtlasNamesEnemyAttack
                                                                                                         animationState:kOGAnimationStateAttack
                                                                                                         bodyActionName:nil
-                                                                                                 repeatTexturesForever:NO
+                                                                                                 repeatTexturesForever:YES
                                                                                                          playBackwards:NO];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateDead]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[4]

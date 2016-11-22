@@ -127,6 +127,10 @@ static NSArray *sOGDoorEntitySoundNames = nil;
     }
 }
 
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+}
+
 - (void)swapTriggerPosition
 {
     SKNode *trigger = [self.render.node childNodeWithName:kOGDoorEntityTriggerNodeName];
