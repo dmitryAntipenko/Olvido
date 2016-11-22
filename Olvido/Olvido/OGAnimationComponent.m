@@ -95,7 +95,6 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                                                        timePerFrame:animation.timePerFrame
                                                              resize:YES
                                                             restore:YES];
-            
             if (animation.isRepeatedTexturesForever)
             {
                 texturesAction = [SKAction repeatActionForever:animateAction];
