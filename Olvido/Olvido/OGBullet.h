@@ -11,16 +11,13 @@
 #import "OGResourceLoadable.h"
 #import "OGEntityManaging.h"
 
-@class OGRenderComponent;
 @class OGPhysicsComponent;
-@class OGHealthComponent;
+@class OGRenderComponent;
 
 @interface OGBullet : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
-
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 
 @end

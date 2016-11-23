@@ -17,7 +17,23 @@
 #import "OGRenderComponent.h"
 #import "OGSoundComponent.h"
 
+@interface OGDoorEntityOpenedState ()
+
+@property (nonatomic, weak) OGSoundComponent *soundComponent;
+
+@end
+
 @implementation OGDoorEntityOpenedState
+
+- (OGSoundComponent *)soundComponent
+{
+    if (!_soundComponent)
+    {
+        _soundComponent = (OGSoundComponent *) [self.doorEntity componentForClass:[OGSoundComponent class]];
+    }
+    
+    return _soundComponent;
+}
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
@@ -27,7 +43,7 @@
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
     self.renderComponent.node.physicsBody.categoryBitMask = 0;
     
-    [self.doorEntity.sound playSoundOnce:@"door_open"];
+    [self.soundComponent playSoundOnce:@"door_open"];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

@@ -26,13 +26,6 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 @implementation OGSceneLoaderPrepearingResourcesState
 
-- (void)didEnterWithPreviousState:(GKState *)state
-{
-    [super didEnterWithPreviousState:state];
-    
-    [self loadResourcesAsunchronously];
-}
-
 - (instancetype)init
 {
     self = [super init];
@@ -45,12 +38,19 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     return self;
 }
 
+- (void)didEnterWithPreviousState:(GKState *)state
+{
+    [super didEnterWithPreviousState:state];
+    
+    [self loadResourcesAsynchronously];
+}
+
 - (BOOL)isValidNextState:(Class)stateClass
 {
     return stateClass == [OGSceneLoaderResourcesReadyState class];
 }
 
-- (void)loadResourcesAsunchronously
+- (void)loadResourcesAsynchronously
 {
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     

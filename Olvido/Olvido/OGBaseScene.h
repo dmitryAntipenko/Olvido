@@ -12,7 +12,7 @@
 
 @property (nonatomic, assign) BOOL customPaused;
 
-- (void)createCamera;
+- (void)configureScene;
 
 - (void)pause;
 - (void)resume;

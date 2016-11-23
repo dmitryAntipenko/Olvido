@@ -19,6 +19,14 @@ NSInteger const kOGBulletDamage = 1;
 
 static SKTexture *sOGBulletEntityTexture;
 
+@interface OGBullet ()
+
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+
+@end
+
 @implementation OGBullet
 
 - (instancetype)init
@@ -52,7 +60,10 @@ static SKTexture *sOGBulletEntityTexture;
     }
          
     [self.delegate removeEntity:self];
-    
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
 }
 
 #pragma mark - Resources

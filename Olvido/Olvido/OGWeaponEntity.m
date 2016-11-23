@@ -13,7 +13,10 @@
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
 #import "OGSoundComponent.h"
+
 #import "OGZPositionEnum.m"
+#import "OGInventoryItem.h"
+#import "OGResourceLoadable.h"
 
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
@@ -21,7 +24,11 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
 static NSArray *sOGWeaponEntitySoundNames = nil;
 
-@interface OGWeaponEntity ()
+@interface OGWeaponEntity () <OGInventoryItem, OGResourceLoadable>
+
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGSoundComponent *soundComponent;
 
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 @property (nonatomic, assign) BOOL allowsAttacking;
@@ -40,16 +47,16 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
         NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
         [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
         
-        _render = [[OGRenderComponent alloc] init];
-        _render.node = sprite;
-        [self addComponent:_render];
+        _renderComponent = [[OGRenderComponent alloc] init];
+        _renderComponent.node = sprite;
+        [self addComponent:_renderComponent];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
-                                                      colliderType:[OGColliderType weapon]];
-        [self addComponent:_physics];
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
+                                                               colliderType:[OGColliderType weapon]];
+        [self addComponent:_physicsComponent];
             
-        _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
-        [self addComponent:_sound];
+        _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
+        [self addComponent:_soundComponent];
         
         _allowsAttacking = YES;
     }
@@ -61,7 +68,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 {
     _owner = owner;
     
-    self.sound.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
+    self.soundComponent.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
 }
 
 + (NSArray *)sOGWeaponEntitySoundNames
@@ -80,6 +87,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
         if (ownerRenderComponent)
         {
             self.allowsAttacking = NO;
+            
             CGFloat vectorAngle = atan2(-vector.dx, vector.dy);
             
             CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed,
@@ -93,7 +101,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
             
             [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
             
-            [self.sound playSoundOnce:@"shot"];
+            [self.soundComponent playSoundOnce:@"shot"];
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
@@ -129,12 +137,12 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 - (void)wasTaken
 {
-    [self.render.node removeFromParent];
+    [self.renderComponent.node removeFromParent];
 }
 
 - (void)didThrown
 {
-    SKSpriteNode *weaponNode = (SKSpriteNode *) self.render.node;
+    SKSpriteNode *weaponNode = (SKSpriteNode *) self.renderComponent.node;
     
     OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:[OGMovementComponent class]];
     SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
@@ -153,12 +161,12 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 - (SKTexture *)texture
 {
-    return ((SKSpriteNode *) self.render.node).texture;
+    return ((SKSpriteNode *) self.renderComponent.node).texture;
 }
 
 - (NSString *)identifier
 {
-    return self.render.node.name;
+    return self.renderComponent.node.name;
 }
 
 - (void)dealloc

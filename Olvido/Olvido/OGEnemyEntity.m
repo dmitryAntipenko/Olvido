@@ -56,11 +56,18 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
 @property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
 
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+
 @end
 
 @implementation OGEnemyEntity
 
 #pragma mark - Inits
+
 - (instancetype)init
 {
     return [self initWithConfiguration:nil graph:nil];
@@ -77,7 +84,6 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
-        _physicsComponent.physicsBody.mass = 1.0;
         [self addComponent:_physicsComponent];
         
         _healthComponent = [[OGHealthComponent alloc] init];
@@ -128,6 +134,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 }
 
 #pragma mark - GKAgentDelegate Protocol Methods
+
 - (void)agentWillUpdate:(GKAgent *)agent
 {
     [self updateAgentPositionToMatchNodePosition];
@@ -161,19 +168,21 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 }
 
 #pragma mark - OGContactNotifiableType Protocol Methods
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
+    
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
+    
 }
 
 #pragma mark - OGRulesComponentDelegate Protocol Methods
+
 - (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
-    OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
-    
     NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(kOGFuzzyEnemyRuleFactPlayerNear)];
     
     NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts])];
@@ -183,11 +192,13 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
     if (huntPlayer > 0.0)
     {
+        OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
         OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey];
+        GKAgent2D *agent = (GKAgent2D *) [player componentForClass:[GKAgent2D class]];
         
-        if (player.agent)
+        if (agent)
         {
-            self.huntAgent = player.agent;
+            self.huntAgent = agent;
             self.mandate = kOGEnemyEntityMandateHunt;
         }
     }
@@ -202,8 +213,10 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 }
 
 #pragma mark - OGHealthComponentDelegate Protocol Methods
+
 - (void)entityWillDie
 {
+    
 }
 
 - (void)dealDamage:(NSInteger)damage
@@ -214,7 +227,8 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     }
 }
 
-#pragma mark - Other Methods
+#pragma mark - Other Method
+
 - (void)entityDidDie
 {
     SKTexture *texture = self.animationComponent.currentAnimation.textures.lastObject;
@@ -224,7 +238,6 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     [self.renderComponent.node.scene addChild:node];
     
     [self.delegate removeEntity:self];
-  
 }
 
 - (GKBehavior *)behaviorForCurrentMandate
@@ -261,8 +274,6 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
                                                       scene:(OGGameScene *)scene];
                 break;
             }
-            default:
-                break;
         }        
     }
     else
@@ -276,35 +287,32 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 - (CGFloat)maxWithArray:(NSArray<NSNumber *> *)array defaultValue:(CGFloat)defaultValue
 {
     CGFloat result = defaultValue;
-    
-    NSUInteger arrayCounter = array.count;
-    
-    if (arrayCounter != 0)
+
+    for (NSUInteger i = 0; i < array.count; i++)
     {
-        result = (result > array[0].floatValue) ? result : array[0].floatValue;
-    }
-    
-    for (NSUInteger i = 0; i < arrayCounter - 1; i++)
-    {
-        result = (result > array[i+1].floatValue) ? result : array[i+1].floatValue;
+        result = MAX(result, array[i].floatValue);
     }
     
     return result;
 }
 
 #pragma mark count with graph
+
 - (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph
 {
     CGPoint enemyPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
     
-    NSUInteger nodesCounter = [graph.nodes count];
+    NSUInteger nodesCounter = graph.nodes.count;
     
-    CGPoint result = CGPointMake(((GKGraphNode2D *)graph.nodes[0]).position.x, ((GKGraphNode2D *)graph.nodes[0]).position.y);
+    GKGraphNode2D *graphNode = ((GKGraphNode2D *) graph.nodes[0]);
+    CGPoint result = CGPointMake(graphNode.position.x, graphNode.position.y);
     
-    for (NSUInteger i = 0; i < nodesCounter - 1; i++)
+    for (NSUInteger i = 1; i < nodesCounter; i++)
     {
         CGFloat distance = [self distanceBetweenStartPoint:enemyPosition endPoint:result];
-        CGPoint nextNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[i+1]).position.x, ((GKGraphNode2D *)graph.nodes[i+1]).position.y);
+        
+        graphNode = ((GKGraphNode2D *)graph.nodes[i]);
+        CGPoint nextNodePosition = CGPointMake(graphNode.position.x, graphNode.position.y);
         CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:nextNodePosition];
         
         result = (distance < nextDistance) ? result : nextNodePosition;
@@ -319,22 +327,25 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     
     NSUInteger nodesCounter = [graph.nodes count];
     
-    CGPoint firstNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[0]).position.x, ((GKGraphNode2D *)graph.nodes[0]).position.y);
+    GKGraphNode2D *graphNode = ((GKGraphNode2D *) graph.nodes[0]);
+    CGPoint firstNodePosition = CGPointMake(graphNode.position.x, graphNode.position.y);
     
     CGFloat result = [self distanceBetweenStartPoint:enemyPosition endPoint:firstNodePosition];
     
-    for (NSUInteger i = 0; i < nodesCounter - 1; i++)
+    for (NSUInteger i = 1; i < nodesCounter; i++)
     {
-        CGPoint nextNodePosition = CGPointMake(((GKGraphNode2D *)graph.nodes[i+1]).position.x, ((GKGraphNode2D *)graph.nodes[i+1]).position.y);
+        graphNode = ((GKGraphNode2D *)graph.nodes[i]);
+        CGPoint nextNodePosition = CGPointMake(graphNode.position.x, graphNode.position.y);
         CGFloat nextDistance = [self distanceBetweenStartPoint:enemyPosition endPoint:nextNodePosition];
         
-        result = (result < nextDistance) ? result : nextDistance;
+        result = MIN(result, nextDistance);
     }
     
     return result;
 }
 
 #pragma mark count distance
+
 - (CGFloat)distanceToAgentWithOtherAgent:(GKAgent2D *)otherAgent
 {
     CGPoint agentPosition = CGPointMake(self.agent.position.x, self.agent.position.y);
@@ -353,6 +364,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 }
 
 #pragma mark updates
+
 - (void)updateAgentPositionToMatchNodePosition
 {
     OGRenderComponent *renderComponent = (OGRenderComponent *) [self componentForClass:[OGRenderComponent class]];
@@ -376,6 +388,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 }
 
 #pragma mark - Miscellaneous Assets
+
 + (void)loadMiscellaneousAssets
 {
     NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy]];

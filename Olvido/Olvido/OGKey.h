@@ -14,8 +14,8 @@
 
 @interface OGKey : GKEntity <OGInventoryItem>
 
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode*)spriteNode;
 

@@ -9,8 +9,6 @@
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneLoaderInitialState.h"
 
-NSString *const kOGSceneLoaderDidCompleteNotification = @"sceneLoaderDidCompleteNotification";
-
 @implementation OGSceneLoaderResourcesReadyState
 
 - (BOOL)isValidNextState:(Class)stateClass

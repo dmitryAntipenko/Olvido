@@ -14,6 +14,7 @@
 NSString *const kOGLevelStateSnapshotEntitiesKey = @"entities";
 NSString *const kOGLevelStateSnapshotDistancesKey = @"distances";
 NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
+NSUInteger const OGLevelStateSnapshotProximityFactor = 900;
 
 @interface OGLevelStateSnapshot ()
 
@@ -31,9 +32,9 @@ NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
     
     if (self)
     {
-        _mutableDistances = [NSMutableArray array];
-        _mutableEntities = [NSMutableArray array];
-        _mutableSnapshots = [NSMutableArray array];
+        _mutableDistances   = [NSMutableArray array];
+        _mutableEntities    = [NSMutableArray array];
+        _mutableSnapshots   = [NSMutableArray array];
         
         for (GKEntity *entity in scene.entities)
         {
@@ -48,8 +49,8 @@ NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
         {
             NSUInteger index = [_mutableEntities indexOfObject:entity];
             GKAgent2D *sourceAgent = (GKAgent2D *) [entity componentForClass:[GKAgent2D class]];
-
-            for (NSUInteger i = index + 1; i <= [_mutableEntities indexOfObject:_mutableEntities.lastObject]; i++)
+            
+            for (NSUInteger i = index + 1; i < _mutableEntities.count; i++)
             {
                 GKEntity *targetEntity = _mutableEntities[i];
                 GKAgent2D *targetAgent = (GKAgent2D *) [targetEntity componentForClass:[GKAgent2D class]];
@@ -73,8 +74,9 @@ NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
         for (GKEntity *entity in _mutableEntities)
         {
             NSUInteger index = [_mutableEntities indexOfObject:entity];
-            NSArray<OGEntityDistance *> *distances = [_mutableDistances objectAtIndex:index];
-            OGEntitySnapshot *entitySnapshot = [[OGEntitySnapshot alloc] initWithEntityDistances:distances proximityFactor:900];
+            NSArray<OGEntityDistance *> *distances = _mutableDistances[index];
+            OGEntitySnapshot *entitySnapshot = [[OGEntitySnapshot alloc] initWithEntityDistances:distances
+                                                                                 proximityFactor:OGLevelStateSnapshotProximityFactor];
             
             [_mutableSnapshots addObject:entitySnapshot];
         }

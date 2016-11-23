@@ -17,10 +17,7 @@
 
 @class OGRulesComponent;
 @class OGRenderComponent;
-@class OGPhysicsComponent;
 @class OGOrientationComponent;
-@class OGAnimationComponent;
-@class OGHealthComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -41,13 +38,9 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGHealthComponent *healthComponent;
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
-@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
-
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
+@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
+@property (nonatomic, strong, readonly) OGOrientationComponent *orientationComponent;
 @property (nonatomic, strong) GKAgent2D *agent;
 @property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
 

@@ -10,7 +10,7 @@
 
 @implementation OGBaseScene
 
-- (void)createCamera
+- (void)configureScene
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
 }

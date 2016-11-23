@@ -35,6 +35,9 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 
 @interface OGZombie ()
 
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
+@property (nonatomic, strong) OGTrailComponent *trailComponent;
+
 @property (nonatomic, assign) CGFloat lastPositionX;
 @property (nonatomic, weak) SKPhysicsBody *huntContactBody;
 
@@ -71,6 +74,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - OGRulesComponentDelegate Protocol Methods
+
 - (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
     [super rulesComponentWithRulesComponent:rulesComponent ruleSystem:ruleSystem];
@@ -86,13 +90,15 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - OGContactNotifiableType Protocol Methods
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     [super contactWithEntityDidBegin:entity];
     
     if ([entity isMemberOfClass:[OGPlayerEntity class]] && !self.huntContactBody)
     {
-        self.huntContactBody = ((OGPlayerEntity *) entity).physicsComponent.physicsBody;
+        OGPhysicsComponent *physicsComponent = (OGPhysicsComponent *) [entity componentForClass:[OGPhysicsComponent class]];
+        self.huntContactBody = physicsComponent.physicsBody;
         self.agent.behavior = nil;
         [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
     }
@@ -105,6 +111,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         self.huntContactBody = nil;
+        
         if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
         {
             [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
@@ -113,6 +120,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - GKAgentDelegate Protocol Methods
+
 - (void)agentDidUpdate:(GKAgent *)agent
 {
     [super agentDidUpdate:agent];
@@ -131,6 +139,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - OGResourceLoadable Protocol Methods
+
 + (BOOL)resourcesNeedLoading
 {
     return sOGZombieAnimations == nil;
@@ -202,6 +211,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - OGHealthComponentDelegate Protocol Methods
+
 - (void)entityWillDie
 {
     [super entityWillDie];
@@ -213,6 +223,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 }
 
 #pragma mark - Getters
+
 + (NSDictionary *)sOGZombieAnimations
 {
     return sOGZombieAnimations;
