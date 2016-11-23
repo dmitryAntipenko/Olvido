@@ -81,7 +81,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         _healthComponent = [[OGHealthComponent alloc] init];
         _healthComponent.maxHealth = 10.0;
         _healthComponent.currentHealth = 10.0;
-        
+        _healthComponent.delegate = self;
         [self addComponent:_healthComponent];
         
         _orientationComponent = [[OGOrientationComponent alloc] init];
@@ -203,10 +203,22 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 #pragma mark - OGHealthComponentDelegate Protocol Methods
 - (void)entityWillDie
 {
-    [self removeComponentForClass:self.agent.class];
+}
+
+- (void)dealDamage:(NSInteger)damage
+{
+    if (self.healthComponent)
+    {
+        [self.healthComponent dealDamage:damage];
+    }
 }
 
 #pragma mark - Other Methods
+- (void)entityDidDie
+{
+    //[self.delegate removeEntity:self];
+}
+
 - (GKBehavior *)behaviorForCurrentMandate
 {
     GKBehavior *result = nil;
@@ -363,6 +375,12 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
+}
+
+
+- (void)dealloc
+{
+    NSLog(@"dealloc");
 }
 
 @end

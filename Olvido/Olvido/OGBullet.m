@@ -12,7 +12,10 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 
+#import "OGHealthComponentDelegate.h"
+
 NSString *const kOGBulletTextureName = @"Bullet";
+NSInteger const kOGBulletDamage = 1;
 
 static SKTexture *sOGBulletEntityTexture;
 
@@ -24,16 +27,16 @@ static SKTexture *sOGBulletEntityTexture;
     
     if (self)
     {
-        _render = [[OGRenderComponent alloc] init];
+        _renderComponent = [[OGRenderComponent alloc] init];
             
         SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithTexture:sOGBulletEntityTexture];
         bulletSprite.physicsBody = [SKPhysicsBody bodyWithTexture:sOGBulletEntityTexture size:sOGBulletEntityTexture.size];
         
-        _render.node = bulletSprite;
-        [self addComponent:_render];
+        _renderComponent.node = bulletSprite;
+        [self addComponent:_renderComponent];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:_render.node.physicsBody
-                                                      colliderType:[OGColliderType bullet]];
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
+                                                               colliderType:[OGColliderType bullet]];
     }
     
     return self;
@@ -42,8 +45,14 @@ static SKTexture *sOGBulletEntityTexture;
 #pragma mark - Contact Handling
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
-{    
+{
+    if ([entity conformsToProtocol:@protocol(OGHealthComponentDelegate)])
+    {
+        [((id<OGHealthComponentDelegate>) entity) dealDamage:kOGBulletDamage];
+    }
+         
     [self.delegate removeEntity:self];
+    
 }
 
 #pragma mark - Resources

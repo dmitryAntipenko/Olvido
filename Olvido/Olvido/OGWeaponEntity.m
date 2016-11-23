@@ -91,7 +91,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
             bullet.delegate = self.delegate;
             [self.delegate addEntity:bullet];
             
-            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
+            [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
             
             [self.sound playSoundOnce:@"shot"];
             
@@ -109,8 +109,8 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 {
     OGBullet *bullet = [[OGBullet alloc] init];
     
-    bullet.render.node.zRotation = rotation;
-    bullet.render.node.position = point;
+    bullet.renderComponent.node.zRotation = rotation;
+    bullet.renderComponent.node.position = point;
     
     return bullet;
 }

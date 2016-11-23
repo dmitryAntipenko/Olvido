@@ -14,6 +14,7 @@
 @protocol OGHealthComponentDelegate <NSObject>
 
 - (void)entityWillDie;
+- (void)dealDamage:(NSInteger)damage;
 
 @end
 

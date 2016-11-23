@@ -188,7 +188,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)checkPlayerPosition
 {
-    CGPoint playerPosition = [self.playerEntity.render.node.parent convertPoint:self.playerEntity.render.node.position toNode:self.parent];
+    CGPoint playerPosition = [self.playerEntity.renderComponent.node.parent convertPoint:self.playerEntity.renderComponent.node.position toNode:self.parent];
     
     if (CGRectContainsPoint(self.hideTrigger, playerPosition))
     {

@@ -51,11 +51,11 @@
     
     for (SKPhysicsBody *contactedBody in contactedBodies)
     {
-        [self applyDamageWithEntity:contactedBody.node.entity];
+        [self applyDamageToEntity:contactedBody.node.entity];
     }
 }
 
-- (void)applyDamageWithEntity:(GKEntity *)entity
+- (void)applyDamageToEntity:(GKEntity *)entity
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {

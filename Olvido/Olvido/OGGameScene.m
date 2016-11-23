@@ -237,7 +237,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
-    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.inputComponent;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
 }
@@ -250,7 +250,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
-    self.cameraController.target = self.player.render.node;
+    self.cameraController.target = self.player.renderComponent.node;
 }
 
 - (void)createPlayer
@@ -260,7 +260,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
-    self.player.render.node.position = playerInitialNode.position;
+    self.player.renderComponent.node.position = playerInitialNode.position;
 }
 
 - (void)createEnemies
@@ -273,6 +273,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
     
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
+        enemy.delegate = self;
         
         if ([enemy isMemberOfClass:[OGZombie class]])
         {
@@ -298,7 +299,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
             
             BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
             
-            door.lockComponent.target = self.player.render.node;
+            door.lockComponent.target = self.player.renderComponent.node;
             door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
             door.lockComponent.locked = doorLocked;
             
@@ -569,7 +570,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
         self.lastUpdateTimeInterval = currentTime;
         
-        for (GKComponentSystem *componentSystem in self.componentSystems)
+        NSArray *array = [NSArray arrayWithArray:self.componentSystems];
+        for (GKComponentSystem *componentSystem in array)
         {
             [componentSystem updateWithDeltaTime:deltaTime];
         }

@@ -21,6 +21,7 @@
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityAttackState.h"
+#import "OGEnemyEntityDieState.h"
 
 NSTimeInterval const kOGEnemyEntityDelayBetweenAttacks = 1.0;
 
@@ -53,8 +54,9 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
         OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
         OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
         OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
+        OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
 
-        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState]];
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState, dieState]];
         [self addComponent:_intelligenceComponent];
         
         //TEMPORARY
@@ -90,7 +92,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     
     if ([entity isMemberOfClass:[OGPlayerEntity class]] && !self.huntContactBody)
     {
-        self.huntContactBody = ((OGPlayerEntity *) entity).physics.physicsBody;
+        self.huntContactBody = ((OGPlayerEntity *) entity).physicsComponent.physicsBody;
         self.agent.behavior = nil;
         [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
     }
@@ -202,7 +204,17 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 #pragma mark - OGHealthComponentDelegate Protocol Methods
 - (void)entityWillDie
 {
-    [self removeComponentForClass:self.agent.class];
+    [super entityWillDie];
+    
+    if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityDieState class]])
+    {
+        [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityDieState class]];
+    }
+}
+
+- (void)entityDidDie
+{
+    [self.delegate removeEntity:self];
 }
 
 #pragma mark - Getters

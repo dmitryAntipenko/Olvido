@@ -24,17 +24,17 @@
 
 @interface OGPlayerEntity : GKEntity
 
-@property (nonatomic, strong) OGShadowComponent *shadow;
+@property (nonatomic, strong) OGShadowComponent *shadowComponent;
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGInputComponent *input;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
-@property (nonatomic, strong) OGHealthComponent *health;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGMovementComponent *movement;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGInputComponent *inputComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGMovementComponent *movementComponent;
 @property (nonatomic, strong) OGMessageComponent *messageComponent;
-@property (nonatomic, strong) OGOrientationComponent *orientation;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
 @property (nonatomic, strong) GKAgent2D *agent;
 

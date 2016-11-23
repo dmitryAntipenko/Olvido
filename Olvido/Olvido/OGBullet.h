@@ -13,12 +13,14 @@
 
 @class OGRenderComponent;
 @class OGPhysicsComponent;
+@class OGHealthComponent;
 
 @interface OGBullet : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGRenderComponent *render;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
 
 @end

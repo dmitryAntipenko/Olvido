@@ -11,6 +11,7 @@
 #import "OGContactNotifiableType.h"
 #import "OGRulesComponentDelegate.h"
 #import "OGHealthComponentDelegate.h"
+#import "OGEntityManaging.h"
 
 @class OGEnemyConfiguration;
 
@@ -38,6 +39,8 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
 
 @interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType, OGHealthComponentDelegate>
 
+@property (nonatomic, weak) id<OGEntityManaging> delegate;
+
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong) OGHealthComponent *healthComponent;
@@ -58,6 +61,7 @@ extern NSUInteger const kOGEnemyEntityDealGamage;
                                 graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
 
 - (GKBehavior *)behaviorForCurrentMandate;
+- (void)entityDidDie;
 
 - (CGPoint)closestPointOnPathWithGraph:(GKGraph *)graph;
 - (CGFloat)closestDistanceToAgentWithGraph:(GKGraph *)graph;
