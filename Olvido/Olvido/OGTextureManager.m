@@ -10,7 +10,7 @@
 
 @interface OGTextureManager ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary<NSString *, NSArray *> *> *textures;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary<NSString *, NSArray<SKTexture *> *> *> *textures;
 
 @end
 
@@ -69,14 +69,24 @@
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName
 {
-    
+    if (unitName)
+    {
+        [self.textures removeObjectForKey:unitName];
+    }
 }
 
 #pragma mark - Accessing to atlases
 
-- (NSArray<SKTexture *> *)atlasesWithUnitName:(NSString *)unitName
+- (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 {
+    NSDictionary<NSString *, NSArray *> *result = nil;
     
+    if (unitName)
+    {
+        result = [self.textures objectForKey:unitName];
+    }
+    
+    return result;
 }
 
 @end
