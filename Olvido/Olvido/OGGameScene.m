@@ -90,8 +90,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) OGAudioManager *audioManager;
-
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, strong) OGPlayerEntity *player;
@@ -124,8 +122,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (self)
     {        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
-        
-        _audioManager = [OGAudioManager audioManager];
         
         _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
@@ -220,7 +216,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
     self.audioManager.musicPlayerDelegate = self;
     
-    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
+    [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
 #pragma mark - Scene Creation
@@ -269,7 +265,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
+        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long) counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
     
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
@@ -410,7 +406,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode duration:1.0];
+    [self.cameraController moveCameraToNode:destinationNode];
     
     completion();
 }
@@ -519,7 +515,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)restart
 {
-    [self.sceneDelegate gameSceneDidCallRestart];
+    [self.sceneDelegate didCallRestart];
 }
 
 - (void)runStoryConclusion
@@ -556,7 +552,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
-    [self.cameraController update];
     
     if (self.lastUpdateTimeInterval == 0)
     {
@@ -624,15 +619,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenResumeButtonName])
     {
-        [self.sceneDelegate resume];
+        [self.sceneDelegate didCallResume];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenRestartButtonName])
     {
-        [self.sceneDelegate restart];
+        [self.sceneDelegate didCallRestart];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenMenuButtonName])
     {
-        [self.sceneDelegate exitToMenu];
+        [self.sceneDelegate didCallExit];
     }
 }
 

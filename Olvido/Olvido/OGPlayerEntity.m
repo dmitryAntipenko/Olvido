@@ -24,6 +24,7 @@
 #import "OGInventoryComponent.h"
 
 #import "OGColliderType.h"
+#import "OGZPositionEnum.m"
 
 #import "OGAnimationState.h"
 #import "OGPlayerEntityAppearState.h"
@@ -114,8 +115,12 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
         
-        SKSpriteNode *targetSprite = (SKSpriteNode *) _renderComponent.node.children.firstObject;
-        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite minShowDistance:configuration.messageShowDistance];
+        SKSpriteNode *targetSprite = (SKSpriteNode *) _renderComponent.node;
+        SKLabelNode *messageLabelNode = [SKLabelNode node];
+        messageLabelNode.zPosition = OGZPositionCategoryForeground;
+        _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite
+                                                       minShowDistance:configuration.messageShowDistance
+                                                             labelNode:messageLabelNode];
         [self addComponent:_messageComponent];
         
         _weaponComponent = [[OGWeaponComponent alloc] init];
@@ -146,6 +151,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
+        [self.messageComponent showMessage:@"Shotgun!" duration:3.0 shouldOverlay:YES];
     }
     
     if ([entity conformsToProtocol:@protocol(OGInventoryItem)]

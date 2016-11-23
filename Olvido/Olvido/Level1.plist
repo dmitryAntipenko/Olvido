@@ -69,18 +69,6 @@
 			<key>PhysicsBodyRadius</key>
 			<integer>30</integer>
 		</dict>
-		<dict>
-			<key>Type</key>
-			<string>OGZombie</string>
-			<key>PhysicsBodyRadius</key>
-			<integer>30</integer>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>OGZombie</string>
-			<key>PhysicsBodyRadius</key>
-			<integer>30</integer>
-		</dict>
 	</array>
 </dict>
 </plist>

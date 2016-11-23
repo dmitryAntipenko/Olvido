@@ -15,6 +15,7 @@
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
 #import "OGSoundComponent.h"
+#import "OGColliderType.h"
 
 @implementation OGDoorEntityClosedState
 
@@ -24,6 +25,8 @@
     
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+    
+    self.renderComponent.node.physicsBody.categoryBitMask = (uint32_t) [OGColliderType door].categoryBitMask;
     
     if (previousState)
     {

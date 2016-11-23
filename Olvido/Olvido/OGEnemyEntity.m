@@ -174,10 +174,9 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 {
     OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
     
-    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = [NSArray arrayWithObject:@(kOGFuzzyEnemyRuleFactPlayerNear)];
+    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(kOGFuzzyEnemyRuleFactPlayerNear)];
     
-    NSArray<NSNumber *> *huntPlayerRaw = [NSArray arrayWithObjects:@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts]),
-                                          nil];
+    NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts])];
     
     CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
     self.huntAgent = nil;
@@ -379,10 +378,10 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 #pragma mark - Miscellaneous Assets
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy], nil];
+    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
     
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
+    NSArray *contactColliders = @[[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
 }
 
