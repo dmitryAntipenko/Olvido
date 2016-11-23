@@ -102,6 +102,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, assign) NSTimeInterval pausedTimeInterval;
 
 @property (nonatomic, strong) NSMutableOrderedSet<GKEntity *> *mutableEntities;
+@property (nonatomic, strong) NSMutableArray<GKEntity *> *entitiesToRemove;
 
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
@@ -136,6 +137,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         ]];
         
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
+        _entitiesToRemove = [[NSMutableArray alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
                              [[GKComponentSystem alloc] initWithComponentClass:[GKAgent2D class]],
@@ -386,16 +388,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)removeEntity:(GKEntity *)entity
 {
-    SKNode *node = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
-    
-    [node removeFromParent];
-    
-    for (GKComponentSystem *componentSystem in self.componentSystems)
-    {
-        [componentSystem removeComponentWithEntity:entity];
-    }
-    
-    [self.mutableEntities removeObject:entity];
+    [self.entitiesToRemove addObject:entity];
 }
 
 #pragma mark - TransitionComponentDelegate
@@ -549,6 +542,23 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 #pragma mark - Update
 
+- (void)clearEntitiesToRemove
+{
+    for (GKEntity *entity in self.entitiesToRemove)
+    {
+        SKNode *node = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
+        
+        [node removeFromParent];
+        
+        for (GKComponentSystem *componentSystem in self.componentSystems)
+        {
+            [componentSystem removeComponentWithEntity:entity];
+        }
+        
+        [self.mutableEntities removeObject:entity];
+    }
+}
+
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
@@ -557,6 +567,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     {
         self.lastUpdateTimeInterval = currentTime;
     }
+    
+    [self clearEntitiesToRemove];
     
     if (!self.customPaused)
     {
