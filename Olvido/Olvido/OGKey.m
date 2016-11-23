@@ -44,4 +44,9 @@
     return ((SKSpriteNode *)self.render.node).texture;
 }
 
+- (void)wasTaken
+{
+    [self.render.node removeFromParent];
+}
+
 @end

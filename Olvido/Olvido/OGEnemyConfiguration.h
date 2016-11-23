@@ -13,6 +13,7 @@
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, copy, readonly) NSString *initialPointName;
 @property (nonatomic, assign, readonly) CGVector initialVector;
+@property (nonatomic, assign) Class enemyClass;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

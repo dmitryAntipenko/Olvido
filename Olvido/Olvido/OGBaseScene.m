@@ -20,7 +20,6 @@
     self.customPaused = YES;
 }
 
-
 - (void)resume
 {
     self.customPaused = NO;

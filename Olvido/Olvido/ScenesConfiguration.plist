@@ -40,6 +40,8 @@
 		<key>OnDemandResources</key>
 		<array>
 			<string>OGZombie</string>
+			<string>OGWeaponEntity</string>
+			<string>OGEnemyEntity</string>
 			<string>OGDoorEntity</string>
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>

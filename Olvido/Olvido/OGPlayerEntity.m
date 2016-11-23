@@ -5,10 +5,11 @@
 //  Created by Дмитрий Антипенко on 11/4/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
+
 #import "OGPlayerEntity.h"
+#import "OGShadowComponent.h"
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
 #import "OGPlayerConfiguration.h"
-
 #import "OGRenderComponent.h"
 #import "OGHealthComponent.h"
 #import "OGIntelligenceComponent.h"
@@ -33,6 +34,8 @@
 #import "OGHealthComponentDelegate.h"
 
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
+NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
+CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -61,10 +64,18 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType player]];
+        _physics.physicsBody.mass = 1.0;
         [self addComponent:_physics];
         
         _render.node.physicsBody = _physics.physicsBody;
         _render.node.physicsBody.allowsRotation = NO;
+        
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGPlayerEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, kOGPlayerEntityShadowYOffset);
+        _shadow = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        [self addComponent:_shadow];
+        
+        [_render.node addChild:_shadow.node];
         
         _health = [[OGHealthComponent alloc] init];
         _health.maxHealth = configuration.maxHealth;
@@ -90,9 +101,7 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         
         if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
-            
             _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
-            _animation.spriteNode.anchorPoint = CGPointMake(0.5, 0.2);
             
             [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
@@ -129,19 +138,27 @@ CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
         self.weaponComponent.weapon.owner = self;
         
         self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-                                     {
-                                         self.canTakeWeapon = YES;
-                                         [timer invalidate];
-                                         timer = nil;
-                                     }];
+        {
+            self.canTakeWeapon = YES;
+            [timer invalidate];
+            timer = nil;
+        }];
+        
+        [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }
     
-    if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
+    if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
+        && ![entity conformsToProtocol:@protocol(OGAttacking)])
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
     }
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+
 }
 
 - (void)dealloc

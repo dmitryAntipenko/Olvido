@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGGUINode.h"
 
 @protocol OGThumbStickNodeDelegate
 
@@ -16,7 +15,7 @@
 
 @end
 
-@interface OGThumbStickNode : OGGUINode
+@interface OGThumbStickNode : SKSpriteNode
 
 @property (nonatomic, weak) id<OGThumbStickNodeDelegate> thumbStickNodeDelegate;
 

@@ -7,8 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGGUINode.h"
 
-@interface OGButtonNode : OGGUINode
+@interface OGButtonNode : SKSpriteNode
 
 @end

@@ -13,6 +13,7 @@ NSString *const kOGEnemyConfigurationInitialVectorKey = @"InitialVector";
 NSString *const kOGEnemyConfigurationInitialVectorDXKey = @"dx";
 NSString *const kOGEnemyConfigurationInitialVectorDYKey = @"dy";
 NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
 
 @interface OGEnemyConfiguration ()
 
@@ -38,6 +39,8 @@ NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius"
             _initialVector = CGVectorMake(dx, dy);
             
             _physicsBodyRadius = [dictionary[kOGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
+            
+            _enemyClass = NSClassFromString(dictionary[kOGEnemyConfigurationConfigurationEnemyTypeKey]);
         }
     }
     

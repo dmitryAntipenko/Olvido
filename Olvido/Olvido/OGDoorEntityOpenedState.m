@@ -12,8 +12,10 @@
 #import "OGDoorEntityUnlockedState.h"
 #import "OGCollisionBitMask.h"
 
+#import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
+#import "OGSoundComponent.h"
 
 @implementation OGDoorEntityOpenedState
 
@@ -23,6 +25,8 @@
     
     self.lockComponent.closed = NO;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
+    
+    [self.doorEntity.sound playSoundOnce:@"door_open"];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

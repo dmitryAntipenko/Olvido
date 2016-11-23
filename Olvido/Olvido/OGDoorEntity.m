@@ -16,6 +16,7 @@
 #import "OGLockComponent.h"
 #import "OGTransitionComponent.h"
 #import "OGInventoryComponent.h"
+#import "OGSoundComponent.h"
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
@@ -23,6 +24,8 @@
 #import "OGDoorEntityUnlockedState.h"
 
 NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
+
+static NSArray *sOGDoorEntitySoundNames = nil;
 
 @interface OGDoorEntity ()
 
@@ -69,6 +72,10 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
             
             _transition = [[OGTransitionComponent alloc] init];
             [self addComponent:_transition];
+            
+            _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNames];
+            _sound.target = _render.node;
+            [self addComponent:_sound];
         }
     }
     else
@@ -120,6 +127,10 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
     }
 }
 
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+}
+
 - (void)swapTriggerPosition
 {
     SKNode *trigger = [self.render.node childNodeWithName:kOGDoorEntityTriggerNodeName];
@@ -150,6 +161,8 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 {
     [OGDoorEntity loadMiscellaneousAssets];
     
+    sOGDoorEntitySoundNames = @[@"door_open"];
+    
     handler();
 }
 
@@ -157,6 +170,7 @@ NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 {
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
+    [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType lockedDoor]];
 }
 
 + (BOOL)resourcesNeedLoading

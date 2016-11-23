@@ -12,11 +12,14 @@
 #import "OGBullet.h"
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
+#import "OGSoundComponent.h"
 #import "OGZPositionEnum.m"
 
 CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.05;
+CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
+
+static NSArray *sOGWeaponEntitySoundNames = nil;
 
 @interface OGWeaponEntity ()
 
@@ -44,11 +47,26 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
                                                       colliderType:[OGColliderType weapon]];
         [self addComponent:_physics];
+            
+        _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
+        [self addComponent:_sound];
         
         _allowsAttacking = YES;
     }
     
     return self;
+}
+
+- (void)setOwner:(GKEntity *)owner
+{
+    _owner = owner;
+    
+    self.sound.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
+}
+
++ (NSArray *)sOGWeaponEntitySoundNames
+{
+    return sOGWeaponEntitySoundNames;
 }
 
 #pragma mark - OGAttacking
@@ -73,7 +91,9 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
             bullet.delegate = self.delegate;
             [self.delegate addEntity:bullet];
             
-            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];            
+            [bullet.physics.physicsBody applyImpulse:bulletMovementVector];
+            
+            [self.sound playSoundOnce:@"shot"];
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
@@ -106,6 +126,11 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 }
 
 #pragma mark - OGInventoryItem
+
+- (void)wasTaken
+{
+    [self.render.node removeFromParent];
+}
 
 - (void)didThrown
 {
@@ -143,6 +168,25 @@ CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
         [_bulletSpawnTimer invalidate];
         _bulletSpawnTimer = nil;
     }
+}
+
+#pragma mark - Resources
+
++ (void)loadResourcesWithCompletionHandler:(void (^)())handler
+{
+    sOGWeaponEntitySoundNames = @[@"shot"];
+    
+    handler();
+}
+
++ (BOOL)resourcesNeedLoading
+{
+    return sOGWeaponEntitySoundNames == nil;
+}
+
++ (void)purgeResources
+{
+    sOGWeaponEntitySoundNames = nil;
 }
 
 @end

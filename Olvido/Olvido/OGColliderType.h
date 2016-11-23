@@ -19,6 +19,7 @@
 + (instancetype)enemy;
 + (instancetype)obstacle;
 + (instancetype)door;
++ (instancetype)lockedDoor;
 + (instancetype)weapon;
 + (instancetype)bullet;
 + (instancetype)key;

@@ -60,9 +60,9 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
         {
             [self.mutableInventoryItems setObject:item forKey:item.identifier];
             
-            if ([item respondsToSelector:@selector(didTaken)])
+            if ([item respondsToSelector:@selector(wasTaken)])
             {
-                [item didTaken];
+                [item wasTaken];
             }
         }
     }

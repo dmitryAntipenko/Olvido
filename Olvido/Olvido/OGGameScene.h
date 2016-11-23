@@ -28,11 +28,9 @@
 @property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
 
 - (void)restart;
-
+- (void)resume;
 - (void)pauseWithoutPauseScreen;
-
 - (void)gameOver;
-
 - (void)runStoryConclusion;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity;

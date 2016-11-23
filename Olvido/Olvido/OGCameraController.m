@@ -39,7 +39,7 @@ NSString *const kOGCameraControllerMoveActionKey = @"camera_move_action";
     else
     {
         newPosition = node.position;
-    }
+    }        
     
     SKAction *cameraMovement = [SKAction moveTo:newPosition duration:duration];
     [self.camera runAction:cameraMovement withKey:kOGCameraControllerMoveActionKey];

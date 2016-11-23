@@ -139,15 +139,15 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         
         if ([polygonVertices count] > 0)
         {
-            for (NSUInteger i = 0; i < [polygonVertices count]; i++)
+            for (NSUInteger i = 0; i < polygonVertices.count; i++)
             {
-                if (i != [polygonVertices count])
+                if (i != polygonVertices.count)
                 {
                     CGFloat x = polygonVertices[i].CGPointValue.x;
                     CGFloat y = polygonVertices[i].CGPointValue.y;
                     
-                    CGFloat nextX = polygonVertices[i+1].CGPointValue.x;
-                    CGFloat nextY = polygonVertices[i+1].CGPointValue.y;
+                    CGFloat nextX = polygonVertices[i + 1].CGPointValue.x;
+                    CGFloat nextY = polygonVertices[i + 1].CGPointValue.y;
                     
                     CGFloat maxX = ((x > nextX) ? x : nextX) + extrusionRadius;
                     CGFloat maxY = ((y > nextY) ? y : nextY) + extrusionRadius;

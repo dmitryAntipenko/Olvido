@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+
 @class OGEntitySnapshot;
 
 typedef NS_ENUM(NSUInteger, OGFuzzyEnemyRuleFact)

@@ -34,5 +34,6 @@
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                 repeatTexturesForever:(BOOL)repeatTexturesForever
-                        playBackwards:(BOOL)playBackwards;
+                        playBackwards:(BOOL)playBackwards
+                         timePerFrame:(NSTimeInterval)timePerFrame;
 @end

@@ -13,6 +13,7 @@
 #import "OGTransitionComponentDelegate.h"
 
 @class OGRenderComponent;
+@class OGSoundComponent;
 @class OGIntelligenceComponent;
 @class OGAnimationComponent;
 @class OGPhysicsComponent;
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) OGPhysicsComponent *physics;
 @property (nonatomic, strong) OGLockComponent *lockComponent;
 @property (nonatomic, strong) OGTransitionComponent *transition;
+@property (nonatomic, strong) OGSoundComponent *sound;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 

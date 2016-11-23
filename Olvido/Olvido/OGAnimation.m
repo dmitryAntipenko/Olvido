@@ -17,6 +17,7 @@
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         bodyActionName:(NSString *)bodyActionName
                             bodyAction:(SKAction *)bodyAction
+                          timePerFrame:(NSTimeInterval)timePerFrame
 {
     self = [self init];
     
@@ -29,6 +30,7 @@
         _repeatTexturesForever = repeatTexturesForever;
         _bodyActionName = bodyActionName;
         _bodyAction = bodyAction;
+        _timePerFrame = timePerFrame;
     }
     
     return self;
@@ -41,6 +43,7 @@
                       repeatTexturesForever:(BOOL)repeatTexturesForever
                              bodyActionName:(NSString *)bodyActionName
                                  bodyAction:(SKAction *)bodyAction
+                               timePerFrame:(NSTimeInterval)timePerFrame
 {
     return [[OGAnimation alloc] initWithAnimationState:animationState
                                              direction:direction
@@ -48,7 +51,7 @@
                                            frameOffset:frameOffset
                                  repeatTexturesForever:repeatTexturesForever
                                         bodyActionName:bodyActionName
-                                            bodyAction:bodyAction];
+                                            bodyAction:bodyAction timePerFrame:timePerFrame];
 }
 
 - (NSArray<SKTexture *> *)offsetTextures

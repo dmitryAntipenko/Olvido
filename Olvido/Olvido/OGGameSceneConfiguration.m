@@ -8,17 +8,20 @@
 
 #import "OGGameSceneConfiguration.h"
 #import "OGPlayerConfiguration.h"
+#import "OGEnemyConfiguration.h"
 
 NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
 NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
+NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
 
 @interface OGGameSceneConfiguration ()
 
+@property (nonatomic, copy, readwrite) NSString *backgroundMusic;
 @property (nonatomic, copy, readwrite) NSString *startRoom;
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
-@property (nonatomic, strong, readwrite) NSMutableArray<NSDictionary *> *mutableEnemiesConfiguration;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
 
 @end
 
@@ -57,6 +60,7 @@ NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
     NSDictionary *configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
     
     self.startRoom = configurationDictionary[kOGGameSceneConfigurationStartRoomKey];
+    self.backgroundMusic = configurationDictionary[kOGGameSceneConfigurationBackgroundMusicKey];
     
     NSDictionary *playerConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationPlayerKey];
     
@@ -67,11 +71,12 @@ NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
     
     for (NSDictionary *enemyDictionary in enemiesConfigurationDictionary)
     {
-        [self.mutableEnemiesConfiguration addObject:enemyDictionary];
+        OGEnemyConfiguration *enemyConfiguration = [[OGEnemyConfiguration alloc] initWithDictionary:enemyDictionary];
+        [self.mutableEnemiesConfiguration addObject:enemyConfiguration];
     }
 }
 
-- (NSArray<NSDictionary *> *)enemiesConfiguration
+- (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
     return self.mutableEnemiesConfiguration;
 }

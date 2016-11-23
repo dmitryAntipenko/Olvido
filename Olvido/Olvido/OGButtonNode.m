@@ -7,8 +7,8 @@
 //
 
 #import "OGButtonNode.h"
-#import "OGConstants.h"
 #import "SKColor+OGConstantColors.h"
+#import "OGConstants.h"
 
 NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
 NSString *const kOGButtonNodeUserDataTouchedColorKey = @"touchedColor";

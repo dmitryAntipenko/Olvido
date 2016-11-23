@@ -14,6 +14,9 @@
 #import "OGRulesComponent.h"
 #import "OGEnemyBehavior.h"
 #import "OGOrientationComponent.h"
+#import "OGAnimationComponent.h"
+#import "OGPhysicsComponent.h"
+#import "OGHealthComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -31,6 +34,8 @@
 
 #import "OGColliderType.h"
 
+#import "OGZombie.h"
+
 NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
@@ -44,12 +49,9 @@ CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
 NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
-NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
-
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
-@property (nonatomic, assign, readonly) CGPoint agentOffset;
 @property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
 
 @end
@@ -62,7 +64,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     return [self initWithConfiguration:nil graph:nil];
 }
 
-- (instancetype)initWithConfiguration:(NSDictionary *)configuration
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
     self = [super init];
@@ -71,6 +73,34 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     {
         _graph = graph;
         
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
+                                                               colliderType:[OGColliderType enemy]];
+        _physicsComponent.physicsBody.mass = 1.0;
+        [self addComponent:_physicsComponent];
+        
+        _healthComponent = [[OGHealthComponent alloc] init];
+        _healthComponent.maxHealth = 10.0;
+        _healthComponent.currentHealth = 10.0;
+        
+        [self addComponent:_healthComponent];
+        
+        _orientationComponent = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientationComponent];
+        
+        GKGraphNode2D *initialNode = (GKGraphNode2D *) [graph nodes][0];
+        CGPoint position = CGPointMake(initialNode.position.x, initialNode.position.y);
+        
+        _renderComponent = [[OGRenderComponent alloc] init];
+        _renderComponent.node.position = position;
+        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
+        _renderComponent.node.physicsBody.allowsRotation = NO;
+        [self addComponent:_renderComponent];
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
+        [self addComponent:_animationComponent];
+        
+        [self.renderComponent.node addChild:_animationComponent.spriteNode];
+        
         _mandate = kOGEnemyEntityMandateFollowPath;
  
         _agent = [[GKAgent2D alloc] init];
@@ -78,7 +108,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
         _agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
         _agent.maxAcceleration = kOGEnemyEntityMaximumAcceleration;
         _agent.mass = kOGEnemyEntityAgentMass;
-        _agent.radius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
+        _agent.radius = configuration.physicsBodyRadius;
         _agent.behavior = [[GKBehavior alloc] init];
         [self addComponent:_agent];
 
@@ -131,7 +161,10 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
 #pragma mark - OGContactNotifiableType Protocol Methods
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
 }
 
 #pragma mark - OGRulesComponentDelegate Protocol Methods
@@ -167,6 +200,12 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     }
 }
 
+#pragma mark - OGHealthComponentDelegate Protocol Methods
+- (void)entityWillDie
+{
+    [self removeComponentForClass:self.agent.class];
+}
+
 #pragma mark - Other Methods
 - (GKBehavior *)behaviorForCurrentMandate
 {
@@ -174,11 +213,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     
     SKScene *scene = ((OGRenderComponent *) [self componentForClass:[OGRenderComponent class]]).node.scene;
     
-    if (!scene)
-    {
-        result = [[GKBehavior alloc] init];
-    }
-    else
+    if (scene)
     {
         switch (self.mandate)
         {
@@ -208,8 +243,11 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
             }
             default:
                 break;
-        }
-        
+        }        
+    }
+    else
+    {
+        result = [[GKBehavior alloc] init];
     }
     
     return result;
@@ -301,7 +339,7 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     
     if (renderComponent)
     {
-        self.agent.position = (vector_float2){renderComponent.node.position.x + self.agentOffset.x, renderComponent.node.position.y + self.agentOffset.y};
+        self.agent.position = (vector_float2){renderComponent.node.position.x, renderComponent.node.position.y};
     }
 }
 
@@ -313,20 +351,14 @@ NSString *const kOGEnemyEntityConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyR
     
     if (renderComponent)
     {
-        renderComponent.node.position = CGPointMake(agent.position.x - self.agentOffset.x, agent.position.y - self.agentOffset.y);
+        renderComponent.node.position = CGPointMake(agent.position.x, agent.position.y);
     }
-}
-
-#pragma mark - Getters
-- (CGPoint)agentOffset
-{
-    return CGPointMake(0.0, -25.0);
 }
 
 #pragma mark - Miscellaneous Assets
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = [NSArray arrayWithObject:[OGColliderType obstacle]];
+    NSArray *collisionColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType lockedDoor], [OGColliderType player], [OGColliderType enemy], nil];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
     
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];

@@ -8,9 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGControlInputSource.h"
-#import "OGGUINode.h"
 
-@interface OGTouchControlInputNode : OGGUINode
+@interface OGTouchControlInputNode : SKSpriteNode
 
 @property (nonatomic, weak) id<OGControlInputSourceDelegate> inputSourceDelegate;
 

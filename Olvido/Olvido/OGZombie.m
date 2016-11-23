@@ -7,17 +7,16 @@
 //
 
 #import "OGZombie.h"
+#import "OGPlayerEntity.h"
 #import "OGEnemyConfiguration.h"
 
 #import "OGAnimationComponent.h"
 #import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGTrailComponent.h"
-
-#import "OGHealthComponentDelegate.h"
+#import "OGPhysicsComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -33,51 +32,23 @@ NSString *const kOGEnemyEntityAtlasNamesEnemyDead = @"EnemyDead";
 
 static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 
-@interface OGZombie () <OGHealthComponentDelegate>
+@interface OGZombie ()
 
 @property (nonatomic, assign) CGFloat lastPositionX;
+@property (nonatomic, weak) SKPhysicsBody *huntContactBody;
 
 @end
 
 @implementation OGZombie
 
-- (instancetype)initWithConfiguration:(NSDictionary *)configuration
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
     self = [super initWithConfiguration:configuration graph:graph];
     
     if (self)
     {
-        CGFloat physicsBodyRadius = [configuration[kOGEnemyEntityConfigurationPhysicsBodyRadiusKey] floatValue];
-        
-        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius]
-                                                               colliderType:[OGColliderType enemy]];
-        [self addComponent:_physicsComponent];
-        
-        _healthComponent = [[OGHealthComponent alloc] init];
-        _healthComponent.maxHealth = 10.0;
-        _healthComponent.currentHealth = 10.0;
-        
-        [self addComponent:_healthComponent];
-        
-        _orientationComponent = [[OGOrientationComponent alloc] init];
-        [self addComponent:_orientationComponent];
-        
-        
-        CGPoint position = CGPointMake(((GKGraphNode2D *) [graph nodes][0]).position.x, ((GKGraphNode2D *) [graph nodes][0]).position.y);
-        
-        _renderComponent = [[OGRenderComponent alloc] init];
-        _renderComponent.node.position = position;
-        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
-        _renderComponent.node.physicsBody.allowsRotation = NO;
-        [self addComponent:_renderComponent];
-        
-        _lastPositionX = _renderComponent.node.position.x;
-        
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
-        [self addComponent:_animationComponent];
-        
-        [self.renderComponent.node addChild:_animationComponent.spriteNode];
+        _lastPositionX = self.renderComponent.node.position.x;
         
         OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
         OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
@@ -102,15 +73,39 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 {
     [super rulesComponentWithRulesComponent:rulesComponent ruleSystem:ruleSystem];
     
-    OGEnemyEntityAgentControlledState *agentControlledState = (OGEnemyEntityAgentControlledState *) self.intelligenceComponent.stateMachine.currentState;
-
-    if ([agentControlledState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
-        && agentControlledState.elapsedTime >= kOGEnemyEntityDelayBetweenAttacks
-        && self.mandate == kOGEnemyEntityMandateHunt && self.huntAgent && [self distanceToAgentWithOtherAgent:self.huntAgent] <= 30.0)
+    GKState *currentState = self.intelligenceComponent.stateMachine.currentState;
+   
+    if ([currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
+        && self.huntAgent && self.huntContactBody)
     {
-        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
+        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:(self.agent.position.x - self.huntAgent.position.x)];
+        [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+    }
+}
+
+#pragma mark - OGContactNotifiableType Protocol Methods
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    [super contactWithEntityDidBegin:entity];
+    
+    if ([entity isMemberOfClass:[OGPlayerEntity class]] && !self.huntContactBody)
+    {
+        self.huntContactBody = ((OGPlayerEntity *) entity).physics.physicsBody;
+        self.agent.behavior = nil;
+        [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+    }
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    [super contactWithEntityDidEnd:entity];
+    
+    if ([entity isMemberOfClass:[OGPlayerEntity class]])
+    {
+        self.huntContactBody = nil;
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
         {
-            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
         }
     }
 }
@@ -122,10 +117,14 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     
     if (self.renderComponent.node.position.x != self.lastPositionX)
     {
-        CGFloat differenceX = self.lastPositionX - _renderComponent.node.position.x;
-        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+        CGFloat differenceX = self.lastPositionX - self.renderComponent.node.position.x;
+        
+        if (differenceX != 0 && !self.huntContactBody)
+        {
+            self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+        }
 
-        self.lastPositionX = _renderComponent.node.position.x;
+        self.lastPositionX = self.renderComponent.node.position.x;
     }
 }
 
@@ -154,35 +153,40 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
                                                                                                       animationState:kOGAnimationStateIdle
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:YES
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
                                                                                                             imageIdentifier:kOGEnemyEntityAtlasNamesEnemyWalk
                                                                                                              animationState:kOGAnimationStateWalkForward
                                                                                                              bodyActionName:nil
                                                                                                       repeatTexturesForever:YES
-                                                                                                              playBackwards:NO];
+                                                                                                              playBackwards:NO
+                                                                                                               timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateRun]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[2]
                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyRun
                                                                                                      animationState:kOGAnimationStateRun
                                                                                                      bodyActionName:nil
                                                                                               repeatTexturesForever:YES
-                                                                                                      playBackwards:NO];
+                                                                                                      playBackwards:NO
+                                                                                                       timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateAttack]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[3]
                                                                                                        imageIdentifier:kOGEnemyEntityAtlasNamesEnemyAttack
                                                                                                         animationState:kOGAnimationStateAttack
                                                                                                         bodyActionName:nil
-                                                                                                 repeatTexturesForever:NO
-                                                                                                         playBackwards:NO];
+                                                                                                 repeatTexturesForever:YES
+                                                                                                         playBackwards:NO
+                                                                                                          timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateDead]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[4]
                                                                                                      imageIdentifier:kOGEnemyEntityAtlasNamesEnemyDead
                                                                                                       animationState:kOGAnimationStateDead
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:NO
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          sOGZombieAnimations = animations;
          

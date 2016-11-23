@@ -10,6 +10,11 @@
 #import "OGMovementComponent.h"
 #import "OGWeaponComponent.h"
 
+#import "OGAnimationComponent.h"
+#import "OGAnimation.h"
+
+#import "OGConstants.h"
+
 @interface OGInputComponent ()
 
 @property (nonatomic, assign) CGVector displacement;
