@@ -16,11 +16,12 @@
 
 #pragma mark - Memory managment
 
-- (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName;
+- (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
 #pragma mark - Accessing to atlases
+
 
 - (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 

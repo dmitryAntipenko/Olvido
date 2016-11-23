@@ -8,9 +8,12 @@
 
 #import "OGTextureManager.h"
 
+char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManagerSyncQueue";
+
 @interface OGTextureManager ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary<NSString *, NSArray<SKTexture *> *> *> *textures;
+@property (nonatomic, strong) dispatch_queue_t syncQueue;
 
 @end
 
@@ -23,6 +26,7 @@
     if (self)
     {
         _textures = [[NSMutableDictionary alloc] init];
+        _syncQueue = dispatch_queue_create(kOGTextureManagerQueueLabel, DISPATCH_QUEUE_CONCURRENT);
     }
     
     return self;
@@ -35,36 +39,45 @@
 
 #pragma mark - Memory managment
 
-- (void)loadAtlasesWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName
+- (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
 {
-    if (unitName && atlasName)
+    dispatch_queue_t currentQueue = [NSOperationQueue currentQueue].underlyingQueue;
+    
+    dispatch_barrier_async(self.syncQueue, ^
     {
-        NSMutableDictionary *atlases = [[self.textures objectForKey:unitName] mutableCopy];
-        
-        if (!atlases)
+        if (unitName && atlasName)
         {
-            atlases = [[NSMutableDictionary alloc] init];
-        }
-        
-        SKTextureAtlas *atlas = [atlases objectForKey:atlasName];
-        
-        if (!atlas)
-        {
-            atlas = [SKTextureAtlas atlasNamed:atlasName];
-            [atlas preloadWithCompletionHandler:^{}];
+            NSMutableDictionary *atlases = [[self.textures objectForKey:unitName] mutableCopy];
             
-            NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
-            
-            for (NSString *textureName in atlas.textureNames)
+            if (!atlases)
             {
-                [atlasTextures addObject:[atlas textureNamed:textureName]];
+                atlases = [[NSMutableDictionary alloc] init];
             }
             
-            [atlases setObject:atlasTextures forKey:atlasName];
+            SKTextureAtlas *atlas = [atlases objectForKey:atlasName];
+            
+            if (!atlas)
+            {
+                atlas = [SKTextureAtlas atlasNamed:atlasName];
+                
+                NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
+                
+                for (NSString *textureName in atlas.textureNames)
+                {
+                    [atlasTextures addObject:[atlas textureNamed:textureName]];
+                }
+                
+                [atlases setObject:atlasTextures forKey:atlasName];
+            }
+            
+            
+            [atlas preloadWithCompletionHandler:^{}];
+            
+            [self.textures setObject:[atlases copy] forKey:atlasName];
         }
         
-        [self.textures setObject:[atlases copy] forKey:atlasName];
-    }
+        dispatch_async(currentQueue, completion);
+    });
 }
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName
@@ -79,12 +92,15 @@
 
 - (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 {
-    NSDictionary<NSString *, NSArray *> *result = nil;
+    __block NSDictionary<NSString *, NSArray *> *result = nil;
     
-    if (unitName)
+    dispatch_sync(self.syncQueue, ^
     {
-        result = [self.textures objectForKey:unitName];
-    }
+        if (unitName)
+        {
+            result = [self.textures objectForKey:unitName];
+        }
+    });
     
     return result;
 }
