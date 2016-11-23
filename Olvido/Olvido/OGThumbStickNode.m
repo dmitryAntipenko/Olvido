@@ -27,22 +27,33 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
 
 - (instancetype)initWithSize:(CGSize)size
 {
-    _trackingDistance = size.width / 2.0;
+    CGFloat halfWidth = size.width / 2.0;
+    CGFloat halfHeight = size.height / 2.0;
+    
+    _trackingDistance = halfWidth;
+    
     CGFloat touchPadLength = size.width / 2.2;
-    _center = CGPointMake(size.width / 2.0 - touchPadLength, size.height / 2.0 - touchPadLength);
+    _center = CGPointMake(halfWidth - touchPadLength, halfHeight - touchPadLength);
     
     CGSize touchPadSize = CGSizeMake(touchPadLength, touchPadLength);
     SKTexture *touchPadTexture = [SKTexture textureWithImageNamed:kOGThumbStickNodeTextureName];
     
-    self = [super initWithTexture:touchPadTexture color:[SKColor clearColor] size:size];
-    
-    if (self)
+    if (touchPadTexture)
     {
-        _touchPad = [SKSpriteNode spriteNodeWithTexture:touchPadTexture size:touchPadSize];
-        _touchPad.color = [SKColor clearColor];
+        self = [super initWithTexture:touchPadTexture color:[SKColor clearColor] size:size];
         
-        self.alpha = kOGThumbStickNodeDefaultAlpha;
-        [self addChild:_touchPad];
+        if (self)
+        {
+            _touchPad = [SKSpriteNode spriteNodeWithTexture:touchPadTexture size:touchPadSize];
+            _touchPad.color = [SKColor clearColor];
+            
+            self.alpha = kOGThumbStickNodeDefaultAlpha;
+            [self addChild:_touchPad];
+        }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;
@@ -93,12 +104,10 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
 {
     [super touchesEnded:touches withEvent:event];
     
-    if (touches.count == 0)
+    if (touches.count != 0)
     {
-        return;
+        [self resetTouchPad];
     }
-    
-    [self resetTouchPad];
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

@@ -188,7 +188,9 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)checkPlayerPosition
 {
-    CGPoint playerPosition = [self.playerEntity.render.node.parent convertPoint:self.playerEntity.render.node.position toNode:self.parent];
+    SKNode *renderComponentNode = ((OGRenderComponent *) [self.playerEntity componentForClass:[OGRenderComponent class]]).node;
+    
+    CGPoint playerPosition = [renderComponentNode.parent convertPoint:renderComponentNode.position toNode:self.parent];
     
     if (CGRectContainsPoint(self.hideTrigger, playerPosition))
     {
@@ -206,10 +208,10 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 - (CGRect)parentFrame
 {
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^
-        {
-            _parentFrame = [self.parent calculateAccumulatedFrame];
-        });
+    dispatch_once(&onceToken, ^()
+    {
+        _parentFrame = [self.parent calculateAccumulatedFrame];
+    });
     
     return _parentFrame;
 }

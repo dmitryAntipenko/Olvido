@@ -8,8 +8,6 @@
 
 #import <GameplayKit/GameplayKit.h>
 
-@class OGEntitySnapshot;
-
 typedef NS_ENUM(NSUInteger, OGFuzzyEnemyRuleFact)
 {
     kOGFuzzyEnemyRuleNoneFact,
@@ -17,6 +15,8 @@ typedef NS_ENUM(NSUInteger, OGFuzzyEnemyRuleFact)
     kOGFuzzyEnemyRuleFactPlayerMedium,
     kOGFuzzyEnemyRuleFactPlayerFar
 };
+
+@class OGEntitySnapshot;
 
 @interface OGFuzzyEnemyRule : GKRule
 

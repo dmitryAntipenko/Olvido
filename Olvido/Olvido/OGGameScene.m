@@ -18,6 +18,7 @@
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
 
+#import "OGInputComponent.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -233,7 +234,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
-    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    
+    OGInputComponent *inputComponent = (OGInputComponent *) [self.player componentForClass:[OGInputComponent class]];
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) inputComponent;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
 }
@@ -246,7 +249,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
-    self.cameraController.target = self.player.render.node;
+    self.cameraController.target = self.player.renderComponent.node;
 }
 
 - (void)createPlayer
@@ -256,7 +259,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
-    self.player.render.node.position = playerInitialNode.position;
+    self.player.renderComponent.node.position = playerInitialNode.position;
 }
 
 - (void)createEnemies
@@ -269,10 +272,12 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
     
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
+        enemy.delegate = self;
         
         if ([enemy isMemberOfClass:[OGZombie class]])
         {
-            ((OGZombie *) enemy).trailComponent.targetNode = self;
+            OGTrailComponent *trailComponent = (OGTrailComponent *) [enemy componentForClass:[OGTrailComponent class]];
+            trailComponent.targetNode = self;
         }
         
         [self addEntity:enemy];
@@ -290,19 +295,22 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         if ([doorNode isKindOfClass:[SKSpriteNode class]])
         {
             OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            OGLockComponent *lockComponent = (OGLockComponent *) [door componentForClass:[OGLockComponent class]];
+            OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [door componentForClass:[OGTransitionComponent class]];
+            
             door.transitionDelegate = self;
             
             BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
             
-            door.lockComponent.target = self.player.render.node;
-            door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
-            door.lockComponent.locked = doorLocked;
+            lockComponent.target = self.player.renderComponent.node;
+            lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
+            lockComponent.locked = doorLocked;
             
             NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
             NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];
             
-            door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
-            door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
+            transitionComponent.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
+            transitionComponent.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
             
             for (NSString *key in doorNode.userData.allKeys)
             {
@@ -319,7 +327,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createInventoryBar
 {
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent];
     self.inventoryBarNode.playerEntity = self.player;
     
     if (self.camera)
@@ -401,11 +410,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
 {
-    SKNode *destinationNode = component.destination;
-    
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode];
+    [self.cameraController moveCameraToNode:self.currentRoom];
     
     completion();
 }
@@ -564,7 +571,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
         self.lastUpdateTimeInterval = currentTime;
         
-        for (GKComponentSystem *componentSystem in self.componentSystems)
+        NSArray *array = [NSArray arrayWithArray:self.componentSystems];
+        for (GKComponentSystem *componentSystem in array)
         {
             [componentSystem updateWithDeltaTime:deltaTime];
         }

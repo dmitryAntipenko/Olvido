@@ -65,6 +65,7 @@
 		2177AF0C1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF0B1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m */; };
 		2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */; };
 		2177AF171DE33CC100A21B75 /* OGZombie.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF161DE33CC100A21B75 /* OGZombie.m */; };
+		2177AF1D1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */; };
 		EA05FA061DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA021DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m */; };
@@ -114,7 +115,6 @@
 		EAF7F10E1DD51F0E0067D76D /* OGTransitionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10D1DD51F0E0067D76D /* OGTransitionComponent.m */; };
 		EAF7F1111DD523B30067D76D /* OGDoorEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F12021DD4E292006D4129 /* OGDoorEntity.m */; };
 		EAF7F1191DD785FE0067D76D /* OGWeaponComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */; };
-		EAF7F11C1DD7878D0067D76D /* OGActionButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */; };
 		EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */; };
 		EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1251DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m */; };
 		EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1281DD800C30067D76D /* OGBullet.m */; };
@@ -237,6 +237,8 @@
 		2177AF111DE1F72200A21B75 /* OGHealthComponentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGHealthComponentDelegate.h; sourceTree = "<group>"; };
 		2177AF151DE33CC100A21B75 /* OGZombie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGZombie.h; sourceTree = "<group>"; };
 		2177AF161DE33CC100A21B75 /* OGZombie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZombie.m; sourceTree = "<group>"; };
+		2177AF1B1DE5CE6B00A21B75 /* OGEnemyEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityDieState.h; sourceTree = "<group>"; };
+		2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityDieState.m; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		EA05F9FF1DD4FA6C00FAC81A /* OGPlayerEntityAppearState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAppearState.h; sourceTree = "<group>"; };
 		EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAppearState.m; sourceTree = "<group>"; };
@@ -329,8 +331,6 @@
 		EAF7F10D1DD51F0E0067D76D /* OGTransitionComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTransitionComponent.m; sourceTree = "<group>"; };
 		EAF7F1171DD785FE0067D76D /* OGWeaponComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponent.h; sourceTree = "<group>"; };
 		EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponent.m; sourceTree = "<group>"; };
-		EAF7F11A1DD7878D0067D76D /* OGActionButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGActionButtonNode.h; sourceTree = "<group>"; };
-		EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGActionButtonNode.m; sourceTree = "<group>"; };
 		EAF7F11F1DD79C370067D76D /* OGAttacking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGAttacking.h; sourceTree = "<group>"; };
 		EAF7F1211DD7A4A60067D76D /* OGWeaponEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponEntity.h; sourceTree = "<group>"; };
 		EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponEntity.m; sourceTree = "<group>"; };
@@ -532,6 +532,8 @@
 				2177AF0B1DDF401F00A21B75 /* OGEnemyEntityPreAttackState.m */,
 				2177AF0D1DDF405600A21B75 /* OGEnemyEntityAttackState.h */,
 				2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */,
+				2177AF1B1DE5CE6B00A21B75 /* OGEnemyEntityDieState.h */,
+				2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */,
 			);
 			name = "IntelligenceComponent States (EnemyEntity)";
 			sourceTree = "<group>";
@@ -805,8 +807,6 @@
 				EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */,
 				1B0E44E61DD9FB0B008F0F7B /* OGInventoryBarNode.h */,
 				1B0E44E71DD9FB0B008F0F7B /* OGInventoryBarNode.m */,
-				EAF7F11A1DD7878D0067D76D /* OGActionButtonNode.h */,
-				EAF7F11B1DD7878D0067D76D /* OGActionButtonNode.m */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -1009,7 +1009,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -1075,7 +1075,6 @@
 				EA05FA0F1DD507FA00FAC81A /* OGDoorEntityClosedState.m in Sources */,
 				2177AF171DE33CC100A21B75 /* OGZombie.m in Sources */,
 				EA05FA101DD507FA00FAC81A /* OGDoorEntityState.m in Sources */,
-				EAF7F11C1DD7878D0067D76D /* OGActionButtonNode.m in Sources */,
 				2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */,
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
@@ -1106,6 +1105,7 @@
 				215A8A6D1DD9ED1D00C5C90D /* OGEnemyBehavior.m in Sources */,
 				215A8A8E1DDCD13900C5C90D /* OGLevelStateSnapshot.m in Sources */,
 				1B7F24A41DD5D074004918C8 /* OGSceneLoaderResourcesReadyState.m in Sources */,
+				2177AF1D1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m in Sources */,
 				EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */,
 				1B7F249B1DD5D074004918C8 /* OGLevelManager.m in Sources */,
 				1B700AB21DDC88A500DC88F6 /* OGTrailComponent.m in Sources */,
@@ -1278,11 +1278,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1296,11 +1296,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -21,13 +21,13 @@
         
         if (self)
         {
-            _render = [[OGRenderComponent alloc] init];
-            _render.node = spriteNode;
-            [self addComponent:_render];
+            _renderComponent = [[OGRenderComponent alloc] init];
+            _renderComponent.node = spriteNode;
+            [self addComponent:_renderComponent];
             
-            _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
-                                                          colliderType:[OGColliderType key]];
-            [self addComponent:_physics];
+            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
+                                                                   colliderType:[OGColliderType key]];
+            [self addComponent:_physicsComponent];
         }
     }
     
@@ -36,17 +36,17 @@
 
 - (NSString *)identifier
 {
-    return self.render.node.name;
+    return self.renderComponent.node.name;
 }
 
 - (SKTexture *)texture
 {
-    return ((SKSpriteNode *)self.render.node).texture;
+    return ((SKSpriteNode *) self.renderComponent.node).texture;
 }
 
 - (void)wasTaken
 {
-    [self.render.node removeFromParent];
+    [self.renderComponent.node removeFromParent];
 }
 
 @end

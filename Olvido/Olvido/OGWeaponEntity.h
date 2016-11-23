@@ -7,28 +7,16 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGAttacking.h"
-#import "OGInventoryItem.h"
-#import "OGResourceLoadable.h"
 #import "OGEntityManaging.h"
+#import "OGAttacking.h"
 
-@class OGAnimationComponent;
-@class OGRenderComponent;
-@class OGPhysicsComponent;
-@class OGSoundComponent;
-
-@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem, OGResourceLoadable>
+@interface OGWeaponEntity : GKEntity <OGAttacking>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
 @property (nonatomic, weak) GKEntity *owner;
-
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGSoundComponent *sound;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite;
 

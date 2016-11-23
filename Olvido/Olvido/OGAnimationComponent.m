@@ -105,7 +105,13 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
             }
         }
         
-        [self.spriteNode runAction:texturesAction withKey:kOGAnimationComponentTextureActionKey];
+        SKAction *complitionAction =  [SKAction runBlock:^()
+        {
+            [self.delegate animationDidFinish];
+        }];
+        
+        [self.spriteNode runAction:[SKAction sequence:@[texturesAction, complitionAction]]
+                           withKey:kOGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
         self.currentTimePerFrame = self.currentAnimation.timePerFrame;

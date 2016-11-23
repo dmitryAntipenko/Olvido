@@ -11,8 +11,8 @@
 
 @interface OGHealthComponent : GKComponent
 
-@property (nonatomic, assign) GKInspectable NSInteger currentHealth;
-@property (nonatomic, assign) GKInspectable NSInteger maxHealth;
+@property (nonatomic, assign) NSInteger currentHealth;
+@property (nonatomic, assign) NSInteger maxHealth;
 @property (nonatomic, weak) id<OGHealthComponentDelegate> delegate;
 
 - (void)dealDamage:(NSInteger)damage;

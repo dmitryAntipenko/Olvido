@@ -31,7 +31,7 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                 _fileName = fileName;
                 _identifier = identifier;
                 
-                NSArray<NSString *> *onDemandResourcesClassNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *onDemandResourcesClassNames = configuration[kOGSceneMetadataOnDemandResourcesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 
@@ -48,7 +48,7 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                     }
                 }
                 
-                _loadableClasses = [mutableLoadableClasses copy];
+                _loadableClasses = mutableLoadableClasses;
             }
             else
             {

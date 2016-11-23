@@ -17,7 +17,23 @@
 #import "OGSoundComponent.h"
 #import "OGColliderType.h"
 
+@interface OGDoorEntityClosedState ()
+
+@property (nonatomic, weak) OGSoundComponent *soundComponent;
+
+@end
+
 @implementation OGDoorEntityClosedState
+
+- (OGSoundComponent *)soundComponent
+{
+    if (!_soundComponent)
+    {
+        _soundComponent = (OGSoundComponent *) [self.doorEntity componentForClass:[OGSoundComponent class]];
+    }
+    
+    return _soundComponent;
+}
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
@@ -30,7 +46,7 @@
     
     if (previousState)
     {
-        [self.doorEntity.sound playSoundOnce:@"door_open"];
+        [self.soundComponent playSoundOnce:@"door_open"];
     }
 }
 

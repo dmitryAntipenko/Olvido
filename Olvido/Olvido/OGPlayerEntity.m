@@ -40,6 +40,20 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
+@property (nonatomic, strong) OGShadowComponent         *shadowComponent;
+@property (nonatomic, strong) OGInventoryComponent      *inventoryComponent;
+@property (nonatomic, strong) OGRenderComponent         *renderComponent;
+@property (nonatomic, strong) OGPhysicsComponent        *physicsComponent;
+@property (nonatomic, strong) OGInputComponent          *inputComponent;
+@property (nonatomic, strong) OGIntelligenceComponent   *intelligenceComponent;
+@property (nonatomic, strong) OGHealthComponent         *healthComponent;
+@property (nonatomic, strong) OGAnimationComponent      *animationComponent;
+@property (nonatomic, strong) OGMovementComponent       *movementComponent;
+@property (nonatomic, strong) OGMessageComponent        *messageComponent;
+@property (nonatomic, strong) OGOrientationComponent    *orientationComponent;
+@property (nonatomic, strong) OGWeaponComponent         *weaponComponent;
+@property (nonatomic, strong) GKAgent2D                 *agent;
+
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
@@ -60,36 +74,36 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _inventoryComponent = [OGInventoryComponent inventoryComponent];
         [self addComponent:_inventoryComponent];
         
-        _render = [[OGRenderComponent alloc] init];
-        [self addComponent:_render];
+        _renderComponent = [[OGRenderComponent alloc] init];
+        [self addComponent:_renderComponent];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                       colliderType:[OGColliderType player]];
-        _physics.physicsBody.mass = 1.0;
-        [self addComponent:_physics];
+        _physicsComponent.physicsBody.mass = 100.0;
+        [self addComponent:_physicsComponent];
         
-        _render.node.physicsBody = _physics.physicsBody;
-        _render.node.physicsBody.allowsRotation = NO;
+        _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
+        _renderComponent.node.physicsBody.allowsRotation = NO;
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGPlayerEntityShadowTextureName];
         CGPoint shadowOffset = CGPointMake(0.0, kOGPlayerEntityShadowYOffset);
-        _shadow = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
-        [self addComponent:_shadow];
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        [self addComponent:_shadowComponent];
         
-        [_render.node addChild:_shadow.node];
+        [_renderComponent.node addChild:_shadowComponent.node];
         
-        _health = [[OGHealthComponent alloc] init];
-        _health.maxHealth = configuration.maxHealth;
-        _health.currentHealth = configuration.currentHealth;
-        _health.delegate = self;
-        [self addComponent:_health];
+        _healthComponent = [[OGHealthComponent alloc] init];
+        _healthComponent.maxHealth = configuration.maxHealth;
+        _healthComponent.currentHealth = configuration.currentHealth;
+        _healthComponent.delegate = self;
+        [self addComponent:_healthComponent];
         
-        _movement = [[OGMovementComponent alloc] init];
-        [self addComponent:_movement];
+        _movementComponent = [[OGMovementComponent alloc] init];
+        [self addComponent:_movementComponent];
         
-        _input = [[OGInputComponent alloc] init];
-        _input.enabled = YES;
-        [self addComponent:_input];
+        _inputComponent = [[OGInputComponent alloc] init];
+        _inputComponent.enabled = YES;
+        [self addComponent:_inputComponent];
         
         OGPlayerEntityAppearState *appearState = [[OGPlayerEntityAppearState alloc] initWithPlayerEntity:self];
         OGPlayerEntityControlledState *controlledState = [[OGPlayerEntityControlledState alloc] initWithPlayerEntity:self];
@@ -97,25 +111,25 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         
         NSArray *states = @[appearState, controlledState, attackState];
         
-        _intelligence = [[OGIntelligenceComponent alloc] initWithStates:states];
-        [self addComponent:_intelligence];
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
+        [self addComponent:_intelligenceComponent];
         
         if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
-            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
             
-            [_render.node addChild:_animation.spriteNode];
-            [self addComponent:_animation];
+            [_renderComponent.node addChild:_animationComponent.spriteNode];
+            [self addComponent:_animationComponent];
         }
         else
         {
             return nil;
         }
         
-        _orientation = [[OGOrientationComponent alloc] init];
-        [self addComponent:_orientation];
+        _orientationComponent = [[OGOrientationComponent alloc] init];
+        [self addComponent:_orientationComponent];
         
-        SKSpriteNode *targetSprite = (SKSpriteNode *) _render.node;
+        SKSpriteNode *targetSprite = (SKSpriteNode *) _renderComponent.node;
         SKLabelNode *messageLabelNode = [SKLabelNode node];
         messageLabelNode.zPosition = OGZPositionCategoryForeground;
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite
@@ -132,11 +146,12 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
     return self;
 }
 
+#pragma mark - OGContactNotifiableType protocol
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
     {
-        [self.inventoryComponent removeItem:self.weaponComponent.weapon];
+        [self.inventoryComponent removeItem:(id<OGInventoryItem>) self.weaponComponent.weapon];
         self.canTakeWeapon = NO;
         
         self.weaponComponent.weapon = (OGWeaponEntity *) entity;
@@ -167,6 +182,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 }
 
+#pragma mark - dealloc
 - (void)dealloc
 {
     if (_weaponTakeDelayTimer)
@@ -178,14 +194,23 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 - (void)updateAgentPositionToMatchNodePosition
 {
-    CGPoint position = self.render.node.position;
+    CGPoint position = self.renderComponent.node.position;
     
     self.agent.position = (vector_float2){position.x, position.y};
 }
 
+#pragma mark - OGHealthComponentDelegate protoc
 - (void)entityWillDie
 {
     
+}
+
+- (void)dealDamage:(NSInteger)damage
+{
+    if (self.healthComponent)
+    {
+        [self.healthComponent dealDamage:damage];
+    }
 }
 
 @end

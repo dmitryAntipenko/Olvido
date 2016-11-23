@@ -29,6 +29,14 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 
 @interface OGDoorEntity ()
 
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
+@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGLockComponent *lockComponent;
+@property (nonatomic, strong) OGTransitionComponent *transitionComponent;
+@property (nonatomic, strong) OGSoundComponent *soundComponent;
+
 @property (nonatomic, strong) NSMutableArray<NSString *> *keyIdentifiers;
 
 @end
@@ -45,37 +53,37 @@ static NSArray *sOGDoorEntitySoundNames = nil;
         {
             _keyIdentifiers = [NSMutableArray array];
             
-            _render = [[OGRenderComponent alloc] init];
-            _render.node = spriteNode;
-            [self addComponent:_render];
+            _renderComponent = [[OGRenderComponent alloc] init];
+            _renderComponent.node = spriteNode;
+            [self addComponent:_renderComponent];
             
             SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
             trigger.entity = self;
-            _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
-                                                          colliderType:[OGColliderType doorTrigger]];
-            [self addComponent:_physics];        
+            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
+                                                                   colliderType:[OGColliderType doorTrigger]];
+            [self addComponent:_physicsComponent];
             
-            _intelligence = [[OGIntelligenceComponent alloc] initWithStates:@[
+            _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[
                 [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
                 [[OGDoorEntityOpenedState alloc] initWithDoorEntity:self],
                 [[OGDoorEntityLockedState alloc] initWithDoorEntity:self],
                 [[OGDoorEntityUnlockedState alloc] initWithDoorEntity:self]
             ]];
             
-            [self addComponent:_intelligence];
+            [self addComponent:_intelligenceComponent];
             
-            _animation = [[OGAnimationComponent alloc] init];
-            [self addComponent:_animation];
+            _animationComponent = [[OGAnimationComponent alloc] init];
+            [self addComponent:_animationComponent];
             
             _lockComponent = [[OGLockComponent alloc] init];
             [self addComponent:_lockComponent];
             
-            _transition = [[OGTransitionComponent alloc] init];
-            [self addComponent:_transition];
+            _transitionComponent = [[OGTransitionComponent alloc] init];
+            [self addComponent:_transitionComponent];
             
-            _sound = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNames];
-            _sound.target = _render.node;
-            [self addComponent:_sound];
+            _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNames];
+            _soundComponent.target = _renderComponent.node;
+            [self addComponent:_soundComponent];
         }
     }
     else
@@ -102,13 +110,13 @@ static NSArray *sOGDoorEntitySoundNames = nil;
     {
         if (!self.lockComponent.isLocked)
         {
-            [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transition completion:^()
+            [self.transitionDelegate transitToDestinationWithTransitionComponent:self.transitionComponent completion:^()
              {
                 [self swapTriggerPosition];
                  
-                SKNode *temp = self.transition.destination;
-                self.transition.destination = self.transition.source;
-                self.transition.source = temp;
+                SKNode *temp = self.transitionComponent.destination;
+                self.transitionComponent.destination = self.transitionComponent.source;
+                self.transitionComponent.source = temp;
             }];
         }
         else
@@ -133,7 +141,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 
 - (void)swapTriggerPosition
 {
-    SKNode *trigger = [self.render.node childNodeWithName:kOGDoorEntityTriggerNodeName];
+    SKNode *trigger = [self.renderComponent.node childNodeWithName:kOGDoorEntityTriggerNodeName];
     
     CGPoint newTriggerPosition = CGPointMake(-trigger.position.x, -trigger.position.y);
     

@@ -8,7 +8,7 @@
 
 #import "OGHealthComponent.h"
 
-CGFloat const kOGHealthComponentMinHealth = 0.0;
+NSInteger const kOGHealthComponentMinHealth = 0;
 
 @implementation OGHealthComponent
 
@@ -45,8 +45,6 @@ CGFloat const kOGHealthComponentMinHealth = 0.0;
 
 - (void)kill
 {
-    self.currentHealth = kOGHealthComponentMinHealth;
-    
     if (self.delegate)
     {
         [self.delegate entityWillDie];
