@@ -18,6 +18,8 @@
 #import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
 
+#import "OGAnimation.h"
+
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityAttackState.h"
@@ -216,7 +218,14 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 #pragma mark - Other Methods
 - (void)entityDidDie
 {
-    //[self.delegate removeEntity:self];
+    SKTexture *texture = self.animationComponent.currentAnimation.textures.lastObject;
+    SKSpriteNode *node = [SKSpriteNode spriteNodeWithTexture:texture];
+    node.position = self.renderComponent.node.position;
+
+    [self.renderComponent.node.scene addChild:node];
+    
+    [self.delegate removeEntity:self];
+  
 }
 
 - (GKBehavior *)behaviorForCurrentMandate
@@ -370,17 +379,11 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 #pragma mark - Miscellaneous Assets
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType lockedDoor], [OGColliderType player], [OGColliderType enemy], nil];
+    NSArray *collisionColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy], nil];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
     
     NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
-}
-
-
-- (void)dealloc
-{
-    NSLog(@"dealloc");
 }
 
 @end

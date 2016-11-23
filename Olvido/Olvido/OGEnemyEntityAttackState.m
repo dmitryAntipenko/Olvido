@@ -19,8 +19,8 @@
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @property (nonatomic, assign) CGPoint targetPosition;
 

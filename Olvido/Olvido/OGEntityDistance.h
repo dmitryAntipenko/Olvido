@@ -10,8 +10,8 @@
 
 @interface OGEntityDistance : NSObject
 
-@property (nonatomic, strong) GKEntity *source;
-@property (nonatomic, strong) GKEntity *target;
+@property (nonatomic, weak) GKEntity *source;
+@property (nonatomic, weak) GKEntity *target;
 @property (nonatomic, assign) CGFloat distance;
 
 - (instancetype)initWithSource:(GKEntity *)source

@@ -9,18 +9,14 @@
 #import "OGEnemyEntityDieState.h"
 #import "OGEnemyEntity.h"
 
-#import "OGPhysicsComponent.h"
 #import "OGAnimationComponent.h"
-#import "OGAnimation.h"
 
-@interface OGEnemyEntityDieState ()
+@interface OGEnemyEntityDieState () <OGAnimationComponentDelegate>
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
-@property (nonatomic, assign) NSTimeInterval elapsedTime;
 @end
 
 @implementation OGEnemyEntityDieState
@@ -32,7 +28,6 @@
     if (self)
     {
         _enemyEntity = enemyEntity;
-        _elapsedTime = 0.0;
     }
     
     return self;
@@ -41,29 +36,19 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [super didEnterWithPreviousState:previousState];
-    
-    self.elapsedTime = 0.0;
+
+    self.animationComponent.delegate = self;
     self.animationComponent.requestedAnimationState = kOGAnimationStateDead;
 }
 
-- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+- (void)animationDidFinish
 {
-    [super updateWithDeltaTime:seconds];
-    
-    self.elapsedTime += seconds;
+    [self.enemyEntity entityDidDie];
+}
 
-    OGAnimation *animation = self.animationComponent.currentAnimation;
-    
-    if (animation.animationState == kOGAnimationStateDead)
-    {
-        NSTimeInterval animationTime = animation.textures.count * animation.timePerFrame;
-        
-        if (self.elapsedTime >= animationTime)
-        {
-            [self.enemyEntity entityDidDie];
-        }
-    }
-    
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return NO;
 }
 
 - (OGAnimationComponent *)animationComponent
@@ -74,16 +59,6 @@
     }
     
     return _animationComponent;
-}
-
-- (OGPhysicsComponent *)physicsComponent
-{
-    if (!_physicsComponent)
-    {
-        _physicsComponent = (OGPhysicsComponent *) [self.enemyEntity componentForClass:[OGPhysicsComponent class]];
-    }
-    
-    return _physicsComponent;
 }
 
 @end

@@ -212,11 +212,6 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     }
 }
 
-- (void)entityDidDie
-{
-    [self.delegate removeEntity:self];
-}
-
 #pragma mark - Getters
 + (NSDictionary *)sOGZombieAnimations
 {
