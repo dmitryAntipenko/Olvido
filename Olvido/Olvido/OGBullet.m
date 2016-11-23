@@ -59,7 +59,7 @@ static SKTexture *sOGBulletEntityTexture;
     
     sOGBulletEntityTexture = [SKTexture textureWithImageNamed:kOGBulletTextureName];
     
-    handler();
+    handler();        
 }
 
 + (void)purgeResources
@@ -69,7 +69,7 @@ static SKTexture *sOGBulletEntityTexture;
 
 + (void)loadMiscelaneousAssets
 {
-    NSArray *contactColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy], nil];
+    NSArray *contactColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType bullet]];
 }
 

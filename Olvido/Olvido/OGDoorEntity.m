@@ -168,7 +168,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 
 + (void)loadMiscellaneousAssets
 {
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType player]];
+    NSArray *contactColliders = @[[OGColliderType player]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType doorTrigger]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType door]];
 }
