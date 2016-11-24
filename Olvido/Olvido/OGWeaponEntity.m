@@ -22,7 +22,7 @@ CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
 
-static NSArray *sOGWeaponEntitySoundNames = nil;
+static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 @interface OGWeaponEntity () <OGInventoryItem, OGResourceLoadable>
 
@@ -55,7 +55,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
                                                                colliderType:[OGColliderType weapon]];
         [self addComponent:_physicsComponent];
             
-        _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
+        _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNodes];
         [self addComponent:_soundComponent];
         
         _allowsAttacking = YES;
@@ -73,7 +73,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 + (NSArray *)sOGWeaponEntitySoundNames
 {
-    return sOGWeaponEntitySoundNames;
+    return sOGWeaponEntitySoundNodes;
 }
 
 #pragma mark - OGAttacking
@@ -102,6 +102,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
             [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
             
             [self.soundComponent playSoundOnce:@"shot"];
+            NSLog(@"shot");
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
@@ -182,19 +183,19 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
-    sOGWeaponEntitySoundNames = @[@"shot"];
+    sOGWeaponEntitySoundNodes = @[@"shot"];
     
     handler();
 }
 
 + (BOOL)resourcesNeedLoading
 {
-    return sOGWeaponEntitySoundNames == nil;
+    return sOGWeaponEntitySoundNodes == nil;
 }
 
 + (void)purgeResources
 {
-    sOGWeaponEntitySoundNames = nil;
+    sOGWeaponEntitySoundNodes = nil;
 }
 
 @end

@@ -249,13 +249,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
+    self.listener = camera;
+    
     self.cameraController.target = self.player.renderComponent.node;
 }
 
 - (void)createPlayer
 {
     OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
-    self.player = player;
+    self.player = player;    
+    
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
@@ -543,7 +546,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity
 {
-    if (self.levelSnapshot == nil)
+    if (!self.levelSnapshot)
     {
         self.levelSnapshot = [[OGLevelStateSnapshot alloc] initWithScene:self];
     }
@@ -582,7 +585,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 }
 
 - (void)didFinishUpdate
-{
+{    
     [super didFinishUpdate];
     
     if (((OGRenderComponent *) [self.player componentForClass:[OGRenderComponent class]]).node)

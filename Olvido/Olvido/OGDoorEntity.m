@@ -25,7 +25,7 @@
 
 NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
 
-static NSArray *sOGDoorEntitySoundNames = nil;
+static NSArray *sOGDoorEntitySoundNodes = nil;
 
 @interface OGDoorEntity ()
 
@@ -81,7 +81,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
             _transitionComponent = [[OGTransitionComponent alloc] init];
             [self addComponent:_transitionComponent];
             
-            _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNames];
+            _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNodes];
             _soundComponent.target = _renderComponent.node;
             [self addComponent:_soundComponent];
         }
@@ -169,7 +169,7 @@ static NSArray *sOGDoorEntitySoundNames = nil;
 {
     [OGDoorEntity loadMiscellaneousAssets];
     
-    sOGDoorEntitySoundNames = @[@"door_open"];
+    sOGDoorEntitySoundNodes = @[@"door_open"];
     
     handler();
 }

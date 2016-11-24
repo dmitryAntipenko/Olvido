@@ -13,7 +13,7 @@ NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAc
 
 @interface OGSoundComponent ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, SKAction *> *actions;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, SKAudioNode *> *soundNodes;
 
 @end
 
@@ -26,13 +26,14 @@ NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAc
         self = [super init];
         
         if (self)
-        {
-        _actions = [NSMutableDictionary dictionary];
+        {            
+            _soundNodes = [NSMutableDictionary dictionary];
         
             for (NSString *name in names)
             {
-                SKAction *action = [SKAction playSoundFileNamed:name waitForCompletion:NO];
-                [_actions setObject:action forKey:name];
+                SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:name];
+                node.autoplayLooped = NO;                
+                [_soundNodes setObject:node forKey:name];
             }
         }
     }
@@ -44,10 +45,21 @@ NSString *const kOGSoundComponentActionKey = @"Olvido.SoundComponent.PlaySoundAc
     return self;
 }
 
+- (void)setTarget:(SKNode *)target
+{
+    _target = target;
+    
+    [self.soundNodes enumerateKeysAndObjectsUsingBlock:^(NSString *key, SKAudioNode *node, BOOL *stop)
+    {
+        [node removeFromParent];
+        [self.target addChild:node];
+    }];
+}
+
 - (void)playSoundOnce:(NSString *)soundName
-{    
-    [self.target removeActionForKey:kOGSoundComponentActionKey];                
-    [self.target runAction:self.actions[soundName] withKey:kOGSoundComponentActionKey];
+{
+    [self.soundNodes[soundName] removeActionForKey:kOGSoundComponentActionKey];
+    [self.soundNodes[soundName] runAction:[SKAction play] withKey:kOGSoundComponentActionKey];
 }
 
 @end
