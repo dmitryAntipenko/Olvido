@@ -117,4 +117,24 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     return result;
 }
 
+- (SKTextureAtlas *)atlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey
+{
+    __block SKTextureAtlas *result = nil;
+    
+    dispatch_sync(self.syncQueue, ^
+                  {
+                      if (unitName && atlasKey)
+                      {
+                          NSDictionary<NSString *, SKTextureAtlas *> *unitAtlases = [self.textures objectForKey:unitName];
+                          
+                          if (unitAtlases)
+                          {
+                              result = [unitAtlases objectForKey:atlasKey];
+                          }
+                      }
+                  });
+    
+    return result;
+}
+
 @end
