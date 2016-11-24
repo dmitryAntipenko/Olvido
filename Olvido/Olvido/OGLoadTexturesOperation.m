@@ -51,11 +51,13 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            if (self.unitName && self.atlasName && ![OGTextureManager containsAtlasWithName:self.atlasName unitName:self.unitName])
+            OGTextureManager *textureManager = [OGTextureManager sharedInstance];
+            
+            if (self.unitName && self.atlasName && ![textureManager containsAtlasWithName:self.atlasName unitName:self.unitName])
             {
                 SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
                 
-                [OGTextureManager addAtlasWithUnitName:self.unitName atlasName:self.atlasName atlas:atlas];
+                [textureManager addAtlasWithUnitName:self.unitName atlasName:self.atlasName atlas:atlas];
                 
                 __weak typeof(self) weakSelf = self;
                 [atlas preloadWithCompletionHandler:^

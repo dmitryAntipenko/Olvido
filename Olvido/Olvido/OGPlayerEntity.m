@@ -120,7 +120,9 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
         
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+        OGTextureManager *textureManager = [OGTextureManager sharedInstance];
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[textureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
         [self addComponent:_animationComponent];
         
 //        if ([OGPlayerEntity sOGPlayerEntityAnimations])

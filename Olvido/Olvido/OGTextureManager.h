@@ -10,18 +10,20 @@
 
 @interface OGTextureManager : NSObject
 
++ (instancetype)sharedInstance;
+
 #pragma mark - Atlases managment
 
-+ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas;
+- (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas;
 
-+ (void)purgeAtlasesWithUnitName:(NSString *)unitName;
+- (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
-+ (void)purgeAllTextures;
+- (void)purgeAllTextures;
 
-+ (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName;
+- (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName;
 
 #pragma mark - Access to atlases
 
-+ (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName;
+- (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName;
 
 @end
