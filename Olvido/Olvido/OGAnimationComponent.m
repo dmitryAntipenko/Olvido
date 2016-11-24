@@ -192,7 +192,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
                          timePerFrame:(NSTimeInterval)timePerFrame
-                            atlasName:(NSString *)atlasName
+                      imageIdentifier:(NSString *)imageIdentifier
 {
     SKAction *bodyAction = nil;
     if (bodyActionName)
@@ -202,7 +202,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     NSMutableDictionary *animations = [NSMutableDictionary dictionary];
 
-    NSString *structure = [NSString stringWithFormat:@"%@_", atlasName];
+    NSString *structure = [NSString stringWithFormat:@"%@_", imageIdentifier];
     NSString *filter = @"SELF BEGINSWITH %@";
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, structure];

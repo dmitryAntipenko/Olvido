@@ -37,10 +37,10 @@
                                        imageIdentifier:(NSString *)imageIdentifier;
 
 + (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
-                      imageIdentifier:(NSString *)imageIdentifier
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                 repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
-                         timePerFrame:(NSTimeInterval)timePerFrame;
+                         timePerFrame:(NSTimeInterval)timePerFrame
+                      imageIdentifier:(NSString *)imageIdentifier;
 @end
