@@ -76,9 +76,11 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
     }
 }
 
+
+
 - (void)finish
 {
-    self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+    self.progress.completedUnitCount = kOGLoadTexturesOperationProgressTotalUnitCount;
 }
 
 @end

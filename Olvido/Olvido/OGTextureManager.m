@@ -19,6 +19,19 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 @implementation OGTextureManager
 
++ (instancetype)instance
+{
+    static OGTextureManager *instance = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^
+    {
+        instance = [[OGTextureManager alloc] init];
+    });
+    
+    return instance;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -32,18 +45,10 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     return self;
 }
 
-+ (instancetype)textureManager
-{
-    return [[self alloc] init];
-}
-
 #pragma mark - Memory managment
 
-- (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
++ (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
 {
- 
-    
-    
     dispatch_queue_t currentQueue = [NSOperationQueue currentQueue].underlyingQueue;
     
     dispatch_barrier_async(self.syncQueue, ^
@@ -83,7 +88,7 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     });
 }
 
-- (void)purgeAtlasesWithUnitName:(NSString *)unitName
++ (void)purgeAtlasesWithUnitName:(NSString *)unitName
 {
     if (unitName)
     {
@@ -93,7 +98,7 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Accessing to atlases
 
-- (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
++ (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 {
     __block NSDictionary<NSString *, NSArray *> *result = nil;
     
