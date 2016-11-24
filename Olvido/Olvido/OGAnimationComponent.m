@@ -187,12 +187,12 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 }
 
 + (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
+                      imageIdentifier:(NSString *)imageIdentifier
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
-                 repeatTexturesForever:(BOOL)repeatTexturesForever
+                repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
                          timePerFrame:(NSTimeInterval)timePerFrame
-                      imageIdentifier:(NSString *)imageIdentifier
 {
     SKAction *bodyAction = nil;
     if (bodyActionName)

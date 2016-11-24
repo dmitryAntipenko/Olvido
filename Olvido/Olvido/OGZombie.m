@@ -147,62 +147,62 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler
 {
-//    [OGEnemyEntity loadMiscellaneousAssets];
+    [OGEnemyEntity loadMiscellaneousAssets];
     
-//    NSArray *enemyAtlasNames = @[kOGEnemyEntityAtlasNamesEnemyIdle,
-//                                 kOGEnemyEntityAtlasNamesEnemyWalk,
-//                                 kOGEnemyEntityAtlasNamesEnemyRun,
-//                                 kOGEnemyEntityAtlasNamesEnemyAttack,
-//                                 kOGEnemyEntityAtlasNamesEnemyDead];
+    NSArray *enemyAtlasNames = @[kOGEnemyEntityAtlasNamesEnemyIdle,
+                                 kOGEnemyEntityAtlasNamesEnemyWalk,
+                                 kOGEnemyEntityAtlasNamesEnemyRun,
+                                 kOGEnemyEntityAtlasNamesEnemyAttack,
+                                 kOGEnemyEntityAtlasNamesEnemyDead];
     
-//    [SKTextureAtlas preloadTextureAtlasesNamed:enemyAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
-//     {
-//         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
-//         
-//         animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-//                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyIdle
-//                                                                                                      animationState:kOGAnimationStateIdle
-//                                                                                                      bodyActionName:nil
-//                                                                                               repeatTexturesForever:YES
-//                                                                                                       playBackwards:NO
-//                                                                                                        timePerFrame:0.1];
-//         
-//         animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-//                                                                                                            imageIdentifier:kOGEnemyEntityAtlasNamesEnemyWalk
-//                                                                                                             animationState:kOGAnimationStateWalkForward
-//                                                                                                             bodyActionName:nil
-//                                                                                                      repeatTexturesForever:YES
-//                                                                                                              playBackwards:NO
-//                                                                                                               timePerFrame:0.1];
-//         
-//         animations[kOGAnimationStateDescription[kOGAnimationStateRun]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[2]
-//                                                                                                    imageIdentifier:kOGEnemyEntityAtlasNamesEnemyRun
-//                                                                                                     animationState:kOGAnimationStateRun
-//                                                                                                     bodyActionName:nil
-//                                                                                              repeatTexturesForever:YES
-//                                                                                                      playBackwards:NO
-//                                                                                                       timePerFrame:0.1];
-//         
-//         animations[kOGAnimationStateDescription[kOGAnimationStateAttack]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[3]
-//                                                                                                       imageIdentifier:kOGEnemyEntityAtlasNamesEnemyAttack
-//                                                                                                        animationState:kOGAnimationStateAttack
-//                                                                                                        bodyActionName:nil
-//                                                                                                 repeatTexturesForever:YES
-//                                                                                                         playBackwards:NO
-//                                                                                                          timePerFrame:0.1];
-//         
-//         animations[kOGAnimationStateDescription[kOGAnimationStateDead]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[4]
-//                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyDead
-//                                                                                                      animationState:kOGAnimationStateDead
-//                                                                                                      bodyActionName:nil
-//                                                                                               repeatTexturesForever:NO
-//                                                                                                       playBackwards:NO
-//                                                                                                        timePerFrame:0.1];
-//         
-//         sOGZombieAnimations = animations;
-//         
-//         completionHandler();
-//     }];
+    [SKTextureAtlas preloadTextureAtlasesNamed:enemyAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
+     {
+         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+         
+         animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
+                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyIdle
+                                                                                                      animationState:kOGAnimationStateIdle
+                                                                                                      bodyActionName:nil
+                                                                                               repeatTexturesForever:YES
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
+         
+         animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
+                                                                                                            imageIdentifier:kOGEnemyEntityAtlasNamesEnemyWalk
+                                                                                                             animationState:kOGAnimationStateWalkForward
+                                                                                                             bodyActionName:nil
+                                                                                                      repeatTexturesForever:YES
+                                                                                                              playBackwards:NO
+                                                                                                               timePerFrame:0.1];
+         
+         animations[kOGAnimationStateDescription[kOGAnimationStateRun]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[2]
+                                                                                                    imageIdentifier:kOGEnemyEntityAtlasNamesEnemyRun
+                                                                                                     animationState:kOGAnimationStateRun
+                                                                                                     bodyActionName:nil
+                                                                                              repeatTexturesForever:YES
+                                                                                                      playBackwards:NO
+                                                                                                       timePerFrame:0.1];
+         
+         animations[kOGAnimationStateDescription[kOGAnimationStateAttack]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[3]
+                                                                                                       imageIdentifier:kOGEnemyEntityAtlasNamesEnemyAttack
+                                                                                                        animationState:kOGAnimationStateAttack
+                                                                                                        bodyActionName:nil
+                                                                                                 repeatTexturesForever:YES
+                                                                                                         playBackwards:NO
+                                                                                                          timePerFrame:0.1];
+         
+         animations[kOGAnimationStateDescription[kOGAnimationStateDead]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[4]
+                                                                                                     imageIdentifier:kOGEnemyEntityAtlasNamesEnemyDead
+                                                                                                      animationState:kOGAnimationStateDead
+                                                                                                      bodyActionName:nil
+                                                                                               repeatTexturesForever:NO
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
+         
+         sOGZombieAnimations = animations;
+         
+         completionHandler();
+     }];
 }
 
 + (void)purgeResources

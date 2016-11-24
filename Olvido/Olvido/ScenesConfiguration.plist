@@ -50,14 +50,6 @@
 		<dict>
 			<key>Player</key>
 			<array>
-				<dict>
-					<key>AtlasName</key>
-					<string>PlayerBotIdleLeft</string>
-					<key>Key</key>
-					<string>PlayerIdleLeft</string>
-					<key>TimePerFrame</key>
-					<real>0.2</real>
-				</dict>
 				<string>PlayerBotWalkL</string>
 				<string>PlayerBotWalkR</string>
 				<string>PlayerBotIdleL</string>
