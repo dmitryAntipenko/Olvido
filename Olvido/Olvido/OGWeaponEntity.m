@@ -101,8 +101,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
             
             [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
             
-            [self.soundComponent playSoundOnce:@"shot"];
-            NSLog(@"shot");
+            [self.soundComponent playSoundOnce:@"shot"];            
             
             self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
