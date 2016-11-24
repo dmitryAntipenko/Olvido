@@ -465,6 +465,12 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         callback((id<OGContactNotifiableType>) entityA, entityB);
     }
     
+    
+    
+    
+    
+    
+    
     if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
     {
         callback((id<OGContactNotifiableType>) entityB, entityA);
