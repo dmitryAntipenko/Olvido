@@ -47,66 +47,70 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Memory managment
 
-+ (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
-{
-    dispatch_queue_t currentQueue = [NSOperationQueue currentQueue].underlyingQueue;
-    
-    dispatch_barrier_async(self.syncQueue, ^
-    {
-        if (unitName && atlasName)
-        {
-            NSMutableDictionary *atlases = [[self.textures objectForKey:unitName] mutableCopy];
-            
-            if (!atlases)
-            {
-                atlases = [[NSMutableDictionary alloc] init];
-            }
-            
-            SKTextureAtlas *atlas = [atlases objectForKey:atlasName];
-            
-            if (!atlas)
-            {
-                atlas = [SKTextureAtlas atlasNamed:atlasName];
-                
-                NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
-                
-                for (NSString *textureName in atlas.textureNames)
-                {
-                    [atlasTextures addObject:[atlas textureNamed:textureName]];
-                }
-                
-                [atlases setObject:atlasTextures forKey:atlasName];
-            }
-            
-            
-            [atlas preloadWithCompletionHandler:^{}];
-            
-            [self.textures setObject:[atlases copy] forKey:atlasName];
-        }
-        
-        dispatch_async(currentQueue, completion);
-    });
-}
-
-+ (void)purgeAtlasesWithUnitName:(NSString *)unitName
-{
-    if (unitName)
-    {
-        [self.textures removeObjectForKey:unitName];
-    }
-}
+//+ (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
+//{
+//    dispatch_queue_t currentQueue = [NSOperationQueue currentQueue].underlyingQueue;
+//    
+//    dispatch_barrier_sync(<#dispatch_queue_t  _Nonnull queue#>, <#^(void)block#>)
+//    
+//    dispatch_barrier_async(self.syncQueue, ^
+//    {
+//        if (unitName && atlasName)
+//        {
+//            NSMutableDictionary *atlases = [[self.textures objectForKey:unitName] mutableCopy];
+//            
+//            if (!atlases)
+//            {
+//                atlases = [[NSMutableDictionary alloc] init];
+//            }
+//            
+//            SKTextureAtlas *atlas = [atlases objectForKey:atlasName];
+//            
+//            if (!atlas)
+//            {
+//                atlas = [SKTextureAtlas atlasNamed:atlasName];
+//                
+//                NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
+//                
+//                for (NSString *textureName in atlas.textureNames)
+//                {
+//                    [atlasTextures addObject:[atlas textureNamed:textureName]];
+//                }
+//                
+//                [atlases setObject:atlasTextures forKey:atlasName];
+//            }
+//            
+//            
+//            [atlas preloadWithCompletionHandler:^{}];
+//            
+//            [self.textures setObject:[atlases copy] forKey:atlasName];
+//        }
+//        
+//        dispatch_async(currentQueue, completion);
+//    });
+//}
+//
+//+ (void)purgeAtlasesWithUnitName:(NSString *)unitName
+//{
+//    if (unitName)
+//    {
+//        [self.textures removeObjectForKey:unitName];
+//    }
+//}
 
 #pragma mark - Accessing to atlases
 
 + (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 {
+    OGTextureManager *instance = [self instance];
+    
     __block NSDictionary<NSString *, NSArray *> *result = nil;
     
-    dispatch_sync(self.syncQueue, ^
+    dispatch_sync(instance.syncQueue, ^
     {
         if (unitName)
         {
-            result = [self.textures objectForKey:unitName];
+            result = [instance.textures objectForKey:unitName];
         }
     });
     
