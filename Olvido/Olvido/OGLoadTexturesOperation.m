@@ -15,7 +15,6 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
 
 @property (nonatomic, strong) NSString *unitName;
 @property (nonatomic, strong) NSString *atlasName;
-@property (nonatomic, strong) NSProgress *progress;
 
 @end
 

@@ -46,6 +46,8 @@
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>
 		</array>
+		<key>TextureAtlases</key>
+		<dict/>
 	</dict>
 </array>
 </plist>

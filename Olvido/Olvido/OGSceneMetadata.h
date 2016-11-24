@@ -16,6 +16,7 @@
 @property (nonatomic, assign, readonly) Class sceneClass;
 @property (nonatomic, strong, readonly) NSString *fileName;
 @property (nonatomic, strong, readonly) NSArray<Class<OGResourceLoadable>> *loadableClasses;
+@property (nonatomic, strong, readonly) NSDictionary<NSString *, NSArray<NSString *> *> *textureAtlases;
 
 + (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 

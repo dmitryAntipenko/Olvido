@@ -11,6 +11,7 @@
 NSString *const kOGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
 NSString *const kOGSceneMetadataClassNameKey = @"ClassName";
 NSString *const kOGSceneMetadataFileNameKey = @"FileName";
+NSString *const kOGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
 
 @implementation OGSceneMetadata
 
@@ -30,6 +31,12 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
+                _textureAtlases = [configuration objectForKey:kOGSceneMetadataTextureAtlasesKey];
+                
+                if (!_textureAtlases)
+                {
+                    _textureAtlases = [[NSDictionary alloc] init];
+                }
                 
                 NSArray<NSString *> *onDemandResourcesClassNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
                 
