@@ -67,6 +67,7 @@
 		2177AF171DE33CC100A21B75 /* OGZombie.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF161DE33CC100A21B75 /* OGZombie.m */; };
 		2177AF1D1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
+		21F6B5431DE71FFA0062AE16 /* OGPlayerEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */; };
 		EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */; };
 		EA05FA061DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA021DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m */; };
 		EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA05FA041DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m */; };
@@ -240,6 +241,8 @@
 		2177AF1B1DE5CE6B00A21B75 /* OGEnemyEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityDieState.h; sourceTree = "<group>"; };
 		2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityDieState.m; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
+		21F6B5411DE71FFA0062AE16 /* OGPlayerEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityDieState.h; sourceTree = "<group>"; };
+		21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityDieState.m; sourceTree = "<group>"; };
 		EA05F9FF1DD4FA6C00FAC81A /* OGPlayerEntityAppearState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAppearState.h; sourceTree = "<group>"; };
 		EA05FA001DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityAppearState.m; sourceTree = "<group>"; };
 		EA05FA011DD4FA6C00FAC81A /* OGPlayerEntityAttackState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityAttackState.h; sourceTree = "<group>"; };
@@ -622,6 +625,8 @@
 				EA05FA021DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m */,
 				EA05FA031DD4FA6C00FAC81A /* OGPlayerEntityControlledState.h */,
 				EA05FA041DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m */,
+				21F6B5411DE71FFA0062AE16 /* OGPlayerEntityDieState.h */,
+				21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */,
 			);
 			name = "IntelligenceComponent States (PlayerEntity)";
 			sourceTree = "<group>";
@@ -1090,6 +1095,7 @@
 				EA4982521DD0F48400DCFE00 /* OGGameSceneConfiguration.m in Sources */,
 				1B0E44E81DD9FB0B008F0F7B /* OGInventoryBarNode.m in Sources */,
 				1B27EAAB1DC0D0A900E9CA23 /* OGMapMenuScene.m in Sources */,
+				21F6B5431DE71FFA0062AE16 /* OGPlayerEntityDieState.m in Sources */,
 				EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,

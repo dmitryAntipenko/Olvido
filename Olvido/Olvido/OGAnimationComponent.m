@@ -187,12 +187,12 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 }
 
 + (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
-                      imageIdentifier:(NSString *)imageIdentifier
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
                          timePerFrame:(NSTimeInterval)timePerFrame
+                            atlasName:(NSString *)atlasName
 {
     SKAction *bodyAction = nil;
     if (bodyActionName)
@@ -201,30 +201,40 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     }
     
     NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+
+    NSString *structure = [NSString stringWithFormat:@"%@_", atlasName];
+    NSString *filter = @"SELF BEGINSWITH %@";
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, structure];
+    NSArray<NSString *> *filteredTextureNames = [[atlas textureNames] filteredArrayUsingPredicate:predicate];
+
+    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:!playBackwards];
+    filteredTextureNames = [filteredTextureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
+        
+    NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
     
-    for (NSUInteger i = 0; i < kOGDirectionCount; i++)
+    OGDirection directin;
+    
+    NSString *directionIdentifier = [atlasName substringFromIndex:atlasName.length];
+    
+    if ([directionIdentifier isEqualToString:@"R"])
     {
-        NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, (unsigned long)i];
-        NSString *filter = @"SELF BEGINSWITH %@";
-
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:filter, structure];
-        NSArray<NSString *> *filteredTextureNames = [[atlas textureNames] filteredArrayUsingPredicate:predicate];
-
-        NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:!playBackwards];
-        filteredTextureNames = [filteredTextureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
-        
-        NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
-
-        
-        animations[kOGDirectionDescription[i]] = [OGAnimation animationWithAnimationState:animationState
-                                                                                direction:i
-                                                                                 textures:textures
-                                                                              frameOffset:0
-                                                                    repeatTexturesForever:repeatTexturesForever
-                                                                           bodyActionName:bodyActionName
-                                                                               bodyAction:bodyAction
-                                                                             timePerFrame:timePerFrame];
+        directin = kOGDirectionRight;
     }
+    else if ([directionIdentifier isEqualToString:@"L"])
+    {
+        directin = kOGDirectionLeft;
+    }
+        
+    animations[atlasName] = [OGAnimation animationWithAnimationState:animationState
+                                                           direction:directin
+                                                            textures:textures
+                                                         frameOffset:0
+                                               repeatTexturesForever:repeatTexturesForever
+                                                      bodyActionName:bodyActionName
+                                                          bodyAction:bodyAction
+                                                        timePerFrame:timePerFrame];
+
     
     return animations;
 }

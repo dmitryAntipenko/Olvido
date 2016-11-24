@@ -28,8 +28,9 @@
 
 #import "OGAnimationState.h"
 #import "OGPlayerEntityAppearState.h"
-#import "OGplayerEntityControlledState.h"
-#import "OGplayerEntityAttackState.h"
+#import "OGPlayerEntityControlledState.h"
+#import "OGPlayerEntityAttackState.h"
+#import "OGPlayerEntityDieState.h"
 
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
@@ -108,8 +109,9 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         OGPlayerEntityAppearState *appearState = [[OGPlayerEntityAppearState alloc] initWithPlayerEntity:self];
         OGPlayerEntityControlledState *controlledState = [[OGPlayerEntityControlledState alloc] initWithPlayerEntity:self];
         OGPlayerEntityAttackState *attackState = [[OGPlayerEntityAttackState alloc] initWithPlayerEntity:self];
+        OGPlayerEntityDieState *dieState = [[OGPlayerEntityDieState alloc] initWithPlayerEntity:self];
         
-        NSArray *states = @[appearState, controlledState, attackState];
+        NSArray *states = @[appearState, controlledState, attackState, dieState];
         
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
@@ -147,6 +149,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 }
 
 #pragma mark - OGContactNotifiableType protocol
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
@@ -183,6 +186,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 }
 
 #pragma mark - dealloc
+
 - (void)dealloc
 {
     if (_weaponTakeDelayTimer)
@@ -200,9 +204,13 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 }
 
 #pragma mark - OGHealthComponentDelegate protoc
+
 - (void)entityWillDie
 {
-    
+    if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
+    {
+        [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
+    }
 }
 
 - (void)dealDamage:(NSInteger)damage
@@ -211,6 +219,13 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
     {
         [self.healthComponent dealDamage:damage];
     }
+}
+
+#pragma mark - didDie
+
+- (void)entityDidDie
+{
+    //[self.delegate removeEntity:self];
 }
 
 @end

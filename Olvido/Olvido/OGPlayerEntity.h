@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGEntityManaging.h"
 
 @class OGRenderComponent;
 @class OGPlayerConfiguration;
@@ -14,9 +15,11 @@
 @interface OGPlayerEntity : GKEntity
 
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
+@property (nonatomic, weak) id<OGEntityManaging> delegate;
 
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
 
 - (void)updateAgentPositionToMatchNodePosition;
+- (void)entityDidDie;
 
 @end

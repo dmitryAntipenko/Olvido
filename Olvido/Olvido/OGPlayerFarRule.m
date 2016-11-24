@@ -22,9 +22,9 @@
     
     if (self.snapshot.playerTarget)
     {
-        CGFloat distance = [[self.snapshot.playerTarget valueForKey:kOGEntitySnapshotPlayerBotTargetDistanceKey] floatValue];
+        CGFloat distance = [self.snapshot.playerTarget[kOGEntitySnapshotPlayerBotTargetDistanceKey] floatValue];
         
-        CGFloat oneThird = self.snapshot.proximityFactor / 3;
+        CGFloat oneThird = self.snapshot.proximityFactor / 3.0;
         
         result = (distance - oneThird) / oneThird;
     }

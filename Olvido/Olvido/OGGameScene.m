@@ -255,6 +255,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)createPlayer
 {
     OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
+    player.delegate = self;
     self.player = player;
     [self addEntity:self.player];
     

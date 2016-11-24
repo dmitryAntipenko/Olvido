@@ -54,7 +54,7 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
-@property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
+@property (nonatomic, weak) GKAgent2D *huntAgent;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -183,9 +183,9 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
 - (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
-    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(kOGFuzzyEnemyRuleFactPlayerNear)];
+    NSArray<NSNumber *> *huntNearPlayerRawGradeForFacts = @[@(kOGFuzzyEnemyRuleFactPlayerMedium)];
     
-    NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts])];
+    NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawGradeForFacts])];
     
     CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
     self.huntAgent = nil;
