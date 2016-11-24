@@ -7,6 +7,7 @@
 //
 
 #import "OGLoadTexturesOperation.h"
+#import "OGTextureManager.h"
 
 NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
 
@@ -52,22 +53,19 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         else
         {
             if (self.unitName && self.atlasName)
-            {
-                [self.loadableClass loadResourcesWithCompletionHandler:^
-                 {
-                     [weakSelf finish];
-                 }];
+            {   
+                SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
+                NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
+                
+                for (NSString *textureName in atlas.textureNames)
+                {
+                    [atlasTextures addObject:[atlas textureNamed:textureName]];
+                }
+                
+                [atlas preloadWithCompletionHandler:^{}];
+                
+//                [OGTextureManager ]
             }
-//            
-//            if ([self.loadableClass resourcesNeedLoading])
-//            {
-//                __block typeof(self) weakSelf = self;
-//                
-//                [self.loadableClass loadResourcesWithCompletionHandler:^
-//                 {
-//                     [weakSelf finish];
-//                 }];
-//            }
             else
             {
                 [self finish];

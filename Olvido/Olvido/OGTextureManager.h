@@ -12,7 +12,7 @@
 
 #pragma mark - Memory managment
 
-+ (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
++ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName textures:(NSArray<SKTexture *> *)textures;
 
 + (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
