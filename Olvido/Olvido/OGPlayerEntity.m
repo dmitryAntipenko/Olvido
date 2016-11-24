@@ -83,7 +83,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         [self addComponent:_renderComponent];
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
-                                                      colliderType:[OGColliderType player]];
+                                                               colliderType:[OGColliderType player]];
         _physicsComponent.physicsBody.mass = 100.0;
         [self addComponent:_physicsComponent];
         
@@ -119,24 +119,24 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
-
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
-
         
-        if ([OGPlayerEntity sOGPlayerEntityAnimations])
-        {
-//            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
-            
-//            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
-
-            
-            [_renderComponent.node addChild:_animationComponent.spriteNode];
-            [self addComponent:_animationComponent];
-        }
-        else
-        {
-            return nil;
-        }
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+        [self addComponent:_animationComponent];
+        
+//        if ([OGPlayerEntity sOGPlayerEntityAnimations])
+//        {
+//            //            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+//            
+//            //            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+//            
+//            
+//            [_renderComponent.node addChild:_animationComponent.spriteNode];
+//            //            [self addComponent:_animationComponent];
+//        }
+//        else
+//        {
+//            return nil;
+//        }
         
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
@@ -171,11 +171,11 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         self.weaponComponent.weapon.owner = self;
         
         self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-        {
-            self.canTakeWeapon = YES;
-            [timer invalidate];
-            timer = nil;
-        }];
+                                     {
+                                         self.canTakeWeapon = YES;
+                                         [timer invalidate];
+                                         timer = nil;
+                                     }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
         [self.messageComponent showMessage:@"Shotgun!" duration:3.0 shouldOverlay:YES];
@@ -192,7 +192,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-
+    
 }
 
 #pragma mark - dealloc

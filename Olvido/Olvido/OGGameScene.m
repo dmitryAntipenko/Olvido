@@ -225,7 +225,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)createSceneContents
 {
     [self createPlayer];
-    [self createEnemies];
+//    [self createEnemies];
     [self createDoors];
     [self createSceneItems];
 }
