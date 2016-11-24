@@ -12,7 +12,7 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 @interface OGTextureManager ()
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, NSArray<SKTexture *> *> *> *textures;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, SKTextureAtlas *> *> *textures;
 @property (nonatomic, strong) dispatch_queue_t syncQueue;
 
 @end
@@ -47,24 +47,24 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Atlases managment
 
-+ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName textures:(NSArray<SKTexture *> *)textures;
++ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas
 {
-    if (unitName && atlasName &&textures)
+    if (unitName && atlasName && atlas)
     {
         OGTextureManager *instance = [self instance];
         
         dispatch_barrier_sync(instance.syncQueue, ^
-                              {
-                                  NSMutableDictionary<NSString *, NSArray<SKTexture *> *> *unitAtlases = [instance.textures objectForKey:unitName];
-                                  
-                                  if (!unitAtlases)
-                                  {
-                                      unitAtlases = [[NSMutableDictionary alloc] init];
-                                      [instance.textures setObject:unitAtlases forKey:unitName];
-                                  }
-                                  
-                                  [unitAtlases setObject:textures forKey:atlasName];
-                              });
+          {
+              NSMutableDictionary<NSString *, SKTextureAtlas *> *unitAtlases = [instance.textures objectForKey:unitName];
+              
+              if (!unitAtlases)
+              {
+                  unitAtlases = [[NSMutableDictionary alloc] init];
+                  [instance.textures setObject:unitAtlases forKey:unitName];
+              }
+              
+              [unitAtlases setObject:atlas forKey:atlasName];
+          });
     }
 }
 
@@ -110,11 +110,11 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Accessing to atlases
 
-+ (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
++ (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName
 {
     OGTextureManager *instance = [self instance];
     
-    __block NSDictionary<NSString *, NSArray *> *result = nil;
+    __block NSDictionary<NSString *, SKTextureAtlas *> *result = nil;
     
     dispatch_sync(instance.syncQueue, ^
       {

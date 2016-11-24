@@ -12,7 +12,7 @@
 
 #pragma mark - Atlases managment
 
-+ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName textures:(NSArray<SKTexture *> *)textures;
++ (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas;
 
 + (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
@@ -22,6 +22,6 @@
 
 #pragma mark - Access to atlases
 
-+ (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
++ (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName;
 
 @end
