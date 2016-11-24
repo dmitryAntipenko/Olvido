@@ -20,7 +20,7 @@
 
 + (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName;
 
-#pragma mark - Accessing to atlases
+#pragma mark - Access to atlases
 
 + (NSDictionary<NSString *, NSArray *> *)atlasesWithUnitName:(NSString *)unitName;
 
