@@ -47,7 +47,15 @@
 			<string>OGPlayerEntity</string>
 		</array>
 		<key>TextureAtlases</key>
-		<dict/>
+		<dict>
+			<key>Player</key>
+			<array>
+				<string>PlayerBotWalkL</string>
+				<string>PlayerBotWalkR</string>
+				<string>PlayerBotIdleL</string>
+				<string>PlayerBotIdleR</string>
+			</array>
+		</dict>
 	</dict>
 </array>
 </plist>

@@ -33,9 +33,13 @@
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
 
+#import "OGTextureManager.h"
+
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
 CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
+
+NSString *kOGPlayerEntityUnitName = @"Player";
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -101,7 +105,10 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         
         if ([OGPlayerEntity sOGPlayerEntityAnimations])
         {
-            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            
+            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];//
+            
+//            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
             
             [_render.node addChild:_animation.spriteNode];
             [self addComponent:_animation];
