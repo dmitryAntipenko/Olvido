@@ -13,7 +13,7 @@
 
 @interface OGInventoryBarNode : SKSpriteNode
 
-@property (nonatomic, strong) OGPlayerEntity *playerEntity;
+@property (nonatomic, weak) OGPlayerEntity *playerEntity;
 
 + (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent;
 
