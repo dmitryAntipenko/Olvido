@@ -10,4 +10,6 @@
 
 @interface OGLoadTexturesOperation : NSOperation
 
++ (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName;
+
 @end

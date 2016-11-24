@@ -41,6 +41,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 - (void)loadAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName completion:(void (^)())completion;
 {
+ 
+    
+    
     dispatch_queue_t currentQueue = [NSOperationQueue currentQueue].underlyingQueue;
     
     dispatch_barrier_async(self.syncQueue, ^
