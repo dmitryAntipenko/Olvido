@@ -215,7 +215,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     OGDirection directin;
     
-    NSString *directionIdentifier = [atlasName substringFromIndex:atlasName.length];
+    NSString *directionIdentifier = [imageIdentifier substringFromIndex:imageIdentifier.length];
     
     if ([directionIdentifier isEqualToString:@"R"])
     {
@@ -226,14 +226,14 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         directin = kOGDirectionLeft;
     }
         
-    animations[atlasName] = [OGAnimation animationWithAnimationState:animationState
-                                                           direction:directin
-                                                            textures:textures
-                                                         frameOffset:0
-                                               repeatTexturesForever:repeatTexturesForever
-                                                      bodyActionName:bodyActionName
-                                                          bodyAction:bodyAction
-                                                        timePerFrame:timePerFrame];
+    animations[imageIdentifier] = [OGAnimation animationWithAnimationState:animationState
+                                                                 direction:directin
+                                                                  textures:textures
+                                                               frameOffset:0
+                                                     repeatTexturesForever:repeatTexturesForever
+                                                            bodyActionName:bodyActionName
+                                                                bodyAction:bodyAction
+                                                              timePerFrame:timePerFrame];
 
     
     return animations;
