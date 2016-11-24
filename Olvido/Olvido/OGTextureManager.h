@@ -10,11 +10,15 @@
 
 @interface OGTextureManager : NSObject
 
-#pragma mark - Memory managment
+#pragma mark - Atlases managment
 
 + (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName textures:(NSArray<SKTexture *> *)textures;
 
 + (void)purgeAtlasesWithUnitName:(NSString *)unitName;
+
++ (void)purgeAllTextures;
+
++ (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName;
 
 #pragma mark - Accessing to atlases
 

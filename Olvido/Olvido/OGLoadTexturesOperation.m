@@ -52,8 +52,8 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            if (self.unitName && self.atlasName)
-            {   
+            if (self.unitName && self.atlasName && ![OGTextureManager containsAtlasWithName:self.atlasName unitName:self.unitName])
+            {
                 SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
                 NSMutableArray *atlasTextures = [[NSMutableArray alloc] init];
                 
@@ -62,10 +62,16 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
                     [atlasTextures addObject:[atlas textureNamed:textureName]];
                 }
                 
-                [atlas preloadWithCompletionHandler:^{}];
-                
-//                [OGTextureManager ]
-            }
+                __weak typeof(self) weakSelf = self;
+                [atlas preloadWithCompletionHandler:^
+                 {
+                     if (weakSelf)
+                     {
+                         typeof(weakSelf) strongSelf = weakSelf;
+                         
+                         [strongSelf finish];
+                     }
+                 }];            }
             else
             {
                 [self finish];
@@ -73,8 +79,6 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         }
     }
 }
-
-
 
 - (void)finish
 {
