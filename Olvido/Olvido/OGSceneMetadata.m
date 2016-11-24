@@ -38,7 +38,7 @@ NSString *const kOGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
                     _textureAtlases = [[NSDictionary alloc] init];
                 }
                 
-                NSArray<NSString *> *onDemandResourcesClassNames = [configuration objectForKey:kOGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *onDemandResourcesClassNames = configuration[kOGSceneMetadataOnDemandResourcesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 
@@ -55,7 +55,7 @@ NSString *const kOGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
                     }
                 }
                 
-                _loadableClasses = [mutableLoadableClasses copy];
+                _loadableClasses = mutableLoadableClasses;
             }
             else
             {

@@ -28,7 +28,7 @@
     doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorPhysicsBodySize];
     doorNode.physicsBody.dynamic = NO;
     
-    OGColliderType *doorColliderType = [OGColliderType lockedDoor];
+    OGColliderType *doorColliderType = [OGColliderType door];
     doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
     doorNode.physicsBody.contactTestBitMask = (uint32_t) doorColliderType.contactTestBitMask;
 }

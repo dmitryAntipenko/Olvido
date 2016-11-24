@@ -64,7 +64,7 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
             GKScene *gkScene = [GKScene sceneWithMetadata:self.sceneMetadata];
             
             self.scene = (OGBaseScene *) gkScene.rootNode;
-            [self.scene createCamera];
+            [self.scene configureScene];
             
             self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
         }

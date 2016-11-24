@@ -11,15 +11,15 @@
 
 @interface OGColliderType : NSObject <NSCopying>
 
-@property (nonatomic, assign) NSUInteger categoryBitMask;
-@property (nonatomic, assign) NSUInteger collisionBitMask;
-@property (nonatomic, assign) NSUInteger contactTestBitMask;
+@property (nonatomic, assign, readonly) OGCollisionBitMask categoryBitMask;
+@property (nonatomic, assign, readonly) OGCollisionBitMask collisionBitMask;
+@property (nonatomic, assign, readonly) OGCollisionBitMask contactTestBitMask;
 
 + (instancetype)player;
 + (instancetype)enemy;
 + (instancetype)obstacle;
 + (instancetype)door;
-+ (instancetype)lockedDoor;
++ (instancetype)doorTrigger;
 + (instancetype)weapon;
 + (instancetype)bullet;
 + (instancetype)key;

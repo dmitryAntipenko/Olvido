@@ -12,8 +12,15 @@
 
 @class OGAnimation;
 
+@protocol OGAnimationComponentDelegate <NSObject>
+
+- (void)animationDidFinish;
+
+@end
+
 @interface OGAnimationComponent : GKComponent
 
+@property (nonatomic, weak) id<OGAnimationComponentDelegate> delegate;
 @property (nonatomic, strong) NSDictionary *animations;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
@@ -30,10 +37,10 @@
                                        imageIdentifier:(NSString *)imageIdentifier;
 
 + (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
-                      imageIdentifier:(NSString *)imageIdentifier
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                 repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
-                         timePerFrame:(NSTimeInterval)timePerFrame;
+                         timePerFrame:(NSTimeInterval)timePerFrame
+                      imageIdentifier:(NSString *)imageIdentifier;
 @end

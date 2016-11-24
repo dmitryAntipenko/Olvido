@@ -13,12 +13,14 @@
 #import "OGGameSceneDelegate.h"
 
 @class OGEntitySnapshot;
+@class OGAudioManager;
 
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
 @property (nonatomic, strong) GKStateMachine *stateMachine;
+@property (nonatomic, strong) OGAudioManager *audioManager;
 
 @property (nonatomic, strong) GKObstacleGraph *obstaclesGraph;
 

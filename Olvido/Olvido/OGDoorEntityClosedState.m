@@ -15,8 +15,25 @@
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
 #import "OGSoundComponent.h"
+#import "OGColliderType.h"
+
+@interface OGDoorEntityClosedState ()
+
+@property (nonatomic, weak) OGSoundComponent *soundComponent;
+
+@end
 
 @implementation OGDoorEntityClosedState
+
+- (OGSoundComponent *)soundComponent
+{
+    if (!_soundComponent)
+    {
+        _soundComponent = (OGSoundComponent *) [self.doorEntity componentForClass:[OGSoundComponent class]];
+    }
+    
+    return _soundComponent;
+}
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
@@ -25,9 +42,11 @@
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
     
+    self.renderComponent.node.physicsBody.categoryBitMask = (uint32_t) [OGColliderType door].categoryBitMask;
+    
     if (previousState)
     {
-        [self.doorEntity.sound playSoundOnce:@"door_open"];
+        [self.soundComponent playSoundOnce:@"door_open"];
     }
 }
 

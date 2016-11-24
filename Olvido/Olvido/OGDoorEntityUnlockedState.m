@@ -23,9 +23,6 @@
     self.lockComponent.closed = NO;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
     
-    SKNode *doorNode = self.renderComponent.node;    
-    doorNode.physicsBody = nil;
-    
     if ([self.stateMachine canEnterState:[OGDoorEntityClosedState class]])
     {
         [self.stateMachine enterState:[OGDoorEntityClosedState class]];

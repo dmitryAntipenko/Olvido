@@ -22,7 +22,6 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
 
 @interface OGMenuManager () <AVAudioPlayerDelegate>
 
-@property (nonatomic, strong, readwrite) OGAudioManager *audioManager;
 @property (nonatomic, strong) NSArray<NSDictionary *> *menusMap;
 @property (nonatomic, weak) OGMenuBaseScene *currentScene;
 
@@ -36,18 +35,6 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
     [menuManager loadMenuMap];
     
     return menuManager;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        _audioManager = [OGAudioManager audioManager];
-    }
-    
-    return self;
 }
 
 - (void)loadMenuMap

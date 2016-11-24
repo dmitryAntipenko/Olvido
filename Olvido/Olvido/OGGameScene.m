@@ -18,6 +18,7 @@
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
 
+#import "OGInputComponent.h"
 #import "OGRenderComponent.h"
 #import "OGLockComponent.h"
 #import "OGPhysicsComponent.h"
@@ -90,8 +91,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
-@property (nonatomic, strong) OGAudioManager *audioManager;
-
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, strong) OGPlayerEntity *player;
@@ -124,8 +123,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (self)
     {        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
-        
-        _audioManager = [OGAudioManager audioManager];
         
         _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
@@ -220,7 +217,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
     self.audioManager.musicPlayerDelegate = self;
     
-    [self.cameraController moveCameraToNode:self.currentRoom duration:0.0];
+    [self.cameraController moveCameraToNode:self.currentRoom];
 }
 
 #pragma mark - Scene Creation
@@ -237,7 +234,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
-    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) self.player.input;
+    
+    OGInputComponent *inputComponent = (OGInputComponent *) [self.player componentForClass:[OGInputComponent class]];
+    inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) inputComponent;
     inputNode.position = CGPointZero;
     [self.camera addChild:inputNode];
 }
@@ -250,17 +249,18 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
-    self.cameraController.target = self.player.render.node;
+    self.cameraController.target = self.player.renderComponent.node;
 }
 
 - (void)createPlayer
 {
     OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
+    player.delegate = self;
     self.player = player;
     [self addEntity:self.player];
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
-    self.player.render.node.position = playerInitialNode.position;
+    self.player.renderComponent.node.position = playerInitialNode.position;
 }
 
 - (void)createEnemies
@@ -269,14 +269,16 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long)counter];
+        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long) counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
     
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
+        enemy.delegate = self;
         
         if ([enemy isMemberOfClass:[OGZombie class]])
         {
-            ((OGZombie *) enemy).trailComponent.targetNode = self;
+            OGTrailComponent *trailComponent = (OGTrailComponent *) [enemy componentForClass:[OGTrailComponent class]];
+            trailComponent.targetNode = self;
         }
         
         [self addEntity:enemy];
@@ -294,19 +296,22 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         if ([doorNode isKindOfClass:[SKSpriteNode class]])
         {
             OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            OGLockComponent *lockComponent = (OGLockComponent *) [door componentForClass:[OGLockComponent class]];
+            OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [door componentForClass:[OGTransitionComponent class]];
+            
             door.transitionDelegate = self;
             
             BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
             
-            door.lockComponent.target = self.player.render.node;
-            door.lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
-            door.lockComponent.locked = doorLocked;
+            lockComponent.target = self.player.renderComponent.node;
+            lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
+            lockComponent.locked = doorLocked;
             
             NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
             NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];
             
-            door.transition.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
-            door.transition.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
+            transitionComponent.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
+            transitionComponent.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
             
             for (NSString *key in doorNode.userData.allKeys)
             {
@@ -323,7 +328,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createInventoryBar
 {
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:self.player.inventoryComponent];
+    OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent];
     self.inventoryBarNode.playerEntity = self.player;
     
     if (self.camera)
@@ -405,11 +411,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
 {
-    SKNode *destinationNode = component.destination;
-    
     self.currentRoom = component.destination;
     
-    [self.cameraController moveCameraToNode:destinationNode duration:1.0];
+    [self.cameraController moveCameraToNode:self.currentRoom];
     
     completion();
 }
@@ -518,7 +522,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)restart
 {
-    [self.sceneDelegate gameSceneDidCallRestart];
+    [self.sceneDelegate didCallRestart];
 }
 
 - (void)runStoryConclusion
@@ -555,7 +559,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)update:(NSTimeInterval)currentTime
 {
     [super update:currentTime];
-    [self.cameraController update];
     
     if (self.lastUpdateTimeInterval == 0)
     {
@@ -569,7 +572,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         CGFloat deltaTime = currentTime - self.lastUpdateTimeInterval;
         self.lastUpdateTimeInterval = currentTime;
         
-        for (GKComponentSystem *componentSystem in self.componentSystems)
+        NSArray *array = [NSArray arrayWithArray:self.componentSystems];
+        for (GKComponentSystem *componentSystem in array)
         {
             [componentSystem updateWithDeltaTime:deltaTime];
         }
@@ -622,15 +626,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenResumeButtonName])
     {
-        [self.sceneDelegate resume];
+        [self.sceneDelegate didCallResume];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenRestartButtonName])
     {
-        [self.sceneDelegate restart];
+        [self.sceneDelegate didCallRestart];
     }
     else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenMenuButtonName])
     {
-        [self.sceneDelegate exitToMenu];
+        [self.sceneDelegate didCallExit];
     }
 }
 

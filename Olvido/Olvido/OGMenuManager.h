@@ -15,7 +15,7 @@
 @interface OGMenuManager : NSObject
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
-@property (nonatomic, strong, readonly) OGAudioManager *audioManager;
+@property (nonatomic, strong) OGAudioManager *audioManager;
 @property (nonatomic, weak) OGLevelManager *levelManager;
 
 + (instancetype)menuManager;

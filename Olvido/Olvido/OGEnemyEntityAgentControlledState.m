@@ -13,6 +13,7 @@
 #import "OGAnimationComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
+#import "OGEnemyEntityDieState.h"
 
 @interface OGEnemyEntityAgentControlledState ()
 
@@ -20,8 +21,8 @@
 
 @property (nonatomic, assign) NSTimeInterval timeSinceBehaviorUpdate;
 
-@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGOrientationComponent *orientationComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 @end
 
 @implementation OGEnemyEntityAgentControlledState
@@ -94,7 +95,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGEnemyEntityPreAttackState class];
+    return stateClass == [OGEnemyEntityPreAttackState class] || stateClass == [OGEnemyEntityDieState class];
 }
 
 #pragma mark - Getters

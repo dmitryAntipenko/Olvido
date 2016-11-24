@@ -9,13 +9,7 @@
 #import "OGEnemyEntity.h"
 #import "OGResourceLoadable.h"
 
-@class OGIntelligenceComponent;
-@class OGTrailComponent;
-
 @interface OGZombie : OGEnemyEntity <OGResourceLoadable>
-
-@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
-@property (nonatomic, strong) OGTrailComponent *trailComponent;
 
 + (NSDictionary *)sOGZombieAnimations;
 

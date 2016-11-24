@@ -44,14 +44,17 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     
     for (GKEntity *entity in scene.entities)
     {
-        if (entity && [entity isKindOfClass:[OGEnemyEntity class]] && ((OGEnemyEntity *) entity).agent != agent
-            && [((OGEnemyEntity *) entity) distanceToAgentWithOtherAgent:agent] <= kOGEnemyBehaviorAgentSearchDistanceForFlocking)
+        OGEnemyEntity *enemyEntity = (OGEnemyEntity *) entity;
+        
+        if ([entity isKindOfClass:[OGEnemyEntity class]]
+            && enemyEntity.agent != agent
+            && [enemyEntity distanceToAgentWithOtherAgent:agent] <= kOGEnemyBehaviorAgentSearchDistanceForFlocking)
         {
             [agentsToFlockWith addObject:((OGEnemyEntity *) entity).agent];
         }
     }
 
-    if ([agentsToFlockWith count] != 0)
+    if (agentsToFlockWith.count != 0)
     {
         GKGoal *separationGoal = [GKGoal goalToSeparateFromAgents:agentsToFlockWith
                                                       maxDistance:kOGEnemyBehaviorSeparationRadius
@@ -137,7 +140,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
             [polygonVertices addObject:[NSValue valueWithCGPoint:vertexPoint]];
         }
         
-        if ([polygonVertices count] > 0)
+        if (polygonVertices.count > 0)
         {
             for (NSUInteger i = 0; i < polygonVertices.count; i++)
             {
@@ -149,13 +152,14 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
                     CGFloat nextX = polygonVertices[i + 1].CGPointValue.x;
                     CGFloat nextY = polygonVertices[i + 1].CGPointValue.y;
                     
-                    CGFloat maxX = ((x > nextX) ? x : nextX) + extrusionRadius;
-                    CGFloat maxY = ((y > nextY) ? y : nextY) + extrusionRadius;
+                    CGFloat maxX = MAX(x, nextX) + extrusionRadius;
+                    CGFloat maxY = MAX(y, nextY) + extrusionRadius;
                     
-                    CGFloat minX = ((x < nextX) ? x : nextX) - extrusionRadius;
-                    CGFloat minY = ((y < nextY) ? y : nextY) - extrusionRadius;
+                    CGFloat minX = MIN(x, nextX) - extrusionRadius;
+                    CGFloat minY = MIN(y, nextY) - extrusionRadius;
                     
-                    if ((point.x > minX && point.x < maxX) && (point.y > minY && point.y < maxY))
+                    if ((point.x > minX && point.x < maxX)
+                        && (point.y > minY && point.y < maxY))
                     {
                         [result addObject:obstacle];
                     }
@@ -178,7 +182,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     
     [scene.obstaclesGraph connectNodeUsingObstacles:pointNode];
     
-    if (pointNode.connectedNodes.count == 0 && scene.obstaclesGraph.nodes.count != 1)
+    if (pointNode.connectedNodes.count == 0 && scene.obstaclesGraph.nodes.count > 1)
     {
         [scene.obstaclesGraph removeNodes:@[pointNode]];
         
@@ -209,12 +213,11 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     {
         NSArray *pathNodes = [scene.obstaclesGraph findPathFromNode:startNode toNode:endNode];
         
-        if ([pathNodes count] > 1)
+        if (pathNodes.count > 1)
         {
             GKPath *path = [GKPath pathWithGraphNodes:pathNodes radius:pathRadius];
             
-            [self addFollowAndStayOnPathGoalsWithPath:path];
-            
+            [self addFollowAndStayOnPathGoalsWithPath:path];            
             
             for (GKGraphNode2D *node in pathNodes)
             {

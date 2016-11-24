@@ -12,25 +12,9 @@
 #import "OGTransitionComponent.h"
 #import "OGTransitionComponentDelegate.h"
 
-@class OGRenderComponent;
-@class OGSoundComponent;
-@class OGIntelligenceComponent;
-@class OGAnimationComponent;
-@class OGPhysicsComponent;
-@class OGLockComponent;
-@class OGTransitionComponent;
-
 @interface OGDoorEntity : GKEntity <OGContactNotifiableType, OGResourceLoadable>
 
 @property (nonatomic, weak) id<OGTransitionComponentDelegate> transitionDelegate;
-
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGLockComponent *lockComponent;
-@property (nonatomic, strong) OGTransitionComponent *transition;
-@property (nonatomic, strong) OGSoundComponent *sound;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 

@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+
 @class OGEntityDistance;
 
 extern NSString *const kOGEntitySnapshotPlayerBotTargetTargetKey;

@@ -13,6 +13,7 @@
 @class OGStoryScene;
 @class OGSceneManager;
 @class OGMenuManager;
+@class OGAudioManager;
 
 @interface OGLevelManager : NSObject <OGGameSceneDelegate>
 
@@ -21,6 +22,7 @@
 @property (nonatomic, copy, readonly) NSArray *levelMap;
 @property (nonatomic, strong) OGSceneManager *sceneManager;
 @property (nonatomic, weak) OGMenuManager *menuManager;
+@property (nonatomic, strong) OGAudioManager *audioManager;
 
 + (instancetype)levelManager;
 

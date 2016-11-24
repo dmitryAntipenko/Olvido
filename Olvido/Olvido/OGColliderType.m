@@ -14,7 +14,15 @@ char *const kOGColliderTypeQueueName = "ZEOUniversity.Olvido.InitQueue";
 static NSMutableDictionary<NSNumber *, OGColliderType *> *sOGColliderTypes = nil;
 
 static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions = nil;
-static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications = nil;;
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications = nil;
+
+@interface OGColliderType ()
+
+@property (nonatomic, assign, readwrite) OGCollisionBitMask categoryBitMask;
+@property (nonatomic, assign, readwrite) OGCollisionBitMask collisionBitMask;
+@property (nonatomic, assign, readwrite) OGCollisionBitMask contactTestBitMask;
+
+@end
 
 @implementation OGColliderType
 
@@ -71,9 +79,9 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoor];
 }
 
-+ (instancetype)lockedDoor
++ (instancetype)doorTrigger
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskLockedDoor];
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoorTrigger];
 }
 
 + (instancetype)weapon
@@ -115,9 +123,9 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
 
 #pragma mark - Getters
 
-- (NSUInteger)findBitMaskInDictionary:(NSDictionary *)dictionary
+- (OGCollisionBitMask)findBitMaskInDictionary:(NSDictionary *)dictionary
 {
-    __block NSUInteger result = 0;
+    __block OGCollisionBitMask result = 0;
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(OGColliderType *key, NSArray *obj, BOOL *stop)
      {
@@ -135,12 +143,12 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     return result;
 }
 
-- (NSUInteger)collisionBitMask
+- (OGCollisionBitMask)collisionBitMask
 {
     return [self findBitMaskInDictionary:sOGDefinedCollisions];
 }
 
-- (NSUInteger)contactTestBitMask
+- (OGCollisionBitMask)contactTestBitMask
 {
     return [self findBitMaskInDictionary:sOGRequestedContactNotifications];
 }

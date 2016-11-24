@@ -12,6 +12,7 @@
 
 #import "OGEnemyEntityAttackState.h"
 #import "OGEnemyEntityAgentControlledState.h"
+#import "OGEnemyEntityDieState.h"
 
 NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 
@@ -22,7 +23,7 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
 @property (nonatomic, assign) NSTimeInterval elapsedTimeForAnimation;
 
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @end
 
@@ -69,7 +70,8 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityAgentControlledState class];
+    return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityAgentControlledState class]
+    || stateClass == [OGEnemyEntityDieState class];
 }
 
 - (OGAnimationComponent *)animationComponent

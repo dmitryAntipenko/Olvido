@@ -19,8 +19,8 @@
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @property (nonatomic, assign) CGPoint targetPosition;
 
@@ -51,11 +51,11 @@
     
     for (SKPhysicsBody *contactedBody in contactedBodies)
     {
-        [self applyDamageWithEntity:contactedBody.node.entity];
+        [self applyDamageToEntity:contactedBody.node.entity];
     }
 }
 
-- (void)applyDamageWithEntity:(GKEntity *)entity
+- (void)applyDamageToEntity:(GKEntity *)entity
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {

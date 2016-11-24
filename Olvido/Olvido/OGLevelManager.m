@@ -53,16 +53,56 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 #pragma mark - GameSceneDelegate methods
 
-- (void)gameSceneDidCallFinish
+- (void)didCallFinish
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"Not implemented %@", NSStringFromSelector(_cmd)];
 }
 
-- (void)gameSceneDidCallRestart
+- (void)didCallPause
 {
-    [self loadLevelWithIdentifier:self.currentGameSceneIdentifier];
+    if (self.currentGameScene)
+    {
+        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+    }
+}
+
+- (void)didCallResume
+{
+    if (self.currentGameScene)
+    {
+        [self.currentGameScene.stateMachine enterState:[OGGameLevelState class]];
+    }
+}
+
+- (void)didCallRestart
+{
+    [self clearCurrentScene];
     [self runGameScene];
+}
+
+- (void)didCallExit
+{
+    [self clearCurrentScene];
+    [self.menuManager loadMenuWithName:kOGMapMenuName];
+}
+
+- (void)clearCurrentScene
+{
+    if (self.currentGameScene)
+    {
+        self.currentGameScene.sceneDelegate = nil;
+    }
+    
+    self.currentStoryScene = nil;
+    
+    if (self.currentStoryScene)
+    {
+        self.currentStoryScene.sceneDelegate = nil;
+    }
+    
+    [self.audioManager stopMusic];
+    self.currentGameScene = nil;
 }
 
 #pragma mark - GameSceneStoreDelegate method
@@ -88,6 +128,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
                  typeof(weakSelf) strongSelf = weakSelf;
                  
                  strongSelf.currentGameScene = (OGGameScene *)scene;
+                 strongSelf.currentGameScene.audioManager = self.audioManager;
                  strongSelf.currentGameScene.sceneDelegate = self;
              }
          }];
@@ -127,51 +168,6 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
-}
-
-- (void)pause
-{
-    if (self.currentGameScene)
-    {
-        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
-    }
-}
-
-- (void)resume
-{
-    if (self.currentGameScene)
-    {
-        [self.currentGameScene.stateMachine enterState:[OGGameLevelState class]];
-    }
-}
-
-- (void)restart
-{
-    [self clearCurrentScene];
-    [self runGameScene];
-}
-
-- (void)exitToMenu
-{
-    [self clearCurrentScene];
-    [self.menuManager loadMenuWithName:kOGMapMenuName];
-}
-
-- (void)clearCurrentScene
-{
-    if (self.currentGameScene)
-    {
-        self.currentGameScene.sceneDelegate = nil;
-    }
-    
-    self.currentStoryScene = nil;
-    
-    if (self.currentStoryScene)
-    {
-        self.currentStoryScene.sceneDelegate = nil;
-    }
-    
-    self.currentGameScene = nil;
 }
 
 @end

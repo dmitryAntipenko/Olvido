@@ -39,12 +39,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    [self.gameViewController.levelManager pause];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [self.gameViewController.levelManager resume];
+    [self.gameViewController.levelManager didCallPause];
 }
 
 @end
