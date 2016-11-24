@@ -49,12 +49,16 @@
 		<key>TextureAtlases</key>
 		<dict>
 			<key>Player</key>
-			<array>
+			<dict>
+				<key>Player_Walk_Left</key>
 				<string>PlayerBotWalkL</string>
+				<key>Player_Walk_Right</key>
 				<string>PlayerBotWalkR</string>
+				<key>Player_Idle_Left</key>
 				<string>PlayerBotIdleL</string>
+				<key>Player_Idle_Right</key>
 				<string>PlayerBotIdleR</string>
-			</array>
+			</dict>
 		</dict>
 	</dict>
 </array>

@@ -35,7 +35,7 @@
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
 
-#import "OGTextureManager.h"
+#import "OGTextureAtlasesManager.h"
 
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
@@ -120,26 +120,11 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
         
-        OGTextureManager *textureManager = [OGTextureManager sharedInstance];
+        OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
         
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[textureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[textureAtlasesManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
 
         [self addComponent:_animationComponent];
-        
-//        if ([OGPlayerEntity sOGPlayerEntityAnimations])
-//        {
-//            //            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGTextureManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
-//            
-//            //            _animation = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
-//            
-//            
-//            [_renderComponent.node addChild:_animationComponent.spriteNode];
-//            //            [self addComponent:_animationComponent];
-//        }
-//        else
-//        {
-//            return nil;
-//        }
         
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];

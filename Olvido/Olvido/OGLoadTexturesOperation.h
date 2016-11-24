@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) NSProgress *progress;
 
-+ (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName;
++ (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName
+                                         atlasKey:(NSString *)atlasKey
+                                        atlasName:(NSString *)atlasname;
 
 @end

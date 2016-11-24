@@ -6,27 +6,27 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGTextureManager.h"
+#import "OGTextureAtlasesManager.h"
 
 char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManagerSyncQueue";
 
-@interface OGTextureManager ()
+@interface OGTextureAtlasesManager ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, SKTextureAtlas *> *> *textures;
 @property (nonatomic, strong) dispatch_queue_t syncQueue;
 
 @end
 
-@implementation OGTextureManager
+@implementation OGTextureAtlasesManager
 
 + (instancetype)sharedInstance;
 {
-    static OGTextureManager *instance = nil;
+    static OGTextureAtlasesManager *instance = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^
                   {
-                      instance = [[OGTextureManager alloc] init];
+                      instance = [[OGTextureAtlasesManager alloc] init];
                   });
     
     return instance;
@@ -47,9 +47,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Atlases managment
 
-- (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas
+- (void)addAtlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey atlas:(SKTextureAtlas *)atlas
 {
-    if (unitName && atlasName && atlas)
+    if (unitName && atlasKey && atlas)
     {
         dispatch_barrier_sync(self.syncQueue, ^
           {
@@ -61,7 +61,7 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                   [self.textures setObject:unitAtlases forKey:unitName];
               }
               
-              [unitAtlases setObject:atlas forKey:atlasName];
+              [unitAtlases setObject:atlas forKey:atlasKey];
           });
     }
 }
@@ -85,15 +85,15 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
       });
 }
 
-- (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName
+- (BOOL)containsAtlasWithKey:(NSString *)atlasKey unitName:(NSString *)unitName
 {
     __block BOOL result = NO;
     
-    if (atlasName && unitName)
+    if (atlasKey && unitName)
     {
         dispatch_sync(self.syncQueue, ^
         {
-            result = ([[self.textures objectForKey:unitName] objectForKey:atlasName] != nil);
+            result = ([[self.textures objectForKey:unitName] objectForKey:atlasKey] != nil);
         });
     }
     

@@ -24,7 +24,7 @@
 		1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B36E4C71DC618100080D80B /* OGPauseScreen.sks */; };
 		1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */; };
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
-		1B4C32FC1DE5875C008E5339 /* OGTextureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FB1DE5875C008E5339 /* OGTextureManager.m */; };
+		1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */; };
 		1B4C32FF1DE59ACF008E5339 /* OGLoadTexturesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */; };
 		1B700AB21DDC88A500DC88F6 /* OGTrailComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */; };
 		1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24771DD5D074004918C8 /* MenusMap.plist */; };
@@ -157,8 +157,8 @@
 		1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationComponent.h; sourceTree = "<group>"; };
 		1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationComponent.m; sourceTree = "<group>"; };
 		1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZPositionEnum.m; sourceTree = "<group>"; };
-		1B4C32FA1DE5875C008E5339 /* OGTextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTextureManager.h; sourceTree = "<group>"; };
-		1B4C32FB1DE5875C008E5339 /* OGTextureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTextureManager.m; sourceTree = "<group>"; };
+		1B4C32FA1DE5875C008E5339 /* OGTextureAtlasesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTextureAtlasesManager.h; sourceTree = "<group>"; };
+		1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTextureAtlasesManager.m; sourceTree = "<group>"; };
 		1B4C32FD1DE59ACF008E5339 /* OGLoadTexturesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadTexturesOperation.h; sourceTree = "<group>"; };
 		1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadTexturesOperation.m; sourceTree = "<group>"; };
 		1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrailComponent.h; sourceTree = "<group>"; };
@@ -458,13 +458,13 @@
 			name = AnimationComponent;
 			sourceTree = "<group>";
 		};
-		1B4C32F91DE58717008E5339 /* TextureManager */ = {
+		1B4C32F91DE58717008E5339 /* TextureAtlasesManager */ = {
 			isa = PBXGroup;
 			children = (
-				1B4C32FA1DE5875C008E5339 /* OGTextureManager.h */,
-				1B4C32FB1DE5875C008E5339 /* OGTextureManager.m */,
+				1B4C32FA1DE5875C008E5339 /* OGTextureAtlasesManager.h */,
+				1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */,
 			);
-			name = TextureManager;
+			name = TextureAtlasesManager;
 			sourceTree = "<group>";
 		};
 		1B7F24AA1DD5D0C1004918C8 /* SceneManager */ = {
@@ -881,7 +881,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				1B4C32F91DE58717008E5339 /* TextureManager */,
+				1B4C32F91DE58717008E5339 /* TextureAtlasesManager */,
 				EA8CAF091DE1F41700CDB848 /* AudioManager */,
 				215A8A8B1DDCD0EE00C5C90D /* Snapshots */,
 				215A8A731DDCB13B00C5C90D /* Rules */,
@@ -1100,7 +1100,7 @@
 				EA05FA101DD507FA00FAC81A /* OGDoorEntityState.m in Sources */,
 				2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */,
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
-				1B4C32FC1DE5875C008E5339 /* OGTextureManager.m in Sources */,
+				1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B7F24A31DD5D074004918C8 /* OGSceneLoaderPrepearingResourcesState.m in Sources */,

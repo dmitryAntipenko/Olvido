@@ -8,19 +8,19 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface OGTextureManager : NSObject
+@interface OGTextureAtlasesManager : NSObject
 
 + (instancetype)sharedInstance;
 
 #pragma mark - Atlases managment
 
-- (void)addAtlasWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName atlas:(SKTextureAtlas *)atlas;
+- (void)addAtlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey atlas:(SKTextureAtlas *)atlas;
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
 - (void)purgeAllTextures;
 
-- (BOOL)containsAtlasWithName:(NSString *)atlasName unitName:(NSString *)unitName;
+- (BOOL)containsAtlasWithKey:(NSString *)atlasKey unitName:(NSString *)unitName;
 
 #pragma mark - Access to atlases
 

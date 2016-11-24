@@ -103,11 +103,13 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     
     for (NSString *unitName in sceneMetadata.textureAtlases)
     {
-        NSArray<NSString *> *unitAtlases = [sceneMetadata.textureAtlases objectForKey:unitName];
+        NSDictionary<NSString *, NSString *> *unitAtlases = [sceneMetadata.textureAtlases objectForKey:unitName];
         
-        for (NSString *atlasName in unitAtlases)
+        for (NSString *atlasKey in unitAtlases)
         {
-            OGLoadTexturesOperation *loadTexturesOperation = [OGLoadTexturesOperation loadTexturesOperationWithUnitName:unitName atlasName:atlasName];
+            OGLoadTexturesOperation *loadTexturesOperation = [OGLoadTexturesOperation loadTexturesOperationWithUnitName:unitName
+                                                                                                               atlasKey:atlasKey
+                                                                                                              atlasName:unitAtlases[atlasKey]];
             
             [self.progress addChild:loadTexturesOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
             

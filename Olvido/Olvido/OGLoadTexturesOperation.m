@@ -7,7 +7,7 @@
 //
 
 #import "OGLoadTexturesOperation.h"
-#import "OGTextureManager.h"
+#import "OGTextureAtlasesManager.h"
 
 NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
 
@@ -15,17 +15,22 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
 
 @property (nonatomic, strong) NSString *unitName;
 @property (nonatomic, strong) NSString *atlasName;
+@property (nonatomic, strong) NSString *atlasKey;
 
 @end
 
 @implementation OGLoadTexturesOperation
 
-+ (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName
++ (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName
+                                         atlasKey:(NSString *)atlasKey
+                                        atlasName:(NSString *)atlasName
 {
-    return [[self alloc] initWithUnitName:unitName atlasName:atlasName];
+    return [[self alloc] initWithUnitName:unitName atlasKey:atlasKey atlasName:atlasName];
 }
 
-- (instancetype)initWithUnitName:(NSString *)unitName atlasName:(NSString *)atlasName;
+- (instancetype)initWithUnitName:(NSString *)unitName
+                        atlasKey:(NSString *)atlasKey
+                       atlasName:(NSString *)atlasName
 {
     self = [self init];
     
@@ -33,6 +38,7 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
     {
         _unitName = unitName;
         _atlasName = atlasName;
+        _atlasKey = atlasKey;
         
         _progress = [[NSProgress alloc] init];
         _progress.totalUnitCount = kOGLoadTexturesOperationProgressTotalUnitCount;
@@ -51,13 +57,16 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         }
         else
         {
-            OGTextureManager *textureManager = [OGTextureManager sharedInstance];
+            OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
             
-            if (self.unitName && self.atlasName && ![textureManager containsAtlasWithName:self.atlasName unitName:self.unitName])
+            if (self.atlasKey
+                && self.unitName
+                && self.atlasName
+                && ![textureAtlasesManager containsAtlasWithKey:self.atlasKey unitName:self.unitName])
             {
                 SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
                 
-                [textureManager addAtlasWithUnitName:self.unitName atlasName:self.atlasName atlas:atlas];
+                [textureAtlasesManager addAtlasWithUnitName:self.unitName atlasKey:self.atlasKey atlas:atlas];
                 
                 __weak typeof(self) weakSelf = self;
                 [atlas preloadWithCompletionHandler:^
