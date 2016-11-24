@@ -15,7 +15,7 @@
 
 @property (nonatomic, weak) OGPlayerEntity *playerEntity;
 
-+ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent;
++ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize;
 
 - (void)updateConstraints;
 

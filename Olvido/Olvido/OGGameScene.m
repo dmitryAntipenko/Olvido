@@ -121,20 +121,20 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self = [super initWithCoder:aDecoder];
     
     if (self)
-    {        
+    {
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
         _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
-            [OGStoryConclusionLevelState stateWithLevelScene:self],
-            [OGBeforeStartLevelState stateWithLevelScene:self],
-            [OGGameLevelState stateWithLevelScene:self],
-            [OGPauseLevelState stateWithLevelScene:self],
-            [OGCompleteLevelState stateWithLevelScene:self],
-            [OGDeathLevelState stateWithLevelScene:self]
-        ]];
+                                                                 [OGStoryConclusionLevelState stateWithLevelScene:self],
+                                                                 [OGBeforeStartLevelState stateWithLevelScene:self],
+                                                                 [OGGameLevelState stateWithLevelScene:self],
+                                                                 [OGPauseLevelState stateWithLevelScene:self],
+                                                                 [OGCompleteLevelState stateWithLevelScene:self],
+                                                                 [OGDeathLevelState stateWithLevelScene:self]
+                                                                 ]];
         
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
         
@@ -209,7 +209,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     [self createSceneContents];
     
     [self createCameraNode];
-    [self createInventoryBar];
     [self createTouchControlInputNode];
     
     [self.stateMachine enterState:[OGGameLevelState class]];
@@ -218,6 +217,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.audioManager.musicPlayerDelegate = self;
     
     [self.cameraController moveCameraToNode:self.currentRoom];
+    
+    [self createInventoryBar];
 }
 
 #pragma mark - Scene Creation
@@ -271,7 +272,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     {
         NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long) counter];
         GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
-    
+        
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
         enemy.delegate = self;
         
@@ -329,7 +330,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 - (void)createInventoryBar
 {
     OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
     self.inventoryBarNode.playerEntity = self.player;
     
     if (self.camera)

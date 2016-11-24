@@ -28,16 +28,14 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, assign) CGFloat itemSizeLength;
 @property (nonatomic, assign) CGRect hideTrigger;
-@property (nonatomic, assign, readonly) CGRect parentFrame;
+@property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) BOOL customHidden;
 
 @end
 
 @implementation OGInventoryBarNode
 
-@synthesize parentFrame = _parentFrame;
-
-- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
+- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
 {
     if (inventoryComponent)
     {
@@ -49,6 +47,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
         {
             _inventoryComponent = inventoryComponent;
             _inventoryComponent.inventoryComponentDelegate = self;
+            _screenSize = screenSize;
         }
     }
     else
@@ -59,9 +58,9 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
     return self;
 }
 
-+ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
++ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
 {
-    return [[self alloc] initWithInventoryComponent:inventoryComponent];
+    return [[self alloc] initWithInventoryComponent:inventoryComponent screenSize:screenSize];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
@@ -162,7 +161,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     [self removeActionForKey:kOGInventoryBarNodeShowingActionKey];
     
-    SKAction *hidingAction = [SKAction moveToY: -(self.parentFrame.size.height + self.size.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
+    SKAction *hidingAction = [SKAction moveToY: -(self.screenSize.height + self.size.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
     
     [self runAction:hidingAction withKey:kOGInventoryBarNodeHidingActionKey];
     
@@ -173,7 +172,7 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     [self removeActionForKey:kOGInventoryBarNodeHidingActionKey];
     
-    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.parentFrame.size.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
+    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.screenSize.height) / 2 duration:kOGInventoryBarNodeHidingTimeInterval];
     [self runAction:showingAction withKey:kOGInventoryBarNodeShowingActionKey];
     
     self.customHidden = NO;
@@ -199,17 +198,6 @@ CGFloat const kOGInventoryBarNodeHidingZoneWidth = 50.0;
             [self show];
         }
     }
-}
-
-- (CGRect)parentFrame
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^()
-                  {
-                      _parentFrame = [self.parent calculateAccumulatedFrame];
-                  });
-    
-    return _parentFrame;
 }
 
 #pragma mark - OGInventoryComponentDelegate
