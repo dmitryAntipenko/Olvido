@@ -26,6 +26,7 @@
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
 		1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */; };
 		1B4C32FF1DE59ACF008E5339 /* OGLoadTexturesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */; };
+		1B4C33091DE76535008E5339 /* OGSoundsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C33081DE76535008E5339 /* OGSoundsManager.m */; };
 		1B700AB21DDC88A500DC88F6 /* OGTrailComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */; };
 		1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24771DD5D074004918C8 /* MenusMap.plist */; };
 		1B7F249A1DD5D074004918C8 /* OGBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24791DD5D074004918C8 /* OGBaseScene.m */; };
@@ -161,6 +162,8 @@
 		1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTextureAtlasesManager.m; sourceTree = "<group>"; };
 		1B4C32FD1DE59ACF008E5339 /* OGLoadTexturesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadTexturesOperation.h; sourceTree = "<group>"; };
 		1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadTexturesOperation.m; sourceTree = "<group>"; };
+		1B4C33071DE76535008E5339 /* OGSoundsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSoundsManager.h; sourceTree = "<group>"; };
+		1B4C33081DE76535008E5339 /* OGSoundsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSoundsManager.m; sourceTree = "<group>"; };
 		1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrailComponent.h; sourceTree = "<group>"; };
 		1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTrailComponent.m; sourceTree = "<group>"; };
 		1B7F24771DD5D074004918C8 /* MenusMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MenusMap.plist; sourceTree = "<group>"; };
@@ -465,6 +468,15 @@
 				1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */,
 			);
 			name = TextureAtlasesManager;
+			sourceTree = "<group>";
+		};
+		1B4C33061DE7650C008E5339 /* SoundsManager */ = {
+			isa = PBXGroup;
+			children = (
+				1B4C33071DE76535008E5339 /* OGSoundsManager.h */,
+				1B4C33081DE76535008E5339 /* OGSoundsManager.m */,
+			);
+			name = SoundsManager;
 			sourceTree = "<group>";
 		};
 		1B7F24AA1DD5D0C1004918C8 /* SceneManager */ = {
@@ -881,6 +893,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				1B4C33061DE7650C008E5339 /* SoundsManager */,
 				1B4C32F91DE58717008E5339 /* TextureAtlasesManager */,
 				EA8CAF091DE1F41700CDB848 /* AudioManager */,
 				215A8A8B1DDCD0EE00C5C90D /* Snapshots */,
@@ -1158,6 +1171,7 @@
 				215A8A791DDCB2D900C5C90D /* OGEntityDistance.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1B7F24A61DD5D074004918C8 /* OGSceneManager.m in Sources */,
+				1B4C33091DE76535008E5339 /* OGSoundsManager.m in Sources */,
 				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,
 				EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */,
 				EA05FA061DD4FA6C00FAC81A /* OGPlayerEntityAttackState.m in Sources */,

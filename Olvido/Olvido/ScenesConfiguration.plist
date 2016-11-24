@@ -60,6 +60,14 @@
 				<string>PlayerBotIdleR</string>
 			</dict>
 		</dict>
+		<key>Sounds</key>
+		<dict>
+			<key>Bullet</key>
+			<dict>
+				<key>Shot</key>
+				<string>shot</string>
+			</dict>
+		</dict>
 	</dict>
 </array>
 </plist>
