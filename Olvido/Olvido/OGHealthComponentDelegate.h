@@ -10,7 +10,9 @@
 
 @protocol OGHealthComponentDelegate <NSObject>
 
+@optional
+- (void)healthDidChange;
 - (void)entityWillDie;
-- (void)dealDamage:(NSInteger)damage;
+- (void)dealDamageToEntity:(NSInteger)damage;
 
 @end

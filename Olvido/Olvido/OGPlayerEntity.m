@@ -22,6 +22,7 @@
 #import "OGWeaponComponent.h"
 #import "OGInventoryItem.h"
 #import "OGInventoryComponent.h"
+#import "OGHealthBarComponent.h"
 
 #import "OGColliderType.h"
 #import "OGZPositionEnum.m"
@@ -52,6 +53,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 @property (nonatomic, strong) OGMessageComponent        *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent    *orientationComponent;
 @property (nonatomic, strong) OGWeaponComponent         *weaponComponent;
+@property (nonatomic, strong) OGHealthBarComponent      *healthBarComponent;
 @property (nonatomic, strong) GKAgent2D                 *agent;
 
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
@@ -140,6 +142,9 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _weaponComponent = [[OGWeaponComponent alloc] init];
         [self addComponent:_weaponComponent];
         
+        _healthBarComponent = [OGHealthBarComponent healthBarComponent];
+        [self addComponent:_healthBarComponent];
+        
         _canTakeWeapon = YES;
     }
     
@@ -147,6 +152,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 }
 
 #pragma mark - OGContactNotifiableType protocol
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
@@ -183,6 +189,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 }
 
 #pragma mark - dealloc
+
 - (void)dealloc
 {
     if (_weaponTakeDelayTimer)
@@ -199,13 +206,19 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
     self.agent.position = (vector_float2){position.x, position.y};
 }
 
-#pragma mark - OGHealthComponentDelegate protoc
+#pragma mark - OGHealthComponentDelegate protocol
+
+- (void)healthDidChange
+{
+    [self.healthBarComponent redrawBarNode];
+}
+
 - (void)entityWillDie
 {
     
 }
 
-- (void)dealDamage:(NSInteger)damage
+- (void)dealDamageToEntity:(NSInteger)damage
 {
     if (self.healthComponent)
     {

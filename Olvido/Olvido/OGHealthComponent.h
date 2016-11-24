@@ -17,7 +17,6 @@
 
 - (void)dealDamage:(NSInteger)damage;
 - (void)restoreHealth:(NSInteger)health;
-- (void)kill;
 - (void)restoreFullHealth;
 
 @end

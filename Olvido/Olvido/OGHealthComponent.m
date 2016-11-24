@@ -14,18 +14,18 @@ NSInteger const kOGHealthComponentMinHealth = 0;
 
 - (void)setCurrentHealth:(NSInteger)newHealth
 {
-    if (newHealth > self.maxHealth)
+    _currentHealth = newHealth;
+    
+    if (_currentHealth > self.maxHealth)
     {
         _currentHealth = self.maxHealth;
     }
-    else if (newHealth < kOGHealthComponentMinHealth)
+    else if (_currentHealth < kOGHealthComponentMinHealth)
     {
-        [self kill];
+        _currentHealth = kOGHealthComponentMinHealth;
     }
-    else
-    {
-        _currentHealth = newHealth;
-    }
+    
+    [self.delegate healthDidChange];
 }
 
 - (void)restoreHealth:(NSInteger)health
@@ -40,10 +40,15 @@ NSInteger const kOGHealthComponentMinHealth = 0;
 
 - (void)dealDamage:(NSInteger)damage
 {
-    self.currentHealth -= damage;    
+    self.currentHealth -= damage;
+    
+    if (self.currentHealth <= kOGHealthComponentMinHealth)
+    {
+        [self killEntity];
+    }
 }
 
-- (void)kill
+- (void)killEntity
 {
     if (self.delegate)
     {

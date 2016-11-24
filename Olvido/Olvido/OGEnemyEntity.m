@@ -17,6 +17,8 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
+#import "OGHealthBarComponent.h"
+#import "OGShadowComponent.h"
 
 #import "OGAnimation.h"
 
@@ -51,6 +53,9 @@ CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
 NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
+NSString *const kOGEnemyEntityShadowTextureName = @"PlayerShadow";
+CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
+
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
@@ -61,6 +66,8 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 @property (nonatomic, strong) OGHealthComponent *healthComponent;
 @property (nonatomic, strong) OGAnimationComponent *animationComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong) OGHealthBarComponent *healthBarComponent;
+@property (nonatomic, strong) OGShadowComponent *shadowComponent;
 
 @end
 
@@ -82,9 +89,19 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
     {
         _graph = graph;
         
+        _renderComponent = [[OGRenderComponent alloc] init];
+        [self addComponent:_renderComponent];
+        
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
         [self addComponent:_physicsComponent];
+        
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGEnemyEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, kOGEnemyEntityShadowYOffset);
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        [self addComponent:_shadowComponent];
+        
+        [_renderComponent.node addChild:_shadowComponent.node];
         
         _healthComponent = [[OGHealthComponent alloc] init];
         _healthComponent.maxHealth = 10.0;
@@ -98,11 +115,9 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         GKGraphNode2D *initialNode = (GKGraphNode2D *) [graph nodes][0];
         CGPoint position = CGPointMake(initialNode.position.x, initialNode.position.y);
         
-        _renderComponent = [[OGRenderComponent alloc] init];
         _renderComponent.node.position = position;
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
         _renderComponent.node.physicsBody.allowsRotation = NO;
-        [self addComponent:_renderComponent];
         
         _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
         [self addComponent:_animationComponent];
@@ -128,6 +143,9 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         [self addComponent:_rulesComponent];
         
         _rulesComponent.delegate = self;
+        
+        _healthBarComponent = [OGHealthBarComponent healthBarComponent];
+        [self addComponent:_healthBarComponent];
     }
     
     return self;
@@ -214,12 +232,17 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
 
 #pragma mark - OGHealthComponentDelegate Protocol Methods
 
+- (void)healthDidChange
+{
+    [self.healthBarComponent redrawBarNode];
+}
+
 - (void)entityWillDie
 {
     
 }
 
-- (void)dealDamage:(NSInteger)damage
+- (void)dealDamageToEntity:(NSInteger)damage
 {
     if (self.healthComponent)
     {

@@ -64,7 +64,8 @@
     }
 }
 
-#pragma mark - setters
+#pragma mark - Setters
+
 - (OGPhysicsComponent *)physicsComponent
 {
     if (!_physicsComponent)

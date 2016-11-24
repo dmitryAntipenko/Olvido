@@ -56,7 +56,7 @@ static SKTexture *sOGBulletEntityTexture;
 {
     if ([entity conformsToProtocol:@protocol(OGHealthComponentDelegate)])
     {
-        [((id<OGHealthComponentDelegate>) entity) dealDamage:kOGBulletDamage];
+        [((id<OGHealthComponentDelegate>) entity) dealDamageToEntity:kOGBulletDamage];
     }
          
     [self.delegate removeEntity:self];
