@@ -7,6 +7,7 @@
 //
 
 #import "OGEnemyConfiguration.h"
+#import "OGTextureConfiguration.h"
 
 NSString *const kOGEnemyConfigurationInitialPointKey = @"InitialPoint";
 NSString *const kOGEnemyConfigurationInitialVectorKey = @"InitialVector";
@@ -14,11 +15,11 @@ NSString *const kOGEnemyConfigurationInitialVectorDXKey = @"dx";
 NSString *const kOGEnemyConfigurationInitialVectorDYKey = @"dy";
 NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
 NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
+NSString *const kOGEnemyConfigurationTexturesKey = @"Textures";
 
 @interface OGEnemyConfiguration ()
 
-@property (nonatomic, copy, readwrite) NSString *initialPointName;
-@property (nonatomic, assign, readwrite) CGVector initialVector;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGTextureConfiguration *> *mutableEnemyTextures;
 
 @end
 
@@ -32,19 +33,25 @@ NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
         
         if (self)
         {
-            _initialPointName = dictionary[kOGEnemyConfigurationInitialPointKey];
-            
-            CGFloat dx = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDXKey] floatValue];
-            CGFloat dy = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDYKey] floatValue];
-            _initialVector = CGVectorMake(dx, dy);
+            _mutableEnemyTextures = [NSMutableArray array];
             
             _physicsBodyRadius = [dictionary[kOGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
-            
             _enemyClass = NSClassFromString(dictionary[kOGEnemyConfigurationConfigurationEnemyTypeKey]);
+            
+            for (NSDictionary *textureDictionary in dictionary[kOGEnemyConfigurationTexturesKey])
+            {
+                OGTextureConfiguration *textureConfiguration = [[OGTextureConfiguration alloc] initWithDictionary:textureDictionary];
+                [_mutableEnemyTextures addObject:textureConfiguration];
+            }
         }
     }
     
     return self;
+}
+
+- (NSArray *)enemyTextures
+{
+    return self.mutableEnemyTextures;
 }
 
 @end

@@ -7,51 +7,84 @@
 //
 
 #import "OGAnimation.h"
+#import "OGTextureConfiguration.h"
+#import "OGTextureAtlasesManager.h"
 
 @implementation OGAnimation
 
-- (instancetype)initWithAnimationState:(OGAnimationState)animationState
-                             direction:(OGDirection)direction
-                              textures:(NSArray<SKTexture *> *)textures
-                           frameOffset:(NSInteger)frameOffset
-                 repeatTexturesForever:(BOOL)repeatTexturesForever
-                        bodyActionName:(NSString *)bodyActionName
-                            bodyAction:(SKAction *)bodyAction
-                          timePerFrame:(NSTimeInterval)timePerFrame
+#pragma mark - Initializers
+
+- (instancetype)initWithTextures:(NSArray<SKTexture *> *)textures
+                     frameOffset:(NSInteger)frameOffset
+           repeatTexturesForever:(BOOL)repeatTexturesForever
+                    timePerFrame:(NSTimeInterval)timePerFrame
+                       stateName:(NSString *)stateName
+                 pairTextureName:(NSString *)pairTextureName
 {
     self = [self init];
     
     if (self)
     {
-        _animationState = animationState;
-        _direction = direction;
         _textures = textures;
         _frameOffset = frameOffset;
         _repeatTexturesForever = repeatTexturesForever;
-        _bodyActionName = bodyActionName;
-        _bodyAction = bodyAction;
         _timePerFrame = timePerFrame;
+        _stateName = stateName;
     }
     
     return self;
 }
 
-+ (instancetype)animationWithAnimationState:(OGAnimationState)animationState
-                                  direction:(OGDirection)direction
-                                   textures:(NSArray<SKTexture *> *)textures
-                                frameOffset:(NSInteger)frameOffset
-                      repeatTexturesForever:(BOOL)repeatTexturesForever
-                             bodyActionName:(NSString *)bodyActionName
-                                 bodyAction:(SKAction *)bodyAction
-                               timePerFrame:(NSTimeInterval)timePerFrame
++ (instancetype)animationWithTextures:(NSArray<SKTexture *> *)textures
+                          frameOffset:(NSInteger)frameOffset
+                repeatTexturesForever:(BOOL)repeatTexturesForever
+                         timePerFrame:(NSTimeInterval)timePerFrame
+                            stateName:(NSString *)stateName
+                      pairTextureName:(NSString *)pairTextureName
 {
-    return [[OGAnimation alloc] initWithAnimationState:animationState
-                                             direction:direction
-                                              textures:textures
-                                           frameOffset:frameOffset
-                                 repeatTexturesForever:repeatTexturesForever
-                                        bodyActionName:bodyActionName
-                                            bodyAction:bodyAction timePerFrame:timePerFrame];
+    return [[OGAnimation alloc] initWithTextures:textures
+                                     frameOffset:frameOffset
+                           repeatTexturesForever:repeatTexturesForever
+                                    timePerFrame:timePerFrame
+                                       stateName:stateName
+                                 pairTextureName:pairTextureName];
+}
+
++ (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
+                             defaultConfiguration:(OGTextureConfiguration *)defaultConfiguration
+                                         unitName:(NSString *)unitName
+{
+    NSString *textureName = configuration.textureName ? configuration.textureName : defaultConfiguration.textureName;
+    NSString *pairTextureName = configuration.pairTextureName ? configuration.pairTextureName : defaultConfiguration.pairTextureName;
+        
+    CGFloat timePerFrame = configuration.timePerFrame;
+    BOOL repeatForever = configuration.repeatForever;
+    
+    SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
+    NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:atlas.textureNames];
+    
+    return  [OGAnimation animationWithTextures:textures
+                                   frameOffset:0
+                         repeatTexturesForever:repeatForever
+                                  timePerFrame:timePerFrame
+                                     stateName:textureName
+                               pairTextureName:pairTextureName];
+}
+
+#pragma mark -
+
++ (NSArray<SKTexture *> *)mapWithArrayOfStrings:(NSArray<NSString *> *)arrayOfStrings
+{
+    NSMutableArray<SKTexture *> *result = [NSMutableArray array];
+    
+    for (NSString *imageName in arrayOfStrings)
+    {
+        SKTexture *texture = [SKTexture textureWithImageNamed:imageName];
+        
+        [result addObject:texture];
+    }
+    
+    return result;
 }
 
 - (NSArray<SKTexture *> *)offsetTextures

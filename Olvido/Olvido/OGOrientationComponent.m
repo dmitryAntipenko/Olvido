@@ -10,20 +10,20 @@
 
 @implementation OGOrientationComponent
 
-+ (OGDirection)directionWithVectorX:(CGFloat)vectorX
++ (NSString *)orientationWithVectorX:(CGFloat)vectorX
 {
-    OGDirection direction;
+    NSString *result = nil;
     
     if (vectorX > 0)
     {
-        direction = kOGDirectionRight;
+        result = @"Right";
     }
     else
     {
-        direction = kOGDirectionLeft;
+        result = @"Left";
     }
     
-    return direction;
+    return result;
 }
 
 @end

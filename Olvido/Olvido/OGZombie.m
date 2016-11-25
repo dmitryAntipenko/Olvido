@@ -84,7 +84,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
     if ([currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
         && self.huntAgent && self.huntContactBody)
     {
-        self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:(self.agent.position.x - self.huntAgent.position.x)];
+        self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:(self.agent.position.x - self.huntAgent.position.x)];
         [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
     }
 }
@@ -131,7 +131,7 @@ static NSDictionary<NSString *, NSDictionary *> *sOGZombieAnimations;
         
         if (differenceX != 0 && !self.huntContactBody)
         {
-            self.orientationComponent.direction = [OGOrientationComponent directionWithVectorX:differenceX];
+            self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:differenceX];
         }
 
         self.lastPositionX = self.renderComponent.node.position.x;

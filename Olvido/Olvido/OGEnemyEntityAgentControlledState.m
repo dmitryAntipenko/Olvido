@@ -15,6 +15,8 @@
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
 
+#import "OGConstants.h"
+
 @interface OGEnemyEntityAgentControlledState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
@@ -77,11 +79,13 @@
         
         if (self.enemyEntity.mandate == kOGEnemyEntityMandateHunt)
         {
-            self.animationComponent.requestedAnimationState = kOGAnimationStateRun;
+            NSString *animationState = [NSString stringWithFormat:@"%@_%@", kOGConstantsRun, self.orientationComponent.currentOrientation];
+            self.animationComponent.requestedAnimationState = animationState;
         }
         else
         {
-            self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+            NSString *animationState = [NSString stringWithFormat:@"%@_%@", kOGConstantsWalk, self.orientationComponent.currentOrientation];
+            self.animationComponent.requestedAnimationState = animationState;
         }
     }
 }

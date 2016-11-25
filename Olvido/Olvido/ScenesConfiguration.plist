@@ -50,13 +50,13 @@
 		<dict>
 			<key>Player</key>
 			<dict>
-				<key>Player_Walk_Left</key>
+				<key>Walk_Left</key>
 				<string>PlayerBotWalkL</string>
-				<key>Player_Walk_Right</key>
+				<key>Walk_Right</key>
 				<string>PlayerBotWalkR</string>
-				<key>Player_Idle_Left</key>
+				<key>Idle_Left</key>
 				<string>PlayerBotIdleL</string>
-				<key>Player_Idle_Right</key>
+				<key>Idle_Right</key>
 				<string>PlayerBotIdleR</string>
 			</dict>
 		</dict>

@@ -10,11 +10,11 @@
 
 @interface OGSoundsManager : NSObject
 
-+ (instancetype)sharedInstance;
-
-#pragma mark - Atlases managment
-
-- (void)addSoundWithUnitName:(NSString *)unitName asoundKey:(NSString *)soundKey f:(NSString *)fileName;
+//+ (instancetype)sharedInstance;
+//
+//#pragma mark - Atlases managment
+//
+//- (void)addSoundWithUnitName:(NSString *)unitName asoundKey:(NSString *)soundKey f:(NSString *)fileName;
 
 //- (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 //

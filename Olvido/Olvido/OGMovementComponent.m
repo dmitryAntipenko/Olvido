@@ -44,24 +44,27 @@ CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
 {
     [super updateWithDeltaTime:seconds];
     
-    if ([self animationStateCanBeOverwrittenWithAnimationState:self.animationComponent.currentAnimation.animationState])
-    {
-        if (self.displacementVector.dx != 0)
-        {
-            OGDirection direction = [OGOrientationComponent directionWithVectorX:self.displacementVector.dx];
-            if (self.orientationComponent.direction != direction
-                || self.animationComponent.currentAnimation.animationState != kOGAnimationStateWalkForward)
-            {
-                self.orientationComponent.direction = direction;
-        
-                self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
-            }
-        }
-        else if (self.displacementVector.dx == 0 && self.displacementVector.dy == 0)
-        {
-            self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
-        }
-    }
+#warning 
+//TODO: rewrite in state
+    
+//    if ([self animationStateCanBeOverwrittenWithAnimationState:self.animationComponent.currentAnimation.animationState])
+//    {
+//        if (self.displacementVector.dx != 0)
+//        {
+//            OGDirection direction = [OGOrientationComponent directionWithVectorX:self.displacementVector.dx];
+//            if (self.orientationComponent.direction != direction
+//                || self.animationComponent.currentAnimation.animationState != kOGAnimationStateWalkForward)
+//            {
+//                self.orientationComponent.direction = direction;
+//        
+//                self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
+//            }
+//        }
+//        else if (self.displacementVector.dx == 0 && self.displacementVector.dy == 0)
+//        {
+//            self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
+//        }
+//    }
     
     CGPoint oldPosition = self.renderComponent.node.position;
     CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * kOGMovementComponentDefaultSpeed,
@@ -74,11 +77,11 @@ CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
 {
     BOOL result = NO;
     
-    if (animationState == kOGAnimationStateNone || animationState == kOGAnimationStateIdle
-        || animationState == kOGAnimationStateAttack || animationState == kOGAnimationStateWalkForward)
-    {
-        result = YES;
-    }
+//    if (animationState == kOGAnimationStateNone || animationState == kOGAnimationStateIdle
+//        || animationState == kOGAnimationStateAttack || animationState == kOGAnimationStateWalkForward)
+//    {
+//        result = YES;
+//    }
     
     return result;
 }

@@ -38,6 +38,14 @@ NSString *const kOGMapMenuName = @"MapMenu";
 NSString *const kOGSettingsMenuName = @"SettingsMenu";
 NSString *const kOGShopMenuName = @"ShopMenu";
 
+NSString *const kOGConstantsIdle = @"Idle";
+NSString *const kOGConstantsWalk = @"Walk";
+NSString *const kOGConstantsRun = @"Run";
+NSString *const kOGConstantsAttack = @"Attack";
+NSString *const kOGConstantsDead = @"Dead";
+
+NSString *const kOGConstantsLeft = @"Left";
+NSString *const kOGConstantsRight = @"Right";
 
 @implementation OGConstants
 

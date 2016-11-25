@@ -13,6 +13,8 @@
 
 #import "OGPlayerEntity.h"
 
+#import "OGConstants.h"
+
 CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
 
 @interface OGPlayerEntityAttackState ()
@@ -56,8 +58,8 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
-    
-    self.animationComponent.requestedAnimationState = kOGAnimationStateAttack;
+
+    self.animationComponent.requestedAnimationState = kOGConstantsAttack;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

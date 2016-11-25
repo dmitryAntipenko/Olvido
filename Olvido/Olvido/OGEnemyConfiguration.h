@@ -8,12 +8,14 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@class OGTextureConfiguration;
+
 @interface OGEnemyConfiguration : NSObject
 
 @property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
-@property (nonatomic, copy, readonly) NSString *initialPointName;
-@property (nonatomic, assign, readonly) CGVector initialVector;
 @property (nonatomic, assign) Class enemyClass;
+
+@property (nonatomic, strong, readonly) NSArray<OGTextureConfiguration *> *enemyTextures;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

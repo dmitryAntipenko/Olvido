@@ -15,6 +15,8 @@
 
 #import "OGPlayerEntityAttackState.h"
 
+#import "OGConstants.h"
+
 @interface OGPlayerEntityControlledState ()
 
 @property (nonatomic, weak) OGPlayerEntity *playerEntity;
@@ -45,7 +47,7 @@
     
     [self.inputComponent setEnabled:YES];
     
-    self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
+    self.animationComponent.requestedAnimationState = kOGConstantsIdle;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

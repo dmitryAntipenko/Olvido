@@ -7,26 +7,28 @@
 //
 
 #import "OGPlayerEntity.h"
-#import "OGShadowComponent.h"
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
 #import "OGPlayerConfiguration.h"
+#import "OGTextureConfiguration.h"
+
 #import "OGRenderComponent.h"
 #import "OGHealthComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGInputComponent.h"
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
+#import "OGAnimation.h"
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryItem.h"
 #import "OGInventoryComponent.h"
+#import "OGShadowComponent.h"
 
 #import "OGColliderType.h"
 #import "OGZPositionEnum.m"
 
-#import "OGAnimationState.h"
 #import "OGPlayerEntityAppearState.h"
 #import "OGPlayerEntityControlledState.h"
 #import "OGPlayerEntityAttackState.h"
@@ -37,11 +39,19 @@
 
 #import "OGTextureAtlasesManager.h"
 
+static OGTextureConfiguration *sOGPlayerEntityDefaultTextureConfiguration = nil;
+
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
 CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 NSString *kOGPlayerEntityUnitName = @"Player";
+
+NSString *const kOGPlayerEntityTextureAtlasIdleLeftKey = @"Idle_Left";
+NSString *const kOGPlayerEntityTextureAtlasIdleRightKey = @"Idle_Right";
+
+NSString *const kOGPlayerEntityTextureAtlasWalkLeftKey = @"Walk_Left";
+NSString *const kOGPlayerEntityTextureAtlasWalkRightKey = @"Walk_Right";
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -66,7 +76,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
 
 @implementation OGPlayerEntity
 
-- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration
+- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration    
 {
     self = [super init];
     
@@ -120,9 +130,18 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
         
-        OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
+        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[textureAtlasesManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+        for (OGTextureConfiguration *textureConfiguration in configuration.playerTextures)
+        {
+            OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
+                                                               defaultConfiguration:sOGPlayerEntityDefaultTextureConfiguration
+                                                                           unitName:kOGPlayerEntityUnitName];
+            
+            animations[animation.stateName] = animation;
+        }
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
 
         [self addComponent:_animationComponent];
         

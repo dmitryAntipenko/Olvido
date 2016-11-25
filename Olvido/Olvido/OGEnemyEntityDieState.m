@@ -11,6 +11,8 @@
 
 #import "OGAnimationComponent.h"
 
+#import "OGConstants.h"
+
 @interface OGEnemyEntityDieState () <OGAnimationComponentDelegate>
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
@@ -38,7 +40,8 @@
     [super didEnterWithPreviousState:previousState];
 
     self.animationComponent.delegate = self;
-    self.animationComponent.requestedAnimationState = kOGAnimationStateDead;
+
+    self.animationComponent.requestedAnimationState = kOGConstantsDead;
 }
 
 - (void)animationDidFinish

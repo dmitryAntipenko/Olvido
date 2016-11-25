@@ -8,6 +8,18 @@
 	<string>room1</string>
 	<key>Player</key>
 	<dict>
+		<key>Textures</key>
+		<array>
+			<dict>
+				<key>Pair</key>
+				<string>Idle_Right</string>
+				<key>Repeat</key>
+				<true/>
+				<key>Name</key>
+				<string>Idle_Left</string>
+			</dict>
+			<dict/>
+		</array>
 		<key>CurrentHealth</key>
 		<integer>3</integer>
 		<key>PhysicsBodyRadius</key>
@@ -20,6 +32,18 @@
 	<key>Enemies</key>
 	<array>
 		<dict>
+			<key>Textures</key>
+			<array>
+				<dict>
+					<key>Pair</key>
+					<string>Idle_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Idle_Left</string>
+				</dict>
+				<dict/>
+			</array>
 			<key>MaxHealth</key>
 			<integer>10</integer>
 			<key>Type</key>

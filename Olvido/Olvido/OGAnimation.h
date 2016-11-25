@@ -7,36 +7,37 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "OGAnimationState.h"
-#import "OGDirection.h"
+
+typedef NSString * OGAnimationState;
+
+@class OGTextureConfiguration;
 
 @interface OGAnimation : NSObject
 
-@property (nonatomic, strong) NSString *bodyActionName;
 @property (nonatomic, strong) NSArray<SKTexture *> *textures;
-@property (nonatomic, assign) OGAnimationState animationState;
+@property (nonatomic, copy) OGAnimationState stateName;
 @property (nonatomic, assign, getter=isRepeatedTexturesForever) BOOL repeatTexturesForever;
 @property (nonatomic, assign) NSInteger frameOffset;
-@property (nonatomic, strong) SKAction *bodyAction;
 @property (nonatomic, strong, readonly) NSArray<SKTexture *> *offsetTextures;
-@property (nonatomic, assign) OGDirection direction;
 @property (nonatomic, assign) NSTimeInterval timePerFrame;
+@property (nonatomic, copy) NSString *pairTextureName;
 
-- (instancetype)initWithAnimationState:(OGAnimationState)animationState
-                             direction:(OGDirection)direction
-                              textures:(NSArray<SKTexture *> *)textures
-                           frameOffset:(NSInteger)frameOffset
-                 repeatTexturesForever:(BOOL)repeatTexturesForever
-                        bodyActionName:(NSString *)bodyActionName
-                            bodyAction:(SKAction *)bodyAction
-                          timePerFrame:(NSTimeInterval)timePerFrame;
+- (instancetype)initWithTextures:(NSArray<SKTexture *> *)textures
+                     frameOffset:(NSInteger)frameOffset
+           repeatTexturesForever:(BOOL)repeatTexturesForever
+                    timePerFrame:(NSTimeInterval)timePerFrame
+                       stateName:(NSString *)stateName
+                 pairTextureName:(NSString *)pairTextureName;
 
-+ (instancetype)animationWithAnimationState:(OGAnimationState)animationState
-                                  direction:(OGDirection)direction
-                                   textures:(NSArray<SKTexture *> *)textures
-                                frameOffset:(NSInteger)frameOffset
-                      repeatTexturesForever:(BOOL)repeatTexturesForever
-                             bodyActionName:(NSString *)bodyActionName
-                                 bodyAction:(SKAction *)bodyAction
-                               timePerFrame:(NSTimeInterval)timePerFrame;
++ (instancetype)animationWithTextures:(NSArray<SKTexture *> *)textures
+                          frameOffset:(NSInteger)frameOffset
+                repeatTexturesForever:(BOOL)repeatTexturesForever
+                         timePerFrame:(NSTimeInterval)timePerFrame
+                            stateName:(NSString *)stateName
+                      pairTextureName:(NSString *)pairTextureName;
+
++ (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
+                             defaultConfiguration:(OGTextureConfiguration *)defaultConfiguration
+                                         unitName:(NSString *)unitName;
+
 @end
