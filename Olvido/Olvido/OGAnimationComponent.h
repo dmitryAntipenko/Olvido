@@ -21,6 +21,7 @@
 @interface OGAnimationComponent : GKComponent
 
 @property (nonatomic, weak) id<OGAnimationComponentDelegate> delegate;
+
 @property (nonatomic, strong) NSDictionary *animations;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
