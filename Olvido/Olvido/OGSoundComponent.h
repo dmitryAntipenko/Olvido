@@ -14,6 +14,11 @@
 
 - (instancetype)initWithSoundNames:(NSArray *)names;
 
+- (void)playSoundContinuously:(NSString *)soundName;
+- (void)stopPlayingSound:(NSString *)soundName;
+
 - (void)playSoundOnce:(NSString *)soundName;
+
+- (void)changeVolumeBy:(CGFloat)volume duration:(CGFloat)duration;
 
 @end

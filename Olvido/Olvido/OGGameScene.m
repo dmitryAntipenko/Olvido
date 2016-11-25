@@ -249,8 +249,6 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
-    self.listener = camera;
-    
     self.cameraController.target = self.player.renderComponent.node;
 }
 
@@ -260,6 +258,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     self.player = player;    
     
     [self addEntity:self.player];
+    
+    self.listener = self.player.renderComponent.node;
     
     SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
     self.player.renderComponent.node.position = playerInitialNode.position;

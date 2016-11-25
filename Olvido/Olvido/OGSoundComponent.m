@@ -6,6 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "OGSoundComponent.h"
 #import "OGRenderComponent.h"
 
@@ -30,8 +32,12 @@
             for (NSString *name in names)
             {
                 SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:name];
-                node.autoplayLooped = NO;                
-                [_soundNodes setObject:node forKey:name];
+                node.autoplayLooped = NO;
+                
+                if (node)
+                {
+                    [_soundNodes setObject:node forKey:name];
+                }
             }
         }
     }
@@ -54,10 +60,47 @@
     }];
 }
 
+#pragma mark - Playing sounds
+
+- (void)playSoundContinuously:(NSString *)soundName
+{
+    SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:soundName];
+    [self.soundNodes setObject:node forKey:soundName];
+    [self.target addChild:node];
+}
+
+- (void)stopPlayingSound:(NSString *)soundName
+{
+    [self.soundNodes[soundName] runAction:[SKAction stop]];
+    [self.soundNodes[soundName] removeFromParent];
+}
+
 - (void)playSoundOnce:(NSString *)soundName
 {
     [self.soundNodes[soundName] runAction:[SKAction stop]];
     [self.soundNodes[soundName] runAction:[SKAction play]];
+}
+
+#pragma mark - Actions
+
+- (void)changeVolumeBy:(CGFloat)volume duration:(CGFloat)duration
+{
+    SKAction *action = [SKAction changeVolumeBy:volume duration:duration];
+    [self runActionOnSoundNodes:action];
+}
+
+- (void)changeVolumeTo:(CGFloat)volume duration:(CGFloat)duration
+{
+    SKAction *action = [SKAction changeVolumeTo:volume duration:duration];
+    [self runActionOnSoundNodes:action];
+}
+
+- (void)runActionOnSoundNodes:(SKAction *)action
+{
+    for (NSString *key in self.soundNodes.allKeys)
+    {
+        [self.soundNodes[key] runAction:action];
+    }
 }
 
 @end

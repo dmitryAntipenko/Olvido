@@ -9,13 +9,13 @@
 	<key>Player</key>
 	<dict>
 		<key>CurrentHealth</key>
-		<integer>3</integer>
+		<integer>20</integer>
 		<key>PhysicsBodyRadius</key>
 		<integer>30</integer>
 		<key>MessageShowDistance</key>
 		<integer>30</integer>
 		<key>MaxHealth</key>
-		<integer>3</integer>
+		<integer>20</integer>
 	</dict>
 	<key>Enemies</key>
 	<array>
