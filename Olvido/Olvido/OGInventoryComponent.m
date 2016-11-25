@@ -52,8 +52,6 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
 
 - (void)addItem:(id <OGInventoryItem>)item
 {
-    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
-    
     if (item)
     {
         if (!self.isFull)
@@ -64,16 +62,14 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
             {
                 [item wasTaken];
             }
+            
+            [self.inventoryComponentDelegate inventoryDidUpdate];
         }
     }
-    
-    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (void)removeItem:(id <OGInventoryItem>)item
 {
-    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
-    
     if (item && [self.mutableInventoryItems objectForKey:item.identifier])
     {
         [self.mutableInventoryItems removeObjectForKey:item.identifier];
@@ -82,9 +78,9 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
         {
             [item didThrown];
         }
+        
+        [self.inventoryComponentDelegate inventoryDidUpdate];
     }
-    
-    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (BOOL)containsItem:(id <OGInventoryItem>)item

@@ -9,6 +9,12 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGInventoryItem.h"
 
+@protocol OGInventoryComponentDelegate <NSObject>
+
+- (void)inventoryDidUpdate;
+
+@end
+
 extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
 
 @interface OGInventoryComponent : GKComponent
@@ -17,6 +23,7 @@ extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
 @property (nonatomic, assign, readonly, getter=isEmpty) BOOL empty;
 @property (nonatomic, assign, readonly) NSUInteger capacity;
 @property (nonatomic, strong, readonly) NSArray<id <OGInventoryItem>> *inventoryItems;
+@property (nonatomic, weak) id <OGInventoryComponentDelegate> inventoryComponentDelegate;
 
 + (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity;
 + (instancetype)inventoryComponent;

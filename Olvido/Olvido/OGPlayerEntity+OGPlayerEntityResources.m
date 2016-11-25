@@ -25,26 +25,27 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
-    [OGPlayerEntity loadMiscellaneousAssets];
-    
-    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
-                                  kOGPlayerEntityAtlasNamesPlayerBotWalk];
-    
-    [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
-     {
-         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
-         
-         for (NSUInteger i = 0; i < kOGDirectionCount; i++)
-         {
-             appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
-                                                                                                                  atlas:foundAtlases[0]
-                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
-         }
-         
-         sOGPlayerEntityAppearTextures = appearTextures;
-         
-         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
-         
+
+//    [OGPlayerEntity loadMiscellaneousAssets];
+//    
+//    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
+//                                  kOGPlayerEntityAtlasNamesPlayerBotWalk];
+//    
+//    [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
+//     {
+//         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
+//         
+//         for (NSUInteger i = 0; i < kOGDirectionCount; i++)
+//         {
+//             appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
+//                                                                                                                  atlas:foundAtlases[0]
+//                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
+//         }
+//         
+//         sOGPlayerEntityAppearTextures = appearTextures;
+//         
+//         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+//
 //         animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
 //                                                                                                     imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle
 //                                                                                                      animationState:kOGAnimationStateIdle
@@ -60,11 +61,11 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 //                                                                                                      repeatTexturesForever:YES
 //                                                                                                              playBackwards:NO
 //                                                                                                               timePerFrame:0.1];
-         
-         sOGPlayerEntityAnimations = animations;
-         
-         completionHandler();
-     }];
+//         
+//         sOGPlayerEntityAnimations = animations;
+//         
+//         completionHandler();
+//     }];
 }
 
 + (CGSize)textureSize

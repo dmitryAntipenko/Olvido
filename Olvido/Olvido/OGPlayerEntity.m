@@ -35,9 +35,13 @@
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
 
+#import "OGTextureAtlasesManager.h"
+
 CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
 NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
 CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
+
+NSString *kOGPlayerEntityUnitName = @"Player";
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -79,7 +83,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         [self addComponent:_renderComponent];
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
-                                                      colliderType:[OGColliderType player]];
+                                                               colliderType:[OGColliderType player]];
         _physicsComponent.physicsBody.mass = 100.0;
         [self addComponent:_physicsComponent];
         
@@ -116,17 +120,11 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
         
-        if ([OGPlayerEntity sOGPlayerEntityAnimations])
-        {
-            _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
-            
-            [_renderComponent.node addChild:_animationComponent.spriteNode];
-            [self addComponent:_animationComponent];
-        }
-        else
-        {
-            return nil;
-        }
+        OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[textureAtlasesManager atlasesWithUnitName:kOGPlayerEntityUnitName]];
+
+        [self addComponent:_animationComponent];
         
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
@@ -161,11 +159,11 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         self.weaponComponent.weapon.owner = self;
         
         self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-        {
-            self.canTakeWeapon = YES;
-            [timer invalidate];
-            timer = nil;
-        }];
+                                     {
+                                         self.canTakeWeapon = YES;
+                                         [timer invalidate];
+                                         timer = nil;
+                                     }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
         [self.messageComponent showMessage:@"Shotgun!" duration:3.0 shouldOverlay:YES];
@@ -182,7 +180,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-
+    
 }
 
 #pragma mark - dealloc

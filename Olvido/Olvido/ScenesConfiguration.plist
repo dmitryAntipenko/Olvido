@@ -46,6 +46,28 @@
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>
 		</array>
+		<key>TextureAtlases</key>
+		<dict>
+			<key>Player</key>
+			<dict>
+				<key>Player_Walk_Left</key>
+				<string>PlayerBotWalkL</string>
+				<key>Player_Walk_Right</key>
+				<string>PlayerBotWalkR</string>
+				<key>Player_Idle_Left</key>
+				<string>PlayerBotIdleL</string>
+				<key>Player_Idle_Right</key>
+				<string>PlayerBotIdleR</string>
+			</dict>
+		</dict>
+		<key>Sounds</key>
+		<dict>
+			<key>Bullet</key>
+			<dict>
+				<key>Shot</key>
+				<string>shot</string>
+			</dict>
+		</dict>
 	</dict>
 </array>
 </plist>
