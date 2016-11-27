@@ -47,12 +47,6 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
 
 NSString *kOGPlayerEntityUnitName = @"Player";
 
-NSString *const kOGPlayerEntityTextureAtlasIdleLeftKey = @"Idle_Left";
-NSString *const kOGPlayerEntityTextureAtlasIdleRightKey = @"Idle_Right";
-
-NSString *const kOGPlayerEntityTextureAtlasWalkLeftKey = @"Walk_Left";
-NSString *const kOGPlayerEntityTextureAtlasWalkRightKey = @"Walk_Right";
-
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
 @property (nonatomic, strong) OGShadowComponent         *shadowComponent;
