@@ -46,6 +46,7 @@
 
 - (void)animationDidFinish
 {
+    self.animationComponent.delegate = nil;
     [self.enemyEntity entityDidDie];
 }
 

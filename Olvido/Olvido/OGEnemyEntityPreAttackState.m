@@ -16,9 +16,7 @@
 
 #import "OGConstants.h"
 
-NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
-
-@interface OGEnemyEntityPreAttackState ()
+@interface OGEnemyEntityPreAttackState () <OGAnimationComponentDelegate>
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
@@ -38,8 +36,6 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
     if (self)
     {
         _enemyEntity = enemyEntity;
-        _elapsedTime = 0.0;
-        _elapsedTimeForAnimation = 0.0;
     }
     
     return self;
@@ -49,31 +45,24 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 {
     [super didEnterWithPreviousState:previousState];
     
-    self.elapsedTime = 0.0;
-    self.elapsedTimeForAnimation = 0.0;
-}
-
-- (void)updateWithDeltaTime:(NSTimeInterval)seconds
-{
-    [super updateWithDeltaTime:seconds];
-    
-    self.elapsedTime += seconds;
-    
-    if (self.elapsedTime >= kOGEnemyEntityPreAttackStatePreAttackStateDuration)
-    {
-        self.animationComponent.requestedAnimationState = kOGConstantsAttack;
-
-        if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
-        {
-            [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
-        }
-    }
+    self.animationComponent.delegate = self;
+    self.animationComponent.requestedAnimationState = kOGConstantsAttack;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
     return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityAgentControlledState class]
     || stateClass == [OGEnemyEntityDieState class];
+}
+
+- (void)animationDidFinish
+{
+    self.animationComponent.delegate = nil;
+    
+    if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
+    {
+        [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
+    }
 }
 
 - (OGAnimationComponent *)animationComponent

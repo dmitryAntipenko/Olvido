@@ -30,8 +30,6 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
 @end
 
-#warning
-
 @implementation OGPlayerEntityAppearState
 
 - (instancetype)init
@@ -64,7 +62,6 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     
     self.elapsedTime = 0.0;
     self.orientationComponent.currentOrientation = @"Left";
-//TODO: write appear, some settings
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

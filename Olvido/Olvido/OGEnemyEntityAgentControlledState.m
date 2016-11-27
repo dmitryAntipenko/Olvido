@@ -9,7 +9,6 @@
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntity.h"
 
-#import "OGOrientationComponent.h"
 #import "OGAnimationComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
@@ -22,8 +21,8 @@
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
 @property (nonatomic, assign) NSTimeInterval timeSinceBehaviorUpdate;
+@property (nonatomic, assign) NSTimeInterval elapsedTime;
 
-@property (nonatomic, weak) OGOrientationComponent *orientationComponent;
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
 @end
 
@@ -49,7 +48,8 @@
     
     self.timeSinceBehaviorUpdate = 0.0;
     self.elapsedTime = 0.0;
-    
+
+    self.animationComponent.requestedAnimationState = kOGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
 }
 
@@ -79,13 +79,11 @@
         
         if (self.enemyEntity.mandate == kOGEnemyEntityMandateHunt)
         {
-            NSString *animationState = [NSString stringWithFormat:@"%@_%@", kOGConstantsRun, self.orientationComponent.currentOrientation];
-            self.animationComponent.requestedAnimationState = animationState;
+            self.animationComponent.requestedAnimationState = kOGConstantsRun;
         }
         else
         {
-            NSString *animationState = [NSString stringWithFormat:@"%@_%@", kOGConstantsWalk, self.orientationComponent.currentOrientation];
-            self.animationComponent.requestedAnimationState = animationState;
+            self.animationComponent.requestedAnimationState = kOGConstantsWalk;
         }
     }
 }
@@ -103,15 +101,6 @@
 }
 
 #pragma mark - Getters
-- (OGOrientationComponent *)orientationComponent
-{
-    if (!_orientationComponent)
-    {
-        _orientationComponent = (OGOrientationComponent *) [self.enemyEntity componentForClass:[OGOrientationComponent class]];
-    }
-    
-    return _orientationComponent;
-}
 
 - (OGAnimationComponent *)animationComponent
 {

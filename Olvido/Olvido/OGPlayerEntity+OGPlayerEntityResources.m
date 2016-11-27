@@ -21,6 +21,9 @@ static BOOL sResourcesNeedLoading = YES;
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
     [OGPlayerEntity loadMiscellaneousAssets];
+    sResourcesNeedLoading = NO;
+    
+    completionHandler();
 }
 
 + (void)purgeResources
@@ -35,8 +38,6 @@ static BOOL sResourcesNeedLoading = YES;
     
     NSArray *contactColliders = @[[OGColliderType weapon], [OGColliderType key]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType player]];
-    
-    sResourcesNeedLoading = NO;
 }
 
 @end

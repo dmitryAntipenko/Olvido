@@ -61,7 +61,11 @@
     BOOL repeatForever = configuration.repeatForever;
     
     SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
-    NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:atlas.textureNames];
+    
+    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:!repeatForever];
+    NSArray<NSString *> *filteredTextureNames = [atlas.textureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
+    
+    NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
     
     return  [OGAnimation animationWithTextures:textures
                                    frameOffset:0

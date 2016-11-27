@@ -11,6 +11,4 @@
 
 @interface OGZombie : OGEnemyEntity <OGResourceLoadable>
 
-+ (NSDictionary *)sOGZombieAnimations;
-
 @end

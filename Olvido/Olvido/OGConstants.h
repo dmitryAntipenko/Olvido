@@ -35,7 +35,6 @@ extern NSString *const kOGShopMenuName;
 extern NSString *const kOGConstantsIdle;
 extern NSString *const kOGConstantsWalk;
 extern NSString *const kOGConstantsIdle;
-extern NSString *const kOGConstantsWalk;
 extern NSString *const kOGConstantsRun;
 extern NSString *const kOGConstantsAttack;
 extern NSString *const kOGConstantsDead;

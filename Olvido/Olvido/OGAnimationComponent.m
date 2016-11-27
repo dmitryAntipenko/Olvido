@@ -9,9 +9,7 @@
 #import "OGAnimation.h"
 #import "OGOrientationComponent.h"
 
-NSString *const kOGAnimationComponentBodyActionKey = @"bodyAction";
 NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
-CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 
 @interface OGAnimationComponent ()
 
@@ -92,6 +90,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         
         SKAction *complitionAction =  [SKAction runBlock:^()
         {
+            self.spriteNode.texture = self.currentAnimation.textures.lastObject;
+            self.currentAnimation = nil;
            [self.delegate animationDidFinish];
         }];
         

@@ -15,6 +15,9 @@
 #import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
 
+#import "OGEnemyEntityAgentControlledState.h"
+#import "OGEnemyEntityPreAttackState.h"
+
 @interface OGEnemyEntityAttackState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
@@ -24,6 +27,7 @@
 
 @property (nonatomic, assign) CGPoint targetPosition;
 
+@property (nonatomic, assign, getter=isHit) BOOL hit;
 @end
 
 @implementation OGEnemyEntityAttackState
@@ -35,6 +39,7 @@
     if (self)
     {
         _enemyEntity = enemyEntity;
+        _hit = NO;
         
         vector_float2 targetPosition = self.enemyEntity.huntAgent.position;
         _targetPosition = CGPointMake(targetPosition.x, targetPosition.y);
@@ -47,11 +52,22 @@
 {
     [super didEnterWithPreviousState:previousState];
     
+    self.hit = NO;
+    
     NSArray<SKPhysicsBody*> *contactedBodies = [self.physicsComponent.physicsBody allContactedBodies];
     
     for (SKPhysicsBody *contactedBody in contactedBodies)
     {
         [self applyDamageToEntity:contactedBody.node.entity];
+    }
+    
+    if (self.isHit)
+    {
+        [self.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+    }
+    else
+    {
+        [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
     }
 }
 
@@ -61,6 +77,8 @@
     {
         OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
         [healthComponent dealDamage:kOGEnemyEntityDealGamage];
+        
+        self.hit = YES;
     }
 }
 

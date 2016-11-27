@@ -38,6 +38,10 @@
 
 #import "OGZombie.h"
 
+#import "OGTextureConfiguration.h"
+
+static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
+
 NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
@@ -50,6 +54,8 @@ CGFloat const kOGEnemyEntityAgentMass = 0.25;
 CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
 NSUInteger const kOGEnemyEntityDealGamage = 1.0;
+
+NSString *kOGEnemyEntityUnitName = @"Enemy";
 
 @interface OGEnemyEntity ()
 
@@ -104,7 +110,18 @@ NSUInteger const kOGEnemyEntityDealGamage = 1.0;
         _renderComponent.node.physicsBody.allowsRotation = NO;
         [self addComponent:_renderComponent];
         
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
+        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        
+        for (OGTextureConfiguration *textureConfiguration in configuration.enemyTextures)
+        {
+            OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
+                                                               defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration
+                                                                           unitName:kOGEnemyEntityUnitName];
+            
+            animations[animation.stateName] = animation;
+        }
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
         [self addComponent:_animationComponent];
         
         [self.renderComponent.node addChild:_animationComponent.spriteNode];
