@@ -142,6 +142,8 @@ NSString *const kOGPlayerEntityTextureAtlasWalkRightKey = @"Walk_Right";
         }
         
         _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
+        
+        [self.renderComponent.node addChild:_animationComponent.spriteNode];
 
         [self addComponent:_animationComponent];
         

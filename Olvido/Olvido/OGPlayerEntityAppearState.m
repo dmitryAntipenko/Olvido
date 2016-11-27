@@ -63,7 +63,8 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
-//TODO: appear
+    self.orientationComponent.currentOrientation = @"Left";
+//TODO: write appear, some settings
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

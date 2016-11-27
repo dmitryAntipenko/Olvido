@@ -22,7 +22,6 @@ CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGAnimationComponent *animationComponent;
-@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @end
 
@@ -44,46 +43,11 @@ CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
 {
     [super updateWithDeltaTime:seconds];
     
-#warning 
-//TODO: rewrite in state
-    
-//    if ([self animationStateCanBeOverwrittenWithAnimationState:self.animationComponent.currentAnimation.animationState])
-//    {
-//        if (self.displacementVector.dx != 0)
-//        {
-//            OGDirection direction = [OGOrientationComponent directionWithVectorX:self.displacementVector.dx];
-//            if (self.orientationComponent.direction != direction
-//                || self.animationComponent.currentAnimation.animationState != kOGAnimationStateWalkForward)
-//            {
-//                self.orientationComponent.direction = direction;
-//        
-//                self.animationComponent.requestedAnimationState = kOGAnimationStateWalkForward;
-//            }
-//        }
-//        else if (self.displacementVector.dx == 0 && self.displacementVector.dy == 0)
-//        {
-//            self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
-//        }
-//    }
-    
     CGPoint oldPosition = self.renderComponent.node.position;
     CGPoint newPosition = CGPointMake(oldPosition.x + self.displacementVector.dx * self.speedFactor * kOGMovementComponentDefaultSpeed,
                                       oldPosition.y + self.displacementVector.dy * self.speedFactor * kOGMovementComponentDefaultSpeed);
     
     self.renderComponent.node.position = newPosition;
-}
-
-- (BOOL)animationStateCanBeOverwrittenWithAnimationState:(OGAnimationState)animationState
-{
-    BOOL result = NO;
-    
-//    if (animationState == kOGAnimationStateNone || animationState == kOGAnimationStateIdle
-//        || animationState == kOGAnimationStateAttack || animationState == kOGAnimationStateWalkForward)
-//    {
-//        result = YES;
-//    }
-    
-    return result;
 }
 
 - (OGRenderComponent *)renderComponent
@@ -104,16 +68,6 @@ CGFloat const kOGMovementComponentDefaultSpeed = 5.0;
     }
     
     return _animationComponent;
-}
-
-- (OGOrientationComponent *)orientationComponent
-{
-    if (!_orientationComponent)
-    {
-        _orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
-    }
-    
-    return _orientationComponent;
 }
 
 @end

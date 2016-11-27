@@ -7,13 +7,13 @@
 //
 
 #import "OGPlayerEntityControlledState.h"
+#import "OGPlayerEntity.h"
+#import "OGPlayerEntityAttackState.h"
+
 #import "OGAnimationComponent.h"
 #import "OGMovementComponent.h"
 #import "OGInputComponent.h"
-
-#import "OGPlayerEntity.h"
-
-#import "OGPlayerEntityAttackState.h"
+#import "OGOrientationComponent.h"
 
 #import "OGConstants.h"
 
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) OGAnimationComponent *animationComponent;
 @property (nonatomic, strong) OGMovementComponent *movementComponent;
 @property (nonatomic, strong) OGInputComponent *inputComponent;
+@property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 
 @end
 
@@ -53,6 +54,18 @@
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     [super updateWithDeltaTime:seconds];
+    
+    CGVector vector = self.movementComponent.displacementVector;
+    
+    if (vector.dx != 0 || vector.dy != 0)
+    {
+        self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:vector.dx];
+        self.animationComponent.requestedAnimationState = kOGConstantsWalk;
+    }
+    else
+    {
+        self.animationComponent.requestedAnimationState = kOGConstantsIdle;
+    }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
@@ -100,6 +113,17 @@
     
     return _inputComponent;
 }
+
+- (OGOrientationComponent *)orientationComponent
+{
+    if (!_orientationComponent)
+    {
+        _orientationComponent = (OGOrientationComponent *) [self.playerEntity componentForClass:[OGOrientationComponent class]];
+    }
+    
+    return _orientationComponent;
+}
+
 
 
 @end

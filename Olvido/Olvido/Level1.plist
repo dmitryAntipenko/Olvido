@@ -18,7 +18,30 @@
 				<key>Name</key>
 				<string>Idle_Left</string>
 			</dict>
-			<dict/>
+			<dict>
+				<key>Pair</key>
+				<string>Idle_Left</string>
+				<key>Repeat</key>
+				<true/>
+				<key>Name</key>
+				<string>Idle_Right</string>
+			</dict>
+			<dict>
+				<key>Pair</key>
+				<string>Walk_Left</string>
+				<key>Repeat</key>
+				<true/>
+				<key>Name</key>
+				<string>Walk_Right</string>
+			</dict>
+			<dict>
+				<key>Pair</key>
+				<string>Walk_Right</string>
+				<key>Repeat</key>
+				<true/>
+				<key>Name</key>
+				<string>Walk_Left</string>
+			</dict>
 		</array>
 		<key>CurrentHealth</key>
 		<integer>3</integer>
