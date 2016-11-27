@@ -11,26 +11,26 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-extern NSString *const kOGPortalNodeName;
+extern NSString *const OGPortalNodeName;
 
-extern CGFloat const kOGGameSceneStatusBarHidingDistance;
-extern CGFloat const kOGGameSceneStatusBarAlpha;
-extern CGFloat const kOGGameSceneStatusBarPositionOffset;
-extern CGFloat const kOGGameSceneStatusBarYOffset;
-extern CGFloat const kOGGameSceneStatusBarDuration;
+extern CGFloat const OGGameSceneStatusBarHidingDistance;
+extern CGFloat const OGGameSceneStatusBarAlpha;
+extern CGFloat const OGGameSceneStatusBarPositionOffset;
+extern CGFloat const OGGameSceneStatusBarYOffset;
+extern CGFloat const OGGameSceneStatusBarDuration;
 
-extern NSString *const kOGPropertyFileExtension;
-extern NSString *const kOGSceneFileExtension;
+extern NSString *const OGPropertyFileExtension;
+extern NSString *const OGSceneFileExtension;
 
-extern NSString *const kOGPlayerSpriteName;
-extern NSString *const kOGPortalSpriteName;
-extern NSString *const kOGEnemySpriteName;
-extern NSString *const kOGObstacleSpriteName;
+extern NSString *const OGPlayerSpriteName;
+extern NSString *const OGPortalSpriteName;
+extern NSString *const OGEnemySpriteName;
+extern NSString *const OGObstacleSpriteName;
 
-extern NSString *const kOGMainMenuName;
-extern NSString *const kOGMapMenuName;
-extern NSString *const kOGSettingsMenuName;
-extern NSString *const kOGShopMenuName;
+extern NSString *const OGMainMenuName;
+extern NSString *const OGMapMenuName;
+extern NSString *const OGSettingsMenuName;
+extern NSString *const OGShopMenuName;
 
 @interface OGConstants : NSObject
 

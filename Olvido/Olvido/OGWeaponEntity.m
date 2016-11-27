@@ -18,9 +18,9 @@
 #import "OGInventoryItem.h"
 #import "OGResourceLoadable.h"
 
-CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
-CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
+CGFloat const OGWeaponEntityDefaultBulletSpeed = 10.0;
+CGFloat const OGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
+CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 
 static NSArray *sOGWeaponEntitySoundNodes = nil;
 
@@ -55,7 +55,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
                                                                colliderType:[OGColliderType weapon]];
         [self addComponent:_physicsComponent];
             
-        _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNodes];
+        _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGWeaponEntitySoundNodes];
         [self addComponent:_soundComponent];
         
         _allowsAttacking = YES;
@@ -90,8 +90,8 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
             
             CGFloat vectorAngle = atan2(-vector.dx, vector.dy);
             
-            CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed,
-                                                         cosf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed);
+            CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed,
+                                                         cosf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed);
             
             OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
                                             withRotation:vectorAngle];
@@ -103,7 +103,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
             
             [self.soundComponent playSoundOnce:@"shot"];            
             
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:OGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
                 self.allowsAttacking = YES;
                 [timer invalidate];
@@ -151,8 +151,8 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     
     [ownerNode.scene addChild:weaponNode];
     
-    CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * kOGWeaponEntityThrowingFactor,
-                                       -ownerMovement.displacementVector.dy * kOGWeaponEntityThrowingFactor);
+    CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * OGWeaponEntityThrowingFactor,
+                                       -ownerMovement.displacementVector.dy * OGWeaponEntityThrowingFactor);
     
     [weaponNode.physicsBody applyImpulse:dropVector];
     
@@ -182,7 +182,11 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
-    sOGWeaponEntitySoundNodes = @[@"shot"];
+    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
+    shotNode.autoplayLooped = NO;
+    shotNode.name = @"shot";
+    
+    sOGWeaponEntitySoundNodes = @[shotNode];
     
     handler();
 }

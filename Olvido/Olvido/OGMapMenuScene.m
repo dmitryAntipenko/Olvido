@@ -13,8 +13,8 @@
 #import "OGMenuManager.h"
 #import "OGLevelManager.h"
 
-NSString *const kOGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
-NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
+NSString *const OGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
+NSString *const OGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 @implementation OGMapMenuScene
 
@@ -29,13 +29,13 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 {
     [super onButtonClick:button];
     
-    if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
+    if ([button.name isEqualToString:OGMapMenuSceneMainMenuButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGMainMenuName];
+        [self.menuManager loadMenuWithName:OGMainMenuName];
     }
-    else if ([button.name isEqualToString:kOGMapMenuSceneShopButtonNodeName])
+    else if ([button.name isEqualToString:OGMapMenuSceneShopButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGShopMenuName];
+        [self.menuManager loadMenuWithName:OGShopMenuName];
     }
 }
 

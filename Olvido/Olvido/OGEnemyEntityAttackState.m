@@ -60,7 +60,7 @@
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
-        [healthComponent dealDamage:kOGEnemyEntityDealGamage];
+        [healthComponent dealDamage:OGEnemyEntityDealGamage];
     }
 }
 

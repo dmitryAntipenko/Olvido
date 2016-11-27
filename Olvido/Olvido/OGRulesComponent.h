@@ -9,7 +9,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGRulesComponentDelegate.h"
 
-extern NSString *const kOGRulesComponentRuleSystemStateSnapshot;
+extern NSString *const OGRulesComponentRuleSystemStateSnapshot;
 
 @interface OGRulesComponent : GKComponent
 

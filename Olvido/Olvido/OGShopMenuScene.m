@@ -11,7 +11,7 @@
 #import "OGButtonNode.h"
 #import "OGMenuManager.h"
 
-NSString *const kOGShopMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
+NSString *const OGShopMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 
 @implementation OGShopMenuScene
 
@@ -19,9 +19,9 @@ NSString *const kOGShopMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 {
     [super onButtonClick:button];
     
-    if ([button.name isEqualToString:kOGShopMenuSceneMapMenuButtonNodeName])
+    if ([button.name isEqualToString:OGShopMenuSceneMapMenuButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGMapMenuName];
+        [self.menuManager loadMenuWithName:OGMapMenuName];
     }
 }
 

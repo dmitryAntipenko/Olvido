@@ -14,8 +14,8 @@
 #import "OGLoadSceneOperation.h"
 #import "OGLoadResourcesOPeration.h"
 
-NSUInteger const kOGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
-NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
+NSUInteger const OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
+NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 @interface OGSceneLoaderPrepearingResourcesState ()
 
@@ -55,17 +55,17 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
     self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count
-                     + kOGSceneLoaderPrepearingResourcesStateSceneFileUnitCount];
+                     + OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount];
     
     if (self.sceneLoader.progress)
     {
         [self.sceneLoader.progress addChild:self.progress
-                       withPendingUnitCount: kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+                       withPendingUnitCount: OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     }
     
     OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:sceneMetadata];
     
-    [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+    [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     
     __weak typeof(self) weakSelf = self;
     __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
@@ -93,7 +93,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     {
         OGLoadResourcesOperation *loadResourceOperation = [OGLoadResourcesOperation loadResourcesOperationWithLoadableClass:loadableClass];
         
-        [self.progress addChild:loadResourceOperation.progress withPendingUnitCount:kOGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+        [self.progress addChild:loadResourceOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
         
         [loadSceneOperation addDependency:loadResourceOperation];
         

@@ -9,8 +9,8 @@
 #import "OGLoadingScene.h"
 #import "OGSceneLoader.h"
 
-CGFloat const kOGLoadingSceneLoadingBarOptimalScaleFactor = 0.07;
-CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
+CGFloat const OGLoadingSceneLoadingBarOptimalScaleFactor = 0.07;
+CGFloat const OGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
 
 @interface OGLoadingScene ()
 
@@ -59,7 +59,7 @@ CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
                                                                 size:loadingBarSize];
     
     [loadingBarNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI
-                                                                            duration:kOGLoadingSceneLoadingBarRotatingActionTimeInterval]]];
+                                                                            duration:OGLoadingSceneLoadingBarRotatingActionTimeInterval]]];
     
     [background addChild:loadingBarNode];
     [self addChild:background];
@@ -78,11 +78,11 @@ CGFloat const kOGLoadingSceneLoadingBarRotatingActionTimeInterval = 0.4;
         
         if (height < width)
         {
-            loadingBarLength = height * kOGLoadingSceneLoadingBarOptimalScaleFactor;
+            loadingBarLength = height * OGLoadingSceneLoadingBarOptimalScaleFactor;
         }
         else
         {
-            loadingBarLength = width * kOGLoadingSceneLoadingBarOptimalScaleFactor;
+            loadingBarLength = width * OGLoadingSceneLoadingBarOptimalScaleFactor;
         }
         
         result = CGSizeMake(loadingBarLength, loadingBarLength);

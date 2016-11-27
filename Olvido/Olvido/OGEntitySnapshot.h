@@ -10,8 +10,8 @@
 
 @class OGEntityDistance;
 
-extern NSString *const kOGEntitySnapshotPlayerBotTargetTargetKey;
-extern NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey;
+extern NSString *const OGEntitySnapshotPlayerBotTargetTargetKey;
+extern NSString *const OGEntitySnapshotPlayerBotTargetDistanceKey;
 
 @interface OGEntitySnapshot : NSObject
 

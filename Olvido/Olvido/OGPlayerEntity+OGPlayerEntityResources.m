@@ -10,8 +10,8 @@
 #import "OGAnimationComponent.h"
 #import "OGColliderType.h"
 
-NSString *const kOGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
-NSString *const kOGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
+NSString *const OGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
+NSString *const OGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
 
 static NSDictionary<NSString *, NSDictionary *> *sOGPlayerEntityAnimations;
 static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
@@ -27,35 +27,35 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 {
     [OGPlayerEntity loadMiscellaneousAssets];
     
-    NSArray *playerAtlasNames = @[kOGPlayerEntityAtlasNamesPlayerBotIdle,
-                                  kOGPlayerEntityAtlasNamesPlayerBotWalk];
+    NSArray *playerAtlasNames = @[OGPlayerEntityAtlasNamesPlayerBotIdle,
+                                  OGPlayerEntityAtlasNamesPlayerBotWalk];
     
     [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
      {
          NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
          
-         for (NSUInteger i = 0; i < kOGDirectionCount; i++)
+         for (NSUInteger i = 0; i < OGDirectionCount; i++)
          {
-             appearTextures[kOGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
+             appearTextures[OGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
                                                                                                                   atlas:foundAtlases[0]
-                                                                                                        imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle];
+                                                                                                        imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotIdle];
          }
          
          sOGPlayerEntityAppearTextures = appearTextures;
          
          NSMutableDictionary *animations = [NSMutableDictionary dictionary];
          
-         animations[kOGAnimationStateDescription[kOGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-                                                                                                     imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotIdle
-                                                                                                      animationState:kOGAnimationStateIdle
+         animations[OGAnimationStateDescription[OGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
+                                                                                                     imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotIdle
+                                                                                                      animationState:OGAnimationStateIdle
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:YES
                                                                                                        playBackwards:NO
                                                                                                         timePerFrame:0.1];
          
-         animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-                                                                                                            imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk
-                                                                                                             animationState:kOGAnimationStateWalkForward
+         animations[OGAnimationStateDescription[OGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
+                                                                                                            imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotWalk
+                                                                                                             animationState:OGAnimationStateWalkForward
                                                                                                              bodyActionName:nil
                                                                                                       repeatTexturesForever:YES
                                                                                                               playBackwards:NO

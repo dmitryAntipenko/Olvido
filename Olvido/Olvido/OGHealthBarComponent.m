@@ -13,8 +13,10 @@
 #import "OGZPositionEnum.m"
 #import "SKColor+OGConstantColors.h"
 
-CGFloat const kOGHealthBarComponentYOffset = 40.0;
-CGFloat const kOGHealthBarComponentBarHeight = 10.0;
+CGFloat const OGHealthBarComponentYOffset = 40.0;
+CGFloat const OGHealthBarComponentBarHeight = 10.0;
+
+CGFloat const OGHealthBarComponentHiddingDuration = 3.0;
 
 @interface OGHealthBarComponent ()
 
@@ -25,6 +27,8 @@ CGFloat const kOGHealthBarComponentBarHeight = 10.0;
 @property (nonatomic, strong) SKSpriteNode *barProgressNode;
 
 @property (nonatomic, assign) CGFloat barNodeWidth;
+
+@property (nonatomic, strong) SKAction *hiddingAction;
 
 @end
 
@@ -45,6 +49,8 @@ CGFloat const kOGHealthBarComponentBarHeight = 10.0;
     {
         _barBackgroundNode = [SKSpriteNode node];
         _barProgressNode = [SKSpriteNode node];
+        
+        _hiddingAction = [SKAction waitForDuration:OGHealthBarComponentHiddingDuration];
     }
     
     return self;
@@ -61,16 +67,18 @@ CGFloat const kOGHealthBarComponentBarHeight = 10.0;
     
     self.barNodeWidth = entityNodeWidth;
     
-    self.barBackgroundNode.size = CGSizeMake(entityNodeWidth, kOGHealthBarComponentBarHeight);
+    self.barBackgroundNode.size = CGSizeMake(entityNodeWidth, OGHealthBarComponentBarHeight);
     self.barBackgroundNode.color = [SKColor gameBlack];
-    self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHeight / 2.0 + kOGHealthBarComponentYOffset);
+    self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHeight / 2.0 + OGHealthBarComponentYOffset);
     self.barBackgroundNode.zPosition = OGZPositionCategoryPhysicsWorld;
     
-    self.barProgressNode.size = CGSizeMake([self progressBarWidth], kOGHealthBarComponentBarHeight);
+    self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
     self.barProgressNode.color = [SKColor gameGreen];
     self.barProgressNode.anchorPoint = [self progressBarNodeAnchorPoint];
     self.barProgressNode.position = [self progressBarNodePosition];
     self.barProgressNode.zPosition = OGZPositionCategoryPhysicsWorld;
+    
+    self.barBackgroundNode.hidden = YES;
     
     [self.barBackgroundNode addChild:self.barProgressNode];
     [self.renderComponent.node addChild:self.barBackgroundNode];
@@ -78,7 +86,13 @@ CGFloat const kOGHealthBarComponentBarHeight = 10.0;
 
 - (void)redrawBarNode
 {
-    self.barProgressNode.size = CGSizeMake([self progressBarWidth], kOGHealthBarComponentBarHeight);
+    self.barBackgroundNode.hidden = NO;
+    self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
+    
+    [self.barBackgroundNode runAction:self.hiddingAction completion:^()
+    {
+        self.barBackgroundNode.hidden = YES;
+    }];
 }
 
 #pragma mark - Getters

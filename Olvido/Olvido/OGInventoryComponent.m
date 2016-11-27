@@ -10,9 +10,9 @@
 #import "OGMessageComponent.h"
 #import "OGRenderComponent.h"
 
-NSString *const kOGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
-NSUInteger const kOGInventoryComponentDefaultCapacity = 5;
-NSUInteger const kOGInventoryComponentEmptyCount = 0;
+NSString *const OGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
+NSUInteger const OGInventoryComponentDefaultCapacity = 5;
+NSUInteger const OGInventoryComponentEmptyCount = 0;
 
 @interface OGInventoryComponent ()
 
@@ -47,12 +47,12 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
 
 - (instancetype)init
 {
-    return [self initWithCapacity:kOGInventoryComponentDefaultCapacity];
+    return [self initWithCapacity:OGInventoryComponentDefaultCapacity];
 }
 
 - (void)addItem:(id <OGInventoryItem>)item
 {
-    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    [self willChangeValueForKey:OGInventoryComponentInventoryItemsKeyPath];
     
     if (item)
     {
@@ -67,12 +67,12 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
         }
     }
     
-    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    [self didChangeValueForKey:OGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (void)removeItem:(id <OGInventoryItem>)item
 {
-    [self willChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    [self willChangeValueForKey:OGInventoryComponentInventoryItemsKeyPath];
     
     if (item && [self.mutableInventoryItems objectForKey:item.identifier])
     {
@@ -84,7 +84,7 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
         }
     }
     
-    [self didChangeValueForKey:kOGInventoryComponentInventoryItemsKeyPath];
+    [self didChangeValueForKey:OGInventoryComponentInventoryItemsKeyPath];
 }
 
 - (BOOL)containsItem:(id <OGInventoryItem>)item
@@ -111,7 +111,7 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
 
 - (BOOL)isEmpty
 {
-    return self.mutableInventoryItems.count == kOGInventoryComponentEmptyCount;
+    return self.mutableInventoryItems.count == OGInventoryComponentEmptyCount;
 }
 
 - (NSArray<id<OGInventoryItem>> *)inventoryItems

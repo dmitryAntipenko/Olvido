@@ -8,10 +8,10 @@
 
 #import "OGPlayerConfiguration.h"
 
-NSString *const kOGPlayerConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
-NSString *const kOGPlayerConfigurationMessageShowDistanceKey = @"MessageShowDistance";
-NSString *const kOGPlayerConfigurationMaxHealthKey = @"MaxHealth";
-NSString *const kOGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
+NSString *const OGPlayerConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+NSString *const OGPlayerConfigurationMessageShowDistanceKey = @"MessageShowDistance";
+NSString *const OGPlayerConfigurationMaxHealthKey = @"MaxHealth";
+NSString *const OGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
 
 @interface OGPlayerConfiguration ()
 
@@ -32,10 +32,10 @@ NSString *const kOGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
         
         if (self)
         {
-            _physicsBodyRadius = [dictionary[kOGPlayerConfigurationPhysicsBodyRadiusKey] floatValue];
-            _messageShowDistance = [dictionary[kOGPlayerConfigurationMessageShowDistanceKey] floatValue];
-            _maxHealth = [dictionary[kOGPlayerConfigurationMaxHealthKey] floatValue];
-            _currentHealth = [dictionary[kOGPlayerConfigurationCurrentHealthKey] floatValue];
+            _physicsBodyRadius = [dictionary[OGPlayerConfigurationPhysicsBodyRadiusKey] floatValue];
+            _messageShowDistance = [dictionary[OGPlayerConfigurationMessageShowDistanceKey] floatValue];
+            _maxHealth = [dictionary[OGPlayerConfigurationMaxHealthKey] floatValue];
+            _currentHealth = [dictionary[OGPlayerConfigurationCurrentHealthKey] floatValue];
         }
     }
     

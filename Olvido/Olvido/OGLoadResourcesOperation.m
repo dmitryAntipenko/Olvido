@@ -9,7 +9,7 @@
 #import "OGLoadResourcesOperation.h"
 #import "OGResourceLoadable.h"
 
-NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
+NSUInteger const OGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 @interface OGLoadResourcesOperation ()
 
@@ -27,7 +27,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
     {
         _loadableClass = loadableClass;
         _progress =  [[NSProgress alloc] init];
-        _progress.totalUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+        _progress.totalUnitCount = OGLoadResourcesOperationProgressTotalUnitCount;
     }
     
     return self;
@@ -67,7 +67,7 @@ NSUInteger const kOGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 - (void)finish
 {
-    self.progress.completedUnitCount = kOGLoadResourcesOperationProgressTotalUnitCount;
+    self.progress.completedUnitCount = OGLoadResourcesOperationProgressTotalUnitCount;
 }
 
 @end

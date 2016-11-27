@@ -8,20 +8,20 @@
 
 typedef NS_ENUM(NSUInteger, OGAnimationState)
 {
-    kOGAnimationStateNone,
-    kOGAnimationStateIdle,
-    kOGAnimationStateWalkForward,
-    kOGAnimationStateRun,
-    kOGAnimationStateAttack,
-    kOGAnimationStateDead
+    OGAnimationStateNone,
+    OGAnimationStateIdle,
+    OGAnimationStateWalkForward,
+    OGAnimationStateRun,
+    OGAnimationStateAttack,
+    OGAnimationStateDead
 };
 
 
-static NSString *const kOGAnimationStateDescription[] = {
-    [kOGAnimationStateNone] = @"none",
-    [kOGAnimationStateIdle] = @"idle",
-    [kOGAnimationStateWalkForward] = @"walkForward",
-    [kOGAnimationStateRun] = @"run",
-    [kOGAnimationStateAttack] = @"attack",
-    [kOGAnimationStateDead] = @"dead"
+static NSString *const OGAnimationStateDescription[] = {
+    [OGAnimationStateNone] = @"none",
+    [OGAnimationStateIdle] = @"idle",
+    [OGAnimationStateWalkForward] = @"walkForward",
+    [OGAnimationStateRun] = @"run",
+    [OGAnimationStateAttack] = @"attack",
+    [OGAnimationStateDead] = @"dead"
 };

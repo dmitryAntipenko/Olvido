@@ -8,10 +8,10 @@
 
 #import "OGThumbStickNode.h"
 
-CGFloat const kOGThumbStickNodeDefaultAlpha = 0.05;
-CGFloat const kOGThumbStickNodeTouchedAlpha = 0.5;
-CGFloat const kOGThumbStickNodeRestoreDuration = 0.2;
-NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
+CGFloat const OGThumbStickNodeDefaultAlpha = 0.05;
+CGFloat const OGThumbStickNodeTouchedAlpha = 0.5;
+CGFloat const OGThumbStickNodeRestoreDuration = 0.2;
+NSString *const OGThumbStickNodeTextureName = @"ControlPad";
 
 @interface OGThumbStickNode ()
 
@@ -36,7 +36,7 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
     _center = CGPointMake(halfWidth - touchPadLength, halfHeight - touchPadLength);
     
     CGSize touchPadSize = CGSizeMake(touchPadLength, touchPadLength);
-    SKTexture *touchPadTexture = [SKTexture textureWithImageNamed:kOGThumbStickNodeTextureName];
+    SKTexture *touchPadTexture = [SKTexture textureWithImageNamed:OGThumbStickNodeTextureName];
     
     if (touchPadTexture)
     {
@@ -47,7 +47,7 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
             _touchPad = [SKSpriteNode spriteNodeWithTexture:touchPadTexture size:touchPadSize];
             _touchPad.color = [SKColor clearColor];
             
-            self.alpha = kOGThumbStickNodeDefaultAlpha;
+            self.alpha = OGThumbStickNodeDefaultAlpha;
             [self addChild:_touchPad];
         }
     }
@@ -68,7 +68,7 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
 {
     [super touchesBegan:touches withEvent:event];
     
-    self.alpha = kOGThumbStickNodeTouchedAlpha;
+    self.alpha = OGThumbStickNodeTouchedAlpha;
     [self.thumbStickNodeDelegate thumbStickNode:self isPressed:YES];
 }
 
@@ -118,9 +118,9 @@ NSString *const kOGThumbStickNodeTextureName = @"ControlPad";
 
 - (void)resetTouchPad
 {
-    self.alpha = kOGThumbStickNodeDefaultAlpha;
+    self.alpha = OGThumbStickNodeDefaultAlpha;
     
-    SKAction *restoreToCenter = [SKAction moveTo:CGPointZero duration:kOGThumbStickNodeRestoreDuration];
+    SKAction *restoreToCenter = [SKAction moveTo:CGPointZero duration:OGThumbStickNodeRestoreDuration];
     [self.touchPad runAction:restoreToCenter];
         
     [self.thumbStickNodeDelegate thumbStickNode:self isPressed:NO];

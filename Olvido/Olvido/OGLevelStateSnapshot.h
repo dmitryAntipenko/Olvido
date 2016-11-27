@@ -10,9 +10,9 @@
 
 @class OGGameScene;
 
-extern NSString *const kOGLevelStateSnapshotEntitiesKey;
-extern NSString *const kOGLevelStateSnapshotDistancesKey;
-extern NSString *const kOGLevelStateSnapshotSnapshotsKey;
+extern NSString *const OGLevelStateSnapshotEntitiesKey;
+extern NSString *const OGLevelStateSnapshotDistancesKey;
+extern NSString *const OGLevelStateSnapshotSnapshotsKey;
 
 @interface OGLevelStateSnapshot : GKComponent
 

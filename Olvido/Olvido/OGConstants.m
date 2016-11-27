@@ -8,35 +8,35 @@
 
 #import "OGConstants.h"
 
-NSString *const kOGPortalNodeName = @"portal";
-NSString *const kOGPauseButtonName = @"pause";
+NSString *const OGPortalNodeName = @"portal";
+NSString *const OGPauseButtonName = @"pause";
 
-CGFloat const kOGGameSceneStatusBarHidingDistance = 100.0;
-CGFloat const kOGGameSceneStatusBarAlpha = 0.5;
-CGFloat const kOGGameSceneStatusBarPositionOffset = 10.0;
-CGFloat const kOGGameSceneStatusBarYOffset = 10.0;
-CGFloat const kOGGameSceneStatusBarDuration = 0.2;
+CGFloat const OGGameSceneStatusBarHidingDistance = 100.0;
+CGFloat const OGGameSceneStatusBarAlpha = 0.5;
+CGFloat const OGGameSceneStatusBarPositionOffset = 10.0;
+CGFloat const OGGameSceneStatusBarYOffset = 10.0;
+CGFloat const OGGameSceneStatusBarDuration = 0.2;
 
-NSString *const kOGPropertyFileExtension = @"plist";
-NSString *const kOGSceneFileExtension = @"sks";
-//NSString *const kOGMainMenuSceneFileName = @"OGMainMenuScene";
-//NSString *const kOGMapMenuSceneFileName = @"OGMapMenuScene";
-//NSString *const kOGSettingsMenuSceneFileName = @"OGSettingsMenuScene";
-//NSString *const kOGShopMenuSceneFileName = @"OGShopMenuScene";
+NSString *const OGPropertyFileExtension = @"plist";
+NSString *const OGSceneFileExtension = @"sks";
+//NSString *const OGMainMenuSceneFileName = @"OGMainMenuScene";
+//NSString *const OGMapMenuSceneFileName = @"OGMapMenuScene";
+//NSString *const OGSettingsMenuSceneFileName = @"OGSettingsMenuScene";
+//NSString *const OGShopMenuSceneFileName = @"OGShopMenuScene";
 
-CGFloat const kOGGameSceneScoreLabelYPosition = -13.0;
+CGFloat const OGGameSceneScoreLabelYPosition = -13.0;
 
-CGFloat const kOGConstantsDefaultTransitionTimeDuration = 1.0;
+CGFloat const OGConstantsDefaultTransitionTimeDuration = 1.0;
 
-NSString *const kOGPlayerSpriteName = @"Player";
-NSString *const kOGEnemySpriteName = @"Enemy";
-NSString *const kOGPortalSpriteName = @"Door";
-NSString *const kOGObstacleSpriteName = @"Obstacle";
+NSString *const OGPlayerSpriteName = @"Player";
+NSString *const OGEnemySpriteName = @"Enemy";
+NSString *const OGPortalSpriteName = @"Door";
+NSString *const OGObstacleSpriteName = @"Obstacle";
 
-NSString *const kOGMainMenuName = @"MainMenu";
-NSString *const kOGMapMenuName = @"MapMenu";
-NSString *const kOGSettingsMenuName = @"SettingsMenu";
-NSString *const kOGShopMenuName = @"ShopMenu";
+NSString *const OGMainMenuName = @"MainMenu";
+NSString *const OGMapMenuName = @"MapMenu";
+NSString *const OGSettingsMenuName = @"SettingsMenu";
+NSString *const OGShopMenuName = @"ShopMenu";
 
 
 @implementation OGConstants

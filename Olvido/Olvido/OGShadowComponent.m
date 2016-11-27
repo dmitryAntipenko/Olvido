@@ -8,7 +8,7 @@
 
 #import "OGShadowComponent.h"
 
-CGFloat const kOGShadowComponentAlpha = 0.25;
+CGFloat const OGShadowComponentAlpha = 0.25;
 
 @implementation OGShadowComponent
 
@@ -19,7 +19,7 @@ CGFloat const kOGShadowComponentAlpha = 0.25;
     if (self)
     {
         _node = [SKSpriteNode spriteNodeWithTexture:texture];
-        _node.alpha = kOGShadowComponentAlpha;
+        _node.alpha = OGShadowComponentAlpha;
         _node.position = offset;
     }
     

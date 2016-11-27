@@ -8,9 +8,9 @@
 
 #import "OGSceneMetadata.h"
 
-NSString *const kOGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
-NSString *const kOGSceneMetadataClassNameKey = @"ClassName";
-NSString *const kOGSceneMetadataFileNameKey = @"FileName";
+NSString *const OGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
+NSString *const OGSceneMetadataClassNameKey = @"ClassName";
+NSString *const OGSceneMetadataFileNameKey = @"FileName";
 
 @implementation OGSceneMetadata
 
@@ -22,8 +22,8 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
         
         if (self)
         {
-            NSString *className = [configuration objectForKey:kOGSceneMetadataClassNameKey];
-            NSString *fileName = [configuration objectForKey:kOGSceneMetadataFileNameKey];
+            NSString *className = [configuration objectForKey:OGSceneMetadataClassNameKey];
+            NSString *fileName = [configuration objectForKey:OGSceneMetadataFileNameKey];
             
             if (className && fileName)
             {
@@ -31,7 +31,7 @@ NSString *const kOGSceneMetadataFileNameKey = @"FileName";
                 _fileName = fileName;
                 _identifier = identifier;
                 
-                NSArray<NSString *> *onDemandResourcesClassNames = configuration[kOGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *onDemandResourcesClassNames = configuration[OGSceneMetadataOnDemandResourcesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 

@@ -9,78 +9,78 @@
 #import <SpriteKit/SpriteKit.h>
 #import "SKColor+OGConstantColors.h"
 
-NSUInteger const kOGConstantColorsBackgroundLightGray = 0xf2f2f2;
-NSUInteger const kOGConstantColorsBackgroundGray = 0xdddddd;
+NSUInteger const OGConstantColorsBackgroundLightGray = 0xf2f2f2;
+NSUInteger const OGConstantColorsBackgroundGray = 0xdddddd;
 
-NSUInteger const kOGConstantColorsRed = 0xe74c3c;
-NSUInteger const kOGConstantColorsDarkRed = 0xc0392b;
+NSUInteger const OGConstantColorsRed = 0xe74c3c;
+NSUInteger const OGConstantColorsDarkRed = 0xc0392b;
 
-NSUInteger const kOGConstantColorsBlue = 0x3498db;
-NSUInteger const kOGConstantColorsDarkBlue = 0x2980b9;
+NSUInteger const OGConstantColorsBlue = 0x3498db;
+NSUInteger const OGConstantColorsDarkBlue = 0x2980b9;
 
-NSUInteger const kOGConstantColorsBlack = 0x11181f;
-NSUInteger const kOGConstantColorsLightBlack = 0x2c3e50;
+NSUInteger const OGConstantColorsBlack = 0x11181f;
+NSUInteger const OGConstantColorsLightBlack = 0x2c3e50;
 
-NSUInteger const kOGConstantColorsGreen = 0x1abc9c;
-NSUInteger const kOGConstantColorsDarkGreen = 0x16a085;
+NSUInteger const OGConstantColorsGreen = 0x1abc9c;
+NSUInteger const OGConstantColorsDarkGreen = 0x16a085;
 
-NSUInteger const kOGConstantColorsWhite = 0xecf0f1;
+NSUInteger const OGConstantColorsWhite = 0xecf0f1;
 
 @implementation SKColor (OGConstantColors)
 
 + (SKColor *)backgroundGrayColor
 {
-    return [SKColor colorWithHex:kOGConstantColorsBackgroundGray];
+    return [SKColor colorWithHex:OGConstantColorsBackgroundGray];
 }
 
 + (SKColor *)backgroundLightGrayColor
 {
-    return [SKColor colorWithHex:kOGConstantColorsBackgroundLightGray];
+    return [SKColor colorWithHex:OGConstantColorsBackgroundLightGray];
 }
 
 + (SKColor *)gameRed
 {
-    return [SKColor colorWithHex:kOGConstantColorsRed];
+    return [SKColor colorWithHex:OGConstantColorsRed];
 }
 
 + (SKColor *)gameDarkRed
 {
-    return [SKColor colorWithHex:kOGConstantColorsDarkRed];
+    return [SKColor colorWithHex:OGConstantColorsDarkRed];
 }
 
 + (SKColor *)gameGreen
 {
-    return [SKColor colorWithHex:kOGConstantColorsGreen];
+    return [SKColor colorWithHex:OGConstantColorsGreen];
 }
 
 + (SKColor *)gameDarkGreen
 {
-    return [SKColor colorWithHex:kOGConstantColorsDarkGreen];
+    return [SKColor colorWithHex:OGConstantColorsDarkGreen];
 }
 
 + (SKColor *)gameBlue
 {
-    return [SKColor colorWithHex:kOGConstantColorsBlue];
+    return [SKColor colorWithHex:OGConstantColorsBlue];
 }
 
 + (SKColor *)gameDarkBlue
 {
-    return [SKColor colorWithHex:kOGConstantColorsDarkBlue];
+    return [SKColor colorWithHex:OGConstantColorsDarkBlue];
 }
 
 + (SKColor *)gameBlack
 {
-    return [SKColor colorWithHex:kOGConstantColorsBlack];
+    return [SKColor colorWithHex:OGConstantColorsBlack];
 }
 
 + (SKColor *)gameLightBlack
 {
-    return [SKColor colorWithHex:kOGConstantColorsLightBlack];
+    return [SKColor colorWithHex:OGConstantColorsLightBlack];
 }
 
 + (SKColor *)gameWhite
 {
-    return [SKColor colorWithHex:kOGConstantColorsWhite];
+    return [SKColor colorWithHex:OGConstantColorsWhite];
 }
 
 + (SKColor *)colorWithHex:(NSUInteger)hex

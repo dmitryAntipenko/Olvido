@@ -12,7 +12,7 @@
 #import "OGBaseScene.h"
 #import "OGLevelManager.h"
 
-NSString *const kOGAppDelegateMainStoryboardName = @"Main";
+NSString *const OGAppDelegateMainStoryboardName = @"Main";
 
 @interface OGAppDelegate ()
 
@@ -24,7 +24,7 @@ NSString *const kOGAppDelegateMainStoryboardName = @"Main";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:kOGAppDelegateMainStoryboardName bundle:nil];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:OGAppDelegateMainStoryboardName bundle:nil];
     
     self.gameViewController = [mainStoryboard instantiateInitialViewController];
     

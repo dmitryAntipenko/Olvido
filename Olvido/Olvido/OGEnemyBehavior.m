@@ -10,24 +10,24 @@
 #import "OGGameScene.h"
 #import "OGEnemyEntity.h"
 
-CGFloat const kOGEnemyBehaviorAgentSearchDistanceForFlocking = 50.0;
+CGFloat const OGEnemyBehaviorAgentSearchDistanceForFlocking = 50.0;
 
-CGFloat const kOGEnemyBehaviorSeparationRadius = 25.3;
-CGFloat const kOGEnemyBehaviorSeparationAngle = (CGFloat) (3 * M_PI_4);
-CGFloat const kOGEnemyBehaviorSeparationWeight = 2.0;
+CGFloat const OGEnemyBehaviorSeparationRadius = 25.3;
+CGFloat const OGEnemyBehaviorSeparationAngle = (CGFloat) (3 * M_PI_4);
+CGFloat const OGEnemyBehaviorSeparationWeight = 2.0;
                                                           
-CGFloat const kOGEnemyBehaviorAlignmentRadius = 43.333;
-CGFloat const kOGEnemyBehaviorAlignmentAngle = (CGFloat) M_PI_4;
-CGFloat const kOGEnemyBehaviorAlignmentWeight = 1.667;
+CGFloat const OGEnemyBehaviorAlignmentRadius = 43.333;
+CGFloat const OGEnemyBehaviorAlignmentAngle = (CGFloat) M_PI_4;
+CGFloat const OGEnemyBehaviorAlignmentWeight = 1.667;
 
-CGFloat const kOGEnemyBehaviorCohesionRadius = 50.0;
-CGFloat const kOGEnemyBehaviorCohesionAngle = (CGFloat) M_PI_2;
-CGFloat const kOGEnemyBehaviorCohesionWeight = 1.667;
+CGFloat const OGEnemyBehaviorCohesionRadius = 50.0;
+CGFloat const OGEnemyBehaviorCohesionAngle = (CGFloat) M_PI_2;
+CGFloat const OGEnemyBehaviorCohesionWeight = 1.667;
 
-NSTimeInterval const kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 1.0;
+NSTimeInterval const OGEnemyBehaviorMaxPredictionTimeWhenFollowingPath = 1.0;
 
-NSString *const kOGEnemyBehaviorBehaviorKey = @"behavior";
-NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
+NSString *const OGEnemyBehaviorBehaviorKey = @"behavior";
+NSString *const OGEnemyBehaviorPathPointsKey = @"pathPoints";
 
 @implementation OGEnemyBehavior
 
@@ -48,7 +48,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
         
         if ([entity isKindOfClass:[OGEnemyEntity class]]
             && enemyEntity.agent != agent
-            && [enemyEntity distanceToAgentWithOtherAgent:agent] <= kOGEnemyBehaviorAgentSearchDistanceForFlocking)
+            && [enemyEntity distanceToAgentWithOtherAgent:agent] <= OGEnemyBehaviorAgentSearchDistanceForFlocking)
         {
             [agentsToFlockWith addObject:((OGEnemyEntity *) entity).agent];
         }
@@ -57,20 +57,20 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
     if (agentsToFlockWith.count != 0)
     {
         GKGoal *separationGoal = [GKGoal goalToSeparateFromAgents:agentsToFlockWith
-                                                      maxDistance:kOGEnemyBehaviorSeparationRadius
-                                                         maxAngle:kOGEnemyBehaviorSeparationAngle];
-        [enemyBehavior setWeight:kOGEnemyBehaviorSeparationWeight forGoal:separationGoal];
+                                                      maxDistance:OGEnemyBehaviorSeparationRadius
+                                                         maxAngle:OGEnemyBehaviorSeparationAngle];
+        [enemyBehavior setWeight:OGEnemyBehaviorSeparationWeight forGoal:separationGoal];
         
         GKGoal *alignmentGoal = [GKGoal goalToAlignWithAgents:agentsToFlockWith
-                                                  maxDistance:kOGEnemyBehaviorAlignmentRadius
-                                                     maxAngle:kOGEnemyBehaviorAlignmentAngle];
-        [enemyBehavior setWeight:kOGEnemyBehaviorAlignmentWeight forGoal:alignmentGoal];    
+                                                  maxDistance:OGEnemyBehaviorAlignmentRadius
+                                                     maxAngle:OGEnemyBehaviorAlignmentAngle];
+        [enemyBehavior setWeight:OGEnemyBehaviorAlignmentWeight forGoal:alignmentGoal];    
         
         GKGoal *cohesionGoal = [GKGoal goalToCohereWithAgents:agentsToFlockWith
-                                                  maxDistance:kOGEnemyBehaviorCohesionRadius
-                                                     maxAngle:kOGEnemyBehaviorCohesionAngle];
+                                                  maxDistance:OGEnemyBehaviorCohesionRadius
+                                                     maxAngle:OGEnemyBehaviorCohesionAngle];
         
-        [enemyBehavior setWeight:kOGEnemyBehaviorCohesionWeight forGoal:cohesionGoal];
+        [enemyBehavior setWeight:OGEnemyBehaviorCohesionWeight forGoal:cohesionGoal];
     }
     
     CGPoint agentPosition = CGPointMake(agent.position.x, agent.position.y);
@@ -124,7 +124,7 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 - (NSArray<GKPolygonObstacle *> *)extrudedObstaclesContainingPoint:(CGPoint)point
                                                              scene:(OGGameScene *)scene
 {
-    CGFloat extrusionRadius = (CGFloat) kOGEnemyEntityPathfindingGraphBufferRadius + 5.0;
+    CGFloat extrusionRadius = (CGFloat) OGEnemyEntityPathfindingGraphBufferRadius + 5.0;
     
     NSMutableArray<GKPolygonObstacle *> *result = [NSMutableArray array];
     
@@ -240,17 +240,17 @@ NSString *const kOGEnemyBehaviorPathPointsKey = @"pathPoints";
 - (void)addAvoidObstaclesGoalWithScene:(OGGameScene *)scene
 {
     [self setWeight:1.0 forGoal:[GKGoal goalToAvoidObstacles:scene.polygonObstacles
-                                           maxPredictionTime:kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance]];
+                                           maxPredictionTime:OGEnemyEntityMaxPredictionTimeForObstacleAvoidance]];
 }
 
 - (void)addFollowAndStayOnPathGoalsWithPath:(GKPath *)path
 {
     [self setWeight:1.0 forGoal:[GKGoal goalToFollowPath:path
-                                       maxPredictionTime:kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath
+                                       maxPredictionTime:OGEnemyBehaviorMaxPredictionTimeWhenFollowingPath
                                                  forward:YES]];
     
     [self setWeight:1.0 forGoal:[GKGoal goalToStayOnPath:path
-                                       maxPredictionTime:kOGEnemyBehaviorMaxPredictionTimeWhenFollowingPath]];
+                                       maxPredictionTime:OGEnemyBehaviorMaxPredictionTimeWhenFollowingPath]];
 }
 
 @end

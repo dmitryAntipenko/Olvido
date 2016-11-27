@@ -19,31 +19,23 @@
 
 @implementation OGSoundComponent
 
-- (instancetype)initWithSoundNames:(NSArray<NSString *> *)names
+- (instancetype)init
 {
-    if (names)
-    {
-        self = [super init];
-        
-        if (self)
-        {            
-            _soundNodes = [NSMutableDictionary dictionary];
-        
-            for (NSString *name in names)
-            {
-                SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:name];
-                node.autoplayLooped = NO;
-                
-                if (node)
-                {
-                    [_soundNodes setObject:node forKey:name];
-                }
-            }
+    return [self initWithSoundNodes:nil];
+}
+
+- (instancetype)initWithSoundNodes:(NSArray<SKAudioNode *> *)nodes
+{
+    self = [super init];
+    
+    if (self)
+    {            
+        _soundNodes = [NSMutableDictionary dictionary];
+    
+        for (SKAudioNode *audioNode in nodes)
+        {
+            [_soundNodes setObject:audioNode forKey:audioNode.name];
         }
-    }
-    else
-    {
-        self = nil;
     }
     
     return self;

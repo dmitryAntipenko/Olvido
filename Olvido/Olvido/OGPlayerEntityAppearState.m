@@ -17,7 +17,7 @@
 #import "OGDirection.h"
 #import "OGPlayerEntityControlledState.h"
 
-CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
+CGFloat const OGPlayerEntityAppearStateDurationTime = 0.0;
 
 @interface OGPlayerEntityAppearState ()
 
@@ -67,7 +67,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     
     if (appearTextures)
     {
-        SKTexture *texture = appearTextures[kOGDirectionDescription[self.orientationComponent.direction]];
+        SKTexture *texture = appearTextures[OGDirectionDescription[self.orientationComponent.direction]];
         
         self.spriteNode.texture = texture;
         self.spriteNode.size = [OGPlayerEntity textureSize];
@@ -86,7 +86,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     
     self.elapsedTime += seconds;
     
-    if (self.elapsedTime > kOGPlayerEntityAppearStateDurationTime)
+    if (self.elapsedTime > OGPlayerEntityAppearStateDurationTime)
     {
         [self.spriteNode removeFromParent];
         

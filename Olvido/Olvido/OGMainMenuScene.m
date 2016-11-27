@@ -11,8 +11,8 @@
 #import "OGConstants.h"
 #import "OGMenuManager.h"
 
-NSString *const kOGMainMenuSceneSettingsButtonNodeName = @"SettingsButton";
-NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
+NSString *const OGMainMenuSceneSettingsButtonNodeName = @"SettingsButton";
+NSString *const OGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 
 @implementation OGMainMenuScene
 
@@ -20,13 +20,13 @@ NSString *const kOGMainMenuSceneMapMenuButtonNodeName = @"MapMenuButton";
 {
     [super onButtonClick:button];
     
-    if ([button.name isEqualToString:kOGMainMenuSceneSettingsButtonNodeName])
+    if ([button.name isEqualToString:OGMainMenuSceneSettingsButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGSettingsMenuName];
+        [self.menuManager loadMenuWithName:OGSettingsMenuName];
     }
-    else if ([button.name isEqualToString:kOGMainMenuSceneMapMenuButtonNodeName])
+    else if ([button.name isEqualToString:OGMainMenuSceneMapMenuButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGMapMenuName];
+        [self.menuManager loadMenuWithName:OGMapMenuName];
     }
 }
 

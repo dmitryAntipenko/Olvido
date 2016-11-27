@@ -8,7 +8,7 @@
 
 #import "OGHealthComponent.h"
 
-NSInteger const kOGHealthComponentMinHealth = 0;
+NSInteger const OGHealthComponentMinHealth = 0;
 
 @implementation OGHealthComponent
 
@@ -20,9 +20,9 @@ NSInteger const kOGHealthComponentMinHealth = 0;
     {
         _currentHealth = self.maxHealth;
     }
-    else if (_currentHealth < kOGHealthComponentMinHealth)
+    else if (_currentHealth < OGHealthComponentMinHealth)
     {
-        _currentHealth = kOGHealthComponentMinHealth;
+        _currentHealth = OGHealthComponentMinHealth;
     }
     
     [self.delegate healthDidChange];
@@ -42,7 +42,7 @@ NSInteger const kOGHealthComponentMinHealth = 0;
 {
     self.currentHealth -= damage;
     
-    if (self.currentHealth <= kOGHealthComponentMinHealth)
+    if (self.currentHealth <= OGHealthComponentMinHealth)
     {
         [self killEntity];
     }

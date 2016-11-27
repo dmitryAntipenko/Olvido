@@ -38,7 +38,7 @@
     [super didEnterWithPreviousState:previousState];
 
     self.animationComponent.delegate = self;
-    self.animationComponent.requestedAnimationState = kOGAnimationStateDead;
+    self.animationComponent.requestedAnimationState = OGAnimationStateDead;
 }
 
 - (void)animationDidFinish

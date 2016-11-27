@@ -8,12 +8,12 @@
 
 #import "OGEnemyConfiguration.h"
 
-NSString *const kOGEnemyConfigurationInitialPointKey = @"InitialPoint";
-NSString *const kOGEnemyConfigurationInitialVectorKey = @"InitialVector";
-NSString *const kOGEnemyConfigurationInitialVectorDXKey = @"dx";
-NSString *const kOGEnemyConfigurationInitialVectorDYKey = @"dy";
-NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
-NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
+NSString *const OGEnemyConfigurationInitialPointKey = @"InitialPoint";
+NSString *const OGEnemyConfigurationInitialVectorKey = @"InitialVector";
+NSString *const OGEnemyConfigurationInitialVectorDXKey = @"dx";
+NSString *const OGEnemyConfigurationInitialVectorDYKey = @"dy";
+NSString *const OGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+NSString *const OGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
 
 @interface OGEnemyConfiguration ()
 
@@ -32,15 +32,15 @@ NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
         
         if (self)
         {
-            _initialPointName = dictionary[kOGEnemyConfigurationInitialPointKey];
+            _initialPointName = dictionary[OGEnemyConfigurationInitialPointKey];
             
-            CGFloat dx = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDXKey] floatValue];
-            CGFloat dy = [dictionary[kOGEnemyConfigurationInitialVectorKey][kOGEnemyConfigurationInitialVectorDYKey] floatValue];
+            CGFloat dx = [dictionary[OGEnemyConfigurationInitialVectorKey][OGEnemyConfigurationInitialVectorDXKey] floatValue];
+            CGFloat dy = [dictionary[OGEnemyConfigurationInitialVectorKey][OGEnemyConfigurationInitialVectorDYKey] floatValue];
             _initialVector = CGVectorMake(dx, dy);
             
-            _physicsBodyRadius = [dictionary[kOGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
+            _physicsBodyRadius = [dictionary[OGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
             
-            _enemyClass = NSClassFromString(dictionary[kOGEnemyConfigurationConfigurationEnemyTypeKey]);
+            _enemyClass = NSClassFromString(dictionary[OGEnemyConfigurationConfigurationEnemyTypeKey]);
         }
     }
     

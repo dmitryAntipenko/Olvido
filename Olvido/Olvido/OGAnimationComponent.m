@@ -10,9 +10,9 @@
 #import "OGAnimation.h"
 #import "OGOrientationComponent.h"
 
-NSString *const kOGAnimationComponentBodyActionKey = @"bodyAction";
-NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
-CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
+NSString *const OGAnimationComponentBodyActionKey = @"bodyAction";
+NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
+CGFloat const OGAnimationComponentTimePerFrame = 0.1;
 
 @interface OGAnimationComponent ()
 
@@ -56,24 +56,24 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     if ((self.currentAnimation == nil || self.currentAnimation.animationState != animationState
          || self.currentAnimation.direction != direction || self.currentTimePerFrame != self.currentAnimation.timePerFrame)
-        && self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
+        && self.animations[OGAnimationStateDescription[animationState]][OGDirectionDescription[direction]])
     {
-        OGAnimation *animation = self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]];
+        OGAnimation *animation = self.animations[OGAnimationStateDescription[animationState]][OGDirectionDescription[direction]];
         
         if (self.currentAnimation && ![self.currentAnimation.bodyActionName isEqualToString:animation.bodyActionName])
         {
-            [self.spriteNode removeActionForKey:kOGAnimationComponentBodyActionKey];
+            [self.spriteNode removeActionForKey:OGAnimationComponentBodyActionKey];
             self.spriteNode.position = CGPointZero;
             
             SKAction *bodyAction = animation.bodyAction;
             
             if (bodyAction)
             {
-                [self.spriteNode runAction:[SKAction repeatActionForever:bodyAction] withKey:kOGAnimationComponentBodyActionKey];
+                [self.spriteNode runAction:[SKAction repeatActionForever:bodyAction] withKey:OGAnimationComponentBodyActionKey];
             }
         }
         
-        [self.spriteNode removeActionForKey:kOGAnimationComponentTextureActionKey];
+        [self.spriteNode removeActionForKey:OGAnimationComponentTextureActionKey];
         
         SKAction *texturesAction = nil;
         
@@ -111,7 +111,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         }];
         
         [self.spriteNode runAction:[SKAction sequence:@[texturesAction, complitionAction]]
-                           withKey:kOGAnimationComponentTextureActionKey];
+                           withKey:OGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
         self.currentTimePerFrame = self.currentAnimation.timePerFrame;
@@ -125,14 +125,14 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 {
     [super updateWithDeltaTime:deltaTime];
     
-    if (self.requestedAnimationState != kOGAnimationStateNone)
+    if (self.requestedAnimationState != OGAnimationStateNone)
     {
         OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
         
         if (orientationComponent)
         {
             [self runAnimationForAnimationStateWithAnimationState:self.requestedAnimationState direction:orientationComponent.direction deltaTime:deltaTime];
-            self.requestedAnimationState = kOGAnimationStateNone;
+            self.requestedAnimationState = OGAnimationStateNone;
         }
     }
 }
@@ -179,7 +179,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     }
     else
     {
-        SKAction *texturesAction = [SKAction animateWithTextures:sortedTextures timePerFrame:kOGAnimationComponentTimePerFrame];
+        SKAction *texturesAction = [SKAction animateWithTextures:sortedTextures timePerFrame:OGAnimationComponentTimePerFrame];
         result = [SKAction repeatActionForever:texturesAction];
     }
     
@@ -202,7 +202,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     
     NSMutableDictionary *animations = [NSMutableDictionary dictionary];
     
-    for (NSUInteger i = 0; i < kOGDirectionCount; i++)
+    for (NSUInteger i = 0; i < OGDirectionCount; i++)
     {
         NSString *structure = [NSString stringWithFormat:@"%@_%lu_", imageIdentifier, (unsigned long)i];
         NSString *filter = @"SELF BEGINSWITH %@";
@@ -216,7 +216,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
         NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
 
         
-        animations[kOGDirectionDescription[i]] = [OGAnimation animationWithAnimationState:animationState
+        animations[OGDirectionDescription[i]] = [OGAnimation animationWithAnimationState:animationState
                                                                                 direction:i
                                                                                  textures:textures
                                                                               frameOffset:0

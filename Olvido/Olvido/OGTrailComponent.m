@@ -9,20 +9,20 @@
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
 #import "OGZPositionEnum.m"
-NSString *const kOGTrailComponentParticleFileName = @"SlimeTrail";
-CGFloat const kOGTrailComponentParticleBirthratePlay = 120.0;
-CGFloat const kOGTrailComponentParticleBirthratePause = 0.0;
-CGFloat const kOGTrailComponentParticleAlphaRange = 0.2;
-CGFloat const kOGTrailComponentParticleAlpha = 0.5;
-CGFloat const kOGTrailComponentParticleSpeed = 0.0;
-CGFloat const kOGTrailComponentParticleLifeTime = 10.0;
-CGFloat const kOGTrailComponentParticleAngleRange = 0.0;
-CGFloat const kOGTrailComponentParticleScale = 0.6;
-CGFloat const kOGTrailComponentParticleScaleRange = 0.6;
-CGFloat const kOGTrailComponentParticlePsoitionRangeDx = 32.0;
-CGFloat const kOGTrailComponentParticlePsoitionRangeDy = 32.0;
-CGFloat const kOGTrailComponentParticleLifeTimeRange = 0.0;
-CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
+NSString *const OGTrailComponentParticleFileName = @"SlimeTrail";
+CGFloat const OGTrailComponentParticleBirthratePlay = 120.0;
+CGFloat const OGTrailComponentParticleBirthratePause = 0.0;
+CGFloat const OGTrailComponentParticleAlphaRange = 0.2;
+CGFloat const OGTrailComponentParticleAlpha = 0.5;
+CGFloat const OGTrailComponentParticleSpeed = 0.0;
+CGFloat const OGTrailComponentParticleLifeTime = 10.0;
+CGFloat const OGTrailComponentParticleAngleRange = 0.0;
+CGFloat const OGTrailComponentParticleScale = 0.6;
+CGFloat const OGTrailComponentParticleScaleRange = 0.6;
+CGFloat const OGTrailComponentParticlePsoitionRangeDx = 32.0;
+CGFloat const OGTrailComponentParticlePsoitionRangeDy = 32.0;
+CGFloat const OGTrailComponentParticleLifeTimeRange = 0.0;
+CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
 @interface OGTrailComponent ()
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) SKEmitterNode *emitter;
@@ -38,17 +38,17 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
     if (self)
     {
         _emitter = [SKEmitterNode node];
-        _emitter.particleAlphaSpeed = kOGTrailComponentParticleAlphaSpeed;
-        _emitter.particleAlphaRange = kOGTrailComponentParticleAlphaRange;
-        _emitter.particleAlpha = kOGTrailComponentParticleAlpha;
-        _emitter.particleSpeed = kOGTrailComponentParticleSpeed;
-        _emitter.particleScale = kOGTrailComponentParticleScale;
-        _emitter.particleLifetime = kOGTrailComponentParticleLifeTime;
-        _emitter.emissionAngleRange = kOGTrailComponentParticleAngleRange;
-        _emitter.particlePositionRange = CGVectorMake(kOGTrailComponentParticlePsoitionRangeDx, kOGTrailComponentParticlePsoitionRangeDy);
-        _emitter.particleScaleRange = kOGTrailComponentParticleScaleRange;
-        _emitter.particleLifetimeRange = kOGTrailComponentParticleLifeTimeRange;
-        _emitter.particleBirthRate = kOGTrailComponentParticleBirthratePause;
+        _emitter.particleAlphaSpeed = OGTrailComponentParticleAlphaSpeed;
+        _emitter.particleAlphaRange = OGTrailComponentParticleAlphaRange;
+        _emitter.particleAlpha = OGTrailComponentParticleAlpha;
+        _emitter.particleSpeed = OGTrailComponentParticleSpeed;
+        _emitter.particleScale = OGTrailComponentParticleScale;
+        _emitter.particleLifetime = OGTrailComponentParticleLifeTime;
+        _emitter.emissionAngleRange = OGTrailComponentParticleAngleRange;
+        _emitter.particlePositionRange = CGVectorMake(OGTrailComponentParticlePsoitionRangeDx, OGTrailComponentParticlePsoitionRangeDy);
+        _emitter.particleScaleRange = OGTrailComponentParticleScaleRange;
+        _emitter.particleLifetimeRange = OGTrailComponentParticleLifeTimeRange;
+        _emitter.particleBirthRate = OGTrailComponentParticleBirthratePause;
     }
     
     return self;
@@ -82,11 +82,11 @@ CGFloat const kOGTrailComponentParticleAlphaSpeed = -0.1;
 }
 - (void)pause
 {
-    self.emitter.particleBirthRate = kOGTrailComponentParticleBirthratePause;
+    self.emitter.particleBirthRate = OGTrailComponentParticleBirthratePause;
 }
 - (void)play
 {
-    self.emitter.particleBirthRate = kOGTrailComponentParticleBirthratePlay;
+    self.emitter.particleBirthRate = OGTrailComponentParticleBirthratePlay;
 }
 - (void)setTargetNode:(SKNode *)targetNode
 {

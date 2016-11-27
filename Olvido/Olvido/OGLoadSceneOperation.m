@@ -13,8 +13,8 @@
 #import "OGGameScene.h"
 #import "GKScene+OGFactory.h"
 
-NSUInteger const kOGLoadSceneOperationProgressTotalUnitCount = 1;
-NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
+NSUInteger const OGLoadSceneOperationProgressTotalUnitCount = 1;
+NSString *const OGLoadSceneOperationGraphsKey = @"Graphs";
 
 @interface OGLoadSceneOperation ()
 
@@ -35,7 +35,7 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
         if (self)
         {
             _sceneMetadata = sceneMetadata;
-            _progress = [NSProgress progressWithTotalUnitCount:kOGLoadSceneOperationProgressTotalUnitCount];
+            _progress = [NSProgress progressWithTotalUnitCount:OGLoadSceneOperationProgressTotalUnitCount];
         }
     }
     else
@@ -66,7 +66,7 @@ NSString *const kOGLoadSceneOperationGraphsKey = @"Graphs";
             self.scene = (OGBaseScene *) gkScene.rootNode;
             [self.scene configureScene];
             
-            self.progress.completedUnitCount = kOGLoadSceneOperationProgressTotalUnitCount;
+            self.progress.completedUnitCount = OGLoadSceneOperationProgressTotalUnitCount;
         }
     }
 }

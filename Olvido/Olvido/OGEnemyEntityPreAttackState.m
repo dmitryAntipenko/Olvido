@@ -14,7 +14,7 @@
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityDieState.h"
 
-NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
+NSTimeInterval const OGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
 
 @interface OGEnemyEntityPreAttackState ()
 
@@ -57,9 +57,9 @@ NSTimeInterval const kOGEnemyEntityPreAttackStatePreAttackStateDuration = 0.3;
     
     self.elapsedTime += seconds;
     
-    if (self.elapsedTime >= kOGEnemyEntityPreAttackStatePreAttackStateDuration)
+    if (self.elapsedTime >= OGEnemyEntityPreAttackStatePreAttackStateDuration)
     {
-        self.animationComponent.requestedAnimationState = kOGAnimationStateAttack;
+        self.animationComponent.requestedAnimationState = OGAnimationStateAttack;
 
         if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
         {

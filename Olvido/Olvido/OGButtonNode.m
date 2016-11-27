@@ -10,10 +10,10 @@
 #import "SKColor+OGConstantColors.h"
 #import "OGConstants.h"
 
-NSString *const kOGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
-NSString *const kOGButtonNodeUserDataTouchedColorKey = @"touchedColor";
-NSString *const kOGButtonNodeUserDataSelectorKey = @"selector";
-NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
+NSString *const OGButtonNodeUserDataTouchedTextureKey = @"touchedTexture";
+NSString *const OGButtonNodeUserDataTouchedColorKey = @"touchedColor";
+NSString *const OGButtonNodeUserDataSelectorKey = @"selector";
+NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 @interface OGButtonNode ()
 
@@ -39,7 +39,7 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 {
     if (!_touchedTexture)
     {
-        NSString *touchedTextureName = [self.userData objectForKey:kOGButtonNodeUserDataTouchedTextureKey];
+        NSString *touchedTextureName = [self.userData objectForKey:OGButtonNodeUserDataTouchedTextureKey];
         
         if (touchedTextureName)
         {
@@ -58,7 +58,7 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 {
     if (!_touchedColor)
     {
-        NSString *touchedColorHexString = [self.userData objectForKey:kOGButtonNodeUserDataTouchedColorKey];
+        NSString *touchedColorHexString = [self.userData objectForKey:OGButtonNodeUserDataTouchedColorKey];
         
         if (touchedColorHexString)
         {
@@ -88,7 +88,7 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 - (void)doAction
 {
-    NSString *selectorName = [self.userData objectForKey:kOGButtonNodeUserDataSelectorKey];
+    NSString *selectorName = [self.userData objectForKey:OGButtonNodeUserDataSelectorKey];
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -104,7 +104,7 @@ NSString *const kOGButtonNodeDefaultSelectorName =  @"onButtonClick:";
     }
     else
     {
-        SEL defaultSelector = NSSelectorFromString(kOGButtonNodeDefaultSelectorName);
+        SEL defaultSelector = NSSelectorFromString(OGButtonNodeDefaultSelectorName);
         
         if ([self.scene respondsToSelector:defaultSelector])
         {

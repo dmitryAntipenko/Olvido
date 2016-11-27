@@ -9,13 +9,13 @@
 #import "OGFuzzyEnemyRule.h"
 #import "OGEntitySnapshot.h"
 
-NSString *const kOGFuzzyEnemyRuleSystemStateSnapshot = @"snapshot";
+NSString *const OGFuzzyEnemyRuleSystemStateSnapshot = @"snapshot";
 
 @implementation OGFuzzyEnemyRule
 
 - (instancetype)init
 {
-    return [self initWithFact:kOGFuzzyEnemyRuleNoneFact];
+    return [self initWithFact:OGFuzzyEnemyRuleNoneFact];
 }
 
 - (instancetype)initWithFact:(OGFuzzyEnemyRuleFact)fact
@@ -39,7 +39,7 @@ NSString *const kOGFuzzyEnemyRuleSystemStateSnapshot = @"snapshot";
 
 - (BOOL)evaluatePredicateWithSystem:(GKRuleSystem *)system
 {
-    self.snapshot = (OGEntitySnapshot *) system.state[kOGFuzzyEnemyRuleSystemStateSnapshot];
+    self.snapshot = (OGEntitySnapshot *) system.state[OGFuzzyEnemyRuleSystemStateSnapshot];
     
     BOOL result = NO;
     

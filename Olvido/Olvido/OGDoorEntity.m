@@ -23,7 +23,7 @@
 #import "OGDoorEntityLockedState.h"
 #import "OGDoorEntityUnlockedState.h"
 
-NSString *const kOGDoorEntityTriggerNodeName = @"trigger";
+NSString *const OGDoorEntityTriggerNodeName = @"trigger";
 
 static NSArray *sOGDoorEntitySoundNodes = nil;
 
@@ -57,7 +57,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             _renderComponent.node = spriteNode;
             [self addComponent:_renderComponent];
             
-            SKNode *trigger = [spriteNode childNodeWithName:kOGDoorEntityTriggerNodeName];
+            SKNode *trigger = [spriteNode childNodeWithName:OGDoorEntityTriggerNodeName];
             trigger.entity = self;
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
                                                                    colliderType:[OGColliderType doorTrigger]];
@@ -81,7 +81,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             _transitionComponent = [[OGTransitionComponent alloc] init];
             [self addComponent:_transitionComponent];
             
-            _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGDoorEntitySoundNodes];
+            _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGDoorEntitySoundNodes];
             _soundComponent.target = _renderComponent.node;
             [self addComponent:_soundComponent];
         }
@@ -141,7 +141,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
 
 - (void)swapTriggerPosition
 {
-    SKNode *trigger = [self.renderComponent.node childNodeWithName:kOGDoorEntityTriggerNodeName];
+    SKNode *trigger = [self.renderComponent.node childNodeWithName:OGDoorEntityTriggerNodeName];
     
     CGPoint newTriggerPosition = CGPointMake(-trigger.position.x, -trigger.position.y);
     
@@ -169,7 +169,11 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
 {
     [OGDoorEntity loadMiscellaneousAssets];
     
-    sOGDoorEntitySoundNodes = @[@"door_open"];
+    SKAudioNode *doorOpenNode = [[SKAudioNode alloc] initWithFileNamed:@"door_open"];
+    doorOpenNode.autoplayLooped = NO;
+    doorOpenNode.name = @"door_open";
+    
+    sOGDoorEntitySoundNodes = @[doorOpenNode];
     
     handler();
 }

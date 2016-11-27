@@ -13,7 +13,7 @@
 
 - (instancetype)init
 {
-    return [super initWithFact:kOGFuzzyEnemyRuleFactPlayerFar];
+    return [super initWithFact:OGFuzzyEnemyRuleFactPlayerFar];
 }
 
 - (CGFloat)grade
@@ -22,7 +22,7 @@
     
     if (self.snapshot.playerTarget)
     {
-        CGFloat distance = [[self.snapshot.playerTarget valueForKey:kOGEntitySnapshotPlayerBotTargetDistanceKey] floatValue];
+        CGFloat distance = [[self.snapshot.playerTarget valueForKey:OGEntitySnapshotPlayerBotTargetDistanceKey] floatValue];
         
         CGFloat oneThird = self.snapshot.proximityFactor / 3;
         

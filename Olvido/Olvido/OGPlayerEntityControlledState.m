@@ -45,7 +45,7 @@
     
     [self.inputComponent setEnabled:YES];
     
-    self.animationComponent.requestedAnimationState = kOGAnimationStateIdle;
+    self.animationComponent.requestedAnimationState = OGAnimationStateIdle;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

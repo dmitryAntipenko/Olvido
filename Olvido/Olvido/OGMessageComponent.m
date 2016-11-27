@@ -8,10 +8,10 @@
 
 #import "OGMessageComponent.h"
 
-CGFloat const kOGMessageComponentYOffset = 40.0;
-CGFloat const kOGMessageComponentLabelFontSize = 32.0;
-CGFloat const kOGMessageComponentLabelColorBlendFactor = 1.0;
-NSString *const kOGMessageComponentClearMessage = @"";
+CGFloat const OGMessageComponentYOffset = 40.0;
+CGFloat const OGMessageComponentLabelFontSize = 32.0;
+CGFloat const OGMessageComponentLabelColorBlendFactor = 1.0;
+NSString *const OGMessageComponentClearMessage = @"";
 
 @interface OGMessageComponent ()
 
@@ -52,7 +52,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
 
 - (void)didAddToEntity
 {
-    CGPoint messagePosition = CGPointMake(0.0, CGRectGetHeight(self.target.calculateAccumulatedFrame) / 2.0 + kOGMessageComponentYOffset);
+    CGPoint messagePosition = CGPointMake(0.0, CGRectGetHeight(self.target.calculateAccumulatedFrame) / 2.0 + OGMessageComponentYOffset);
     self.messageLabel.position = messagePosition;    
     [self.target addChild:self.messageLabel];
 }
@@ -65,7 +65,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
     SKAction *messageDelay = [SKAction waitForDuration:duration];
     [self.messageLabel runAction:messageDelay completion:^()
     {
-        self.messageLabel.text = kOGMessageComponentClearMessage;
+        self.messageLabel.text = OGMessageComponentClearMessage;
         self.overlayed = NO;
     }];
 }
@@ -97,7 +97,7 @@ NSString *const kOGMessageComponentClearMessage = @"";
             }
             else
             {
-                self.messageLabel.text = kOGMessageComponentClearMessage;
+                self.messageLabel.text = OGMessageComponentClearMessage;
             }
         }
     }

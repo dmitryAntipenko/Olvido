@@ -40,21 +40,21 @@
 
 #import "OGZombie.h"
 
-NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
-NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
+NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
+NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
-CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius = 30.0;
-CGFloat const kOGEnemyEntityPatrolPathRadius = 10.0;
-CGFloat const kOGEnemyEntityWalkMaxSpeed = 50;
-CGFloat const kOGEnemyEntityHuntMaxSpeed = 500;
-CGFloat const kOGEnemyEntityMaximumAcceleration = 300.0;
-CGFloat const kOGEnemyEntityAgentMass = 0.25;
-CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
+CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 30.0;
+CGFloat const OGEnemyEntityPatrolPathRadius = 10.0;
+CGFloat const OGEnemyEntityWalkMaxSpeed = 50;
+CGFloat const OGEnemyEntityHuntMaxSpeed = 500;
+CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
+CGFloat const OGEnemyEntityAgentMass = 0.25;
+CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
-NSUInteger const kOGEnemyEntityDealGamage = 1.0;
+NSUInteger const OGEnemyEntityDealGamage = 1.0;
 
-NSString *const kOGEnemyEntityShadowTextureName = @"PlayerShadow";
-CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
+NSString *const OGEnemyEntityShadowTextureName = @"PlayerShadow";
+CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 @interface OGEnemyEntity ()
 
@@ -96,8 +96,8 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
                                                                colliderType:[OGColliderType enemy]];
         [self addComponent:_physicsComponent];
         
-        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGEnemyEntityShadowTextureName];
-        CGPoint shadowOffset = CGPointMake(0.0, kOGEnemyEntityShadowYOffset);
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, OGEnemyEntityShadowYOffset);
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
         [self addComponent:_shadowComponent];
         
@@ -124,13 +124,13 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
         
         [self.renderComponent.node addChild:_animationComponent.spriteNode];
         
-        _mandate = kOGEnemyEntityMandateFollowPath;
+        _mandate = OGEnemyEntityMandateFollowPath;
  
         _agent = [[GKAgent2D alloc] init];
         _agent.delegate = self;
-        _agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
-        _agent.maxAcceleration = kOGEnemyEntityMaximumAcceleration;
-        _agent.mass = kOGEnemyEntityAgentMass;
+        _agent.maxSpeed = OGEnemyEntityWalkMaxSpeed;
+        _agent.maxAcceleration = OGEnemyEntityMaximumAcceleration;
+        _agent.mass = OGEnemyEntityAgentMass;
         _agent.radius = configuration.physicsBodyRadius;
         _agent.behavior = [[GKBehavior alloc] init];
         [self addComponent:_agent];
@@ -167,13 +167,13 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
     {
         if ([intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]])
         {
-            if (self.mandate == kOGEnemyEntityMandateHunt)
+            if (self.mandate == OGEnemyEntityMandateHunt)
             {
-                self.agent.maxSpeed = kOGEnemyEntityHuntMaxSpeed;
+                self.agent.maxSpeed = OGEnemyEntityHuntMaxSpeed;
             }
             else
             {
-                self.agent.maxSpeed = kOGEnemyEntityWalkMaxSpeed;
+                self.agent.maxSpeed = OGEnemyEntityWalkMaxSpeed;
             }
             
             [self updateNodePositionToMatchAgentPosition];
@@ -201,7 +201,7 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
 
 - (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
-    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(kOGFuzzyEnemyRuleFactPlayerNear)];
+    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(OGFuzzyEnemyRuleFactPlayerNear)];
     
     NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts])];
     
@@ -210,22 +210,22 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
 
     if (huntPlayer > 0.0)
     {
-        OGEntitySnapshot *state = ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot];
-        OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey];
+        OGEntitySnapshot *state = ruleSystem.state[OGRulesComponentRuleSystemStateSnapshot];
+        OGPlayerEntity *player = (OGPlayerEntity *) state.playerTarget[OGEntitySnapshotPlayerBotTargetTargetKey];
         GKAgent2D *agent = (GKAgent2D *) [player componentForClass:[GKAgent2D class]];
         
         if (agent)
         {
             self.huntAgent = agent;
-            self.mandate = kOGEnemyEntityMandateHunt;
+            self.mandate = OGEnemyEntityMandateHunt;
         }
     }
     else
     {
-        if (self.mandate != kOGEnemyEntityMandateFollowPath)
+        if (self.mandate != OGEnemyEntityMandateFollowPath)
         {
             self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
-            self.mandate = kOGEnemyEntityMandateReturnToPositionOnPath;
+            self.mandate = OGEnemyEntityMandateReturnToPositionOnPath;
         }
     }
 }
@@ -273,27 +273,27 @@ CGFloat const kOGEnemyEntityShadowYOffset = -70.0;
     {
         switch (self.mandate)
         {
-            case kOGEnemyEntityMandateFollowPath:
+            case OGEnemyEntityMandateFollowPath:
             {
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                       graph:self.graph
-                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                 pathRadius:OGEnemyEntityPatrolPathRadius
                                                       scene:(OGGameScene *)scene];
                 break;
             }
-            case kOGEnemyEntityMandateHunt:
+            case OGEnemyEntityMandateHunt:
             {
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                huntingAgent:self.huntAgent
-                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                 pathRadius:OGEnemyEntityPatrolPathRadius
                                                       scene:(OGGameScene *)scene];
                 break;
             }
-            case kOGEnemyEntityMandateReturnToPositionOnPath:
+            case OGEnemyEntityMandateReturnToPositionOnPath:
             {
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                    endPoint:self.closestPointOnPath
-                                                 pathRadius:kOGEnemyEntityPatrolPathRadius
+                                                 pathRadius:OGEnemyEntityPatrolPathRadius
                                                       scene:(OGGameScene *)scene];
                 break;
             }

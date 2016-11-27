@@ -16,11 +16,11 @@
     
     if (vectorX > 0)
     {
-        direction = kOGDirectionRight;
+        direction = OGDirectionRight;
     }
     else
     {
-        direction = kOGDirectionLeft;
+        direction = OGDirectionLeft;
     }
     
     return direction;

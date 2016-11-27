@@ -35,9 +35,9 @@
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
 
-CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
-NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
-CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
+CGFloat const OGPlayerEntityWeaponDropDelay = 1.0;
+NSString *const OGPlayerEntityShadowTextureName = @"PlayerShadow";
+CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -87,8 +87,8 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
         _renderComponent.node.physicsBody.allowsRotation = NO;
         
-        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGPlayerEntityShadowTextureName];
-        CGPoint shadowOffset = CGPointMake(0.0, kOGPlayerEntityShadowYOffset);
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGPlayerEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, OGPlayerEntityShadowYOffset);
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
         [self addComponent:_shadowComponent];
         
@@ -163,7 +163,7 @@ CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
         self.weaponComponent.weapon = (OGWeaponEntity *) entity;
         self.weaponComponent.weapon.owner = self;
         
-        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
+        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
         {
             self.canTakeWeapon = YES;
             [timer invalidate];
