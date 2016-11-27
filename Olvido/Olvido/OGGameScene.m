@@ -57,37 +57,37 @@
 #import "OGLevelStateSnapshot.h"
 #import "OGEntitySnapshot.h"
 
-NSString *const kOGGameSceneDoorsNodeName = @"doors";
-NSString *const kOGGameSceneItemsNodeName = @"items";
-NSString *const kOGGameSceneWeaponNodeName = @"weapon";
-NSString *const kOGGameSceneKeysNodeName = @"keys";
-NSString *const kOGGameSceneSourceNodeName = @"source";
-NSString *const kOGGameSceneDestinationNodeName = @"destination";
-NSString *const kOGGameSceneUserDataGraphs = @"Graphs";
-NSString *const kOGGameSceneUserDataGraph = @"Graph_";
-NSString *const kOGGameSceneDoorLockedKey = @"locked";
+NSString *const OGGameSceneDoorsNodeName = @"doors";
+NSString *const OGGameSceneItemsNodeName = @"items";
+NSString *const OGGameSceneWeaponNodeName = @"weapon";
+NSString *const OGGameSceneKeysNodeName = @"keys";
+NSString *const OGGameSceneSourceNodeName = @"source";
+NSString *const OGGameSceneDestinationNodeName = @"destination";
+NSString *const OGGameSceneUserDataGraphs = @"Graphs";
+NSString *const OGGameSceneUserDataGraph = @"Graph_";
+NSString *const OGGameSceneDoorLockedKey = @"locked";
 
-NSString *const kOGGameScenePlayerInitialPointNodeName = @"player_initial_point";
+NSString *const OGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
-NSString *const kOGGameSceneDoorKeyPrefix = @"key";
+NSString *const OGGameSceneDoorKeyPrefix = @"key";
 
-NSString *const kOGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
-NSString *const kOGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
+NSString *const OGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
+NSString *const OGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 
-NSString *const kOGGameScenePlayerInitialPoint = @"player_initial_point";
-NSString *const kOGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
-NSString *const kOGGameSceneObstacleName = @"obstacle";
+NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
+NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
+NSString *const OGGameSceneObstacleName = @"obstacle";
 
-NSString *const kOGGameScenePauseScreenResumeButtonName = @"ResumeButton";
-NSString *const kOGGameScenePauseScreenRestartButtonName = @"RestartButton";
-NSString *const kOGGameScenePauseScreenMenuButtonName = @"MenuButton";
+NSString *const OGGameScenePauseScreenResumeButtonName = @"ResumeButton";
+NSString *const OGGameScenePauseScreenRestartButtonName = @"RestartButton";
+NSString *const OGGameScenePauseScreenMenuButtonName = @"MenuButton";
 
-CGFloat const kOGGameScenePauseSpeed = 0.0;
-CGFloat const kOGGameScenePlaySpeed = 1.0;
+CGFloat const OGGameScenePauseSpeed = 0.0;
+CGFloat const OGGameScenePlaySpeed = 1.0;
 
-CGFloat const kOGGameSceneDoorOpenDistance = 50.0;
+CGFloat const OGGameSceneDoorOpenDistance = 50.0;
 
-NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
+NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
@@ -150,10 +150,10 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
                              [[GKComponentSystem alloc] initWithComponentClass:[OGRulesComponent class]],
                              nil];
         
-        _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameScenePauseScreenNodeName];
+        _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
         _pauseScreenNode.zPosition = OGZPositionCategoryForeground;
         
-        _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:kOGGameSceneGameOverScreenNodeName];
+        _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
         _gameOverScreenNode.zPosition = OGZPositionCategoryForeground;
     }
     
@@ -166,7 +166,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     NSMutableArray<SKSpriteNode *> *result = nil;
     
-    [self enumerateChildNodesWithName:kOGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
+    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
      {
          [result addObject:(SKSpriteNode *)node];
      }];
@@ -189,7 +189,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     if (!_obstaclesGraph)
     {
         _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
-                                                        bufferRadius:kOGEnemyEntityPathfindingGraphBufferRadius];
+                                                        bufferRadius:OGEnemyEntityPathfindingGraphBufferRadius];
     }
     
     return _obstaclesGraph;
@@ -258,9 +258,12 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     OGPlayerEntity *player = [[OGPlayerEntity alloc] initWithConfiguration:self.sceneConfiguration.playerConfiguration];
     player.delegate = self;
     self.player = player;
+    
     [self addEntity:self.player];
     
-    SKNode *playerInitialNode = [self childNodeWithName:kOGGameScenePlayerInitialPointNodeName];
+    self.listener = self.player.renderComponent.node;
+    
+    SKNode *playerInitialNode = [self childNodeWithName:OGGameScenePlayerInitialPointNodeName];
     self.player.renderComponent.node.position = playerInitialNode.position;
 }
 
@@ -270,8 +273,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
     
     for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
     {
-        NSString *graphName = [NSString stringWithFormat:@"%@%lu", kOGGameSceneUserDataGraph, (unsigned long) counter];
-        GKGraph *graph = self.userData[kOGGameSceneUserDataGraphs][graphName];
+        NSString *graphName = [NSString stringWithFormat:@"%@%lu", OGGameSceneUserDataGraph, (unsigned long) counter];
+        GKGraph *graph = self.userData[OGGameSceneUserDataGraphs][graphName];
         
         OGEnemyEntity *enemy = [[enemyConfiguration.enemyClass alloc] initWithConfiguration:enemyConfiguration graph:graph];
         enemy.delegate = self;
@@ -290,7 +293,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createDoors
 {
-    NSArray<SKNode *> *doorNodes = [self childNodeWithName:kOGGameSceneDoorsNodeName].children;
+    NSArray<SKNode *> *doorNodes = [self childNodeWithName:OGGameSceneDoorsNodeName].children;
     
     for (SKNode *doorNode in doorNodes)
     {
@@ -302,21 +305,21 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
             
             door.transitionDelegate = self;
             
-            BOOL doorLocked = [doorNode.userData[kOGGameSceneDoorLockedKey] boolValue];
+            BOOL doorLocked = [doorNode.userData[OGGameSceneDoorLockedKey] boolValue];
             
             lockComponent.target = self.player.renderComponent.node;
-            lockComponent.openDistance = kOGGameSceneDoorOpenDistance;
+            lockComponent.openDistance = OGGameSceneDoorOpenDistance;
             lockComponent.locked = doorLocked;
             
-            NSString *sourceNodeName = doorNode.userData[kOGGameSceneSourceNodeName];
-            NSString *destinationNodeName = doorNode.userData[kOGGameSceneDestinationNodeName];
+            NSString *sourceNodeName = doorNode.userData[OGGameSceneSourceNodeName];
+            NSString *destinationNodeName = doorNode.userData[OGGameSceneDestinationNodeName];
             
             transitionComponent.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
             transitionComponent.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
             
             for (NSString *key in doorNode.userData.allKeys)
             {
-                if ([key hasPrefix:kOGGameSceneDoorKeyPrefix])
+                if ([key hasPrefix:OGGameSceneDoorKeyPrefix])
                 {
                     [door addKeyName:doorNode.userData[key]];
                 }
@@ -343,9 +346,9 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)createSceneItems
 {
-    SKNode *items = [self childNodeWithName:kOGGameSceneItemsNodeName];
-    NSArray *weapons = [items childNodeWithName:kOGGameSceneWeaponNodeName].children;
-    NSArray *keys = [items childNodeWithName:kOGGameSceneKeysNodeName].children;
+    SKNode *items = [self childNodeWithName:OGGameSceneItemsNodeName];
+    NSArray *weapons = [items childNodeWithName:OGGameSceneWeaponNodeName].children;
+    NSArray *keys = [items childNodeWithName:OGGameSceneKeysNodeName].children;
     
     for (SKSpriteNode *weaponSprite in weapons)
     {
@@ -490,8 +493,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)pauseWithoutPauseScreen
 {
-    self.physicsWorld.speed = kOGGameScenePauseSpeed;
-    self.speed = kOGGameScenePauseSpeed;
+    self.physicsWorld.speed = OGGameScenePauseSpeed;
+    self.speed = OGGameScenePauseSpeed;
     
     self.pausedTimeInterval = NSTimeIntervalSince1970;
 }
@@ -508,8 +511,8 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 {
     [super resume];
     
-    self.physicsWorld.speed = kOGGameScenePlaySpeed;
-    self.speed = kOGGameScenePlaySpeed;
+    self.physicsWorld.speed = OGGameScenePlaySpeed;
+    self.speed = OGGameScenePlaySpeed;
     
     if (self.pauseScreenNode.parent)
     {
@@ -551,14 +554,14 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity
 {
-    if (self.levelSnapshot == nil)
+    if (!self.levelSnapshot)
     {
         self.levelSnapshot = [[OGLevelStateSnapshot alloc] initWithScene:self];
     }
     
-    NSUInteger index = [self.levelSnapshot.snapshot[kOGLevelStateSnapshotEntitiesKey] indexOfObject:entity];
+    NSUInteger index = [self.levelSnapshot.snapshot[OGLevelStateSnapshotEntitiesKey] indexOfObject:entity];
     
-    return [self.levelSnapshot.snapshot[kOGLevelStateSnapshotSnapshotsKey] objectAtIndex:index];
+    return [self.levelSnapshot.snapshot[OGLevelStateSnapshotSnapshotsKey] objectAtIndex:index];
 }
 
 #pragma mark - Update
@@ -590,7 +593,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 }
 
 - (void)didFinishUpdate
-{
+{    
     [super didFinishUpdate];
     
     if (((OGRenderComponent *) [self.player componentForClass:[OGRenderComponent class]]).node)
@@ -623,7 +626,7 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;
         
-        characterZPosition += kOGGameSceneZSpacePerCharacter;
+        characterZPosition += OGGameSceneZSpacePerCharacter;
     }
 }
 
@@ -631,15 +634,15 @@ NSUInteger const kOGGameSceneZSpacePerCharacter = 100;
 
 - (void)onButtonClick:(OGButtonNode *)buttonNode
 {
-    if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenResumeButtonName])
+    if ([buttonNode.name isEqualToString:OGGameScenePauseScreenResumeButtonName])
     {
         [self.sceneDelegate didCallResume];
     }
-    else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenRestartButtonName])
+    else if ([buttonNode.name isEqualToString:OGGameScenePauseScreenRestartButtonName])
     {
         [self.sceneDelegate didCallRestart];
     }
-    else if ([buttonNode.name isEqualToString:kOGGameScenePauseScreenMenuButtonName])
+    else if ([buttonNode.name isEqualToString:OGGameScenePauseScreenMenuButtonName])
     {
         [self.sceneDelegate didCallExit];
     }

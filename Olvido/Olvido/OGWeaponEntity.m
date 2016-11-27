@@ -18,11 +18,11 @@
 #import "OGInventoryItem.h"
 #import "OGResourceLoadable.h"
 
-CGFloat const kOGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const kOGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
-CGFloat const kOGWeaponEntityThrowingFactor = 80.0;
+CGFloat const OGWeaponEntityDefaultBulletSpeed = 10.0;
+CGFloat const OGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
+CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 
-static NSArray *sOGWeaponEntitySoundNames = nil;
+static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 @interface OGWeaponEntity () <OGInventoryItem, OGResourceLoadable>
 
@@ -55,7 +55,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
                                                                colliderType:[OGColliderType weapon]];
         [self addComponent:_physicsComponent];
             
-        _soundComponent = [[OGSoundComponent alloc] initWithSoundNames:sOGWeaponEntitySoundNames];
+        _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGWeaponEntitySoundNodes];
         [self addComponent:_soundComponent];
         
         _allowsAttacking = YES;
@@ -73,7 +73,7 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 + (NSArray *)sOGWeaponEntitySoundNames
 {
-    return sOGWeaponEntitySoundNames;
+    return sOGWeaponEntitySoundNodes;
 }
 
 #pragma mark - OGAttacking
@@ -90,8 +90,8 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
             
             CGFloat vectorAngle = atan2(-vector.dx, vector.dy);
             
-            CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed,
-                                                         cosf(vectorAngle) * kOGWeaponEntityDefaultBulletSpeed);
+            CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed,
+                                                         cosf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed);
             
             OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
                                             withRotation:vectorAngle];
@@ -101,9 +101,9 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
             
             [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
             
-            [self.soundComponent playSoundOnce:@"shot"];
+            [self.soundComponent playSoundOnce:@"shot"];            
             
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:kOGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:OGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
             {
                 self.allowsAttacking = YES;
                 [timer invalidate];
@@ -151,8 +151,8 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
     
     [ownerNode.scene addChild:weaponNode];
     
-    CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * kOGWeaponEntityThrowingFactor,
-                                       -ownerMovement.displacementVector.dy * kOGWeaponEntityThrowingFactor);
+    CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * OGWeaponEntityThrowingFactor,
+                                       -ownerMovement.displacementVector.dy * OGWeaponEntityThrowingFactor);
     
     [weaponNode.physicsBody applyImpulse:dropVector];
     
@@ -182,19 +182,23 @@ static NSArray *sOGWeaponEntitySoundNames = nil;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
-    sOGWeaponEntitySoundNames = @[@"shot"];
+    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
+    shotNode.autoplayLooped = NO;
+    shotNode.name = @"shot";
+    
+    sOGWeaponEntitySoundNodes = @[shotNode];
     
     handler();
 }
 
 + (BOOL)resourcesNeedLoading
 {
-    return sOGWeaponEntitySoundNames == nil;
+    return sOGWeaponEntitySoundNodes == nil;
 }
 
 + (void)purgeResources
 {
-    sOGWeaponEntitySoundNames = nil;
+    sOGWeaponEntitySoundNodes = nil;
 }
 
 @end

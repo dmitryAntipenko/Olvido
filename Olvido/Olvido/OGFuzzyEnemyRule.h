@@ -10,10 +10,10 @@
 
 typedef NS_ENUM(NSUInteger, OGFuzzyEnemyRuleFact)
 {
-    kOGFuzzyEnemyRuleNoneFact,
-    kOGFuzzyEnemyRuleFactPlayerNear,
-    kOGFuzzyEnemyRuleFactPlayerMedium,
-    kOGFuzzyEnemyRuleFactPlayerFar
+    OGFuzzyEnemyRuleNoneFact,
+    OGFuzzyEnemyRuleFactPlayerNear,
+    OGFuzzyEnemyRuleFactPlayerMedium,
+    OGFuzzyEnemyRuleFactPlayerFar
 };
 
 @class OGEntitySnapshot;

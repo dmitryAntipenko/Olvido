@@ -13,12 +13,12 @@
 #import "OGConstants.h"
 #import "OGMenuBaseScene.h"
 
-NSString *const kOGMenuManagerMenuNameKey = @"Name";
-NSString *const kOGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
-NSString *const kOGMenuManagerMenusMapName = @"MenusMap";
-NSString *const kOGMenuManagerMainMenuName = @"OGMainMenuScene";
-NSUInteger const kOGMenuManagerMainMenuIdentifier = 0;
-NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
+NSString *const OGMenuManagerMenuNameKey = @"Name";
+NSString *const OGMenuManagerSceneIdentifierKey = @"SceneIdentifier";
+NSString *const OGMenuManagerMenusMapName = @"MenusMap";
+NSString *const OGMenuManagerMainMenuName = @"OGMainMenuScene";
+NSUInteger const OGMenuManagerMainMenuIdentifier = 0;
+NSString *const OGMenuManagerBackgroundMusic = @"menu_music";
 
 @interface OGMenuManager () <AVAudioPlayerDelegate>
 
@@ -39,19 +39,19 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
 
 - (void)loadMenuMap
 {
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGMenuManagerMenusMapName
-                                                          ofType:kOGPropertyFileExtension];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:OGMenuManagerMenusMapName
+                                                          ofType:OGPropertyFileExtension];
     self.menusMap = [NSArray arrayWithContentsOfFile:plistPath];
 }
 
 - (void)loadMainMenu
 {
-    [self loadMenuWithName:kOGMenuManagerMainMenuName];
+    [self loadMenuWithName:OGMenuManagerMainMenuName];
 }
 
 - (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier
 {
-    NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][kOGMenuManagerSceneIdentifierKey] integerValue];
+    NSUInteger sceneIdentifer = [self.menusMap[menuIdentifier][OGMenuManagerSceneIdentifierKey] integerValue];
     
     [self.sceneManager transitionToSceneWithIdentifier:sceneIdentifer
                                      completionHandler:^(OGBaseScene *scene)
@@ -71,7 +71,7 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
     {
         [self.menusMap enumerateObjectsUsingBlock:^(NSDictionary *menuAsDictionary, NSUInteger idx, BOOL * _Nonnull stop)
          {
-             if ([menuAsDictionary[kOGMenuManagerMenuNameKey] isEqualToString:menuName])
+             if ([menuAsDictionary[OGMenuManagerMenuNameKey] isEqualToString:menuName])
              {
                  menuIdentifier = idx;
                  *stop = YES;
@@ -80,12 +80,12 @@ NSString *const kOGMenuManagerBackgroundMusic = @"menu_music";
     }
     else
     {
-        menuIdentifier = kOGMenuManagerMainMenuIdentifier;
+        menuIdentifier = OGMenuManagerMainMenuIdentifier;
     }
     
     if (!self.audioManager.isMusicPlaying)
     {
-        [self.audioManager playMusic:kOGMenuManagerBackgroundMusic];
+        [self.audioManager playMusic:OGMenuManagerBackgroundMusic];
         self.audioManager.musicPlayerDelegate = self;
     }
     

@@ -12,8 +12,8 @@
 #import "OGRenderComponent.h"
 #import "OGEntitySnapshot.h"
 
-CGFloat const kOGRulesComponentRulesUpdateWaitDuration = 1.0;
-NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
+CGFloat const OGRulesComponentRulesUpdateWaitDuration = 1.0;
+NSString *const OGRulesComponentRuleSystemStateSnapshot = @"snapshot";
 
 @interface OGRulesComponent ()
 
@@ -55,7 +55,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
 {
     self.timeSinceRulesUpdate += seconds;
     
-    if (self.timeSinceRulesUpdate > kOGRulesComponentRulesUpdateWaitDuration)
+    if (self.timeSinceRulesUpdate > OGRulesComponentRulesUpdateWaitDuration)
     {
         self.timeSinceRulesUpdate = 0.0;
         
@@ -66,7 +66,7 @@ NSString *const kOGRulesComponentRuleSystemStateSnapshot = @"snapshot";
             
             [self.ruleSystem reset];
             
-            self.ruleSystem.state[kOGRulesComponentRuleSystemStateSnapshot] = entitySnapshot;
+            self.ruleSystem.state[OGRulesComponentRuleSystemStateSnapshot] = entitySnapshot;
             
             [self.ruleSystem evaluate];
             

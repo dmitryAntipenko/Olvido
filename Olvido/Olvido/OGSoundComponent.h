@@ -12,8 +12,13 @@
 
 @property (nonatomic, weak) SKNode *target;
 
-- (instancetype)initWithSoundNames:(NSArray *)names;
+- (instancetype)initWithSoundNodes:(NSArray<SKAudioNode *> *)nodes;
+
+- (void)playSoundContinuously:(NSString *)soundName;
+- (void)stopPlayingSound:(NSString *)soundName;
 
 - (void)playSoundOnce:(NSString *)soundName;
+
+- (void)changeVolumeBy:(CGFloat)volume duration:(CGFloat)duration;
 
 @end

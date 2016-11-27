@@ -8,10 +8,10 @@
 
 #import "OGSceneMetadata.h"
 
-NSString *const kOGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
-NSString *const kOGSceneMetadataClassNameKey = @"ClassName";
-NSString *const kOGSceneMetadataFileNameKey = @"FileName";
-NSString *const kOGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
+NSString *const OGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
+NSString *const OGSceneMetadataClassNameKey = @"ClassName";
+NSString *const OGSceneMetadataFileNameKey = @"FileName";
+NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
 
 @implementation OGSceneMetadata
 
@@ -23,22 +23,22 @@ NSString *const kOGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
         
         if (self)
         {
-            NSString *className = [configuration objectForKey:kOGSceneMetadataClassNameKey];
-            NSString *fileName = [configuration objectForKey:kOGSceneMetadataFileNameKey];
+            NSString *className = [configuration objectForKey:OGSceneMetadataClassNameKey];
+            NSString *fileName = [configuration objectForKey:OGSceneMetadataFileNameKey];
             
             if (className && fileName)
             {
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
-                _textureAtlases = [configuration objectForKey:kOGSceneMetadataTextureAtlasesKey];
+                _textureAtlases = [configuration objectForKey:OGSceneMetadataTextureAtlasesKey];
                 
                 if (!_textureAtlases)
                 {
                     _textureAtlases = [[NSDictionary alloc] init];
                 }
                 
-                NSArray<NSString *> *onDemandResourcesClassNames = configuration[kOGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *onDemandResourcesClassNames = configuration[OGSceneMetadataOnDemandResourcesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 

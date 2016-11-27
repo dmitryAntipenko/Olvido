@@ -17,6 +17,7 @@
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
+#import "OGEnemyEntityDieState.h"
 
 @interface OGEnemyEntityAttackState ()
 
@@ -63,11 +64,17 @@
     
     if (self.isHit)
     {
-        [self.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+        if ([self.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
+        {
+            [self.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+        }
     }
     else
     {
-        [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
+        if ([self.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
+        {
+            [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
+        }
     }
 }
 
@@ -76,13 +83,22 @@
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
-        [healthComponent dealDamage:kOGEnemyEntityDealGamage];
+        
+        [healthComponent dealDamage:OGEnemyEntityDealDamage];
         
         self.hit = YES;
     }
 }
 
-#pragma mark - setters
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return stateClass == [OGEnemyEntityAgentControlledState class]
+    || stateClass == [OGEnemyEntityPreAttackState class]
+    || stateClass == [OGEnemyEntityDieState class];
+}
+
+#pragma mark - Setters
+
 - (OGPhysicsComponent *)physicsComponent
 {
     if (!_physicsComponent)

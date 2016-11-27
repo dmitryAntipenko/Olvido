@@ -10,8 +10,8 @@
 #import "OGEntityDistance.h"
 #import "OGPlayerEntity.h"
 
-NSString *const kOGEntitySnapshotPlayerBotTargetTargetKey = @"target";
-NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
+NSString *const OGEntitySnapshotPlayerBotTargetTargetKey = @"target";
+NSString *const OGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
 
 @interface OGEntitySnapshot ()
 
@@ -42,8 +42,8 @@ NSString *const kOGEntitySnapshotPlayerBotTargetDistanceKey = @"distance";
         {
             if ([entityDistance.target isMemberOfClass:[OGPlayerEntity class]])
             {
-                _mutablePlayerTarget[kOGEntitySnapshotPlayerBotTargetTargetKey] = entityDistance.target;
-                _mutablePlayerTarget[kOGEntitySnapshotPlayerBotTargetDistanceKey] = @(entityDistance.distance);
+                _mutablePlayerTarget[OGEntitySnapshotPlayerBotTargetTargetKey] = entityDistance.target;
+                _mutablePlayerTarget[OGEntitySnapshotPlayerBotTargetDistanceKey] = @(entityDistance.distance);
                 
                 break;
             }

@@ -9,7 +9,7 @@
 #import "OGColliderType.h"
 #import "OGCollisionBitMask.h"
 
-char *const kOGColliderTypeQueueName = "ZEOUniversity.Olvido.InitQueue";
+char *const OGColliderTypeQueueName = "ZEOUniversity.Olvido.InitQueue";
 
 static NSMutableDictionary<NSNumber *, OGColliderType *> *sOGColliderTypes = nil;
 
@@ -46,7 +46,7 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     
     if (!result)
     {
-        dispatch_queue_t initQueue = dispatch_queue_create(kOGColliderTypeQueueName, DISPATCH_QUEUE_SERIAL);
+        dispatch_queue_t initQueue = dispatch_queue_create(OGColliderTypeQueueName, DISPATCH_QUEUE_SERIAL);
         
         dispatch_sync(initQueue, ^()
         {
@@ -61,42 +61,42 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
 
 + (instancetype)player
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskPlayer];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskPlayer];
 }
 
 + (instancetype)enemy
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskEnemy];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskEnemy];
 }
 
 + (instancetype)obstacle
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskObstacle];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskObstacle];
 }
 
 + (instancetype)door
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoor];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskDoor];
 }
 
 + (instancetype)doorTrigger
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoorTrigger];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskDoorTrigger];
 }
 
 + (instancetype)weapon
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskWeapon];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskWeapon];
 }
 
 + (instancetype)bullet
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskBullet];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskBullet];
 }
 
 + (instancetype)key
 {
-    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskKey];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskKey];
 }
 
 #pragma mark - Lazy getters

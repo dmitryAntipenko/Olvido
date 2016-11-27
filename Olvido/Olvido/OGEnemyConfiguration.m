@@ -9,13 +9,13 @@
 #import "OGEnemyConfiguration.h"
 #import "OGTextureConfiguration.h"
 
-NSString *const kOGEnemyConfigurationInitialPointKey = @"InitialPoint";
-NSString *const kOGEnemyConfigurationInitialVectorKey = @"InitialVector";
-NSString *const kOGEnemyConfigurationInitialVectorDXKey = @"dx";
-NSString *const kOGEnemyConfigurationInitialVectorDYKey = @"dy";
-NSString *const kOGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
-NSString *const kOGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
-NSString *const kOGEnemyConfigurationTexturesKey = @"Textures";
+NSString *const OGEnemyConfigurationInitialPointKey = @"InitialPoint";
+NSString *const OGEnemyConfigurationInitialVectorKey = @"InitialVector";
+NSString *const OGEnemyConfigurationInitialVectorDXKey = @"dx";
+NSString *const OGEnemyConfigurationInitialVectorDYKey = @"dy";
+NSString *const OGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+NSString *const OGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
+NSString *const OGEnemyConfigurationTexturesKey = @"Textures";
 
 @interface OGEnemyConfiguration ()
 
@@ -35,10 +35,10 @@ NSString *const kOGEnemyConfigurationTexturesKey = @"Textures";
         {
             _mutableEnemyTextures = [NSMutableArray array];
             
-            _physicsBodyRadius = [dictionary[kOGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
-            _enemyClass = NSClassFromString(dictionary[kOGEnemyConfigurationConfigurationEnemyTypeKey]);
+            _physicsBodyRadius = [dictionary[OGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
+            _enemyClass = NSClassFromString(dictionary[OGEnemyConfigurationConfigurationEnemyTypeKey]);
             
-            for (NSDictionary *textureDictionary in dictionary[kOGEnemyConfigurationTexturesKey])
+            for (NSDictionary *textureDictionary in dictionary[OGEnemyConfigurationTexturesKey])
             {
                 OGTextureConfiguration *textureConfiguration = [[OGTextureConfiguration alloc] initWithDictionary:textureDictionary];
                 [_mutableEnemyTextures addObject:textureConfiguration];

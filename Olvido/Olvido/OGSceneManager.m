@@ -17,10 +17,10 @@
 #import "OGLoadingScene.h"
 #import "OGSceneLoaderDelegate.h"
 
-NSString *const kOGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
-NSString *const kOGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
-CGFloat const kOGSceneManagerTransitionTimeInterval = 0.6;
-NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
+NSString *const OGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
+NSString *const OGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
+CGFloat const OGSceneManagerTransitionTimeInterval = 0.6;
+NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 @interface OGSceneManager () <OGSceneLoaderDelegate>
 
@@ -39,8 +39,8 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
     
     if (self)
     {
-        NSString *pathForScenesConfiguration = [[NSBundle mainBundle] pathForResource:kOGSceneManagerScenesConfigurationFileName
-                                                                               ofType:kOGPropertyFileExtension];
+        NSString *pathForScenesConfiguration = [[NSBundle mainBundle] pathForResource:OGSceneManagerScenesConfigurationFileName
+                                                                               ofType:OGPropertyFileExtension];
         
         if (pathForScenesConfiguration)
         {
@@ -127,7 +127,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
         self.loadingScene = [OGLoadingScene loadingSceneWithSceneLoader:sceneLoader];
         self.loadingScene.sceneManager = self;
         
-        SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
+        SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
         
         [self.view presentScene:self.loadingScene transition:transition];
     }
@@ -152,7 +152,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
         self.transitionCompletion = nil;
     }
     
-    SKTransition *transition = [SKTransition fadeWithDuration:kOGSceneManagerTransitionTimeInterval];
+    SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
     
     [sceneLoader purgeResources];
@@ -160,7 +160,7 @@ NSUInteger const kOGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;
 {
-    [self transitionToSceneWithIdentifier:kOGSceneManagerInitialSceneIdentifier completionHandler:completion];
+    [self transitionToSceneWithIdentifier:OGSceneManagerInitialSceneIdentifier completionHandler:completion];
 }
 
 @end

@@ -17,7 +17,7 @@
 
 @interface OGStoryScene : OGBaseScene
 
-@property (nonatomic, strong) id<OGGameSceneStoryDelegate> sceneDelegate;
+@property (nonatomic, weak) id<OGGameSceneStoryDelegate> sceneDelegate;
 
 - (void)skipStory;
 

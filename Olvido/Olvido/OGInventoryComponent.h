@@ -15,7 +15,7 @@
 
 @end
 
-extern NSString *const kOGInventoryComponentInventoryItemsKeyPath;
+extern NSString *const OGInventoryComponentInventoryItemsKeyPath;
 
 @interface OGInventoryComponent : GKComponent
 

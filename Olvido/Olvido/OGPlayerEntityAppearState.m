@@ -16,7 +16,7 @@
 #import "OGInputComponent.h"
 #import "OGPlayerEntityControlledState.h"
 
-CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
+CGFloat const OGPlayerEntityAppearStateDurationTime = 0.0;
 
 @interface OGPlayerEntityAppearState ()
 
@@ -61,6 +61,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
+
     self.orientationComponent.currentOrientation = @"Left";
 }
 
@@ -70,7 +71,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
     
     self.elapsedTime += seconds;
     
-    if (self.elapsedTime > kOGPlayerEntityAppearStateDurationTime)
+    if (self.elapsedTime > OGPlayerEntityAppearStateDurationTime)
     {
         [self.spriteNode removeFromParent];
         

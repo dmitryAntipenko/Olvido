@@ -10,11 +10,11 @@
 #import "OGPlayerConfiguration.h"
 #import "OGEnemyConfiguration.h"
 
-NSString *const kOGGameSceneConfigurationEnemiesKey = @"Enemies";
-NSString *const kOGGameSceneConfigurationPlayerKey = @"Player";
-NSString *const kOGGameSceneConfigurationStartRoomKey = @"StartRoom";
-NSString *const kOGGameSceneConfigurationFileExtension = @"plist";
-NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
+NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
+NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
+NSString *const OGGameSceneConfigurationStartRoomKey = @"StartRoom";
+NSString *const OGGameSceneConfigurationFileExtension = @"plist";
+NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
 
 @interface OGGameSceneConfiguration ()
 
@@ -55,19 +55,19 @@ NSString *const kOGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic"
 
 - (void)loadConfigurationWithFileName:(NSString *)fileName
 {
-    NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:kOGGameSceneConfigurationFileExtension];
+    NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:fileName withExtension:OGGameSceneConfigurationFileExtension];
     
     NSDictionary *configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
     
-    self.startRoom = configurationDictionary[kOGGameSceneConfigurationStartRoomKey];
-    self.backgroundMusic = configurationDictionary[kOGGameSceneConfigurationBackgroundMusicKey];
+    self.startRoom = configurationDictionary[OGGameSceneConfigurationStartRoomKey];
+    self.backgroundMusic = configurationDictionary[OGGameSceneConfigurationBackgroundMusicKey];
     
-    NSDictionary *playerConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationPlayerKey];
+    NSDictionary *playerConfigurationDictionary = configurationDictionary[OGGameSceneConfigurationPlayerKey];
     
     OGPlayerConfiguration *playerConfiguration = [[OGPlayerConfiguration alloc] initWithDictionary:playerConfigurationDictionary];
     self.playerConfiguration = playerConfiguration;
     
-    NSArray *enemiesConfigurationDictionary = configurationDictionary[kOGGameSceneConfigurationEnemiesKey];
+    NSArray *enemiesConfigurationDictionary = configurationDictionary[OGGameSceneConfigurationEnemiesKey];
     
     for (NSDictionary *enemyDictionary in enemiesConfigurationDictionary)
     {

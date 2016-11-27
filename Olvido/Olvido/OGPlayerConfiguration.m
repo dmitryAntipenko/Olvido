@@ -9,11 +9,11 @@
 #import "OGPlayerConfiguration.h"
 #import "OGTextureConfiguration.h"
 
-NSString *const kOGPlayerConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
-NSString *const kOGPlayerConfigurationMessageShowDistanceKey = @"MessageShowDistance";
-NSString *const kOGPlayerConfigurationMaxHealthKey = @"MaxHealth";
-NSString *const kOGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
-NSString *const kOGPlayerConfigurationTexturesKey = @"Textures";
+NSString *const OGPlayerConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
+NSString *const OGPlayerConfigurationMessageShowDistanceKey = @"MessageShowDistance";
+NSString *const OGPlayerConfigurationMaxHealthKey = @"MaxHealth";
+NSString *const OGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
+NSString *const OGPlayerConfigurationTexturesKey = @"Textures";
 
 @interface OGPlayerConfiguration ()
 
@@ -37,12 +37,12 @@ NSString *const kOGPlayerConfigurationTexturesKey = @"Textures";
         {
             _mutablePlayerTextures = [NSMutableArray array];
             
-            _physicsBodyRadius = [dictionary[kOGPlayerConfigurationPhysicsBodyRadiusKey] floatValue];
-            _messageShowDistance = [dictionary[kOGPlayerConfigurationMessageShowDistanceKey] floatValue];
-            _maxHealth = [dictionary[kOGPlayerConfigurationMaxHealthKey] floatValue];
-            _currentHealth = [dictionary[kOGPlayerConfigurationCurrentHealthKey] floatValue];
+            _physicsBodyRadius = [dictionary[OGPlayerConfigurationPhysicsBodyRadiusKey] floatValue];
+            _messageShowDistance = [dictionary[OGPlayerConfigurationMessageShowDistanceKey] floatValue];
+            _maxHealth = [dictionary[OGPlayerConfigurationMaxHealthKey] floatValue];
+            _currentHealth = [dictionary[OGPlayerConfigurationCurrentHealthKey] floatValue];
             
-            for (NSDictionary *textureDictionary in dictionary[kOGPlayerConfigurationTexturesKey])
+            for (NSDictionary *textureDictionary in dictionary[OGPlayerConfigurationTexturesKey])
             {
                 OGTextureConfiguration *textureConfiguration = [[OGTextureConfiguration alloc] initWithDictionary:textureDictionary];
                 [_mutablePlayerTextures addObject:textureConfiguration];

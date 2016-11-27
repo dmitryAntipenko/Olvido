@@ -9,7 +9,7 @@
 #import "OGAnimation.h"
 #import "OGOrientationComponent.h"
 
-NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
+NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
 
 @interface OGAnimationComponent ()
 
@@ -52,11 +52,11 @@ NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
     self.elapsedAnimationDuration += deltaTime;
 
     OGAnimation *animation = self.animations[animationState];
-    
+
     if ((self.currentTimePerFrame != self.currentAnimation.timePerFrame || ![self.currentAnimation.stateName isEqualToString:animation.stateName])
         && self.animations[animationState])
     {
-        [self.spriteNode removeActionForKey:kOGAnimationComponentTextureActionKey];
+        [self.spriteNode removeActionForKey:OGAnimationComponentTextureActionKey];
         
         SKAction *texturesAction = nil;
         
@@ -90,13 +90,16 @@ NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
         
         SKAction *complitionAction =  [SKAction runBlock:^()
         {
-            self.spriteNode.texture = self.currentAnimation.textures.lastObject;
-            self.currentAnimation = nil;
-           [self.delegate animationDidFinish];
+            if (self.delegate)
+            {
+                self.spriteNode.texture = self.currentAnimation.textures.lastObject;
+                self.currentAnimation = nil;
+               [self.delegate animationDidFinish];
+            }
         }];
         
         [self.spriteNode runAction:[SKAction sequence:@[texturesAction, complitionAction]]
-                           withKey:kOGAnimationComponentTextureActionKey];
+                           withKey:OGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
         self.currentTimePerFrame = self.currentAnimation.timePerFrame;
@@ -112,6 +115,7 @@ NSString *const kOGAnimationComponentTextureActionKey = @"textureActionKey";
     [super updateWithDeltaTime:deltaTime];
     
     if (self.requestedAnimationState)
+
     {
         [self runAnimationForAnimationState:self.requestedAnimationState deltaTime:deltaTime];
         self.requestedAnimationState = nil;

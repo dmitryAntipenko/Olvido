@@ -9,7 +9,7 @@
 #import "OGStoryScene.h"
 #import "OGLevelManager.h"
 
-NSString *const kOGStorySceneDarknessNode = @"Darkness";
+NSString *const OGStorySceneDarknessNode = @"Darkness";
 
 @implementation OGStoryScene
 
@@ -20,7 +20,7 @@ NSString *const kOGStorySceneDarknessNode = @"Darkness";
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if (![self childNodeWithName:kOGStorySceneDarknessNode].hasActions)
+    if (![self childNodeWithName:OGStorySceneDarknessNode].hasActions)
     {
         [self.sceneDelegate storySceneDidCallFinish];
     }

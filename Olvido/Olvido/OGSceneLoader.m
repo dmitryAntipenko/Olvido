@@ -14,8 +14,8 @@
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 
-NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
-NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
+NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
+NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
 
 @implementation OGSceneLoader
 
@@ -54,11 +54,11 @@ NSUInteger const kOGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
 {
     if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
     {
-        self.progress = [NSProgress progressWithTotalUnitCount:kOGSceneLoaderProgressTotalCountWhenResourcesReady];
+        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesReady];
     }
     else if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
     {
-        self.progress = [NSProgress progressWithTotalUnitCount:kOGSceneLoaderProgressTotalCountWhenResourcesAvailable];
+        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesAvailable];
         [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
     }
     

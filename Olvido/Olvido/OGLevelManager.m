@@ -16,9 +16,9 @@
 #import "OGPauseLevelState.h"
 #import "OGGameLevelState.h"
 
-NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
-NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
-NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
+NSString *const OGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
+NSString *const OGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
+NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 
 @interface OGLevelManager () <OGGameSceneStoryDelegate>
 
@@ -45,8 +45,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)loadLevelMap
 {
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGLevelManagerLevelMapName
-                                                          ofType:kOGPropertyFileExtension];
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:OGLevelManagerLevelMapName
+                                                          ofType:OGPropertyFileExtension];
     
     self.levelMap = [NSArray arrayWithContentsOfFile:plistPath];
 }
@@ -84,7 +84,7 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 - (void)didCallExit
 {
     [self clearCurrentScene];
-    [self.menuManager loadMenuWithName:kOGMapMenuName];
+    [self.menuManager loadMenuWithName:OGMapMenuName];
 }
 
 - (void)clearCurrentScene
@@ -166,8 +166,8 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     [self clearCurrentScene];
     
-    self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
-    self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
+    self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][OGLevelManagerGameSceneIdentifierKey];
+    self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][OGLevelManagerStorySceneIdentifierKey];
 }
 
 @end

@@ -46,7 +46,7 @@
     [super didEnterWithPreviousState:previousState];
     
     self.animationComponent.delegate = self;
-    self.animationComponent.requestedAnimationState = kOGConstantsAttack;
+    self.animationComponent.requestedAnimationState = OGConstantsAttack;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

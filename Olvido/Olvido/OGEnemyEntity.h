@@ -21,18 +21,18 @@
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
-    kOGEnemyEntityMandateFollowPath = 0,
-    kOGEnemyEntityMandateHunt = 1,
-    kOGEnemyEntityMandateReturnToPositionOnPath = 2
+    OGEnemyEntityMandateFollowPath = 0,
+    OGEnemyEntityMandateHunt = 1,
+    OGEnemyEntityMandateReturnToPositionOnPath = 2
 };
 
-extern NSTimeInterval const kOGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
-extern NSTimeInterval const kOGEnemyEntityBehaviorUpdateWaitDuration;
+extern NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance;
+extern NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration;
 
-extern CGFloat const kOGEnemyEntityThresholdProximityToPatrolPathStartPoint;
-extern CGFloat const kOGEnemyEntityPathfindingGraphBufferRadius;
+extern CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint;
+extern CGFloat const OGEnemyEntityPathfindingGraphBufferRadius;
 
-extern NSUInteger const kOGEnemyEntityDealGamage;
+extern NSUInteger const OGEnemyEntityDealDamage;
 
 @interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType, OGHealthComponentDelegate>
 

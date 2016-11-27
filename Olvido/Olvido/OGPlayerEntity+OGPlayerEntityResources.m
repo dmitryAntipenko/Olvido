@@ -22,7 +22,7 @@ static BOOL sResourcesNeedLoading = YES;
 {
     [OGPlayerEntity loadMiscellaneousAssets];
     sResourcesNeedLoading = NO;
-    
+
     completionHandler();
 }
 

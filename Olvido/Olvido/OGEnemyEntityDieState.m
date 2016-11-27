@@ -38,10 +38,9 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [super didEnterWithPreviousState:previousState];
-
+    
     self.animationComponent.delegate = self;
-
-    self.animationComponent.requestedAnimationState = kOGConstantsDead;
+    self.animationComponent.requestedAnimationState = OGConstantsDead;
 }
 
 - (void)animationDidFinish

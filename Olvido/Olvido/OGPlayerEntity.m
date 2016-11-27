@@ -25,6 +25,7 @@
 #import "OGInventoryItem.h"
 #import "OGInventoryComponent.h"
 #import "OGShadowComponent.h"
+#import "OGHealthBarComponent.h"
 
 #import "OGColliderType.h"
 #import "OGZPositionEnum.m"
@@ -41,11 +42,11 @@
 
 static OGTextureConfiguration *sOGPlayerEntityDefaultTextureConfiguration = nil;
 
-CGFloat const kOGPlayerEntityWeaponDropDelay = 1.0;
-NSString *const kOGPlayerEntityShadowTextureName = @"PlayerShadow";
-CGFloat const kOGPlayerEntityShadowYOffset = -40.0;
+CGFloat const OGPlayerEntityWeaponDropDelay = 1.0;
+CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 
-NSString *kOGPlayerEntityUnitName = @"Player";
+NSString *const OGPlayerEntityShadowTextureName = @"PlayerShadow";
+NSString *OGPlayerEntityUnitName = @"Player";
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -61,6 +62,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
 @property (nonatomic, strong) OGMessageComponent        *messageComponent;
 @property (nonatomic, strong) OGOrientationComponent    *orientationComponent;
 @property (nonatomic, strong) OGWeaponComponent         *weaponComponent;
+@property (nonatomic, strong) OGHealthBarComponent      *healthBarComponent;
 @property (nonatomic, strong) GKAgent2D                 *agent;
 
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
@@ -94,8 +96,8 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
         _renderComponent.node.physicsBody.allowsRotation = NO;
         
-        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:kOGPlayerEntityShadowTextureName];
-        CGPoint shadowOffset = CGPointMake(0.0, kOGPlayerEntityShadowYOffset);
+        SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGPlayerEntityShadowTextureName];
+        CGPoint shadowOffset = CGPointMake(0.0, OGPlayerEntityShadowYOffset);
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
         [self addComponent:_shadowComponent];
         
@@ -130,7 +132,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGPlayerEntityDefaultTextureConfiguration
-                                                                           unitName:kOGPlayerEntityUnitName];
+                                                                           unitName:OGPlayerEntityUnitName];
             
             animations[animation.stateName] = animation;
         }
@@ -155,6 +157,9 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         _weaponComponent = [[OGWeaponComponent alloc] init];
         [self addComponent:_weaponComponent];
         
+        _healthBarComponent = [OGHealthBarComponent healthBarComponent];
+        [self addComponent:_healthBarComponent];
+        
         _canTakeWeapon = YES;
     }
     
@@ -173,12 +178,12 @@ NSString *kOGPlayerEntityUnitName = @"Player";
         self.weaponComponent.weapon = (OGWeaponEntity *) entity;
         self.weaponComponent.weapon.owner = self;
         
-        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kOGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-                                     {
-                                         self.canTakeWeapon = YES;
-                                         [timer invalidate];
-                                         timer = nil;
-                                     }];
+        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
+        {
+             self.canTakeWeapon = YES;
+             [timer invalidate];
+             timer = nil;
+        }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
         [self.messageComponent showMessage:@"Shotgun!" duration:3.0 shouldOverlay:YES];
@@ -216,7 +221,12 @@ NSString *kOGPlayerEntityUnitName = @"Player";
     self.agent.position = (vector_float2){position.x, position.y};
 }
 
-#pragma mark - OGHealthComponentDelegate protoc
+#pragma mark - OGHealthComponentDelegate protocol
+
+- (void)healthDidChange
+{
+    [self.healthBarComponent redrawBarNode];
+}
 
 - (void)entityWillDie
 {
@@ -226,7 +236,7 @@ NSString *kOGPlayerEntityUnitName = @"Player";
     }
 }
 
-- (void)dealDamage:(NSInteger)damage
+- (void)dealDamageToEntity:(NSInteger)damage
 {
     if (self.healthComponent)
     {

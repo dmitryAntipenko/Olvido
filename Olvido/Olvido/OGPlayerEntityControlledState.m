@@ -48,7 +48,7 @@
     
     [self.inputComponent setEnabled:YES];
     
-    self.animationComponent.requestedAnimationState = kOGConstantsIdle;
+    self.animationComponent.requestedAnimationState = OGConstantsIdle;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -60,11 +60,11 @@
     if (vector.dx != 0 || vector.dy != 0)
     {
         self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:vector.dx];
-        self.animationComponent.requestedAnimationState = kOGConstantsWalk;
+        self.animationComponent.requestedAnimationState = OGConstantsWalk;
     }
     else
     {
-        self.animationComponent.requestedAnimationState = kOGConstantsIdle;
+        self.animationComponent.requestedAnimationState = OGConstantsIdle;
     }
 }
 

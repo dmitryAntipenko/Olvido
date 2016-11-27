@@ -11,37 +11,37 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-extern NSString *const kOGPortalNodeName;
+extern NSString *const OGPortalNodeName;
 
-extern CGFloat const kOGGameSceneStatusBarHidingDistance;
-extern CGFloat const kOGGameSceneStatusBarAlpha;
-extern CGFloat const kOGGameSceneStatusBarPositionOffset;
-extern CGFloat const kOGGameSceneStatusBarYOffset;
-extern CGFloat const kOGGameSceneStatusBarDuration;
+extern CGFloat const OGGameSceneStatusBarHidingDistance;
+extern CGFloat const OGGameSceneStatusBarAlpha;
+extern CGFloat const OGGameSceneStatusBarPositionOffset;
+extern CGFloat const OGGameSceneStatusBarYOffset;
+extern CGFloat const OGGameSceneStatusBarDuration;
 
-extern NSString *const kOGPropertyFileExtension;
-extern NSString *const kOGSceneFileExtension;
+extern NSString *const OGPropertyFileExtension;
+extern NSString *const OGSceneFileExtension;
 
-extern NSString *const kOGPlayerSpriteName;
-extern NSString *const kOGPortalSpriteName;
-extern NSString *const kOGEnemySpriteName;
-extern NSString *const kOGObstacleSpriteName;
+extern NSString *const OGPlayerSpriteName;
+extern NSString *const OGPortalSpriteName;
+extern NSString *const OGEnemySpriteName;
+extern NSString *const OGObstacleSpriteName;
 
-extern NSString *const kOGMainMenuName;
-extern NSString *const kOGMapMenuName;
-extern NSString *const kOGSettingsMenuName;
-extern NSString *const kOGShopMenuName;
+extern NSString *const OGMainMenuName;
+extern NSString *const OGMapMenuName;
+extern NSString *const OGSettingsMenuName;
+extern NSString *const OGShopMenuName;
 
-extern NSString *const kOGConstantsIdle;
-extern NSString *const kOGConstantsWalk;
-extern NSString *const kOGConstantsIdle;
-extern NSString *const kOGConstantsRun;
-extern NSString *const kOGConstantsAttack;
-extern NSString *const kOGConstantsDead;
+extern NSString *const OGConstantsIdle;
+extern NSString *const OGConstantsWalk;
+extern NSString *const OGConstantsIdle;
+extern NSString *const OGConstantsRun;
+extern NSString *const OGConstantsAttack;
+extern NSString *const OGConstantsDead;
 
 
-extern NSString *const kOGConstantsLeft;
-extern NSString *const kOGConstantsRight;
+extern NSString *const OGConstantsLeft;
+extern NSString *const OGConstantsRight;
 
 @interface OGConstants : NSObject
 

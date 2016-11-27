@@ -8,14 +8,13 @@
 
 #import "OGPlayerEntityAttackState.h"
 #import "OGPlayerEntityControlledState.h"
+#import "OGPlayerEntity.h"
 
 #import "OGAnimationComponent.h"
 
-#import "OGPlayerEntity.h"
-
 #import "OGConstants.h"
 
-CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
+CGFloat const OGPlayerEntityAttackStateAttackDuration = 3.0;
 
 @interface OGPlayerEntityAttackState ()
 
@@ -58,8 +57,8 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
-
-    self.animationComponent.requestedAnimationState = kOGConstantsAttack;
+    
+    self.animationComponent.requestedAnimationState = OGConstantsAttack;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -68,7 +67,7 @@ CGFloat const kOGPlayerEntityAttackStateAttackDuration = 3.0;
     
     self.elapsedTime += seconds;
     
-    if (self.elapsedTime > kOGPlayerEntityAttackStateAttackDuration)
+    if (self.elapsedTime > OGPlayerEntityAttackStateAttackDuration)
     {
         if ([self.stateMachine canEnterState:[OGPlayerEntityControlledState class]])
         {

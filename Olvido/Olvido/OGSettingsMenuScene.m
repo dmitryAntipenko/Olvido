@@ -12,7 +12,7 @@
 #import "OGButtonNode.h"
 #import "OGMenuManager.h"
 
-NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
+NSString *const OGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 @implementation OGSettingsMenuScene
 
@@ -20,9 +20,9 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 {
     [super onButtonClick:button];
     
-    if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
+    if ([button.name isEqualToString:OGSettingsMenuSceneMainMenuButtonNodeName])
     {
-        [self.menuManager loadMenuWithName:kOGMainMenuName];
+        [self.menuManager loadMenuWithName:OGMainMenuName];
     }
 }
 

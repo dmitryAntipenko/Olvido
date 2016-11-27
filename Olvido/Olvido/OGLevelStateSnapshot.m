@@ -11,9 +11,9 @@
 #import "OGEntityDistance.h"
 #import "OGEntitySnapshot.h"
 
-NSString *const kOGLevelStateSnapshotEntitiesKey = @"entities";
-NSString *const kOGLevelStateSnapshotDistancesKey = @"distances";
-NSString *const kOGLevelStateSnapshotSnapshotsKey = @"snapshots";
+NSString *const OGLevelStateSnapshotEntitiesKey = @"entities";
+NSString *const OGLevelStateSnapshotDistancesKey = @"distances";
+NSString *const OGLevelStateSnapshotSnapshotsKey = @"snapshots";
 NSUInteger const OGLevelStateSnapshotProximityFactor = 900;
 
 @interface OGLevelStateSnapshot ()
@@ -82,9 +82,9 @@ NSUInteger const OGLevelStateSnapshotProximityFactor = 900;
         }
         
         _mutableSnapshot = [NSMutableDictionary dictionary];
-        _mutableSnapshot[kOGLevelStateSnapshotEntitiesKey] = _mutableEntities;
-        _mutableSnapshot[kOGLevelStateSnapshotDistancesKey] = _mutableDistances;
-        _mutableSnapshot[kOGLevelStateSnapshotSnapshotsKey] = _mutableSnapshots;
+        _mutableSnapshot[OGLevelStateSnapshotEntitiesKey] = _mutableEntities;
+        _mutableSnapshot[OGLevelStateSnapshotDistancesKey] = _mutableDistances;
+        _mutableSnapshot[OGLevelStateSnapshotSnapshotsKey] = _mutableSnapshots;
     }
     
     return self;

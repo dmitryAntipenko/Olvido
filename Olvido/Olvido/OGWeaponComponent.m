@@ -10,7 +10,7 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 
-CGFloat const kOGWeaponComponentDefaultAttackSpeed = 1.0;
+CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
 
 @interface OGWeaponComponent ()
 
@@ -27,7 +27,7 @@ CGFloat const kOGWeaponComponentDefaultAttackSpeed = 1.0;
     
     if (self)
     {
-        _attackSpeed = kOGWeaponComponentDefaultAttackSpeed;
+        _attackSpeed = OGWeaponComponentDefaultAttackSpeed;
     }
     
     return self;

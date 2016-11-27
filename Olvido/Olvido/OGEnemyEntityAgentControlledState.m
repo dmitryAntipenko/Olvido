@@ -49,7 +49,7 @@
     self.timeSinceBehaviorUpdate = 0.0;
     self.elapsedTime = 0.0;
 
-    self.animationComponent.requestedAnimationState = kOGConstantsWalk;
+    self.animationComponent.requestedAnimationState = OGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
 }
 
@@ -60,16 +60,16 @@
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
     
-    if (self.timeSinceBehaviorUpdate >= kOGEnemyEntityBehaviorUpdateWaitDuration)
+    if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {
-        if (self.enemyEntity.mandate == kOGEnemyEntityMandateReturnToPositionOnPath)
+        if (self.enemyEntity.mandate == OGEnemyEntityMandateReturnToPositionOnPath)
         {
             CGPoint enemyPosition = CGPointMake(self.enemyEntity.agent.position.x, self.enemyEntity.agent.position.y);
             
             if ([self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath]
-                <= kOGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+                <= OGEnemyEntityThresholdProximityToPatrolPathStartPoint)
             {
-                self.enemyEntity.mandate = kOGEnemyEntityMandateFollowPath;
+                self.enemyEntity.mandate = OGEnemyEntityMandateFollowPath;
             }
         }
         
@@ -77,13 +77,13 @@
         
         self.timeSinceBehaviorUpdate = 0.0;
         
-        if (self.enemyEntity.mandate == kOGEnemyEntityMandateHunt)
+        if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt)
         {
-            self.animationComponent.requestedAnimationState = kOGConstantsRun;
+            self.animationComponent.requestedAnimationState = OGConstantsRun;
         }
         else
         {
-            self.animationComponent.requestedAnimationState = kOGConstantsWalk;
+            self.animationComponent.requestedAnimationState = OGConstantsWalk;
         }
     }
 }

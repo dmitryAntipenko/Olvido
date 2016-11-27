@@ -14,8 +14,8 @@
 
 #import "OGHealthComponentDelegate.h"
 
-NSString *const kOGBulletTextureName = @"Bullet";
-NSInteger const kOGBulletDamage = 1;
+NSString *const OGBulletTextureName = @"Bullet";
+NSInteger const OGBulletDamage = 1;
 
 static SKTexture *sOGBulletEntityTexture;
 
@@ -56,7 +56,7 @@ static SKTexture *sOGBulletEntityTexture;
 {
     if ([entity conformsToProtocol:@protocol(OGHealthComponentDelegate)])
     {
-        [((id<OGHealthComponentDelegate>) entity) dealDamage:kOGBulletDamage];
+        [((id<OGHealthComponentDelegate>) entity) dealDamageToEntity:OGBulletDamage];
     }
          
     [self.delegate removeEntity:self];
@@ -77,7 +77,7 @@ static SKTexture *sOGBulletEntityTexture;
 {
     [OGBullet loadMiscelaneousAssets];
     
-    sOGBulletEntityTexture = [SKTexture textureWithImageNamed:kOGBulletTextureName];
+    sOGBulletEntityTexture = [SKTexture textureWithImageNamed:OGBulletTextureName];
     
     handler();        
 }
