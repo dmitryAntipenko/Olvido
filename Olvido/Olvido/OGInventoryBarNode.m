@@ -23,21 +23,19 @@ NSString *const OGInventoryBarNodeHidingActionKey = @"HidingAction";
 NSString *const OGInventoryBarNodeShowingActionKey = @"ShowingAction";
 CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
-@interface OGInventoryBarNode ()
+@interface OGInventoryBarNode () <OGInventoryComponentDelegate>
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, assign) CGFloat itemSizeLength;
 @property (nonatomic, assign) CGRect hideTrigger;
-@property (nonatomic, assign, readonly) CGRect parentFrame;
+@property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) BOOL customHidden;
 
 @end
 
 @implementation OGInventoryBarNode
 
-@synthesize parentFrame = _parentFrame;
-
-- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
+- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
 {
     if (inventoryComponent)
     {
@@ -48,9 +46,8 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
         if (self)
         {
             _inventoryComponent = inventoryComponent;
-            [_inventoryComponent addObserver:self forKeyPath:OGInventoryComponentInventoryItemsKeyPath
-                                     options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial
-                                     context:nil];
+            _inventoryComponent.inventoryComponentDelegate = self;
+            _screenSize = screenSize;
         }
     }
     else
@@ -61,9 +58,9 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     return self;
 }
 
-+ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
++ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
 {
-    return [[self alloc] initWithInventoryComponent:inventoryComponent];
+    return [[self alloc] initWithInventoryComponent:inventoryComponent screenSize:screenSize];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
@@ -72,11 +69,6 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     {
         [self updateInventoryBarItems];
     }
-}
-
-- (void)dealloc
-{
-    [_inventoryComponent removeObserver:self forKeyPath:OGInventoryComponentInventoryItemsKeyPath];
 }
 
 #pragma mark - Update
@@ -114,7 +106,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     }
     
     self.size = CGSizeMake(width, height);
-    self.position = CGPointMake(OGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);    
+    self.position = CGPointMake(OGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);
     
     self.itemSizeLength = height;
     
@@ -169,8 +161,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     [self removeActionForKey:OGInventoryBarNodeShowingActionKey];
     
-    SKAction *hidingAction = [SKAction moveToY: -(self.parentFrame.size.height + self.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
-    
+    SKAction *hidingAction = [SKAction moveToY: -(self.screenSize.height + self.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
     [self runAction:hidingAction withKey:OGInventoryBarNodeHidingActionKey];
     
     self.customHidden = YES;
@@ -179,8 +170,8 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 - (void)show
 {
     [self removeActionForKey:OGInventoryBarNodeHidingActionKey];
-    
-    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.parentFrame.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
+
+    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.screenSize.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
     [self runAction:showingAction withKey:OGInventoryBarNodeShowingActionKey];
     
     self.customHidden = NO;
@@ -188,32 +179,31 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)checkPlayerPosition
 {
-    SKNode *renderComponentNode = ((OGRenderComponent *) [self.playerEntity componentForClass:[OGRenderComponent class]]).node;
-    
-    CGPoint playerPosition = [renderComponentNode.parent convertPoint:renderComponentNode.position toNode:self.parent];
-    
-    if (CGRectContainsPoint(self.hideTrigger, playerPosition))
+    if (self.playerEntity)
     {
-        if (!self.customHidden)
+        SKNode *renderComponentNode = ((OGRenderComponent *) [self.playerEntity componentForClass:[OGRenderComponent class]]).node;
+        
+        CGPoint playerPosition = [renderComponentNode.parent convertPoint:renderComponentNode.position toNode:self.parent];
+        
+        if (CGRectContainsPoint(self.hideTrigger, playerPosition))
         {
-            [self hide];
+            if (!self.customHidden)
+            {
+                [self hide];
+            }
         }
-    }
-    else if (self.customHidden)
-    {
-        [self show];
+        else if (self.customHidden)
+        {
+            [self show];
+        }
     }
 }
 
-- (CGRect)parentFrame
+#pragma mark - OGInventoryComponentDelegate
+
+- (void)inventoryDidUpdate
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^()
-    {
-        _parentFrame = [self.parent calculateAccumulatedFrame];
-    });
-    
-    return _parentFrame;
+    [self updateInventoryBarItems];
 }
 
 @end

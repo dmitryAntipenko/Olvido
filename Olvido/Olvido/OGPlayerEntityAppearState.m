@@ -14,7 +14,6 @@
 #import "OGRenderComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGInputComponent.h"
-#import "OGDirection.h"
 #import "OGPlayerEntityControlledState.h"
 
 CGFloat const OGPlayerEntityAppearStateDurationTime = 0.0;
@@ -62,22 +61,8 @@ CGFloat const OGPlayerEntityAppearStateDurationTime = 0.0;
     [super didEnterWithPreviousState:previousState];
     
     self.elapsedTime = 0.0;
-    
-    NSDictionary *appearTextures = [OGPlayerEntity sOGPlayerEntityAppearTextures];
-    
-    if (appearTextures)
-    {
-        SKTexture *texture = appearTextures[OGDirectionDescription[self.orientationComponent.direction]];
-        
-        self.spriteNode.texture = texture;
-        self.spriteNode.size = [OGPlayerEntity textureSize];
-        
-        [self.renderComponent.node addChild:self.spriteNode];
-        
-        [self.animationComponent.spriteNode setHidden:YES];
-        
-        [self.inputComponent setEnabled:NO];
-    }
+
+    self.orientationComponent.currentOrientation = @"Left";
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds

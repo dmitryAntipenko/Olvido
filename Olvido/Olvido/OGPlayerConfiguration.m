@@ -7,11 +7,13 @@
 //
 
 #import "OGPlayerConfiguration.h"
+#import "OGTextureConfiguration.h"
 
 NSString *const OGPlayerConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
 NSString *const OGPlayerConfigurationMessageShowDistanceKey = @"MessageShowDistance";
 NSString *const OGPlayerConfigurationMaxHealthKey = @"MaxHealth";
 NSString *const OGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
+NSString *const OGPlayerConfigurationTexturesKey = @"Textures";
 
 @interface OGPlayerConfiguration ()
 
@@ -19,6 +21,7 @@ NSString *const OGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
 @property (nonatomic, assign, readwrite) CGFloat messageShowDistance;
 @property (nonatomic, assign, readwrite) CGFloat maxHealth;
 @property (nonatomic, assign, readwrite) CGFloat currentHealth;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGTextureConfiguration *> *mutablePlayerTextures;
 
 @end
 
@@ -32,14 +35,27 @@ NSString *const OGPlayerConfigurationCurrentHealthKey = @"CurrentHealth";
         
         if (self)
         {
+            _mutablePlayerTextures = [NSMutableArray array];
+            
             _physicsBodyRadius = [dictionary[OGPlayerConfigurationPhysicsBodyRadiusKey] floatValue];
             _messageShowDistance = [dictionary[OGPlayerConfigurationMessageShowDistanceKey] floatValue];
             _maxHealth = [dictionary[OGPlayerConfigurationMaxHealthKey] floatValue];
             _currentHealth = [dictionary[OGPlayerConfigurationCurrentHealthKey] floatValue];
+            
+            for (NSDictionary *textureDictionary in dictionary[OGPlayerConfigurationTexturesKey])
+            {
+                OGTextureConfiguration *textureConfiguration = [[OGTextureConfiguration alloc] initWithDictionary:textureDictionary];
+                [_mutablePlayerTextures addObject:textureConfiguration];
+            }
         }
     }
     
     return self;
+}
+
+- (NSArray<OGTextureConfiguration *> *)playerTextures
+{
+    return self.mutablePlayerTextures;
 }
 
 @end

@@ -15,6 +15,10 @@
 #import "OGPhysicsComponent.h"
 #import "OGHealthComponent.h"
 
+#import "OGEnemyEntityAgentControlledState.h"
+#import "OGEnemyEntityPreAttackState.h"
+#import "OGEnemyEntityDieState.h"
+
 @interface OGEnemyEntityAttackState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
@@ -24,6 +28,7 @@
 
 @property (nonatomic, assign) CGPoint targetPosition;
 
+@property (nonatomic, assign, getter=isHit) BOOL hit;
 @end
 
 @implementation OGEnemyEntityAttackState
@@ -35,6 +40,7 @@
     if (self)
     {
         _enemyEntity = enemyEntity;
+        _hit = NO;
         
         vector_float2 targetPosition = self.enemyEntity.huntAgent.position;
         _targetPosition = CGPointMake(targetPosition.x, targetPosition.y);
@@ -47,11 +53,28 @@
 {
     [super didEnterWithPreviousState:previousState];
     
+    self.hit = NO;
+    
     NSArray<SKPhysicsBody*> *contactedBodies = [self.physicsComponent.physicsBody allContactedBodies];
     
     for (SKPhysicsBody *contactedBody in contactedBodies)
     {
         [self applyDamageToEntity:contactedBody.node.entity];
+    }
+    
+    if (self.isHit)
+    {
+        if ([self.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
+        {
+            [self.stateMachine enterState:[OGEnemyEntityPreAttackState class]];
+        }
+    }
+    else
+    {
+        if ([self.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
+        {
+            [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
+        }
     }
 }
 
@@ -60,8 +83,18 @@
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
-        [healthComponent dealDamage:OGEnemyEntityDealGamage];
+        
+        [healthComponent dealDamage:OGEnemyEntityDealDamage];
+        
+        self.hit = YES;
     }
+}
+
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return stateClass == [OGEnemyEntityAgentControlledState class]
+    || stateClass == [OGEnemyEntityPreAttackState class]
+    || stateClass == [OGEnemyEntityDieState class];
 }
 
 #pragma mark - Setters

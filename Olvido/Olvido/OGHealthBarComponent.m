@@ -16,7 +16,9 @@
 CGFloat const OGHealthBarComponentYOffset = 40.0;
 CGFloat const OGHealthBarComponentBarHeight = 10.0;
 
-CGFloat const OGHealthBarComponentHiddingDuration = 3.0;
+CGFloat const OGHealthBarComponentHiddingDuration = 1.0;
+
+NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
 
 @interface OGHealthBarComponent ()
 
@@ -50,7 +52,12 @@ CGFloat const OGHealthBarComponentHiddingDuration = 3.0;
         _barBackgroundNode = [SKSpriteNode node];
         _barProgressNode = [SKSpriteNode node];
         
-        _hiddingAction = [SKAction waitForDuration:OGHealthBarComponentHiddingDuration];
+        _hiddingAction = [SKAction sequence:@[
+                            [SKAction waitForDuration:OGHealthBarComponentHiddingDuration],
+                            [SKAction runBlock:^()
+        {
+            self.barBackgroundNode.hidden = YES;
+        }]]];
     }
     
     return self;
@@ -87,12 +94,11 @@ CGFloat const OGHealthBarComponentHiddingDuration = 3.0;
 - (void)redrawBarNode
 {
     self.barBackgroundNode.hidden = NO;
+    [self.barBackgroundNode removeActionForKey:OGHealthBarComponentHiddingActionKey];
+    
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
     
-    [self.barBackgroundNode runAction:self.hiddingAction completion:^()
-    {
-        self.barBackgroundNode.hidden = YES;
-    }];
+    [self.barBackgroundNode runAction:self.hiddingAction withKey:OGHealthBarComponentHiddingActionKey];
 }
 
 #pragma mark - Getters

@@ -11,8 +11,4 @@
 
 @interface OGPlayerEntity (OGPlayerEntityResources) <OGResourceLoadable>
 
-+ (NSDictionary *)sOGPlayerEntityAnimations;
-+ (NSDictionary *)sOGPlayerEntityAppearTextures;
-+ (CGSize)textureSize;
-
 @end

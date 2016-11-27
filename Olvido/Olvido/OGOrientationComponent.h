@@ -7,12 +7,11 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGDirection.h"
 
 @interface OGOrientationComponent : GKComponent
 
-@property (nonatomic, assign) OGDirection direction;
+@property (nonatomic, copy) NSString *currentOrientation;
 
-+ (OGDirection)directionWithVectorX:(CGFloat)vectorX;
++ (NSString *)orientationWithVectorX:(CGFloat)vectorX;
 
 @end

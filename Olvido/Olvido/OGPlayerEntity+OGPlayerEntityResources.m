@@ -7,85 +7,28 @@
 //
 
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
-#import "OGAnimationComponent.h"
 #import "OGColliderType.h"
 
-NSString *const OGPlayerEntityAtlasNamesPlayerBotIdle = @"PlayerBotIdle";
-NSString *const OGPlayerEntityAtlasNamesPlayerBotWalk = @"PlayerBotWalk";
-
-static NSDictionary<NSString *, NSDictionary *> *sOGPlayerEntityAnimations;
-static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
+static BOOL sResourcesNeedLoading = YES;
 
 @implementation OGPlayerEntity (OGPlayerEntityResources)
 
 + (BOOL)resourcesNeedLoading
 {
-    return sOGPlayerEntityAnimations == nil || sOGPlayerEntityAppearTextures == nil;
+    return sResourcesNeedLoading;
 }
 
 + (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler
 {
     [OGPlayerEntity loadMiscellaneousAssets];
-    
-    NSArray *playerAtlasNames = @[OGPlayerEntityAtlasNamesPlayerBotIdle,
-                                  OGPlayerEntityAtlasNamesPlayerBotWalk];
-    
-    [SKTextureAtlas preloadTextureAtlasesNamed:playerAtlasNames withCompletionHandler:^(NSError *error, NSArray<SKTextureAtlas *> *foundAtlases)
-     {
-         NSMutableDictionary *appearTextures = [NSMutableDictionary dictionary];
-         
-         for (NSUInteger i = 0; i < OGDirectionCount; i++)
-         {
-             appearTextures[OGDirectionDescription[i]] = [OGAnimationComponent firstTextureForOrientationWithDirection:i
-                                                                                                                  atlas:foundAtlases[0]
-                                                                                                        imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotIdle];
-         }
-         
-         sOGPlayerEntityAppearTextures = appearTextures;
-         
-         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
-         
-         animations[OGAnimationStateDescription[OGAnimationStateIdle]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[0]
-                                                                                                     imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotIdle
-                                                                                                      animationState:OGAnimationStateIdle
-                                                                                                      bodyActionName:nil
-                                                                                               repeatTexturesForever:YES
-                                                                                                       playBackwards:NO
-                                                                                                        timePerFrame:0.1];
-         
-         animations[OGAnimationStateDescription[OGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
-                                                                                                            imageIdentifier:OGPlayerEntityAtlasNamesPlayerBotWalk
-                                                                                                             animationState:OGAnimationStateWalkForward
-                                                                                                             bodyActionName:nil
-                                                                                                      repeatTexturesForever:YES
-                                                                                                              playBackwards:NO
-                                                                                                               timePerFrame:0.1];
-         
-         sOGPlayerEntityAnimations = animations;
-         
-         completionHandler();
-     }];
-}
+    sResourcesNeedLoading = NO;
 
-+ (CGSize)textureSize
-{
-    return CGSizeMake(120.0, 120.0);
+    completionHandler();
 }
 
 + (void)purgeResources
 {
-    sOGPlayerEntityAppearTextures = nil;
-    sOGPlayerEntityAnimations = nil;
-}
-
-+ (NSDictionary *)sOGPlayerEntityAnimations
-{
-    return sOGPlayerEntityAnimations;
-}
-
-+ (NSDictionary *)sOGPlayerEntityAppearTextures
-{
-    return sOGPlayerEntityAppearTextures;
+    sResourcesNeedLoading = YES;
 }
 
 + (void)loadMiscellaneousAssets

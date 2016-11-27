@@ -7,37 +7,46 @@
 //
 
 #import "OGPlayerEntity.h"
-#import "OGShadowComponent.h"
 #import "OGPlayerEntity+OGPlayerEntityResources.h"
 #import "OGPlayerConfiguration.h"
+#import "OGTextureConfiguration.h"
+
 #import "OGRenderComponent.h"
 #import "OGHealthComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGInputComponent.h"
 #import "OGMovementComponent.h"
 #import "OGAnimationComponent.h"
+#import "OGAnimation.h"
 #import "OGPhysicsComponent.h"
 #import "OGMessageComponent.h"
 #import "OGOrientationComponent.h"
 #import "OGWeaponComponent.h"
 #import "OGInventoryItem.h"
 #import "OGInventoryComponent.h"
+#import "OGShadowComponent.h"
 #import "OGHealthBarComponent.h"
 
 #import "OGColliderType.h"
 #import "OGZPositionEnum.m"
 
-#import "OGAnimationState.h"
 #import "OGPlayerEntityAppearState.h"
-#import "OGplayerEntityControlledState.h"
-#import "OGplayerEntityAttackState.h"
+#import "OGPlayerEntityControlledState.h"
+#import "OGPlayerEntityAttackState.h"
+#import "OGPlayerEntityDieState.h"
 
 #import "OGContactNotifiableType.h"
 #import "OGHealthComponentDelegate.h"
 
+#import "OGTextureAtlasesManager.h"
+
+static OGTextureConfiguration *sOGPlayerEntityDefaultTextureConfiguration = nil;
+
 CGFloat const OGPlayerEntityWeaponDropDelay = 1.0;
-NSString *const OGPlayerEntityShadowTextureName = @"PlayerShadow";
 CGFloat const OGPlayerEntityShadowYOffset = -40.0;
+
+NSString *const OGPlayerEntityShadowTextureName = @"PlayerShadow";
+NSString *OGPlayerEntityUnitName = @"Player";
 
 @interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
 
@@ -63,7 +72,7 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 
 @implementation OGPlayerEntity
 
-- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration
+- (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration    
 {
     self = [super init];
     
@@ -80,7 +89,7 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
         [self addComponent:_renderComponent];
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
-                                                      colliderType:[OGColliderType player]];
+                                                               colliderType:[OGColliderType player]];
         _physicsComponent.physicsBody.mass = 100.0;
         [self addComponent:_physicsComponent];
         
@@ -110,23 +119,29 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
         OGPlayerEntityAppearState *appearState = [[OGPlayerEntityAppearState alloc] initWithPlayerEntity:self];
         OGPlayerEntityControlledState *controlledState = [[OGPlayerEntityControlledState alloc] initWithPlayerEntity:self];
         OGPlayerEntityAttackState *attackState = [[OGPlayerEntityAttackState alloc] initWithPlayerEntity:self];
+        OGPlayerEntityDieState *dieState = [[OGPlayerEntityDieState alloc] initWithPlayerEntity:self];
         
-        NSArray *states = @[appearState, controlledState, attackState];
+        NSArray *states = @[appearState, controlledState, attackState, dieState];
         
         _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
         [self addComponent:_intelligenceComponent];
         
-        if ([OGPlayerEntity sOGPlayerEntityAnimations])
+        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        
+        for (OGTextureConfiguration *textureConfiguration in configuration.playerTextures)
         {
-            _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGPlayerEntity sOGPlayerEntityAnimations]];
+            OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
+                                                               defaultConfiguration:sOGPlayerEntityDefaultTextureConfiguration
+                                                                           unitName:OGPlayerEntityUnitName];
             
-            [_renderComponent.node addChild:_animationComponent.spriteNode];
-            [self addComponent:_animationComponent];
+            animations[animation.stateName] = animation;
         }
-        else
-        {
-            return nil;
-        }
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
+        
+        [self.renderComponent.node addChild:_animationComponent.spriteNode];
+
+        [self addComponent:_animationComponent];
         
         _orientationComponent = [[OGOrientationComponent alloc] init];
         [self addComponent:_orientationComponent];
@@ -165,9 +180,9 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
         
         self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
         {
-            self.canTakeWeapon = YES;
-            [timer invalidate];
-            timer = nil;
+             self.canTakeWeapon = YES;
+             [timer invalidate];
+             timer = nil;
         }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
@@ -185,7 +200,7 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-
+    
 }
 
 #pragma mark - dealloc
@@ -215,7 +230,10 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 
 - (void)entityWillDie
 {
-    
+    if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
+    {
+        [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
+    }
 }
 
 - (void)dealDamageToEntity:(NSInteger)damage
@@ -224,6 +242,13 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
     {
         [self.healthComponent dealDamage:damage];
     }
+}
+
+#pragma mark - didDie
+
+- (void)entityDidDie
+{
+    //[self.delegate removeEntity:self];
 }
 
 @end

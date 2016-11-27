@@ -11,6 +11,7 @@
 NSString *const OGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
 NSString *const OGSceneMetadataClassNameKey = @"ClassName";
 NSString *const OGSceneMetadataFileNameKey = @"FileName";
+NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
 
 @implementation OGSceneMetadata
 
@@ -30,6 +31,12 @@ NSString *const OGSceneMetadataFileNameKey = @"FileName";
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
+                _textureAtlases = [configuration objectForKey:OGSceneMetadataTextureAtlasesKey];
+                
+                if (!_textureAtlases)
+                {
+                    _textureAtlases = [[NSDictionary alloc] init];
+                }
                 
                 NSArray<NSString *> *onDemandResourcesClassNames = configuration[OGSceneMetadataOnDemandResourcesKey];
                 

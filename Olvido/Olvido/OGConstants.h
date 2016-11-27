@@ -32,6 +32,17 @@ extern NSString *const OGMapMenuName;
 extern NSString *const OGSettingsMenuName;
 extern NSString *const OGShopMenuName;
 
+extern NSString *const OGConstantsIdle;
+extern NSString *const OGConstantsWalk;
+extern NSString *const OGConstantsIdle;
+extern NSString *const OGConstantsRun;
+extern NSString *const OGConstantsAttack;
+extern NSString *const OGConstantsDead;
+
+
+extern NSString *const OGConstantsLeft;
+extern NSString *const OGConstantsRight;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;

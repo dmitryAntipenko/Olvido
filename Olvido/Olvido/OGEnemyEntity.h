@@ -32,7 +32,7 @@ extern NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration;
 extern CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint;
 extern CGFloat const OGEnemyEntityPathfindingGraphBufferRadius;
 
-extern NSUInteger const OGEnemyEntityDealGamage;
+extern NSUInteger const OGEnemyEntityDealDamage;
 
 @interface OGEnemyEntity : GKEntity <GKAgentDelegate, OGRulesComponentDelegate, OGContactNotifiableType, OGHealthComponentDelegate>
 

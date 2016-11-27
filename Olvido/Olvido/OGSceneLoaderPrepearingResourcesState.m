@@ -12,7 +12,8 @@
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
 #import "OGLoadSceneOperation.h"
-#import "OGLoadResourcesOPeration.h"
+#import "OGLoadResourcesOperation.h"
+#import "OGLoadTexturesOperation.h"
 
 NSUInteger const OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
 NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
@@ -77,15 +78,15 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
             OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
             
             dispatch_async(dispatch_get_main_queue(), ^
-            {
-                if (weakSelf)
-                {
-                    typeof(weakSelf) strongSelf = weakSelf;
-
-                    strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                    [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                }
-            });
+                           {
+                               if (weakSelf)
+                               {
+                                   typeof(weakSelf) strongSelf = weakSelf;
+                                   
+                                   strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
+                                   [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                               }
+                           });
         }
     };
     
@@ -100,6 +101,24 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
         [self.operationQueue addOperation:loadResourceOperation];
     }
     
+    for (NSString *unitName in sceneMetadata.textureAtlases)
+    {
+        NSDictionary<NSString *, NSString *> *unitAtlases = [sceneMetadata.textureAtlases objectForKey:unitName];
+        
+        for (NSString *atlasKey in unitAtlases)
+        {
+            OGLoadTexturesOperation *loadTexturesOperation = [OGLoadTexturesOperation loadTexturesOperationWithUnitName:unitName
+                                                                                                               atlasKey:atlasKey
+                                                                                                              atlasName:unitAtlases[atlasKey]];
+            
+            [self.progress addChild:loadTexturesOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+            
+            [loadSceneOperation addDependency:loadTexturesOperation];
+            
+            [self.operationQueue addOperation:loadTexturesOperation];
+        }
+    }
+    
     [self.operationQueue addOperation:loadSceneOperation];
 }
 
@@ -111,14 +130,14 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     __weak typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_main_queue(), ^
-    {
-        if (weakSelf)
-        {
-            typeof(weakSelf) strongSelf = weakSelf;
-
-            [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
-        }
-    });
+                   {
+                       if (weakSelf)
+                       {
+                           typeof(weakSelf) strongSelf = weakSelf;
+                           
+                           [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
+                       }
+                   });
 }
 
 @end

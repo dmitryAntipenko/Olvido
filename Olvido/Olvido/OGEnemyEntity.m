@@ -40,6 +40,10 @@
 
 #import "OGZombie.h"
 
+#import "OGTextureConfiguration.h"
+
+static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
+
 NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
@@ -51,15 +55,17 @@ CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
 CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
-NSUInteger const OGEnemyEntityDealGamage = 1.0;
+NSUInteger const OGEnemyEntityDealDamage = 1.0;
 
 NSString *const OGEnemyEntityShadowTextureName = @"PlayerShadow";
 CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
+NSString *OGEnemyEntityUnitName = @"Enemy";
+
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
-@property (nonatomic, weak, readwrite) GKAgent2D *huntAgent;
+@property (nonatomic, weak) GKAgent2D *huntAgent;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -119,7 +125,18 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
         _renderComponent.node.physicsBody.allowsRotation = NO;
         
-        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:[OGZombie sOGZombieAnimations]];
+        NSMutableDictionary *animations = [NSMutableDictionary dictionary];
+        
+        for (OGTextureConfiguration *textureConfiguration in configuration.enemyTextures)
+        {
+            OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
+                                                               defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration
+                                                                           unitName:OGEnemyEntityUnitName];
+            
+            animations[animation.stateName] = animation;
+        }
+        
+        _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
         [self addComponent:_animationComponent];
         
         [self.renderComponent.node addChild:_animationComponent.spriteNode];
@@ -201,9 +218,9 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 - (void)rulesComponentWithRulesComponent:(OGRulesComponent *)rulesComponent ruleSystem:(GKRuleSystem *)ruleSystem
 {
-    NSArray<NSNumber *> *huntNearPlayerRawMinimumGradeForFacts = @[@(OGFuzzyEnemyRuleFactPlayerNear)];
+    NSArray<NSNumber *> *huntNearPlayerRawGradeForFacts = @[@(OGFuzzyEnemyRuleFactPlayerMedium)];
     
-    NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawMinimumGradeForFacts])];
+    NSArray<NSNumber *> *huntPlayerRaw = @[@([ruleSystem minimumGradeForFacts:huntNearPlayerRawGradeForFacts])];
     
     CGFloat huntPlayer = [self maxWithArray:huntPlayerRaw defaultValue:0.0];
     self.huntAgent = nil;
@@ -254,7 +271,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 - (void)entityDidDie
 {
-    SKTexture *texture = self.animationComponent.currentAnimation.textures.lastObject;
+    SKTexture *texture = self.animationComponent.spriteNode.texture;
     SKSpriteNode *node = [SKSpriteNode spriteNodeWithTexture:texture];
     node.position = self.renderComponent.node.position;
 

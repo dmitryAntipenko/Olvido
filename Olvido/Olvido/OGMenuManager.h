@@ -22,8 +22,6 @@
 
 - (void)loadMainMenu;
 
-- (void)loadMenuWithIdentifier:(NSUInteger)menuIdentifier;
-
 - (void)loadMenuWithName:(NSString *)menuName;
 
 @end

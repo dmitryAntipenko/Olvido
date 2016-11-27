@@ -8,10 +8,11 @@
 
 #import "OGPlayerEntityAttackState.h"
 #import "OGPlayerEntityControlledState.h"
+#import "OGPlayerEntity.h"
 
 #import "OGAnimationComponent.h"
 
-#import "OGPlayerEntity.h"
+#import "OGConstants.h"
 
 CGFloat const OGPlayerEntityAttackStateAttackDuration = 3.0;
 
@@ -57,7 +58,7 @@ CGFloat const OGPlayerEntityAttackStateAttackDuration = 3.0;
     
     self.elapsedTime = 0.0;
     
-    self.animationComponent.requestedAnimationState = OGAnimationStateAttack;
+    self.animationComponent.requestedAnimationState = OGConstantsAttack;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
