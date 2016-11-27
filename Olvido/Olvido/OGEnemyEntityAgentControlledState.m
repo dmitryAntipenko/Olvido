@@ -23,6 +23,7 @@
 
 @property (nonatomic, weak) OGOrientationComponent *orientationComponent;
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
+
 @end
 
 @implementation OGEnemyEntityAgentControlledState

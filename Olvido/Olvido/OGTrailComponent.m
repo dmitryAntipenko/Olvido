@@ -9,6 +9,7 @@
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
 #import "OGZPositionEnum.m"
+
 NSString *const OGTrailComponentParticleFileName = @"SlimeTrail";
 CGFloat const OGTrailComponentParticleBirthratePlay = 120.0;
 CGFloat const OGTrailComponentParticleBirthratePause = 0.0;
@@ -23,14 +24,20 @@ CGFloat const OGTrailComponentParticlePsoitionRangeDx = 32.0;
 CGFloat const OGTrailComponentParticlePsoitionRangeDy = 32.0;
 CGFloat const OGTrailComponentParticleLifeTimeRange = 0.0;
 CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
+
 @interface OGTrailComponent ()
+
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) SKEmitterNode *emitter;
 @property (nonatomic, assign, getter=isReady) BOOL ready;
 @property (nonatomic, assign) CGPoint lastPosition;
+
 @end
+
 @implementation OGTrailComponent
+
 @synthesize renderComponent = _renderComponent;
+
 - (instancetype)init
 {
     self = [super init];
@@ -53,6 +60,7 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
     
     return self;
 }
+
 - (void)didAddToEntity
 {
     self.renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
@@ -63,14 +71,17 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
         self.emitter.particleZPosition = OGZPositionCategoryUnderPhysicsWorld;
     }
 }
+
 + (instancetype)trailComponent
 {
     return [[self alloc] init];
 }
+
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
     
 }
+
 - (OGRenderComponent *)renderComponent
 {
     if (!_renderComponent)
@@ -80,14 +91,17 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
     
     return _renderComponent;
 }
+
 - (void)pause
 {
     self.emitter.particleBirthRate = OGTrailComponentParticleBirthratePause;
 }
+
 - (void)play
 {
     self.emitter.particleBirthRate = OGTrailComponentParticleBirthratePlay;
 }
+
 - (void)setTargetNode:(SKNode *)targetNode
 {
     _targetNode = targetNode;
@@ -101,10 +115,12 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
         self.emitter.targetNode = self.renderComponent.node.scene;
     }
 }
+
 - (void)setTextureSize:(CGSize)textureSize
 {
     self.emitter.particleSize = textureSize;
 }
+
 - (void)setTexture:(SKTexture *)texture
 {
     _texture = texture;
@@ -119,4 +135,5 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
         [self pause];
     }
 }
+
 @end
