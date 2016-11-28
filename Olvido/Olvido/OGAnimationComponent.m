@@ -93,6 +93,7 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             if (self.delegate)
             {
                 self.spriteNode.texture = self.currentAnimation.textures.lastObject;
+                self.spriteNode.size = self.spriteNode.texture.size;
                 self.currentAnimation = nil;
                [self.delegate animationDidFinish];
             }

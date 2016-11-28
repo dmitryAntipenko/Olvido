@@ -744,7 +744,7 @@
 			<key>Type</key>
 			<string>OGBoss</string>
 			<key>PhysicsBodyRadius</key>
-			<integer>80</integer>
+			<integer>50</integer>
 			<key>Textures</key>
 			<array>
 				<dict>

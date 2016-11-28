@@ -100,11 +100,11 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
+        
         [self addComponent:_physicsComponent];
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
-        CGPoint shadowOffset = CGPointMake(0.0, OGEnemyEntityShadowYOffset);
-        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];
@@ -139,7 +139,10 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         }
         
         _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
+        _animationComponent.spriteNode.anchorPoint = CGPointMake(0.5, 0.0);
+        _animationComponent.spriteNode.position = CGPointMake(0.0, -configuration.physicsBodyRadius);
         [self addComponent:_animationComponent];
+        
         
         [self.renderComponent.node addChild:_animationComponent.spriteNode];
         

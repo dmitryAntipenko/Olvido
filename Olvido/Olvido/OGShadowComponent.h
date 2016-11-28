@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) SKSpriteNode *node;
 
-- (instancetype)initWithTexture:(SKTexture *)texture offset:(CGPoint)offset;
+- (instancetype)initWithTexture:(SKTexture *)texture offset:(CGFloat)offset;
 
 @end
