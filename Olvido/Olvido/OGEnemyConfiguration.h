@@ -12,8 +12,13 @@
 
 @interface OGEnemyConfiguration : NSObject
 
-@property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
 @property (nonatomic, assign) Class enemyClass;
+
+@property (nonatomic, assign, readonly) CGFloat physicsBodyRadius;
+@property (nonatomic, assign, readonly) CGFloat maxHealth;
+@property (nonatomic, assign, readonly) CGFloat currentHealth;
+
+@property (nonatomic, copy) NSString *unitName;
 
 @property (nonatomic, strong, readonly) NSArray<OGTextureConfiguration *> *enemyTextures;
 

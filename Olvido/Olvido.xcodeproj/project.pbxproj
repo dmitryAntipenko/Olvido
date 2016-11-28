@@ -71,6 +71,8 @@
 		2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */; };
 		2177AF171DE33CC100A21B75 /* OGZombie.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF161DE33CC100A21B75 /* OGZombie.m */; };
 		2177AF1D1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */; };
+		21AD66D21DEC595300E4BC93 /* OGBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 21AD66D11DEC595300E4BC93 /* OGBoss.m */; };
+		21AD66D41DEC5C5B00E4BC93 /* Boss.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21AD66D31DEC5C5B00E4BC93 /* Boss.xcassets */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		21F6B5431DE71FFA0062AE16 /* OGPlayerEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */; };
 		21F6B5461DE8A25D0062AE16 /* OGTextureConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F6B5451DE8A25D0062AE16 /* OGTextureConfiguration.m */; };
@@ -253,6 +255,9 @@
 		2177AF161DE33CC100A21B75 /* OGZombie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZombie.m; sourceTree = "<group>"; };
 		2177AF1B1DE5CE6B00A21B75 /* OGEnemyEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGEnemyEntityDieState.h; sourceTree = "<group>"; };
 		2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGEnemyEntityDieState.m; sourceTree = "<group>"; };
+		21AD66D01DEC595300E4BC93 /* OGBoss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBoss.h; sourceTree = "<group>"; };
+		21AD66D11DEC595300E4BC93 /* OGBoss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBoss.m; sourceTree = "<group>"; };
+		21AD66D31DEC5C5B00E4BC93 /* Boss.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Boss.xcassets; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		21F6B5411DE71FFA0062AE16 /* OGPlayerEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityDieState.h; sourceTree = "<group>"; };
 		21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityDieState.m; sourceTree = "<group>"; };
@@ -728,6 +733,8 @@
 				EA4982461DCFB44E00DCFE00 /* OGEnemyEntity.m */,
 				2177AF151DE33CC100A21B75 /* OGZombie.h */,
 				2177AF161DE33CC100A21B75 /* OGZombie.m */,
+				21AD66D01DEC595300E4BC93 /* OGBoss.h */,
+				21AD66D11DEC595300E4BC93 /* OGBoss.m */,
 			);
 			name = Enemy;
 			sourceTree = "<group>";
@@ -740,6 +747,7 @@
 				EA8CAF031DDF7E7200CDB848 /* Sounds.xcassets */,
 				215A8A671DD623B600C5C90D /* Enemy.xcassets */,
 				EA976C901D9AAEE2003B77FC /* Assets.xcassets */,
+				21AD66D31DEC5C5B00E4BC93 /* Boss.xcassets */,
 				EA49824C1DD0F29C00DCFE00 /* Scenes */,
 				1B36E4C91DC624010080D80B /* Screens */,
 			);
@@ -1100,6 +1108,7 @@
 				1B4C94601DEC58ED00EA5ED6 /* DefaultLevelResources.plist in Resources */,
 				EA8EF71C1DDE3F16008CF3A4 /* shot.wav in Resources */,
 				215C4BDC1DC0ED1B000DF29F /* Level1.sks in Resources */,
+				21AD66D41DEC5C5B00E4BC93 /* Boss.xcassets in Resources */,
 				EA84DBE11DE240740044B2EE /* door_open.mp3 in Resources */,
 				EA976CD01D9C253B003B77FC /* Main.storyboard in Resources */,
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
@@ -1181,6 +1190,7 @@
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
 				EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
+				21AD66D21DEC595300E4BC93 /* OGBoss.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */,
 				EAF7F10E1DD51F0E0067D76D /* OGTransitionComponent.m in Sources */,
