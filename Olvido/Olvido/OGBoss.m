@@ -114,11 +114,6 @@ static BOOL sResourcesNeedLoading = YES;
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         self.huntContactBody = nil;
-        
-        if ([self.intelligenceComponent.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
-        {
-            [self.intelligenceComponent.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
-        }
     }
 }
 
