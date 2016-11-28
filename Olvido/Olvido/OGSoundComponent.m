@@ -58,7 +58,7 @@
 {
     SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:soundName];
     [self.soundNodes setObject:node forKey:soundName];
-    [self.target addChild:node];
+    [self.target addChild:self.soundNodes[soundName]];
 }
 
 - (void)stopPlayingSound:(NSString *)soundName
