@@ -7,8 +7,10 @@
 //
 
 #import "OGPlayerEntityAttackState.h"
-#import "OGPlayerEntityControlledState.h"
 #import "OGPlayerEntity.h"
+
+#import "OGPlayerEntityDieState.h"
+#import "OGPlayerEntityControlledState.h"
 
 #import "OGAnimationComponent.h"
 
@@ -78,7 +80,7 @@ CGFloat const OGPlayerEntityAttackStateAttackDuration = 3.0;
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGPlayerEntityControlledState class];
+    return stateClass == [OGPlayerEntityControlledState class] || stateClass == [OGPlayerEntityDieState class];
 }
 
 - (OGAnimationComponent *)animationComponent

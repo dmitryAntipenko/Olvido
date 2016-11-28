@@ -51,8 +51,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityAgentControlledState class]
-    || stateClass == [OGEnemyEntityDieState class];
+    return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityDieState class];
 }
 
 - (void)animationDidFinish

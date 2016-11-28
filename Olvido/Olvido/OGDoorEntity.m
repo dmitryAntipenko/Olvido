@@ -198,7 +198,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
 
 + (void)purgeResources
 {
-    return;
+    sOGDoorEntitySoundNodes = nil;
 }
 
 @end

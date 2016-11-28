@@ -184,8 +184,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 {
     if (_bulletSpawnTimer)
     {
-        [_bulletSpawnTimer invalidate];
-        _bulletSpawnTimer = nil;
+        [_bulletSpawnTimer invalidate];        
     }
 }
 

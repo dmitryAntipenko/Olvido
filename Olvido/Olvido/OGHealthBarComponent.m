@@ -9,6 +9,7 @@
 #import "OGHealthBarComponent.h"
 #import "OGHealthComponent.h"
 #import "OGRenderComponent.h"
+#import "OGAnimationComponent.h"
 
 #import "OGZPositionEnum.m"
 #import "SKColor+OGConstantColors.h"
@@ -23,13 +24,14 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
 
 @property (nonatomic, weak) OGHealthComponent *healthComponent;
 @property (nonatomic, weak) OGRenderComponent *renderComponent;
+@property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @property (nonatomic, strong) SKSpriteNode *barBackgroundNode;
 @property (nonatomic, strong) SKSpriteNode *barProgressNode;
 
 @property (nonatomic, assign) CGFloat barNodeWidth;
 
-@property (nonatomic, strong) SKAction *hiddingAction;
+@property (nonatomic, strong) NSTimer *hiddingBarTimer;
 
 @end
 
@@ -50,13 +52,6 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     {
         _barBackgroundNode = [SKSpriteNode node];
         _barProgressNode = [SKSpriteNode node];
-        
-        _hiddingAction = [SKAction sequence:@[
-                            [SKAction waitForDuration:OGHealthBarComponentHiddingDuration],
-                            [SKAction runBlock:^()
-        {
-            self.barBackgroundNode.hidden = YES;
-        }]]];
     }
     
     return self;
@@ -97,10 +92,18 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
     
-    CGFloat entityNodeHalfHeight = self.renderComponent.node.calculateAccumulatedFrame.size.height / 2.0;    
+    CGFloat entityNodeHalfHeight = self.animationComponent.spriteNode.calculateAccumulatedFrame.size.height;
     self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHalfHeight);
     
-    [self.barBackgroundNode runAction:self.hiddingAction withKey:OGHealthBarComponentHiddingActionKey];
+    SKAction *hiddingAction = [SKAction waitForDuration:OGHealthBarComponentHiddingDuration];
+    [self.barBackgroundNode runAction:hiddingAction withKey:OGHealthBarComponentHiddingActionKey];
+    
+    self.hiddingBarTimer = [NSTimer scheduledTimerWithTimeInterval:OGHealthBarComponentHiddingDuration repeats:NO block:^(NSTimer *timer)
+    {
+        self.barBackgroundNode.hidden = YES;
+        [timer invalidate];
+        timer = nil;
+    }];
 }
 
 #pragma mark - Getters
@@ -138,6 +141,24 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     }
     
     return _renderComponent;
+}
+
+- (OGAnimationComponent *)animationComponent
+{
+    if (!_animationComponent)
+    {
+        _animationComponent = (OGAnimationComponent *) [self.entity componentForClass:[OGAnimationComponent class]];
+    }
+    
+    return _animationComponent;
+}
+
+- (void)dealloc
+{
+    if (_hiddingBarTimer)
+    {
+        [_hiddingBarTimer invalidate];        
+    }
 }
 
 @end

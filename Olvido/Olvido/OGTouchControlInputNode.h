@@ -12,6 +12,7 @@
 @interface OGTouchControlInputNode : SKSpriteNode
 
 @property (nonatomic, weak) id<OGControlInputSourceDelegate> inputSourceDelegate;
+@property (nonatomic, assign) BOOL shouldHideThumbStickNodes;
 
 - (instancetype)initWithFrame:(CGRect)frame thumbStickNodeSize:(CGSize)size;
 

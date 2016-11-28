@@ -14,7 +14,7 @@
 
 @interface OGDoorEntityState : GKState
 
-@property (nonatomic, strong) OGDoorEntity *doorEntity;
+@property (nonatomic, weak) OGDoorEntity *doorEntity;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGLockComponent *lockComponent;

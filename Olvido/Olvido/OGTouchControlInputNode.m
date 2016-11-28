@@ -18,7 +18,6 @@
 @property (nonatomic, strong) NSMutableSet<UITouch *> *rightControlTouches;
 
 @property (nonatomic, assign) CGFloat centerDividerWidth;
-@property (nonatomic, assign) BOOL shouldHideThumbStickNodes;
 
 @end
 

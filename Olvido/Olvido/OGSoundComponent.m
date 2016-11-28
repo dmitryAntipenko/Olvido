@@ -45,11 +45,11 @@
 {
     _target = target;
     
-    [self.soundNodes enumerateKeysAndObjectsUsingBlock:^(NSString *key, SKAudioNode *node, BOOL *stop)
+    for (NSString *key in self.soundNodes.allKeys)
     {
-        [node removeFromParent];
-        [self.target addChild:node];
-    }];
+        [self.soundNodes[key] removeFromParent];
+        [self.target addChild:self.soundNodes[key]];
+    }
 }
 
 #pragma mark - Playing sounds

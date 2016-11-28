@@ -530,11 +530,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     }
 }
 
-- (void)restart
-{
-    [self.sceneDelegate didCallRestart];
-}
-
 - (void)runStoryConclusion
 {
     
