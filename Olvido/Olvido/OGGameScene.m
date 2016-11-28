@@ -93,7 +93,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
-@property (nonatomic, strong) OGPlayerEntity *player;
+@property (nonatomic, weak) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
@@ -108,6 +108,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
 
+@property (nonatomic, strong) OGTouchControlInputNode *controllInputNode;
 @end
 
 @implementation OGGameScene
@@ -235,6 +236,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 {
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
+    self.controllInputNode = inputNode;
     
     OGInputComponent *inputComponent = (OGInputComponent *) [self.player componentForClass:[OGInputComponent class]];
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) inputComponent;
@@ -411,6 +413,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     [self.mutableEntities removeObject:entity];
 }
 
+- (void)playerDidDie
+{
+    [self gameOver];
+}
+
 #pragma mark - TransitionComponentDelegate
 
 - (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
@@ -469,12 +476,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         callback((id<OGContactNotifiableType>) entityA, entityB);
     }
     
-    
-    
-    
-    
-    
-    
     if ([entityB conformsToProtocol:@protocol(OGContactNotifiableType)] && bNeedsCallback)
     {
         callback((id<OGContactNotifiableType>) entityB, entityA);
@@ -497,6 +498,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     self.speed = OGGameScenePauseSpeed;
     
     self.pausedTimeInterval = NSTimeIntervalSince1970;
+    self.controllInputNode.shouldHideThumbStickNodes = YES;
 }
 
 - (void)showPauseScreen
@@ -510,6 +512,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 - (void)resume
 {
     [super resume];
+    
+    self.controllInputNode.shouldHideThumbStickNodes = NO;
     
     self.physicsWorld.speed = OGGameScenePlaySpeed;
     self.speed = OGGameScenePlaySpeed;
@@ -542,7 +546,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 - (void)gameOver
 {
-    [self pause];
+    [self pauseWithoutPauseScreen];
     
     if (!self.gameOverScreenNode.parent)
     {
