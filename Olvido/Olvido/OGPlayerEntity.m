@@ -247,7 +247,8 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 - (void)entityDidDie
 {
-    //[self.delegate removeEntity:self];
+    [self.delegate removeEntity:self];
+    [self.delegate playerDidDie];
 }
 
 @end
