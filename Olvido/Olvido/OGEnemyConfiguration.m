@@ -25,8 +25,8 @@ NSString *const OGEnemyConfigurationDefaultEnemyType = @"OGZombie";
 
 CGFloat const OGEnemyConfigurationDefaultPhysicsBodyRadius = 30.0;
 
-NSInteger const OGEnemyConfigurationDefaultMaxHealth = 30;
-NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 30;
+NSInteger const OGEnemyConfigurationDefaultMaxHealth = 10;
+NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 10;
 
 @interface OGEnemyConfiguration ()
 

@@ -97,8 +97,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         _renderComponent.node.physicsBody.allowsRotation = NO;
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGPlayerEntityShadowTextureName];
-        CGPoint shadowOffset = CGPointMake(0.0, OGPlayerEntityShadowYOffset);
-        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:shadowOffset];
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];
@@ -138,9 +137,9 @@ NSString *OGPlayerEntityUnitName = @"Player";
         }
         
         _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
-        
         [self.renderComponent.node addChild:_animationComponent.spriteNode];
-
+        _animationComponent.spriteNode.anchorPoint = CGPointMake(0.5, 0.0);
+        _animationComponent.spriteNode.position = CGPointMake(0.0, -configuration.physicsBodyRadius);
         [self addComponent:_animationComponent];
         
         _orientationComponent = [[OGOrientationComponent alloc] init];

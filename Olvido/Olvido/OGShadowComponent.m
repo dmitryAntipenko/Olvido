@@ -12,7 +12,7 @@ CGFloat const OGShadowComponentAlpha = 0.25;
 
 @implementation OGShadowComponent
 
-- (instancetype)initWithTexture:(SKTexture *)texture offset:(CGPoint)offset
+- (instancetype)initWithTexture:(SKTexture *)texture offset:(CGFloat)offset
 {
     self = [super init];
     
@@ -20,7 +20,7 @@ CGFloat const OGShadowComponentAlpha = 0.25;
     {
         _node = [SKSpriteNode spriteNodeWithTexture:texture];
         _node.alpha = OGShadowComponentAlpha;
-        _node.position = offset;
+        _node.position = CGPointMake(0.0, offset);
     }
     
     return self;
