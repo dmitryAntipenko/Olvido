@@ -22,6 +22,9 @@ CGFloat const OGWeaponEntityDefaultBulletSpeed = 10.0;
 CGFloat const OGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 
+CGFloat const OGWeaponEntityDefaultAttackSpeed = 0.3;
+NSString *const OGWeaponEntityAttackSpeedKey = @"attackSpeed";
+
 static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 @interface OGWeaponEntity () <OGInventoryItem, OGResourceLoadable>
@@ -33,6 +36,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 @property (nonatomic, assign) BOOL allowsAttacking;
 @property (nonatomic, strong) NSTimer *bulletSpawnTimer;
+@property (nonatomic, assign, readwrite) CGFloat attackSpeed;
 
 @end
 
@@ -59,6 +63,13 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
         [self addComponent:_soundComponent];
         
         _allowsAttacking = YES;
+        
+        _attackSpeed = OGWeaponEntityDefaultAttackSpeed;
+        
+        if (sprite.userData[OGWeaponEntityAttackSpeedKey])
+        {
+            _attackSpeed = [sprite.userData[OGWeaponEntityAttackSpeedKey] floatValue];
+        }
     }
     
     return self;
@@ -103,7 +114,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
             
             [self.soundComponent playSoundOnce:@"shot"];            
             
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:OGWeaponEntityDefaultBulletSpawnTimeInterval repeats:NO block:^(NSTimer *timer)
+            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:speed repeats:NO block:^(NSTimer *timer)
             {
                 self.allowsAttacking = YES;
                 [timer invalidate];

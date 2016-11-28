@@ -18,6 +18,8 @@
 
 @property (nonatomic, weak) GKEntity *owner;
 
+@property (nonatomic, assign, readonly) CGFloat attackSpeed;
+
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite;
 
 @end

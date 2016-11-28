@@ -10,6 +10,8 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 
+#import "OGWeaponEntity.h"
+
 CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
 
 @implementation OGWeaponComponent
@@ -24,6 +26,13 @@ CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
     }
     
     return self;
+}
+
+- (void)setWeapon:(OGWeaponEntity *)weapon
+{
+    _weapon = weapon;
+    
+    self.attackSpeed = weapon.attackSpeed;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
