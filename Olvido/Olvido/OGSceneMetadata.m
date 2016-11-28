@@ -34,7 +34,6 @@ NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
                 _fileName = fileName;
                 _identifier = identifier;
                 _textureAtlases = [configuration objectForKey:OGSceneMetadataTextureAtlasesKey];
-                
                 _needLoadDefaultResources = [[configuration objectForKey:OGSceneMetadataNeedLoadDefaultResourcesKey] boolValue];
                 _customResourcesFileName = [configuration objectForKey:OGSceneMetadataCustomResourcesFileNameKey];
                 
