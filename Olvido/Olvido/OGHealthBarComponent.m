@@ -13,7 +13,6 @@
 #import "OGZPositionEnum.m"
 #import "SKColor+OGConstantColors.h"
 
-CGFloat const OGHealthBarComponentYOffset = 40.0;
 CGFloat const OGHealthBarComponentBarHeight = 10.0;
 
 CGFloat const OGHealthBarComponentHiddingDuration = 1.0;
@@ -76,7 +75,7 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     
     self.barBackgroundNode.size = CGSizeMake(entityNodeWidth, OGHealthBarComponentBarHeight);
     self.barBackgroundNode.color = [SKColor gameBlack];
-    self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHeight / 2.0 + OGHealthBarComponentYOffset);
+    self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHeight / 2.0);
     self.barBackgroundNode.zPosition = OGZPositionCategoryPhysicsWorld;
     
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
@@ -97,6 +96,9 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     [self.barBackgroundNode removeActionForKey:OGHealthBarComponentHiddingActionKey];
     
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
+    
+    CGFloat entityNodeHalfHeight = self.renderComponent.node.calculateAccumulatedFrame.size.height / 2.0;    
+    self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHalfHeight);
     
     [self.barBackgroundNode runAction:self.hiddingAction withKey:OGHealthBarComponentHiddingActionKey];
 }
