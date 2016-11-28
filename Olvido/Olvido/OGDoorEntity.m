@@ -17,6 +17,7 @@
 #import "OGTransitionComponent.h"
 #import "OGInventoryComponent.h"
 #import "OGSoundComponent.h"
+#import "OGKeyComponent.h"
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
@@ -123,12 +124,17 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
         {
             OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:[OGInventoryComponent class]];
             
-            for (NSString *identifier in self.keyIdentifiers)
+            for (GKEntity *entity in inventory.inventoryItems)
             {
-                if ([inventory containsItemWithIdentifier:identifier])
+                OGKeyComponent *keyComponent = (OGKeyComponent *) [entity componentForClass:[OGKeyComponent class]];
+                
+                if (keyComponent)
                 {
-                    self.lockComponent.locked = NO;
-                    break;
+                    if ([self.keyIdentifiers containsObject:keyComponent.keyIdentifier])
+                    {
+                        self.lockComponent.locked = NO;
+                        break;
+                    }
                 }
             }
         }

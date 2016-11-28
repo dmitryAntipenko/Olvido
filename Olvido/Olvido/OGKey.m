@@ -9,6 +9,7 @@
 #import "OGKey.h"
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
+#import "OGKeyComponent.h"
 #import "OGColliderType.h"
 
 @implementation OGKey
@@ -28,6 +29,10 @@
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
                                                                    colliderType:[OGColliderType key]];
             [self addComponent:_physicsComponent];
+            
+            _keyComponent = [[OGKeyComponent alloc] init];
+            _keyComponent.keyIdentifier = spriteNode.name;
+            [self addComponent:_keyComponent];
         }
     }
     
@@ -36,7 +41,7 @@
 
 - (NSString *)identifier
 {
-    return self.renderComponent.node.name;
+    return self.keyComponent.keyIdentifier;
 }
 
 - (SKTexture *)texture

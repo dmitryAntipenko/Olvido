@@ -10,12 +10,14 @@
 #import "OGInventoryItem.h"
 
 @class OGRenderComponent;
+@class OGKeyComponent;
 @class OGPhysicsComponent;
 
 @interface OGKey : GKEntity <OGInventoryItem>
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGKeyComponent *keyComponent;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode*)spriteNode;
 
