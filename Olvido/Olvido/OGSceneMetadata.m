@@ -47,7 +47,7 @@ NSString *const OGSceneMetadataDefaultResourcesFileName = @"DefaultLevelResource
                     
                     if (pathForCustomResourcesFile)
                     {
-                        [resources setDictionary:[[NSDictionary alloc] initWithContentsOfFile:pathForCustomResourcesFile]];
+                        [resources setDictionary:[[NSMutableDictionary alloc] initWithContentsOfFile:pathForCustomResourcesFile]];
                     }
                 }
                 
