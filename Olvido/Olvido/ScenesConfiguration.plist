@@ -40,7 +40,7 @@
 		<key>NeedLoadDefaultResources</key>
 		<true/>
 		<key>CustomResourcesFileName</key>
-		<string>DefaultLevelResources</string>
+		<string>Level1CustomResources</string>
 		<key>LoadableClasses</key>
 		<array>
 			<string>OGZombie</string>

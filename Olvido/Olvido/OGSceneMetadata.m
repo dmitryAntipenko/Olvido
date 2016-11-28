@@ -97,6 +97,8 @@ NSString *const OGSceneMetadataDefaultResourcesFileName = @"DefaultLevelResource
                     }
                 }
                 
+                _textureAtlases = [[resources objectForKey:OGSceneMetadataTextureAtlasesKey] copy];
+                
                 NSArray<NSString *> *loadableClassNames = configuration[OGSceneMetadataLoadableClassesKey];
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 
