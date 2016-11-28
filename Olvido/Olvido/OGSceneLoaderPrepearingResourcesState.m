@@ -12,7 +12,7 @@
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
 #import "OGLoadSceneOperation.h"
-#import "OGLoadResourcesOperation.h"
+#import "OGLoadLoadableClassOperation.h"
 #import "OGLoadTexturesOperation.h"
 
 NSUInteger const OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
@@ -78,28 +78,17 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
             OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
             
             dispatch_async(dispatch_get_main_queue(), ^
-                           {
-                               if (weakSelf)
-                               {
-                                   typeof(weakSelf) strongSelf = weakSelf;
-                                   
-                                   strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                                   [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                               }
-                           });
+               {
+                   if (weakSelf)
+                   {
+                       typeof(weakSelf) strongSelf = weakSelf;
+                       
+                       strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
+                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                   }
+               });
         }
     };
-    
-    for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
-    {
-        OGLoadResourcesOperation *loadResourceOperation = [OGLoadResourcesOperation loadResourcesOperationWithLoadableClass:loadableClass];
-        
-        [self.progress addChild:loadResourceOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-        
-        [loadSceneOperation addDependency:loadResourceOperation];
-        
-        [self.operationQueue addOperation:loadResourceOperation];
-    }
     
     for (NSString *unitName in sceneMetadata.textureAtlases)
     {
@@ -119,6 +108,17 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
         }
     }
     
+    for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
+    {
+        OGLoadLoadableClassOperation *loadLoadableClassOperation = [OGLoadLoadableClassOperation loadResourcesOperationWithLoadableClass:loadableClass];
+        
+        [self.progress addChild:loadLoadableClassOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+        
+        [loadSceneOperation addDependency:loadLoadableClassOperation];
+        
+        [self.operationQueue addOperation:loadLoadableClassOperation];
+    }
+    
     [self.operationQueue addOperation:loadSceneOperation];
 }
 
@@ -130,14 +130,14 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     __weak typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       if (weakSelf)
-                       {
-                           typeof(weakSelf) strongSelf = weakSelf;
-                           
-                           [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
-                       }
-                   });
+       {
+           if (weakSelf)
+           {
+               typeof(weakSelf) strongSelf = weakSelf;
+               
+               [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
+           }
+       });
 }
 
 @end

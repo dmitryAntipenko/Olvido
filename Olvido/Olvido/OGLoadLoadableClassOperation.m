@@ -6,18 +6,18 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGLoadResourcesOperation.h"
+#import "OGLoadLoadableClassOperation.h"
 #import "OGResourceLoadable.h"
 
-NSUInteger const OGLoadResourcesOperationProgressTotalUnitCount = 1;
+NSUInteger const OGLoadLoadableClassOperationProgressTotalUnitCount = 1;
 
-@interface OGLoadResourcesOperation ()
+@interface OGLoadLoadableClassOperation ()
 
 @property (nonatomic, assign) Class<OGResourceLoadable> loadableClass;
 
 @end
 
-@implementation OGLoadResourcesOperation
+@implementation OGLoadLoadableClassOperation
 
 - (instancetype)initWithLoadableClass:(Class<OGResourceLoadable>)loadableClass
 {
@@ -27,7 +27,7 @@ NSUInteger const OGLoadResourcesOperationProgressTotalUnitCount = 1;
     {
         _loadableClass = loadableClass;
         _progress =  [[NSProgress alloc] init];
-        _progress.totalUnitCount = OGLoadResourcesOperationProgressTotalUnitCount;
+        _progress.totalUnitCount = OGLoadLoadableClassOperationProgressTotalUnitCount;
     }
     
     return self;
@@ -35,7 +35,7 @@ NSUInteger const OGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 + (instancetype)loadResourcesOperationWithLoadableClass:(Class<OGResourceLoadable>)loadableClass
 {
-    return [[OGLoadResourcesOperation alloc] initWithLoadableClass:loadableClass];
+    return [[OGLoadLoadableClassOperation alloc] initWithLoadableClass:loadableClass];
 }
 
 - (void)main
@@ -67,7 +67,7 @@ NSUInteger const OGLoadResourcesOperationProgressTotalUnitCount = 1;
 
 - (void)finish
 {
-    self.progress.completedUnitCount = OGLoadResourcesOperationProgressTotalUnitCount;
+    self.progress.completedUnitCount = OGLoadLoadableClassOperationProgressTotalUnitCount;
 }
 
 @end

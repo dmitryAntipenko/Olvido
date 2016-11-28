@@ -60,8 +60,6 @@ NSUInteger const OGEnemyEntityDealDamage = 1.0;
 NSString *const OGEnemyEntityShadowTextureName = @"PlayerShadow";
 CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
-NSString *OGEnemyEntityUnitName = @"Enemy";
-
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
@@ -74,6 +72,8 @@ NSString *OGEnemyEntityUnitName = @"Enemy";
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 @property (nonatomic, strong) OGHealthBarComponent *healthBarComponent;
 @property (nonatomic, strong) OGShadowComponent *shadowComponent;
+
+@property (nonatomic, strong) NSString *unitName;
 
 @end
 
@@ -110,8 +110,8 @@ NSString *OGEnemyEntityUnitName = @"Enemy";
         [_renderComponent.node addChild:_shadowComponent.node];
         
         _healthComponent = [[OGHealthComponent alloc] init];
-        _healthComponent.maxHealth = 10.0;
-        _healthComponent.currentHealth = 10.0;
+        _healthComponent.maxHealth = configuration.maxHealth;
+        _healthComponent.currentHealth = configuration.currentHealth;
         _healthComponent.delegate = self;
         [self addComponent:_healthComponent];
         
@@ -127,11 +127,13 @@ NSString *OGEnemyEntityUnitName = @"Enemy";
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
+        _unitName = configuration.unitName;
+        
         for (OGTextureConfiguration *textureConfiguration in configuration.enemyTextures)
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration
-                                                                           unitName:OGEnemyEntityUnitName];
+                                                                           unitName:_unitName];
             
             animations[animation.stateName] = animation;
         }

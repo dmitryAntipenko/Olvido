@@ -1,5 +1,5 @@
 //
-//  OGZombieMan.m
+//  OGZombie.m
 //  Olvido
 //
 //  Created by Александр Песоцкий on 11/21/16.
