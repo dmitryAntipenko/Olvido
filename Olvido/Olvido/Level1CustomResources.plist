@@ -3,18 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>TextureAtlases</key>
-	<dict>
-		<key>Player</key>
-		<dict>
-			<key>Walk_Left</key>
-			<string>PlayerBotWalkL</string>
-			<key>Walk_Right</key>
-			<string>PlayerBotWalkR</string>
-			<key>Idle_Left</key>
-			<string>PlayerBotIdleL</string>
-			<key>Idle_Right</key>
-			<string>PlayerBotIdleR</string>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>
