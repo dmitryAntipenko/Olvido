@@ -8,7 +8,9 @@
 
 #import "OGSceneMetadata.h"
 
-NSString *const OGSceneMetadataOnDemandResourcesKey = @"LoadableClasses";
+NSString *const OGSceneMetadataNeedLoadDefaultResourcesKey = @"NeedLoadDefaultResources";
+NSString *const OGSceneMetadataCustomResourcesFileNameKey = @"CustomResourcesFileName";
+NSString *const OGSceneMetadataLoadableClassesKey = @"LoadableClasses";
 NSString *const OGSceneMetadataClassNameKey = @"ClassName";
 NSString *const OGSceneMetadataFileNameKey = @"FileName";
 NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
@@ -33,18 +35,21 @@ NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
                 _identifier = identifier;
                 _textureAtlases = [configuration objectForKey:OGSceneMetadataTextureAtlasesKey];
                 
+                _needLoadDefaultResources = [[configuration objectForKey:OGSceneMetadataNeedLoadDefaultResourcesKey] boolValue];
+                _customResourcesFileName = [configuration objectForKey:OGSceneMetadataCustomResourcesFileNameKey];
+                
                 if (!_textureAtlases)
                 {
                     _textureAtlases = [[NSDictionary alloc] init];
                 }
                 
-                NSArray<NSString *> *onDemandResourcesClassNames = configuration[OGSceneMetadataOnDemandResourcesKey];
+                NSArray<NSString *> *loadableClassNames = configuration[OGSceneMetadataLoadableClassesKey];
                 
                 NSMutableArray *mutableLoadableClasses = [NSMutableArray array];
                 
-                if (onDemandResourcesClassNames)
+                if (loadableClassNames)
                 {
-                    for (NSString *resourceLoadableClassName in onDemandResourcesClassNames)
+                    for (NSString *resourceLoadableClassName in loadableClassNames)
                     {
                         Class loadableClass = NSClassFromString(resourceLoadableClassName);
                         

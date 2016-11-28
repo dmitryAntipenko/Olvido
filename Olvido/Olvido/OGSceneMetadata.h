@@ -12,6 +12,8 @@
 
 @interface OGSceneMetadata : NSObject
 
+@property (nonatomic, assign, readonly) BOOL needLoadDefaultResources;
+@property (nonatomic, strong, readonly) NSString *customResourcesFileName;
 @property (nonatomic, assign, readonly) NSUInteger  identifier;
 @property (nonatomic, assign, readonly) Class sceneClass;
 @property (nonatomic, strong, readonly) NSString *fileName;
