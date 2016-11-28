@@ -37,7 +37,11 @@
 		<string>OGInitialLevel</string>
 		<key>FileName</key>
 		<string>Level1</string>
-		<key>OnDemandResources</key>
+		<key>NeedLoadDefaultResources</key>
+		<true/>
+		<key>CustomResourcesFileName</key>
+		<string>DefaultLevelResources</string>
+		<key>LoadableClasses</key>
 		<array>
 			<string>OGZombie</string>
 			<string>OGWeaponEntity</string>
@@ -46,51 +50,6 @@
 			<string>OGBullet</string>
 			<string>OGPlayerEntity</string>
 		</array>
-		<key>TextureAtlases</key>
-		<dict>
-			<key>Player</key>
-			<dict>
-				<key>Walk_Left</key>
-				<string>PlayerBotWalkL</string>
-				<key>Walk_Right</key>
-				<string>PlayerBotWalkR</string>
-				<key>Idle_Left</key>
-				<string>PlayerBotIdleL</string>
-				<key>Idle_Right</key>
-				<string>PlayerBotIdleR</string>
-			</dict>
-			<key>Enemy</key>
-			<dict>
-				<key>Walk_Left</key>
-				<string>EnemyWalkL</string>
-				<key>Walk_Right</key>
-				<string>EnemyWalkR</string>
-				<key>Idle_Left</key>
-				<string>EnemyIdleL</string>
-				<key>Idle_Right</key>
-				<string>EnemyIdleR</string>
-				<key>Run_Left</key>
-				<string>EnemyRunL</string>
-				<key>Run_Right</key>
-				<string>EnemyRunR</string>
-				<key>Attack_Left</key>
-				<string>EnemyAttackL</string>
-				<key>Attack_Right</key>
-				<string>EnemyAttackR</string>
-				<key>Dead_Left</key>
-				<string>EnemyDeadL</string>
-				<key>Dead_Right</key>
-				<string>EnemyDeadR</string>
-			</dict>
-		</dict>
-		<key>Sounds</key>
-		<dict>
-			<key>Bullet</key>
-			<dict>
-				<key>Shot</key>
-				<string>shot</string>
-			</dict>
-		</dict>
 	</dict>
 </array>
 </plist>

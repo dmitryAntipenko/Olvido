@@ -8,7 +8,7 @@
 
 #import "OGSceneMetadata.h"
 
-NSString *const OGSceneMetadataOnDemandResourcesKey = @"OnDemandResources";
+NSString *const OGSceneMetadataOnDemandResourcesKey = @"LoadableClasses";
 NSString *const OGSceneMetadataClassNameKey = @"ClassName";
 NSString *const OGSceneMetadataFileNameKey = @"FileName";
 NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
