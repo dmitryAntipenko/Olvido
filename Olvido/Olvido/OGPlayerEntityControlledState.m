@@ -9,6 +9,7 @@
 #import "OGPlayerEntityControlledState.h"
 #import "OGPlayerEntity.h"
 #import "OGPlayerEntityAttackState.h"
+#import "OGPlayerEntityDieState.h"
 
 #import "OGAnimationComponent.h"
 #import "OGMovementComponent.h"
@@ -70,7 +71,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGPlayerEntityAttackState class];
+    return stateClass == [OGPlayerEntityAttackState class] || stateClass == [OGPlayerEntityDieState class];
 }
 
 - (void)willExitWithNextState:(GKState *)nextState
