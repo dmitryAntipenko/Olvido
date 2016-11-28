@@ -16,6 +16,17 @@ NSString *const OGEnemyConfigurationInitialVectorDYKey = @"dy";
 NSString *const OGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
 NSString *const OGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
 NSString *const OGEnemyConfigurationTexturesKey = @"Textures";
+NSString *const OGEnemyConfigurationUnitNameKey = @"UnitName";
+NSString *const OGEnemyConfigurationMaxHealthKey = @"MaxHealth";
+NSString *const OGEnemyConfigurationCurrentHealthKey = @"CurrentHealth";
+
+NSString *const OGEnemyConfigurationDefaultUnitName = @"Enemy";
+NSString *const OGEnemyConfigurationDefaultEnemyType = @"OGZombie";
+
+CGFloat const OGEnemyConfigurationDefaultPhysicsBodyRadius = 30.0;
+
+NSInteger const OGEnemyConfigurationDefaultMaxHealth = 30;
+NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 30;
 
 @interface OGEnemyConfiguration ()
 
@@ -33,10 +44,48 @@ NSString *const OGEnemyConfigurationTexturesKey = @"Textures";
         
         if (self)
         {
-            _mutableEnemyTextures = [NSMutableArray array];
+            _physicsBodyRadius = OGEnemyConfigurationDefaultPhysicsBodyRadius;
+            _maxHealth = OGEnemyConfigurationDefaultMaxHealth;
+            _currentHealth = OGEnemyConfigurationDefaultCurrentHealth;
+
+            if (dictionary[OGEnemyConfigurationPhysicsBodyRadiusKey])
+            {
+                _physicsBodyRadius = [dictionary[OGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
+            }
             
-            _physicsBodyRadius = [dictionary[OGEnemyConfigurationPhysicsBodyRadiusKey] floatValue];
-            _enemyClass = NSClassFromString(dictionary[OGEnemyConfigurationConfigurationEnemyTypeKey]);
+            if (dictionary[OGEnemyConfigurationMaxHealthKey])
+            {
+                _maxHealth = [dictionary[OGEnemyConfigurationMaxHealthKey] integerValue];
+            }
+                
+            if (dictionary[OGEnemyConfigurationCurrentHealthKey])
+            {
+                _currentHealth = [dictionary[OGEnemyConfigurationCurrentHealthKey] integerValue];
+            }
+            
+            NSString *enemyType = dictionary[OGEnemyConfigurationConfigurationEnemyTypeKey];
+            
+            if (enemyType)
+            {
+                _enemyClass = NSClassFromString(enemyType);
+            }
+            else
+            {
+                _enemyClass = NSClassFromString(OGEnemyConfigurationDefaultEnemyType);
+            }
+            
+            NSString *unitName = dictionary[OGEnemyConfigurationUnitNameKey];
+            
+            if (unitName)
+            {
+                _unitName = unitName;
+            }
+            else
+            {
+                _unitName = OGEnemyConfigurationDefaultUnitName;
+            }
+            
+            _mutableEnemyTextures = [NSMutableArray array];
             
             for (NSDictionary *textureDictionary in dictionary[OGEnemyConfigurationTexturesKey])
             {

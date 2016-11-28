@@ -40,6 +40,7 @@
 		<key>OnDemandResources</key>
 		<array>
 			<string>OGZombie</string>
+			<string>OGBoss</string>
 			<string>OGWeaponEntity</string>
 			<string>OGEnemyEntity</string>
 			<string>OGDoorEntity</string>
@@ -81,6 +82,29 @@
 				<string>EnemyDeadL</string>
 				<key>Dead_Right</key>
 				<string>EnemyDeadR</string>
+			</dict>
+			<key>Boss</key>
+			<dict>
+				<key>Walk_Left</key>
+				<string>BossWalkL</string>
+				<key>Walk_Right</key>
+				<string>BossWalkR</string>
+				<key>Idle_Left</key>
+				<string>BossIdleL</string>
+				<key>Idle_Right</key>
+				<string>BossIdleR</string>
+				<key>Run_Left</key>
+				<string>BossRunL</string>
+				<key>Run_Right</key>
+				<string>BossRunR</string>
+				<key>Attack_Left</key>
+				<string>BossAttackL</string>
+				<key>Attack_Right</key>
+				<string>BossAttackR</string>
+				<key>Dead_Left</key>
+				<string>BossDeadL</string>
+				<key>Dead_Right</key>
+				<string>BossDeadR</string>
 			</dict>
 		</dict>
 		<key>Sounds</key>
