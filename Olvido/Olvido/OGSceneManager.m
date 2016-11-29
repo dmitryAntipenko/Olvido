@@ -16,7 +16,6 @@
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGLoadingScene.h"
 #import "OGSceneLoaderDelegate.h"
-#import "OGTextureAtlasesManager.h"
 
 NSString *const OGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const OGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";

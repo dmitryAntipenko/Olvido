@@ -6,6 +6,7 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGTextureAtlasesManager.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneLoaderInitialState.h"
@@ -53,6 +54,8 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 - (void)loadResourcesAsynchronously
 {
+    [[OGTextureAtlasesManager sharedInstance] purgeAllTextures];//remporary
+    
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
     self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count

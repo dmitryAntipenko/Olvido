@@ -16,7 +16,6 @@ NSString *const OGSceneMetadataClassNameKey = @"ClassName";
 NSString *const OGSceneMetadataFileNameKey = @"FileName";
 NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
 NSString *const OGSceneMetadataDefaultResourcesFileName = @"DefaultLevelResources";
-NSString *const OGSceneMetadataNeedPurgeResources = @"PurgeResources";
 
 @implementation OGSceneMetadata
 
@@ -36,7 +35,6 @@ NSString *const OGSceneMetadataNeedPurgeResources = @"PurgeResources";
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
-                _needToPurgeResources = [[configuration objectForKey:OGSceneMetadataNeedPurgeResources] boolValue];
                 
                 NSMutableDictionary *resources = [[NSMutableDictionary alloc] init];
                 
