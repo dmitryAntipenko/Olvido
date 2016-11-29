@@ -17,6 +17,8 @@
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
+@property (nonatomic, strong, readonly) GKAgent2D *agent;
+
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
 
 - (void)updateAgentPositionToMatchNodePosition;

@@ -128,6 +128,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 {
     OGBullet *bullet = [[OGBullet alloc] init];
     
+    bullet.weapon = self;
     bullet.renderComponent.node.zRotation = rotation;
     bullet.renderComponent.node.position = point;
     

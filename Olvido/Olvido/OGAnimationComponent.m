@@ -88,14 +88,18 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             }
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         SKAction *complitionAction =  [SKAction runBlock:^()
         {
-            if (self.delegate)
+            if (weakSelf && weakSelf.delegate)
             {
-                self.spriteNode.texture = self.currentAnimation.textures.lastObject;
-                self.spriteNode.size = self.spriteNode.texture.size;
-                self.currentAnimation = nil;
-               [self.delegate animationDidFinish];
+                typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.spriteNode.texture = strongSelf.currentAnimation.textures.lastObject;
+                strongSelf.spriteNode.size = strongSelf.spriteNode.texture.size;
+                strongSelf.currentAnimation = nil;
+               [strongSelf.delegate animationDidFinish];
             }
         }];
         

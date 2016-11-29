@@ -27,7 +27,6 @@ static BOOL sResourcesNeedLoading = YES;
 
 @property (nonatomic, assign) CGFloat lastPositionX;
 @property (nonatomic, weak) SKPhysicsBody *huntContactBody;
-
 @end
 
 @implementation OGBoss
