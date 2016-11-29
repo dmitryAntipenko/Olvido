@@ -15,6 +15,8 @@ typedef NSString * OGAnimationState;
 @interface OGAnimation : NSObject
 
 @property (nonatomic, strong) NSArray<SKTexture *> *textures;
+@property (nonatomic, strong) NSArray<SKTexture *> *backwardsTextures;
+
 @property (nonatomic, copy) OGAnimationState stateName;
 @property (nonatomic, assign, getter=isRepeatedTexturesForever) BOOL repeatTexturesForever;
 @property (nonatomic, assign, getter=isPlayingBackwards) BOOL playBackwards;
@@ -29,7 +31,7 @@ typedef NSString * OGAnimationState;
                     timePerFrame:(NSTimeInterval)timePerFrame
                        stateName:(NSString *)stateName
                  pairTextureName:(NSString *)pairTextureName
-                        backward:(BOOL)backward;
+               backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures;
 
 + (instancetype)animationWithTextures:(NSArray<SKTexture *> *)textures
                           frameOffset:(NSInteger)frameOffset
@@ -37,7 +39,7 @@ typedef NSString * OGAnimationState;
                          timePerFrame:(NSTimeInterval)timePerFrame
                             stateName:(NSString *)stateName
                       pairTextureName:(NSString *)pairTextureName
-                             backward:(BOOL)backward;
+                    backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures;
 
 + (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
                              defaultConfiguration:(OGTextureConfiguration *)defaultConfiguration

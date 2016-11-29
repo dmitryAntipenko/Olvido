@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readonly) NSString *textureName;
 @property (nonatomic, assign, readonly) CGFloat timePerFrame;
 @property (nonatomic, assign, readonly) BOOL repeatForever;
-@property (nonatomic, assign, readonly) BOOL backward;
+@property (nonatomic, assign, readonly) BOOL backwards;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -11,11 +11,11 @@
 NSString *const kOGTextureConfigurationPairTextureNameKey = @"Pair";
 NSString *const kOGTextureConfigurationTextureNameKey = @"Name";
 NSString *const kOGTextureConfigurationRepeatForeverKey = @"Repeat";
-NSString *const kOGTextureConfigurationBackwardKey = @"Backward";
+NSString *const kOGTextureConfigurationBackwardsKey = @"Backward";
 NSString *const kOGTextureConfigurationTimePerFrameKey = @"TimePerFrame";
 
 BOOL const kOGTextureConfigurationDefaultRepeatForever = YES;
-BOOL const kOGTextureConfigurationDefaultBackward = NO;
+BOOL const kOGTextureConfigurationDefaultBackwards = NO;
 CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
 
 @interface OGTextureConfiguration ()
@@ -24,7 +24,7 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
 @property (nonatomic, strong) NSString *textureName;
 @property (nonatomic, assign) CGFloat timePerFrame;
 @property (nonatomic, assign) BOOL repeatForever;
-@property (nonatomic, assign) BOOL backward;
+@property (nonatomic, assign) BOOL backwards;
 @end
 
 @implementation OGTextureConfiguration
@@ -37,7 +37,7 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
     {
         _repeatForever = kOGTextureConfigurationDefaultRepeatForever;
         _timePerFrame = kOGTextureConfigurationDefaultTimePerFrame;
-        _backward = kOGTextureConfigurationDefaultBackward;
+        _backwards= kOGTextureConfigurationDefaultBackwards;
         
         NSString *pairTextureName = dictionary[kOGTextureConfigurationPairTextureNameKey];
         
@@ -58,9 +58,9 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
             _repeatForever = [dictionary[kOGTextureConfigurationRepeatForeverKey] boolValue];
         }
         
-        if (dictionary[kOGTextureConfigurationBackwardKey])
+        if (dictionary[kOGTextureConfigurationBackwardsKey])
         {
-            _backward = [dictionary[kOGTextureConfigurationBackwardKey] boolValue];
+            _backwards = [dictionary[kOGTextureConfigurationBackwardsKey] boolValue];
         }
 
         if (dictionary[kOGTextureConfigurationTimePerFrameKey])

@@ -20,7 +20,7 @@
                     timePerFrame:(NSTimeInterval)timePerFrame
                        stateName:(NSString *)stateName
                  pairTextureName:(NSString *)pairTextureName
-                        backward:(BOOL)backward
+               backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures
 {
     self = [self init];
     
@@ -31,7 +31,8 @@
         _repeatTexturesForever = repeatTexturesForever;
         _timePerFrame = timePerFrame;
         _stateName = stateName;
-        _backward = backward;
+        _backwardsTextures = backwardsTextures;
+        _backward = NO;
     }
     
     return self;
@@ -43,7 +44,7 @@
                          timePerFrame:(NSTimeInterval)timePerFrame
                             stateName:(NSString *)stateName
                       pairTextureName:(NSString *)pairTextureName
-                             backward:(BOOL)backward
+                    backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures
 {
     return [[OGAnimation alloc] initWithTextures:textures
                                      frameOffset:frameOffset
@@ -51,7 +52,7 @@
                                     timePerFrame:timePerFrame
                                        stateName:stateName
                                  pairTextureName:pairTextureName
-                                        backward:backward];
+                               backwardsTextures:backwardsTextures];
 }
 
 + (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
@@ -63,7 +64,7 @@
         
     CGFloat timePerFrame = configuration.timePerFrame;
     BOOL repeatForever = configuration.repeatForever;
-    BOOL backward = configuration.backward;
+    BOOL backwards = configuration.backwards;
     
     SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
     
@@ -72,13 +73,20 @@
     
     NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
     
+    NSArray<SKTexture *> *backwardsTextures = nil;
+    
+    if (backwards)
+    {
+        backwardsTextures = [[textures reverseObjectEnumerator] allObjects];
+    }
+    
     return  [OGAnimation animationWithTextures:textures
                                    frameOffset:0
                          repeatTexturesForever:repeatForever
                                   timePerFrame:timePerFrame
                                      stateName:textureName
                                pairTextureName:pairTextureName
-                                      backward:backward];
+                             backwardsTextures:backwardsTextures];
 }
 
 #pragma mark -
