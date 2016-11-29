@@ -12,8 +12,8 @@
 #import "OGBaseScene.h"
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
+#import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
-#import "OGSceneLoaderResourcesReadyWithoutScene.h"
 
 @implementation OGSceneLoader
 
@@ -29,8 +29,8 @@
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
                 [OGSceneLoaderInitialState stateWithSceneLoader:self],
                 [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyWithoutScene stateWithSceneLoader:self]
+                [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
+                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
             ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];
@@ -64,7 +64,7 @@
 
 - (void)purgeScene
 {
-    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyWithoutScene class]];
+    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
 }
 
 @end

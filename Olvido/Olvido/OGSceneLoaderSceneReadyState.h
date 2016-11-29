@@ -1,5 +1,5 @@
 //
-//  OGSceneLoaderResourcesReadyWithoutScene.h
+//  OGSceneLoaderSceneReadyState.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 11/29/16.
@@ -8,6 +8,6 @@
 
 #import "OGSceneLoaderState.h"
 
-@interface OGSceneLoaderResourcesReadyState : OGSceneLoaderState
+@interface OGSceneLoaderSceneReadyState : OGSceneLoaderState
 
 @end

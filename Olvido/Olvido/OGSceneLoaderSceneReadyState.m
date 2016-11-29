@@ -1,16 +1,14 @@
 //
-//  OGSceneLoaderResourcesReadyWithoutScene.m
+//  OGSceneLoaderSceneReadyState.m
 //  Olvido
 //
 //  Created by Алексей Подолян on 11/29/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGSceneLoaderInitialState.h"
-#import "OGSceneLoaderPrepearingSceneState.h"
-#import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderSceneReadyState.h"
 
-@implementation OGSceneLoaderResourcesReadyState
+@implementation OGSceneLoaderSceneReadyState
 
 - (BOOL)isValidNextState:(Class)stateClass
 {

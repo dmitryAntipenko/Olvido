@@ -8,7 +8,7 @@
 
 #import "OGTextureAtlasesManager.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
-#import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
@@ -45,7 +45,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGSceneLoaderResourcesReadyState class];
+    return stateClass == [OGSceneLoaderResourcesAndSceneReadyState class];
 }
 
 - (void)loadResourcesAsynchronously
@@ -70,7 +70,7 @@
                        typeof(weakSelf) strongSelf = weakSelf;
                        
                        strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesAndSceneReadyState class]];
                    }
                });
         }

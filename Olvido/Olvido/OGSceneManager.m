@@ -13,8 +13,8 @@
 #import "OGSceneMetadata.h"
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
+#import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
-#import "OGSceneLoaderResourcesReadyWithoutScene.h"
 #import "OGLoadingScene.h"
 #import "OGSceneLoaderDelegate.h"
 
@@ -96,7 +96,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
-    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesAndSceneReadyState class])
     {
         [self presentSceneWithSceneLoader:sceneLoader];
     }
