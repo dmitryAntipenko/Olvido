@@ -15,6 +15,7 @@
 #import "OGMovementComponent.h"
 #import "OGInputComponent.h"
 #import "OGOrientationComponent.h"
+#import "OGWeaponComponent.h"
 
 #import "OGConstants.h"
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) OGMovementComponent *movementComponent;
 @property (nonatomic, strong) OGInputComponent *inputComponent;
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong) OGWeaponComponent *weaponComponent;
 
 @end
 
@@ -56,8 +58,28 @@
 {
     [super updateWithDeltaTime:seconds];
     
-    CGVector vector = self.movementComponent.displacementVector;
-    
+    if (self.weaponComponent.weapon)
+    {
+        
+        CGVector vector = self.weaponComponent.attackDirection;
+        
+        if (vector.dx != 0 || vector.dy != 0)
+        {
+            [self changeAnimationStateWithVector:vector];
+        }
+        else
+        {
+            [self changeAnimationStateWithVector:self.movementComponent.displacementVector];
+        }
+    }
+    else
+    {
+        [self changeAnimationStateWithVector:self.movementComponent.displacementVector];
+    }
+}
+
+- (void)changeAnimationStateWithVector:(CGVector)vector
+{
     if (vector.dx != 0 || vector.dy != 0)
     {
         self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:vector.dx];
@@ -125,6 +147,14 @@
     return _orientationComponent;
 }
 
-
+- (OGWeaponComponent *)weaponComponent
+{
+    if (!_weaponComponent)
+    {
+        _weaponComponent = (OGWeaponComponent *) [self.playerEntity componentForClass:[OGWeaponComponent class]];
+    }
+    
+    return _weaponComponent;
+}
 
 @end

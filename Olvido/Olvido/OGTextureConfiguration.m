@@ -11,9 +11,11 @@
 NSString *const kOGTextureConfigurationPairTextureNameKey = @"Pair";
 NSString *const kOGTextureConfigurationTextureNameKey = @"Name";
 NSString *const kOGTextureConfigurationRepeatForeverKey = @"Repeat";
+NSString *const kOGTextureConfigurationBackwardKey = @"Backward";
 NSString *const kOGTextureConfigurationTimePerFrameKey = @"TimePerFrame";
 
 BOOL const kOGTextureConfigurationDefaultRepeatForever = YES;
+BOOL const kOGTextureConfigurationDefaultBackward = NO;
 CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
 
 @interface OGTextureConfiguration ()
@@ -22,7 +24,7 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
 @property (nonatomic, strong) NSString *textureName;
 @property (nonatomic, assign) CGFloat timePerFrame;
 @property (nonatomic, assign) BOOL repeatForever;
-
+@property (nonatomic, assign) BOOL backward;
 @end
 
 @implementation OGTextureConfiguration
@@ -35,6 +37,7 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
     {
         _repeatForever = kOGTextureConfigurationDefaultRepeatForever;
         _timePerFrame = kOGTextureConfigurationDefaultTimePerFrame;
+        _backward = kOGTextureConfigurationDefaultBackward;
         
         NSString *pairTextureName = dictionary[kOGTextureConfigurationPairTextureNameKey];
         
@@ -53,6 +56,11 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
         if (dictionary[kOGTextureConfigurationRepeatForeverKey])
         {
             _repeatForever = [dictionary[kOGTextureConfigurationRepeatForeverKey] boolValue];
+        }
+        
+        if (dictionary[kOGTextureConfigurationBackwardKey])
+        {
+            _backward = [dictionary[kOGTextureConfigurationBackwardKey] boolValue];
         }
 
         if (dictionary[kOGTextureConfigurationTimePerFrameKey])

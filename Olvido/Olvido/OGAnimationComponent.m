@@ -17,6 +17,8 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
 @property (nonatomic, strong, readwrite) OGAnimation *currentAnimation;
 @property (nonatomic, assign) NSTimeInterval currentTimePerFrame;
 
+@property (nonatomic, assign) NSTimeInterval elapsedFrameDuration;
+@property (nonatomic, assign) NSUInteger currentFrame;
 @end
 
 @implementation OGAnimationComponent
@@ -34,6 +36,8 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             _animations = animations;
             _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil];
             _elapsedAnimationDuration = 0.0;
+            _elapsedFrameDuration = 0.0;
+            _currentFrame = 0.0;
         }
     }
     else
@@ -78,6 +82,7 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
                                                        timePerFrame:animation.timePerFrame
                                                              resize:YES
                                                             restore:YES];
+            
             if (animation.isRepeatedTexturesForever)
             {
                 texturesAction = [SKAction repeatActionForever:animateAction];
@@ -115,17 +120,57 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
 
 #pragma mark - Updates
 
-- (void)updateWithDeltaTime:(NSTimeInterval)deltaTime
-{
-    [super updateWithDeltaTime:deltaTime];
-    
-    if (self.requestedAnimationState)
-
-    {
-        [self runAnimationForAnimationState:self.requestedAnimationState deltaTime:deltaTime];
-        self.requestedAnimationState = nil;
-    }
-}
+//- (void)updateWithDeltaTime:(NSTimeInterval)deltaTime
+//{
+//    [super updateWithDeltaTime:deltaTime];
+//    
+//    if (self.requestedAnimationState)
+//
+//    {
+//        [self runAnimationForAnimationState:self.requestedAnimationState deltaTime:deltaTime];
+//        self.requestedAnimationState = nil;
+//    }
+//}
+//
+//- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+//{
+//    [super updateWithDeltaTime:seconds];
+//    
+//    if (self.currentAnimation)
+//    {
+//        self.elapsedAnimationDuration += seconds;
+//        self.elapsedFrameDuration += seconds;
+//        
+//        if (self.elapsedFrameDuration >= self.currentAnimation.timePerFrame)
+//        {
+//            self.elapsedFrameDuration = 0.0;
+//            
+//            if (![self.currentAnimation playBackward])
+//            {
+//                if (self.currentFrame == self.currentAnimation.textures.count)
+//                {
+//                    self.currentFrame = 0;
+//                }
+//                else
+//                {
+//                    self.currentFrame  += 1;
+//                }
+//            }
+//            else
+//            {
+//                if (self.currentFrame == 0)
+//                {
+//                    self.currentFrame = self.currentAnimation.textures.count;
+//                }
+//                else
+//                {
+//                    self.currentFrame -= 1;
+//                }
+//            }
+//        }
+//        
+//    }
+//}
 
 - (void)setRequestedAnimationState:(NSString *)requestedAnimationState
 {

@@ -20,6 +20,7 @@
                     timePerFrame:(NSTimeInterval)timePerFrame
                        stateName:(NSString *)stateName
                  pairTextureName:(NSString *)pairTextureName
+                        backward:(BOOL)backward
 {
     self = [self init];
     
@@ -30,6 +31,7 @@
         _repeatTexturesForever = repeatTexturesForever;
         _timePerFrame = timePerFrame;
         _stateName = stateName;
+        _backward = backward;
     }
     
     return self;
@@ -41,13 +43,15 @@
                          timePerFrame:(NSTimeInterval)timePerFrame
                             stateName:(NSString *)stateName
                       pairTextureName:(NSString *)pairTextureName
+                             backward:(BOOL)backward
 {
     return [[OGAnimation alloc] initWithTextures:textures
                                      frameOffset:frameOffset
                            repeatTexturesForever:repeatTexturesForever
                                     timePerFrame:timePerFrame
                                        stateName:stateName
-                                 pairTextureName:pairTextureName];
+                                 pairTextureName:pairTextureName
+                                        backward:backward];
 }
 
 + (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
@@ -59,10 +63,11 @@
         
     CGFloat timePerFrame = configuration.timePerFrame;
     BOOL repeatForever = configuration.repeatForever;
+    BOOL backward = configuration.backward;
     
     SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
     
-    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:!repeatForever];
+    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO];
     NSArray<NSString *> *filteredTextureNames = [atlas.textureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
     
     NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
@@ -72,7 +77,8 @@
                          repeatTexturesForever:repeatForever
                                   timePerFrame:timePerFrame
                                      stateName:textureName
-                               pairTextureName:pairTextureName];
+                               pairTextureName:pairTextureName
+                                      backward:backward];
 }
 
 #pragma mark -
