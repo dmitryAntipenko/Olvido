@@ -13,6 +13,8 @@
 		<string>OGMapMenuScene</string>
 		<key>FileName</key>
 		<string>OGMapMenuScene</string>
+		<key>PurgeResources</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>ClassName</key>

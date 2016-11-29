@@ -6,6 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGTextureAtlasesManager.h"
+
 #import "OGMapMenuScene.h"
 #import "OGLevelManager.h"
 #import "OGButtonNode.h"
@@ -17,6 +19,11 @@ NSString *const OGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 NSString *const OGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 @implementation OGMapMenuScene
+
+- (void)didMoveToView:(SKView *)view
+{
+    
+}
 
 - (void)startGame
 {
