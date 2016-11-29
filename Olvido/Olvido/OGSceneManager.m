@@ -27,6 +27,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
 @property (nonatomic, strong) OGLoadingScene *loadingScene;
+@property (nonatomic, strong) OGSceneLoader *currentSceneLoader;
 @property (nonatomic, strong) void (^transitionCompletion)(OGBaseScene *scene);
 
 @end
@@ -146,6 +147,8 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
+    [self.currentSceneLoader purgeResources];
+    
     if (self.transitionCompletion)
     {
         self.transitionCompletion(sceneLoader.scene);
@@ -155,7 +158,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
     
-    [sceneLoader purgeResources];
+    self.currentSceneLoader = sceneLoader;
 }
 
 - (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;

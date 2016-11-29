@@ -12,7 +12,7 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 @protocol OGTextureAtlasesManagerPairDelegate <NSObject>
 
-- (void)pairReletadScenesCountDidSetToZero:(OGTextureAtlasesManagerPair *)pair;
+- (void)pairReletadScenesCountDidSetToZero:(id)pair;
 
 @end
 
@@ -61,7 +61,6 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 }
 
 @end
-
 
 
 @interface OGTextureAtlasesManager () <OGTextureAtlasesManagerPairDelegate>
@@ -123,11 +122,10 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                                   }
                                   else
                                   {
-                                      OGTextureAtlasesManagerPair *newPair = [[OGTextureAtlasesManagerPair alloc] initWithTextureAtlas:atlas];
-                                      unitAtlases[atlasKey] = newPair;
-                                      newPair.unitDictionary = unitAtlases;
-                                      newPair.atlasKey = atlasKey;
-                                      newPair.delegate = self;
+                                      unitAtlases[atlasKey] = [self pairWithAtlas:atlas
+                                                                   unitDictionary:unitAtlases
+                                                                         atlasKey:atlasKey
+                                                                         delegate:self];
                                   }
                               });
     }
@@ -147,13 +145,25 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                                       self.textures[unitName] = unitAtlases;
                                   }
                                   
-                                  OGTextureAtlasesManagerPair *newPair = [[OGTextureAtlasesManagerPair alloc] initWithTextureAtlas:atlas];
-                                  unitAtlases[atlasKey] = newPair;
-                                  newPair.unitDictionary = unitAtlases;
-                                  newPair.atlasKey = atlasKey;
-                                  newPair.delegate = self;
+                                  unitAtlases[atlasKey] = [self pairWithAtlas:atlas
+                                                               unitDictionary:unitAtlases
+                                                                     atlasKey:atlasKey
+                                                                     delegate:self];
                               });
     }
+}
+
+- (OGTextureAtlasesManagerPair *)pairWithAtlas:(SKTextureAtlas *)atlas
+                                unitDictionary:(NSMutableDictionary *)unitDictionary
+                                      atlasKey:(NSString *)atlasKey
+                                      delegate:(id <OGTextureAtlasesManagerPairDelegate>)delegate
+{
+    OGTextureAtlasesManagerPair *newPair = [[OGTextureAtlasesManagerPair alloc] initWithTextureAtlas:atlas];
+    newPair.unitDictionary = unitDictionary;
+    newPair.atlasKey = atlasKey;
+    newPair.delegate = self;
+    
+    return newPair;
 }
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName
@@ -169,8 +179,6 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                                       for (OGTextureAtlasesManagerPair *pair in unitAtlases)
                                       {
                                           [pair decrement];
-                                          
-                                          if (pair)
                                       }
                                   }
                               });
@@ -181,7 +189,15 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 {
     dispatch_barrier_sync(self.syncQueue, ^()
                           {
-                              [self.textures removeAllObjects];
+                              for (NSString *unitName in self.textures)
+                              {
+                                  NSMutableDictionary *unitAtlases = self.textures[unitName];
+                                  
+                                  for (OGTextureAtlasesManagerPair *pair in unitAtlases)
+                                  {
+                                      [pair decrement];
+                                  }
+                              }
                           });
 }
 
@@ -202,21 +218,6 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Accessing to atlases
 
-- (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName
-{
-    __block NSDictionary<NSString *, SKTextureAtlas *> *result = nil;
-    
-    dispatch_sync(self.syncQueue, ^()
-                  {
-                      if (unitName)
-                      {
-                          result = self.textures[unitName];
-                      }
-                  });
-    
-    return result;
-}
-
 - (SKTextureAtlas *)atlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey
 {
     __block SKTextureAtlas *result = nil;
@@ -225,11 +226,16 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                   {
                       if (unitName && atlasKey)
                       {
-                          NSDictionary<NSString *, SKTextureAtlas *> *unitAtlases = self.textures[unitName];
+                          NSDictionary<NSString *, OGTextureAtlasesManagerPair *> *unitAtlases = self.textures[unitName];
                           
                           if (unitAtlases)
                           {
-                              result = unitAtlases[atlasKey];
+                              OGTextureAtlasesManagerPair *pair = unitAtlases[atlasKey];
+                              
+                              if (pair)
+                              {
+                                  result = pair.textureAtlas;
+                              }
                           }
                       }
                   });

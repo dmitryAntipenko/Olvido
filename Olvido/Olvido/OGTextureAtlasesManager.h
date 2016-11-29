@@ -26,8 +26,6 @@
 
 #pragma mark - Access to atlases
 
-- (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName;
-
 - (SKTextureAtlas *)atlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey;
 
 @end
