@@ -6,6 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGTextureAtlasesManager.h"
+
 #import "OGSceneManager.h"
 #import "OGBaseScene.h"
 #import "OGSceneLoader.h"
@@ -150,8 +152,6 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)presentSceneWithSceneLoader:(OGSceneLoader *)sceneLoader
 {
-    [self.currentSceneLoader purgeResources];
-    
     if (self.transitionCompletion)
     {
         self.transitionCompletion(sceneLoader.scene);
