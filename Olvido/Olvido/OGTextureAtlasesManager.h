@@ -16,6 +16,8 @@
 
 - (void)addAtlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey atlas:(SKTextureAtlas *)atlas;
 
+- (void)addOrReplaceAtlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey atlas:(SKTextureAtlas *)atlas;
+
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName;
 
 - (void)purgeAllTextures;
