@@ -29,9 +29,4 @@
     [self.sceneLoader.delegate sceneLoaderDidComplete:self.sceneLoader];
 }
 
-- (void)willExitWithNextState:(GKState *)nextState
-{
-    [super willExitWithNextState:nextState];
-}
-
 @end
