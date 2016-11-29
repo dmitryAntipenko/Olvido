@@ -13,6 +13,7 @@
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderResourcesReadyWithoutScene.h"
 
 NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
 NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
@@ -31,7 +32,8 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
                 [OGSceneLoaderInitialState stateWithSceneLoader:self],
                 [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
+                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
+                [OGSceneLoaderResourcesReadyWithoutScene stateWithSceneLoader:self]
             ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];
@@ -70,6 +72,13 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
     [self.progress cancel];
     
     [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+}
+
+- (void)purgeScene
+{
+    [self.progress cancel];
+    
+    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyWithoutScene class]];
 }
 
 @end

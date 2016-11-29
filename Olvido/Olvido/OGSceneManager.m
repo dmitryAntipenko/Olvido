@@ -14,6 +14,7 @@
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderResourcesReadyWithoutScene.h"
 #import "OGLoadingScene.h"
 #import "OGSceneLoaderDelegate.h"
 
@@ -89,6 +90,8 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier completionHandler:(void (^)(OGBaseScene *scene))completion;
 {
+    [self.currentSceneLoader purgeScene];
+    
     self.transitionCompletion = completion;
     
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];

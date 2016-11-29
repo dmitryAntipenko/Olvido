@@ -7,13 +7,19 @@
 //
 
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderResourcesReadyWithoutScene.h"
 #import "OGSceneLoaderInitialState.h"
 
 @implementation OGSceneLoaderResourcesReadyState
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGSceneLoaderInitialState class];
+    BOOL result = NO;
+    
+    result = (stateClass == [OGSceneLoaderInitialState class]);
+    result = result || (stateClass == [OGSceneLoaderResourcesReadyWithoutScene class]);
+    
+    return result;
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
@@ -28,8 +34,6 @@
 - (void)willExitWithNextState:(GKState *)nextState
 {
     [super willExitWithNextState:nextState];
-    
-    self.sceneLoader.scene = nil;
 }
 
 @end
