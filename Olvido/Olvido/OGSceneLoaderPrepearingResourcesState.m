@@ -8,8 +8,7 @@
 
 #import "OGTextureAtlasesManager.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
-#import "OGSceneLoaderResourcesAndSceneReadyState.h"
-#import "OGSceneLoaderInitialState.h"
+#import "OGSceneLoaderPrepearingSceneState.h"
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
 #import "OGLoadSceneOperation.h"
@@ -45,7 +44,11 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGSceneLoaderResourcesAndSceneReadyState class];
+    BOOL result = NO;
+    
+    result = (stateClass == [OGSceneLoaderPrepearingSceneState class]);
+    
+    return result ;
 }
 
 - (void)loadResourcesAsynchronously
@@ -70,7 +73,7 @@
                        typeof(weakSelf) strongSelf = weakSelf;
                        
                        strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesAndSceneReadyState class]];
+//                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesAndSceneReadyState class]];
                    }
                });
         }
@@ -102,24 +105,6 @@
     }
     
     [self.operationQueue addOperation:loadSceneOperation];
-}
-
-- (void)cancel
-{
-    [self.operationQueue cancelAllOperations];
-    self.sceneLoader.scene = nil;
-    
-    __weak typeof(self) weakSelf = self;
-    
-    dispatch_async(dispatch_get_main_queue(), ^
-       {
-           if (weakSelf)
-           {
-               typeof(weakSelf) strongSelf = weakSelf;
-               
-               [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
-           }
-       });
 }
 
 @end

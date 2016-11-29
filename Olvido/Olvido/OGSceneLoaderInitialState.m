@@ -8,9 +8,8 @@
 
 #import "OGTextureAtlasesManager.h"
 #import "OGSceneLoaderInitialState.h"
-#import "OGSceneLoaderPrepearingSceneState.h"
+#import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesAndSceneReadyState.h"
-#import "OGSceneLoaderSceneReadyState.h"
 #import "OGSceneMetadata.h"
 
 @implementation OGSceneLoaderInitialState
@@ -19,16 +18,14 @@
 {
     BOOL result = NO;
     
-    result = (stateClass == [OGSceneLoaderPrepearingSceneState class]);
+    result = (stateClass == [OGSceneLoaderPrepearingResourcesState class]);
     
     return result;
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    if (previousState.class == [OGSceneLoaderResourcesAndSceneReadyState class]
-        || previousState.class == [OGSceneLoaderResourcesAndSceneReadyState class]
-        || previousState.class == [OGSceneLoaderSceneReadyState class])
+    if (previousState.class == [OGSceneLoaderResourcesAndSceneReadyState class])
     {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
         {
