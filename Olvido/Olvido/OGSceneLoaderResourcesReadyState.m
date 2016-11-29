@@ -26,8 +26,6 @@
 {
     [super didEnterWithPreviousState:previousState];
     
-    self.sceneLoader.progress = nil;
-    
     [self.sceneLoader.delegate sceneLoaderDidComplete:self.sceneLoader];
 }
 

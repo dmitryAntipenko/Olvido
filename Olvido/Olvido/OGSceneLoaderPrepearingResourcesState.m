@@ -16,13 +16,9 @@
 #import "OGLoadLoadableClassOperation.h"
 #import "OGLoadTexturesOperation.h"
 
-NSUInteger const OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
-NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
-
 @interface OGSceneLoaderPrepearingResourcesState ()
 
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
-@property (nonatomic, strong) NSProgress *progress;
 
 @end
 
@@ -56,18 +52,7 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 {   
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
-    self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count
-                     + OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount];
-    
-    if (self.sceneLoader.progress)
-    {
-        [self.sceneLoader.progress addChild:self.progress
-                       withPendingUnitCount: OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-    }
-    
     OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:sceneMetadata];
-    
-    [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
     
     __weak typeof(self) weakSelf = self;
     __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
@@ -101,8 +86,6 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                                                                                                                atlasKey:atlasKey
                                                                                                               atlasName:unitAtlases[atlasKey]];
             
-            [self.progress addChild:loadTexturesOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-            
             [loadSceneOperation addDependency:loadTexturesOperation];
             
             [self.operationQueue addOperation:loadTexturesOperation];
@@ -112,8 +95,6 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     for (Class<OGResourceLoadable> loadableClass in sceneMetadata.loadableClasses)
     {
         OGLoadLoadableClassOperation *loadLoadableClassOperation = [OGLoadLoadableClassOperation loadResourcesOperationWithLoadableClass:loadableClass];
-        
-        [self.progress addChild:loadLoadableClassOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
         
         [loadSceneOperation addDependency:loadLoadableClassOperation];
         

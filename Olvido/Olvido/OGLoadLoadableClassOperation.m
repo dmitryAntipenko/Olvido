@@ -9,8 +9,6 @@
 #import "OGLoadLoadableClassOperation.h"
 #import "OGResourceLoadable.h"
 
-NSUInteger const OGLoadLoadableClassOperationProgressTotalUnitCount = 1;
-
 @interface OGLoadLoadableClassOperation ()
 
 @property (nonatomic, assign) Class<OGResourceLoadable> loadableClass;
@@ -26,8 +24,6 @@ NSUInteger const OGLoadLoadableClassOperationProgressTotalUnitCount = 1;
     if (self)
     {
         _loadableClass = loadableClass;
-        _progress =  [[NSProgress alloc] init];
-        _progress.totalUnitCount = OGLoadLoadableClassOperationProgressTotalUnitCount;
     }
     
     return self;
@@ -42,32 +38,14 @@ NSUInteger const OGLoadLoadableClassOperationProgressTotalUnitCount = 1;
 {
     if (!self.isCancelled)
     {
-        if (self.progress.isCancelled)
+        if ([self.loadableClass resourcesNeedLoading])
         {
-            [self cancel];
-        }
-        else
-        {
-            if ([self.loadableClass resourcesNeedLoading])
-            {
-                __block typeof(self) weakSelf = self;
-                
-                [self.loadableClass loadResourcesWithCompletionHandler:^
-                 {
-                     [weakSelf finish];
-                 }];
-            }
-            else
-            {
-                [self finish];
-            }
+            [self.loadableClass loadResourcesWithCompletionHandler:^
+             {
+                 //temporary
+             }];
         }
     }
-}
-
-- (void)finish
-{
-    self.progress.completedUnitCount = OGLoadLoadableClassOperationProgressTotalUnitCount;
 }
 
 @end

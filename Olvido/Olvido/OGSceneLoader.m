@@ -15,9 +15,6 @@
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneLoaderResourcesReadyWithoutScene.h"
 
-NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
-NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
-
 @implementation OGSceneLoader
 
 - (instancetype)initWithMetadata:(OGSceneMetadata *)metadata
@@ -52,32 +49,21 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
     return [[self alloc] initWithMetadata:metadata];
 }
 
-- (NSProgress *)asynchronouslyLoadSceneForPresentation;
+- (void)asynchronouslyLoadSceneForPresentation;
 {
-    if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    if (self.stateMachine.currentState.class != [OGSceneLoaderResourcesReadyState class])
     {
-        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesReady];
-    }
-    else
-    {
-        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesAvailable];//???
         [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
     }
-    
-    return self.progress;
 }
 
 - (void)purgeResources
 {
-    [self.progress cancel];
-    
     [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
 }
 
 - (void)purgeScene
 {
-    [self.progress cancel];
-    
     [self.stateMachine enterState:[OGSceneLoaderResourcesReadyWithoutScene class]];
 }
 

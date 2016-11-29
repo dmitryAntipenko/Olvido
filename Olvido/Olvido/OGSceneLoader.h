@@ -18,13 +18,12 @@
 @property (nonatomic, strong, readonly) GKStateMachine *stateMachine;
 @property (nonatomic, strong, readonly) OGSceneMetadata *metadata;
 @property (nonatomic, strong) OGBaseScene *scene;
-@property (nonatomic, strong) NSProgress *progress;
 @property (nonatomic, assign) BOOL requestedForPresentation;
 @property (nonatomic, weak) id <OGSceneLoaderDelegate> delegate;
 
 + (instancetype)sceneLoaderWithMetadata:(OGSceneMetadata *)metadata;
 
-- (NSProgress *)asynchronouslyLoadSceneForPresentation;
+- (void)asynchronouslyLoadSceneForPresentation;
 
 - (void)purgeResources;
 
