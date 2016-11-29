@@ -93,7 +93,8 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
-    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class]
+        && self.currentSceneLoader != sceneLoader)
     {
         [self presentSceneWithSceneLoader:sceneLoader];
     }

@@ -28,4 +28,6 @@
 
 - (void)purgeResources;
 
+- (void)purgeScene;
+
 @end
