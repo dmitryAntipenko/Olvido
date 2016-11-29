@@ -8,6 +8,7 @@
 
 #import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderPrepearingSceneState.h"
+#import "OGLoadSceneOperation.h"
 
 @implementation OGSceneLoaderPrepearingSceneState
 
@@ -22,7 +23,31 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    self.sceneLoader.scene = nil;
+    OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:self.sceneLoader.metadata];
+    
+    __weak typeof(self) weakSelf = self;
+    __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
+    
+    loadSceneOperation.completionBlock = ^
+    {
+        if (weakLoadSceneOperation)
+        {
+            OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
+            
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               if (weakSelf)
+                               {
+                                   typeof(weakSelf) strongSelf = weakSelf;
+                                   
+                                   strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
+                                   [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesAndSceneReadyState class]];
+                               }
+                           });
+        }
+    };
+    
+    [loadSceneOperation start];
 }
 
 @end

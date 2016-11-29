@@ -14,6 +14,7 @@
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
+#import "OGSceneLoaderPrepearingSceneState.h"
 
 @implementation OGSceneLoader
 
@@ -30,7 +31,8 @@
                 [OGSceneLoaderInitialState stateWithSceneLoader:self],
                 [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
                 [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
+                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
+                [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
             ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];

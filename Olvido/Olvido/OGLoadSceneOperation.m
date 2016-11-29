@@ -59,4 +59,9 @@ NSString *const OGLoadSceneOperationGraphsKey = @"Graphs";
     }
 }
 
+- (BOOL)isAsynchronous
+{
+    return YES;
+}
+
 @end

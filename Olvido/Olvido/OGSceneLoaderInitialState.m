@@ -10,6 +10,7 @@
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
 #import "OGSceneLoaderResourcesAndSceneReadyState.h"
+#import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneMetadata.h"
 
 @implementation OGSceneLoaderInitialState
@@ -25,7 +26,8 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    if (previousState.class == [OGSceneLoaderResourcesAndSceneReadyState class])
+    if (previousState.class == [OGSceneLoaderResourcesAndSceneReadyState class]
+        || previousState.class == [OGSceneLoaderResourcesReadyState class])
     {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
         {

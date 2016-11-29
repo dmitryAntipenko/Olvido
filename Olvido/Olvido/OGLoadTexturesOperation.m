@@ -65,4 +65,9 @@
     }
 }
 
+- (BOOL)isAsynchronous
+{
+    return YES;
+}
+
 @end

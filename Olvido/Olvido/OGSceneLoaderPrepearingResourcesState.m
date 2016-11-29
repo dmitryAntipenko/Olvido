@@ -52,31 +52,24 @@
 }
 
 - (void)loadResourcesAsynchronously
-{   
+{
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
-    OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:sceneMetadata];
+    NSOperation *completionOperation = [[NSOperation alloc] init];
     
     __weak typeof(self) weakSelf = self;
-    __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
-    loadSceneOperation.completionBlock = ^
+    completionOperation.completionBlock = ^
     {
-        if (weakLoadSceneOperation)
+        //        dispatch_async(dispatch_get_main_queue(), ^
+        //                       {
+        if (weakSelf)
         {
-            OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
+            typeof(weakSelf) strongSelf = weakSelf;
             
-            dispatch_async(dispatch_get_main_queue(), ^
-               {
-                   if (weakSelf)
-                   {
-                       typeof(weakSelf) strongSelf = weakSelf;
-                       
-                       strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-//                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesAndSceneReadyState class]];
-                   }
-               });
+            [strongSelf.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
         }
+        //                       });
     };
     
     for (NSString *unitName in sceneMetadata.textureAtlases)
@@ -89,7 +82,7 @@
                                                                                                                atlasKey:atlasKey
                                                                                                               atlasName:unitAtlases[atlasKey]];
             
-            [loadSceneOperation addDependency:loadTexturesOperation];
+            [completionOperation addDependency:loadTexturesOperation];
             
             [self.operationQueue addOperation:loadTexturesOperation];
         }
@@ -99,12 +92,12 @@
     {
         OGLoadLoadableClassOperation *loadLoadableClassOperation = [OGLoadLoadableClassOperation loadResourcesOperationWithLoadableClass:loadableClass];
         
-        [loadSceneOperation addDependency:loadLoadableClassOperation];
+        [completionOperation addDependency:loadLoadableClassOperation];
         
         [self.operationQueue addOperation:loadLoadableClassOperation];
     }
     
-    [self.operationQueue addOperation:loadSceneOperation];
+    [self.operationQueue addOperation:completionOperation];
 }
 
 @end
