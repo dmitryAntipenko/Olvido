@@ -37,9 +37,16 @@ CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    if (self.weapon && self.shouldAttack && [self.weapon canAttack])
+    if (self.weapon)
     {
-        [self.weapon attackWithVector:self.attackDirection speed:self.attackSpeed];
+        if (self.shouldReload)
+        {
+            [self.weapon reload];
+        }
+        else if (self.shouldAttack && [self.weapon canAttack])
+        {
+            [self.weapon attackWithVector:self.attackDirection speed:self.attackSpeed];
+        }
     }
 }
 

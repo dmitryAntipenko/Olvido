@@ -118,6 +118,7 @@
 		EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA490C61DA7BE64007734F0 /* OGConstants.m */; };
 		EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */; };
 		EAC60F331DEB6A220057DC34 /* OGKeyComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC60F321DEB6A220057DC34 /* OGKeyComponent.m */; };
+		EAC89F3E1DEDB3C300E69A48 /* OGShootingWeapon.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F3D1DEDB3C300E69A48 /* OGShootingWeapon.m */; };
 		EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */; };
 		EADA97641DE745CC003D708B /* OGHealthBarComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA97631DE745CC003D708B /* OGHealthBarComponent.m */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
@@ -348,6 +349,8 @@
 		EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGGameOverScreen.sks; sourceTree = "<group>"; };
 		EAC60F311DEB6A220057DC34 /* OGKeyComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGKeyComponent.h; sourceTree = "<group>"; };
 		EAC60F321DEB6A220057DC34 /* OGKeyComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGKeyComponent.m; sourceTree = "<group>"; };
+		EAC89F3C1DEDB3C300E69A48 /* OGShootingWeapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShootingWeapon.h; sourceTree = "<group>"; };
+		EAC89F3D1DEDB3C300E69A48 /* OGShootingWeapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShootingWeapon.m; sourceTree = "<group>"; };
 		EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shooting_sfx.wav; sourceTree = "<group>"; };
 		EADA97621DE745CC003D708B /* OGHealthBarComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthBarComponent.h; sourceTree = "<group>"; };
 		EADA97631DE745CC003D708B /* OGHealthBarComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthBarComponent.m; sourceTree = "<group>"; };
@@ -1040,6 +1043,8 @@
 			children = (
 				EAF7F1211DD7A4A60067D76D /* OGWeaponEntity.h */,
 				EAF7F1221DD7A4A60067D76D /* OGWeaponEntity.m */,
+				EAC89F3C1DEDB3C300E69A48 /* OGShootingWeapon.h */,
+				EAC89F3D1DEDB3C300E69A48 /* OGShootingWeapon.m */,
 				EAF7F1271DD800C30067D76D /* OGBullet.h */,
 				EAF7F1281DD800C30067D76D /* OGBullet.m */,
 			);
@@ -1171,6 +1176,7 @@
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
 				21F6B5461DE8A25D0062AE16 /* OGTextureConfiguration.m in Sources */,
+				EAC89F3E1DEDB3C300E69A48 /* OGShootingWeapon.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
 				EA84DBD91DE21BEC0044B2EE /* OGShadowComponent.m in Sources */,
 				1B27EAC01DC0F6F000E9CA23 /* OGCompleteLevelState.m in Sources */,

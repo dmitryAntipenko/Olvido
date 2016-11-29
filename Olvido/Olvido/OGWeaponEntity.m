@@ -18,58 +18,64 @@
 #import "OGInventoryItem.h"
 #import "OGResourceLoadable.h"
 
-CGFloat const OGWeaponEntityDefaultBulletSpeed = 10.0;
-CGFloat const OGWeaponEntityDefaultBulletSpawnTimeInterval = 0.1;
 CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 
 CGFloat const OGWeaponEntityDefaultAttackSpeed = 0.3;
-NSString *const OGWeaponEntityAttackSpeedKey = @"attackSpeed";
+CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
-static NSArray *sOGWeaponEntitySoundNodes = nil;
-
-@interface OGWeaponEntity () <OGInventoryItem, OGResourceLoadable>
+@interface OGWeaponEntity () <OGInventoryItem>
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong) OGSoundComponent *soundComponent;
-
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
+
 @property (nonatomic, assign) BOOL allowsAttacking;
-@property (nonatomic, strong) NSTimer *bulletSpawnTimer;
+@property (nonatomic, strong) NSTimer *attackTimer;
+@property (nonatomic, strong) NSTimer *reloadTimer;
+
 @property (nonatomic, assign, readwrite) CGFloat attackSpeed;
+@property (nonatomic, assign, readwrite) CGFloat reloadSpeed;
+@property (nonatomic, assign, readwrite) NSUInteger maxCharge;
+@property (nonatomic, assign, readwrite) NSUInteger charge;
 
 @end
 
 @implementation OGWeaponEntity
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+                       attackSpeed:(CGFloat)attackSpeed
+                       reloadSpeed:(CGFloat)reloadSpeed
+                            charge:(NSUInteger)charge
 {
-    self = [super init];
-
-    if (self)
+    if (sprite)
     {
-        NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
-        [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
-        
-        _renderComponent = [[OGRenderComponent alloc] init];
-        _renderComponent.node = sprite;
-        [self addComponent:_renderComponent];
-        
-        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
-                                                               colliderType:[OGColliderType weapon]];
-        [self addComponent:_physicsComponent];
-            
-        _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGWeaponEntitySoundNodes];
-        [self addComponent:_soundComponent];
-        
-        _allowsAttacking = YES;
-        
-        _attackSpeed = OGWeaponEntityDefaultAttackSpeed;
-        
-        if (sprite.userData[OGWeaponEntityAttackSpeedKey])
+        self = [super init];
+
+        if (self)
         {
-            _attackSpeed = [sprite.userData[OGWeaponEntityAttackSpeedKey] floatValue];
+            NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
+            [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
+            
+            _renderComponent = [[OGRenderComponent alloc] init];
+            _renderComponent.node = sprite;
+            [self addComponent:_renderComponent];
+            
+            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
+                                                                   colliderType:[OGColliderType weapon]];
+            [self addComponent:_physicsComponent];
+            
+            _allowsAttacking = YES;
+            
+            _attackSpeed = attackSpeed;
+            _reloadSpeed = reloadSpeed;
+            _charge = charge;
+            _maxCharge = charge;
         }
+    }
+    else
+    {
+        self = nil;
     }
     
     return self;
@@ -80,11 +86,6 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     _owner = owner;
     
     self.soundComponent.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
-}
-
-+ (NSArray *)sOGWeaponEntitySoundNames
-{
-    return sOGWeaponEntitySoundNodes;
 }
 
 #pragma mark - OGAttacking
@@ -99,24 +100,17 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
         {
             self.allowsAttacking = NO;
             
-            CGFloat vectorAngle = atan2(-vector.dx, vector.dy);
-            
-            CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed,
-                                                         cosf(vectorAngle) * OGWeaponEntityDefaultBulletSpeed);
-            
-            OGBullet *bullet = [self createBulletAtPoint:ownerRenderComponent.node.position
-                                            withRotation:vectorAngle];
-            
-            bullet.delegate = self.delegate;
-            [self.delegate addEntity:bullet];
-            
-            [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
-            
-            [self.soundComponent playSoundOnce:@"shot"];            
-            
-            self.bulletSpawnTimer = [NSTimer scheduledTimerWithTimeInterval:speed repeats:NO block:^(NSTimer *timer)
+            self.attackTimer = [NSTimer scheduledTimerWithTimeInterval:speed repeats:NO block:^(NSTimer *timer)
             {
-                self.allowsAttacking = YES;
+                if (self.charge-- <= 0)
+                {
+                    self.weaponComponent.shouldReload = YES;
+                }
+                else
+                {
+                    self.allowsAttacking = YES;
+                }
+                
                 [timer invalidate];
                 timer = nil;
             }];
@@ -124,14 +118,19 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     }
 }
 
-- (OGBullet *)createBulletAtPoint:(CGPoint)point withRotation:(CGFloat)rotation
+- (void)reload
 {
-    OGBullet *bullet = [[OGBullet alloc] init];
+    self.allowsAttacking = NO;
+    self.weaponComponent.shouldReload = NO;
     
-    bullet.renderComponent.node.zRotation = rotation;
-    bullet.renderComponent.node.position = point;
-    
-    return bullet;
+    self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:self.reloadSpeed repeats:NO block:^(NSTimer *timer)
+    {
+        self.allowsAttacking = YES;
+        self.charge = self.maxCharge;
+        
+        [timer invalidate];
+        timer = nil;
+    }];
 }
 
 - (BOOL)canAttack
@@ -182,33 +181,15 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 - (void)dealloc
 {
-    if (_bulletSpawnTimer)
+    if (_attackTimer)
     {
-        [_bulletSpawnTimer invalidate];        
+        [_attackTimer invalidate];
     }
-}
-
-#pragma mark - Resources
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)())handler
-{
-    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
-    shotNode.autoplayLooped = NO;
-    shotNode.name = @"shot";
     
-    sOGWeaponEntitySoundNodes = @[shotNode];
-    
-    handler();
-}
-
-+ (BOOL)resourcesNeedLoading
-{
-    return sOGWeaponEntitySoundNodes == nil;
-}
-
-+ (void)purgeResources
-{
-    sOGWeaponEntitySoundNodes = nil;
+    if (_reloadTimer)
+    {
+        [_reloadTimer invalidate];
+    }
 }
 
 @end

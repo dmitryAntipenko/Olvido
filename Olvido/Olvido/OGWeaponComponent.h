@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) OGWeaponEntity *weapon;
 @property (nonatomic, assign) BOOL shouldAttack;
+@property (nonatomic, assign) BOOL shouldReload;
+
 @property (nonatomic, assign) CGVector attackDirection;
 @property (nonatomic, assign) CGFloat attackSpeed;
 

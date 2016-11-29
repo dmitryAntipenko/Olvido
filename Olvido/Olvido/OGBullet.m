@@ -17,6 +17,8 @@
 NSString *const OGBulletTextureName = @"Bullet";
 NSInteger const OGBulletDamage = 1;
 
+CGFloat const OGBulletEntityDefaultSpeed = 10.0;
+
 static SKTexture *sOGBulletEntityTexture;
 
 @interface OGBullet ()
@@ -45,6 +47,8 @@ static SKTexture *sOGBulletEntityTexture;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
                                                                colliderType:[OGColliderType bullet]];
+        
+        _speed = OGBulletEntityDefaultSpeed;
     }
     
     return self;

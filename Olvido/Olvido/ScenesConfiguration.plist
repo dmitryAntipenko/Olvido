@@ -45,7 +45,7 @@
 		<array>
 			<string>OGZombie</string>
 			<string>OGBoss</string>
-			<string>OGWeaponEntity</string>
+			<string>OGShootingWeapon</string>
 			<string>OGEnemyEntity</string>
 			<string>OGDoorEntity</string>
 			<string>OGBullet</string>

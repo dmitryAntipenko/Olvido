@@ -37,7 +37,7 @@
 #import "OGZombie.h"
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
-#import "OGWeaponEntity.h"
+#import "OGShootingWeapon.h"
 #import "OGKey.h"
 
 #import "OGInventoryBarNode.h"
@@ -66,6 +66,9 @@ NSString *const OGGameSceneDestinationNodeName = @"destination";
 NSString *const OGGameSceneUserDataGraphs = @"Graphs";
 NSString *const OGGameSceneUserDataGraph = @"Graph_";
 NSString *const OGGameSceneDoorLockedKey = @"locked";
+NSString *const OGGameSceneAttackSpeedKey = @"attackSpeed";
+NSString *const OGGameSceneReloadSpeedKey = @"reloadSpeed";
+NSString *const OGGameSceneChargeKey = @"charge";
 
 NSString *const OGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -354,7 +357,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     for (SKSpriteNode *weaponSprite in weapons)
     {
-        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weaponSprite];
+        CGFloat attackSpeed = [weaponSprite.userData[OGGameSceneAttackSpeedKey] floatValue];
+        CGFloat reloadSpeed = [weaponSprite.userData[OGGameSceneReloadSpeedKey] floatValue];
+        NSUInteger charge = [weaponSprite.userData[OGGameSceneChargeKey] integerValue];
+        
+        OGShootingWeapon *shootingWeapon = [[OGShootingWeapon alloc] initWithSpriteNode:weaponSprite
+                                                                            attackSpeed:attackSpeed
+                                                                            reloadSpeed:reloadSpeed
+                                                                                 charge:charge];
         shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
     }
