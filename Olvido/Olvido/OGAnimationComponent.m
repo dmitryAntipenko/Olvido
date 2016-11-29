@@ -34,6 +34,7 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             _animations = animations;
             _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil];
             _elapsedAnimationDuration = 0.0;
+            _playBackwards = NO;
         }
     }
     else
@@ -74,12 +75,17 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
                 animation.frameOffset = (self.currentAnimation.frameOffset + numberOfFramesPlayedSinceCurrentAnimationBegan + 1) % numberOfFramesInCurrentAnimation;
             }
             
-            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures
+            NSArray *textures = animation.offsetTextures;
+            
+            if (self.isPlayingBackwards)
+            {
+                textures = [[textures reverseObjectEnumerator] allObjects];
+            }
+            
+            SKAction *animateAction = [SKAction animateWithTextures:textures
                                                        timePerFrame:animation.timePerFrame
                                                              resize:YES
                                                             restore:YES];
-            
-            
             
             if (animation.isRepeatedTexturesForever)
             {
@@ -110,9 +116,10 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
                            withKey:OGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
-        self.currentTimePerFrame = self.currentAnimation.timePerFrame;
+        self.currentTimePerFrame = animation.timePerFrame;
         
         self.elapsedAnimationDuration = 0.0;
+        self.playBackwards = NO;
     }
 }
 
@@ -123,7 +130,6 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
     [super updateWithDeltaTime:deltaTime];
     
     if (self.requestedAnimationState)
-
     {
         [self runAnimationForAnimationState:self.requestedAnimationState deltaTime:deltaTime];
         self.requestedAnimationState = nil;

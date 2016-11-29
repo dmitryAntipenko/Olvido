@@ -20,7 +20,6 @@
                     timePerFrame:(NSTimeInterval)timePerFrame
                        stateName:(NSString *)stateName
                  pairTextureName:(NSString *)pairTextureName
-               backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures
 {
     self = [self init];
     
@@ -31,8 +30,6 @@
         _repeatTexturesForever = repeatTexturesForever;
         _timePerFrame = timePerFrame;
         _stateName = stateName;
-        _backwardsTextures = backwardsTextures;
-        _backward = NO;
     }
     
     return self;
@@ -44,15 +41,13 @@
                          timePerFrame:(NSTimeInterval)timePerFrame
                             stateName:(NSString *)stateName
                       pairTextureName:(NSString *)pairTextureName
-                    backwardsTextures:(NSArray<SKTexture *> *)backwardsTextures
 {
     return [[OGAnimation alloc] initWithTextures:textures
                                      frameOffset:frameOffset
                            repeatTexturesForever:repeatTexturesForever
                                     timePerFrame:timePerFrame
                                        stateName:stateName
-                                 pairTextureName:pairTextureName
-                               backwardsTextures:backwardsTextures];
+                                 pairTextureName:pairTextureName];
 }
 
 + (instancetype)animationWithTextureConfiguration:(OGTextureConfiguration *)configuration
@@ -64,29 +59,20 @@
         
     CGFloat timePerFrame = configuration.timePerFrame;
     BOOL repeatForever = configuration.repeatForever;
-    BOOL backwards = configuration.backwards;
     
     SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
     
-    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO];
+    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES];
     NSArray<NSString *> *filteredTextureNames = [atlas.textureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
     
     NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];
-    
-    NSArray<SKTexture *> *backwardsTextures = nil;
-    
-    if (backwards)
-    {
-        backwardsTextures = [[textures reverseObjectEnumerator] allObjects];
-    }
     
     return  [OGAnimation animationWithTextures:textures
                                    frameOffset:0
                          repeatTexturesForever:repeatForever
                                   timePerFrame:timePerFrame
                                      stateName:textureName
-                               pairTextureName:pairTextureName
-                             backwardsTextures:backwardsTextures];
+                               pairTextureName:pairTextureName];
 }
 
 #pragma mark -

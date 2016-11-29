@@ -60,11 +60,11 @@
     
     if (self.weaponComponent.weapon)
     {
-        
         CGVector vector = self.weaponComponent.attackDirection;
         
         if (vector.dx != 0 || vector.dy != 0)
         {
+            self.animationComponent.playBackwards = YES;
             [self changeAnimationStateWithVector:vector];
         }
         else

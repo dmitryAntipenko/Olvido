@@ -24,6 +24,8 @@
 @property (nonatomic, copy) NSString *requestedAnimationState;
 @property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
 
+@property (nonatomic, assign, getter=isPlayingBackwards) BOOL playBackwards;
+
 - (instancetype)initWithAnimations:(NSDictionary *)animations;
 
 - (void)runAnimationForAnimationState:(NSString *)animationState
