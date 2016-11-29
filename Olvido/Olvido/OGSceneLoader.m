@@ -28,12 +28,12 @@
         {
             _metadata = metadata;
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
-                [OGSceneLoaderInitialState stateWithSceneLoader:self],
-                [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
-                [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
-            ]];
+                                                                     [OGSceneLoaderInitialState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
+                                                                     ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
@@ -53,9 +53,13 @@
 
 - (void)asynchronouslyLoadSceneForPresentation;
 {
-    if (self.stateMachine.currentState.class != [OGSceneLoaderResourcesReadyState class])
+    if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
     {
         [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
+    }
+    else if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    {
+        [self.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
     }
 }
 

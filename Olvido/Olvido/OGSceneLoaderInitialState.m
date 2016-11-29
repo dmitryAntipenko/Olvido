@@ -37,8 +37,6 @@
             }
         });
     }
-    
-    self.sceneLoader.scene = nil;
 }
 
 @end
