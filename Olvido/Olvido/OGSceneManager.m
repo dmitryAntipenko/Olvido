@@ -6,6 +6,8 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+#import "OGTextureAtlasesManager.h"
+
 #import "OGSceneManager.h"
 #import "OGBaseScene.h"
 #import "OGSceneLoader.h"
@@ -13,6 +15,7 @@
 #import "OGSceneMetadata.h"
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
+#import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGLoadingScene.h"
 #import "OGSceneLoaderDelegate.h"
@@ -27,6 +30,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 @property (nonatomic, strong) OGSceneLoader *nextSceneLoader;
 @property (nonatomic, strong) NSMutableArray<OGSceneLoader *> *sceneLoaders;
 @property (nonatomic, strong) OGLoadingScene *loadingScene;
+@property (nonatomic, strong) OGSceneLoader *currentSceneLoader;
 @property (nonatomic, strong) void (^transitionCompletion)(OGBaseScene *scene);
 
 @end
@@ -88,11 +92,13 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier completionHandler:(void (^)(OGBaseScene *scene))completion;
 {
+    [self.currentSceneLoader purgeScene];
+    
     self.transitionCompletion = completion;
     
     OGSceneLoader *sceneLoader = [self sceneLoaderForIdentifier:sceneIdentifier];
     
-    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+    if (sceneLoader.stateMachine.currentState.class == [OGSceneLoaderResourcesAndSceneReadyState class])
     {
         [self presentSceneWithSceneLoader:sceneLoader];
     }
@@ -155,7 +161,8 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
     
-    [sceneLoader purgeResources];
+    [self.currentSceneLoader purgeResources];
+    self.currentSceneLoader = sceneLoader;
 }
 
 - (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;

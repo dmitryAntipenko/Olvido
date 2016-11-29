@@ -10,8 +10,6 @@
 
 @interface OGLoadTexturesOperation : NSOperation
 
-@property (nonatomic, strong) NSProgress *progress;
-
 + (instancetype)loadTexturesOperationWithUnitName:(NSString *)unitName
                                          atlasKey:(NSString *)atlasKey
                                         atlasName:(NSString *)atlasname;
