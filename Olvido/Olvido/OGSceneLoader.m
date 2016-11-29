@@ -58,9 +58,9 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
     {
         self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesReady];
     }
-    else if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
+    else
     {
-        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesAvailable];
+        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesAvailable];//???
         [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
     }
     

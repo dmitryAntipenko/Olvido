@@ -53,9 +53,7 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 }
 
 - (void)loadResourcesAsynchronously
-{
-    [[OGTextureAtlasesManager sharedInstance] purgeAllTextures];//remporary
-    
+{   
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
     self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count
