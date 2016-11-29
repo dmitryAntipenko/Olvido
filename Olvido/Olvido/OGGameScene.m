@@ -78,9 +78,9 @@ NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
 NSString *const OGGameSceneObstacleName = @"obstacle";
 
-NSString *const OGGameScenePauseScreenResumeButtonName = @"ResumeButton";
-NSString *const OGGameScenePauseScreenRestartButtonName = @"RestartButton";
-NSString *const OGGameScenePauseScreenMenuButtonName = @"MenuButton";
+NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
+NSString *const OGGameSceneRestartButtonName = @"RestartButton";
+NSString *const OGGameSceneMenuButtonName = @"MenuButton";
 
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
@@ -545,7 +545,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     if (!self.gameOverScreenNode.parent)
     {
-        [self addChild:self.gameOverScreenNode];
+        [self.camera addChild:self.gameOverScreenNode];
     }
 }
 
@@ -633,15 +633,15 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 - (void)onButtonClick:(OGButtonNode *)buttonNode
 {
-    if ([buttonNode.name isEqualToString:OGGameScenePauseScreenResumeButtonName])
+    if ([buttonNode.name isEqualToString:OGGameSceneResumeButtonName])
     {
         [self.sceneDelegate didCallResume];
     }
-    else if ([buttonNode.name isEqualToString:OGGameScenePauseScreenRestartButtonName])
+    else if ([buttonNode.name isEqualToString:OGGameSceneRestartButtonName])
     {
         [self.sceneDelegate didCallRestart];
     }
-    else if ([buttonNode.name isEqualToString:OGGameScenePauseScreenMenuButtonName])
+    else if ([buttonNode.name isEqualToString:OGGameSceneMenuButtonName])
     {
         [self.sceneDelegate didCallExit];
     }
