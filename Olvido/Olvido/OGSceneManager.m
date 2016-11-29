@@ -161,6 +161,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
     
+    [self.currentSceneLoader purgeResources];
     self.currentSceneLoader = sceneLoader;
 }
 
