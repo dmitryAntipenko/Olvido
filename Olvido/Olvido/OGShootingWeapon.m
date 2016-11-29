@@ -11,12 +11,14 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGSoundComponent.h"
+#import "OGWeaponComponent.h"
 
 static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 @interface OGShootingWeapon () <OGResourceLoadable>
 
 @property (nonatomic, strong) OGSoundComponent *soundComponent;
+@property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 @end
 
@@ -35,6 +37,25 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     }
     
     return self;
+}
+
+- (OGWeaponComponent *)weaponComponent
+{
+    return (OGWeaponComponent *) [self.owner componentForClass:[OGWeaponComponent class]];
+}
+
+- (void)wasTaken
+{
+    [super wasTaken];
+    
+    [self.weaponComponent.weaponObserver weaponWasTakenWithProperties:@{@"Charge" : @(self.charge), @"Reloading" : @(self.isReloading)}];
+}
+
+- (void)didThrown
+{
+    [super didThrown];
+    
+    [self.weaponComponent.weaponObserver weaponWasRemoved];
 }
 
 #pragma mark - OGAttacking

@@ -9,10 +9,13 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGAttacking.h"
 #import "OGWeaponEntity.h"
+#import "OGWeaponComponentObserving.h"
 
 @interface OGWeaponComponent : GKComponent
 
 @property (nonatomic, strong) OGWeaponEntity *weapon;
+@property (nonatomic, weak) id<OGWeaponComponentObserving> weaponObserver;
+
 @property (nonatomic, assign) BOOL shouldAttack;
 @property (nonatomic, assign) BOOL shouldReload;
 

@@ -11,6 +11,7 @@
 #import "OGZPositionEnum.m"
 #import "OGRenderComponent.h"
 #import "OGPlayerEntity.h"
+#import "OGHUDNode.h"
 
 CGFloat const OGInventoryBarNodeMaxHeight = 256;
 CGFloat const OGInventoryBarNodeMaxWidthFactor = 0.5;
@@ -24,16 +25,22 @@ NSString *const OGInventoryBarNodeShowingActionKey = @"ShowingAction";
 CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 @interface OGInventoryBarNode () <OGInventoryComponentDelegate>
+{
+    OGHUDNode *_hudNode;
+}
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, assign) CGFloat itemSizeLength;
 @property (nonatomic, assign) CGRect hideTrigger;
 @property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) BOOL customHidden;
+@property (nonatomic, assign) BOOL needsUpdate;
 
 @end
 
 @implementation OGInventoryBarNode
+
+#pragma mark - Initialising
 
 - (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
 {
@@ -63,11 +70,32 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     return [[self alloc] initWithInventoryComponent:inventoryComponent screenSize:screenSize];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+#pragma mark - Getters & Setters
+
+- (void)setHudNode:(OGHUDNode *)hudNode
 {
-    if ([keyPath isEqualToString:OGInventoryComponentInventoryItemsKeyPath])
+    _hudNode = hudNode;
+}
+
+- (OGHUDNode *)hudNode
+{
+    return _hudNode;
+}
+
+#pragma mark - OGHUDElement
+
+- (void)didAddToHUD
+{
+    
+}
+
+- (void)update
+{
+    if (self.needsUpdate)
     {
+        [self updateInventoryBarSize];
         [self updateInventoryBarItems];
+        self.needsUpdate = NO;
     }
 }
 
@@ -75,8 +103,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)updateConstraints
 {
-    [self updateInventoryBarSize];
-    [self updateInventoryBarItems];
+    self.needsUpdate = YES;
 }
 
 - (void)updateInventoryBarSize
@@ -179,9 +206,9 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)checkPlayerPosition
 {
-    if (self.playerEntity)
+    if (self.hudNode.playerEntity)
     {
-        SKNode *renderComponentNode = ((OGRenderComponent *) [self.playerEntity componentForClass:[OGRenderComponent class]]).node;
+        SKNode *renderComponentNode = ((OGRenderComponent *) [self.hudNode.playerEntity componentForClass:[OGRenderComponent class]]).node;
         
         CGPoint playerPosition = [renderComponentNode.parent convertPoint:renderComponentNode.position toNode:self.parent];
         

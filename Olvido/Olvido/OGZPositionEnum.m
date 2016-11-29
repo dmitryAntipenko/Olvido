@@ -16,5 +16,6 @@ typedef NS_ENUM(NSInteger, OGZPositionCategory)
     OGZPositionCategoryPhysicsWorld = 0,
     OGZPositionCategoryAbovePhysicsWorld = 2000,
     OGZPositionCategoryUnderForeground = 2500,
-    OGZPositionCategoryForeground = 3000
+    OGZPositionCategoryForeground = 3000,
+    OGZPositionCategoryTouchControl = 3500,
 };

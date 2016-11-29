@@ -13,17 +13,16 @@
 #import "OGWeaponComponent.h"
 #import "OGMovementComponent.h"
 #import "OGSoundComponent.h"
+#import "OGWeaponComponentObserving.h"
 
 #import "OGZPositionEnum.m"
-#import "OGInventoryItem.h"
-#import "OGResourceLoadable.h"
 
 CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 
 CGFloat const OGWeaponEntityDefaultAttackSpeed = 0.3;
 CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
-@interface OGWeaponEntity () <OGInventoryItem>
+@interface OGWeaponEntity ()
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -31,6 +30,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 @property (nonatomic, assign) BOOL allowsAttacking;
+@property (nonatomic, assign) BOOL reloading;
 @property (nonatomic, strong) NSTimer *attackTimer;
 @property (nonatomic, strong) NSTimer *reloadTimer;
 
@@ -42,6 +42,8 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 @end
 
 @implementation OGWeaponEntity
+
+#pragma mark - Initializing
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
                        attackSpeed:(CGFloat)attackSpeed
@@ -81,11 +83,32 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
     return self;
 }
 
+#pragma mark - Getters & Setters
+
 - (void)setOwner:(GKEntity *)owner
 {
     _owner = owner;
     
     self.soundComponent.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
+}
+
+- (void)setCharge:(NSUInteger)charge
+{
+    _charge = charge;
+    
+    [self.weaponComponent.weaponObserver weaponDidUpdateKey:@"Charge" withValue:@(_charge)];
+}
+
+- (void)setReloading:(BOOL)reloading
+{
+    _reloading = reloading;
+    
+    [self.weaponComponent.weaponObserver weaponDidUpdateKey:@"Reloading" withValue:[NSNumber numberWithBool:_reloading]];
+}
+
+- (BOOL)isReloading
+{
+    return self.reloading;
 }
 
 #pragma mark - OGAttacking
@@ -102,13 +125,14 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
             
             self.attackTimer = [NSTimer scheduledTimerWithTimeInterval:speed repeats:NO block:^(NSTimer *timer)
             {
-                if (self.charge-- <= 0)
+                if (self.charge <= 0)
                 {
                     self.weaponComponent.shouldReload = YES;
                 }
                 else
                 {
                     self.allowsAttacking = YES;
+                    self.charge--;
                 }
                 
                 [timer invalidate];
@@ -121,11 +145,13 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 - (void)reload
 {
     self.allowsAttacking = NO;
+    self.reloading = YES;
     self.weaponComponent.shouldReload = NO;
     
     self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:self.reloadSpeed repeats:NO block:^(NSTimer *timer)
     {
         self.allowsAttacking = YES;
+        self.reloading = NO;
         self.charge = self.maxCharge;
         
         [timer invalidate];
@@ -178,6 +204,8 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 {
     return self.renderComponent.node.name;
 }
+
+#pragma mark - Dealloc
 
 - (void)dealloc
 {

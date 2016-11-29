@@ -9,17 +9,20 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGEntityManaging.h"
 #import "OGAttacking.h"
+#import "OGInventoryItem.h"
 
 extern CGFloat const OGWeaponEntityDefaultAttackSpeed;
 extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 
-@interface OGWeaponEntity : GKEntity <OGAttacking>
+@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
 @property (nonatomic, weak) GKEntity *owner;
+
+@property (nonatomic, assign, readonly) BOOL isReloading;
 
 @property (nonatomic, assign, readonly) CGFloat attackSpeed;
 @property (nonatomic, assign, readonly) CGFloat reloadSpeed;
