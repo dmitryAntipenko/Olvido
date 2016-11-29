@@ -176,9 +176,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                                   
                                   if (unitAtlases)
                                   {
-                                      for (OGTextureAtlasesManagerPair *pair in unitAtlases)
+                                      for (NSString *atlasKey in unitAtlases.allKeys)
                                       {
-                                          [pair decrement];
+                                          [unitAtlases[atlasKey] decrement];
                                       }
                                   }
                               });
@@ -193,9 +193,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
                               {
                                   NSMutableDictionary *unitAtlases = self.textures[unitName];
                                   
-                                  for (OGTextureAtlasesManagerPair *pair in unitAtlases)
+                                  for (NSString *atlasKey in unitAtlases.allKeys)
                                   {
-                                      [pair decrement];
+                                      [unitAtlases[atlasKey] decrement];
                                   }
                               }
                           });

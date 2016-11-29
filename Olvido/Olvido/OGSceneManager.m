@@ -136,6 +136,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 - (void)sceneLoaderDidComplete:(OGSceneLoader *)sceneLoader
 {
+    
     if (sceneLoader.requestedForPresentation)
     {
         [self presentSceneWithSceneLoader:sceneLoader];
