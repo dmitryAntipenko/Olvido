@@ -63,7 +63,10 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentGameScene)
     {
-        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+        if ([self.currentGameScene.stateMachine canEnterState:[OGPauseLevelState class]])
+        {
+            [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+        }
     }
 }
 

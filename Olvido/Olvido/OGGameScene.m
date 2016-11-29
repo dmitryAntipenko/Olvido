@@ -415,7 +415,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 - (void)playerDidDie
 {
-    [self gameOver];
+    [self.stateMachine enterState:[OGDeathLevelState class]];
 }
 
 #pragma mark - TransitionComponentDelegate
@@ -539,10 +539,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
 }
 
-- (void)gameOver
+- (void)showGameOverScreen
 {
-    [self pauseWithoutPauseScreen];
-    
     if (!self.gameOverScreenNode.parent)
     {
         [self.camera addChild:self.gameOverScreenNode];

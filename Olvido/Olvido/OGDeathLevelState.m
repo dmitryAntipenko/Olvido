@@ -14,7 +14,8 @@
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    [self.scene gameOver];
+    [self.scene pauseWithoutPauseScreen];
+    [self.scene showGameOverScreen];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
