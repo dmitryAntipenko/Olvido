@@ -148,14 +148,13 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
     self.reloading = YES;
     self.weaponComponent.shouldReload = NO;
     
-    self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:self.reloadSpeed repeats:NO block:^(NSTimer *timer)
+    SKNode *ownerRenderNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
+    
+    [ownerRenderNode runAction:[SKAction waitForDuration:self.reloadSpeed] completion:^()
     {
         self.allowsAttacking = YES;
         self.reloading = NO;
         self.charge = self.maxCharge;
-        
-        [timer invalidate];
-        timer = nil;
     }];
 }
 

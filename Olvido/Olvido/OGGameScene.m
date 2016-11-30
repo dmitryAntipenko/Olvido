@@ -102,7 +102,7 @@ CGFloat const OGGameScenePlaySpeed = 1.0;
 
 CGFloat const OGGameSceneDoorOpenDistance = 50.0;
 
-NSUInteger const OGGameSceneZSpacePerCharacter = 100;
+NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
@@ -650,6 +650,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;
+        
+        //NSLog(@"%@ zPos: %lu", renderComponent.node.name, (unsigned long)characterZPosition);
         
         characterZPosition += OGGameSceneZSpacePerCharacter;
     }

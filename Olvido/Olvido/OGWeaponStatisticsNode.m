@@ -21,8 +21,6 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSValue *> *weaponProperties;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, SKLabelNode *> *labelNodes;
 
-@property (nonatomic, assign) BOOL shouldRedraw;
-
 @end
 
 @implementation OGWeaponStatisticsNode
@@ -62,8 +60,6 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
     {
         [self addPropertyWithKey:key value:properties[key]];
     }
-    
-    self.shouldRedraw = YES;
 }
 
 - (void)weaponWasRemoved
@@ -80,7 +76,6 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
 - (void)weaponDidUpdateKey:(NSString *)key withValue:(NSValue *)value
 {
     [self addPropertyWithKey:key value:value];
-    self.shouldRedraw = YES;
 }
 
 - (void)addPropertyWithKey:(NSString *)key value:(NSValue *)value
@@ -92,6 +87,8 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
         self.labelNodes[key] = [SKLabelNode node];
         [self addChild:self.labelNodes[key]];
     }
+    
+    [self redrawPropertyWithKey:key];
 }
 
 #pragma mark - OGHUDElement
@@ -107,25 +104,17 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
 
 - (void)update
 {
-    if (self.shouldRedraw)
-    {
-        [self redraw];
-        self.shouldRedraw = NO;
-    }
+    
 }
 
-- (void)redraw
+- (void)redrawPropertyWithKey:(NSString *)key
 {
-    CGFloat currentPositionY = -OGWeaponStatisticsNodeOffset;
     CGFloat yPerLabel = 30.0;
+    CGFloat currentPositionY = -OGWeaponStatisticsNodeOffset - yPerLabel * [self.labelNodes.allKeys indexOfObject:key];
     
-    for (NSString *key in self.weaponProperties)
-    {
-        self.labelNodes[key].horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        self.labelNodes[key].position = CGPointMake(OGWeaponStatisticsNodeOffset, currentPositionY);
-        self.labelNodes[key].text = [NSString stringWithFormat:@"%@: %@", key, self.weaponProperties[key]];
-        currentPositionY -= yPerLabel;
-    }
+    self.labelNodes[key].horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    self.labelNodes[key].position = CGPointMake(OGWeaponStatisticsNodeOffset, currentPositionY);
+    self.labelNodes[key].text = [NSString stringWithFormat:@"%@: %@", key, self.weaponProperties[key]];
 }
 
 @end
