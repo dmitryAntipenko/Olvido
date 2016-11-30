@@ -7,9 +7,19 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGContactNotifiableType.h"
 
-@interface OGZoneEntity : GKEntity
+@interface OGZoneEntity : GKEntity <OGContactNotifiableType>
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+#pragma mark - Init
+
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
+                  affectedEntities:(NSArray<Class> *)affectedEntities
+                  interactionBlock:(void (^)())interactionBlock;
+
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
+                  affectedEntities:(NSArray<Class> *)affectedEntities
+                  interactionBlock:(void (^)())interactionBlock
+                   particleEmitter:(SKEmitterNode *)particleEmitter NS_DESIGNATED_INITIALIZER;
 
 @end
