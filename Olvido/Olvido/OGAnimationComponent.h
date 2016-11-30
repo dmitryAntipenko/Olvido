@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+
 @class OGAnimation;
 
 @protocol OGAnimationComponentDelegate <NSObject>

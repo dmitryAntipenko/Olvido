@@ -7,6 +7,9 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+
+//MARK: Miscelaneous
+
 #import "OGAudioManager.h"
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
@@ -17,6 +20,12 @@
 #import "OGEnemyConfiguration.h"
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
+#import "OGLevelManager.h"
+#import "OGZPositionEnum.m"
+#import "OGLevelStateSnapshot.h"
+#import "OGEntitySnapshot.h"
+
+//MARK: Components
 
 #import "OGInputComponent.h"
 #import "OGRenderComponent.h"
@@ -33,6 +42,8 @@
 #import "OGRulesComponent.h"
 #import "OGShadowComponent.h"
 
+//MARK: Entities
+
 #import "OGPlayerEntity.h"
 #import "OGZombie.h"
 #import "OGEnemyEntity.h"
@@ -41,10 +52,17 @@
 #import "OGSpriteZoneEntity.h"
 #import "OGHiddenZoneEntity.h"
 #import "OGParticlesZoneEntity.h"
+#import "OGShootingWeapon.h"
 #import "OGKey.h"
 
+//MARK: Nodes
+
 #import "OGInventoryBarNode.h"
+#import "OGWeaponStatisticsNode.h"
 #import "OGButtonNode.h"
+#import "OGHUDNode.h"
+
+//MARK: States
 
 #import "OGBeforeStartLevelState.h"
 #import "OGStoryConclusionLevelState.h"
@@ -53,12 +71,7 @@
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
 
-#import "OGLevelManager.h"
-
-#import "OGZPositionEnum.m"
-
-#import "OGLevelStateSnapshot.h"
-#import "OGEntitySnapshot.h"
+//MARK: Constants
 
 NSString *const OGGameSceneDoorsNodeName = @"doors";
 NSString *const OGGameSceneItemsNodeName = @"items";
@@ -69,6 +82,9 @@ NSString *const OGGameSceneDestinationNodeName = @"destination";
 NSString *const OGGameSceneUserDataGraphs = @"Graphs";
 NSString *const OGGameSceneUserDataGraph = @"Graph_";
 NSString *const OGGameSceneDoorLockedKey = @"locked";
+NSString *const OGGameSceneAttackSpeedKey = @"attackSpeed";
+NSString *const OGGameSceneReloadSpeedKey = @"reloadSpeed";
+NSString *const OGGameSceneChargeKey = @"charge";
 
 NSString *const OGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -91,7 +107,7 @@ CGFloat const OGGameScenePlaySpeed = 1.0;
 
 CGFloat const OGGameSceneDoorOpenDistance = 50.0;
 
-NSUInteger const OGGameSceneZSpacePerCharacter = 100;
+NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
@@ -100,9 +116,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, weak) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
+
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+
+@property (nonatomic, strong) OGHUDNode *hudNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
+@property (nonatomic, strong) OGWeaponStatisticsNode *weaponStatisticsNode;
+@property (nonatomic, strong) OGTouchControlInputNode *controllInputNode;
 
 @property (nonatomic, assign) CGFloat lastUpdateTimeInterval;
 @property (nonatomic, assign) NSTimeInterval pausedTimeInterval;
@@ -113,7 +134,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
 
-@property (nonatomic, strong) OGTouchControlInputNode *controllInputNode;
 @end
 
 @implementation OGGameScene
@@ -132,7 +152,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
-        _inventoryBarNode = [OGInventoryBarNode node];
         _cameraController = [[OGCameraController alloc] init];
         
         _stateMachine = [[GKStateMachine alloc] initWithStates:@[
@@ -168,41 +187,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     return self;
 }
 
-#pragma mark - Getters
-
-- (NSArray<SKSpriteNode *> *)obstacleSpriteNodes
-{
-    NSMutableArray<SKSpriteNode *> *result = nil;
-    
-    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-     {
-         [result addObject:(SKSpriteNode *)node];
-     }];
-    
-    return result;
-}
-
-- (NSArray<GKPolygonObstacle *> *)polygonObstacles
-{
-    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
-}
-
-- (NSArray<GKEntity *> *)entities
-{
-    return self.mutableEntities.array;
-}
-
-- (GKObstacleGraph *)obstaclesGraph
-{
-    if (!_obstaclesGraph)
-    {
-        _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
-                                                        bufferRadius:OGEnemyEntityPathfindingGraphBufferRadius];
-    }
-    
-    return _obstaclesGraph;
-}
-
 #pragma mark - Scene contents
 
 - (void)didMoveToView:(SKView *)view
@@ -226,10 +210,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     [self.cameraController moveCameraToNode:self.currentRoom];
     
-    [self createInventoryBar];
+    [self createHUD];
 }
 
-#pragma mark - Scene Creation
+#pragma mark - Scene Contents Creation
 
 - (void)createSceneContents
 {
@@ -280,6 +264,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
     inputNode.size = self.size;
     self.controllInputNode = inputNode;
+    self.controllInputNode.zPosition = OGZPositionCategoryTouchControl;
     
     OGInputComponent *inputComponent = (OGInputComponent *) [self.player componentForClass:[OGInputComponent class]];
     inputNode.inputSourceDelegate = (id<OGControlInputSourceDelegate>) inputComponent;
@@ -375,20 +360,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     }
 }
 
-- (void)createInventoryBar
-{
-    OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
-    self.inventoryBarNode.playerEntity = self.player;
-    
-    if (self.camera)
-    {
-        [self.camera addChild:self.inventoryBarNode];
-    }
-    
-    [self.inventoryBarNode updateConstraints];
-}
-
 - (void)createSceneItems
 {
     SKNode *items = [self childNodeWithName:OGGameSceneItemsNodeName];
@@ -397,7 +368,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     for (SKSpriteNode *weaponSprite in weapons)
     {
-        OGWeaponEntity *shootingWeapon = [[OGWeaponEntity alloc] initWithSpriteNode:weaponSprite];
+        CGFloat attackSpeed = [weaponSprite.userData[OGGameSceneAttackSpeedKey] floatValue];
+        CGFloat reloadSpeed = [weaponSprite.userData[OGGameSceneReloadSpeedKey] floatValue];
+        NSUInteger charge = [weaponSprite.userData[OGGameSceneChargeKey] integerValue];
+        
+        OGShootingWeapon *shootingWeapon = [[OGShootingWeapon alloc] initWithSpriteNode:weaponSprite
+                                                                            attackSpeed:attackSpeed
+                                                                            reloadSpeed:reloadSpeed
+                                                                                 charge:charge];
         shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
     }
@@ -407,6 +385,48 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         OGKey *key = [[OGKey alloc] initWithSpriteNode:keySprite];
         [self addEntity:key];
     }
+}
+
+#pragma mark HUD creation
+
+- (void)createHUD
+{
+    self.hudNode = [OGHUDNode node];
+    self.hudNode.size = self.size;
+    
+    if (self.camera)
+    {
+        [self.camera addChild:self.hudNode];
+    }
+    
+    [self createInventoryBar];
+    [self createWeaponStatistics];
+}
+
+- (void)createWeaponStatistics
+{
+    self.weaponStatisticsNode = [[OGWeaponStatisticsNode alloc] init];
+    
+    if (self.weaponStatisticsNode)
+    {
+        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.player componentForClass:[OGWeaponComponent class]];
+        weaponComponent.weaponObserver = self.weaponStatisticsNode;
+        [self.hudNode addHUDElement:self.weaponStatisticsNode];
+    }
+}
+
+- (void)createInventoryBar
+{
+    OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
+    //self.inventoryBarNode.playerEntity = self.player;
+    
+    if (self.hudNode)
+    {
+        [self.hudNode addHUDElement:self.inventoryBarNode];
+    }
+    
+    [self.inventoryBarNode updateConstraints];
 }
 
 #pragma mark - Entity Adding
@@ -651,6 +671,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         
         [self.inventoryBarNode checkPlayerPosition];
     }
+    
+    [self.hudNode updateHUD];
 }
 
 - (void)didFinishUpdate
@@ -662,6 +684,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         [self.player updateAgentPositionToMatchNodePosition];
     }
     
+    [self sortSpritesWithZPosition];
+}
+
+- (void)sortSpritesWithZPosition
+{
     [self.entitiesSortableByZ sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
      {
          OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:[OGRenderComponent class]];
@@ -685,10 +712,44 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     for (GKEntity *entity in self.entitiesSortableByZ)
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
-        renderComponent.node.zPosition = characterZPosition;
-        
+        renderComponent.node.zPosition = characterZPosition;        
         characterZPosition += OGGameSceneZSpacePerCharacter;
     }
+}
+
+#pragma mark - Getters
+
+- (NSArray<SKSpriteNode *> *)obstacleSpriteNodes
+{
+    NSMutableArray<SKSpriteNode *> *result = nil;
+    
+    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
+     {
+         [result addObject:(SKSpriteNode *)node];
+     }];
+    
+    return result;
+}
+
+- (NSArray<GKPolygonObstacle *> *)polygonObstacles
+{
+    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
+}
+
+- (NSArray<GKEntity *> *)entities
+{
+    return self.mutableEntities.array;
+}
+
+- (GKObstacleGraph *)obstaclesGraph
+{
+    if (!_obstaclesGraph)
+    {
+        _obstaclesGraph = [[GKObstacleGraph alloc] initWithObstacles:[[NSArray alloc] init]
+                                                        bufferRadius:OGEnemyEntityPathfindingGraphBufferRadius];
+    }
+    
+    return _obstaclesGraph;
 }
 
 #pragma mark - Button Click Handling

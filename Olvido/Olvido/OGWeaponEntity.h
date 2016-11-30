@@ -9,8 +9,12 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGEntityManaging.h"
 #import "OGAttacking.h"
+#import "OGInventoryItem.h"
 
-@interface OGWeaponEntity : GKEntity <OGAttacking>
+extern CGFloat const OGWeaponEntityDefaultAttackSpeed;
+extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
+
+@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
 
@@ -19,7 +23,13 @@
 @property (nonatomic, weak) GKEntity *owner;
 
 @property (nonatomic, assign, readonly) CGFloat attackSpeed;
+@property (nonatomic, assign, readonly) CGFloat reloadSpeed;
+@property (nonatomic, assign) NSUInteger charge;
+@property (nonatomic, assign) NSUInteger maxCharge;
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+                       attackSpeed:(CGFloat)attackSpeed
+                       reloadSpeed:(CGFloat)reloadSpeed
+                            charge:(NSUInteger)charge;
 
 @end

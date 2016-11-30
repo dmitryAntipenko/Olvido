@@ -17,6 +17,9 @@
 NSString *const OGBulletTextureName = @"Bullet";
 NSInteger const OGBulletDamage = 1;
 
+CGFloat const OGBulletEntityDefaultSpeed = 10.0;
+CGFloat const OGBulletEntityDefaultMass = 0.005;
+
 static SKTexture *sOGBulletEntityTexture;
 
 @interface OGBullet ()
@@ -38,13 +41,16 @@ static SKTexture *sOGBulletEntityTexture;
         _renderComponent = [[OGRenderComponent alloc] init];
             
         SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithTexture:sOGBulletEntityTexture];
-        bulletSprite.physicsBody = [SKPhysicsBody bodyWithTexture:sOGBulletEntityTexture size:sOGBulletEntityTexture.size];
+        bulletSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sOGBulletEntityTexture.size.width / 2.0];
+        bulletSprite.physicsBody.mass = OGBulletEntityDefaultMass;
         
         _renderComponent.node = bulletSprite;
         [self addComponent:_renderComponent];
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
                                                                colliderType:[OGColliderType bullet]];
+        
+        _speed = OGBulletEntityDefaultSpeed;
     }
     
     return self;

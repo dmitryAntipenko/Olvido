@@ -10,9 +10,19 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 
+#import "OGWeaponComponentIdleState.h"
+#import "OGWeaponComponentAttackState.h"
+#import "OGWeaponComponentRechargeState.h"
+
 #import "OGWeaponEntity.h"
 
 CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
+
+@interface OGWeaponComponent ()
+
+@property (nonatomic, strong) GKStateMachine *weaponStateMachine;
+
+@end
 
 @implementation OGWeaponComponent
 
@@ -23,24 +33,60 @@ CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
     if (self)
     {
         _attackSpeed = OGWeaponComponentDefaultAttackSpeed;
+        
+        OGWeaponComponentIdleState *idleState = [[OGWeaponComponentIdleState alloc] initWithWeaponComponent:self];
+        OGWeaponComponentAttackState *attackState = [[OGWeaponComponentAttackState alloc] initWithWeaponComponent:self];
+        OGWeaponComponentRechargeState *rechargeState = [[OGWeaponComponentRechargeState alloc] initWithWeaponComponent:self];
+        
+        _weaponStateMachine = [GKStateMachine stateMachineWithStates:@[idleState, attackState, rechargeState]];
     }
     
     return self;
 }
+
+- (void)didAddToEntity
+{
+    [super didAddToEntity];
+    
+    [self.weaponStateMachine enterState:[OGWeaponComponentIdleState class]];
+}
+
+#pragma mark - Getters & Setters
 
 - (void)setWeapon:(OGWeaponEntity *)weapon
 {
     _weapon = weapon;
     
     self.attackSpeed = weapon.attackSpeed;
+    self.charge = weapon.charge;
+    self.maxCharge = weapon.maxCharge;
 }
+
+- (void)setCharge:(NSUInteger)charge
+{
+    _charge = charge;
+    
+    self.weapon.charge = _charge;
+}
+
+- (void)setMaxCharge:(NSUInteger)maxCharge
+{
+    _maxCharge = maxCharge;
+    
+    self.weapon.maxCharge = _maxCharge;
+}
+
+- (CGFloat)reloadSpeed
+{
+    return self.weapon.reloadSpeed;
+}
+
+#pragma mark - Update
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    if (self.weapon && self.shouldAttack && [self.weapon canAttack])
-    {
-        [self.weapon attackWithVector:self.attackDirection speed:self.attackSpeed];
-    }
+    [super updateWithDeltaTime:seconds];
+    [self.weaponStateMachine updateWithDeltaTime:seconds];
 }
 
 @end

@@ -7,13 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "OGHUDElement.h"
 
 @class OGInventoryComponent;
 @class OGPlayerEntity;
 
-@interface OGInventoryBarNode : SKSpriteNode
-
-@property (nonatomic, weak) OGPlayerEntity *playerEntity;
+@interface OGInventoryBarNode : SKSpriteNode <OGHUDElement>
 
 + (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize;
 
