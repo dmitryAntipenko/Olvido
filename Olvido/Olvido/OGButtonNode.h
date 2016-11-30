@@ -8,6 +8,10 @@
 
 #import <GameplayKit/GameplayKit.h>
 
+extern NSString *const OGButtonNodeUserDataTouchedTextureKey;
+extern NSString *const OGButtonNodeUserDataTouchedColorKey;
+extern NSString *const OGButtonNodeUserDataSelectorKey;
+
 @interface OGButtonNode : SKSpriteNode
 
 @end

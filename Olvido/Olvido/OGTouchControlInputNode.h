@@ -13,6 +13,7 @@
 
 @property (nonatomic, weak) id<OGControlInputSourceDelegate> inputSourceDelegate;
 @property (nonatomic, assign) BOOL shouldHideThumbStickNodes;
+@property (nonatomic, assign) BOOL shouldHidePauseNode;
 
 - (instancetype)initWithFrame:(CGRect)frame thumbStickNodeSize:(CGSize)size;
 

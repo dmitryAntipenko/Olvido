@@ -81,6 +81,7 @@ NSString *const OGGameSceneObstacleName = @"obstacle";
 NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
 NSString *const OGGameSceneRestartButtonName = @"RestartButton";
 NSString *const OGGameSceneMenuButtonName = @"MenuButton";
+NSString *const OGGameScenePauseButtonName = @"PauseButton";
 
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
@@ -499,6 +500,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     self.pausedTimeInterval = NSTimeIntervalSince1970;
     self.controllInputNode.shouldHideThumbStickNodes = YES;
+    self.controllInputNode.shouldHidePauseNode = YES;
 }
 
 - (void)showPauseScreen
@@ -514,6 +516,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     [super resume];
     
     self.controllInputNode.shouldHideThumbStickNodes = NO;
+    self.controllInputNode.shouldHidePauseNode = NO;
     
     self.physicsWorld.speed = OGGameScenePlaySpeed;
     self.speed = OGGameScenePlaySpeed;
@@ -642,6 +645,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     else if ([buttonNode.name isEqualToString:OGGameSceneMenuButtonName])
     {
         [self.sceneDelegate didCallExit];
+    }
+    else if ([buttonNode.name isEqualToString:OGGameScenePauseButtonName])
+    {
+        [self.sceneDelegate didCallPause];
     }
 }
 

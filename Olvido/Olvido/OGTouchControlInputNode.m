@@ -8,11 +8,18 @@
 
 #import "OGTouchControlInputNode.h"
 #import "OGThumbStickNode.h"
+#import "OGButtonNode.h"
+
+NSString *const OGTouchControlInputNodePauseButtonTexture = @"MenuButton";
+NSString *const OGTouchControlInputNodePauseButtonTouchedColor = @"0xd3d3d3";
+NSString *const OGTouchControlInputNodePayseButtonName = @"PauseButton";;
 
 @interface OGTouchControlInputNode () <OGThumbStickNodeDelegate>
 
 @property (nonatomic, strong) OGThumbStickNode *leftThumbStick;
 @property (nonatomic, strong) OGThumbStickNode *rightThumbStick;
+
+@property (nonatomic, strong) OGButtonNode *pauseNode;
 
 @property (nonatomic, strong) NSMutableSet<UITouch *> *leftControlTouches;
 @property (nonatomic, strong) NSMutableSet<UITouch *> *rightControlTouches;
@@ -31,8 +38,11 @@
     {
         _centerDividerWidth = frame.size.width / 4.5;
         
+        CGFloat halfFrameWidth = frame.size.width / 2.0;
+        CGFloat halfFrameHeight = frame.size.height / 2.0;
+        
         CGFloat initialVerticalOffset = -size.height;
-        CGFloat initialHorizontalOffset = frame.size.width / 2.0 - size.width;
+        CGFloat initialHorizontalOffset = halfFrameWidth - size.width;
         
         _leftControlTouches = [NSMutableSet set];
         _rightControlTouches = [NSMutableSet set];
@@ -46,8 +56,22 @@
         _rightThumbStick.thumbStickNodeDelegate = self;
         _leftThumbStick.thumbStickNodeDelegate = self;
         
+        _pauseNode = [[OGButtonNode alloc] init];
+        _pauseNode.name = OGTouchControlInputNodePayseButtonName;
+        _pauseNode.texture = [SKTexture textureWithImageNamed:OGTouchControlInputNodePauseButtonTexture];
+        _pauseNode.size = CGSizeMake(75, 75);
+        _pauseNode.position = CGPointMake(halfFrameWidth - _pauseNode.size.width,
+                                          halfFrameHeight - _pauseNode.size.height);
+        _pauseNode.colorBlendFactor = 1.0;
+        _pauseNode.color = [SKColor whiteColor];
+        
+        NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+        userData[OGButtonNodeUserDataTouchedColorKey] = OGTouchControlInputNodePauseButtonTouchedColor;
+        _pauseNode.userData = userData;
+        
         [self addChild:_leftThumbStick];
         [self addChild:_rightThumbStick];
+        [self addChild:_pauseNode];
     }
     
     return self;
@@ -59,6 +83,13 @@
     
     self.leftThumbStick.hidden = _shouldHideThumbStickNodes;
     self.rightThumbStick.hidden = _shouldHideThumbStickNodes;
+}
+
+- (void)setShouldHidePauseNode:(BOOL)shouldHidePauseNode
+{
+    _shouldHidePauseNode = shouldHidePauseNode;
+    
+    self.pauseNode.hidden = _shouldHidePauseNode;
 }
 
 - (BOOL)isUserInteractionEnabled
