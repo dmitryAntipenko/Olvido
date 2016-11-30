@@ -73,6 +73,7 @@
 		2177AF1D1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */; };
 		21AD66D21DEC595300E4BC93 /* OGBoss.m in Sources */ = {isa = PBXBuildFile; fileRef = 21AD66D11DEC595300E4BC93 /* OGBoss.m */; };
 		21AD66D41DEC5C5B00E4BC93 /* Boss.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21AD66D31DEC5C5B00E4BC93 /* Boss.xcassets */; };
+		21AD66D61DEF35A700E4BC93 /* ShopScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21AD66D51DEF35A700E4BC93 /* ShopScreen.sks */; };
 		21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 21DD19721DBE1C0E0048658A /* OGChapter1.sks */; };
 		21F6B5431DE71FFA0062AE16 /* OGPlayerEntityDieState.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */; };
 		21F6B5461DE8A25D0062AE16 /* OGTextureConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F6B5451DE8A25D0062AE16 /* OGTextureConfiguration.m */; };
@@ -259,6 +260,7 @@
 		21AD66D01DEC595300E4BC93 /* OGBoss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBoss.h; sourceTree = "<group>"; };
 		21AD66D11DEC595300E4BC93 /* OGBoss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBoss.m; sourceTree = "<group>"; };
 		21AD66D31DEC5C5B00E4BC93 /* Boss.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Boss.xcassets; sourceTree = "<group>"; };
+		21AD66D51DEF35A700E4BC93 /* ShopScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShopScreen.sks; sourceTree = "<group>"; };
 		21DD19721DBE1C0E0048658A /* OGChapter1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter1.sks; sourceTree = "<group>"; };
 		21F6B5411DE71FFA0062AE16 /* OGPlayerEntityDieState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPlayerEntityDieState.h; sourceTree = "<group>"; };
 		21F6B5421DE71FFA0062AE16 /* OGPlayerEntityDieState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGPlayerEntityDieState.m; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 			children = (
 				EAAA9D001DC634060086E15B /* OGGameOverScreen.sks */,
 				1B36E4C71DC618100080D80B /* OGPauseScreen.sks */,
+				21AD66D51DEF35A700E4BC93 /* ShopScreen.sks */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -1127,6 +1130,7 @@
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */,
 				1B4C94621DEC692300EA5ED6 /* Level1CustomResources.plist in Resources */,
+				21AD66D61DEF35A700E4BC93 /* ShopScreen.sks in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 				215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */,
 				215A8A901DDE232C00C5C90D /* Level1.plist in Resources */,
