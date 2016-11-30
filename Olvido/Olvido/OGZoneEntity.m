@@ -18,7 +18,8 @@
 @property (nonatomic, strong) NSArray<Class> *affectedEntities;
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) void (^interactionBlock)(void);
+@property (nonatomic, strong) void (^interactionBeginBlock)(GKEntity *entity);
+@property (nonatomic, strong) void (^interactionEndBlock)(GKEntity *entity);
 
 @end
 
@@ -28,27 +29,33 @@
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                   affectedEntities:(NSArray<Class> *)affectedEntities
-                  interactionBlock:(void (^)())interactionBlock
+             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
+               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
 {
-    return [self initWithSpriteNode:spriteNode affectedEntities:affectedEntities interactionBlock:interactionBlock particleEmitter:nil];
+    return [self initWithSpriteNode:spriteNode affectedEntities:affectedEntities interactionBeginBlock:interactionBeginBlock interactionEndBlock:interactionEndBlock particleEmitter:nil];
 }
 
 - (instancetype)init
 {
-    return [self initWithSpriteNode:nil affectedEntities:nil interactionBlock:nil];
+    return [self initWithSpriteNode:nil affectedEntities:nil interactionBeginBlock:nil interactionEndBlock:nil];
 }
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                   affectedEntities:(NSArray<Class> *)affectedEntities
-                  interactionBlock:(void (^)())interactionBlock
+             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
+               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
                    particleEmitter:(SKEmitterNode *)particleEmitter
 {
-    if (spriteNode && affectedEntities && interactionBlock)
+    if (spriteNode && affectedEntities && interactionBeginBlock && interactionEndBlock)
     {
         self = [super init];
         
         if (self)
         {
+            _interactionBeginBlock = interactionBeginBlock;
+            _interactionEndBlock = interactionEndBlock;
+            _affectedEntities = [affectedEntities copy];
+            
             _renderComponent = [[OGRenderComponent alloc] init];
             
             SKNode *renderComponentNode = nil;
@@ -95,12 +102,18 @@
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
+    if ([self.affectedEntities containsObject:entity.class])
+    {
+        self.interactionBeginBlock(entity);
+    }
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-    
+    if ([self.affectedEntities containsObject:entity.class])
+    {
+        self.interactionEndBlock(entity);
+    }
 }
 
 @end

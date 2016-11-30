@@ -15,11 +15,13 @@
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                   affectedEntities:(NSArray<Class> *)affectedEntities
-                  interactionBlock:(void (^)())interactionBlock;
+             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
+               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                   affectedEntities:(NSArray<Class> *)affectedEntities
-                  interactionBlock:(void (^)())interactionBlock
+             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
+               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
                    particleEmitter:(SKEmitterNode *)particleEmitter NS_DESIGNATED_INITIALIZER;
 
 @end
