@@ -6,19 +6,21 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGAreaEntity.h"
+#import "OGZoneEntity.h"
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGZPositionEnum.m"
+#import "OGColliderType.h"
+#import "OGCollisionBitMask.h"
 
-@interface OGAreaEntity ()
+@interface OGZoneEntity ()
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 
 @end
 
-@implementation OGAreaEntity
+@implementation OGZoneEntity
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
@@ -32,7 +34,12 @@
             _renderComponent.node.position = spriteNode.position;
             _renderComponent.node.zPosition = OGZPositionCategoryBackground;
             
-            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:<#(SKPhysicsBody *)#> colliderType:<#(OGColliderType *)#>]
+            SKPhysicsBody *physicsBody = [SKPhysicsBody bodyWithTexture:spriteNode.texture size:spriteNode.size];
+            OGColliderType *colliderType = [OGColliderType zone];
+            colliderType.collisionBitMask = OGCollisionBitMaskDefault;
+            
+            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:physicsBody colliderType:];
+            _physicsComponent.
         }
     }
     else

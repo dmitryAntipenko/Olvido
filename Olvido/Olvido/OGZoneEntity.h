@@ -8,7 +8,7 @@
 
 #import <GameplayKit/GameplayKit.h>
 
-@interface OGAreaEntity : GKEntity
+@interface OGZoneEntity : GKEntity
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 

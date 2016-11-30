@@ -48,7 +48,7 @@
 		1B7F24A71DD5D074004918C8 /* OGSceneMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24961DD5D074004918C8 /* OGSceneMetadata.m */; };
 		1B7F24A91DD5D074004918C8 /* ScenesConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24981DD5D074004918C8 /* ScenesConfiguration.plist */; };
 		1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */; };
-		1BF21BF41DEE12BF009798F0 /* OGAreaEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF21BF31DEE12BF009798F0 /* OGAreaEntity.m */; };
+		1BF21BF41DEE12BF009798F0 /* OGZoneEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BF21BF31DEE12BF009798F0 /* OGZoneEntity.m */; };
 		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210CC8121DD5D7EE00824E84 /* Player.xcassets */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
@@ -217,8 +217,8 @@
 		1B7F24AF1DD5D916004918C8 /* OGMenuBaseScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMenuBaseScene.m; sourceTree = "<group>"; };
 		1B7F24B31DD61F98004918C8 /* OGInventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGInventoryItem.h; sourceTree = "<group>"; };
 		1BDD29CC1DE22D0300FFFC26 /* OGGameSceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGameSceneDelegate.h; sourceTree = "<group>"; };
-		1BF21BF21DEE12BF009798F0 /* OGAreaEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAreaEntity.h; sourceTree = "<group>"; };
-		1BF21BF31DEE12BF009798F0 /* OGAreaEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAreaEntity.m; sourceTree = "<group>"; };
+		1BF21BF21DEE12BF009798F0 /* OGZoneEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGZoneEntity.h; sourceTree = "<group>"; };
+		1BF21BF31DEE12BF009798F0 /* OGZoneEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZoneEntity.m; sourceTree = "<group>"; };
 		210CC8031DD3532000824E84 /* OGOrientationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGOrientationComponent.h; sourceTree = "<group>"; };
 		210CC8041DD3532000824E84 /* OGOrientationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGOrientationComponent.m; sourceTree = "<group>"; };
 		210CC8121DD5D7EE00824E84 /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
@@ -576,8 +576,8 @@
 		1BF21BF01DEE1287009798F0 /* Area */ = {
 			isa = PBXGroup;
 			children = (
-				1BF21BF21DEE12BF009798F0 /* OGAreaEntity.h */,
-				1BF21BF31DEE12BF009798F0 /* OGAreaEntity.m */,
+				1BF21BF21DEE12BF009798F0 /* OGZoneEntity.h */,
+				1BF21BF31DEE12BF009798F0 /* OGZoneEntity.m */,
 			);
 			name = Area;
 			sourceTree = "<group>";
@@ -1242,7 +1242,7 @@
 				EAA490C71DA7BE64007734F0 /* OGConstants.m in Sources */,
 				EADA97641DE745CC003D708B /* OGHealthBarComponent.m in Sources */,
 				1B2E873B1DDB0EE40022CAB6 /* GKScene+OGFactory.m in Sources */,
-				1BF21BF41DEE12BF009798F0 /* OGAreaEntity.m in Sources */,
+				1BF21BF41DEE12BF009798F0 /* OGZoneEntity.m in Sources */,
 				EA976C811D9AAEE2003B77FC /* main.m in Sources */,
 				EAF7F12F1DDA306C0067D76D /* OGPlayerConfiguration.m in Sources */,
 				215A8A7C1DDCBA6A00C5C90D /* OGFuzzyEnemyRule.m in Sources */,
