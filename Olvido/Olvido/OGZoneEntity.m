@@ -58,8 +58,6 @@
             
             _renderComponent = [[OGRenderComponent alloc] init];
             
-            SKNode *renderComponentNode = nil;
-            
             if (particleEmitter)
             {
                 SKCropNode *cropNode = [SKCropNode node];
@@ -69,24 +67,25 @@
                 
                 [spriteNode removeFromParent];
                 [cropNode addChild:spriteNode];
-                renderComponentNode = cropNode;
+                _renderComponent.node = cropNode;
             }
             else
             {
-                renderComponentNode = spriteNode;
+                _renderComponent.node = spriteNode;
             }
-            
-            _renderComponent.node = renderComponentNode;
             [self addComponent:_renderComponent];
             
-            SKPhysicsBody *physicsBody = [SKPhysicsBody bodyWithTexture:spriteNode.texture size:spriteNode.size];
-            physicsBody.dynamic = NO;
-            physicsBody.allowsRotation = NO;
-            physicsBody.affectedByGravity = NO;
+            SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithTexture:spriteNode.texture size:spriteNode.texture.size];
+            physicsBody.usesPreciseCollisionDetection = YES;
             
             OGColliderType *colliderType = [OGColliderType zone];
             
+            NSArray *contactColliders = @[[OGColliderType player], [OGColliderType enemy]];
+            [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:colliderType];
+            
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:physicsBody colliderType:colliderType];
+            
+            _renderComponent.node.physicsBody = physicsBody;
             [self addComponent:_physicsComponent];
         }
     }

@@ -38,6 +38,7 @@
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
+#import "OGZoneEntity.h"
 #import "OGKey.h"
 
 #import "OGInventoryBarNode.h"
@@ -230,6 +231,44 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     [self createEnemies];
     [self createDoors];
     [self createSceneItems];
+    [self createZones];
+}
+
+- (void)createZones
+{
+    NSUInteger idx = 0;
+    SKSpriteNode *zoneNode = nil;
+    
+    //    while (zoneNode)
+    //    {
+    //        NSString *zoneName = [NSString stringWithFormat:@"Zone_%lu", (unsigned long)idx++];
+    NSString *zoneName = @"Zone_0";
+    zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
+    
+    OGZoneEntity *zoneEntity = [[OGZoneEntity alloc] initWithSpriteNode:zoneNode
+                                                       affectedEntities:@[[OGPlayerEntity class], [OGZombie class]]
+                                                  interactionBeginBlock:^(GKEntity *entity)
+                                {
+                                    OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+                                    
+                                    if (movementComponent)
+                                    {
+                                        movementComponent.speedFactor = 0.5;
+                                    }
+                                }
+                                                    interactionEndBlock:^(GKEntity *entity)
+                                {
+                                    OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+                                    
+                                    if (movementComponent)
+                                    {
+                                        movementComponent.speedFactor = 1.0;
+                                    }
+                                }];
+    
+    
+    [self addEntity:zoneEntity];
+    //    }
 }
 
 - (void)createTouchControlInputNode
@@ -590,7 +629,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 }
 
 - (void)didFinishUpdate
-{    
+{
     [super didFinishUpdate];
     
     if (((OGRenderComponent *) [self.player componentForClass:[OGRenderComponent class]]).node)
