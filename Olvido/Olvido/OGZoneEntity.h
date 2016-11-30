@@ -14,14 +14,8 @@
 #pragma mark - Init
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-                  affectedEntities:(NSArray<Class> *)affectedEntities
+                 affectedColliders:(NSArray<Class> *)affectedEntities
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
                interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock;
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-                  affectedEntities:(NSArray<Class> *)affectedEntities
-             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
-               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
-                   particleEmitter:(SKEmitterNode *)particleEmitter NS_DESIGNATED_INITIALIZER;
 
 @end

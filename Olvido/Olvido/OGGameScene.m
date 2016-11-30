@@ -39,6 +39,7 @@
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
 #import "OGZoneEntity.h"
+#import "OGHiddenZoneEntity.h"
 #import "OGKey.h"
 
 #import "OGInventoryBarNode.h"
@@ -242,16 +243,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     NSUInteger idx = 0;
     SKSpriteNode *zoneNode = nil;
     
-    //    while (zoneNode)
-    //    {
-    //        NSString *zoneName = [NSString stringWithFormat:@"Zone_%lu", (unsigned long)idx++];
     NSString *zoneName = @"Zone_0";
     zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
     
-    SKEmitterNode *emitter = [SKEmitterNode nodeWithFileNamed:@"SlimeZoneParticleSystem"];
-    
     OGZoneEntity *zoneEntity = [[OGZoneEntity alloc] initWithSpriteNode:zoneNode
-                                                       affectedEntities:@[[OGPlayerEntity class], [OGZombie class]]
+                                                      affectedColliders:@[]
                                                   interactionBeginBlock:^(GKEntity *entity)
                                 {
                                     OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
@@ -269,8 +265,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
                                     {
                                         movementComponent.speedFactor = 1.0;
                                     }
-                                }
-                                                        particleEmitter:emitter];
+                                }];
     
     
     [self addEntity:zoneEntity];

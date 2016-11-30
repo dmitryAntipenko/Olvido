@@ -53,14 +53,18 @@
 
 - (void)asynchronouslyLoadSceneForPresentation;
 {
-    if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
-    {
-        [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
-    }
-    else if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
-    {
-        [self.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
+                       {
+                           [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
+                       }
+                       else if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+                       {
+                           [self.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
+                       }
+                   });
+    
 }
 
 - (void)purgeResources

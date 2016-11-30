@@ -15,7 +15,6 @@
 
 @interface OGZoneEntity ()
 
-@property (nonatomic, strong) NSArray<Class> *affectedEntities;
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong) void (^interactionBeginBlock)(GKEntity *entity);
@@ -28,25 +27,11 @@
 #pragma mark - Init
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-                  affectedEntities:(NSArray<Class> *)affectedEntities
+                 affectedColliders:(NSArray<OGColliderType *> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
                interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
 {
-    return [self initWithSpriteNode:spriteNode affectedEntities:affectedEntities interactionBeginBlock:interactionBeginBlock interactionEndBlock:interactionEndBlock particleEmitter:nil];
-}
-
-- (instancetype)init
-{
-    return [self initWithSpriteNode:nil affectedEntities:nil interactionBeginBlock:nil interactionEndBlock:nil];
-}
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-                  affectedEntities:(NSArray<Class> *)affectedEntities
-             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
-               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
-                   particleEmitter:(SKEmitterNode *)particleEmitter
-{
-    if (spriteNode && affectedEntities && interactionBeginBlock && interactionEndBlock)
+    if (spriteNode && affectedColliders && interactionBeginBlock && interactionEndBlock)
     {
         self = [super init];
         
@@ -54,38 +39,30 @@
         {
             _interactionBeginBlock = interactionBeginBlock;
             _interactionEndBlock = interactionEndBlock;
-            _affectedEntities = [affectedEntities copy];
             
             _renderComponent = [[OGRenderComponent alloc] init];
             _renderComponent.sortableByZ = NO;
+            _renderComponent.node.position = spriteNode.position;
+            _renderComponent.node.zPosition = spriteNode.zPosition;
             
-            if (particleEmitter)
-            {
-                SKCropNode *cropNode = [SKCropNode node];
-                cropNode.maskNode = spriteNode;
-                cropNode.position = spriteNode.position;
-                cropNode.zPosition = spriteNode.zPosition;
-                
-                [spriteNode removeFromParent];
-                [cropNode addChild:spriteNode];
-                _renderComponent.node = cropNode;
-            }
-            else
-            {
-                _renderComponent.node = spriteNode;
-            }
+            [spriteNode.parent addChild:_renderComponent.node];
+            [spriteNode removeFromParent];
+            
+            spriteNode.position = CGPointZero;
+            [_renderComponent.node addChild:spriteNode];
+            
             [self addComponent:_renderComponent];
             
             SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithTexture:spriteNode.texture size:spriteNode.texture.size];
             physicsBody.usesPreciseCollisionDetection = YES;
             
             OGColliderType *colliderType = [OGColliderType zone];
-            NSArray *contactColliders = @[[OGColliderType player], [OGColliderType enemy]];
-            [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:colliderType];
+            [[OGColliderType requestedContactNotifications] setObject:affectedColliders forKey:colliderType];
             
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:physicsBody colliderType:colliderType];
             
-            _renderComponent.node.physicsBody = physicsBody;
+            _renderComponent.node.physicsBody = physicsBody;//will removed after physict component add physics body to render node
+            
             [self addComponent:_physicsComponent];
         }
     }
@@ -97,22 +74,21 @@
     return self;
 }
 
+- (instancetype)init
+{
+    return [self initWithSpriteNode:nil affectedColliders:nil interactionBeginBlock:nil interactionEndBlock:nil];
+}
+
 #pragma mark - OGContactNotifiableType
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    if ([self.affectedEntities containsObject:entity.class])
-    {
-        self.interactionBeginBlock(entity);
-    }
+    self.interactionBeginBlock(entity);
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-    if ([self.affectedEntities containsObject:entity.class])
-    {
-        self.interactionEndBlock(entity);
-    }
+    self.interactionEndBlock(entity);
 }
 
 @end
