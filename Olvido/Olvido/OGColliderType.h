@@ -23,6 +23,7 @@
 + (instancetype)weapon;
 + (instancetype)bullet;
 + (instancetype)key;
++ (instancetype)zone;
 
 + (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
 

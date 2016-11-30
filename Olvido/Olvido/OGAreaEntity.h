@@ -10,4 +10,6 @@
 
 @interface OGAreaEntity : GKEntity
 
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+
 @end
