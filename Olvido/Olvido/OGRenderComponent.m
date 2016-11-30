@@ -18,6 +18,7 @@
     if (self)
     {
         _node = [[SKNode alloc] init];
+        _sortableByZ = YES;
     }
     
     return self;

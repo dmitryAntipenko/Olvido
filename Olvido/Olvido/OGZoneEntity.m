@@ -57,6 +57,7 @@
             _affectedEntities = [affectedEntities copy];
             
             _renderComponent = [[OGRenderComponent alloc] init];
+            _renderComponent.sortableByZ = NO;
             
             if (particleEmitter)
             {
@@ -79,7 +80,6 @@
             physicsBody.usesPreciseCollisionDetection = YES;
             
             OGColliderType *colliderType = [OGColliderType zone];
-            
             NSArray *contactColliders = @[[OGColliderType player], [OGColliderType enemy]];
             [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:colliderType];
             

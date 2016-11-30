@@ -92,6 +92,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
+@property (nonatomic, strong) NSMutableArray<GKEntity *> *entitiesSortableByZ;
 @property (nonatomic, strong) SKNode *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, weak) OGPlayerEntity *player;
@@ -124,6 +125,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     if (self)
     {
+        _entitiesSortableByZ = [[NSMutableArray alloc] init];
+        
         _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
         
         _inventoryBarNode = [OGInventoryBarNode node];
@@ -416,17 +419,27 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         [componentSystem addComponentWithEntity:entity];
     }
     
-    SKNode *renderNode = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
+    OGRenderComponent *renderComponent = (OGRenderComponent *)[entity componentForClass:[OGRenderComponent class]];
     
-    if (renderNode && !renderNode.parent)
+    if(renderComponent)
     {
-        [self addChild:renderNode];
-        
-        SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]).node;
-        
-        if (shadowNode)
+        if (renderComponent.isSortableByZ)
         {
-            shadowNode.zPosition = OGZPositionCategoryShadows;
+            [self.entitiesSortableByZ addObject:entity];
+        }
+        
+        SKNode *renderNode = renderComponent.node;
+        
+        if (renderNode && !renderNode.parent)
+        {
+            [self addChild:renderNode];
+            
+            SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]).node;
+            
+            if (shadowNode)
+            {
+                shadowNode.zPosition = OGZPositionCategoryShadows;
+            }
         }
     }
     
@@ -440,9 +453,18 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 - (void)removeEntity:(GKEntity *)entity
 {
-    SKNode *node = ((OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]]).node;
+    OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
     
-    [node removeFromParent];
+    if (renderComponent)
+    {
+        if (renderComponent.isSortableByZ)
+        {
+            [self.entitiesSortableByZ removeObject:entity];
+        }
+        
+        SKNode *node = renderComponent.node;
+        [node removeFromParent];
+    }
     
     for (GKComponentSystem *componentSystem in self.componentSystems)
     {
@@ -637,7 +659,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
         [self.player updateAgentPositionToMatchNodePosition];
     }
     
-    [self.mutableEntities sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
+    [self.entitiesSortableByZ sortUsingComparator:(NSComparator)^(GKEntity *objA, GKEntity *objB)
      {
          OGRenderComponent *renderComponentA = (OGRenderComponent *) [objA componentForClass:[OGRenderComponent class]];
          OGRenderComponent *renderComponentB = (OGRenderComponent *) [objB componentForClass:[OGRenderComponent class]];
@@ -657,7 +679,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     
     NSUInteger characterZPosition = OGZPositionCategoryPhysicsWorld;
     
-    for (GKEntity *entity in self.entities)
+    for (GKEntity *entity in self.entitiesSortableByZ)
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;
