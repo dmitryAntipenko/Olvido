@@ -178,10 +178,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
-        _pauseScreenNode.zPosition = OGZPositionCategoryForeground;
+        _pauseScreenNode.zPosition = OGZPositionCategoryTouchControl;
         
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
-        _gameOverScreenNode.zPosition = OGZPositionCategoryForeground;
+        _gameOverScreenNode.zPosition = OGZPositionCategoryTouchControl;
     }
     
     return self;
