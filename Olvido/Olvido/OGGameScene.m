@@ -649,10 +649,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     for (GKEntity *entity in self.entities)
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
-        renderComponent.node.zPosition = characterZPosition;
-        
-        //NSLog(@"%@ zPos: %lu", renderComponent.node.name, (unsigned long)characterZPosition);
-        
+        renderComponent.node.zPosition = characterZPosition;        
         characterZPosition += OGGameSceneZSpacePerCharacter;
     }
 }

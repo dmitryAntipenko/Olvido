@@ -22,11 +22,10 @@ extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 
 @property (nonatomic, weak) GKEntity *owner;
 
-@property (nonatomic, assign, readonly) BOOL isReloading;
-
 @property (nonatomic, assign, readonly) CGFloat attackSpeed;
 @property (nonatomic, assign, readonly) CGFloat reloadSpeed;
-@property (nonatomic, assign, readonly) NSUInteger charge;
+@property (nonatomic, assign) NSUInteger charge;
+@property (nonatomic, assign) NSUInteger maxCharge;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
                        attackSpeed:(CGFloat)attackSpeed

@@ -48,7 +48,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 {
     [super wasTaken];
     
-    [self.weaponComponent.weaponObserver weaponWasTakenWithProperties:@{@"Charge" : @(self.charge), @"Reloading" : @(self.isReloading)}];
+    [self.weaponComponent.weaponObserver weaponWasTakenWithProperties:@{@"Charge" : @(self.charge)}];
 }
 
 - (void)didThrown
@@ -62,8 +62,6 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 - (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed
 {
-    [super attackWithVector:vector speed:speed];
-    
     if (vector.dx != 0.0 && vector.dy != 0.0)
     {
         OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]];

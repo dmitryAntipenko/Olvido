@@ -30,14 +30,9 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 @property (nonatomic, assign) BOOL allowsAttacking;
-@property (nonatomic, assign) BOOL reloading;
-@property (nonatomic, strong) NSTimer *attackTimer;
-@property (nonatomic, strong) NSTimer *reloadTimer;
 
 @property (nonatomic, assign, readwrite) CGFloat attackSpeed;
 @property (nonatomic, assign, readwrite) CGFloat reloadSpeed;
-@property (nonatomic, assign, readwrite) NSUInteger maxCharge;
-@property (nonatomic, assign, readwrite) NSUInteger charge;
 
 @end
 
@@ -99,69 +94,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
     [self.weaponComponent.weaponObserver weaponDidUpdateKey:@"Charge" withValue:@(_charge)];
 }
 
-- (void)setReloading:(BOOL)reloading
-{
-    _reloading = reloading;
-    
-    [self.weaponComponent.weaponObserver weaponDidUpdateKey:@"Reloading" withValue:[NSNumber numberWithBool:_reloading]];
-}
-
-- (BOOL)isReloading
-{
-    return self.reloading;
-}
-
 #pragma mark - OGAttacking
-
-- (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed
-{
-    if (vector.dx != 0.0 && vector.dy != 0.0)
-    {
-        OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]];
-        
-        if (ownerRenderComponent)
-        {
-            self.allowsAttacking = NO;
-            
-            self.attackTimer = [NSTimer scheduledTimerWithTimeInterval:speed repeats:NO block:^(NSTimer *timer)
-            {
-                if (self.charge <= 0)
-                {
-                    self.weaponComponent.shouldReload = YES;
-                }
-                else
-                {
-                    self.allowsAttacking = YES;
-                    self.charge--;
-                }
-                
-                [timer invalidate];
-                timer = nil;
-            }];
-        }
-    }
-}
-
-- (void)reload
-{
-    self.allowsAttacking = NO;
-    self.reloading = YES;
-    self.weaponComponent.shouldReload = NO;
-    
-    SKNode *ownerRenderNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
-    
-    [ownerRenderNode runAction:[SKAction waitForDuration:self.reloadSpeed] completion:^()
-    {
-        self.allowsAttacking = YES;
-        self.reloading = NO;
-        self.charge = self.maxCharge;
-    }];
-}
-
-- (BOOL)canAttack
-{
-    return self.allowsAttacking;
-}
 
 - (OGWeaponComponent *)weaponComponent
 {
@@ -202,21 +135,6 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 - (NSString *)identifier
 {
     return self.renderComponent.node.name;
-}
-
-#pragma mark - Dealloc
-
-- (void)dealloc
-{
-    if (_attackTimer)
-    {
-        [_attackTimer invalidate];
-    }
-    
-    if (_reloadTimer)
-    {
-        [_reloadTimer invalidate];
-    }
 }
 
 @end

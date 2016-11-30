@@ -121,6 +121,9 @@
 		EAC89F3E1DEDB3C300E69A48 /* OGShootingWeapon.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F3D1DEDB3C300E69A48 /* OGShootingWeapon.m */; };
 		EAC89F411DEDC2BA00E69A48 /* OGHUDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F401DEDC2BA00E69A48 /* OGHUDNode.m */; };
 		EAC89F441DEDC52800E69A48 /* OGWeaponStatisticsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F431DEDC52800E69A48 /* OGWeaponStatisticsNode.m */; };
+		EAC89F4B1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F4A1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m */; };
+		EAC89F4E1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F4D1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m */; };
+		EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */; };
 		EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */; };
 		EADA97641DE745CC003D708B /* OGHealthBarComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA97631DE745CC003D708B /* OGHealthBarComponent.m */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
@@ -359,6 +362,12 @@
 		EAC89F431DEDC52800E69A48 /* OGWeaponStatisticsNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponStatisticsNode.m; sourceTree = "<group>"; };
 		EAC89F461DEDC94600E69A48 /* OGHUDElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGHUDElement.h; sourceTree = "<group>"; };
 		EAC89F471DEDFD3400E69A48 /* OGWeaponComponentObserving.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponentObserving.h; sourceTree = "<group>"; };
+		EAC89F491DEF1DF700E69A48 /* OGWeaponComponentIdleState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponentIdleState.h; sourceTree = "<group>"; };
+		EAC89F4A1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponentIdleState.m; sourceTree = "<group>"; };
+		EAC89F4C1DEF1E0300E69A48 /* OGWeaponComponentAttackState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponentAttackState.h; sourceTree = "<group>"; };
+		EAC89F4D1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponentAttackState.m; sourceTree = "<group>"; };
+		EAC89F4F1DEF1E1100E69A48 /* OGWeaponComponentRechargeState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponentRechargeState.h; sourceTree = "<group>"; };
+		EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponentRechargeState.m; sourceTree = "<group>"; };
 		EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shooting_sfx.wav; sourceTree = "<group>"; };
 		EADA97621DE745CC003D708B /* OGHealthBarComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthBarComponent.h; sourceTree = "<group>"; };
 		EADA97631DE745CC003D708B /* OGHealthBarComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthBarComponent.m; sourceTree = "<group>"; };
@@ -1030,6 +1039,19 @@
 			name = HUD;
 			sourceTree = "<group>";
 		};
+		EAC89F481DEF1D2300E69A48 /* WeaponStates */ = {
+			isa = PBXGroup;
+			children = (
+				EAC89F491DEF1DF700E69A48 /* OGWeaponComponentIdleState.h */,
+				EAC89F4A1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m */,
+				EAC89F4C1DEF1E0300E69A48 /* OGWeaponComponentAttackState.h */,
+				EAC89F4D1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m */,
+				EAC89F4F1DEF1E1100E69A48 /* OGWeaponComponentRechargeState.h */,
+				EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */,
+			);
+			name = WeaponStates;
+			sourceTree = "<group>";
+		};
 		EADA97611DE745B5003D708B /* HealthBarComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1052,6 +1074,7 @@
 		EAF7F11E1DD79B920067D76D /* Weapon Component */ = {
 			isa = PBXGroup;
 			children = (
+				EAC89F481DEF1D2300E69A48 /* WeaponStates */,
 				EAF7F1171DD785FE0067D76D /* OGWeaponComponent.h */,
 				EAF7F1181DD785FE0067D76D /* OGWeaponComponent.m */,
 				EAF7F11F1DD79C370067D76D /* OGAttacking.h */,
@@ -1174,6 +1197,7 @@
 				EA05FA0F1DD507FA00FAC81A /* OGDoorEntityClosedState.m in Sources */,
 				2177AF171DE33CC100A21B75 /* OGZombie.m in Sources */,
 				EA05FA101DD507FA00FAC81A /* OGDoorEntityState.m in Sources */,
+				EAC89F4E1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m in Sources */,
 				2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */,
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */,
@@ -1184,6 +1208,7 @@
 				EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */,
 				EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */,
 				EAF7F1261DD7FCAA0067D76D /* OGPlayerEntity+OGPlayerEntityResources.m in Sources */,
+				EAC89F4B1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m in Sources */,
 				1B27EAB71DC0F6C100E9CA23 /* OGBeforeStartLevelState.m in Sources */,
 				EA4982471DCFB44E00DCFE00 /* OGEnemyEntity.m in Sources */,
 				210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */,
@@ -1261,6 +1286,7 @@
 				EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */,
 				215A8A851DDCC66000C5C90D /* OGPlayerFarRule.m in Sources */,
 				EA9EAACD1DCC9E3100E36855 /* OGInputComponent.m in Sources */,
+				EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */,
 				EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
 				EA9EAACA1DCC9D1400E36855 /* OGRenderComponent.m in Sources */,
