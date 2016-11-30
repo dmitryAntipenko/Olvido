@@ -38,7 +38,7 @@
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
-#import "OGZoneEntity.h"
+#import "OGSpriteZoneEntity.h"
 #import "OGHiddenZoneEntity.h"
 #import "OGKey.h"
 
@@ -246,26 +246,26 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     NSString *zoneName = @"Zone_0";
     zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
     
-    OGZoneEntity *zoneEntity = [[OGZoneEntity alloc] initWithSpriteNode:zoneNode
-                                                      affectedColliders:@[]
-                                                  interactionBeginBlock:^(GKEntity *entity)
-                                {
-                                    OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-                                    
-                                    if (movementComponent)
-                                    {
-                                        movementComponent.speedFactor = 0.5;
-                                    }
-                                }
-                                                    interactionEndBlock:^(GKEntity *entity)
-                                {
-                                    OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-                                    
-                                    if (movementComponent)
-                                    {
-                                        movementComponent.speedFactor = 1.0;
-                                    }
-                                }];
+    OGHiddenZoneEntity *zoneEntity = [[OGHiddenZoneEntity alloc] initWithSpriteNode:zoneNode
+                                                                  affectedColliders:@[]
+                                                              interactionBeginBlock:^(GKEntity *entity)
+                                      {
+                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+                                          
+                                          if (movementComponent)
+                                          {
+                                              movementComponent.speedFactor = 0.5;
+                                          }
+                                      }
+                                                                interactionEndBlock:^(GKEntity *entity)
+                                      {
+                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+                                          
+                                          if (movementComponent)
+                                          {
+                                              movementComponent.speedFactor = 1.0;
+                                          }
+                                      }];
     
     
     [self addEntity:zoneEntity];
