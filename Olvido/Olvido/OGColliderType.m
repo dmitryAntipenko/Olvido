@@ -16,6 +16,8 @@ static NSMutableDictionary<NSNumber *, OGColliderType *> *sOGColliderTypes = nil
 static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions = nil;
 static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications = nil;
 
+static dispatch_queue_t initQueue;
+
 @interface OGColliderType ()
 
 @property (nonatomic, assign, readwrite) OGCollisionBitMask categoryBitMask;
@@ -40,14 +42,13 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     dispatch_once(&dispatchOnceToken, ^()
     {
         sOGColliderTypes = [NSMutableDictionary dictionary];
+        initQueue = dispatch_queue_create(OGColliderTypeQueueName, DISPATCH_QUEUE_SERIAL);
     });
     
     __block OGColliderType *result = sOGColliderTypes[@(bitmask)];
     
     if (!result)
-    {
-        dispatch_queue_t initQueue = dispatch_queue_create(OGColliderTypeQueueName, DISPATCH_QUEUE_SERIAL);
-        
+    {        
         dispatch_sync(initQueue, ^()
         {
             result = [[OGColliderType alloc] init];
