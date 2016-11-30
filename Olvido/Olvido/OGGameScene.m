@@ -241,7 +241,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 
 - (void)createZones
 {
-    NSUInteger idx = 0;
     SKSpriteNode *zoneNode = nil;
     
     NSString *zoneName = @"Zone_0";

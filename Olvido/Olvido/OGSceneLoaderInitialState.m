@@ -28,13 +28,10 @@
 {
     if (previousState.class == [OGSceneLoaderResourcesReadyState class])
     {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
+        for (NSString *unitName in self.sceneLoader.metadata.textureAtlases)
         {
-            for (NSString *unitName in self.sceneLoader.metadata.textureAtlases)
-            {
-                [[OGTextureAtlasesManager sharedInstance] purgeAtlasesWithUnitName:unitName];
-            }
-        });
+            [[OGTextureAtlasesManager sharedInstance] purgeAtlasesWithUnitName:unitName];
+        }
     }
 }
 

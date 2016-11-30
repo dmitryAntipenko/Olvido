@@ -69,12 +69,18 @@
 
 - (void)purgeResources
 {
-    [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
+                   {
+                       [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+                   });
 }
 
 - (void)purgeScene
 {
-    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
+                   {
+                       [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
+                   });
 }
 
 @end

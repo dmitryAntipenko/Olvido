@@ -8,6 +8,7 @@
 
 #import "OGParticlesZoneEntity.h"
 #import "OGRenderComponent.h"
+#import "OGColliderType.h"
 
 @implementation OGParticlesZoneEntity
 
