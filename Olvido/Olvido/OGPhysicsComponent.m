@@ -7,6 +7,7 @@
 //
 
 #import "OGPhysicsComponent.h"
+#import "OGRenderComponent.h"
 
 @interface OGPhysicsComponent ()
 
@@ -34,5 +35,16 @@
     
     return self;
 }
+
+//- (void)didAddToEntity
+//{
+//    OGRenderComponent *renderComponent = (OGRenderComponent *)[self.entity componentForClass:[OGRenderComponent class]];
+//    
+//    if (renderComponent)
+//    {
+//        renderComponent.node.physicsBody = self.physicsBody;
+//    }
+//    
+//}
 
 @end

@@ -9,8 +9,6 @@
 #import "OGLoadTexturesOperation.h"
 #import "OGTextureAtlasesManager.h"
 
-NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
-
 @interface OGLoadTexturesOperation ()
 
 @property (nonatomic, strong) NSString *unitName;
@@ -39,9 +37,6 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
         _unitName = unitName;
         _atlasName = atlasName;
         _atlasKey = atlasKey;
-        
-        _progress = [[NSProgress alloc] init];
-        _progress.totalUnitCount = kOGLoadTexturesOperationProgressTotalUnitCount;
     }
     
     return self;
@@ -51,45 +46,28 @@ NSUInteger const kOGLoadTexturesOperationProgressTotalUnitCount = 1;
 {
     if (!self.isCancelled)
     {
-        if (self.progress.isCancelled)
+        OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
+        
+        if (self.atlasKey
+            && self.unitName
+            && self.atlasName
+            && ![textureAtlasesManager containsAtlasWithKey:self.atlasKey unitName:self.unitName])
         {
-            [self cancel];
-        }
-        else
-        {
-            OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
             
-            if (self.atlasKey
-                && self.unitName
-                && self.atlasName
-                && ![textureAtlasesManager containsAtlasWithKey:self.atlasKey unitName:self.unitName])
-            {
-                SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
-                
-                [textureAtlasesManager addAtlasWithUnitName:self.unitName atlasKey:self.atlasKey atlas:atlas];
-                
-                __weak typeof(self) weakSelf = self;
-                [atlas preloadWithCompletionHandler:^
-                 {
-                     if (weakSelf)
-                     {
-                         typeof(weakSelf) strongSelf = weakSelf;
-                         
-                         [strongSelf finish];
-                     }
-                 }];
-            }
-            else
-            {
-                [self finish];
-            }
+            [textureAtlasesManager addAtlasWithUnitName:self.unitName atlasKey:self.atlasKey atlas:atlas];
+            
+            [atlas preloadWithCompletionHandler:^
+             {
+                 //temporary
+             }];
         }
     }
 }
 
-- (void)finish
+- (BOOL)isAsynchronous
 {
-    self.progress.completedUnitCount = kOGLoadTexturesOperationProgressTotalUnitCount;
+    return YES;
 }
 
 @end

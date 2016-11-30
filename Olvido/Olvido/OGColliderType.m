@@ -99,6 +99,11 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskKey];
 }
 
++ (instancetype)zone
+{
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskZone];
+}
+
 #pragma mark - Lazy getters
 
 + (NSMutableDictionary *)definedCollisions

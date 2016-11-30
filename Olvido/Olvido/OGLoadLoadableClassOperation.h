@@ -10,8 +10,6 @@
 
 @interface OGLoadLoadableClassOperation : NSOperation
 
-@property (nonatomic, strong, readonly) NSProgress *progress;
-
 + (instancetype)loadResourcesOperationWithLoadableClass:(Class<OGResourceLoadable>)loadableClass;
 
 @end

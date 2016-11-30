@@ -8,21 +8,16 @@
 
 #import "OGTextureAtlasesManager.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
-#import "OGSceneLoaderResourcesReadyState.h"
-#import "OGSceneLoaderInitialState.h"
+#import "OGSceneLoaderPrepearingSceneState.h"
 #import "OGSceneLoader.h"
 #import "OGSceneMetadata.h"
 #import "OGLoadSceneOperation.h"
 #import "OGLoadLoadableClassOperation.h"
 #import "OGLoadTexturesOperation.h"
 
-NSUInteger const OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount = 1;
-NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
-
 @interface OGSceneLoaderPrepearingResourcesState ()
 
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
-@property (nonatomic, strong) NSProgress *progress;
 
 @end
 
@@ -49,48 +44,32 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGSceneLoaderResourcesReadyState class];
+    BOOL result = NO;
+    
+    result = (stateClass == [OGSceneLoaderPrepearingSceneState class]);
+    
+    return result ;
 }
 
 - (void)loadResourcesAsynchronously
 {
-    [[OGTextureAtlasesManager sharedInstance] purgeAllTextures];//remporary
-    
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
-    self.progress = [NSProgress progressWithTotalUnitCount:sceneMetadata.loadableClasses.count
-                     + OGSceneLoaderPrepearingResourcesStateSceneFileUnitCount];
-    
-    if (self.sceneLoader.progress)
-    {
-        [self.sceneLoader.progress addChild:self.progress
-                       withPendingUnitCount: OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-    }
-    
-    OGLoadSceneOperation *loadSceneOperation = [OGLoadSceneOperation loadSceneOperationWithSceneMetadata:sceneMetadata];
-    
-    [self.progress addChild:loadSceneOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
+    NSOperation *completionOperation = [[NSOperation alloc] init];
     
     __weak typeof(self) weakSelf = self;
-    __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
-    loadSceneOperation.completionBlock = ^
+    completionOperation.completionBlock = ^
     {
-        if (weakLoadSceneOperation)
+        //        dispatch_async(dispatch_get_main_queue(), ^
+        //                       {
+        if (weakSelf)
         {
-            OGLoadSceneOperation *strongLoadSceneOperation = weakLoadSceneOperation;
+            typeof(weakSelf) strongSelf = weakSelf;
             
-            dispatch_async(dispatch_get_main_queue(), ^
-               {
-                   if (weakSelf)
-                   {
-                       typeof(weakSelf) strongSelf = weakSelf;
-                       
-                       strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                       [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                   }
-               });
+            [strongSelf.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
         }
+        //                       });
     };
     
     for (NSString *unitName in sceneMetadata.textureAtlases)
@@ -103,9 +82,7 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                                                                                                                atlasKey:atlasKey
                                                                                                               atlasName:unitAtlases[atlasKey]];
             
-            [self.progress addChild:loadTexturesOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-            
-            [loadSceneOperation addDependency:loadTexturesOperation];
+            [completionOperation addDependency:loadTexturesOperation];
             
             [self.operationQueue addOperation:loadTexturesOperation];
         }
@@ -115,32 +92,12 @@ NSUInteger const OGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     {
         OGLoadLoadableClassOperation *loadLoadableClassOperation = [OGLoadLoadableClassOperation loadResourcesOperationWithLoadableClass:loadableClass];
         
-        [self.progress addChild:loadLoadableClassOperation.progress withPendingUnitCount:OGSceneLoaderPrepearingResourcesStatePendingUnitCount];
-        
-        [loadSceneOperation addDependency:loadLoadableClassOperation];
+        [completionOperation addDependency:loadLoadableClassOperation];
         
         [self.operationQueue addOperation:loadLoadableClassOperation];
     }
     
-    [self.operationQueue addOperation:loadSceneOperation];
-}
-
-- (void)cancel
-{
-    [self.operationQueue cancelAllOperations];
-    self.sceneLoader.scene = nil;
-    
-    __weak typeof(self) weakSelf = self;
-    
-    dispatch_async(dispatch_get_main_queue(), ^
-       {
-           if (weakSelf)
-           {
-               typeof(weakSelf) strongSelf = weakSelf;
-               
-               [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
-           }
-       });
+    [self.operationQueue addOperation:completionOperation];
 }
 
 @end
