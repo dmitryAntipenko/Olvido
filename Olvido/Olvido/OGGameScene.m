@@ -248,6 +248,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     NSString *zoneName = @"Zone_0";
     zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
     
+    SKEmitterNode *emitter = [SKEmitterNode nodeWithFileNamed:@"SlimeZoneParticleSystem"];
+    
     OGZoneEntity *zoneEntity = [[OGZoneEntity alloc] initWithSpriteNode:zoneNode
                                                        affectedEntities:@[[OGPlayerEntity class], [OGZombie class]]
                                                   interactionBeginBlock:^(GKEntity *entity)
@@ -267,11 +269,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
                                     {
                                         movementComponent.speedFactor = 1.0;
                                     }
-                                }];
+                                }
+                                                        particleEmitter:emitter];
     
     
     [self addEntity:zoneEntity];
-    //    }
 }
 
 - (void)createTouchControlInputNode
