@@ -45,4 +45,16 @@
     return self;
 }
 
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
+                 affectedColliders:(NSArray<Class> *)affectedColliders
+             interactionBeginBlock:(void (^)(GKEntity *))interactionBeginBlock
+               interactionEndBlock:(void (^)(GKEntity *))interactionEndBlock
+{
+    return [self initWithSpriteNode:spriteNode
+                  affectedColliders:affectedColliders
+              interactionBeginBlock:interactionBeginBlock
+                interactionEndBlock:interactionEndBlock
+                            emitter:nil];
+}
+
 @end

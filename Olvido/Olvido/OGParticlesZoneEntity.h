@@ -14,6 +14,6 @@
                  affectedColliders:(NSArray<Class> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
                interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
-                           emitter:(SKEmitterNode *)emitter;
+                           emitter:(SKEmitterNode *)emitter NS_DESIGNATED_INITIALIZER;
 
 @end
