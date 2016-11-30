@@ -11,21 +11,38 @@
 
 @implementation OGParticlesZoneEntity
 
+@synthesize renderComponent = _renderComponent;
+
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  affectedColliders:(NSArray<Class> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
                interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
                            emitter:(SKEmitterNode *)emitter
 {
-    self = [super initWithSpriteNode:spriteNode affectedColliders:affectedColliders
-               interactionBeginBlock:interactionBeginBlock
-                 interactionEndBlock:interactionEndBlock];
+    if (emitter)
+    {
+        self = [super initWithSpriteNode:spriteNode affectedColliders:affectedColliders
+                   interactionBeginBlock:interactionBeginBlock
+                     interactionEndBlock:interactionEndBlock];
+        
+        if (self)
+        {
+            SKCropNode *cropNode = [SKCropNode node];
+            cropNode.position = spriteNode.position;
+            
+            spriteNode.position = CGPointZero;
+            cropNode.maskNode = spriteNode;
+            
+            [cropNode addChild:emitter];
+            
+            _renderComponent.node = cropNode;
+        }
+    }
+    else
+    {
+        self = nil;
+    }
     
-//    if (self)
-//    {
-//        _renderComponent.node
-//    }
-//    
     return self;
 }
 
