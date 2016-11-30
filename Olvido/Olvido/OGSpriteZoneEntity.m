@@ -12,8 +12,6 @@
 
 @implementation OGSpriteZoneEntity
 
-@synthesize renderComponent = _renderComponent;
-
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  affectedColliders:(NSArray<OGColliderType *> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
@@ -29,7 +27,8 @@
         [spriteNode removeFromParent];
         spriteNode.position = CGPointZero;
         
-        [_renderComponent.node addChild:spriteNode];
+        OGRenderComponent *renderComponent = (OGRenderComponent *)[self componentForClass:[OGRenderComponent class]];
+        [renderComponent.node addChild:spriteNode];
     }
     
     return self;

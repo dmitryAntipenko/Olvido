@@ -233,7 +233,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
 {
     [self createPlayer];
     [self createEnemies];
-    [self createDoors];
+//    [self createDoors];
     [self createSceneItems];
     [self createZones];
 }
@@ -246,7 +246,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 100;
     NSString *zoneName = @"Zone_0";
     zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
     
-    OGHiddenZoneEntity *zoneEntity = [[OGHiddenZoneEntity alloc] initWithSpriteNode:zoneNode
+    OGHiddenZoneEntity *zoneEntity = [[OGSpriteZoneEntity alloc] initWithSpriteNode:zoneNode
                                                                   affectedColliders:@[]
                                                               interactionBeginBlock:^(GKEntity *entity)
                                       {

@@ -11,8 +11,6 @@
 
 @implementation OGParticlesZoneEntity
 
-@synthesize renderComponent = _renderComponent;
-
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  affectedColliders:(NSArray<Class> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
@@ -35,7 +33,8 @@
             
             [cropNode addChild:emitter];
             
-            _renderComponent.node = cropNode;
+            OGRenderComponent *renderComponent = (OGRenderComponent *)[self componentForClass:[OGRenderComponent class]];
+            renderComponent.node = cropNode;
         }
     }
     else
