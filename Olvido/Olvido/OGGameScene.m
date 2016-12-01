@@ -576,14 +576,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)pause
 {
-    [super pause];
-    
     [self pauseWithoutPauseScreen];
     [self showPauseScreen];
 }
 
 - (void)pauseWithoutPauseScreen
 {
+    [super pause];
+    
     self.physicsWorld.speed = OGGameScenePauseSpeed;
     self.speed = OGGameScenePauseSpeed;
     
