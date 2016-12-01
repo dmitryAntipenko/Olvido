@@ -97,8 +97,6 @@ NSString *const OGGameScenePauseScreenMenuButtonName = @"MenuButton";
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
 
-CGFloat const OGGameSceneDoorOpenDistance = 50.0;
-
 NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @interface OGGameScene () <AVAudioPlayerDelegate>
@@ -282,31 +280,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         if ([doorNode isKindOfClass:[SKSpriteNode class]])
         {
-            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            OGDoorConfiguration *doorConfiguration = (OGDoorConfiguration *) [self.sceneConfiguration findConfigurationWithUnitName:doorNode.name];
+            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode configuration:doorConfiguration];
+            
             OGLockComponent *lockComponent = (OGLockComponent *) [door componentForClass:[OGLockComponent class]];
-            OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [door componentForClass:[OGTransitionComponent class]];
             
             door.transitionDelegate = self;
-            
-            BOOL doorLocked = [doorNode.userData[OGGameSceneDoorLockedKey] boolValue];
-            
             lockComponent.target = self.player.renderComponent.node;
-            lockComponent.openDistance = OGGameSceneDoorOpenDistance;
-            lockComponent.locked = doorLocked;
-            
-            NSString *sourceNodeName = doorNode.userData[OGGameSceneSourceNodeName];
-            NSString *destinationNodeName = doorNode.userData[OGGameSceneDestinationNodeName];
-            
-            transitionComponent.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
-            transitionComponent.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
-            
-            for (NSString *key in doorNode.userData.allKeys)
-            {
-                if ([key hasPrefix:OGGameSceneDoorKeyPrefix])
-                {
-                    [door addKeyName:doorNode.userData[key]];
-                }
-            }
             
             [self addEntity:door];
         }
@@ -367,7 +347,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
     self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
-    //self.inventoryBarNode.playerEntity = self.player;
     
     if (self.hudNode)
     {

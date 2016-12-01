@@ -55,12 +55,12 @@ NSString *const OGEntityConfigurationUnitNameKey = @"UnitName";
 
 - (NSArray<OGTextureConfiguration *> *)textures
 {
-    return _mutableTextures;
+    return [_mutableTextures copy];
 }
 
 - (NSArray<OGAudioConfiguration *> *)audios
 {
-    return _mutableAudios;
+    return [_mutableAudios copy];
 }
 
 @end

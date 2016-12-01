@@ -12,16 +12,15 @@
 #import "OGTransitionComponent.h"
 #import "OGTransitionComponentDelegate.h"
 
+@class OGDoorConfiguration;
+
 @interface OGDoorEntity : GKEntity <OGContactNotifiableType, OGResourceLoadable>
 
 @property (nonatomic, weak) id<OGTransitionComponentDelegate> transitionDelegate;
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode configuration:(OGDoorConfiguration *)configuration;
 
 - (void)lock;
 - (void)unlock;
-
-- (void)addKeyName:(NSString *)keyName;
-- (void)removeKeyName:(NSString *)keyName;
 
 @end

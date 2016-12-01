@@ -847,6 +847,12 @@
 					<key>Key</key>
 					<string>weapon_attack</string>
 				</dict>
+				<dict>
+					<key>AudioName</key>
+					<string>weapon_reload</string>
+					<key>Key</key>
+					<string>weapon_recharge</string>
+				</dict>
 			</array>
 			<key>UnitName</key>
 			<string>weapon_01</string>
@@ -869,6 +875,106 @@
 			</array>
 			<key>UnitName</key>
 			<string>weapon_02</string>
+		</dict>
+	</array>
+	<key>Doors</key>
+	<array>
+		<dict>
+			<key>Source</key>
+			<string>room1</string>
+			<key>Destination</key>
+			<string>room2</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>door_open</string>
+					<key>Key</key>
+					<string>door_open</string>
+				</dict>
+			</array>
+			<key>UnitName</key>
+			<string>door_01</string>
+		</dict>
+		<dict>
+			<key>Source</key>
+			<string>room2</string>
+			<key>Destination</key>
+			<string>room3</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>door_open</string>
+					<key>Key</key>
+					<string>door_open</string>
+				</dict>
+			</array>
+			<key>UnitName</key>
+			<string>door_02</string>
+		</dict>
+		<dict>
+			<key>Keys</key>
+			<array>
+				<string>red_key</string>
+			</array>
+			<key>Locked</key>
+			<true/>
+			<key>Destination</key>
+			<string>room4</string>
+			<key>Source</key>
+			<string>room3</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>door_open</string>
+					<key>Key</key>
+					<string>door_open</string>
+				</dict>
+			</array>
+			<key>UnitName</key>
+			<string>door_03</string>
+		</dict>
+		<dict>
+			<key>Destination</key>
+			<string>room5</string>
+			<key>Source</key>
+			<string>room3</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>door_open</string>
+					<key>Key</key>
+					<string>door_open</string>
+				</dict>
+			</array>
+			<key>UnitName</key>
+			<string>door_04</string>
+		</dict>
+		<dict>
+			<key>Keys</key>
+			<array>
+				<string>blue_key</string>
+			</array>
+			<key>Locked</key>
+			<true/>
+			<key>Destination</key>
+			<string>room6</string>
+			<key>Source</key>
+			<string>room3</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>door_open</string>
+					<key>Key</key>
+					<string>door_open</string>
+				</dict>
+			</array>
+			<key>UnitName</key>
+			<string>door_05</string>
 		</dict>
 	</array>
 </dict>

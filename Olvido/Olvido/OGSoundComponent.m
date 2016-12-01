@@ -45,9 +45,12 @@
 {
     _target = target;
     
-    for (NSString *key in self.soundNodes.allKeys)
+    for (SKAudioNode *node in self.soundNodes.allValues)
     {
-        [self.soundNodes[key] removeFromParent];
+        if (node.parent)
+        {
+            [node removeFromParent];
+        }
     }
 }
 

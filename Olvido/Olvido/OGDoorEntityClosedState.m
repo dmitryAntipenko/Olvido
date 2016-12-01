@@ -17,6 +17,8 @@
 #import "OGSoundComponent.h"
 #import "OGColliderType.h"
 
+NSString *const OGDoorCloseSoundKey = @"door_close";
+
 @interface OGDoorEntityClosedState ()
 
 @property (nonatomic, weak) OGSoundComponent *soundComponent;
@@ -46,7 +48,7 @@
     
     if (previousState)
     {
-        [self.soundComponent playSoundOnce:@"door_open"];
+        [self.soundComponent playSoundOnce:OGDoorCloseSoundKey];
     }
 }
 

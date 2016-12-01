@@ -11,10 +11,14 @@
 #import "OGWeaponComponentRechargeState.h"
 
 #import "OGWeaponComponent.h"
+#import "OGSoundComponent.h"
+
+NSString *const OGWeaponComponentRechargeSoundKey = @"weapon_recharge";
 
 @interface OGWeaponComponentRechargeState ()
 
 @property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+@property (nonatomic, weak) OGSoundComponent *soundComponent;
 
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
 
@@ -37,6 +41,8 @@
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
     [super didEnterWithPreviousState:previousState];
+    
+    [self.soundComponent playSoundOnce:OGWeaponComponentRechargeSoundKey];
     
     self.elapsedTime = 0.0;
 }
@@ -61,6 +67,16 @@
 {
     return stateClass == [OGWeaponComponentIdleState class]
     || stateClass == [OGWeaponComponentAttackState class];
+}
+
+- (OGSoundComponent *)soundComponent
+{
+    if (!_soundComponent)
+    {
+        _soundComponent = (OGSoundComponent *) [self.weaponComponent.weapon componentForClass:[OGSoundComponent class]];
+    }
+    
+    return _soundComponent;
 }
 
 @end

@@ -63,6 +63,13 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     return self;
 }
 
+- (void)setOwner:(GKEntity *)owner
+{
+    super.owner = owner;
+    
+    self.soundComponent.target = ((OGRenderComponent *) [self.owner componentForClass:OGRenderComponent.self]).node;
+}
+
 - (OGWeaponComponent *)weaponComponent
 {
     return (OGWeaponComponent *) [self.owner componentForClass:[OGWeaponComponent class]];
@@ -92,9 +99,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
         
         if (ownerRenderComponent)
         {
-            [self createBulletAtPoint:ownerRenderComponent.node.position withVector:vector];
-            
-            [self.soundComponent playSoundOnce:@"weapon_attack"];
+            [self createBulletAtPoint:ownerRenderComponent.node.position withVector:vector];            
         }
     }
 }
@@ -120,13 +125,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 #pragma mark - Resources
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
-{
-//    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
-//    shotNode.autoplayLooped = NO;
-//    shotNode.name = @"shot";
-//    
-//    sOGWeaponEntitySoundNodes = @[shotNode];
-    
+{    
     handler();
 }
 

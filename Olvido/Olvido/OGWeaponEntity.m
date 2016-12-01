@@ -26,7 +26,6 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-@property (nonatomic, strong) OGSoundComponent *soundComponent;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 @property (nonatomic, assign) BOOL allowsAttacking;
@@ -81,21 +80,12 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 #pragma mark - Getters & Setters
 
-- (void)setOwner:(GKEntity *)owner
-{
-    _owner = owner;
-    
-    self.soundComponent.target = ((OGRenderComponent *) [_owner componentForClass:OGRenderComponent.self]).node;
-}
-
 - (void)setCharge:(NSUInteger)charge
 {
     _charge = charge;
     
     [self.weaponComponent.weaponObserver weaponDidUpdateKey:@"Charge" withValue:@(_charge)];
 }
-
-#pragma mark - OGAttacking
 
 - (OGWeaponComponent *)weaponComponent
 {

@@ -12,10 +12,12 @@
 #import "OGAudioConfiguration.h"
 #import "OGWeaponConfiguration.h"
 #import "OGEntityConfiguration.h"
+#import "OGDoorConfiguration.h"
 
 NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const OGGameSceneConfigurationWeaponKey = @"Weapon";
+NSString *const OGGameSceneConfigurationDoorsKey = @"Doors";
 NSString *const OGGameSceneConfigurationSceneItemsKey = @"SceneItems";
 
 NSString *const OGGameSceneConfigurationStartRoomKey = @"StartRoom";
@@ -30,6 +32,9 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGWeaponConfiguration *> *mutableWeaponConfigurations;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGDoorConfiguration *> *mutableDoorConfigurations;
+
+@property (nonatomic, strong) NSMutableArray<OGEntityConfiguration *> *searchingArray;
 
 @end
 
@@ -45,6 +50,8 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
     {
         _mutableEnemiesConfiguration = [NSMutableArray array];
         _mutableWeaponConfigurations = [NSMutableArray array];
+        _mutableDoorConfigurations = [NSMutableArray array];
+        _searchingArray = [NSMutableArray array];
     }
     
     return self;
@@ -95,18 +102,26 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
         OGWeaponConfiguration *weaponConfiguration = [[OGWeaponConfiguration alloc] initWithDictionary:weaponDictionary];
         [self.mutableWeaponConfigurations addObject:weaponConfiguration];
     }
+    
+    NSArray *doorConfigurationsDictionary = configurationDictionary[OGGameSceneConfigurationDoorsKey];
+    
+    for (NSDictionary *doorDictionary in doorConfigurationsDictionary)
+    {
+        OGDoorConfiguration *doorConfiguration = [[OGDoorConfiguration alloc] initWithDictionary:doorDictionary];
+        [self.mutableDoorConfigurations addObject:doorConfiguration];
+    }
+    
+    [self.searchingArray addObject:self.playerConfiguration];
+    [self.searchingArray addObjectsFromArray:self.mutableWeaponConfigurations];
+    [self.searchingArray addObjectsFromArray:self.mutableEnemiesConfiguration];
+    [self.searchingArray addObjectsFromArray:self.mutableDoorConfigurations];
 }
 
 - (OGEntityConfiguration *)findConfigurationWithUnitName:(NSString *)unitName
 {
-    NSMutableArray<OGEntityConfiguration *> *searchingArray = [NSMutableArray array];
     OGEntityConfiguration *result = nil;
     
-    [searchingArray addObject:self.playerConfiguration];
-    [searchingArray addObjectsFromArray:self.mutableWeaponConfigurations];
-    [searchingArray addObjectsFromArray:self.mutableEnemiesConfiguration];
-    
-    for (OGEntityConfiguration *configuration in searchingArray)
+    for (OGEntityConfiguration *configuration in self.searchingArray)
     {
         if ([configuration.unitName isEqualToString:unitName])
         {
@@ -122,12 +137,17 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 
 - (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
-    return self.mutableEnemiesConfiguration;
+    return [self.mutableEnemiesConfiguration copy];
 }
 
 - (NSArray<OGWeaponConfiguration *> *)weaponConfigurations
 {
-    return self.mutableWeaponConfigurations;
+    return [self.mutableWeaponConfigurations copy];
+}
+
+- (NSArray<OGDoorConfiguration *> *)doorConfigurations
+{
+    return [self.mutableDoorConfigurations copy];
 }
 
 @end
