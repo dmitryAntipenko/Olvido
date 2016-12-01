@@ -55,9 +55,7 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)didCallFinish
 {
-    [self loadLevelWithIdentifier:@1];
-//    [NSException raise:NSInternalInconsistencyException
-//                format:@"Not implemented %@", NSStringFromSelector(_cmd)];
+    [self loadLevelWithIdentifier:@1];//will change to "Next level"
 }
 
 - (void)didCallPause

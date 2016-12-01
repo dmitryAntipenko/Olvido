@@ -505,8 +505,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)playerDidDie
 {
-    [self.sceneDelegate didCallFinish];
-//    [self.stateMachine enterState:[OGDeathLevelState class]];
+    [self.stateMachine enterState:[OGDeathLevelState class]];
 }
 
 #pragma mark - TransitionComponentDelegate
