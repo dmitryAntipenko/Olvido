@@ -127,7 +127,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
-        for (OGTextureConfiguration *textureConfiguration in configuration.playerTextures)
+        for (OGTextureConfiguration *textureConfiguration in configuration.textures)
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGPlayerEntityDefaultTextureConfiguration

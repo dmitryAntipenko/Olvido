@@ -48,7 +48,6 @@
     for (NSString *key in self.soundNodes.allKeys)
     {
         [self.soundNodes[key] removeFromParent];
-        [self.target addChild:self.soundNodes[key]];
     }
 }
 
@@ -56,9 +55,18 @@
 
 - (void)playSoundContinuously:(NSString *)soundName
 {
-    SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:soundName];
-    [self.soundNodes setObject:node forKey:soundName];
-    [self.target addChild:self.soundNodes[soundName]];
+    SKAudioNode *node = self.soundNodes[soundName];
+    
+    if (!node)
+    {
+        node = [[SKAudioNode alloc] initWithFileNamed:soundName];
+        [self.soundNodes setObject:node forKey:soundName];
+    }
+    
+    if (!self.soundNodes[soundName].parent)
+    {
+        [self.target addChild:self.soundNodes[soundName]];
+    }
 }
 
 - (void)stopPlayingSound:(NSString *)soundName
@@ -69,8 +77,19 @@
 
 - (void)playSoundOnce:(NSString *)soundName
 {
-    [self.soundNodes[soundName] runAction:[SKAction stop]];
-    [self.soundNodes[soundName] runAction:[SKAction play]];
+    SKAudioNode *audioNode = self.soundNodes[soundName];
+    
+    if (audioNode)
+    {
+        [self stopPlayingSound:soundName];
+        
+        if (!audioNode.parent)
+        {
+            [self.target addChild:audioNode];
+        }
+        
+        [audioNode runAction:[SKAction play]];
+    }
 }
 
 #pragma mark - Actions

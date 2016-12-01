@@ -15,7 +15,6 @@ NSString *const OGEnemyConfigurationInitialVectorDXKey = @"dx";
 NSString *const OGEnemyConfigurationInitialVectorDYKey = @"dy";
 NSString *const OGEnemyConfigurationPhysicsBodyRadiusKey = @"PhysicsBodyRadius";
 NSString *const OGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
-NSString *const OGEnemyConfigurationTexturesKey = @"Textures";
 NSString *const OGEnemyConfigurationUnitNameKey = @"UnitName";
 NSString *const OGEnemyConfigurationMaxHealthKey = @"MaxHealth";
 NSString *const OGEnemyConfigurationCurrentHealthKey = @"CurrentHealth";
@@ -28,19 +27,13 @@ CGFloat const OGEnemyConfigurationDefaultPhysicsBodyRadius = 30.0;
 NSInteger const OGEnemyConfigurationDefaultMaxHealth = 10;
 NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 10;
 
-@interface OGEnemyConfiguration ()
-
-@property (nonatomic, strong, readwrite) NSMutableArray<OGTextureConfiguration *> *mutableEnemyTextures;
-
-@end
-
 @implementation OGEnemyConfiguration
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if (dictionary)
     {
-        self = [super init];
+        self = [super initWithDictionary:dictionary];
         
         if (self)
         {
@@ -74,33 +67,14 @@ NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 10;
                 _enemyClass = NSClassFromString(OGEnemyConfigurationDefaultEnemyType);
             }
             
-            NSString *unitName = dictionary[OGEnemyConfigurationUnitNameKey];
-            
-            if (unitName)
+            if (!self.unitName)
             {
-                _unitName = unitName;
-            }
-            else
-            {
-                _unitName = OGEnemyConfigurationDefaultUnitName;
-            }
-            
-            _mutableEnemyTextures = [NSMutableArray array];
-            
-            for (NSDictionary *textureDictionary in dictionary[OGEnemyConfigurationTexturesKey])
-            {
-                OGTextureConfiguration *textureConfiguration = [[OGTextureConfiguration alloc] initWithDictionary:textureDictionary];
-                [_mutableEnemyTextures addObject:textureConfiguration];
+                self.unitName = OGEnemyConfigurationDefaultUnitName;
             }
         }
     }
     
     return self;
-}
-
-- (NSArray *)enemyTextures
-{
-    return self.mutableEnemyTextures;
 }
 
 @end

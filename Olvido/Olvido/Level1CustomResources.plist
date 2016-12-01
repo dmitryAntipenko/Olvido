@@ -2,6 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>InGameSounds</key>
+	<dict>
+		<key>door_open</key>
+		<string>door_open</string>
+		<key>weapon_shot</key>
+		<string>shot</string>
+	</dict>
+	<key>Audio</key>
+	<dict>
+		<key>button_touch</key>
+		<string>button_touch</string>
+		<key>background_music</key>
+		<string>background_music_1</string>
+	</dict>
 	<key>TextureAtlases</key>
 	<dict>
 		<key>Boss</key>

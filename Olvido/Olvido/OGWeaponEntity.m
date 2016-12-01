@@ -44,6 +44,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
                        attackSpeed:(CGFloat)attackSpeed
                        reloadSpeed:(CGFloat)reloadSpeed
                             charge:(NSUInteger)charge
+                         maxCharge:(NSUInteger)maxCharge
 {
     if (sprite)
     {
@@ -67,7 +68,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
             _attackSpeed = attackSpeed;
             _reloadSpeed = reloadSpeed;
             _charge = charge;
-            _maxCharge = charge;
+            _maxCharge = maxCharge;
         }
     }
     else

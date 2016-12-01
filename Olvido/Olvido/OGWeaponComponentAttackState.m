@@ -44,6 +44,7 @@
 - (void)attack
 {
     [self.weaponComponent.weapon attackWithVector:self.weaponComponent.attackDirection speed:self.weaponComponent.attackSpeed];
+    
     self.elapsedTime = 0.0;
     self.weaponComponent.charge--;
 }

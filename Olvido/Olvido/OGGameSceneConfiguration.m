@@ -9,12 +9,19 @@
 #import "OGGameSceneConfiguration.h"
 #import "OGPlayerConfiguration.h"
 #import "OGEnemyConfiguration.h"
+#import "OGAudioConfiguration.h"
+#import "OGWeaponConfiguration.h"
+#import "OGEntityConfiguration.h"
 
 NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
+NSString *const OGGameSceneConfigurationWeaponKey = @"Weapon";
+NSString *const OGGameSceneConfigurationSceneItemsKey = @"SceneItems";
+
 NSString *const OGGameSceneConfigurationStartRoomKey = @"StartRoom";
-NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
+
+NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 
 @interface OGGameSceneConfiguration ()
 
@@ -22,10 +29,13 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
 @property (nonatomic, copy, readwrite) NSString *startRoom;
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGWeaponConfiguration *> *mutableWeaponConfigurations;
 
 @end
 
 @implementation OGGameSceneConfiguration
+
+#pragma mark - Initializing
 
 - (instancetype)init
 {
@@ -33,11 +43,14 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
     
     if (self)
     {
-        _mutableEnemiesConfiguration = [[NSMutableArray alloc] init];
+        _mutableEnemiesConfiguration = [NSMutableArray array];
+        _mutableWeaponConfigurations = [NSMutableArray array];
     }
     
     return self;
 }
+
+#pragma mark -
 
 + (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
 {
@@ -74,11 +87,47 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
         OGEnemyConfiguration *enemyConfiguration = [[OGEnemyConfiguration alloc] initWithDictionary:enemyDictionary];
         [self.mutableEnemiesConfiguration addObject:enemyConfiguration];
     }
+    
+    NSArray *weaponConfigurationsDictionary = configurationDictionary[OGGameSceneConfigurationWeaponKey];
+    
+    for (NSDictionary *weaponDictionary in weaponConfigurationsDictionary)
+    {
+        OGWeaponConfiguration *weaponConfiguration = [[OGWeaponConfiguration alloc] initWithDictionary:weaponDictionary];
+        [self.mutableWeaponConfigurations addObject:weaponConfiguration];
+    }
 }
+
+- (OGEntityConfiguration *)findConfigurationWithUnitName:(NSString *)unitName
+{
+    NSMutableArray<OGEntityConfiguration *> *searchingArray = [NSMutableArray array];
+    OGEntityConfiguration *result = nil;
+    
+    [searchingArray addObject:self.playerConfiguration];
+    [searchingArray addObjectsFromArray:self.mutableWeaponConfigurations];
+    [searchingArray addObjectsFromArray:self.mutableEnemiesConfiguration];
+    
+    for (OGEntityConfiguration *configuration in searchingArray)
+    {
+        if ([configuration.unitName isEqualToString:unitName])
+        {
+            result = configuration;
+            break;
+        }
+    }
+    
+    return result;
+}
+
+#pragma mark - Getters
 
 - (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
     return self.mutableEnemiesConfiguration;
+}
+
+- (NSArray<OGWeaponConfiguration *> *)weaponConfigurations
+{
+    return self.mutableWeaponConfigurations;
 }
 
 @end

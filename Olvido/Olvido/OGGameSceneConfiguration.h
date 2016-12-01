@@ -10,6 +10,8 @@
 
 @class OGPlayerConfiguration;
 @class OGEnemyConfiguration;
+@class OGWeaponConfiguration;
+@class OGEntityConfiguration;
 
 @interface OGGameSceneConfiguration : NSObject
 
@@ -17,7 +19,10 @@
 @property (nonatomic, copy, readonly) NSString *startRoom;
 @property (nonatomic, strong, readonly) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readonly) NSArray<OGEnemyConfiguration *> *enemiesConfiguration;
+@property (nonatomic, strong, readonly) NSArray<OGWeaponConfiguration *> *weaponConfigurations;
 
 + (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
+
+- (OGEntityConfiguration *)findConfigurationWithUnitName:(NSString *)unitName;
 
 @end

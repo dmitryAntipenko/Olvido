@@ -129,7 +129,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         _unitName = configuration.unitName;
         
-        for (OGTextureConfiguration *textureConfiguration in configuration.enemyTextures)
+        for (OGTextureConfiguration *textureConfiguration in configuration.textures)
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration

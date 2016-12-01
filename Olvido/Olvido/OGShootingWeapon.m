@@ -13,10 +13,14 @@
 #import "OGSoundComponent.h"
 #import "OGWeaponComponent.h"
 
+#import "OGWeaponConfiguration.h"
+#import "OGAudioConfiguration.h"
+
 static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 @interface OGShootingWeapon () <OGResourceLoadable>
 
+@property (nonatomic, strong) OGWeaponConfiguration *weaponConfiguration;
 @property (nonatomic, strong) OGSoundComponent *soundComponent;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
@@ -26,13 +30,33 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 #pragma mark - Initializing
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite attackSpeed:(CGFloat)attackSpeed reloadSpeed:(CGFloat)reloadSpeed charge:(NSUInteger)charge
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite configuration:(OGWeaponConfiguration *)configuration
 {
-    self = [super initWithSpriteNode:sprite attackSpeed:attackSpeed reloadSpeed:reloadSpeed charge:charge];
+    self = [super initWithSpriteNode:sprite
+                         attackSpeed:configuration.attackSpeed
+                         reloadSpeed:configuration.reloadSpeed
+                              charge:configuration.charge
+                           maxCharge:configuration.maxCharge];
     
     if (self)
     {
-        _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGWeaponEntitySoundNodes];
+        _weaponConfiguration = configuration;
+        
+        NSMutableArray<SKAudioNode *> *soundNodes = [NSMutableArray array];
+        
+        for (OGAudioConfiguration *audioConfiguration in _weaponConfiguration.audios)
+        {
+            SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:audioConfiguration.audioName];
+            node.autoplayLooped = audioConfiguration.repeatForever;
+            node.name = audioConfiguration.key;
+            
+            if (node)
+            {
+                [soundNodes addObject:node];
+            }
+        }
+        
+        _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:soundNodes];
         [self addComponent:_soundComponent];
     }
     
@@ -70,7 +94,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
         {
             [self createBulletAtPoint:ownerRenderComponent.node.position withVector:vector];
             
-            [self.soundComponent playSoundOnce:@"shot"];
+            [self.soundComponent playSoundOnce:@"weapon_attack"];
         }
     }
 }
@@ -97,11 +121,11 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
-    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
-    shotNode.autoplayLooped = NO;
-    shotNode.name = @"shot";
-    
-    sOGWeaponEntitySoundNodes = @[shotNode];
+//    SKAudioNode *shotNode = [[SKAudioNode alloc] initWithFileNamed:@"shot"];
+//    shotNode.autoplayLooped = NO;
+//    shotNode.name = @"shot";
+//    
+//    sOGWeaponEntitySoundNodes = @[shotNode];
     
     handler();
 }
