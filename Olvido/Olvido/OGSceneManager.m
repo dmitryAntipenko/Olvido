@@ -6,8 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGTextureAtlasesManager.h"
-
 #import "OGSceneManager.h"
 #import "OGBaseScene.h"
 #import "OGSceneLoader.h"
@@ -22,7 +20,7 @@
 
 NSString *const OGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const OGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
-CGFloat const OGSceneManagerTransitionTimeInterval = 0.6;
+CGFloat const OGSceneManagerTransitionTimeInterval = 1.0;
 NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 @interface OGSceneManager () <OGSceneLoaderDelegate>
@@ -133,9 +131,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
         self.loadingScene = [OGLoadingScene loadingSceneWithSceneLoader:sceneLoader];
         self.loadingScene.sceneManager = self;
         
-        SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
-        
-        [self.view presentScene:self.loadingScene transition:transition];
+        [self.view presentScene:self.loadingScene];
     }
 }
 
@@ -161,7 +157,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
     SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionTimeInterval];
     [self.view presentScene:sceneLoader.scene transition:transition];
     
-    [self.currentSceneLoader purgeResources];//need to be testing
+    [self.currentSceneLoader purgeResources];
     self.currentSceneLoader = sceneLoader;
 }
 
