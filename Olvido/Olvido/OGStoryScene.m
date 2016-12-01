@@ -20,10 +20,10 @@ NSString *const OGStorySceneDarknessNode = @"Darkness";
 
 - (void)update:(NSTimeInterval)currentTime
 {
-    if (![self childNodeWithName:OGStorySceneDarknessNode].hasActions)
-    {
-        [self.sceneDelegate storySceneDidCallFinish];
-    }
+//    if (![self childNodeWithName:OGStorySceneDarknessNode].hasActions)
+//    {
+//        [self.sceneDelegate storySceneDidCallFinish];
+//    }
 }
 
 - (void)skipStory

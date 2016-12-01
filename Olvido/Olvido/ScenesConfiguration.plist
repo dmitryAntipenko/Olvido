@@ -54,6 +54,12 @@
 	</dict>
 	<dict>
 		<key>ClassName</key>
+		<string>OGStoryScene</string>
+		<key>FileName</key>
+		<string>OGChapter2</string>
+	</dict>
+	<dict>
+		<key>ClassName</key>
 		<string>OGLevel2</string>
 		<key>FileName</key>
 		<string>Level2</string>
@@ -65,12 +71,6 @@
 		<array>
 			<string>OGPlayerEntity</string>
 		</array>
-	</dict>
-	<dict>
-		<key>ClassName</key>
-		<string>OGStoryScene</string>
-		<key>FileName</key>
-		<string>OGChapter2</string>
 	</dict>
 </array>
 </plist>

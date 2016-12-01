@@ -10,9 +10,9 @@
 	</dict>
 	<dict>
 		<key>StorySceneIdentifier</key>
-		<string>7</string>
-		<key>GameSceneIdentifier</key>
 		<string>6</string>
+		<key>GameSceneIdentifier</key>
+		<string>7</string>
 	</dict>
 </array>
 </plist>
