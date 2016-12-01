@@ -62,7 +62,7 @@
     
     SKTextureAtlas *atlas = [[OGTextureAtlasesManager sharedInstance] atlasWithUnitName:unitName atlasKey:textureName];
     
-    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:!repeatForever];
+    NSSortDescriptor *backwardsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES];
     NSArray<NSString *> *filteredTextureNames = [atlas.textureNames sortedArrayUsingDescriptors:@[backwardsSortDescriptor]];
     
     NSArray<SKTexture *> *textures = [self mapWithArrayOfStrings:filteredTextureNames];

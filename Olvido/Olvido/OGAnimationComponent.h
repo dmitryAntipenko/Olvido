@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+
 @class OGAnimation;
 
 @protocol OGAnimationComponentDelegate <NSObject>
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, copy) NSString *requestedAnimationState;
 @property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
+
+@property (nonatomic, assign, getter=isPlayingBackwards) BOOL playBackwards;
 
 - (instancetype)initWithAnimations:(NSDictionary *)animations;
 

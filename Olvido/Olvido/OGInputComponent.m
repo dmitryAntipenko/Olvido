@@ -54,7 +54,7 @@
             movementComponent.displacementVector = self.displacement;
         }
         
-        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:[OGWeaponComponent class]];
+        OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [self.entity componentForClass:[OGWeaponComponent class]];        
         
         if (weaponComponent)
         {

@@ -24,4 +24,6 @@
 @property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 
+@property (nonatomic, assign, readonly) CGFloat speed;
+
 @end
