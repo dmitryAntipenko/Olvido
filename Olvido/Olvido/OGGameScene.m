@@ -221,42 +221,50 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createEnemies];
     [self createDoors];
     [self createSceneItems];
-    [self createZones];
+//    [self createZones];
 }
 
 - (void)createZones
 {
-    SKSpriteNode *zoneNode = nil;
+   
     
-    NSString *zoneName = @"Zone_0";
-    zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
-    
-    SKEmitterNode *emitter = [SKEmitterNode nodeWithFileNamed:@"SlimeZoneParticleSystem"];
-    
-    OGHiddenZoneEntity *zoneEntity = [[OGParticlesZoneEntity alloc] initWithSpriteNode:zoneNode
-                                                                     affectedColliders:@[]
-                                                                 interactionBeginBlock:^(GKEntity *entity)
-                                      {
-                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-                                          
-                                          if (movementComponent)
-                                          {
-                                              movementComponent.speedFactor = 0.5;
-                                          }
-                                      }
-                                                                   interactionEndBlock:^(GKEntity *entity)
-                                      {
-                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-                                          
-                                          if (movementComponent)
-                                          {
-                                              movementComponent.speedFactor = 1.0;
-                                          }
-                                          
-                                      } emitter:emitter];
+/*
+ *__________________ZONE CREATION EXAMPLE________________
+ * !!!!!This example needs SKSPriteNode with name "Zone_0" on scene!!!!!
+ */
     
     
-    [self addEntity:zoneEntity];
+//    SKSpriteNode *zoneNode = nil;
+//    
+//    NSString *zoneName = @"Zone_0";
+//    zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
+//    
+//    SKEmitterNode *emitter = [SKEmitterNode nodeWithFileNamed:@"SlimeZoneParticleSystem"];
+//    
+//    OGHiddenZoneEntity *zoneEntity = [[OGParticlesZoneEntity alloc] initWithSpriteNode:zoneNode
+//                                                                     affectedColliders:@[]
+//                                                                 interactionBeginBlock:^(GKEntity *entity)
+//                                      {
+//                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+//                                          
+//                                          if (movementComponent)
+//                                          {
+//                                              movementComponent.speedFactor = 0.5;
+//                                          }
+//                                      }
+//                                                                   interactionEndBlock:^(GKEntity *entity)
+//                                      {
+//                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
+//                                          
+//                                          if (movementComponent)
+//                                          {
+//                                              movementComponent.speedFactor = 1.0;
+//                                          }
+//                                          
+//                                      } emitter:emitter];
+//    
+//    
+//    [self addEntity:zoneEntity];
 }
 
 - (void)createTouchControlInputNode
