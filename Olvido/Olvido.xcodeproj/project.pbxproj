@@ -31,9 +31,9 @@
 		1B3D98BB1DF0314100AD577B /* OGChapter2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BA1DF0314100AD577B /* OGChapter2.sks */; };
 		1B3D98BD1DF031E100AD577B /* Level2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BC1DF031E100AD577B /* Level2.plist */; };
 		1B3D98BF1DF033A300AD577B /* Level2CustomResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BE1DF033A300AD577B /* Level2CustomResources.plist */; };
+		1B3D98D51DF069DD00AD577B /* OGAudioLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D98D41DF069DD00AD577B /* OGAudioLoader.m */; };
 		1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */; };
 		1B4C32FF1DE59ACF008E5339 /* OGLoadTexturesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */; };
-		1B4C33091DE76535008E5339 /* OGSoundsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C33081DE76535008E5339 /* OGSoundsManager.m */; };
 		1B4C94601DEC58ED00EA5ED6 /* DefaultLevelResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C945F1DEC58ED00EA5ED6 /* DefaultLevelResources.plist */; };
 		1B4C94621DEC692300EA5ED6 /* Level1CustomResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C94611DEC692300EA5ED6 /* Level1CustomResources.plist */; };
 		1B700AB21DDC88A500DC88F6 /* OGTrailComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */; };
@@ -193,12 +193,12 @@
 		1B3D98BA1DF0314100AD577B /* OGChapter2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter2.sks; sourceTree = "<group>"; };
 		1B3D98BC1DF031E100AD577B /* Level2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level2.plist; sourceTree = "<group>"; };
 		1B3D98BE1DF033A300AD577B /* Level2CustomResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level2CustomResources.plist; sourceTree = "<group>"; };
+		1B3D98D31DF069DD00AD577B /* OGAudioLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAudioLoader.h; sourceTree = "<group>"; };
+		1B3D98D41DF069DD00AD577B /* OGAudioLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAudioLoader.m; sourceTree = "<group>"; };
 		1B4C32FA1DE5875C008E5339 /* OGTextureAtlasesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTextureAtlasesManager.h; sourceTree = "<group>"; };
 		1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTextureAtlasesManager.m; sourceTree = "<group>"; };
 		1B4C32FD1DE59ACF008E5339 /* OGLoadTexturesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadTexturesOperation.h; sourceTree = "<group>"; };
 		1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLoadTexturesOperation.m; sourceTree = "<group>"; };
-		1B4C33071DE76535008E5339 /* OGSoundsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSoundsManager.h; sourceTree = "<group>"; };
-		1B4C33081DE76535008E5339 /* OGSoundsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSoundsManager.m; sourceTree = "<group>"; };
 		1B4C945F1DEC58ED00EA5ED6 /* DefaultLevelResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultLevelResources.plist; sourceTree = "<group>"; };
 		1B4C94611DEC692300EA5ED6 /* Level1CustomResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level1CustomResources.plist; sourceTree = "<group>"; };
 		1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrailComponent.h; sourceTree = "<group>"; };
@@ -556,13 +556,13 @@
 			name = TextureAtlasesManager;
 			sourceTree = "<group>";
 		};
-		1B4C33061DE7650C008E5339 /* SoundsManager */ = {
+		1B4C33061DE7650C008E5339 /* AudioLoader */ = {
 			isa = PBXGroup;
 			children = (
-				1B4C33071DE76535008E5339 /* OGSoundsManager.h */,
-				1B4C33081DE76535008E5339 /* OGSoundsManager.m */,
+				1B3D98D31DF069DD00AD577B /* OGAudioLoader.h */,
+				1B3D98D41DF069DD00AD577B /* OGAudioLoader.m */,
 			);
-			name = SoundsManager;
+			name = AudioLoader;
 			sourceTree = "<group>";
 		};
 		1B7F24AA1DD5D0C1004918C8 /* SceneManager */ = {
@@ -1010,7 +1010,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				1B4C33061DE7650C008E5339 /* SoundsManager */,
+				1B4C33061DE7650C008E5339 /* AudioLoader */,
 				1B4C32F91DE58717008E5339 /* TextureAtlasesManager */,
 				1B7F24AA1DD5D0C1004918C8 /* SceneManager */,
 				EA8CAF091DE1F41700CDB848 /* AudioManager */,
@@ -1345,7 +1345,6 @@
 				215A8A791DDCB2D900C5C90D /* OGEntityDistance.m in Sources */,
 				EA976C841D9AAEE2003B77FC /* OGAppDelegate.m in Sources */,
 				1B7F24A61DD5D074004918C8 /* OGSceneManager.m in Sources */,
-				1B4C33091DE76535008E5339 /* OGSoundsManager.m in Sources */,
 				1B27EABA1DC0F6D100E9CA23 /* OGGameLevelState.m in Sources */,
 				1B319C791DEDD80A00C67384 /* OGSceneLoaderPrepearingSceneState.m in Sources */,
 				EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */,
@@ -1372,6 +1371,7 @@
 				EA9EAACD1DCC9E3100E36855 /* OGInputComponent.m in Sources */,
 				EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */,
 				EA05FA071DD4FA6C00FAC81A /* OGPlayerEntityControlledState.m in Sources */,
+				1B3D98D51DF069DD00AD577B /* OGAudioLoader.m in Sources */,
 				EA70E5281DB3F4620034116D /* OGMovementComponent.m in Sources */,
 				EA9EAACA1DCC9D1400E36855 /* OGRenderComponent.m in Sources */,
 				EA5870F51DC0D26000FCF126 /* OGGameScene.m in Sources */,
