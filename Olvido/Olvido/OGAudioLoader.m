@@ -51,6 +51,7 @@ char *const kOGAudioLoaderSyncQueueLabel = "com.zeouniversity.olvido.audioLoader
 {
     if (unitName && audioDataKey && fileName)
     {
+        NSDataAsset *audioData = [[NSDataAsset alloc] initWithName:fileName];
         
     }
 }
