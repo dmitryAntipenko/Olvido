@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StartRoom</key>
+	<string>room1</string>
+	<key>Textures</key>
+	<array>
+		<dict>
+			<key>Pair</key>
+			<string>Idle_Right</string>
+			<key>Repeat</key>
+			<true/>
+			<key>Name</key>
+			<string>Idle_Left</string>
+		</dict>
+		<dict>
+			<key>Pair</key>
+			<string>Idle_Left</string>
+			<key>Repeat</key>
+			<true/>
+			<key>Name</key>
+			<string>Idle_Right</string>
+		</dict>
+		<dict>
+			<key>Pair</key>
+			<string>Walk_Left</string>
+			<key>Repeat</key>
+			<true/>
+			<key>Name</key>
+			<string>Walk_Right</string>
+		</dict>
+		<dict>
+			<key>Pair</key>
+			<string>Walk_Right</string>
+			<key>Repeat</key>
+			<true/>
+			<key>Name</key>
+			<string>Walk_Left</string>
+		</dict>
+	</array>
+	<key>CurrentHealth</key>
+	<integer>20</integer>
+	<key>PhysicsBodyRadius</key>
+	<integer>30</integer>
+	<key>MessageShowDistance</key>
+	<integer>30</integer>
+	<key>MaxHealth</key>
+	<integer>20</integer>
+</dict>
+</plist>

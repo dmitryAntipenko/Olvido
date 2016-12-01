@@ -26,6 +26,11 @@
 		1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B36E4C71DC618100080D80B /* OGPauseScreen.sks */; };
 		1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */; };
 		1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */; };
+		1B3D98B61DF02F1200AD577B /* OGLevel2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D98B51DF02F1200AD577B /* OGLevel2.m */; };
+		1B3D98B91DF02FB900AD577B /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98B81DF02FB900AD577B /* Level2.sks */; };
+		1B3D98BB1DF0314100AD577B /* OGChapter2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BA1DF0314100AD577B /* OGChapter2.sks */; };
+		1B3D98BD1DF031E100AD577B /* Level2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BC1DF031E100AD577B /* Level2.plist */; };
+		1B3D98BF1DF033A300AD577B /* Level2CustomResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D98BE1DF033A300AD577B /* Level2CustomResources.plist */; };
 		1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */; };
 		1B4C32FF1DE59ACF008E5339 /* OGLoadTexturesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C32FE1DE59ACF008E5339 /* OGLoadTexturesOperation.m */; };
 		1B4C33091DE76535008E5339 /* OGSoundsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B4C33081DE76535008E5339 /* OGSoundsManager.m */; };
@@ -182,6 +187,12 @@
 		1B36E4D21DC639AB0080D80B /* OGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimationComponent.h; sourceTree = "<group>"; };
 		1B36E4D31DC639AB0080D80B /* OGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAnimationComponent.m; sourceTree = "<group>"; };
 		1B36E4D61DC6630C0080D80B /* OGZPositionEnum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGZPositionEnum.m; sourceTree = "<group>"; };
+		1B3D98B41DF02F1200AD577B /* OGLevel2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLevel2.h; sourceTree = "<group>"; };
+		1B3D98B51DF02F1200AD577B /* OGLevel2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGLevel2.m; sourceTree = "<group>"; };
+		1B3D98B81DF02FB900AD577B /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level2.sks; sourceTree = "<group>"; };
+		1B3D98BA1DF0314100AD577B /* OGChapter2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = OGChapter2.sks; sourceTree = "<group>"; };
+		1B3D98BC1DF031E100AD577B /* Level2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level2.plist; sourceTree = "<group>"; };
+		1B3D98BE1DF033A300AD577B /* Level2CustomResources.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Level2CustomResources.plist; sourceTree = "<group>"; };
 		1B4C32FA1DE5875C008E5339 /* OGTextureAtlasesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTextureAtlasesManager.h; sourceTree = "<group>"; };
 		1B4C32FB1DE5875C008E5339 /* OGTextureAtlasesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTextureAtlasesManager.m; sourceTree = "<group>"; };
 		1B4C32FD1DE59ACF008E5339 /* OGLoadTexturesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGLoadTexturesOperation.h; sourceTree = "<group>"; };
@@ -483,6 +494,7 @@
 		1B28BEAB1DC893A000EC0BBD /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				1B3D98B31DF02EFB00AD577B /* Level2 */,
 				210C996F1DB8E39E00704C62 /* StoryLevelScenes */,
 				EA4982531DD101CF00DCFE00 /* Configuration */,
 				EA5F11FF1DD4D59F006D4129 /* Camera */,
@@ -513,6 +525,26 @@
 				215A3C211DCFA12100D5C609 /* OGAnimation.m */,
 			);
 			name = AnimationComponent;
+			sourceTree = "<group>";
+		};
+		1B3D98B31DF02EFB00AD577B /* Level2 */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D98B41DF02F1200AD577B /* OGLevel2.h */,
+				1B3D98B51DF02F1200AD577B /* OGLevel2.m */,
+			);
+			name = Level2;
+			sourceTree = "<group>";
+		};
+		1B3D98B71DF02F9900AD577B /* Level2 */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D98B81DF02FB900AD577B /* Level2.sks */,
+				1B3D98BA1DF0314100AD577B /* OGChapter2.sks */,
+				1B3D98BC1DF031E100AD577B /* Level2.plist */,
+				1B3D98BE1DF033A300AD577B /* Level2CustomResources.plist */,
+			);
+			name = Level2;
 			sourceTree = "<group>";
 		};
 		1B4C32F91DE58717008E5339 /* TextureAtlasesManager */ = {
@@ -820,6 +852,7 @@
 		EA49824C1DD0F29C00DCFE00 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1B3D98B71DF02F9900AD577B /* Level2 */,
 				EA49824D1DD0F2A800DCFE00 /* Level1 */,
 				1B27EA9B1DC090BE00E9CA23 /* OGMainMenuScene.sks */,
 				1B27EAA71DC0CEA200E9CA23 /* OGMapMenuScene.sks */,
@@ -1213,13 +1246,17 @@
 				EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */,
 				215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
+				1B3D98B91DF02FB900AD577B /* Level2.sks in Resources */,
+				1B3D98BF1DF033A300AD577B /* Level2CustomResources.plist in Resources */,
 				1B7F24A91DD5D074004918C8 /* ScenesConfiguration.plist in Resources */,
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */,
 				1B4C94621DEC692300EA5ED6 /* Level1CustomResources.plist in Resources */,
 				21AD66D61DEF35A700E4BC93 /* ShopScreen.sks in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
+				1B3D98BD1DF031E100AD577B /* Level2.plist in Resources */,
 				215C4BE81DC269D6000DF29F /* OGSettingsMenuScene.sks in Resources */,
+				1B3D98BB1DF0314100AD577B /* OGChapter2.sks in Resources */,
 				215A8A901DDE232C00C5C90D /* Level1.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1242,6 +1279,7 @@
 				2177AF0F1DDF405600A21B75 /* OGEnemyEntityAttackState.m in Sources */,
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */,
+				1B3D98B61DF02F1200AD577B /* OGLevel2.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B7F24A31DD5D074004918C8 /* OGSceneLoaderPrepearingResourcesState.m in Sources */,
