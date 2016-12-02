@@ -9,7 +9,9 @@
 #import "OGGameSceneConfiguration.h"
 #import "OGPlayerConfiguration.h"
 #import "OGEnemyConfiguration.h"
+#import "OGZoneConfiguration.h"
 
+NSString *const OGGameSceneConfigurationZonesKey = @"Zones";
 NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const OGGameSceneConfigurationStartRoomKey = @"StartRoom";
@@ -22,6 +24,7 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
 @property (nonatomic, copy, readwrite) NSString *startRoom;
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGZoneConfiguration *> *mutableZoneConfigurations;
 
 @end
 
@@ -34,6 +37,7 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
     if (self)
     {
         _mutableEnemiesConfiguration = [[NSMutableArray alloc] init];
+        _mutable
     }
     
     return self;
@@ -74,11 +78,28 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
         OGEnemyConfiguration *enemyConfiguration = [[OGEnemyConfiguration alloc] initWithDictionary:enemyDictionary];
         [self.mutableEnemiesConfiguration addObject:enemyConfiguration];
     }
+    
+    NSArray *zonesConfigurationDictionaries = configurationDictionary[OGGameSceneConfigurationZonesKey];
+    
+    if (zonesConfigurationDictionaries)
+    {
+        for (NSDictionary *zoneConfigurationDictionary in zonesConfigurationDictionaries)
+        {
+            OGZoneConfiguration *zoneConfiguration = [[OGZoneConfiguration alloc] initWithDictionary:zoneConfigurationDictionary];
+            [self.mutableZoneConfigurations addObject:zoneConfiguration];
+        }
+    }
+   
 }
 
 - (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
     return self.mutableEnemiesConfiguration;
+}
+
+- (NSArray<OGZoneConfiguration *> *)zoneConfigurations
+{
+    return self.mutableZoneConfigurations;
 }
 
 @end

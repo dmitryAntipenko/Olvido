@@ -24,6 +24,14 @@
 
 #pragma mark - Init
 
++ (instancetype)emptyZoneWithSpriteNode:(SKSpriteNode *)spriteNode
+{
+    return [[self alloc] initWithSpriteNode:spriteNode
+                          affectedColliders:@[]
+                      interactionBeginBlock:^(GKEntity *entity){}
+                        interactionEndBlock:^(GKEntity *entity){}];
+}
+
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  affectedColliders:(NSArray<OGColliderType *> *)affectedColliders
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock

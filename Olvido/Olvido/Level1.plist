@@ -830,5 +830,14 @@
 			</array>
 		</dict>
 	</array>
+	<key>Zones</key>
+	<array>
+		<dict>
+			<key>ZoneNodeName</key>
+			<string>Zone_0</string>
+			<key>ZoneClassName</key>
+			<string>OGHiddenZoneEntity</string>
+		</dict>
+	</array>
 </dict>
 </plist>
