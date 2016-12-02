@@ -42,8 +42,8 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
                        attackSpeed:(CGFloat)attackSpeed
                        reloadSpeed:(CGFloat)reloadSpeed
-                            charge:(NSUInteger)charge
-                         maxCharge:(NSUInteger)maxCharge
+                            charge:(NSInteger)charge
+                         maxCharge:(NSInteger)maxCharge
 {
     if (sprite)
     {
@@ -80,7 +80,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 #pragma mark - Getters & Setters
 
-- (void)setCharge:(NSUInteger)charge
+- (void)setCharge:(NSInteger)charge
 {
     _charge = charge;
     

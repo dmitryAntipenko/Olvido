@@ -11,6 +11,8 @@
 #import "OGSoundComponent.h"
 #import "OGRenderComponent.h"
 
+NSString *const OGSoundComponentPlayActionKey = @"Olvido.soundComponentPlayActionKey";
+
 @interface OGSoundComponent ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, SKAudioNode *> *soundNodes;
@@ -39,19 +41,6 @@
     }
     
     return self;
-}
-
-- (void)setTarget:(SKNode *)target
-{
-    _target = target;
-    
-    for (SKAudioNode *node in self.soundNodes.allValues)
-    {
-        if (node.parent)
-        {
-            [node removeFromParent];
-        }
-    }
 }
 
 #pragma mark - Playing sounds
@@ -84,14 +73,14 @@
     
     if (audioNode)
     {
-        [self stopPlayingSound:soundName];
+        [audioNode removeActionForKey:OGSoundComponentPlayActionKey];
         
         if (!audioNode.parent)
         {
             [self.target addChild:audioNode];
         }
         
-        [audioNode runAction:[SKAction play]];
+        [audioNode runAction:[SKAction play] withKey:OGSoundComponentPlayActionKey];
     }
 }
 
