@@ -218,10 +218,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)createSceneContents
 {
-//    [self createPlayer];
-//    [self createEnemies];
-////    [self createDoors];
-//    [self createSceneItems];
+    [self createPlayer];
+    [self createEnemies];
+    [self createDoors];
+    [self createSceneItems];
     [self createZones];
 }
 
