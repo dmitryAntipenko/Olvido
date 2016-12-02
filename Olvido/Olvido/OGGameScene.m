@@ -17,6 +17,7 @@
 #import "OGConstants.h"
 #import "OGZPositionEnum.m"
 #import "OGGameSceneConfiguration.h"
+#import "OGZoneConfiguration.h"
 #import "OGEnemyConfiguration.h"
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
@@ -217,54 +218,27 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)createSceneContents
 {
-    [self createPlayer];
-    [self createEnemies];
-    [self createDoors];
-    [self createSceneItems];
-//    [self createZones];
+//    [self createPlayer];
+//    [self createEnemies];
+////    [self createDoors];
+//    [self createSceneItems];
+    [self createZones];
 }
 
 - (void)createZones
 {
-   
-    
-/*
- *__________________ZONE CREATION EXAMPLE________________
- * !!!!!This example needs SKSPriteNode with name "Zone_0" on scene!!!!!
- */
-    
-    
-//    SKSpriteNode *zoneNode = nil;
-//    
-//    NSString *zoneName = @"Zone_0";
-//    zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
-//    
-//    SKEmitterNode *emitter = [SKEmitterNode nodeWithFileNamed:@"SlimeZoneParticleSystem"];
-//    
-//    OGHiddenZoneEntity *zoneEntity = [[OGParticlesZoneEntity alloc] initWithSpriteNode:zoneNode
-//                                                                     affectedColliders:@[]
-//                                                                 interactionBeginBlock:^(GKEntity *entity)
-//                                      {
-//                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-//                                          
-//                                          if (movementComponent)
-//                                          {
-//                                              movementComponent.speedFactor = 0.5;
-//                                          }
-//                                      }
-//                                                                   interactionEndBlock:^(GKEntity *entity)
-//                                      {
-//                                          OGMovementComponent *movementComponent = (OGMovementComponent *)[entity componentForClass:[OGMovementComponent class]];
-//                                          
-//                                          if (movementComponent)
-//                                          {
-//                                              movementComponent.speedFactor = 1.0;
-//                                          }
-//                                          
-//                                      } emitter:emitter];
-//    
-//    
-//    [self addEntity:zoneEntity];
+    for (OGZoneConfiguration *zoneConfiguration in self.sceneConfiguration.zoneConfigurations)
+    {
+        SKSpriteNode *zoneNode = nil;
+        NSString *zoneName = zoneConfiguration.zoneNodeName;
+        zoneNode = (SKSpriteNode *)[self childNodeWithName:zoneName];
+        
+        if (zoneNode)
+        {
+            OGHiddenZoneEntity *zone = [zoneConfiguration.zoneClass emptyZoneWithSpriteNode:zoneNode];
+            [self addEntity:zone];
+        }
+    }
 }
 
 - (void)createTouchControlInputNode

@@ -37,7 +37,7 @@ NSString *const OGGameSceneConfigurationBackgroundMusicKey = @"BackgroundMusic";
     if (self)
     {
         _mutableEnemiesConfiguration = [[NSMutableArray alloc] init];
-        _mutable
+        _mutableZoneConfigurations = [[NSMutableArray alloc] init];
     }
     
     return self;
