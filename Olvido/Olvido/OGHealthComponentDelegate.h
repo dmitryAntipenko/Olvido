@@ -13,6 +13,8 @@
 @optional
 - (void)healthDidChange;
 - (void)entityWillDie;
+
+- (void)restoreEntityHealth:(NSInteger)health;
 - (void)dealDamageToEntity:(NSInteger)damage;
 
 @end

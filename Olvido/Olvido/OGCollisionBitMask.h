@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
     OGCollisionBitMaskDoor         = 0x01 << 5,    //32
     OGCollisionBitMaskDoorTrigger  = 0x01 << 6,    //64
     OGCollisionBitMaskBullet       = 0x01 << 7,    //128
-    OGCollisionBitMaskKey          = 0x01 << 8     //256
+    OGCollisionBitMaskSceneItem    = 0x01 << 8     //256
 };
 
 #endif /* Header_h */

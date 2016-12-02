@@ -8,15 +8,14 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGInventoryItem.h"
+#import "OGSceneItemEntity.h"
 
 @class OGRenderComponent;
 @class OGKeyComponent;
 @class OGPhysicsComponent;
 
-@interface OGKey : GKEntity <OGInventoryItem>
+@interface OGKey : OGSceneItemEntity <OGInventoryItem>
 
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong) OGKeyComponent *keyComponent;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode*)spriteNode;

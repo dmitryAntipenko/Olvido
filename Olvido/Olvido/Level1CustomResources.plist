@@ -9,13 +9,6 @@
 		<key>weapon_shot</key>
 		<string>shot</string>
 	</dict>
-	<key>Audio</key>
-	<dict>
-		<key>button_touch</key>
-		<string>button_touch</string>
-		<key>background_music</key>
-		<string>background_music_1</string>
-	</dict>
 	<key>TextureAtlases</key>
 	<dict>
 		<key>Boss</key>

@@ -72,6 +72,12 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 @implementation OGPlayerEntity
 
+- (OGRenderComponent *)renderComponent
+{
+    NSLog(@"asd");
+    return _renderComponent;
+}
+
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration    
 {
     self = [super init];
@@ -240,6 +246,14 @@ NSString *OGPlayerEntityUnitName = @"Player";
     if (self.healthComponent)
     {
         [self.healthComponent dealDamage:damage];
+    }
+}
+
+- (void)restoreEntityHealth:(NSInteger)health
+{
+    if (self.healthComponent)
+    {
+        [self.healthComponent restoreHealth:health];
     }
 }
 

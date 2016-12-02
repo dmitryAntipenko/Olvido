@@ -41,6 +41,7 @@
 #import "OGTrailComponent.h"
 #import "OGRulesComponent.h"
 #import "OGShadowComponent.h"
+#import "OGHealthBarComponent.h"
 
 //MARK: Entities
 
@@ -50,6 +51,7 @@
 #import "OGDoorEntity.h"
 #import "OGShootingWeapon.h"
 #import "OGKey.h"
+#import "OGAidKit.h"
 
 //MARK: Nodes
 
@@ -73,6 +75,7 @@ NSString *const OGGameSceneDoorsNodeName = @"doors";
 NSString *const OGGameSceneItemsNodeName = @"items";
 NSString *const OGGameSceneWeaponNodeName = @"weapon";
 NSString *const OGGameSceneKeysNodeName = @"keys";
+NSString *const OGGameSceneAidKitsNodeName = @"aid_kits";
 NSString *const OGGameSceneSourceNodeName = @"source";
 NSString *const OGGameSceneDestinationNodeName = @"destination";
 NSString *const OGGameSceneUserDataGraphs = @"Graphs";
@@ -162,6 +165,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                              [[GKComponentSystem alloc] initWithComponentClass:[OGWeaponComponent class]],
                              [[GKComponentSystem alloc] initWithComponentClass:[OGTrailComponent class]],
                              [[GKComponentSystem alloc] initWithComponentClass:[OGRulesComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGHealthBarComponent class]],
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
@@ -298,6 +302,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     SKNode *items = [self childNodeWithName:OGGameSceneItemsNodeName];
     NSArray *weapons = [items childNodeWithName:OGGameSceneWeaponNodeName].children;
     NSArray *keys = [items childNodeWithName:OGGameSceneKeysNodeName].children;
+    NSArray *aidKits = [items childNodeWithName:OGGameSceneAidKitsNodeName].children;
     
     for (SKSpriteNode *weaponSprite in weapons)
     {
@@ -312,6 +317,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         OGKey *key = [[OGKey alloc] initWithSpriteNode:keySprite];
         [self addEntity:key];
+    }
+    
+    for (SKSpriteNode *aidKitSprite in aidKits)
+    {
+        OGAidKit *aidKit = [[OGAidKit alloc] initWithSpriteNode:aidKitSprite];
+        aidKit.delegate = self;
+        aidKit.healthComponentDelegate = (id<OGHealthComponentDelegate>) self.player;
+        [self addEntity:aidKit];
     }
 }
 
@@ -622,7 +635,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;        
         characterZPosition += OGGameSceneZSpacePerCharacter;
-    }
+    }        
 }
 
 #pragma mark - Getters

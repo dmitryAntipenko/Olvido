@@ -8,6 +8,8 @@
 	<string>room1</string>
 	<key>Player</key>
 	<dict>
+		<key>UnitName</key>
+		<string>player</string>
 		<key>Textures</key>
 		<array>
 			<dict>

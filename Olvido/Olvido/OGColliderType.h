@@ -22,7 +22,7 @@
 + (instancetype)doorTrigger;
 + (instancetype)weapon;
 + (instancetype)bullet;
-+ (instancetype)key;
++ (instancetype)sceneItem;
 
 + (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
 
