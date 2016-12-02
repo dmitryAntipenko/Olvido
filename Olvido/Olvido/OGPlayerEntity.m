@@ -72,12 +72,6 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 @implementation OGPlayerEntity
 
-- (OGRenderComponent *)renderComponent
-{
-    NSLog(@"asd");
-    return _renderComponent;
-}
-
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration    
 {
     self = [super init];
