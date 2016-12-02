@@ -91,7 +91,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 #pragma mark - OGAttacking
 
-- (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed
+- (void)attackWithVector:(CGVector)vector
 {
     if (vector.dx != 0.0 && vector.dy != 0.0)
     {
@@ -106,7 +106,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 - (void)createBulletAtPoint:(CGPoint)point withVector:(CGVector)vector
 {
-    OGBullet *bullet = [[OGBullet alloc] init];
+    OGBullet *bullet = [[OGBullet alloc] initWithConfiguration:self.weaponConfiguration.shellConfiguration];
     
     bullet.renderComponent.node.position = point;
     

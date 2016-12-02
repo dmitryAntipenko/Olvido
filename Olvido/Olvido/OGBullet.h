@@ -13,13 +13,17 @@
 
 @class OGPhysicsComponent;
 @class OGRenderComponent;
+@class OGShellConfiguration;
 
 @interface OGBullet : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
+
 @property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 
 @property (nonatomic, assign, readonly) CGFloat speed;
+
+- (instancetype)initWithConfiguration:(OGShellConfiguration *)configuration;
 
 @end

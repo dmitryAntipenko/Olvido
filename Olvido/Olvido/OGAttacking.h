@@ -10,7 +10,7 @@
 
 @optional
 - (void)attack;
-- (void)attackWithVector:(CGVector)vector speed:(CGFloat)speed;
+- (void)attackWithVector:(CGVector)vector;
 - (void)attackDidEnd;
 
 - (void)reload;

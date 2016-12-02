@@ -95,6 +95,7 @@
 		EA591B321DF0AA1B0034511F /* OGDoorConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B311DF0AA1B0034511F /* OGDoorConfiguration.m */; };
 		EA591B351DF19F920034511F /* OGAidKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B341DF19F920034511F /* OGAidKit.m */; };
 		EA591B391DF1A1030034511F /* OGSceneItemEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B381DF1A1030034511F /* OGSceneItemEntity.m */; };
+		EA591B3D1DF1BD890034511F /* OGShellConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */; };
 		EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */; };
 		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
@@ -309,6 +310,8 @@
 		EA591B341DF19F920034511F /* OGAidKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGAidKit.m; sourceTree = "<group>"; };
 		EA591B371DF1A1030034511F /* OGSceneItemEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSceneItemEntity.h; sourceTree = "<group>"; };
 		EA591B381DF1A1030034511F /* OGSceneItemEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSceneItemEntity.m; sourceTree = "<group>"; };
+		EA591B3B1DF1BD890034511F /* OGShellConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShellConfiguration.h; sourceTree = "<group>"; };
+		EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShellConfiguration.m; sourceTree = "<group>"; };
 		EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGColliderType.m; sourceTree = "<group>"; };
 		EA5F11FE1DD4D47D006D4129 /* OGContactNotifiableType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactNotifiableType.h; sourceTree = "<group>"; };
 		EA5F12011DD4E292006D4129 /* OGDoorEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntity.h; sourceTree = "<group>"; };
@@ -829,6 +832,8 @@
 				EABB2A641DF09310000A1167 /* OGWeaponConfiguration.m */,
 				EA591B301DF0AA1B0034511F /* OGDoorConfiguration.h */,
 				EA591B311DF0AA1B0034511F /* OGDoorConfiguration.m */,
+				EA591B3B1DF1BD890034511F /* OGShellConfiguration.h */,
+				EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -1248,6 +1253,7 @@
 				EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */,
 				EABB2A651DF09310000A1167 /* OGWeaponConfiguration.m in Sources */,
 				1B4C32FC1DE5875C008E5339 /* OGTextureAtlasesManager.m in Sources */,
+				EA591B3D1DF1BD890034511F /* OGShellConfiguration.m in Sources */,
 				1B36E4D41DC639AB0080D80B /* OGAnimationComponent.m in Sources */,
 				EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */,
 				1B7F24A31DD5D074004918C8 /* OGSceneLoaderPrepearingResourcesState.m in Sources */,

@@ -7,11 +7,13 @@
 //
 
 #import "OGWeaponConfiguration.h"
+#import "OGShellConfiguration.h"
 
 NSString *const OGWeaponConfigurationAttackSpeedKey = @"AttackSpeed";
 NSString *const OGWeaponConfigurationReloadSpeedKey = @"ReloadSpeed";
 NSString *const OGWeaponConfigurationChargeKey = @"Charge";
 NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
+NSString *const OGWeaponConfigurationShellKey = @"Shell";
 
 @interface OGWeaponConfiguration ()
 
@@ -19,6 +21,7 @@ NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
 @property (nonatomic, assign, readwrite) CGFloat reloadSpeed;
 @property (nonatomic, assign, readwrite) NSUInteger charge;
 @property (nonatomic, assign, readwrite) NSUInteger maxCharge;
+@property (nonatomic, strong, readwrite) OGShellConfiguration *shellConfiguration;
 
 @end
 
@@ -42,6 +45,9 @@ NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
         {
             _maxCharge = [dictionary[OGWeaponConfigurationMaxChargeKey] integerValue];
         }
+        
+        NSDictionary *shellDictionary = dictionary[OGWeaponConfigurationShellKey];
+        _shellConfiguration = [[OGShellConfiguration alloc] initWithDictionary:shellDictionary];
     }
     
     return self;

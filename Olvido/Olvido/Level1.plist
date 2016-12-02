@@ -835,6 +835,15 @@
 	<key>Weapon</key>
 	<array>
 		<dict>
+			<key>Shell</key>
+			<dict>
+				<key>Speed</key>
+				<integer>10</integer>
+				<key>Damage</key>
+				<integer>1</integer>
+				<key>Texture</key>
+				<string>Bullet</string>
+			</dict>
 			<key>ReloadSpeed</key>
 			<real>1.2</real>
 			<key>AttackSpeed</key>
@@ -860,6 +869,15 @@
 			<string>weapon_01</string>
 		</dict>
 		<dict>
+			<key>Shell</key>
+			<dict>
+				<key>Speed</key>
+				<integer>20</integer>
+				<key>Damage</key>
+				<integer>2</integer>
+				<key>Texture</key>
+				<string>LaserBullet</string>
+			</dict>
 			<key>ReloadSpeed</key>
 			<real>0.5</real>
 			<key>AttackSpeed</key>
