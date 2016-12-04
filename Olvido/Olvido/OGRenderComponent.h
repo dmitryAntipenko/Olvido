@@ -10,6 +10,7 @@
 
 @interface OGRenderComponent : GKComponent
 
+@property (nonatomic, assign, getter=isSortableByZ) BOOL sortableByZ;
 @property (nonatomic, strong) SKNode *node;
 
 @end

@@ -15,6 +15,7 @@ typedef NSString * OGAnimationState;
 @interface OGAnimation : NSObject
 
 @property (nonatomic, strong) NSArray<SKTexture *> *textures;
+
 @property (nonatomic, copy) OGAnimationState stateName;
 @property (nonatomic, assign, getter=isRepeatedTexturesForever) BOOL repeatTexturesForever;
 @property (nonatomic, assign) NSInteger frameOffset;

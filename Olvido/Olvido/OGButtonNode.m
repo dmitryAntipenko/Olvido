@@ -39,7 +39,7 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 {
     if (!_touchedTexture)
     {
-        NSString *touchedTextureName = [self.userData objectForKey:OGButtonNodeUserDataTouchedTextureKey];
+        NSString *touchedTextureName = self.userData[OGButtonNodeUserDataTouchedTextureKey];
         
         if (touchedTextureName)
         {
@@ -58,7 +58,7 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 {
     if (!_touchedColor)
     {
-        NSString *touchedColorHexString = [self.userData objectForKey:OGButtonNodeUserDataTouchedColorKey];
+        NSString *touchedColorHexString = self.userData[OGButtonNodeUserDataTouchedColorKey];
         
         if (touchedColorHexString)
         {
@@ -88,7 +88,7 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 - (void)doAction
 {
-    NSString *selectorName = [self.userData objectForKey:OGButtonNodeUserDataSelectorKey];
+    NSString *selectorName = self.userData[OGButtonNodeUserDataSelectorKey];
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

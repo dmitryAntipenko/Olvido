@@ -22,7 +22,6 @@ CGFloat const kOGTextureConfigurationDefaultTimePerFrame = 0.1;
 @property (nonatomic, strong) NSString *textureName;
 @property (nonatomic, assign) CGFloat timePerFrame;
 @property (nonatomic, assign) BOOL repeatForever;
-
 @end
 
 @implementation OGTextureConfiguration

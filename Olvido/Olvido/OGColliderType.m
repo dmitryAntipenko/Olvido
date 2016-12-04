@@ -100,6 +100,16 @@ static dispatch_queue_t initQueue;
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskSceneItem];
 }
 
++ (instancetype)zone
+{
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskZone];
+}
+
++ (instancetype)shop
+{
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskShop];
+}
+
 #pragma mark - Lazy getters
 
 + (NSMutableDictionary *)definedCollisions

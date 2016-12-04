@@ -63,7 +63,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 @property (nonatomic, strong) OGOrientationComponent    *orientationComponent;
 @property (nonatomic, strong) OGWeaponComponent         *weaponComponent;
 @property (nonatomic, strong) OGHealthBarComponent      *healthBarComponent;
-@property (nonatomic, strong) GKAgent2D                 *agent;
+@property (nonatomic, strong, readwrite) GKAgent2D                 *agent;
 
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;

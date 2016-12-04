@@ -12,10 +12,9 @@
 #import "OGBaseScene.h"
 #import "OGSceneLoaderInitialState.h"
 #import "OGSceneLoaderPrepearingResourcesState.h"
+#import "OGSceneLoaderResourcesAndSceneReadyState.h"
 #import "OGSceneLoaderResourcesReadyState.h"
-
-NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesReady = 0;
-NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
+#import "OGSceneLoaderPrepearingSceneState.h"
 
 @implementation OGSceneLoader
 
@@ -29,10 +28,12 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
         {
             _metadata = metadata;
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
-                [OGSceneLoaderInitialState stateWithSceneLoader:self],
-                [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self]
-            ]];
+                                                                     [OGSceneLoaderInitialState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
+                                                                     [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
+                                                                     ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
@@ -50,26 +51,33 @@ NSUInteger const OGSceneLoaderProgressTotalCountWhenResourcesAvailable = 1;
     return [[self alloc] initWithMetadata:metadata];
 }
 
-- (NSProgress *)asynchronouslyLoadSceneForPresentation;
+- (void)asynchronouslyLoadSceneForPresentation;
 {
-    if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
-    {
-        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesReady];
-    }
-    else if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
-    {
-        self.progress = [NSProgress progressWithTotalUnitCount:OGSceneLoaderProgressTotalCountWhenResourcesAvailable];
-        [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       if (self.stateMachine.currentState.class == [OGSceneLoaderInitialState class])
+                       {
+                           [self.stateMachine enterState:[OGSceneLoaderPrepearingResourcesState class]];
+                       }
+                       else if (self.stateMachine.currentState.class == [OGSceneLoaderResourcesReadyState class])
+                       {
+                           [self.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
+                       }
+                   });
     
-    return self.progress;
 }
 
 - (void)purgeResources
 {
-    [self.progress cancel];
-    
-    [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
+                   {
+                       [self.stateMachine enterState:[OGSceneLoaderInitialState class]];
+                   });
+}
+
+- (void)purgeScene
+{
+    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
 }
 
 @end

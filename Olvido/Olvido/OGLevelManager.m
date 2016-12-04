@@ -55,15 +55,17 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)didCallFinish
 {
-    [NSException raise:NSInternalInconsistencyException
-                format:@"Not implemented %@", NSStringFromSelector(_cmd)];
+    [self loadLevelWithIdentifier:@1];//will change to "Next level"
 }
 
 - (void)didCallPause
 {
     if (self.currentGameScene)
     {
-        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+        if ([self.currentGameScene.stateMachine canEnterState:[OGPauseLevelState class]])
+        {
+            [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+        }
     }
 }
 

@@ -16,6 +16,9 @@
 
 #import "OGConstants.h"
 
+CGFloat const OGEnemyEntityAgentControlledStateWalkMaxSpeed = 50;
+CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
+
 @interface OGEnemyEntityAgentControlledState ()
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
@@ -80,10 +83,17 @@
         
         if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt)
         {
+            self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
+            self.animationComponent.requestedAnimationState = OGConstantsRun;
+        }
+        else if (self.enemyEntity.mandate == OGEnemyEntityMandateCheckPoint)
+        {
+            self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
             self.animationComponent.requestedAnimationState = OGConstantsRun;
         }
         else
         {
+            self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateWalkMaxSpeed;
             self.animationComponent.requestedAnimationState = OGConstantsWalk;
         }
     }

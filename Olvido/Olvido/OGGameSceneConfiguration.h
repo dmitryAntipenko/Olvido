@@ -13,15 +13,18 @@
 @class OGWeaponConfiguration;
 @class OGDoorConfiguration;
 @class OGEntityConfiguration;
+@class OGZoneConfiguration;
 
 @interface OGGameSceneConfiguration : NSObject
 
 @property (nonatomic, copy, readonly) NSString *backgroundMusic;
 @property (nonatomic, copy, readonly) NSString *startRoom;
+
 @property (nonatomic, strong, readonly) OGPlayerConfiguration *playerConfiguration;
-@property (nonatomic, strong, readonly) NSArray<OGEnemyConfiguration *> *enemiesConfiguration;
+@property (nonatomic, strong, readonly) NSArray<OGEnemyConfiguration *> *enemyConfigurations;
 @property (nonatomic, strong, readonly) NSArray<OGWeaponConfiguration *> *weaponConfigurations;
 @property (nonatomic, strong, readonly) NSArray<OGDoorConfiguration *> *doorConfigurations;
+@property (nonatomic, strong, readonly) NSArray<OGZoneConfiguration *> *zoneConfigurations;
 
 + (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
 

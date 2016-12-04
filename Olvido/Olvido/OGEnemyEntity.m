@@ -35,10 +35,10 @@
 
 #import "OGPlayerEntity.h"
 #import "OGZPositionEnum.m"
+#import "OGBullet.h"
+#import "OGWeaponEntity.h"
 
 #import "OGColliderType.h"
-
-#import "OGZombie.h"
 
 #import "OGTextureConfiguration.h"
 
@@ -49,8 +49,7 @@ NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
 CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 30.0;
 CGFloat const OGEnemyEntityPatrolPathRadius = 10.0;
-CGFloat const OGEnemyEntityWalkMaxSpeed = 50;
-CGFloat const OGEnemyEntityHuntMaxSpeed = 500;
+
 CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
 CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
@@ -63,7 +62,6 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 @interface OGEnemyEntity ()
 
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
-@property (nonatomic, weak) GKAgent2D *huntAgent;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
@@ -74,6 +72,10 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 @property (nonatomic, strong) OGShadowComponent *shadowComponent;
 
 @property (nonatomic, strong) NSString *unitName;
+
+@property (nonatomic, weak) GKAgent2D *huntAgent;
+
+@property (nonatomic, assign) CGPoint checkPoint;
 
 @end
 
@@ -150,7 +152,6 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
  
         _agent = [[GKAgent2D alloc] init];
         _agent.delegate = self;
-        _agent.maxSpeed = OGEnemyEntityWalkMaxSpeed;
         _agent.maxAcceleration = OGEnemyEntityMaximumAcceleration;
         _agent.mass = OGEnemyEntityAgentMass;
         _agent.radius = configuration.physicsBodyRadius;
@@ -189,15 +190,6 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     {
         if ([intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]])
         {
-            if (self.mandate == OGEnemyEntityMandateHunt)
-            {
-                self.agent.maxSpeed = OGEnemyEntityHuntMaxSpeed;
-            }
-            else
-            {
-                self.agent.maxSpeed = OGEnemyEntityWalkMaxSpeed;
-            }
-            
             [self updateNodePositionToMatchAgentPosition];
         }
         else
@@ -211,7 +203,18 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    
+    if ([entity isMemberOfClass:[OGBullet class]])
+    {
+        OGWeaponEntity *weapon = ((OGBullet *) entity).weapon;
+        
+        if ([weapon.owner isMemberOfClass:[OGPlayerEntity class]] && !self.huntAgent)
+        {
+            vector_float2 position = ((OGPlayerEntity *) weapon.owner).agent.position;
+            self.checkPoint = CGPointMake(position.x, position.y);
+            
+            self.mandate = OGEnemyEntityMandateCheckPoint;
+        }
+    }
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
@@ -244,7 +247,8 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     }
     else
     {
-        if (self.mandate != OGEnemyEntityMandateFollowPath)
+        if (self.mandate != OGEnemyEntityMandateFollowPath
+            && self.mandate != OGEnemyEntityMandateCheckPoint)
         {
             self.closestPointOnPath = [self closestPointOnPathWithGraph:self.graph];
             self.mandate = OGEnemyEntityMandateReturnToPositionOnPath;
@@ -289,7 +293,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 {
     GKBehavior *result = nil;
     
-    SKScene *scene = ((OGRenderComponent *) [self componentForClass:[OGRenderComponent class]]).node.scene;
+    OGGameScene *scene = (OGGameScene *) ((OGRenderComponent *) [self componentForClass:[OGRenderComponent class]]).node.scene;
     
     if (scene)
     {
@@ -300,7 +304,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                       graph:self.graph
                                                  pathRadius:OGEnemyEntityPatrolPathRadius
-                                                      scene:(OGGameScene *)scene];
+                                                      scene:scene];
                 break;
             }
             case OGEnemyEntityMandateHunt:
@@ -308,7 +312,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                huntingAgent:self.huntAgent
                                                  pathRadius:OGEnemyEntityPatrolPathRadius
-                                                      scene:(OGGameScene *)scene];
+                                                      scene:scene];
                 break;
             }
             case OGEnemyEntityMandateReturnToPositionOnPath:
@@ -316,10 +320,18 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
                 result = [OGEnemyBehavior behaviorWithAgent:self.agent
                                                    endPoint:self.closestPointOnPath
                                                  pathRadius:OGEnemyEntityPatrolPathRadius
-                                                      scene:(OGGameScene *)scene];
+                                                      scene:scene];
                 break;
             }
-        }        
+            case OGEnemyEntityMandateCheckPoint:
+            {
+                result = [OGEnemyBehavior behaviorWithAgent:self.agent
+                                                   endPoint:self.checkPoint
+                                                 pathRadius:OGEnemyEntityPatrolPathRadius
+                                                      scene:scene];
+                break;
+            }
+        }
     }
     else
     {
@@ -439,7 +451,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
     
-    NSArray *contactColliders = @[[OGColliderType player]];
+    NSArray *contactColliders = @[[OGColliderType player], [OGColliderType bullet]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType enemy]];
 }
 

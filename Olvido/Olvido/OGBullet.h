@@ -15,9 +15,12 @@
 @class OGRenderComponent;
 @class OGShellConfiguration;
 
+@class OGWeaponEntity;
+
 @interface OGBullet : GKEntity <OGResourceLoadable, OGContactNotifiableType>
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
+@property (nonatomic, weak) OGWeaponEntity *weapon;
 
 @property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;

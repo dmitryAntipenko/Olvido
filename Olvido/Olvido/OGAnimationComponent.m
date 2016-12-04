@@ -34,6 +34,7 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             _animations = animations;
             _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil];
             _elapsedAnimationDuration = 0.0;
+            _playBackwards = NO;
         }
     }
     else
@@ -74,10 +75,18 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
                 animation.frameOffset = (self.currentAnimation.frameOffset + numberOfFramesPlayedSinceCurrentAnimationBegan + 1) % numberOfFramesInCurrentAnimation;
             }
             
-            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures
+            NSArray *textures = animation.offsetTextures;
+            
+            if (self.isPlayingBackwards)
+            {
+                textures = [[textures reverseObjectEnumerator] allObjects];
+            }
+            
+            SKAction *animateAction = [SKAction animateWithTextures:textures
                                                        timePerFrame:animation.timePerFrame
                                                              resize:YES
                                                             restore:YES];
+            
             if (animation.isRepeatedTexturesForever)
             {
                 texturesAction = [SKAction repeatActionForever:animateAction];
@@ -88,14 +97,18 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             }
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         SKAction *complitionAction =  [SKAction runBlock:^()
         {
-            if (self.delegate)
+            if (weakSelf && weakSelf.delegate)
             {
-                self.spriteNode.texture = self.currentAnimation.textures.lastObject;
-                self.spriteNode.size = self.spriteNode.texture.size;
-                self.currentAnimation = nil;
-               [self.delegate animationDidFinish];
+                typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.spriteNode.texture = strongSelf.currentAnimation.textures.lastObject;
+                strongSelf.spriteNode.size = strongSelf.spriteNode.texture.size;
+                strongSelf.currentAnimation = nil;
+               [strongSelf.delegate animationDidFinish];
             }
         }];
         
@@ -103,9 +116,10 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
                            withKey:OGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
-        self.currentTimePerFrame = self.currentAnimation.timePerFrame;
+        self.currentTimePerFrame = animation.timePerFrame;
         
         self.elapsedAnimationDuration = 0.0;
+        self.playBackwards = NO;
     }
 }
 
@@ -116,7 +130,6 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
     [super updateWithDeltaTime:deltaTime];
     
     if (self.requestedAnimationState)
-
     {
         [self runAnimationForAnimationState:self.requestedAnimationState deltaTime:deltaTime];
         self.requestedAnimationState = nil;

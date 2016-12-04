@@ -11,11 +11,12 @@
 #import "OGTransitionComponentDelegate.h"
 #import "OGEntityManaging.h"
 #import "OGGameSceneDelegate.h"
+#import "OGInteractionsManaging.h"
 
 @class OGEntitySnapshot;
 @class OGAudioManager;
 
-@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging>
+@interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging, OGInteractionsManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
 @property (nonatomic, weak) id<OGGameSceneDelegate> sceneDelegate;
@@ -31,7 +32,7 @@
 
 - (void)resume;
 - (void)pauseWithoutPauseScreen;
-- (void)gameOver;
+- (void)showGameOverScreen;
 - (void)runStoryConclusion;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity;

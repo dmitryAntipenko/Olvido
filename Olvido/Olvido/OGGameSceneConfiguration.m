@@ -13,7 +13,9 @@
 #import "OGWeaponConfiguration.h"
 #import "OGEntityConfiguration.h"
 #import "OGDoorConfiguration.h"
+#import "OGZoneConfiguration.h"
 
+NSString *const OGGameSceneConfigurationZonesKey = @"Zones";
 NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const OGGameSceneConfigurationWeaponKey = @"Weapon";
@@ -29,10 +31,12 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 
 @property (nonatomic, copy, readwrite) NSString *backgroundMusic;
 @property (nonatomic, copy, readwrite) NSString *startRoom;
+
 @property (nonatomic, strong, readwrite) OGPlayerConfiguration *playerConfiguration;
-@property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemiesConfiguration;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGEnemyConfiguration *> *mutableEnemyConfigurations;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGWeaponConfiguration *> *mutableWeaponConfigurations;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGDoorConfiguration *> *mutableDoorConfigurations;
+@property (nonatomic, strong, readwrite) NSMutableArray<OGZoneConfiguration *> *mutableZoneConfigurations;
 
 @property (nonatomic, strong) NSMutableArray<OGEntityConfiguration *> *searchingArray;
 
@@ -48,9 +52,10 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
     
     if (self)
     {
-        _mutableEnemiesConfiguration = [NSMutableArray array];
+        _mutableEnemyConfigurations = [NSMutableArray array];
         _mutableWeaponConfigurations = [NSMutableArray array];
         _mutableDoorConfigurations = [NSMutableArray array];
+        _mutableZoneConfigurations = [[NSMutableArray alloc] init];
         _searchingArray = [NSMutableArray array];
     }
     
@@ -92,7 +97,7 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
     for (NSDictionary *enemyDictionary in enemiesConfigurationDictionary)
     {
         OGEnemyConfiguration *enemyConfiguration = [[OGEnemyConfiguration alloc] initWithDictionary:enemyDictionary];
-        [self.mutableEnemiesConfiguration addObject:enemyConfiguration];
+        [self.mutableEnemyConfigurations addObject:enemyConfiguration];
     }
     
     NSArray *weaponConfigurationsDictionary = configurationDictionary[OGGameSceneConfigurationWeaponKey];
@@ -111,10 +116,22 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
         [self.mutableDoorConfigurations addObject:doorConfiguration];
     }
     
+    NSArray *zonesConfigurationDictionaries = configurationDictionary[OGGameSceneConfigurationZonesKey];
+    
+    if (zonesConfigurationDictionaries)
+    {
+        for (NSDictionary *zoneConfigurationDictionary in zonesConfigurationDictionaries)
+        {
+            OGZoneConfiguration *zoneConfiguration = [[OGZoneConfiguration alloc] initWithDictionary:zoneConfigurationDictionary];
+            [self.mutableZoneConfigurations addObject:zoneConfiguration];
+        }
+    }
+    
     [self.searchingArray addObject:self.playerConfiguration];
     [self.searchingArray addObjectsFromArray:self.mutableWeaponConfigurations];
-    [self.searchingArray addObjectsFromArray:self.mutableEnemiesConfiguration];
+    [self.searchingArray addObjectsFromArray:self.mutableEnemyConfigurations];
     [self.searchingArray addObjectsFromArray:self.mutableDoorConfigurations];
+    [self.searchingArray addObjectsFromArray:self.mutableZoneConfigurations];
 }
 
 - (OGEntityConfiguration *)findConfigurationWithUnitName:(NSString *)unitName
@@ -137,7 +154,7 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 
 - (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
 {
-    return [self.mutableEnemiesConfiguration copy];
+    return [self.mutableEnemyConfigurations copy];
 }
 
 - (NSArray<OGWeaponConfiguration *> *)weaponConfigurations
@@ -148,6 +165,11 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 - (NSArray<OGDoorConfiguration *> *)doorConfigurations
 {
     return [self.mutableDoorConfigurations copy];
+}
+
+- (NSArray<OGZoneConfiguration *> *)zoneConfigurations
+{
+    return self.mutableZoneConfigurations;
 }
 
 @end

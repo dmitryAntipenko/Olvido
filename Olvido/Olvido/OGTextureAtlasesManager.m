@@ -10,9 +10,62 @@
 
 char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManagerSyncQueue";
 
-@interface OGTextureAtlasesManager ()
+@protocol OGTextureAtlasesManagerPairDelegate <NSObject>
 
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, SKTextureAtlas *> *> *textures;
+- (void)pairReletadScenesCountDidSetToZero:(id)pair;
+
+@end
+
+@interface OGTextureAtlasesManagerPair : NSObject
+
+@property (nonatomic, strong) NSString *atlasKey;
+@property (nonatomic, weak)   NSMutableDictionary *unitDictionary;
+@property (nonatomic, strong) SKTextureAtlas *textureAtlas;
+@property (nonatomic, assign) NSUInteger relatedScenesCount;
+@property (nonatomic, weak)   id <OGTextureAtlasesManagerPairDelegate> delegate;
+
+- (instancetype)initWithTextureAtlas:(SKTextureAtlas *)textureAtlas;
+- (void)increment;
+- (void)decrement;
+
+@end
+
+@implementation OGTextureAtlasesManagerPair
+
+- (instancetype)initWithTextureAtlas:(nonnull SKTextureAtlas *)textureAtlas
+{
+    self = [self init];
+    
+    if (self)
+    {
+        _relatedScenesCount = 1;
+        _textureAtlas = textureAtlas;
+    }
+    
+    return self;
+}
+
+- (void)increment
+{
+    self.relatedScenesCount++;
+}
+
+- (void)decrement
+{
+    self.relatedScenesCount--;
+    
+    if (self.relatedScenesCount <= 0)
+    {
+        [self.delegate pairReletadScenesCountDidSetToZero:self];
+    }
+}
+
+@end
+
+
+@interface OGTextureAtlasesManager () <OGTextureAtlasesManagerPairDelegate>
+
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, OGTextureAtlasesManagerPair *> *> *textures;
 @property (nonatomic, strong) dispatch_queue_t syncQueue;
 
 @end
@@ -25,9 +78,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^()
-    {
-        instance = [[OGTextureAtlasesManager alloc] init];
-    });
+                  {
+                      instance = [[OGTextureAtlasesManager alloc] init];
+                  });
     
     return instance;
 }
@@ -52,18 +105,65 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     if (unitName && atlasKey && atlas)
     {
         dispatch_barrier_sync(self.syncQueue, ^()
-        {
-            NSMutableDictionary<NSString *, SKTextureAtlas *> *unitAtlases = self.textures[unitName];
-          
-            if (!unitAtlases)
-            {
-                unitAtlases = [[NSMutableDictionary alloc] init];
-                self.textures[unitName] = unitAtlases;
-            }
-          
-            unitAtlases[atlasKey] = atlas;
-        });
+                              {
+                                  NSMutableDictionary<NSString *, OGTextureAtlasesManagerPair *> *unitAtlases = self.textures[unitName];
+                                  
+                                  if (!unitAtlases)
+                                  {
+                                      unitAtlases = [[NSMutableDictionary alloc] init];
+                                      self.textures[unitName] = unitAtlases;
+                                  }
+                                  
+                                  OGTextureAtlasesManagerPair *pair = unitAtlases[atlasKey];
+                                  
+                                  if (pair)
+                                  {
+                                      [pair increment];
+                                  }
+                                  else
+                                  {
+                                      unitAtlases[atlasKey] = [self pairWithAtlas:atlas
+                                                                   unitDictionary:unitAtlases
+                                                                         atlasKey:atlasKey
+                                                                         delegate:self];
+                                  }
+                              });
     }
+}
+
+- (void)addOrReplaceAtlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey atlas:(SKTextureAtlas *)atlas
+{
+    if (unitName && atlasKey && atlas)
+    {
+        dispatch_barrier_sync(self.syncQueue, ^()
+                              {
+                                  NSMutableDictionary<NSString *, OGTextureAtlasesManagerPair *> *unitAtlases = self.textures[unitName];
+                                  
+                                  if (!unitAtlases)
+                                  {
+                                      unitAtlases = [[NSMutableDictionary alloc] init];
+                                      self.textures[unitName] = unitAtlases;
+                                  }
+                                  
+                                  unitAtlases[atlasKey] = [self pairWithAtlas:atlas
+                                                               unitDictionary:unitAtlases
+                                                                     atlasKey:atlasKey
+                                                                     delegate:self];
+                              });
+    }
+}
+
+- (OGTextureAtlasesManagerPair *)pairWithAtlas:(SKTextureAtlas *)atlas
+                                unitDictionary:(NSMutableDictionary *)unitDictionary
+                                      atlasKey:(NSString *)atlasKey
+                                      delegate:(id <OGTextureAtlasesManagerPairDelegate>)delegate
+{
+    OGTextureAtlasesManagerPair *newPair = [[OGTextureAtlasesManagerPair alloc] initWithTextureAtlas:atlas];
+    newPair.unitDictionary = unitDictionary;
+    newPair.atlasKey = atlasKey;
+    newPair.delegate = self;
+    
+    return newPair;
 }
 
 - (void)purgeAtlasesWithUnitName:(NSString *)unitName
@@ -71,18 +171,34 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     if (unitName)
     {
         dispatch_barrier_sync(self.syncQueue, ^()
-        {
-            [self.textures removeObjectForKey:unitName];
-        });
+                              {
+                                  NSDictionary<NSString *, OGTextureAtlasesManagerPair *> *unitAtlases = self.textures[unitName];
+                                  
+                                  if (unitAtlases)
+                                  {
+                                      for (NSString *atlasKey in unitAtlases.allKeys)
+                                      {
+                                          [unitAtlases[atlasKey] decrement];
+                                      }
+                                  }
+                              });
     }
 }
 
 - (void)purgeAllTextures
 {
     dispatch_barrier_sync(self.syncQueue, ^()
-    {
-      [self.textures removeAllObjects];
-    });
+                          {
+                              for (NSString *unitName in self.textures)
+                              {
+                                  NSMutableDictionary *unitAtlases = self.textures[unitName];
+                                  
+                                  for (NSString *atlasKey in unitAtlases.allKeys)
+                                  {
+                                      [unitAtlases[atlasKey] decrement];
+                                  }
+                              }
+                          });
 }
 
 - (BOOL)containsAtlasWithKey:(NSString *)atlasKey unitName:(NSString *)unitName
@@ -92,9 +208,9 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
     if (atlasKey && unitName)
     {
         dispatch_sync(self.syncQueue, ^()
-        {
-            result = (self.textures[unitName][atlasKey] != nil);
-        });
+                      {
+                          result = (self.textures[unitName][atlasKey] != nil);
+                      });
     }
     
     return result;
@@ -102,39 +218,37 @@ char *const kOGTextureManagerQueueLabel = "com.zeouniversity.olvido.textureManag
 
 #pragma mark - Accessing to atlases
 
-- (NSDictionary<NSString *, SKTextureAtlas *> *)atlasesWithUnitName:(NSString *)unitName
-{
-    __block NSDictionary<NSString *, SKTextureAtlas *> *result = nil;
-    
-    dispatch_sync(self.syncQueue, ^()
-    {
-        if (unitName)
-        {
-            result = self.textures[unitName];
-        }
-    });
-    
-    return result;
-}
-
 - (SKTextureAtlas *)atlasWithUnitName:(NSString *)unitName atlasKey:(NSString *)atlasKey
 {
     __block SKTextureAtlas *result = nil;
     
     dispatch_sync(self.syncQueue, ^()
-    {
-        if (unitName && atlasKey)
-        {
-            NSDictionary<NSString *, SKTextureAtlas *> *unitAtlases = self.textures[unitName];
-          
-            if (unitAtlases)
-            {
-                result = unitAtlases[atlasKey];
-            }
-        }
-    });
+                  {
+                      if (unitName && atlasKey)
+                      {
+                          NSDictionary<NSString *, OGTextureAtlasesManagerPair *> *unitAtlases = self.textures[unitName];
+                          
+                          if (unitAtlases)
+                          {
+                              OGTextureAtlasesManagerPair *pair = unitAtlases[atlasKey];
+                              
+                              if (pair)
+                              {
+                                  result = pair.textureAtlas;
+                              }
+                          }
+                      }
+                  });
     
     return result;
+}
+
+#pragma mark - OGTextureAtlasesManagerPairDelegate
+
+- (void)pairReletadScenesCountDidSetToZero:(OGTextureAtlasesManagerPair *)pair
+{
+    pair.textureAtlas = nil;
+    [pair.unitDictionary removeObjectForKey:pair.atlasKey];
 }
 
 @end
