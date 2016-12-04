@@ -8,11 +8,10 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGInteractionsManaging.h"
+#import "OGSceneItemEntity.h"
 
-@interface OGShop : GKEntity
+@interface OGShop : OGSceneItemEntity
 
-@property (nonatomic, weak) id<OGInteractionsManaging> delegate;
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite;
+@property (nonatomic, weak) id<OGInteractionsManaging> interactionDelegate;
 
 @end

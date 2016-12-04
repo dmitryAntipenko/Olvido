@@ -16,49 +16,13 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 
-@interface OGShop () <OGContactNotifiableType>
-
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-
-@end
-
 @implementation OGShop
-
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
-{
-    if (sprite)
-    {
-        self = [super init];
-        
-        if (self)
-        {
-            NSArray *contactColliders = @[[OGColliderType player]];
-            [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType shop]];
-            
-            _renderComponent = [[OGRenderComponent alloc] init];
-            _renderComponent.node = sprite;
-            [self addComponent:_renderComponent];
-            
-            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
-                                                                   colliderType:[OGColliderType shop]];
-            [self addComponent:_physicsComponent];
-        }
-    }
-    else
-    {
-        self = nil;
-    }
-    
-    return self;
-}
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
-        [self.delegate showShop];
+        [self.interactionDelegate showShop];
     }
 }
 

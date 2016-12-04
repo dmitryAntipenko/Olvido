@@ -243,7 +243,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         OGShop *shop = [[OGShop alloc] initWithSpriteNode:shopNode];
         
-        shop.delegate = self;
+        shop.interactionDelegate = self;
         [self addEntity:shop];
     }
 }
