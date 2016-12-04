@@ -77,10 +77,7 @@
 
 - (void)purgeScene
 {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^
-                   {
-                       [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
-                   });
+    [self.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
 }
 
 @end

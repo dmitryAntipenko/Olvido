@@ -60,16 +60,13 @@
     __weak typeof(self) weakSelf = self;
     
     completionOperation.completionBlock = ^
-    {
-        //        dispatch_async(dispatch_get_main_queue(), ^
-        //                       {
+    {     
         if (weakSelf)
         {
             typeof(weakSelf) strongSelf = weakSelf;
             
             [strongSelf.stateMachine enterState:[OGSceneLoaderPrepearingSceneState class]];
         }
-        //                       });
     };
     
     for (NSString *unitName in sceneMetadata.textureAtlases)

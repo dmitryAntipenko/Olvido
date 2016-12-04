@@ -24,4 +24,6 @@
              interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
                interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock;
 
++ (instancetype)emptyZoneWithSpriteNode:(SKSpriteNode *)spriteNode;
+
 @end

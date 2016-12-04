@@ -48,10 +48,7 @@
     {
         OGTextureAtlasesManager *textureAtlasesManager = [OGTextureAtlasesManager sharedInstance];
         
-        if (self.atlasKey
-            && self.unitName
-            && self.atlasName
-            && ![textureAtlasesManager containsAtlasWithKey:self.atlasKey unitName:self.unitName])
+        if (self.atlasKey && self.unitName && self.atlasName)
         {
             SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:self.atlasName];
             
