@@ -152,7 +152,7 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 
 #pragma mark - Getters
 
-- (NSArray<OGEnemyConfiguration *> *)enemiesConfiguration
+- (NSArray<OGEnemyConfiguration *> *)enemyConfigurations
 {
     return [self.mutableEnemyConfigurations copy];
 }

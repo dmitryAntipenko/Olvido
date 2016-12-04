@@ -832,7 +832,6 @@
 			</array>
 		</dict>
 	</array>
-<<<<<<< HEAD
 	<key>Weapon</key>
 	<array>
 		<dict>
@@ -996,7 +995,8 @@
 			</array>
 			<key>UnitName</key>
 			<string>door_05</string>
-=======
+		</dict>
+	</array>
 	<key>Zones</key>
 	<array>
 		<dict>
@@ -1004,7 +1004,6 @@
 			<string>Zone_0</string>
 			<key>ZoneClassName</key>
 			<string>OGHiddenZoneEntity</string>
->>>>>>> a2f7054bb1dee14c704ba491ee68b3f585aafe10
 		</dict>
 	</array>
 </dict>
