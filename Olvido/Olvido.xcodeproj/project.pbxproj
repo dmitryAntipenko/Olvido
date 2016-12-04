@@ -112,6 +112,7 @@
 		EA591B351DF19F920034511F /* OGAidKit.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B341DF19F920034511F /* OGAidKit.m */; };
 		EA591B391DF1A1030034511F /* OGSceneItemEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B381DF1A1030034511F /* OGSceneItemEntity.m */; };
 		EA591B3D1DF1BD890034511F /* OGShellConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */; };
+		EA591B401DF4A21C0034511F /* OGGame.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B3F1DF4A21C0034511F /* OGGame.m */; };
 		EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */; };
 		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
@@ -355,6 +356,8 @@
 		EA591B381DF1A1030034511F /* OGSceneItemEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSceneItemEntity.m; sourceTree = "<group>"; };
 		EA591B3B1DF1BD890034511F /* OGShellConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShellConfiguration.h; sourceTree = "<group>"; };
 		EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShellConfiguration.m; sourceTree = "<group>"; };
+		EA591B3E1DF4A21C0034511F /* OGGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGame.h; sourceTree = "<group>"; };
+		EA591B3F1DF4A21C0034511F /* OGGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGame.m; sourceTree = "<group>"; };
 		EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGColliderType.m; sourceTree = "<group>"; };
 		EA5F11FE1DD4D47D006D4129 /* OGContactNotifiableType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactNotifiableType.h; sourceTree = "<group>"; };
 		EA5F12011DD4E292006D4129 /* OGDoorEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntity.h; sourceTree = "<group>"; };
@@ -1112,6 +1115,8 @@
 				EA9EAAD51DCCBF7000E36855 /* Input */,
 				EAC384151DB43A2800235B27 /* Utils */,
 				EA49824B1DD0F28200DCFE00 /* Assets */,
+				EA591B3E1DF4A21C0034511F /* OGGame.h */,
+				EA591B3F1DF4A21C0034511F /* OGGame.m */,
 				EA976C8A1D9AAEE2003B77FC /* OGGameViewController.h */,
 				EA976C8B1D9AAEE2003B77FC /* OGGameViewController.m */,
 				EA976C821D9AAEE2003B77FC /* OGAppDelegate.h */,
@@ -1391,6 +1396,7 @@
 				EAF7F1231DD7A4A60067D76D /* OGWeaponEntity.m in Sources */,
 				1B36E4D71DC6630C0080D80B /* OGZPositionEnum.m in Sources */,
 				EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */,
+				EA591B401DF4A21C0034511F /* OGGame.m in Sources */,
 				1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */,
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
