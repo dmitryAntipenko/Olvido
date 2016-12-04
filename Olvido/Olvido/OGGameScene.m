@@ -107,6 +107,11 @@ NSString *const OGGameSceneRestartButtonName = @"RestartButton";
 NSString *const OGGameSceneMenuButtonName = @"MenuButton";
 NSString *const OGGameScenePauseButtonName = @"PauseButton";
 
+//Temporary
+NSString *const OGGameSceneResumeFromShopButtonName = @"ResumeFromShopButton";
+NSString *const OGGameSceneBuyBlasterButtonName = @"BuyBlaster";
+//Temporary
+
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
 
@@ -630,6 +635,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [self.gameOverScreenNode removeFromParent];
     }
     
+    if (self.shopScreenNode.parent)
+    {
+        [self.shopScreenNode removeFromParent];
+    }
+    
     if (self.pausedTimeInterval != 0.0)
     {
         self.lastUpdateTimeInterval = NSTimeIntervalSince1970 - self.pausedTimeInterval;
@@ -790,6 +800,17 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         [self.sceneDelegate didCallPause];
     }
+#warning Temporary
+    // Temporary
+    else if ([buttonNode.name isEqualToString:OGGameSceneResumeFromShopButtonName])
+    {
+        [self resume];
+    }
+    else if ([buttonNode.name isEqualToString:OGGameSceneBuyBlasterButtonName])
+    {
+        
+    }
+    // Temporary
 }
 
 @end
