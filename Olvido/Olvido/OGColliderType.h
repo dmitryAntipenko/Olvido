@@ -24,6 +24,7 @@
 + (instancetype)bullet;
 + (instancetype)key;
 + (instancetype)zone;
++ (instancetype)shop;
 
 + (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask;
 

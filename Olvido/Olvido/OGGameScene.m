@@ -54,6 +54,7 @@
 #import "OGParticlesZoneEntity.h"
 #import "OGShootingWeapon.h"
 #import "OGKey.h"
+#import "OGShop.h"
 
 //MARK: Nodes
 
@@ -75,6 +76,8 @@
 
 NSString *const OGGameSceneDoorsNodeName = @"doors";
 NSString *const OGGameSceneItemsNodeName = @"items";
+NSString *const OGGameSceneInteractionsNodeName = @"interactions";
+NSString *const OGGameSceneShopNodeName = @"shop";
 NSString *const OGGameSceneWeaponNodeName = @"weapon";
 NSString *const OGGameSceneKeysNodeName = @"keys";
 NSString *const OGGameSceneSourceNodeName = @"source";
@@ -92,6 +95,7 @@ NSString *const OGGameSceneDoorKeyPrefix = @"key";
 
 NSString *const OGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const OGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
+NSString *const OGGameSceneShopScreenNodeName = @"OGShopScreen.sks";
 
 NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
@@ -119,6 +123,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) SKReferenceNode *shopScreenNode;
 
 @property (nonatomic, strong) OGHUDNode *hudNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
@@ -182,6 +187,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
         _gameOverScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        
+        _shopScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneShopScreenNodeName];
+        _shopScreenNode.zPosition = OGZPositionCategoryTouchControl;
     }
     
     return self;
@@ -221,7 +229,23 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createEnemies];
     [self createDoors];
     [self createSceneItems];
+    [self createSceneInteractions];
     [self createZones];
+}
+
+- (void)createSceneInteractions
+{
+    SKNode *interactions = [self childNodeWithName:OGGameSceneInteractionsNodeName];
+    
+    SKSpriteNode *shopNode = (SKSpriteNode *) [interactions childNodeWithName:OGGameSceneShopNodeName];
+    
+    if (shopNode)
+    {
+        OGShop *shop = [[OGShop alloc] initWithSpriteNode:shopNode];
+        
+        shop.delegate = self;
+        [self addEntity:shop];
+    }
 }
 
 - (void)createZones
@@ -354,7 +378,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                     [door addKeyName:doorNode.userData[key]];
                 }
             }
-            
+        
             [self addEntity:door];
         }
     }
@@ -427,6 +451,18 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
     
     [self.inventoryBarNode updateConstraints];
+}
+
+#pragma mark - OGInteractionsManaging protocol methods
+
+- (void)showShop
+{
+    [self pauseWithoutPauseScreen];
+    
+    if (!self.shopScreenNode.parent)
+    {
+        [self.camera addChild:self.shopScreenNode];
+    }
 }
 
 #pragma mark - Entity Adding
