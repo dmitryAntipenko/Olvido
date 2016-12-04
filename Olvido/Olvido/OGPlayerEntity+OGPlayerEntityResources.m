@@ -36,7 +36,7 @@ static BOOL sResourcesNeedLoading = YES;
     NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
     
-    NSArray *contactColliders = @[[OGColliderType weapon], [OGColliderType key]];
+    NSArray *contactColliders = @[[OGColliderType weapon], [OGColliderType sceneItem]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType player]];
 }
 

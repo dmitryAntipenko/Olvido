@@ -1,0 +1,56 @@
+//
+//  OGWeaponConfiguration.m
+//  Olvido
+//
+//  Created by Дмитрий Антипенко on 12/1/16.
+//  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
+//
+
+#import "OGWeaponConfiguration.h"
+#import "OGShellConfiguration.h"
+
+NSString *const OGWeaponConfigurationAttackSpeedKey = @"AttackSpeed";
+NSString *const OGWeaponConfigurationReloadSpeedKey = @"ReloadSpeed";
+NSString *const OGWeaponConfigurationChargeKey = @"Charge";
+NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
+NSString *const OGWeaponConfigurationShellKey = @"Shell";
+
+@interface OGWeaponConfiguration ()
+
+@property (nonatomic, assign, readwrite) CGFloat attackSpeed;
+@property (nonatomic, assign, readwrite) CGFloat reloadSpeed;
+@property (nonatomic, assign, readwrite) NSUInteger charge;
+@property (nonatomic, assign, readwrite) NSUInteger maxCharge;
+@property (nonatomic, strong, readwrite) OGShellConfiguration *shellConfiguration;
+
+@end
+
+@implementation OGWeaponConfiguration
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super initWithDictionary:dictionary];
+    
+    if (self)
+    {
+        _attackSpeed = [dictionary[OGWeaponConfigurationAttackSpeedKey] floatValue];
+        _reloadSpeed = [dictionary[OGWeaponConfigurationReloadSpeedKey] floatValue];
+        _charge = [dictionary[OGWeaponConfigurationChargeKey] integerValue];
+        
+        if (!dictionary[OGWeaponConfigurationMaxChargeKey])
+        {
+            _maxCharge = _charge;
+        }
+        else
+        {
+            _maxCharge = [dictionary[OGWeaponConfigurationMaxChargeKey] integerValue];
+        }
+        
+        NSDictionary *shellDictionary = dictionary[OGWeaponConfigurationShellKey];
+        _shellConfiguration = [[OGShellConfiguration alloc] initWithDictionary:shellDictionary];
+    }
+    
+    return self;
+}
+
+@end

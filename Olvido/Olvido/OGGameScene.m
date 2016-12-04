@@ -42,6 +42,7 @@
 #import "OGTrailComponent.h"
 #import "OGRulesComponent.h"
 #import "OGShadowComponent.h"
+#import "OGHealthBarComponent.h"
 
 //MARK: Entities
 
@@ -55,6 +56,7 @@
 #import "OGParticlesZoneEntity.h"
 #import "OGShootingWeapon.h"
 #import "OGKey.h"
+#import "OGAidKit.h"
 #import "OGShop.h"
 
 //MARK: Nodes
@@ -81,14 +83,12 @@ NSString *const OGGameSceneInteractionsNodeName = @"interactions";
 NSString *const OGGameSceneShopNodeName = @"shop";
 NSString *const OGGameSceneWeaponNodeName = @"weapon";
 NSString *const OGGameSceneKeysNodeName = @"keys";
+NSString *const OGGameSceneAidKitsNodeName = @"aid_kits";
 NSString *const OGGameSceneSourceNodeName = @"source";
 NSString *const OGGameSceneDestinationNodeName = @"destination";
 NSString *const OGGameSceneUserDataGraphs = @"Graphs";
 NSString *const OGGameSceneUserDataGraph = @"Graph_";
 NSString *const OGGameSceneDoorLockedKey = @"locked";
-NSString *const OGGameSceneAttackSpeedKey = @"attackSpeed";
-NSString *const OGGameSceneReloadSpeedKey = @"reloadSpeed";
-NSString *const OGGameSceneChargeKey = @"charge";
 
 NSString *const OGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -114,8 +114,6 @@ NSString *const OGGameSceneBuyBlasterButtonName = @"BuyBlaster";
 
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
-
-CGFloat const OGGameSceneDoorOpenDistance = 50.0;
 
 NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
@@ -186,6 +184,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                              [[GKComponentSystem alloc] initWithComponentClass:[OGWeaponComponent class]],
                              [[GKComponentSystem alloc] initWithComponentClass:[OGTrailComponent class]],
                              [[GKComponentSystem alloc] initWithComponentClass:[OGRulesComponent class]],
+                             [[GKComponentSystem alloc] initWithComponentClass:[OGHealthBarComponent class]],
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
@@ -312,7 +311,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     NSUInteger counter = 0;
     
-    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemiesConfiguration)
+    for (OGEnemyConfiguration *enemyConfiguration in self.sceneConfiguration.enemyConfigurations)
     {
         NSString *graphName = [NSString stringWithFormat:@"%@%lu", OGGameSceneUserDataGraph, (unsigned long) counter];
         GKGraph *graph = self.userData[OGGameSceneUserDataGraphs][graphName];
@@ -340,32 +339,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         if ([doorNode isKindOfClass:[SKSpriteNode class]])
         {
-            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode];
+            OGDoorConfiguration *doorConfiguration = (OGDoorConfiguration *) [self.sceneConfiguration findConfigurationWithUnitName:doorNode.name];
+            OGDoorEntity *door = [[OGDoorEntity alloc] initWithSpriteNode:(SKSpriteNode *) doorNode configuration:doorConfiguration];
+            
             OGLockComponent *lockComponent = (OGLockComponent *) [door componentForClass:[OGLockComponent class]];
-            OGTransitionComponent *transitionComponent = (OGTransitionComponent *) [door componentForClass:[OGTransitionComponent class]];
             
             door.transitionDelegate = self;
-            
-            BOOL doorLocked = [doorNode.userData[OGGameSceneDoorLockedKey] boolValue];
-            
             lockComponent.target = self.player.renderComponent.node;
-            lockComponent.openDistance = OGGameSceneDoorOpenDistance;
-            lockComponent.locked = doorLocked;
-            
-            NSString *sourceNodeName = doorNode.userData[OGGameSceneSourceNodeName];
-            NSString *destinationNodeName = doorNode.userData[OGGameSceneDestinationNodeName];
-            
-            transitionComponent.destination = destinationNodeName ? [self childNodeWithName:destinationNodeName] : nil;
-            transitionComponent.source = sourceNodeName ? [self childNodeWithName:sourceNodeName] : nil;
-            
-            for (NSString *key in doorNode.userData.allKeys)
-            {
-                if ([key hasPrefix:OGGameSceneDoorKeyPrefix])
-                {
-                    [door addKeyName:doorNode.userData[key]];
-                }
-            }
-        
+
             [self addEntity:door];
         }
     }
@@ -376,17 +357,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     SKNode *items = [self childNodeWithName:OGGameSceneItemsNodeName];
     NSArray *weapons = [items childNodeWithName:OGGameSceneWeaponNodeName].children;
     NSArray *keys = [items childNodeWithName:OGGameSceneKeysNodeName].children;
+    NSArray *aidKits = [items childNodeWithName:OGGameSceneAidKitsNodeName].children;
     
     for (SKSpriteNode *weaponSprite in weapons)
     {
-        CGFloat attackSpeed = [weaponSprite.userData[OGGameSceneAttackSpeedKey] floatValue];
-        CGFloat reloadSpeed = [weaponSprite.userData[OGGameSceneReloadSpeedKey] floatValue];
-        NSUInteger charge = [weaponSprite.userData[OGGameSceneChargeKey] integerValue];
-        
+        OGWeaponConfiguration *weaponConfiguration = (OGWeaponConfiguration *) [self.sceneConfiguration findConfigurationWithUnitName:weaponSprite.name];
         OGShootingWeapon *shootingWeapon = [[OGShootingWeapon alloc] initWithSpriteNode:weaponSprite
-                                                                            attackSpeed:attackSpeed
-                                                                            reloadSpeed:reloadSpeed
-                                                                                 charge:charge];
+                                                                          configuration:weaponConfiguration];
         shootingWeapon.delegate = self;
         [self addEntity:shootingWeapon];
     }
@@ -395,6 +372,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         OGKey *key = [[OGKey alloc] initWithSpriteNode:keySprite];
         [self addEntity:key];
+    }
+    
+    for (SKSpriteNode *aidKitSprite in aidKits)
+    {
+        OGAidKit *aidKit = [[OGAidKit alloc] initWithSpriteNode:aidKitSprite];
+        aidKit.delegate = self;
+        aidKit.healthComponentDelegate = (id<OGHealthComponentDelegate>) self.player;
+        [self addEntity:aidKit];
     }
 }
 
@@ -430,7 +415,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
     self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
-    //self.inventoryBarNode.playerEntity = self.player;
     
     if (self.hudNode)
     {
@@ -742,7 +726,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         renderComponent.node.zPosition = characterZPosition;        
         characterZPosition += OGGameSceneZSpacePerCharacter;
-    }
+    }        
 }
 
 #pragma mark - Getters

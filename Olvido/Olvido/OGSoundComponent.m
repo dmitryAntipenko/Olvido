@@ -11,6 +11,8 @@
 #import "OGSoundComponent.h"
 #import "OGRenderComponent.h"
 
+NSString *const OGSoundComponentPlayActionKey = @"Olvido.soundComponentPlayActionKey";
+
 @interface OGSoundComponent ()
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, SKAudioNode *> *soundNodes;
@@ -41,24 +43,22 @@
     return self;
 }
 
-- (void)setTarget:(SKNode *)target
-{
-    _target = target;
-    
-    for (NSString *key in self.soundNodes.allKeys)
-    {
-        [self.soundNodes[key] removeFromParent];
-        [self.target addChild:self.soundNodes[key]];
-    }
-}
-
 #pragma mark - Playing sounds
 
 - (void)playSoundContinuously:(NSString *)soundName
 {
-    SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:soundName];
-    [self.soundNodes setObject:node forKey:soundName];
-    [self.target addChild:self.soundNodes[soundName]];
+    SKAudioNode *node = self.soundNodes[soundName];
+    
+    if (!node)
+    {
+        node = [[SKAudioNode alloc] initWithFileNamed:soundName];
+        [self.soundNodes setObject:node forKey:soundName];
+    }
+    
+    if (!self.soundNodes[soundName].parent)
+    {
+        [self.target addChild:self.soundNodes[soundName]];
+    }
 }
 
 - (void)stopPlayingSound:(NSString *)soundName
@@ -69,8 +69,19 @@
 
 - (void)playSoundOnce:(NSString *)soundName
 {
-    [self.soundNodes[soundName] runAction:[SKAction stop]];
-    [self.soundNodes[soundName] runAction:[SKAction play]];
+    SKAudioNode *audioNode = self.soundNodes[soundName];
+    
+    if (audioNode)
+    {
+        [audioNode removeActionForKey:OGSoundComponentPlayActionKey];
+        
+        if (!audioNode.parent)
+        {
+            [self.target addChild:audioNode];
+        }
+        
+        [audioNode runAction:[SKAction play] withKey:OGSoundComponentPlayActionKey];
+    }
 }
 
 #pragma mark - Actions

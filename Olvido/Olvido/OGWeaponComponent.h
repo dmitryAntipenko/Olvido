@@ -20,8 +20,8 @@
 
 @property (nonatomic, assign) CGVector attackDirection;
 @property (nonatomic, assign) CGFloat attackSpeed;
-@property (nonatomic, assign) NSUInteger charge;
-@property (nonatomic, assign) NSUInteger maxCharge;
+@property (nonatomic, assign) NSInteger charge;
+@property (nonatomic, assign) NSInteger maxCharge;
 
 @property (nonatomic, assign, readonly) CGFloat reloadSpeed;
 

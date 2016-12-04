@@ -127,7 +127,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
-        for (OGTextureConfiguration *textureConfiguration in configuration.playerTextures)
+        for (OGTextureConfiguration *textureConfiguration in configuration.textures)
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGPlayerEntityDefaultTextureConfiguration
@@ -240,6 +240,14 @@ NSString *OGPlayerEntityUnitName = @"Player";
     if (self.healthComponent)
     {
         [self.healthComponent dealDamage:damage];
+    }
+}
+
+- (void)restoreEntityHealth:(NSInteger)health
+{
+    if (self.healthComponent)
+    {
+        [self.healthComponent restoreHealth:health];
     }
 }
 

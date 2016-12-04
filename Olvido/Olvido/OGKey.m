@@ -18,18 +18,10 @@
 {
     if (spriteNode)
     {
-        self = [super init];
+        self = [super initWithSpriteNode:spriteNode];
         
         if (self)
         {
-            _renderComponent = [[OGRenderComponent alloc] init];
-            _renderComponent.node = spriteNode;
-            [self addComponent:_renderComponent];
-            
-            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
-                                                                   colliderType:[OGColliderType key]];
-            [self addComponent:_physicsComponent];
-            
             _keyComponent = [[OGKeyComponent alloc] init];
             _keyComponent.keyIdentifier = spriteNode.name;
             [self addComponent:_keyComponent];
@@ -46,12 +38,12 @@
 
 - (SKTexture *)texture
 {
-    return ((SKSpriteNode *) self.renderComponent.node).texture;
+    return ((SKSpriteNode *) super.renderComponent.node).texture;
 }
 
 - (void)wasTaken
 {
-    [self.renderComponent.node removeFromParent];
+    [super.renderComponent.node removeFromParent];
 }
 
 @end

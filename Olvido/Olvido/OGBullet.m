@@ -13,16 +13,13 @@
 #import "OGPhysicsComponent.h"
 
 #import "OGHealthComponentDelegate.h"
+#import "OGShellConfiguration.h"
 
-NSString *const OGBulletTextureName = @"Bullet";
-NSInteger const OGBulletDamage = 1;
-
-CGFloat const OGBulletEntityDefaultSpeed = 10.0;
 CGFloat const OGBulletEntityDefaultMass = 0.005;
 
-static SKTexture *sOGBulletEntityTexture;
-
 @interface OGBullet ()
+
+@property (nonatomic, strong) OGShellConfiguration *bulletConfiguration;
 
 @property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
@@ -32,16 +29,18 @@ static SKTexture *sOGBulletEntityTexture;
 
 @implementation OGBullet
 
-- (instancetype)init
+- (instancetype)initWithConfiguration:(OGShellConfiguration *)configuration
 {
     self = [super init];
     
     if (self)
     {
+        _bulletConfiguration = configuration;
+        
         _renderComponent = [[OGRenderComponent alloc] init];
             
-        SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithTexture:sOGBulletEntityTexture];
-        bulletSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:sOGBulletEntityTexture.size.width / 2.0];
+        SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithImageNamed:configuration.textureName];
+        bulletSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:bulletSprite.size.width / 2.0];
         bulletSprite.physicsBody.mass = OGBulletEntityDefaultMass;
         
         _renderComponent.node = bulletSprite;
@@ -50,7 +49,7 @@ static SKTexture *sOGBulletEntityTexture;
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
                                                                colliderType:[OGColliderType bullet]];
         
-        _speed = OGBulletEntityDefaultSpeed;
+        _speed = configuration.speed;
     }
     
     return self;
@@ -62,7 +61,7 @@ static SKTexture *sOGBulletEntityTexture;
 {
     if ([entity conformsToProtocol:@protocol(OGHealthComponentDelegate)])
     {
-        [((id<OGHealthComponentDelegate>) entity) dealDamageToEntity:OGBulletDamage];
+        [((id<OGHealthComponentDelegate>) entity) dealDamageToEntity:self.bulletConfiguration.damage];
     }
          
     [self.delegate removeEntity:self];
@@ -76,21 +75,19 @@ static SKTexture *sOGBulletEntityTexture;
 
 + (BOOL)resourcesNeedLoading
 {
-    return sOGBulletEntityTexture == nil;
+    return YES;
 }
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
     [OGBullet loadMiscelaneousAssets];
     
-    sOGBulletEntityTexture = [SKTexture textureWithImageNamed:OGBulletTextureName];
-    
     handler();        
 }
 
 + (void)purgeResources
 {
-    sOGBulletEntityTexture = nil;
+    
 }
 
 + (void)loadMiscelaneousAssets

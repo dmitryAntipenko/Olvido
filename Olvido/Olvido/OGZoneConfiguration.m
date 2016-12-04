@@ -17,7 +17,7 @@ NSString *const OGZoneConfigurationZoneClassNameKey = @"ZoneClassName";
 {
     if (dictionary)
     {
-        self = [self init];
+        self = [super initWithDictionary:dictionary];
         
         if (self)
         {

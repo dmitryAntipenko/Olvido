@@ -8,11 +8,10 @@
 
 #import "OGWeaponEntity.h"
 
+@class OGWeaponConfiguration;
+
 @interface OGShootingWeapon : OGWeaponEntity
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
-                       attackSpeed:(CGFloat)attackSpeed
-                       reloadSpeed:(CGFloat)reloadSpeed
-                            charge:(NSUInteger)charge;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite configuration:(OGWeaponConfiguration *)configuration;
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGEntityConfiguration.h"
 
-@interface OGZoneConfiguration : NSObject
+@interface OGZoneConfiguration : OGEntityConfiguration
 
 @property (nonatomic, strong, readonly) NSString *zoneNodeName;
 @property (nonatomic, strong, readonly) Class zoneClass;

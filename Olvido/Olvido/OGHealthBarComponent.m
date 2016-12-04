@@ -16,7 +16,7 @@
 
 CGFloat const OGHealthBarComponentBarHeight = 10.0;
 
-CGFloat const OGHealthBarComponentHiddingDuration = 1.0;
+CGFloat const OGHealthBarComponentHiddingDuration = 3.0;
 
 NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
 
@@ -32,6 +32,8 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
 @property (nonatomic, assign) CGFloat barNodeWidth;
 
 @property (nonatomic, strong) NSTimer *hiddingBarTimer;
+@property (nonatomic, assign) BOOL shouldAppear;
+@property (nonatomic, assign) NSTimeInterval elapsedTime;
 
 @end
 
@@ -88,25 +90,42 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
 - (void)redrawBarNode
 {
     self.barBackgroundNode.hidden = NO;
+    self.shouldAppear = YES;
     [self.barBackgroundNode removeActionForKey:OGHealthBarComponentHiddingActionKey];
     
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
     
     CGFloat entityNodeHalfHeight = self.animationComponent.spriteNode.calculateAccumulatedFrame.size.height;
     self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHalfHeight);
-    
-    SKAction *hiddingAction = [SKAction waitForDuration:OGHealthBarComponentHiddingDuration];
-    [self.barBackgroundNode runAction:hiddingAction withKey:OGHealthBarComponentHiddingActionKey];
-    
-    self.hiddingBarTimer = [NSTimer scheduledTimerWithTimeInterval:OGHealthBarComponentHiddingDuration repeats:NO block:^(NSTimer *timer)
-    {
-        self.barBackgroundNode.hidden = YES;
-        [timer invalidate];
-        timer = nil;
-    }];
 }
 
-#pragma mark - Getters
+#pragma mark - Update
+
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    [super updateWithDeltaTime:seconds];
+    
+    if (self.shouldAppear)
+    {
+        self.elapsedTime += seconds;
+        
+        if (self.elapsedTime >= OGHealthBarComponentHiddingDuration)
+        {
+            self.barBackgroundNode.hidden = YES;
+            self.shouldAppear = NO;
+//            self.elapsedTime = 0.0;
+        }
+    }
+}
+
+#pragma mark - Getters & Setters
+
+- (void)setShouldAppear:(BOOL)shouldAppear
+{
+    _shouldAppear = shouldAppear;
+    
+    self.elapsedTime = 0.0;
+}
 
 - (CGFloat)progressBarWidth
 {

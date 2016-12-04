@@ -62,14 +62,14 @@ CGFloat const OGWeaponComponentDefaultAttackSpeed = 1.0;
     self.maxCharge = weapon.maxCharge;
 }
 
-- (void)setCharge:(NSUInteger)charge
+- (void)setCharge:(NSInteger)charge
 {
     _charge = charge;
     
     self.weapon.charge = _charge;
 }
 
-- (void)setMaxCharge:(NSUInteger)maxCharge
+- (void)setMaxCharge:(NSInteger)maxCharge
 {
     _maxCharge = maxCharge;
     

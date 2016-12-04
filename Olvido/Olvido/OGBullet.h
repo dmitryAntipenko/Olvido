@@ -13,6 +13,7 @@
 
 @class OGPhysicsComponent;
 @class OGRenderComponent;
+@class OGShellConfiguration;
 
 @class OGWeaponEntity;
 
@@ -25,5 +26,7 @@
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 
 @property (nonatomic, assign, readonly) CGFloat speed;
+
+- (instancetype)initWithConfiguration:(OGShellConfiguration *)configuration;
 
 @end

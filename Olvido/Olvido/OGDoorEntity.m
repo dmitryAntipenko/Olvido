@@ -6,9 +6,12 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGZPositionEnum.m"
 #import "OGDoorEntity.h"
+#import "OGZPositionEnum.m"
 #import "OGColliderType.h"
+#import "OGDoorConfiguration.h"
+#import "OGAudioConfiguration.h"
+
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
@@ -30,6 +33,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
 
 @interface OGDoorEntity ()
 
+@property (nonatomic, strong) OGDoorConfiguration *doorConfiguration;
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
 @property (nonatomic, strong) OGAnimationComponent *animationComponent;
@@ -44,7 +48,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
 
 @implementation OGDoorEntity
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode configuration:(OGDoorConfiguration *)configuration
 {
     if (spriteNode)
     {
@@ -52,7 +56,9 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
         
         if (self)
         {
-            _keyIdentifiers = [NSMutableArray array];
+            _doorConfiguration = configuration;
+            
+            _keyIdentifiers = [_doorConfiguration.keys mutableCopy];
             
             _renderComponent = [[OGRenderComponent alloc] init];
             _renderComponent.node = spriteNode;
@@ -82,9 +88,33 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             _transitionComponent = [[OGTransitionComponent alloc] init];
             [self addComponent:_transitionComponent];
             
-            _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:sOGDoorEntitySoundNodes];
+            NSMutableArray<SKAudioNode *> *soundNodes = [NSMutableArray array];
+            
+            for (OGAudioConfiguration *audioConfiguration in _doorConfiguration.audios)
+            {
+                SKAudioNode *node = [[SKAudioNode alloc] initWithFileNamed:audioConfiguration.audioName];
+                node.autoplayLooped = audioConfiguration.repeatForever;
+                node.name = audioConfiguration.key;
+                
+                if (node)
+                {
+                    [soundNodes addObject:node];
+                }
+            }
+            
+            _soundComponent = [[OGSoundComponent alloc] initWithSoundNodes:soundNodes];
             _soundComponent.target = _renderComponent.node;
             [self addComponent:_soundComponent];
+                        
+            _lockComponent.openDistance = _doorConfiguration.openDistance;
+            _lockComponent.locked = _doorConfiguration.isLocked;
+            
+            NSString *sourceNodeName = _doorConfiguration.source;
+            NSString *destinationNodeName = _doorConfiguration.destination;
+            
+            SKScene *scene = self.renderComponent.node.scene;
+            _transitionComponent.destination = destinationNodeName ? [scene childNodeWithName:destinationNodeName] : nil;
+            _transitionComponent.source = sourceNodeName ? [scene childNodeWithName:sourceNodeName] : nil;
         }
     }
     else
@@ -155,32 +185,10 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
     [trigger runAction:move];
 }
 
-- (void)addKeyName:(NSString *)keyName
-{
-    if (keyName)
-    {
-        [self.keyIdentifiers addObject:keyName];
-    }
-}
-
-- (void)removeKeyName:(NSString *)keyName
-{
-    if (keyName)
-    {
-        [self.keyIdentifiers removeObject:keyName];
-    }
-}
-
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {
     [OGDoorEntity loadMiscellaneousAssets];
-    
-    SKAudioNode *doorOpenNode = [[SKAudioNode alloc] initWithFileNamed:@"door_open"];
-    doorOpenNode.autoplayLooped = NO;
-    doorOpenNode.name = @"door_open";
-    
-    sOGDoorEntitySoundNodes = @[doorOpenNode];
-    
+
     handler();
 }
 

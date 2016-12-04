@@ -17,6 +17,8 @@
 #import "OGRenderComponent.h"
 #import "OGSoundComponent.h"
 
+NSString *const OGDoorOpenSoundKey = @"door_open";
+
 @interface OGDoorEntityOpenedState ()
 
 @property (nonatomic, weak) OGSoundComponent *soundComponent;
@@ -43,7 +45,7 @@
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
     self.renderComponent.node.physicsBody.categoryBitMask = 0;
     
-    [self.soundComponent playSoundOnce:@"door_open"];
+    [self.soundComponent playSoundOnce:OGDoorOpenSoundKey];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
