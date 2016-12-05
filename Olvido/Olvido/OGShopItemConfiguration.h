@@ -8,14 +8,16 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@class OGEntityConfiguration;
+
 @interface OGShopItemConfiguration : NSObject
 
-@property (nonatomic, assign) CGFloat price;
+@property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) SKTexture *texture;
 @property (nonatomic, assign) Class unitClass;
 @property (nonatomic, assign) Class unitConfigurationClass;
 
-@property (nonatomic, strong) id *unitConfiguration;
+@property (nonatomic, strong) OGEntityConfiguration *unitConfiguration;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

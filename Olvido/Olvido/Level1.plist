@@ -1011,7 +1011,7 @@
 		<dict>
 			<key>Id</key>
 			<string>shop_1</string>
-			<key>items</key>
+			<key>Items</key>
 			<array>
 				<string>weapon_01</string>
 				<string>weapon_01</string>

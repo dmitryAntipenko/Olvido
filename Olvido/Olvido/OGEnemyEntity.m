@@ -34,7 +34,7 @@
 #import "OGPlayerFarRule.h"
 
 #import "OGPlayerEntity.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 #import "OGBullet.h"
 #import "OGWeaponEntity.h"
 

@@ -11,8 +11,8 @@
 NSString *const OGShopConfigurationTextureNameKey = @"TextureName";
 NSString *const OGShopConfigurationPriceKey = @"Price";
 NSString *const OGShopConfigurationUnitClassNameKey = @"UnitClassName";
-NSString *const OGShopConfigurationUnitConfigurationDictionaryKey = @"UnitConfigurationDictionary";
-NSString *const OGShopConfigurationUnitConfigurationClasssNameKey = @"UnitConfigurationClasssName";
+NSString *const OGShopConfigurationUnitConfigurationDictionaryKey = @"UnitConfiguration";
+NSString *const OGShopConfigurationUnitConfigurationClasssNameKey = @"UnitConfigurationClassName";
 
 @implementation OGShopItemConfiguration
 
@@ -20,7 +20,7 @@ NSString *const OGShopConfigurationUnitConfigurationClasssNameKey = @"UnitConfig
 {
     if (dictionary)
     {
-        self = [self init];
+        self = [super init];
         
         if (self)
         {
@@ -31,9 +31,10 @@ NSString *const OGShopConfigurationUnitConfigurationClasssNameKey = @"UnitConfig
                 _texture = [SKTexture textureWithImageNamed:textureName];
             }
             
-            if (dictionary[OGShopConfigurationPriceKey])
+            NSNumber *price = dictionary[OGShopConfigurationPriceKey];
+            if (price)
             {
-                _price = [dictionary[OGShopConfigurationPriceKey] floatValue];
+                _price = price;
             }
             
             NSString *unitClassName = dictionary[OGShopConfigurationUnitClassNameKey];
@@ -41,21 +42,13 @@ NSString *const OGShopConfigurationUnitConfigurationClasssNameKey = @"UnitConfig
             
             NSDictionary *unitConfigurationDictionary = dictionary[OGShopConfigurationUnitConfigurationDictionaryKey];
             
-            if (unitClassName || unitConfigurationClassName || unitConfigurationDictionary)
+            if (unitClassName && unitConfigurationClassName && unitConfigurationDictionary)
             {
                 _unitConfigurationClass = NSClassFromString(unitConfigurationClassName);
                 _unitClass = NSClassFromString(unitClassName);
                 
                 _unitConfiguration = [[_unitConfigurationClass alloc] initWithDictionary:unitConfigurationDictionary];
             }
-            
-//            NSDictionary *representedItemClassDictianary = dictionary[OGShopConfigurationRepresentedEntityClassDictionaryKey];
-//            
-//            if (representedItemClassName && representedItemClassDictianary)
-//            {
-//                _representedItemClass = NSClassFromString(representedItemClassName);
-//                _representedItemDictionary = representedItemClassDictianary;
-//            }
         }
     }
     else

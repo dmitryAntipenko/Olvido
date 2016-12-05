@@ -8,14 +8,10 @@
 
 #import <GameplayKit/GameplayKit.h>
 
-@class OGSceneManager;
-@class OGLevelManager;
-@class OGMenuManager;
+@class OGGame;
 
 @interface OGGameViewController : UIViewController
 
-@property (nonatomic, strong) OGSceneManager *sceneManager;
-@property (nonatomic, strong) OGLevelManager *levelManager;
-@property (nonatomic, strong) OGMenuManager *menuManager;
+@property (nonatomic, strong, readonly) OGGame *game;
 
 @end

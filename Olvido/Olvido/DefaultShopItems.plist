@@ -7,9 +7,9 @@
 		<key>Price</key>
 		<integer>200</integer>
 		<key>TextureName</key>
-		<string>some</string>
+		<string>Blaster</string>
 		<key>UnitClassName</key>
-		<string>OGWeapon</string>
+		<string>OGShootingWeapon</string>
 		<key>UnitConfigurationClassName</key>
 		<string>OGWeaponConfiguration</string>
 		<key>UnitConfiguration</key>

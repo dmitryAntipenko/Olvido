@@ -7,7 +7,7 @@
 //
 
 #import "OGDoorEntity.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 #import "OGColliderType.h"
 #import "OGDoorConfiguration.h"
 #import "OGAudioConfiguration.h"

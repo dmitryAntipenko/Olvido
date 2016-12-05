@@ -138,7 +138,8 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
         for (NSDictionary *shop in shops)
         {
             
-            OGShopConfiguration *shopConfiguration = [[OGZoneConfiguration alloc] initWithDictionary:shop];
+            OGShopConfiguration *shopConfiguration = [[OGShopConfiguration alloc] initWithDictionary:shop];
+            [self.mutableShopConfigurations addObject:shopConfiguration];
         }
     }
     

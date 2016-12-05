@@ -13,14 +13,12 @@
 
 #import "OGContactNotifiableType.h"
 #import "OGShopConfiguration.h"
+#import "OGShopItemConfiguration.h"
 
-#import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
+@interface OGShop ()
 
-@interface OGShop () <OGContactNotifiableType>
-
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) NSArray<OGShopItemConfiguration *> *shopItemsConfiguration;
+@property (nonatomic, copy) NSString *identifier;
 
 @end
 
@@ -31,22 +29,12 @@
 {
     if (sprite)
     {
-        self = [super init];
+        self = [super initWithSpriteNode:sprite];
         
         if (self)
         {
-            NSArray *contactColliders = @[[OGColliderType player]];
-            [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType shop]];
-            
-            _renderComponent = [[OGRenderComponent alloc] init];
-            _renderComponent.node = sprite;
-            [self addComponent:_renderComponent];
-            
-            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
-                                                                   colliderType:[OGColliderType shop]];
-            [self addComponent:_physicsComponent];
-            
-            _shopConfiguration = shopConfiguration;
+            _identifier = shopConfiguration.identifier;
+            _shopItemsConfiguration = shopConfiguration.shopItemsConfiguration;
         }
     }
     else
@@ -61,7 +49,7 @@
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
-        [self.delegate showShop];
+        [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration player:(OGPlayerEntity *)entity];
     }
 }
 

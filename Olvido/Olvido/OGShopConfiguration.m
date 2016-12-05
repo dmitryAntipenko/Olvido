@@ -29,15 +29,15 @@ NSString *const OGShopConfigurationDefaultShopItemsFileExtension = @"plist";
 {
     if (dictionary)
     {
-        self = [self init];
+        self = [super init];
         
         if (self)
         {
-            NSString *identifiers = dictionary[OGShopConfigurationIdentifierKey];
+            NSString *identifier = dictionary[OGShopConfigurationIdentifierKey];
             
-            if (identifiers)
+            if (identifier)
             {
-                _identifier = identifiers;
+                _identifier = identifier;
             }
             
             NSArray *items = dictionary[OGShopConfigurationItemsKey];
@@ -59,7 +59,7 @@ NSString *const OGShopConfigurationDefaultShopItemsFileExtension = @"plist";
 
 - (void)loadShopItemWithIdentifier:(NSString *)identifier
 {
-    NSDictionary *shopItem = configurationDictionary[identifier];
+    NSDictionary *shopItem = self.configurationDictionary[identifier];
     
     if (shopItem)
     {
