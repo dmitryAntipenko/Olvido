@@ -10,7 +10,6 @@
 
 @interface OGIntelligenceComponent ()
 
-@property (nonatomic, strong) GKStateMachine *stateMachine;
 @property (nonatomic, strong) Class initialStateClass;
 
 @end

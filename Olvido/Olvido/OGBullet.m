@@ -12,9 +12,20 @@
 #import "OGAnimationComponent.h"
 #import "OGPhysicsComponent.h"
 
+#import "OGHealthComponentDelegate.h"
+
 NSString *const kOGBulletTextureName = @"Bullet";
+NSInteger const kOGBulletDamage = 1;
 
 static SKTexture *sOGBulletEntityTexture;
+
+@interface OGBullet ()
+
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
+@property (nonatomic, strong) OGRenderComponent *renderComponent;
+@property (nonatomic, strong) OGHealthComponent *healthComponent;
+
+@end
 
 @implementation OGBullet
 
@@ -24,16 +35,16 @@ static SKTexture *sOGBulletEntityTexture;
     
     if (self)
     {
-        _render = [[OGRenderComponent alloc] init];
+        _renderComponent = [[OGRenderComponent alloc] init];
             
         SKSpriteNode *bulletSprite = [SKSpriteNode spriteNodeWithTexture:sOGBulletEntityTexture];
         bulletSprite.physicsBody = [SKPhysicsBody bodyWithTexture:sOGBulletEntityTexture size:sOGBulletEntityTexture.size];
         
-        _render.node = bulletSprite;
-        [self addComponent:_render];
+        _renderComponent.node = bulletSprite;
+        [self addComponent:_renderComponent];
         
-        _physics = [[OGPhysicsComponent alloc] initWithPhysicsBody:_render.node.physicsBody
-                                                      colliderType:[OGColliderType bullet]];
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
+                                                               colliderType:[OGColliderType bullet]];
     }
     
     return self;
@@ -42,8 +53,17 @@ static SKTexture *sOGBulletEntityTexture;
 #pragma mark - Contact Handling
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
-{    
+{
+    if ([entity conformsToProtocol:@protocol(OGHealthComponentDelegate)])
+    {
+        [((id<OGHealthComponentDelegate>) entity) dealDamage:kOGBulletDamage];
+    }
+         
     [self.delegate removeEntity:self];
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
 }
 
 #pragma mark - Resources
@@ -59,7 +79,7 @@ static SKTexture *sOGBulletEntityTexture;
     
     sOGBulletEntityTexture = [SKTexture textureWithImageNamed:kOGBulletTextureName];
     
-    handler();
+    handler();        
 }
 
 + (void)purgeResources
@@ -69,7 +89,7 @@ static SKTexture *sOGBulletEntityTexture;
 
 + (void)loadMiscelaneousAssets
 {
-    NSArray *contactColliders = [NSArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy], nil];
+    NSArray *contactColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType bullet]];
 }
 

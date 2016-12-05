@@ -19,23 +19,23 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
 @property (nonatomic, assign) NSTimeInterval elapsedAnimationDuration;
 @property (nonatomic, strong, readwrite) OGAnimation *currentAnimation;
 
-@end
+@property (nonatomic, assign) NSTimeInterval currentTimePerFrame;
 
+@end
 
 @implementation OGAnimationComponent
 
-- (instancetype)initWithTextureSize:(CGSize)textureSize
-                         animations:(NSDictionary *)animations
+#pragma mark - Inits
+- (instancetype)initWithAnimations:(NSDictionary *)animations
 {
-    if (animations && textureSize.width != 0.0 && textureSize.height != 0.0)
+    if (animations)
     {
         self = [self init];
         
         if (self)
         {
             _animations = animations;
-            _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil size:textureSize];
-//            _spriteNode.position = CGPointMake(0, 20);
+            _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil];
             _elapsedAnimationDuration = 0.0;
         }
     }
@@ -47,14 +47,16 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     return self;
 }
 
+#pragma mark - Run Animation
 - (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
                                               direction:(OGDirection)direction
                                            deltaTime:(NSTimeInterval)deltaTime
 {
     self.elapsedAnimationDuration += deltaTime;
     
-    if (self.currentAnimation == nil || self.currentAnimation.animationState != animationState
-        || self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
+    if ((self.currentAnimation == nil || self.currentAnimation.animationState != animationState
+         || self.currentAnimation.direction != direction || self.currentTimePerFrame != self.currentAnimation.timePerFrame)
+        && self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]])
     {
         OGAnimation *animation = self.animations[kOGAnimationStateDescription[animationState]][kOGDirectionDescription[direction]];
         
@@ -70,27 +72,29 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                 [self.spriteNode runAction:[SKAction repeatActionForever:bodyAction] withKey:kOGAnimationComponentBodyActionKey];
             }
         }
-
         
         [self.spriteNode removeActionForKey:kOGAnimationComponentTextureActionKey];
         
         SKAction *texturesAction = nil;
         
-        if ([animation.textures count] == 1)
+        if (animation.textures.count == 1)
         {
-            texturesAction = [SKAction setTexture:animation.textures.firstObject];
+            texturesAction = [SKAction setTexture:animation.textures.firstObject resize:YES];
         }
         else
         {
             if (self.currentAnimation && animationState == self.currentAnimation.animationState)
             {
                 NSUInteger numberOfFramesInCurrentAnimation = self.currentAnimation.textures.count;
-                NSInteger numberOfFramesPlayedSinceCurrentAnimationBegan = (NSInteger) (self.elapsedAnimationDuration / kOGAnimationComponentTimePerFrame);
+                NSInteger numberOfFramesPlayedSinceCurrentAnimationBegan = (NSInteger) (self.elapsedAnimationDuration / self.currentAnimation.timePerFrame);
                 
                 animation.frameOffset = (self.currentAnimation.frameOffset + numberOfFramesPlayedSinceCurrentAnimationBegan + 1) % numberOfFramesInCurrentAnimation;
             }
             
-            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures timePerFrame:kOGAnimationComponentTimePerFrame];
+            SKAction *animateAction = [SKAction animateWithTextures:animation.offsetTextures
+                                                       timePerFrame:animation.timePerFrame
+                                                             resize:YES
+                                                            restore:YES];
             if (animation.isRepeatedTexturesForever)
             {
                 texturesAction = [SKAction repeatActionForever:animateAction];
@@ -101,21 +105,29 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
             }
         }
         
-        [self.spriteNode runAction:texturesAction withKey:kOGAnimationComponentTextureActionKey];
+        SKAction *complitionAction =  [SKAction runBlock:^()
+        {
+            [self.delegate animationDidFinish];
+        }];
+        
+        [self.spriteNode runAction:[SKAction sequence:@[texturesAction, complitionAction]]
+                           withKey:kOGAnimationComponentTextureActionKey];
         
         self.currentAnimation = animation;
+        self.currentTimePerFrame = self.currentAnimation.timePerFrame;
         
         self.elapsedAnimationDuration = 0.0;
     }
 }
 
+#pragma mark - Updates
 - (void)updateWithDeltaTime:(NSTimeInterval)deltaTime
 {
     [super updateWithDeltaTime:deltaTime];
     
     if (self.requestedAnimationState != kOGAnimationStateNone)
     {
-        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:OGOrientationComponent.self];
+        OGOrientationComponent *orientationComponent = (OGOrientationComponent *) [self.entity componentForClass:[OGOrientationComponent class]];
         
         if (orientationComponent)
         {
@@ -125,6 +137,7 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     }
 }
 
+#pragma mark - Class Methods
 + (SKTexture *)firstTextureForOrientationWithDirection:(OGDirection)direction
                                                  atlas:(SKTextureAtlas *)atlas
                                        imageIdentifier:(NSString *)imageIdentifier
@@ -137,6 +150,20 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     NSArray<NSString *> *sortedTextureNames = [[[atlas textureNames] filteredArrayUsingPredicate:predicate] sortedArrayUsingSelector:@selector(localizedCompare:)];
     
     return [atlas textureNamed:sortedTextureNames.firstObject];
+}
+
++ (NSArray<SKTexture *> *)mapWithArrayOfStrings:(NSArray<NSString *> *)arrayOfStrings
+{
+    NSMutableArray<SKTexture *> *result = [NSMutableArray array];
+    
+    for (NSString *imageName in arrayOfStrings)
+    {
+        SKTexture *texture = [SKTexture textureWithImageNamed:imageName];
+        
+        [result addObject:texture];
+    }
+    
+    return result;
 }
 
 + (SKAction *)actionForAllTexturesWithAtlas:(SKTextureAtlas *)atlas
@@ -159,26 +186,13 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
     return result;
 }
 
-+ (NSArray<SKTexture *> *)mapWithArrayOfStrings:(NSArray<NSString *> *)arrayOfStrings
-{
-    NSMutableArray<SKTexture *> *result = [NSMutableArray array];
-    
-    for (NSString *imageName in arrayOfStrings)
-    {
-        SKTexture *texture = [SKTexture textureWithImageNamed:imageName];
-        
-        [result addObject:texture];
-    }
-    
-    return result;
-}
-
 + (NSDictionary *)animationsWithAtlas:(SKTextureAtlas *)atlas
                       imageIdentifier:(NSString *)imageIdentifier
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                  repeatTexturesForever:(BOOL)repeatTexturesForever
                         playBackwards:(BOOL)playBackwards
+                         timePerFrame:(NSTimeInterval)timePerFrame
 {
     SKAction *bodyAction = nil;
     if (bodyActionName)
@@ -208,7 +222,8 @@ CGFloat const kOGAnimationComponentTimePerFrame = 0.1;
                                                                               frameOffset:0
                                                                     repeatTexturesForever:repeatTexturesForever
                                                                            bodyActionName:bodyActionName
-                                                                               bodyAction:bodyAction];
+                                                                               bodyAction:bodyAction
+                                                                             timePerFrame:timePerFrame];
     }
     
     return animations;

@@ -18,6 +18,8 @@ NSString *const kOGSettingsMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
+    [super onButtonClick:button];
+    
     if ([button.name isEqualToString:kOGSettingsMenuSceneMainMenuButtonNodeName])
     {
         [self.menuManager loadMenuWithName:kOGMainMenuName];

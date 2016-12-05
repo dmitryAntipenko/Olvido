@@ -9,31 +9,19 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGContactNotifiableType.h"
 #import "OGResourceLoadable.h"
+#import "OGTransitionComponent.h"
 #import "OGTransitionComponentDelegate.h"
-
-@class OGRenderComponent;
-@class OGIntelligenceComponent;
-@class OGAnimationComponent;
-@class OGPhysicsComponent;
-@class OGLockComponent;
-@class OGTransitionComponent;
 
 @interface OGDoorEntity : GKEntity <OGContactNotifiableType, OGResourceLoadable>
 
 @property (nonatomic, weak) id<OGTransitionComponentDelegate> transitionDelegate;
 
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGLockComponent *lockComponent;
-@property (nonatomic, strong) OGTransitionComponent *transition;
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode NS_DESIGNATED_INITIALIZER;
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)(void))completionHandler;
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 
 - (void)lock;
 - (void)unlock;
+
+- (void)addKeyName:(NSString *)keyName;
+- (void)removeKeyName:(NSString *)keyName;
 
 @end

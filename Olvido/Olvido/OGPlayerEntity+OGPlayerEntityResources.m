@@ -50,14 +50,16 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
                                                                                                       animationState:kOGAnimationStateIdle
                                                                                                       bodyActionName:nil
                                                                                                repeatTexturesForever:YES
-                                                                                                       playBackwards:NO];
+                                                                                                       playBackwards:NO
+                                                                                                        timePerFrame:0.1];
          
          animations[kOGAnimationStateDescription[kOGAnimationStateWalkForward]] = [OGAnimationComponent animationsWithAtlas:foundAtlases[1]
                                                                                                             imageIdentifier:kOGPlayerEntityAtlasNamesPlayerBotWalk
                                                                                                              animationState:kOGAnimationStateWalkForward
                                                                                                              bodyActionName:nil
                                                                                                       repeatTexturesForever:YES
-                                                                                                              playBackwards:NO];
+                                                                                                              playBackwards:NO
+                                                                                                               timePerFrame:0.1];
          
          sOGPlayerEntityAnimations = animations;
          
@@ -88,10 +90,10 @@ static NSDictionary<NSString *, SKTexture *> *sOGPlayerEntityAppearTextures;
 
 + (void)loadMiscellaneousAssets
 {
-    NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], nil];
+    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
     
-    NSArray *contactColliders = [NSArray arrayWithObject:[OGColliderType weapon]];
+    NSArray *contactColliders = @[[OGColliderType weapon], [OGColliderType key]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType player]];
 }
 

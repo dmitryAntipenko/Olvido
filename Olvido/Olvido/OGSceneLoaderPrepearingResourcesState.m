@@ -26,11 +26,6 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
 
 @implementation OGSceneLoaderPrepearingResourcesState
 
-- (void)didEnterWithPreviousState:(GKState *)state
-{
-    [self loadResourcesAsunchronously];
-}
-
 - (instancetype)init
 {
     self = [super init];
@@ -43,16 +38,19 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
     return self;
 }
 
-- (BOOL)isValidNextState:(Class)stateClass
+- (void)didEnterWithPreviousState:(GKState *)state
 {
-    BOOL result = NO;
+    [super didEnterWithPreviousState:state];
     
-    result = (stateClass == [OGSceneLoaderResourcesReadyState class]);
-    
-    return result;
+    [self loadResourcesAsynchronously];
 }
 
-- (void)loadResourcesAsunchronously
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return stateClass == [OGSceneLoaderResourcesReadyState class];
+}
+
+- (void)loadResourcesAsynchronously
 {
     OGSceneMetadata *sceneMetadata = self.sceneLoader.metadata;
     
@@ -85,7 +83,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
                     typeof(weakSelf) strongSelf = weakSelf;
 
                     strongSelf.sceneLoader.scene = strongLoadSceneOperation.scene;
-                    [strongSelf.stateMachine enterState:OGSceneLoaderResourcesReadyState.self];
+                    [strongSelf.stateMachine enterState:[OGSceneLoaderResourcesReadyState class]];
                 }
             });
         }
@@ -118,7 +116,7 @@ NSUInteger const kOGSceneLoaderPrepearingResourcesStatePendingUnitCount = 1;
         {
             typeof(weakSelf) strongSelf = weakSelf;
 
-            [strongSelf.stateMachine enterState:OGSceneLoaderInitialState.self];
+            [strongSelf.stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
     });
 }

@@ -7,6 +7,7 @@
 //
 
 #import "OGGameViewController.h"
+#import "OGAudioManager.h"
 #import "OGMainMenuScene.h"
 #import "OGConstants.h"
 #import "OGLevelManager.h"
@@ -16,7 +17,7 @@
 
 @interface OGGameViewController ()
 
-@property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, strong) OGAudioManager *audioManager;
 
 @end
 
@@ -33,15 +34,23 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
+    /* DEBUG OPTIONS */
     
     self.sceneManager = [OGSceneManager sceneManagerWithView:view];
-    [self.sceneManager transitionToInitialScene];
+    self.audioManager = [OGAudioManager audioManager];
     
-    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
-    levelManager.sceneManager = self.sceneManager;
+    self.levelManager = [OGLevelManager levelManager];
+    self.levelManager.sceneManager = self.sceneManager;
+    self.levelManager.audioManager = self.audioManager;
     
-    OGMenuManager *menuManager = [OGMenuManager sharedInstance];
-    menuManager.sceneManager = self.sceneManager;
+    self.menuManager = [OGMenuManager menuManager];
+    self.menuManager.sceneManager = self.sceneManager;
+    self.menuManager.audioManager = self.audioManager;
+    
+    self.menuManager.levelManager = self.levelManager;
+    self.levelManager.menuManager = self.menuManager;
+    
+    [self.menuManager loadMainMenu];
 }
 
 - (BOOL)shouldAutorotate

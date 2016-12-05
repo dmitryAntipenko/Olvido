@@ -10,10 +10,9 @@
 
 @interface OGMessageComponent : GKComponent
 
-@property (nonatomic, strong) GKInspectable NSString *tset;
+- (instancetype)initWithTarget:(SKSpriteNode *)target minShowDistance:(CGFloat)distance labelNode:(SKLabelNode *)labelNode;
 
-- (instancetype)initWithTarget:(SKSpriteNode *)target minShowDistance:(CGFloat)distance;
-
+- (void)showMessage:(NSString *)message duration:(CGFloat)duration shouldOverlay:(BOOL)shouldOverlay;
 - (void)addMessage:(NSString *)message forSprite:(SKSpriteNode *)sprite;
 
 @end

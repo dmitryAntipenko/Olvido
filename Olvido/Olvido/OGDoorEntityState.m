@@ -15,7 +15,7 @@
 
 - (instancetype)initWithDoorEntity:(OGDoorEntity *)entity
 {
-    self = [super init];
+    self = [self init];
     
     if (self)
     {
@@ -29,7 +29,7 @@
 {
     if (!_lockComponent)
     {
-        _lockComponent = (OGLockComponent *) [self.doorEntity componentForClass:OGLockComponent.self];
+        _lockComponent = (OGLockComponent *) [self.doorEntity componentForClass:[OGLockComponent class]];
     }
     
     return _lockComponent;
@@ -39,7 +39,7 @@
 {
     if (!_renderComponent)
     {
-        _renderComponent = (OGRenderComponent *) [self.doorEntity componentForClass:OGRenderComponent.self];
+        _renderComponent = (OGRenderComponent *) [self.doorEntity componentForClass:[OGRenderComponent class]];
     }
     
     return _renderComponent;

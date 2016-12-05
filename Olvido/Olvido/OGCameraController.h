@@ -15,6 +15,4 @@
 
 - (void)moveCameraToNode:(SKNode *)node;
 
-- (void)update;
-
 @end

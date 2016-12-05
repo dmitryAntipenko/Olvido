@@ -25,6 +25,7 @@ NSInteger const kOGTimerTicksIncrement = 1;
 
 - (void)startWithInterval:(CGFloat)interval selector:(SEL)selector sender:(id)sender
 {
+    [self.timer invalidate];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:interval target:sender selector:selector userInfo:nil repeats:YES];
 }
 
@@ -62,7 +63,6 @@ NSInteger const kOGTimerTicksIncrement = 1;
 - (void)dealloc
 {
     [_timer invalidate];
-    
 }
 
 @end

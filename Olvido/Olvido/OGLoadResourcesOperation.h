@@ -6,11 +6,9 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "OGResourceLoadable.h"
-#import "OGLoadOperation.h"
 
-@interface OGLoadResourcesOperation : OGLoadOperation
+@interface OGLoadResourcesOperation : NSOperation
 
 @property (nonatomic, strong, readonly) NSProgress *progress;
 

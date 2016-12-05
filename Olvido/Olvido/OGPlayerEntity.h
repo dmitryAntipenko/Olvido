@@ -7,36 +7,16 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGResourceLoadable.h"
-#import "OGContactNotifiableType.h"
 
-@class OGPlayerConfiguration;
-@class OGInventoryComponent;
-@class OGWeaponComponent;
-@class OGHealthComponent;
-@class OGAnimationComponent;
-@class OGIntelligenceComponent;
-@class OGInputComponent;
 @class OGRenderComponent;
-@class OGMovementComponent;
-@class OGPhysicsComponent;
-@class OGMessageComponent;
-@class OGOrientationComponent;
+@class OGPlayerConfiguration;
 
-@interface OGPlayerEntity : GKEntity <OGContactNotifiableType>
+@interface OGPlayerEntity : GKEntity
 
-@property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
-@property (nonatomic, strong) OGRenderComponent *render;
-@property (nonatomic, strong) OGPhysicsComponent *physics;
-@property (nonatomic, strong) OGInputComponent *input;
-@property (nonatomic, strong) OGIntelligenceComponent *intelligence;
-@property (nonatomic, strong) OGHealthComponent *health;
-@property (nonatomic, strong) OGAnimationComponent *animation;
-@property (nonatomic, strong) OGMovementComponent *movement;
-@property (nonatomic, strong) OGMessageComponent *messageComponent;
-@property (nonatomic, strong) OGOrientationComponent *orientation;
-@property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 
 - (instancetype)initWithConfiguration:(OGPlayerConfiguration *)configuration;
+
+- (void)updateAgentPositionToMatchNodePosition;
 
 @end

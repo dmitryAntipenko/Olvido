@@ -16,8 +16,6 @@ NSString *const kOGStorySceneDarknessNode = @"Darkness";
 - (void)didMoveToView:(SKView *)view
 {
     [super didMoveToView:view];
-    
-    self.sceneDelegate = (id<OGGameSceneStoryDelegate>) [OGLevelManager sharedInstance];
 }
 
 - (void)update:(NSTimeInterval)currentTime

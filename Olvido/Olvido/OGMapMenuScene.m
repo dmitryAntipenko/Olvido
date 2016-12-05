@@ -11,6 +11,7 @@
 #import "OGButtonNode.h"
 #import "OGConstants.h"
 #import "OGMenuManager.h"
+#import "OGLevelManager.h"
 
 NSString *const kOGMapMenuSceneMainMenuButtonNodeName = @"MainMenuButton";
 NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
@@ -19,13 +20,15 @@ NSString *const kOGMapMenuSceneShopButtonNodeName = @"ShopButton";
 
 - (void)startGame
 {
-    OGLevelManager *levelManager = [OGLevelManager sharedInstance];
-    levelManager.view = self.view;
-    [levelManager loadLevelWithIdentifier:@0];    
+    self.menuManager.levelManager.view = self.view;
+    [self.menuManager.audioManager stopMusic];
+    [self.menuManager.levelManager loadLevelWithIdentifier:@0];
 }
 
 - (void)onButtonClick:(OGButtonNode *)button
 {
+    [super onButtonClick:button];
+    
     if ([button.name isEqualToString:kOGMapMenuSceneMainMenuButtonNodeName])
     {
         [self.menuManager loadMenuWithName:kOGMainMenuName];

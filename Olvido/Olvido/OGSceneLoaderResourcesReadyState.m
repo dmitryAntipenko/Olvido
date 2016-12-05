@@ -9,21 +9,17 @@
 #import "OGSceneLoaderResourcesReadyState.h"
 #import "OGSceneLoaderInitialState.h"
 
-NSString *const kOGSceneLoaderDidCompleteNotification = @"sceneLoaderDidCompleteNotification";
-
 @implementation OGSceneLoaderResourcesReadyState
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    BOOL result = NO;
-    
-    result = (stateClass == OGSceneLoaderInitialState.self);
-    
-    return result;
+    return stateClass == [OGSceneLoaderInitialState class];
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.sceneLoader.progress = nil;
     
     [self.sceneLoader.delegate sceneLoaderDidComplete:self.sceneLoader];
@@ -31,6 +27,8 @@ NSString *const kOGSceneLoaderDidCompleteNotification = @"sceneLoaderDidComplete
 
 - (void)willExitWithNextState:(GKState *)nextState
 {
+    [super willExitWithNextState:nextState];
+    
     self.sceneLoader.scene = nil;
 }
 

@@ -12,15 +12,21 @@
 
 @class OGAnimation;
 
+@protocol OGAnimationComponentDelegate <NSObject>
+
+- (void)animationDidFinish;
+
+@end
+
 @interface OGAnimationComponent : GKComponent
 
+@property (nonatomic, weak) id<OGAnimationComponentDelegate> delegate;
 @property (nonatomic, strong) NSDictionary *animations;
 @property (nonatomic, strong) SKSpriteNode *spriteNode;
 @property (nonatomic, assign) OGAnimationState requestedAnimationState;
 @property (nonatomic, strong, readonly) OGAnimation *currentAnimation;
 
-- (instancetype)initWithTextureSize:(CGSize)textureSize
-                         animations:(NSDictionary *)animations;
+- (instancetype)initWithAnimations:(NSDictionary *)animations;
 
 - (void)runAnimationForAnimationStateWithAnimationState:(OGAnimationState)animationState
                                               direction:(OGDirection)direction
@@ -35,5 +41,6 @@
                        animationState:(OGAnimationState)animationState
                        bodyActionName:(NSString *)bodyActionName
                 repeatTexturesForever:(BOOL)repeatTexturesForever
-                        playBackwards:(BOOL)playBackwards;
+                        playBackwards:(BOOL)playBackwards
+                         timePerFrame:(NSTimeInterval)timePerFrame;
 @end

@@ -32,11 +32,10 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
     return [[self alloc] init];
 }
 
-
 - (instancetype)initWithCapacity:(NSUInteger)capacity
 {
     self = [super init];
-    
+            
     if (self)
     {
         _capacity = capacity;
@@ -61,9 +60,9 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
         {
             [self.mutableInventoryItems setObject:item forKey:item.identifier];
             
-            if ([item respondsToSelector:@selector(didTaken)])
+            if ([item respondsToSelector:@selector(wasTaken)])
             {
-                [item didTaken];
+                [item wasTaken];
             }
         }
     }
@@ -98,6 +97,11 @@ NSUInteger const kOGInventoryComponentEmptyCount = 0;
     }
     
     return result;
+}
+
+- (BOOL)containsItemWithIdentifier:(NSString *)identifier
+{
+    return self.mutableInventoryItems[identifier] != nil;
 }
 
 - (BOOL)isFull

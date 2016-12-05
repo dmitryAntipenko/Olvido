@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BackgroundMusic</key>
+	<string>background_music_1</string>
 	<key>StartRoom</key>
 	<string>room1</string>
 	<key>Player</key>
@@ -9,7 +11,7 @@
 		<key>CurrentHealth</key>
 		<integer>3</integer>
 		<key>PhysicsBodyRadius</key>
-		<integer>40</integer>
+		<integer>30</integer>
 		<key>MessageShowDistance</key>
 		<integer>30</integer>
 		<key>MaxHealth</key>
@@ -18,17 +20,54 @@
 	<key>Enemies</key>
 	<array>
 		<dict>
+			<key>MaxHealth</key>
+			<integer>10</integer>
+			<key>Type</key>
+			<string>OGZombie</string>
 			<key>PhysicsBodyRadius</key>
 			<integer>30</integer>
-			<key>InitialVector</key>
-			<dict>
-				<key>dx</key>
-				<string>150</string>
-				<key>dy</key>
-				<string>-150</string>
-			</dict>
-			<key>InitialPoint</key>
-			<string>enemy_initial_point_01</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>OGZombie</string>
+			<key>PhysicsBodyRadius</key>
+			<integer>30</integer>
 		</dict>
 	</array>
 </dict>

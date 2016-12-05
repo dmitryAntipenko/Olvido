@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class OGEnemyConfiguration;
 @class OGPlayerConfiguration;
+@class OGEnemyConfiguration;
 
 @interface OGGameSceneConfiguration : NSObject
 
+@property (nonatomic, copy, readonly) NSString *backgroundMusic;
 @property (nonatomic, copy, readonly) NSString *startRoom;
 @property (nonatomic, strong, readonly) OGPlayerConfiguration *playerConfiguration;
 @property (nonatomic, strong, readonly) NSArray<OGEnemyConfiguration *> *enemiesConfiguration;

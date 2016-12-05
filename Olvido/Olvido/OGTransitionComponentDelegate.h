@@ -2,11 +2,11 @@
 //  OGTransitionComponentDelegate.h
 //  Olvido
 //
-//  Created by Дмитрий Антипенко on 11/10/16.
+//  Created by Дмитрий Антипенко on 11/17/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-@class OGTransitionComponent;
+#import "OGTransitionComponent.h"
 
 @protocol OGTransitionComponentDelegate <NSObject>
 

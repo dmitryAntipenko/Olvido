@@ -9,129 +9,94 @@
 #import "OGColliderType.h"
 #import "OGCollisionBitMask.h"
 
-static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions;
-static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications;
+char *const kOGColliderTypeQueueName = "ZEOUniversity.Olvido.InitQueue";
+
+static NSMutableDictionary<NSNumber *, OGColliderType *> *sOGColliderTypes = nil;
+
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGDefinedCollisions = nil;
+static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *> *sOGRequestedContactNotifications = nil;
+
+@interface OGColliderType ()
+
+@property (nonatomic, assign, readwrite) OGCollisionBitMask categoryBitMask;
+@property (nonatomic, assign, readwrite) OGCollisionBitMask collisionBitMask;
+@property (nonatomic, assign, readwrite) OGCollisionBitMask contactTestBitMask;
+
+@end
 
 @implementation OGColliderType
 
++ (OGColliderType *)existingColliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask
+{
+    return sOGColliderTypes[@(bitmask)];
+}
+
 #pragma mark - Shared Instances
 
-+ (OGColliderType *)colliderTypeWithCategoryBitMask:(NSUInteger)bitmask
++ (instancetype)colliderTypeWithCategoryBitMask:(OGCollisionBitMask)bitmask
 {
-    OGColliderType *result = nil;
+    static dispatch_once_t dispatchOnceToken = 0;
     
-    switch (bitmask)
+    dispatch_once(&dispatchOnceToken, ^()
     {
-        case kOGCollisionBitMaskPlayer:
-            result = [OGColliderType player];
-            break;
-            
-        case kOGCollisionBitMaskEnemy:
-            result = [OGColliderType enemy];
-            break;
-            
-        case kOGCollisionBitMaskObstacle:
-            result = [OGColliderType obstacle];
-            break;
-            
-        case kOGCollisionBitMaskWeapon:
-            result = [OGColliderType weapon];
-            break;
-            
-        case kOGCollisionBitMaskBullet:
-            result = [OGColliderType bullet];
-            break;
-            
-        case kOGCollisionBitMaskDoor:
-            result = [OGColliderType door];
-            break;
+        sOGColliderTypes = [NSMutableDictionary dictionary];
+    });
+    
+    __block OGColliderType *result = sOGColliderTypes[@(bitmask)];
+    
+    if (!result)
+    {
+        dispatch_queue_t initQueue = dispatch_queue_create(kOGColliderTypeQueueName, DISPATCH_QUEUE_SERIAL);
+        
+        dispatch_sync(initQueue, ^()
+        {
+            result = [[OGColliderType alloc] init];
+            result.categoryBitMask = bitmask;
+            [sOGColliderTypes setObject:result forKey:@(bitmask)];
+        });
     }
     
     return result;
 }
 
-+ (OGColliderType *)player
++ (instancetype)player
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskPlayer;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskPlayer];
 }
 
-+ (OGColliderType *)enemy
++ (instancetype)enemy
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskEnemy;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskEnemy];
 }
 
-+ (OGColliderType *)obstacle
++ (instancetype)obstacle
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskObstacle;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskObstacle];
 }
 
-+ (OGColliderType *)door
++ (instancetype)door
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskDoor;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoor];
 }
 
-+ (OGColliderType *)weapon
++ (instancetype)doorTrigger
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskWeapon;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskDoorTrigger];
 }
 
-+ (OGColliderType *)bullet
++ (instancetype)weapon
 {
-    static OGColliderType *colliderType = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        colliderType = [[self alloc] init];
-        colliderType.categoryBitMask = kOGCollisionBitMaskBullet;
-    });
-    
-    return colliderType;
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskWeapon];
+}
+
++ (instancetype)bullet
+{
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskBullet];
+}
+
++ (instancetype)key
+{
+    return [self colliderTypeWithCategoryBitMask:kOGCollisionBitMaskKey];
 }
 
 #pragma mark - Lazy getters
@@ -158,9 +123,9 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
 
 #pragma mark - Getters
 
-- (NSUInteger)findBitMaskInDictionary:(NSDictionary *)dictionary
+- (OGCollisionBitMask)findBitMaskInDictionary:(NSDictionary *)dictionary
 {
-    __block NSUInteger result = 0;
+    __block OGCollisionBitMask result = 0;
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(OGColliderType *key, NSArray *obj, BOOL *stop)
      {
@@ -178,12 +143,12 @@ static NSMutableDictionary<OGColliderType *, NSMutableArray<OGColliderType *> *>
     return result;
 }
 
-- (NSUInteger)collisionBitMask
+- (OGCollisionBitMask)collisionBitMask
 {
     return [self findBitMaskInDictionary:sOGDefinedCollisions];
 }
 
-- (NSUInteger)contactTestBitMask
+- (OGCollisionBitMask)contactTestBitMask
 {
     return [self findBitMaskInDictionary:sOGRequestedContactNotifications];
 }

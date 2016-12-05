@@ -14,21 +14,47 @@
 #import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
+#import "OGSoundComponent.h"
+#import "OGColliderType.h"
+
+@interface OGDoorEntityClosedState ()
+
+@property (nonatomic, weak) OGSoundComponent *soundComponent;
+
+@end
 
 @implementation OGDoorEntityClosedState
 
+- (OGSoundComponent *)soundComponent
+{
+    if (!_soundComponent)
+    {
+        _soundComponent = (OGSoundComponent *) [self.doorEntity componentForClass:[OGSoundComponent class]];
+    }
+    
+    return _soundComponent;
+}
+
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
+    [super didEnterWithPreviousState:previousState];
+    
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+    
+    self.renderComponent.node.physicsBody.categoryBitMask = (uint32_t) [OGColliderType door].categoryBitMask;
+    
+    if (previousState)
+    {
+        [self.soundComponent playSoundOnce:@"door_open"];
+    }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGDoorEntityOpenedState.self
-    || stateClass == OGDoorEntityLockedState.self
-    || stateClass == OGDoorEntityLockedState.self;
+    return stateClass == [OGDoorEntityOpenedState class]
+    || stateClass == [OGDoorEntityLockedState class]
+    || stateClass == [OGDoorEntityLockedState class];
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -39,17 +65,17 @@
     {        
         if (self.lockComponent.isClosed && [self isTargetNearDoor])
         {
-            if ([self.stateMachine canEnterState:OGDoorEntityOpenedState.self])
+            if ([self.stateMachine canEnterState:[OGDoorEntityOpenedState class]])
             {
-                [self.stateMachine enterState:OGDoorEntityOpenedState.self];
+                [self.stateMachine enterState:[OGDoorEntityOpenedState class]];
             }
         }
     }
     else
     {
-        if ([self.stateMachine canEnterState:OGDoorEntityLockedState.self])
+        if ([self.stateMachine canEnterState:[OGDoorEntityLockedState class]])
         {
-            [self.stateMachine enterState:OGDoorEntityLockedState.self];
+            [self.stateMachine enterState:[OGDoorEntityLockedState class]];
         }
     }
 }

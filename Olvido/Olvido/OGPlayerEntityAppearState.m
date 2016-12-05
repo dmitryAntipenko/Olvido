@@ -17,7 +17,7 @@
 #import "OGDirection.h"
 #import "OGPlayerEntityControlledState.h"
 
-CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
+CGFloat const kOGPlayerEntityAppearStateDurationTime = 0.0;
 
 @interface OGPlayerEntityAppearState ()
 
@@ -90,16 +90,16 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
     {
         [self.spriteNode removeFromParent];
         
-        if ([self.stateMachine canEnterState:OGPlayerEntityControlledState.self])
+        if ([self.stateMachine canEnterState:[OGPlayerEntityControlledState class]])
         {
-            [self.stateMachine enterState:OGPlayerEntityControlledState.self];
+            [self.stateMachine enterState:[OGPlayerEntityControlledState class]];
         }
     }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == OGPlayerEntityControlledState.self;
+    return stateClass == [OGPlayerEntityControlledState class];
 }
 
 - (void)willExitWithNextState:(GKState *)nextState
@@ -115,7 +115,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 {
     if (!_animationComponent)
     {
-        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:OGAnimationComponent.self];
+        _animationComponent = (OGAnimationComponent *) [self.playerEntity componentForClass:[OGAnimationComponent class]];
     }
     
     return _animationComponent;
@@ -125,7 +125,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 {
     if (!_renderComponent)
     {
-        _renderComponent = (OGRenderComponent *) [self.playerEntity componentForClass:OGRenderComponent.self];
+        _renderComponent = (OGRenderComponent *) [self.playerEntity componentForClass:[OGRenderComponent class]];
     }
     
     return _renderComponent;
@@ -135,7 +135,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 {
     if (!_orientationComponent)
     {
-        _orientationComponent = (OGOrientationComponent *) [self.playerEntity componentForClass:OGOrientationComponent.self];
+        _orientationComponent = (OGOrientationComponent *) [self.playerEntity componentForClass:[OGOrientationComponent class]];
     }
     
     return _orientationComponent;
@@ -145,7 +145,7 @@ CGFloat const kOGPlayerEntityAppearStateDurationTime = 3.0;
 {
     if (!_inputComponent)
     {
-        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:OGInputComponent.self];
+        _inputComponent = (OGInputComponent *) [self.playerEntity componentForClass:[OGInputComponent class]];
     }
     
     return _inputComponent;

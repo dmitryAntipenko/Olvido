@@ -18,14 +18,14 @@ NSString *const kGKSceneGraphsKey = @"Graphs";
 {
     GKScene *gkScene = [self sceneWithFileNamed:metadata.fileName];
     
-    SKScene *gameScene = (SKScene *)gkScene.rootNode;
+    SKScene *skScene = (SKScene *)gkScene.rootNode;
     
-    if (!gameScene.userData)
+    if (!skScene.userData)
     {
-        gameScene.userData = [NSMutableDictionary dictionary];
+        skScene.userData = [NSMutableDictionary dictionary];
     }
     
-    [gameScene.userData setObject:gkScene.graphs forKey:kGKSceneGraphsKey];
+    [skScene.userData setObject:gkScene.graphs forKey:kGKSceneGraphsKey];
     
     return gkScene;
 }

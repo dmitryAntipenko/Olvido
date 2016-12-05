@@ -7,18 +7,20 @@
 //
 
 #import "OGLevelManager.h"
-#import "OGGameSceneDelegate.h"
-#import "OGGameSceneStoryDelegate.h"
 #import "OGGameScene.h"
 #import "OGStoryScene.h"
 #import "OGConstants.h"
-#import "OGsceneManager.h"
+#import "OGSceneManager.h"
+#import "OGMenuManager.h"
+
+#import "OGPauseLevelState.h"
+#import "OGGameLevelState.h"
 
 NSString *const kOGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
 NSString *const kOGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
 NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
-@interface OGLevelManager () <OGGameSceneDelegate, OGGameSceneStoryDelegate>
+@interface OGLevelManager () <OGGameSceneStoryDelegate>
 
 @property (nonatomic, copy, readwrite) NSArray<NSDictionary *> *levelMap;
 @property (nonatomic, copy, readwrite) NSString *currentSceneName;
@@ -26,20 +28,17 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 @property (nonatomic, strong) NSNumber *currentStorySceneIdentifier;
 @property (nonatomic, strong) NSNumber *currentGameSceneIdentifier;
 
+@property (nonatomic, strong) OGGameScene *currentGameScene;
+@property (nonatomic, strong) OGStoryScene *currentStoryScene;
+
 @end
 
 @implementation OGLevelManager
 
-+ (instancetype)sharedInstance
++ (instancetype)levelManager;
 {
-    static OGLevelManager *levelManager = nil;
-    static dispatch_once_t dispatchOnceToken = 0;
-    
-    dispatch_once(&dispatchOnceToken, ^()
-    {
-        levelManager = [[OGLevelManager alloc] init];
-        [levelManager loadLevelMap];
-    });
+    OGLevelManager *levelManager = [[OGLevelManager alloc] init];
+    [levelManager loadLevelMap];
     
     return levelManager;
 }
@@ -49,23 +48,61 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:kOGLevelManagerLevelMapName
                                                           ofType:kOGPropertyFileExtension];
     
-    NSArray *plistData = [NSArray arrayWithContentsOfFile:plistPath];
-    
-    self.levelMap = plistData;
+    self.levelMap = [NSArray arrayWithContentsOfFile:plistPath];
 }
 
 #pragma mark - GameSceneDelegate methods
 
-- (void)gameSceneDidCallFinish
+- (void)didCallFinish
 {
     [NSException raise:NSInternalInconsistencyException
                 format:@"Not implemented %@", NSStringFromSelector(_cmd)];
 }
 
-- (void)gameSceneDidCallRestart
+- (void)didCallPause
 {
-    [self loadLevelWithIdentifier:self.currentGameSceneIdentifier];
+    if (self.currentGameScene)
+    {
+        [self.currentGameScene.stateMachine enterState:[OGPauseLevelState class]];
+    }
+}
+
+- (void)didCallResume
+{
+    if (self.currentGameScene)
+    {
+        [self.currentGameScene.stateMachine enterState:[OGGameLevelState class]];
+    }
+}
+
+- (void)didCallRestart
+{
+    [self clearCurrentScene];
     [self runGameScene];
+}
+
+- (void)didCallExit
+{
+    [self clearCurrentScene];
+    [self.menuManager loadMenuWithName:kOGMapMenuName];
+}
+
+- (void)clearCurrentScene
+{
+    if (self.currentGameScene)
+    {
+        self.currentGameScene.sceneDelegate = nil;
+    }
+    
+    self.currentStoryScene = nil;
+    
+    if (self.currentStoryScene)
+    {
+        self.currentStoryScene.sceneDelegate = nil;
+    }
+    
+    [self.audioManager stopMusic];
+    self.currentGameScene = nil;
 }
 
 #pragma mark - GameSceneStoreDelegate method
@@ -78,10 +115,23 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 #pragma mark - Loading and Running levels
 
 - (void)runGameScene
-{ 
+{
     if (self.currentGameSceneIdentifier)
     {
-        [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
+        __weak typeof(self) weakSelf = self;
+        
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue
+                                         completionHandler:^(OGBaseScene *scene)
+         {
+             if (weakSelf)
+             {
+                 typeof(weakSelf) strongSelf = weakSelf;
+                 
+                 strongSelf.currentGameScene = (OGGameScene *)scene;
+                 strongSelf.currentGameScene.audioManager = self.audioManager;
+                 strongSelf.currentGameScene.sceneDelegate = self;
+             }
+         }];
     }
 }
 
@@ -89,7 +139,14 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 {
     if (self.currentStorySceneIdentifier)
     {
-        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue];
+        [self.sceneManager transitionToSceneWithIdentifier:self.currentStorySceneIdentifier.integerValue
+                                         completionHandler:^(OGBaseScene *scene)
+         {
+             self.currentStoryScene = (OGStoryScene *)scene;
+             self.currentStoryScene.sceneDelegate = self;
+         }];
+        
+        [self.sceneManager prepareSceneWithIdentifier:self.currentGameSceneIdentifier.integerValue];
     }
     else
     {
@@ -99,10 +156,18 @@ NSString *const kOGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)loadLevelWithIdentifier:(NSNumber *)identifier
 {
+    [self clearCurrentScene];
+    
+    [self loadSceneIdentifiersWithLevelIdentifier:identifier];
+    [self runStoryScene];
+}
+
+- (void)loadSceneIdentifiersWithLevelIdentifier:(NSNumber *)identifier;
+{
+    [self clearCurrentScene];
+    
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerGameSceneIdentifierKey];
     self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][kOGLevelManagerStorySceneIdentifierKey];
-    
-    [self runStoryScene];
 }
 
 @end

@@ -7,14 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OGAudioManager.h"
 
 @class OGSceneManager;
+@class OGLevelManager;
 
 @interface OGMenuManager : NSObject
 
 @property (nonatomic, strong) OGSceneManager *sceneManager;
+@property (nonatomic, strong) OGAudioManager *audioManager;
+@property (nonatomic, weak) OGLevelManager *levelManager;
 
-+ (instancetype)sharedInstance;
++ (instancetype)menuManager;
 
 - (void)loadMainMenu;
 

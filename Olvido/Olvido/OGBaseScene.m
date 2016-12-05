@@ -10,9 +10,19 @@
 
 @implementation OGBaseScene
 
-- (void)createCamera
+- (void)configureScene
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
+}
+
+- (void)pause
+{
+    self.customPaused = YES;
+}
+
+- (void)resume
+{
+    self.customPaused = NO;
 }
 
 @end

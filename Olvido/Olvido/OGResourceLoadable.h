@@ -12,7 +12,7 @@
 
 + (BOOL)resourcesNeedLoading;
 
-+ (void)loadResourcesWithCompletionHandler:(void (^)())handler;
++ (void)loadResourcesWithCompletionHandler:(void (^)())completionHandler;
 
 + (void)purgeResources;
 

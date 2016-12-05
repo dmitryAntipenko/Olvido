@@ -17,14 +17,13 @@
 
 @property (nonatomic, weak) id <OGSceneManagerDelegate> delegate;
 @property (nonatomic, strong, readonly) SKView *view;
-@property (nonatomic, strong, readonly) OGBaseScene *currentScene;
 
 + (instancetype)sceneManagerWithView:(SKView *)view;
 
 - (void)prepareSceneWithIdentifier:(NSUInteger)sceneIdentifier;
 
-- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier;
+- (void)transitionToSceneWithIdentifier:(NSUInteger)sceneIdentifier completionHandler:(void (^)(OGBaseScene *scene))completion;
 
-- (void)transitionToInitialScene;
+- (void)transitionToInitialSceneWithCompletionHandler:(void (^)(OGBaseScene *scene))completion;
 
 @end
