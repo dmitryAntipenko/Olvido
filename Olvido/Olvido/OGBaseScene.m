@@ -12,7 +12,7 @@
 
 - (void)configureScene
 {
-    self.scaleMode = SKSceneScaleModeAspectFit;
+    self.scaleMode = SKSceneScaleModeFill;
 }
 
 - (void)pause

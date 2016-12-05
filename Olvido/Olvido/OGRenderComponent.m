@@ -29,7 +29,7 @@
     [super didAddToEntity];
     
     self.node.entity = self.entity;
-    self.node.zPosition = OGZPositionCategoryPhysicsWorld;
+    self.node.zPosition = OGZPositionCategoryPhysicsWorld;    
 }
 
 - (void)willRemoveFromEntity

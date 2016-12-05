@@ -47,9 +47,4 @@ NSString *const OGAidKitHealingPointsKey = @"healingPoints";
     [self.delegate removeEntity:self];
 }
 
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
-}
-
 @end

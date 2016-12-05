@@ -52,4 +52,8 @@
 {
 }
 
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+}
+
 @end

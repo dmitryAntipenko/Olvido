@@ -24,8 +24,6 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 @interface OGWeaponEntity ()
 
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 @property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 @property (nonatomic, assign) BOOL allowsAttacking;
@@ -47,20 +45,12 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 {
     if (sprite)
     {
-        self = [super init];
+        self = [super initWithSpriteNode:sprite];
 
         if (self)
         {
             NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
             [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
-            
-            _renderComponent = [[OGRenderComponent alloc] init];
-            _renderComponent.node = sprite;
-            [self addComponent:_renderComponent];
-            
-            _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
-                                                                   colliderType:[OGColliderType weapon]];
-            [self addComponent:_physicsComponent];
             
             _allowsAttacking = YES;
             

@@ -23,3 +23,9 @@
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 
 @end
+
+@protocol OGSceneItemsDelegate <NSObject>
+
+- (void)itemWillBeTaken:(OGSceneItemEntity *)entity;
+
+@end

@@ -10,15 +10,14 @@
 #import "OGEntityManaging.h"
 #import "OGAttacking.h"
 #import "OGInventoryItem.h"
+#import "OGSceneItemEntity.h"
 
 extern CGFloat const OGWeaponEntityDefaultAttackSpeed;
 extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 
-@interface OGWeaponEntity : GKEntity <OGAttacking, OGInventoryItem>
+@interface OGWeaponEntity : OGSceneItemEntity <OGAttacking, OGInventoryItem>
 
 @property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
-
-@property (nonatomic, weak) id<OGEntityManaging> delegate;
 
 @property (nonatomic, weak) GKEntity *owner;
 

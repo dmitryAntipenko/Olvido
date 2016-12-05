@@ -13,6 +13,7 @@
 NSString *const OGEntityConfigurationTexturesKey = @"Textures";
 NSString *const OGEntityConfigurationAudioKey = @"Audio";
 NSString *const OGEntityConfigurationUnitNameKey = @"UnitName";
+NSString *const OGEntityConfigurationNeedsCastShadowKey = @"NeedsShadow";
 
 @interface OGEntityConfiguration ()
 
@@ -35,6 +36,7 @@ NSString *const OGEntityConfigurationUnitNameKey = @"UnitName";
             _mutableAudios = [NSMutableArray array];
             
             _unitName = dictionary[OGEntityConfigurationUnitNameKey];
+            _needsCastShadow = dictionary[OGEntityConfigurationNeedsCastShadowKey];
             
             for (NSDictionary *textureDictionary in dictionary[OGEntityConfigurationTexturesKey])
             {

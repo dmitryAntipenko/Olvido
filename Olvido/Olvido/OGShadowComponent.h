@@ -11,6 +11,7 @@
 @interface OGShadowComponent : GKComponent
 
 @property (nonatomic, strong) SKSpriteNode *node;
+@property (nonatomic, assign) BOOL needsCastShadow;
 
 - (instancetype)initWithTexture:(SKTexture *)texture offset:(CGFloat)offset;
 
