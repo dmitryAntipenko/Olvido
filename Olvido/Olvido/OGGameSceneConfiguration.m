@@ -14,12 +14,14 @@
 #import "OGEntityConfiguration.h"
 #import "OGDoorConfiguration.h"
 #import "OGZoneConfiguration.h"
+#import "OGShopConfiguration.h"
 
 NSString *const OGGameSceneConfigurationZonesKey = @"Zones";
 NSString *const OGGameSceneConfigurationEnemiesKey = @"Enemies";
 NSString *const OGGameSceneConfigurationPlayerKey = @"Player";
 NSString *const OGGameSceneConfigurationWeaponKey = @"Weapon";
 NSString *const OGGameSceneConfigurationDoorsKey = @"Doors";
+NSString *const OGGameSceneConfigurationShopsKey = @"Shops";
 NSString *const OGGameSceneConfigurationSceneItemsKey = @"SceneItems";
 
 NSString *const OGGameSceneConfigurationStartRoomKey = @"StartRoom";
@@ -37,6 +39,7 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 @property (nonatomic, strong, readwrite) NSMutableArray<OGWeaponConfiguration *> *mutableWeaponConfigurations;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGDoorConfiguration *> *mutableDoorConfigurations;
 @property (nonatomic, strong, readwrite) NSMutableArray<OGZoneConfiguration *> *mutableZoneConfigurations;
+@property (nonatomic, strong, readonly) NSMutableArray<OGShopConfiguration *> *mutableShopConfigurations;
 
 @property (nonatomic, strong) NSMutableArray<OGEntityConfiguration *> *searchingArray;
 
@@ -52,11 +55,12 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
     
     if (self)
     {
-        _mutableEnemyConfigurations = [NSMutableArray array];
-        _mutableWeaponConfigurations = [NSMutableArray array];
-        _mutableDoorConfigurations = [NSMutableArray array];
+        _mutableEnemyConfigurations = [[NSMutableArray alloc] init];
+        _mutableWeaponConfigurations = [[NSMutableArray alloc] init];
+        _mutableDoorConfigurations = [[NSMutableArray alloc] init];
         _mutableZoneConfigurations = [[NSMutableArray alloc] init];
-        _searchingArray = [NSMutableArray array];
+        _mutableShopConfigurations = [[NSMutableArray alloc] init];
+        _searchingArray = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -127,6 +131,18 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
         }
     }
     
+    NSArray *shops = configurationDictionary[OGGameSceneConfigurationShopsKey];
+    
+    if (shops)
+    {
+        for (NSDictionary *shop in shops)
+        {
+            
+            OGShopConfiguration *shopConfiguration = [[OGZoneConfiguration alloc] initWithDictionary:shop];
+        }
+    }
+    
+    
     [self.searchingArray addObject:self.playerConfiguration];
     [self.searchingArray addObjectsFromArray:self.mutableWeaponConfigurations];
     [self.searchingArray addObjectsFromArray:self.mutableEnemyConfigurations];
@@ -170,6 +186,11 @@ NSString *const OGGameSceneConfigurationFileExtension = @"plist";
 - (NSArray<OGZoneConfiguration *> *)zoneConfigurations
 {
     return self.mutableZoneConfigurations;
+}
+
+- (NSArray<OGShopConfiguration *> *)shopConfigurations
+{
+    return self.mutableShopConfigurations;
 }
 
 @end

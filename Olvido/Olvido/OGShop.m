@@ -12,6 +12,7 @@
 #import "OGPlayerEntity.h"
 
 #import "OGContactNotifiableType.h"
+#import "OGShopConfiguration.h"
 
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
@@ -25,8 +26,8 @@
 
 @implementation OGShop
 
-
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+                 shopConfiguration:(OGShopConfiguration *)shopConfiguration
 {
     if (sprite)
     {
@@ -44,6 +45,8 @@
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:sprite.physicsBody
                                                                    colliderType:[OGColliderType shop]];
             [self addComponent:_physicsComponent];
+            
+            _shopConfiguration = shopConfiguration;
         }
     }
     else
