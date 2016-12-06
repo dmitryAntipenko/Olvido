@@ -1,5 +1,5 @@
 //
-//  OGZPositionEnum.m
+//  OGZPositionEnum.h
 //  Olvido
 //
 //  Created by Алексей Подолян on 10/30/16.

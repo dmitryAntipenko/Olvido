@@ -30,17 +30,17 @@
 		<key>ClassName</key>
 		<string>OGStoryScene</string>
 		<key>FileName</key>
-		<string>OGChapter1</string>
+		<string>Level1_Story_iPad</string>
 	</dict>
 	<dict>
 		<key>ClassName</key>
 		<string>OGInitialLevel</string>
 		<key>FileName</key>
-		<string>Level1</string>
+		<string>Level1_iPad</string>
 		<key>NeedLoadDefaultResources</key>
 		<true/>
 		<key>CustomResourcesFileName</key>
-		<string>Level1CustomResources</string>
+		<string>Level1_CustomResources</string>
 		<key>LoadableClasses</key>
 		<array>
 			<string>OGZombie</string>
@@ -62,11 +62,11 @@
 		<key>ClassName</key>
 		<string>OGLevel2</string>
 		<key>FileName</key>
-		<string>Level2</string>
+		<string>Level2_iPad</string>
 		<key>NeedLoadDefaultResources</key>
 		<false/>
 		<key>CustomResourcesFileName</key>
-		<string>Level2CustomResources</string>
+		<string>Level2_CustomResources</string>
 		<key>LoadableClasses</key>
 		<array>
 			<string>OGPlayerEntity</string>

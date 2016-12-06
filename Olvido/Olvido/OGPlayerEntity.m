@@ -26,6 +26,9 @@
 #import "OGInventoryComponent.h"
 #import "OGShadowComponent.h"
 #import "OGHealthBarComponent.h"
+#import "OGFlashlightComponent.h"
+
+#import "OGSceneItemEntity.h"
 
 #import "OGColliderType.h"
 #import "OGZPositionEnum.h"
@@ -48,7 +51,7 @@ CGFloat const OGPlayerEntityShadowYOffset = -40.0;
 NSString *const OGPlayerEntityShadowTextureName = @"PlayerShadow";
 NSString *OGPlayerEntityUnitName = @"Player";
 
-@interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate>
+@interface OGPlayerEntity () <OGContactNotifiableType, GKAgentDelegate, OGHealthComponentDelegate, OGSceneItemsDelegate>
 
 @property (nonatomic, strong) OGShadowComponent         *shadowComponent;
 @property (nonatomic, strong) OGInventoryComponent      *inventoryComponent;
@@ -63,6 +66,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 @property (nonatomic, strong) OGOrientationComponent    *orientationComponent;
 @property (nonatomic, strong) OGWeaponComponent         *weaponComponent;
 @property (nonatomic, strong) OGHealthBarComponent      *healthBarComponent;
+@property (nonatomic, strong) OGFlashlightComponent     *flashlightComponent;
 @property (nonatomic, strong, readwrite) GKAgent2D                 *agent;
 
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
@@ -159,15 +163,18 @@ NSString *OGPlayerEntityUnitName = @"Player";
         _healthBarComponent = [OGHealthBarComponent healthBarComponent];
         [self addComponent:_healthBarComponent];
         
+        _flashlightComponent = [[OGFlashlightComponent alloc] init];        
+        [self addComponent:_flashlightComponent];
+        
         _canTakeWeapon = YES;
     }
     
     return self;
 }
 
-#pragma mark - OGContactNotifiableType protocol
+#pragma mark - OGSceneItemsDelegate 
 
-- (void)contactWithEntityDidBegin:(GKEntity *)entity
+- (void)itemWillBeTaken:(OGSceneItemEntity *)entity
 {
     if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
     {
@@ -179,13 +186,12 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
         {
-             self.canTakeWeapon = YES;
-             [timer invalidate];
-             timer = nil;
+            self.canTakeWeapon = YES;
+            [timer invalidate];
+            timer = nil;
         }];
         
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
-        [self.messageComponent showMessage:@"Shotgun!" duration:3.0 shouldOverlay:YES];
     }
     
     if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
@@ -194,6 +200,16 @@ NSString *OGPlayerEntityUnitName = @"Player";
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
+    }
+}
+
+#pragma mark - OGContactNotifiableType protocol
+
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    if ([entity isKindOfClass:[OGSceneItemEntity class]])
+    {
+        [self itemWillBeTaken:(OGSceneItemEntity *) entity];
     }
 }
 

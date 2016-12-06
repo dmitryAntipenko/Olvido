@@ -50,8 +50,7 @@ NSString *const OGDoorOpenSoundKey = @"door_open";
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGDoorEntityClosedState class]
-    || stateClass == [OGDoorEntityLockedState class]
+    return stateClass == [OGDoorEntityClosedState class]    
     || stateClass == [OGDoorEntityLockedState class];
 }
 
