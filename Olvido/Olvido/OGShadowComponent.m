@@ -7,6 +7,7 @@
 //
 
 #import "OGShadowComponent.h"
+#import "OGLightBitMask.h"
 
 CGFloat const OGShadowComponentAlpha = 0.25;
 

@@ -28,12 +28,12 @@
         {
             _metadata = metadata;
             _stateMachine = [GKStateMachine stateMachineWithStates:@[
-                                                                     [OGSceneLoaderInitialState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
-                                                                     [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
-                                                                     ]];
+                [OGSceneLoaderInitialState stateWithSceneLoader:self],
+                [OGSceneLoaderPrepearingResourcesState stateWithSceneLoader:self],
+                [OGSceneLoaderResourcesAndSceneReadyState stateWithSceneLoader:self],
+                [OGSceneLoaderResourcesReadyState stateWithSceneLoader:self],
+                [OGSceneLoaderPrepearingSceneState stateWithSceneLoader:self]
+                ]];
             
             [_stateMachine enterState:[OGSceneLoaderInitialState class]];
         }
