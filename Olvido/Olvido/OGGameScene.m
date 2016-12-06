@@ -98,6 +98,7 @@ NSString *const OGGameSceneDoorKeyPrefix = @"key";
 
 NSString *const OGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const OGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
+NSString *const OGGameSceneLevelCompleteScreenNodeName = @"OGLevelCompleteScreen.sks";
 
 NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
@@ -107,6 +108,7 @@ NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
 NSString *const OGGameSceneRestartButtonName = @"RestartButton";
 NSString *const OGGameSceneMenuButtonName = @"MenuButton";
 NSString *const OGGameScenePauseButtonName = @"PauseButton";
+NSString *const OGGameSceneNextLevelButtonName = @"NextLevelButton";
 
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
@@ -123,6 +125,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
+@property (nonatomic, strong) SKReferenceNode *levelCompleteScreenNode;
 
 @property (nonatomic, strong) OGHUDNode *hudNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
@@ -140,6 +143,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @property (nonatomic, strong) OGInGameShopManager *shopManager;
 @property (nonatomic, strong) SKNode *currentInteraction;
+
 @end
 
 @implementation OGGameScene
@@ -189,6 +193,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
         _gameOverScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        
+        _levelCompleteScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneLevelCompleteScreenNodeName];
+        _levelCompleteScreenNode.zPosition = OGZPositionCategoryTouchControl;
         
         _shopManager = [[OGInGameShopManager alloc] init];
         _shopManager.delegate = self;
@@ -515,7 +522,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)playerDidDie
 {
-    [self.stateMachine enterState:[OGDeathLevelState class]];
+    [self.sceneDelegate didCallComplete];
+//    [self.stateMachine enterState:[OGDeathLevelState class]];
 }
 
 #pragma mark - TransitionComponentDelegate
@@ -607,6 +615,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     if (!self.pauseScreenNode.parent)
     {
         [self.camera addChild:self.pauseScreenNode];
+    }
+}
+
+- (void)showCompletionScreen
+{
+    if (!self.levelCompleteScreenNode.parent)
+    {
+        [self.camera addChild:self.levelCompleteScreenNode];
     }
 }
 
@@ -794,6 +810,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     else if ([buttonNode.name isEqualToString:OGGameScenePauseButtonName])
     {
         [self.sceneDelegate didCallPause];
+    }
+    else if([buttonNode.name isEqualToString:OGGameSceneNextLevelButtonName])
+    {
+        [self.sceneDelegate didCallFinish];
     }
 }
 
