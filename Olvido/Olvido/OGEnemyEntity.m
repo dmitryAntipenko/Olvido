@@ -71,6 +71,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 @property (nonatomic, strong) OGHealthBarComponent *healthBarComponent;
 @property (nonatomic, strong) OGShadowComponent *shadowComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
 
 @property (nonatomic, strong) NSString *unitName;
 
@@ -86,11 +87,12 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 - (instancetype)init
 {
-    return [self initWithConfiguration:nil graph:nil];
+    return [self initWithConfiguration:nil graph:nil states:nil];
 }
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
+                               states:(NSArray<GKState *> *)states
 {
     self = [super init];
     
@@ -107,11 +109,13 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         [self addComponent:_physicsComponent];
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
-        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
-        _shadowComponent.needsCastShadow = configuration.needsCastShadow;
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];    
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];
+        
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
+        [self addComponent:_intelligenceComponent];
         
         _healthComponent = [[OGHealthComponent alloc] init];
         _healthComponent.maxHealth = configuration.maxHealth;

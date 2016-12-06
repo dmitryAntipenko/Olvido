@@ -29,6 +29,8 @@
     {
         _flashlight = [[SKLightNode alloc] init];
         _flashlight.enabled = NO;
+        _flashlight.lightColor = [SKColor colorWithRed:160/255 green:1 blue:1 alpha:1];
+        _flashlight.ambientColor = [SKColor colorWithRed:17/255 green:42/255 blue:107/255 alpha:1];
         _flashlight.categoryBitMask = OGLightBitMaskDefault;
     }
     

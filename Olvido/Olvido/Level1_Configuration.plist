@@ -492,6 +492,48 @@
 			</array>
 		</dict>
 		<dict>
+			<key>Weapon</key>
+			<dict>
+				<key>Textures</key>
+				<array>
+					<dict>
+						<key>Name</key>
+						<string>Blaster</string>
+					</dict>
+				</array>
+				<key>Shell</key>
+				<dict>
+					<key>Speed</key>
+					<integer>15</integer>
+					<key>Damage</key>
+					<integer>1</integer>
+					<key>Texture</key>
+					<string>RedLaserBullet</string>
+				</dict>
+				<key>ReloadSpeed</key>
+				<real>1.2</real>
+				<key>AttackSpeed</key>
+				<real>0.5</real>
+				<key>Charge</key>
+				<integer>20</integer>
+				<key>Audio</key>
+				<array>
+					<dict>
+						<key>AudioName</key>
+						<string>shot</string>
+						<key>Key</key>
+						<string>weapon_attack</string>
+					</dict>
+					<dict>
+						<key>AudioName</key>
+						<string>weapon_reload</string>
+						<key>Key</key>
+						<string>weapon_recharge</string>
+					</dict>
+				</array>
+				<key>UnitName</key>
+				<string>boss_weapon</string>
+			</dict>
 			<key>NeedsShadow</key>
 			<true/>
 			<key>MaxHealth</key>

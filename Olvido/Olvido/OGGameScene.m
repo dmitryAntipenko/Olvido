@@ -477,6 +477,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         }
     }
     
+    OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [entity componentForClass:[OGWeaponComponent class]];
+    
+    if (weaponComponent && weaponComponent.weapon)
+    {
+        weaponComponent.weapon.delegate = self;
+    }
+    
     OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:[OGIntelligenceComponent class]];
     
     if (intelligenceComponent)

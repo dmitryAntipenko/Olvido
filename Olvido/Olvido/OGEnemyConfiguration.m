@@ -8,6 +8,7 @@
 
 #import "OGEnemyConfiguration.h"
 #import "OGTextureConfiguration.h"
+#import "OGWeaponConfiguration.h"
 
 NSString *const OGEnemyConfigurationInitialPointKey = @"InitialPoint";
 NSString *const OGEnemyConfigurationInitialVectorKey = @"InitialVector";
@@ -18,6 +19,7 @@ NSString *const OGEnemyConfigurationConfigurationEnemyTypeKey = @"Type";
 NSString *const OGEnemyConfigurationUnitNameKey = @"UnitName";
 NSString *const OGEnemyConfigurationMaxHealthKey = @"MaxHealth";
 NSString *const OGEnemyConfigurationCurrentHealthKey = @"CurrentHealth";
+NSString *const OGEnemyConfigurationWeaponKey = @"Weapon";
 
 NSString *const OGEnemyConfigurationDefaultUnitName = @"Enemy";
 NSString *const OGEnemyConfigurationDefaultEnemyType = @"OGZombie";
@@ -71,6 +73,9 @@ NSInteger const OGEnemyConfigurationDefaultCurrentHealth = 10;
             {
                 self.unitName = OGEnemyConfigurationDefaultUnitName;
             }
+            
+            NSDictionary *weaponDictionary = dictionary[OGEnemyConfigurationWeaponKey];
+            _weaponConfiguration = [[OGWeaponConfiguration alloc] initWithDictionary:weaponDictionary];
         }
     }
     

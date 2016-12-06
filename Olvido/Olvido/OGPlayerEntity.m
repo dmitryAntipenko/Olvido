@@ -101,8 +101,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         _renderComponent.node.physicsBody.allowsRotation = NO;
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGPlayerEntityShadowTextureName];
-        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
-        _shadowComponent.needsCastShadow = configuration.needsCastShadow;
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];    
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];
@@ -229,6 +228,8 @@ NSString *OGPlayerEntityUnitName = @"Player";
         _weaponTakeDelayTimer = nil;
     }
 }
+
+#pragma mark - Update
 
 - (void)updateAgentPositionToMatchNodePosition
 {

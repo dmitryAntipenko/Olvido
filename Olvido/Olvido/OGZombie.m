@@ -27,7 +27,6 @@ static BOOL sResourcesNeedLoading = YES;
 
 @interface OGZombie ()
 
-@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
 @property (nonatomic, strong) OGTrailComponent *trailComponent;
 
 @property (nonatomic, assign) CGFloat lastPositionX;
@@ -40,26 +39,26 @@ static BOOL sResourcesNeedLoading = YES;
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
-    self = [super initWithConfiguration:configuration graph:graph];
+    OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
     
-    if (self)
+    if (agentControlledState && preAttackState && attackState && dieState)
     {
-        _lastPositionX = self.renderComponent.node.position.x;
+        self = [super initWithConfiguration:configuration graph:graph states:@[agentControlledState, preAttackState, attackState, dieState]];
         
-        OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
-
-        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState, dieState]];
-        [self addComponent:_intelligenceComponent];
-        
-        //TEMPORARY
-        _trailComponent = [OGTrailComponent trailComponent];
-        _trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
-        _trailComponent.textureSize = CGSizeMake(64.0, 64.0);
-        [self addComponent:_trailComponent];
-        //TEMPORARY
+        if (self)
+        {
+            _lastPositionX = self.renderComponent.node.position.x;
+            
+            //TEMPORARY
+            _trailComponent = [OGTrailComponent trailComponent];
+            _trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
+            _trailComponent.textureSize = CGSizeMake(64.0, 64.0);
+            [self addComponent:_trailComponent];
+            //TEMPORARY
+        }
     }
     
     return self;

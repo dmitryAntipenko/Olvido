@@ -10,6 +10,7 @@
 #import "OGEnemyEntity.h"
 
 #import "OGAnimationComponent.h"
+#import "OGWeaponComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
@@ -27,6 +28,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
 
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGWeaponComponent *weaponComponent;
 
 @end
 
@@ -55,6 +57,8 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 
     self.animationComponent.requestedAnimationState = OGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
+    
+    self.weaponComponent.shouldAttack = YES;
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -63,6 +67,8 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
+    
+    self.weaponComponent.attackDirection = CGVectorMake(100, 100);
     
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {
@@ -84,7 +90,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
         if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt)
         {
             self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
-            self.animationComponent.requestedAnimationState = OGConstantsRun;
+            self.animationComponent.requestedAnimationState = OGConstantsRun;            
         }
         else if (self.enemyEntity.mandate == OGEnemyEntityMandateCheckPoint)
         {
@@ -123,5 +129,14 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     return _animationComponent;
 }
 
+- (OGWeaponComponent *)weaponComponent
+{
+    if (!_weaponComponent)
+    {
+        _weaponComponent = (OGWeaponComponent *) [self.enemyEntity componentForClass:[OGWeaponComponent class]];
+    }
+    
+    return _weaponComponent;
+}
 
 @end
