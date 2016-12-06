@@ -11,7 +11,7 @@
 #import "OGRenderComponent.h"
 #import "OGAnimationComponent.h"
 
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 #import "SKColor+OGConstantColors.h"
 
 CGFloat const OGHealthBarComponentBarHeight = 10.0;

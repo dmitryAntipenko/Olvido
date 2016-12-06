@@ -7,7 +7,7 @@
 //
 
 #import "OGRenderComponent.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 @implementation OGRenderComponent
 

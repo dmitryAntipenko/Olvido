@@ -31,7 +31,7 @@
 #import "OGSceneItemEntity.h"
 
 #import "OGColliderType.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 #import "OGPlayerEntityAppearState.h"
 #import "OGPlayerEntityControlledState.h"

@@ -8,7 +8,7 @@
 
 #import "OGInventoryBarNode.h"
 #import "OGInventoryComponent.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 #import "OGRenderComponent.h"
 #import "OGPlayerEntity.h"
 #import "OGHUDNode.h"

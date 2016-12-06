@@ -8,7 +8,7 @@
 
 #import "OGTrailComponent.h"
 #import "OGRenderComponent.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 NSString *const OGTrailComponentParticleFileName = @"SlimeTrail";
 CGFloat const OGTrailComponentParticleBirthratePlay = 120.0;

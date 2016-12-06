@@ -15,7 +15,7 @@
 #import "OGSoundComponent.h"
 #import "OGWeaponComponentObserving.h"
 
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 CGFloat const OGWeaponEntityThrowingFactor = 80.0;
 

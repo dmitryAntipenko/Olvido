@@ -9,7 +9,7 @@
 #import "OGHiddenZoneEntity.h"
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 #import "OGColliderType.h"
 #import "OGCollisionBitMask.h"
 

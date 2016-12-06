@@ -38,7 +38,7 @@
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
 
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 #import "OGColliderType.h"
 #import "OGLightBitMask.h"

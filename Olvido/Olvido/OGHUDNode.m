@@ -7,7 +7,7 @@
 //
 
 #import "OGHUDNode.h"
-#import "OGZPositionEnum.m"
+#import "OGZPositionEnum.h"
 
 @interface OGHUDNode ()
 
