@@ -249,14 +249,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     __block NSInteger counter = 0;
     
     [interactions enumerateChildNodesWithName:OGGameSceneShopNodeName usingBlock:^(SKNode *node, BOOL *stop)
-    {
-        OGShop *shop = [[OGShop alloc] initWithSpriteNode:(SKSpriteNode *)node shopConfiguration:self.sceneConfiguration.shopConfigurations[counter]];
-        
-        shop.interactionDelegate = self.shopManager;
-        [self addEntity:shop];
-        
-        counter++;
-    }];
+     {
+         OGShop *shop = [[OGShop alloc] initWithSpriteNode:(SKSpriteNode *)node shopConfiguration:self.sceneConfiguration.shopConfigurations[counter]];
+         
+         shop.interactionDelegate = self.shopManager;
+         [self addEntity:shop];
+         
+         counter++;
+     }];
 }
 
 - (void)createZones
@@ -352,7 +352,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
             
             door.transitionDelegate = self;
             lockComponent.target = self.player.renderComponent.node;
-
+            
             [self addEntity:door];
         }
     }
@@ -522,8 +522,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)playerDidDie
 {
-    [self.sceneDelegate didCallComplete];
-//    [self.stateMachine enterState:[OGDeathLevelState class]];
+    [self.stateMachine enterState:[OGDeathLevelState class]];
 }
 
 #pragma mark - TransitionComponentDelegate
@@ -646,10 +645,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [self.gameOverScreenNode removeFromParent];
     }
     
-//    if (self.shopScreenNode.parent)
-//    {
-//        [self.shopScreenNode removeFromParent];
-//    }
+    //    if (self.shopScreenNode.parent)
+    //    {
+    //        [self.shopScreenNode removeFromParent];
+    //    }
     
     if (self.pausedTimeInterval != 0.0)
     {
@@ -751,9 +750,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     for (GKEntity *entity in self.entitiesSortableByZ)
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
-        renderComponent.node.zPosition = characterZPosition;        
+        renderComponent.node.zPosition = characterZPosition;
         characterZPosition += OGGameSceneZSpacePerCharacter;
-    }        
+    }
 }
 
 #pragma mark - Getters
