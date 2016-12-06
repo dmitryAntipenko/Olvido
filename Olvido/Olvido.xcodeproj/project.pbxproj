@@ -114,6 +114,8 @@
 		EA591B391DF1A1030034511F /* OGSceneItemEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B381DF1A1030034511F /* OGSceneItemEntity.m */; };
 		EA591B3D1DF1BD890034511F /* OGShellConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */; };
 		EA591B401DF4A21C0034511F /* OGGame.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B3F1DF4A21C0034511F /* OGGame.m */; };
+		EA591B461DF5CE670034511F /* Level1_iPhone.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA591B451DF5CE670034511F /* Level1_iPhone.sks */; };
+		EA591B4D1DF5DC3F0034511F /* OGFlashlightComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA591B4C1DF5DC3E0034511F /* OGFlashlightComponent.m */; };
 		EA5F11FD1DD4AFD2006D4129 /* OGColliderType.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */; };
 		EA5F120B1DD4EC50006D4129 /* OGDoorEntityOpenedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120A1DD4EC50006D4129 /* OGDoorEntityOpenedState.m */; };
 		EA5F120E1DD4EDFF006D4129 /* OGLockComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5F120D1DD4EDFF006D4129 /* OGLockComponent.m */; };
@@ -362,6 +364,10 @@
 		EA591B3C1DF1BD890034511F /* OGShellConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShellConfiguration.m; sourceTree = "<group>"; };
 		EA591B3E1DF4A21C0034511F /* OGGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGGame.h; sourceTree = "<group>"; };
 		EA591B3F1DF4A21C0034511F /* OGGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGGame.m; sourceTree = "<group>"; };
+		EA591B451DF5CE670034511F /* Level1_iPhone.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1_iPhone.sks; sourceTree = "<group>"; };
+		EA591B4B1DF5DC3E0034511F /* OGFlashlightComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGFlashlightComponent.h; sourceTree = "<group>"; };
+		EA591B4C1DF5DC3E0034511F /* OGFlashlightComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGFlashlightComponent.m; sourceTree = "<group>"; };
+		EA591B4E1DF5E8F00034511F /* OGLightBitMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGLightBitMask.h; sourceTree = "<group>"; };
 		EA5F11FC1DD4AFD1006D4129 /* OGColliderType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGColliderType.m; sourceTree = "<group>"; };
 		EA5F11FE1DD4D47D006D4129 /* OGContactNotifiableType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OGContactNotifiableType.h; sourceTree = "<group>"; };
 		EA5F12011DD4E292006D4129 /* OGDoorEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntity.h; sourceTree = "<group>"; };
@@ -858,6 +864,8 @@
 				EA84DBD81DE21BEC0044B2EE /* OGShadowComponent.m */,
 				1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */,
 				1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */,
+				EA591B4B1DF5DC3E0034511F /* OGFlashlightComponent.h */,
+				EA591B4C1DF5DC3E0034511F /* OGFlashlightComponent.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -926,6 +934,7 @@
 		EA49824D1DD0F2A800DCFE00 /* Level1 */ = {
 			isa = PBXGroup;
 			children = (
+				EA591B451DF5CE670034511F /* Level1_iPhone.sks */,
 				21DD19721DBE1C0E0048658A /* OGChapter1.sks */,
 				215A8A8F1DDE232C00C5C90D /* Level1.plist */,
 				215C4BDB1DC0ED1B000DF29F /* Level1.sks */,
@@ -1204,6 +1213,7 @@
 				1B36E4D61DC6630C0080D80B /* OGZPositionEnum.h */,
 				1B4C945F1DEC58ED00EA5ED6 /* DefaultLevelResources.plist */,
 				21AD66E81DF4950F00E4BC93 /* DefaultShopItems.plist */,
+				EA591B4E1DF5E8F00034511F /* OGLightBitMask.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1335,6 +1345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B36E4C81DC618100080D80B /* OGPauseScreen.sks in Resources */,
+				EA591B461DF5CE670034511F /* Level1_iPhone.sks in Resources */,
 				215C4BE21DC25D53000DF29F /* OGShopMenuScene.sks in Resources */,
 				1B27EAA81DC0CEA200E9CA23 /* OGMapMenuScene.sks in Resources */,
 				21DD19731DBE1C0E0048658A /* OGChapter1.sks in Resources */,
@@ -1487,6 +1498,7 @@
 				215C4BE01DC25D3F000DF29F /* OGShopMenuScene.m in Sources */,
 				EA05FA051DD4FA6C00FAC81A /* OGPlayerEntityAppearState.m in Sources */,
 				215A8A851DDCC66000C5C90D /* OGPlayerFarRule.m in Sources */,
+				EA591B4D1DF5DC3F0034511F /* OGFlashlightComponent.m in Sources */,
 				EABB2A5F1DF06F8E000A1167 /* OGAudioConfiguration.m in Sources */,
 				EA9EAACD1DCC9E3100E36855 /* OGInputComponent.m in Sources */,
 				EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */,

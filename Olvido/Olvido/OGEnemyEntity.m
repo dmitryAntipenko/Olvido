@@ -8,6 +8,11 @@
 
 #import "OGEnemyEntity.h"
 #import "OGEnemyConfiguration.h"
+#import "OGTextureConfiguration.h"
+
+#import "OGPlayerEntity.h"
+#import "OGWeaponEntity.h"
+#import "OGBullet.h"
 
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
@@ -33,14 +38,10 @@
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
 
-#import "OGPlayerEntity.h"
 #import "OGZPositionEnum.h"
-#import "OGBullet.h"
-#import "OGWeaponEntity.h"
 
 #import "OGColliderType.h"
-
-#import "OGTextureConfiguration.h"
+#import "OGLightBitMask.h"
 
 static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
 
@@ -107,6 +108,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
+        _shadowComponent.needsCastShadow = configuration.needsCastShadow;
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];
@@ -282,6 +284,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 {
     SKTexture *texture = self.animationComponent.spriteNode.texture;
     SKSpriteNode *node = [SKSpriteNode spriteNodeWithTexture:texture];
+    node.lightingBitMask = OGLightBitMaskDefault;
     node.position = self.renderComponent.node.position;
 
     [self.renderComponent.node.scene addChild:node];

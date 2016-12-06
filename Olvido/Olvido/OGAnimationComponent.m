@@ -8,6 +8,7 @@
 #import "OGAnimationComponent.h"
 #import "OGAnimation.h"
 #import "OGOrientationComponent.h"
+#import "OGLightBitMask.h"
 
 NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
 
@@ -33,6 +34,8 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
         {
             _animations = animations;
             _spriteNode = [SKSpriteNode spriteNodeWithTexture:nil];
+            _spriteNode.lightingBitMask = OGLightBitMaskDefault;
+            _spriteNode.shadowedBitMask = OGLightBitMaskDefault;
             _elapsedAnimationDuration = 0.0;
             _playBackwards = NO;
         }

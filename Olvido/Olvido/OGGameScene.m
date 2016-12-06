@@ -13,6 +13,7 @@
 #import "OGAudioManager.h"
 #import "OGGameScene.h"
 #import "OGCollisionBitMask.h"
+#import "OGLightBitMask.h"
 #import "OGTouchControlInputNode.h"
 #import "OGConstants.h"
 #import "OGZPositionEnum.h"
@@ -43,6 +44,7 @@
 #import "OGRulesComponent.h"
 #import "OGShadowComponent.h"
 #import "OGHealthBarComponent.h"
+#import "OGFlashlightComponent.h"
 
 //MARK: Entities
 
@@ -91,6 +93,7 @@ NSString *const OGGameSceneDestinationNodeName = @"destination";
 NSString *const OGGameSceneUserDataGraphs = @"Graphs";
 NSString *const OGGameSceneUserDataGraph = @"Graph_";
 NSString *const OGGameSceneDoorLockedKey = @"locked";
+NSString *const OGGameSceneRoomNeedsFlashlightKey = @"needsFlashlight";
 
 NSString *const OGGameScenePlayerInitialPointNodeName = @"player_initial_point";
 
@@ -221,6 +224,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self.cameraController moveCameraToNode:self.currentRoom];
     
     [self createHUD];
+    
+    SKSpriteNode *backgroundNode = ((SKSpriteNode *) [self.currentRoom childNodeWithName:@"background"]);
+    backgroundNode.texture = [SKTexture textureWithImageNamed:@"background_test"];
+    backgroundNode.normalTexture = backgroundNode.texture.textureByGeneratingNormalMap;
 }
 
 #pragma mark - Scene Contents Creation
@@ -473,11 +480,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         {
             [self addChild:renderNode];
             
-            SKNode *shadowNode = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]).node;
+            OGShadowComponent *shadowComponent = ((OGShadowComponent *) [entity componentForClass:[OGShadowComponent class]]);
             
-            if (shadowNode)
+            if (shadowComponent)
             {
-                shadowNode.zPosition = OGZPositionCategoryShadows;
+                shadowComponent.node.zPosition = OGZPositionCategoryShadows;
             }
         }
     }
@@ -523,6 +530,21 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 - (void)transitToDestinationWithTransitionComponent:(OGTransitionComponent *)component completion:(void (^)(void))completion
 {
     self.currentRoom = component.destination;
+    
+    BOOL roomNeedsFlashlight = [self.currentRoom.userData[OGGameSceneRoomNeedsFlashlightKey] boolValue];
+    OGFlashlightComponent *playerFlashlight = (OGFlashlightComponent *) [self.player componentForClass:[OGFlashlightComponent class]];
+    
+    if (playerFlashlight)
+    {        
+        if (roomNeedsFlashlight)
+        {
+            [playerFlashlight turnOn];
+        }
+        else
+        {
+            [playerFlashlight turnOff];
+        }
+    }
     
     [self.cameraController moveCameraToNode:self.currentRoom];
     
