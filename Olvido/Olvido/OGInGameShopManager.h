@@ -8,18 +8,22 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "OGInteractionsManaging.h"
+#import "OGSceneItemEntity.h"
 
 @class OGShopItemConfiguration;
 @class OGPlayerEntity;
 
 @protocol OGInGameShopManagerProtocol <NSObject>
 
-- (void)showWithShopItems:(NSArray<OGShopItemConfiguration *> *)shopItems player:(OGPlayerEntity *)player;
+- (void)showWithShopItems:(NSArray<OGShopItemConfiguration *> *)shopItems;
+
+@property (nonatomic, weak) id<OGSceneItemsDelegate> visitor;
 
 @end
 
 @interface OGInGameShopManager : NSObject <OGInGameShopManagerProtocol>
 
-@property (nonatomic, weak) id<OGInteractionsManaging> delegate;
+@property (nonatomic, weak) id<OGInteractionsManaging, OGEntityManaging> delegate;
+@property (nonatomic, weak) id<OGSceneItemsDelegate> visitor;
 
 @end

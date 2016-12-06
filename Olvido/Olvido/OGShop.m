@@ -49,7 +49,8 @@
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
-        [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration player:(OGPlayerEntity *)entity];
+        self.interactionDelegate.visitor = (id<OGSceneItemsDelegate>) entity;
+        [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration];
     }
 }
 

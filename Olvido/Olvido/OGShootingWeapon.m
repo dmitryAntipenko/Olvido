@@ -117,6 +117,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     
     bullet.renderComponent.node.zRotation = vectorAngle;
     bullet.delegate = self.delegate;
+    bullet.weapon = self;
     [self.delegate addEntity:bullet];
     
     [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];

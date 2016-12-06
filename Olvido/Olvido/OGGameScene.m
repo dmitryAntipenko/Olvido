@@ -23,7 +23,6 @@
 #import "OGCameraController.h"
 #import "OGContactNotifiableType.h"
 #import "OGLevelManager.h"
-#import "OGZPositionEnum.h"
 #import "OGLevelStateSnapshot.h"
 #import "OGEntitySnapshot.h"
 
@@ -226,7 +225,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createHUD];
     
     SKSpriteNode *backgroundNode = ((SKSpriteNode *) [self.currentRoom childNodeWithName:@"background"]);
-    backgroundNode.texture = [SKTexture textureWithImageNamed:@"background_test"];
+    backgroundNode.texture = [SKTexture textureWithImageNamed:@"background"];
     backgroundNode.normalTexture = backgroundNode.texture.textureByGeneratingNormalMap;
 }
 
