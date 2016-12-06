@@ -34,7 +34,7 @@
 	</dict>
 	<dict>
 		<key>ClassName</key>
-		<string>OGInitialLevel</string>
+		<string>OGLevel1</string>
 		<key>FileName</key>
 		<string>Level1_iPad</string>
 		<key>NeedLoadDefaultResources</key>
@@ -56,7 +56,7 @@
 		<key>ClassName</key>
 		<string>OGStoryScene</string>
 		<key>FileName</key>
-		<string>OGChapter2</string>
+		<string>Level2_Story_iPad</string>
 	</dict>
 	<dict>
 		<key>ClassName</key>
