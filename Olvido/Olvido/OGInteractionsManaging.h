@@ -8,6 +8,7 @@
 
 @protocol OGInteractionsManaging <NSObject>
 
-- (void)showShop;
+- (void)showInteractionWithNode:(SKNode *)node;
+- (void)closeCurrentInteraction;
 
 @end

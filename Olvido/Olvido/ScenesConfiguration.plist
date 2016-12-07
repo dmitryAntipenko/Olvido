@@ -30,17 +30,21 @@
 		<key>ClassName</key>
 		<string>OGStoryScene</string>
 		<key>FileName</key>
-		<string>Level1_Story_iPad</string>
+		<string>Level1_Story</string>
+		<key>DeviceIdiomSensitive</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>ClassName</key>
-		<string>OGInitialLevel</string>
+		<string>OGLevel1</string>
 		<key>FileName</key>
-		<string>Level1_iPad</string>
+		<string>Level1</string>
 		<key>NeedLoadDefaultResources</key>
 		<true/>
 		<key>CustomResourcesFileName</key>
 		<string>Level1_CustomResources</string>
+		<key>DeviceIdiomSensitive</key>
+		<true/>
 		<key>LoadableClasses</key>
 		<array>
 			<string>OGZombie</string>
@@ -56,17 +60,21 @@
 		<key>ClassName</key>
 		<string>OGStoryScene</string>
 		<key>FileName</key>
-		<string>OGChapter2</string>
+		<string>Level2_Story</string>
+		<key>DeviceIdiomSensitive</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>ClassName</key>
 		<string>OGLevel2</string>
 		<key>FileName</key>
-		<string>Level2_iPad</string>
+		<string>Level2</string>
 		<key>NeedLoadDefaultResources</key>
 		<false/>
 		<key>CustomResourcesFileName</key>
 		<string>Level2_CustomResources</string>
+		<key>DeviceIdiomSensitive</key>
+		<true/>
 		<key>LoadableClasses</key>
 		<array>
 			<string>OGPlayerEntity</string>

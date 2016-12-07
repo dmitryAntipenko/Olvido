@@ -14,6 +14,7 @@
 @class OGDoorConfiguration;
 @class OGEntityConfiguration;
 @class OGZoneConfiguration;
+@class OGShopConfiguration;
 
 @interface OGGameSceneConfiguration : NSObject
 
@@ -25,6 +26,7 @@
 @property (nonatomic, strong, readonly) NSArray<OGWeaponConfiguration *> *weaponConfigurations;
 @property (nonatomic, strong, readonly) NSArray<OGDoorConfiguration *> *doorConfigurations;
 @property (nonatomic, strong, readonly) NSArray<OGZoneConfiguration *> *zoneConfigurations;
+@property (nonatomic, strong, readonly) NSArray<OGShopConfiguration *> *shopConfigurations;
 
 + (instancetype)gameSceneConfigurationWithFileName:(NSString *)fileName;
 

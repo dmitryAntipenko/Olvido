@@ -44,11 +44,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    BOOL result = NO;
-    
-    result = (stateClass == [OGSceneLoaderPrepearingSceneState class]);
-    
-    return result ;
+    return stateClass == [OGSceneLoaderPrepearingSceneState class];
 }
 
 - (void)loadResourcesAsynchronously

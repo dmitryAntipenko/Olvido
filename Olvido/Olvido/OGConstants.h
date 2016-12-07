@@ -43,6 +43,8 @@ extern NSString *const OGConstantsDead;
 extern NSString *const OGConstantsLeft;
 extern NSString *const OGConstantsRight;
 
+extern NSString *const OGConstantsSceneConfigurationSuffix;
+
 @interface OGConstants : NSObject
 
 + (CGPoint)randomPointInRect:(CGRect)rect;
@@ -51,6 +53,9 @@ extern NSString *const OGConstantsRight;
 
 + (CGSize)thumbStickNodeSize;
 + (CGFloat)thumbStickNodeRadius;
+
++ (NSString *)sceneSuffixForInterfaceIdiom:(UIUserInterfaceIdiom)idiom;
+
 @end
 
 #endif /* OGConstants_h */

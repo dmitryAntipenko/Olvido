@@ -97,18 +97,18 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
     {
         SEL selector = NSSelectorFromString(selectorName);
         
-        if ([self.scene respondsToSelector:selector])
+        if ([self.target respondsToSelector:selector])
         {
-            [self.scene performSelector:selector];
+            [self.target performSelector:selector];
         }
     }
     else
     {
         SEL defaultSelector = NSSelectorFromString(OGButtonNodeDefaultSelectorName);
         
-        if ([self.scene respondsToSelector:defaultSelector])
+        if ([self.target respondsToSelector:defaultSelector])
         {
-            [self.scene performSelector:defaultSelector withObject:self];
+            [self.target performSelector:defaultSelector withObject:self];
         }
     }
     
@@ -118,6 +118,16 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 - (BOOL)isUserInteractionEnabled
 {
     return YES;
+}
+
+- (id)target
+{
+    if (!_target)
+    {
+        _target = self.scene;
+    }
+    
+    return _target;
 }
 
 @end

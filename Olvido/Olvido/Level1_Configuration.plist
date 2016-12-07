@@ -763,5 +763,17 @@
 			<string>OGHiddenZoneEntity</string>
 		</dict>
 	</array>
+	<key>Shops</key>
+	<array>
+		<dict>
+			<key>Id</key>
+			<string>shop_1</string>
+			<key>Items</key>
+			<array>
+				<string>weapon_01</string>
+				<string>weapon_01</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

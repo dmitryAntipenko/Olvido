@@ -52,9 +52,19 @@ NSString *const OGLoadSceneOperationGraphsKey = @"Graphs";
 {
     if (!self.isCancelled)
     {
-        GKScene *gkScene = [GKScene sceneWithMetadata:self.sceneMetadata];
+        GKScene *gkScene = nil;
         
-        self.scene = (OGBaseScene *) gkScene.rootNode;
+        if (self.sceneMetadata.isDeviceIdiomSensitive)
+        {
+            gkScene =[GKScene sceneWithMetadata:self.sceneMetadata
+                                userDeviceIdion:[[UIDevice currentDevice] userInterfaceIdiom]];
+        }
+        else
+        {
+            gkScene = [GKScene sceneWithMetadata:self.sceneMetadata];
+        }
+        
+        self.scene = (OGBaseScene *)gkScene.rootNode;
         [self.scene configureScene];
     }
 }

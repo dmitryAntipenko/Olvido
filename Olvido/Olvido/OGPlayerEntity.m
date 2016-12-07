@@ -102,7 +102,6 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGPlayerEntityShadowTextureName];
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
-        _shadowComponent.needsCastShadow = configuration.needsCastShadow;
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];

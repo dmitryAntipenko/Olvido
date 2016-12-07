@@ -76,6 +76,8 @@
 #import "OGCompleteLevelState.h"
 #import "OGDeathLevelState.h"
 
+#import "OGInGameShopManager.h"
+
 //MARK: Constants
 
 NSString *const OGGameSceneDoorsNodeName = @"doors";
@@ -98,7 +100,7 @@ NSString *const OGGameSceneDoorKeyPrefix = @"key";
 
 NSString *const OGGameScenePauseScreenNodeName = @"OGPauseScreen.sks";
 NSString *const OGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
-NSString *const OGGameSceneShopScreenNodeName = @"OGShopScreen.sks";
+NSString *const OGGameSceneLevelCompleteScreenNodeName = @"OGLevelCompleteScreen.sks";
 
 NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
@@ -108,11 +110,7 @@ NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
 NSString *const OGGameSceneRestartButtonName = @"RestartButton";
 NSString *const OGGameSceneMenuButtonName = @"MenuButton";
 NSString *const OGGameScenePauseButtonName = @"PauseButton";
-
-//Temporary
-NSString *const OGGameSceneResumeFromShopButtonName = @"ResumeFromShopButton";
-NSString *const OGGameSceneBuyBlasterButtonName = @"BuyBlaster";
-//Temporary
+NSString *const OGGameSceneNextLevelButtonName = @"NextLevelButton";
 
 CGFloat const OGGameScenePauseSpeed = 0.0;
 CGFloat const OGGameScenePlaySpeed = 1.0;
@@ -129,7 +127,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 @property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
 @property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
-@property (nonatomic, strong) SKReferenceNode *shopScreenNode;
+@property (nonatomic, strong) SKReferenceNode *levelCompleteScreenNode;
 
 @property (nonatomic, strong) OGHUDNode *hudNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
@@ -144,6 +142,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 @property (nonatomic, strong) NSMutableArray<GKComponentSystem *> *componentSystems;
 
 @property (nonatomic, strong) OGLevelStateSnapshot *levelSnapshot;
+
+@property (nonatomic, strong) OGInGameShopManager *shopManager;
+@property (nonatomic, strong) SKNode *currentInteraction;
 
 @end
 
@@ -161,7 +162,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         _entitiesSortableByZ = [[NSMutableArray alloc] init];
         
-        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
+        NSString *configurationFileName = [[NSString alloc] initWithFormat:@"%@%@", _name, OGConstantsSceneConfigurationSuffix];
+        
+        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:configurationFileName];
         
         _cameraController = [[OGCameraController alloc] init];
         
@@ -195,8 +198,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
         _gameOverScreenNode.zPosition = OGZPositionCategoryTouchControl;
         
-        _shopScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneShopScreenNodeName];
-        _shopScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        _levelCompleteScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneLevelCompleteScreenNodeName];
+        _levelCompleteScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        
+        _shopManager = [[OGInGameShopManager alloc] init];
+        _shopManager.delegate = self;
     }
     
     return self;
@@ -248,15 +254,17 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     SKNode *interactions = [self childNodeWithName:OGGameSceneInteractionsNodeName];
     
-    SKSpriteNode *shopNode = (SKSpriteNode *) [interactions childNodeWithName:OGGameSceneShopNodeName];
+    __block NSInteger counter = 0;
     
-    if (shopNode)
-    {
-        OGShop *shop = [[OGShop alloc] initWithSpriteNode:shopNode];
-        
-        shop.interactionDelegate = self;
-        [self addEntity:shop];
-    }
+    [interactions enumerateChildNodesWithName:OGGameSceneShopNodeName usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         OGShop *shop = [[OGShop alloc] initWithSpriteNode:(SKSpriteNode *)node shopConfiguration:self.sceneConfiguration.shopConfigurations[counter]];
+         
+         shop.interactionDelegate = self.shopManager;
+         [self addEntity:shop];
+         
+         counter++;
+     }];
 }
 
 - (void)createZones
@@ -352,7 +360,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
             
             door.transitionDelegate = self;
             lockComponent.target = self.player.renderComponent.node;
-
+            
             [self addEntity:door];
         }
     }
@@ -432,13 +440,25 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 #pragma mark - OGInteractionsManaging protocol methods
 
-- (void)showShop
+- (void)showInteractionWithNode:(SKNode *)node
 {
     [self pauseWithoutPauseScreen];
     
-    if (!self.shopScreenNode.parent)
+    if (!node.parent && !self.currentInteraction)
     {
-        [self.camera addChild:self.shopScreenNode];
+        self.currentInteraction = node;
+        [self.camera addChild:node];
+    }
+}
+
+- (void)closeCurrentInteraction
+{
+    if (self.currentInteraction)
+    {
+        [self resume];
+        
+        [self.currentInteraction removeFromParent];
+        self.currentInteraction = nil;
     }
 }
 
@@ -620,6 +640,14 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
 }
 
+- (void)showCompletionScreen
+{
+    if (!self.levelCompleteScreenNode.parent)
+    {
+        [self.camera addChild:self.levelCompleteScreenNode];
+    }
+}
+
 - (void)resume
 {
     [super resume];
@@ -640,10 +668,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [self.gameOverScreenNode removeFromParent];
     }
     
-    if (self.shopScreenNode.parent)
-    {
-        [self.shopScreenNode removeFromParent];
-    }
+    //    if (self.shopScreenNode.parent)
+    //    {
+    //        [self.shopScreenNode removeFromParent];
+    //    }
     
     if (self.pausedTimeInterval != 0.0)
     {
@@ -745,9 +773,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     for (GKEntity *entity in self.entitiesSortableByZ)
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
-        renderComponent.node.zPosition = characterZPosition;        
+        renderComponent.node.zPosition = characterZPosition;
         characterZPosition += OGGameSceneZSpacePerCharacter;
-    }        
+    }
 }
 
 #pragma mark - Getters
@@ -805,17 +833,10 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         [self.sceneDelegate didCallPause];
     }
-#warning Temporary
-    // Temporary
-    else if ([buttonNode.name isEqualToString:OGGameSceneResumeFromShopButtonName])
+    else if([buttonNode.name isEqualToString:OGGameSceneNextLevelButtonName])
     {
-        [self resume];
+        [self.sceneDelegate didCallFinish];
     }
-    else if ([buttonNode.name isEqualToString:OGGameSceneBuyBlasterButtonName])
-    {
-        
-    }
-    // Temporary
 }
 
 @end

@@ -12,6 +12,8 @@
 
 @interface GKScene (OGFactory)
 
++ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata userDeviceIdion:(UIUserInterfaceIdiom)idiom;
+
 + (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata;
 
 @end

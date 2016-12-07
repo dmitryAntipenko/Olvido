@@ -1,5 +1,5 @@
 //
-//  OGShopConfigurations.m
+//  OGShopConfiguration.m
 //  Olvido
 //
 //  Created by Александр Песоцкий on 12/4/16.
@@ -7,11 +7,21 @@
 //
 
 #import "OGShopConfiguration.h"
+#import "OGShopItemConfiguration.h"
 
-NSString *const OGShopConfigurationTextureNameKey = @"TextureName";
-NSString *const OGShopConfigurationPriceKey = @"Price";
-NSString *const OGShopConfigurationRepresentedEntityClassNameKey = @"RepresentedEntityClassName";
-NSString *const OGShopConfigurationRepresentedEntityClassDictionaryKey = @"RepresentedEntityClassDictionary";
+NSString *const OGShopConfigurationItemsKey = @"Items";
+NSString *const OGShopConfigurationIdentifierKey = @"Id";
+
+NSString *const OGShopConfigurationDefaultShopItemsFileName = @"DefaultShopItems";
+NSString *const OGShopConfigurationDefaultShopItemsFileExtension = @"plist";
+
+@interface OGShopConfiguration ()
+
+@property (nonatomic, strong) NSMutableArray<OGShopItemConfiguration *> *mutableShopItemsConfiguration;
+
+@property (nonatomic, strong) NSDictionary *configurationDictionary;
+
+@end
 
 @implementation OGShopConfiguration
 
@@ -19,34 +29,24 @@ NSString *const OGShopConfigurationRepresentedEntityClassDictionaryKey = @"Repre
 {
     if (dictionary)
     {
-        self = [self init];
+        self = [super init];
         
         if (self)
         {
+            NSString *identifier = dictionary[OGShopConfigurationIdentifierKey];
             
-            NSString *textureName = dictionary[OGShopConfigurationTextureNameKey];
-            
-            if (textureName)
+            if (identifier)
             {
-                _texture = [SKTexture textureWithImageNamed:textureName];
+                _identifier = identifier;
             }
             
-            if (dictionary[OGShopConfigurationPriceKey])
+            NSArray *items = dictionary[OGShopConfigurationItemsKey];
+            _mutableShopItemsConfiguration = [[NSMutableArray alloc] init];
+            
+            for (NSString *identifier in items)
             {
-                _price = [dictionary[OGShopConfigurationPriceKey] floatValue];
+                [self loadShopItemWithIdentifier:identifier];
             }
-            
-            NSString *representedEntityClassName = dictionary[OGShopConfigurationRepresentedEntityClassNameKey];
-            NSDictionary *representedEntityClassDictianary = dictionary[OGShopConfigurationRepresentedEntityClassDictionaryKey];
-            
-            if (representedEntityClassName && representedEntityClassDictianary)
-            {
-                Class representedEntityClass = NSClassFromString(representedEntityClassName);
-                _entity = [[representedEntityClass alloc] initWithDictionary:representedEntityClassDictianary];
-            }
-            
-            
-            
         }
     }
     else
@@ -55,6 +55,36 @@ NSString *const OGShopConfigurationRepresentedEntityClassDictionaryKey = @"Repre
     }
     
     return self;
+}
+
+- (void)loadShopItemWithIdentifier:(NSString *)identifier
+{
+    NSDictionary *shopItem = self.configurationDictionary[identifier];
+    
+    if (shopItem)
+    {
+        OGShopItemConfiguration *itemConfiguration = [[OGShopItemConfiguration alloc] initWithDictionary:shopItem];
+        [self.mutableShopItemsConfiguration addObject:itemConfiguration];
+    }
+}
+
+
+- (NSArray<OGShopItemConfiguration *> *)shopItemsConfiguration
+{
+    return self.mutableShopItemsConfiguration;
+}
+
+- (NSDictionary *)configurationDictionary
+{
+    if (!_configurationDictionary)
+    {
+        NSURL *configurationURL = [[NSBundle mainBundle] URLForResource:OGShopConfigurationDefaultShopItemsFileName
+                                                          withExtension:OGShopConfigurationDefaultShopItemsFileExtension];
+        
+        _configurationDictionary = [NSDictionary dictionaryWithContentsOfURL:configurationURL];
+    }
+    
+    return _configurationDictionary;
 }
 
 @end

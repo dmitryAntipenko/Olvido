@@ -17,6 +17,7 @@
 @property (nonatomic, strong, readonly) NSString *fileName;
 @property (nonatomic, strong, readonly) NSArray<Class<OGResourceLoadable>> *loadableClasses;
 @property (nonatomic, strong, readonly) NSDictionary<NSString *, NSDictionary<NSString *, NSString *> *> *textureAtlases;
+@property (nonatomic, assign, readonly, getter=isDeviceIdiomSensitive) BOOL deviceIdiomSensitive;
 
 + (instancetype)sceneMetaDataWithSceneConfiguration:(NSDictionary *)configuration identifier:(NSUInteger)identifier;
 

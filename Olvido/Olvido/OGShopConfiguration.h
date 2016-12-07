@@ -6,13 +6,13 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import <Foundation/Foundation.h>
+@class OGShopItemConfiguration;
 
 @interface OGShopConfiguration : NSObject
 
-@property (nonatomic, assign) CGFloat price;
-@property (nonatomic, strong) SKTexture *texture;
-@property (nonatomic, strong) id entity;
+@property (nonatomic, copy) NSString *identifier;
+@property (nonatomic, strong, readonly) NSArray<OGShopItemConfiguration *> *shopItemsConfiguration;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

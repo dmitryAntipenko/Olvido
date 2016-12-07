@@ -8,12 +8,14 @@
 
 #import "OGCompleteLevelState.h"
 #import "OGBeforeStartLevelState.h"
+#import "OGGameScene.h"
 
 @implementation OGCompleteLevelState
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    
+    [self.scene showCompletionScreen];
+    [self.scene pauseWithoutPauseScreen];
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
