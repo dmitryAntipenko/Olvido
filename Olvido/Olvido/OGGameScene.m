@@ -162,7 +162,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         _entitiesSortableByZ = [[NSMutableArray alloc] init];
         
-        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:_name];
+        NSString *configurationFileName = [[NSString alloc] initWithFormat:@"%@%@", _name, OGConstantsSceneConfigurationSuffix];
+        
+        _sceneConfiguration = [OGGameSceneConfiguration gameSceneConfigurationWithFileName:configurationFileName];
         
         _cameraController = [[OGCameraController alloc] init];
         
