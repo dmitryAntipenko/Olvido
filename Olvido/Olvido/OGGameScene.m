@@ -395,6 +395,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     self.hudNode = [OGHUDNode node];
     self.hudNode.size = self.size;
+    self.hudNode.playerEntity = self.player;
     
     if (self.camera)
     {

@@ -40,6 +40,8 @@ extern NSUInteger const OGEnemyEntityDealDamage;
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
+@property (nonatomic, strong, readonly) OGEnemyConfiguration *enemyConfiguration;
+
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, strong, readonly) OGOrientationComponent *orientationComponent;

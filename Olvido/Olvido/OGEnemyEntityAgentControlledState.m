@@ -8,6 +8,8 @@
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntity.h"
+#import "OGEnemyConfiguration.h"
+#import "OGWeaponConfiguration.h"
 
 #import "OGAnimationComponent.h"
 #import "OGWeaponComponent.h"
@@ -71,14 +73,8 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     
     if (self.enemyEntity.huntAgent && self.weaponComponent)
     {
-        CGPoint huntAgentPosition = CGPointMake(self.enemyEntity.huntAgent.position.x,
-                                                self.enemyEntity.huntAgent.position.y);
-        
-        CGPoint enemyPosition = self.enemyEntity.renderComponent.node.position;
-        CGVector attackDirection = CGVectorMake(huntAgentPosition.x - enemyPosition.x,
-                                                huntAgentPosition.y - enemyPosition.y);
-        
-        self.weaponComponent.attackDirection = attackDirection;
+        CGFloat weaponSpread = self.enemyEntity.enemyConfiguration.weaponConfiguration.spread;
+        self.weaponComponent.attackDirection = [self shootingVectorWithRangeAngle:weaponSpread];
     }
     
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
@@ -129,6 +125,26 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 }
 
 #pragma mark - Getters
+
+- (CGVector)shootingVectorWithRangeAngle:(CGFloat)rangeAngle
+{
+    CGPoint huntAgentPosition = CGPointMake(self.enemyEntity.huntAgent.position.x,
+                                            self.enemyEntity.huntAgent.position.y);
+    
+    CGPoint enemyPosition = self.enemyEntity.renderComponent.node.position;
+    
+    CGFloat randomOffset = -rangeAngle + arc4random() % (NSUInteger) (2.0 * rangeAngle);
+    
+    CGFloat vectorAngleRadians = atan2(huntAgentPosition.x - enemyPosition.x, huntAgentPosition.y - enemyPosition.y);
+    vectorAngleRadians += [self degreesToRadians:randomOffset];
+    
+    return CGVectorMake(sinf(vectorAngleRadians), cosf(vectorAngleRadians));
+}
+
+- (CGFloat)degreesToRadians:(CGFloat)degrees
+{
+    return degrees * (M_PI / 180.0);
+}
 
 - (OGAnimationComponent *)animationComponent
 {

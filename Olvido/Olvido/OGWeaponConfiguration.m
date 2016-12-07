@@ -13,6 +13,7 @@ NSString *const OGWeaponConfigurationAttackSpeedKey = @"AttackSpeed";
 NSString *const OGWeaponConfigurationReloadSpeedKey = @"ReloadSpeed";
 NSString *const OGWeaponConfigurationChargeKey = @"Charge";
 NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
+NSString *const OGWeaponConfigurationSpreadKey = @"Spread";
 NSString *const OGWeaponConfigurationShellKey = @"Shell";
 
 @interface OGWeaponConfiguration ()
@@ -21,6 +22,7 @@ NSString *const OGWeaponConfigurationShellKey = @"Shell";
 @property (nonatomic, assign, readwrite) CGFloat reloadSpeed;
 @property (nonatomic, assign, readwrite) NSUInteger charge;
 @property (nonatomic, assign, readwrite) NSUInteger maxCharge;
+@property (nonatomic, assign, readwrite) CGFloat spread;
 @property (nonatomic, strong, readwrite) OGShellConfiguration *shellConfiguration;
 
 @end
@@ -36,6 +38,7 @@ NSString *const OGWeaponConfigurationShellKey = @"Shell";
         _attackSpeed = [dictionary[OGWeaponConfigurationAttackSpeedKey] floatValue];
         _reloadSpeed = [dictionary[OGWeaponConfigurationReloadSpeedKey] floatValue];
         _charge = [dictionary[OGWeaponConfigurationChargeKey] integerValue];
+        _spread = [dictionary[OGWeaponConfigurationSpreadKey] floatValue];
         
         if (!dictionary[OGWeaponConfigurationMaxChargeKey])
         {
