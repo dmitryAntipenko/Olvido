@@ -103,7 +103,7 @@ NSString *const OGGameSceneGameOverScreenNodeName = @"OGGameOverScreen.sks";
 
 NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
-NSString *const OGGameSceneObstacleName = @"obstacle";
+NSString *const OGGameSceneObstaclesNameNode = @"obstacles";
 
 NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
 NSString *const OGGameSceneRestartButtonName = @"RestartButton";
@@ -767,17 +767,29 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     NSMutableArray<SKSpriteNode *> *result = nil;
     
-    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-     {
-         [result addObject:(SKSpriteNode *)node];
-     }];
+    SKNode *obstacles = [self childNodeWithName:OGGameSceneObstaclesNameNode];
+    
+    if (obstacles.children.count > 0)
+    {
+        result = [NSMutableArray array];
+    }
+    
+    for (SKSpriteNode *obstacle in obstacles.children)
+    {
+        [result addObject:obstacle];
+    }
+    
+//    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
+//     {
+//         [result addObject:(SKSpriteNode *)node];
+//     }];
     
     return result;
 }
 
 - (NSArray<GKPolygonObstacle *> *)polygonObstacles
 {
-    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
+    return [SKNode obstaclesFromNodeBounds:self.obstacleSpriteNodes];;
 }
 
 - (NSArray<GKEntity *> *)entities
