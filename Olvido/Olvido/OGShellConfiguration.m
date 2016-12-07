@@ -7,10 +7,12 @@
 //
 
 #import "OGShellConfiguration.h"
+#import "OGColliderType.h"
 
 NSString *const OGShellConfigurationDamageKey = @"Damage";
 NSString *const OGShellConfigurationSpeedKey = @"Speed";
 NSString *const OGShellConfigurationTextureNameKey = @"Texture";
+NSString *const OGShellConfigurationBitMaskKey = @"BitMask";
 
 @interface OGShellConfiguration ()
 
@@ -28,9 +30,28 @@ NSString *const OGShellConfigurationTextureNameKey = @"Texture";
     
     if (self)
     {
-        _damage = [dictionary[OGShellConfigurationDamageKey] integerValue];
-        _speed = [dictionary[OGShellConfigurationSpeedKey] integerValue];
-        _textureName = dictionary[OGShellConfigurationTextureNameKey];
+        if (dictionary)
+        {
+            _damage = [dictionary[OGShellConfigurationDamageKey] integerValue];
+            _speed = [dictionary[OGShellConfigurationSpeedKey] integerValue];
+            _textureName = dictionary[OGShellConfigurationTextureNameKey];
+            
+            SEL bitMaskSelector = NSSelectorFromString(dictionary[OGShellConfigurationBitMaskKey]);
+            
+            if (bitMaskSelector && [OGColliderType respondsToSelector:bitMaskSelector])
+            {
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                
+                _colliderType = [[OGColliderType class] performSelector:bitMaskSelector];
+                
+                #pragma clang diagnostic pop
+            }
+            else
+            {
+                _colliderType = [OGColliderType bullet];
+            }
+        }
     }
     
     return self;

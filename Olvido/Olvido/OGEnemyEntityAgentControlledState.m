@@ -11,6 +11,7 @@
 
 #import "OGAnimationComponent.h"
 #import "OGWeaponComponent.h"
+#import "OGRenderComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
@@ -68,7 +69,17 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
     
-    self.weaponComponent.attackDirection = CGVectorMake(100, 100);
+    if (self.enemyEntity.huntAgent && self.weaponComponent)
+    {
+        CGPoint huntAgentPosition = CGPointMake(self.enemyEntity.huntAgent.position.x,
+                                                self.enemyEntity.huntAgent.position.y);
+        
+        CGPoint enemyPosition = self.enemyEntity.renderComponent.node.position;
+        CGVector attackDirection = CGVectorMake(huntAgentPosition.x - enemyPosition.x,
+                                                huntAgentPosition.y - enemyPosition.y);
+        
+        self.weaponComponent.attackDirection = attackDirection;
+    }
     
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {

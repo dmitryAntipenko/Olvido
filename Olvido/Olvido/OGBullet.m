@@ -47,7 +47,7 @@ CGFloat const OGBulletEntityDefaultMass = 0.005;
         [self addComponent:_renderComponent];
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
-                                                               colliderType:[OGColliderType bullet]];
+                                                               colliderType:configuration.colliderType];
         
         _speed = configuration.speed;
     }
@@ -94,6 +94,9 @@ CGFloat const OGBulletEntityDefaultMass = 0.005;
 {
     NSArray *contactColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
     [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType bullet]];
+    
+    NSArray *enemyContactColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType player]];
+    [[OGColliderType requestedContactNotifications] setObject:enemyContactColliders forKey:[OGColliderType enemyBullet]];
 }
 
 @end
