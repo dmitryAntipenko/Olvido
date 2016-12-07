@@ -29,7 +29,7 @@
     /* DEBUG OPTIONS */
     view.showsFPS = YES;
     view.showsNodeCount = YES;
-    //view.showsPhysics = YES;
+    view.showsPhysics = YES;
     /* DEBUG OPTIONS */
     
     self.game = [[OGGame alloc] initWithView:view];    

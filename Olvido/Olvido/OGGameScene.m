@@ -651,11 +651,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [self.gameOverScreenNode removeFromParent];
     }
     
-//    if (self.shopScreenNode.parent)
-//    {
-//        [self.shopScreenNode removeFromParent];
-//    }
-    
     if (self.pausedTimeInterval != 0.0)
     {
         self.lastUpdateTimeInterval = NSTimeIntervalSince1970 - self.pausedTimeInterval;
@@ -779,17 +774,12 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [result addObject:obstacle];
     }
     
-//    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-//     {
-//         [result addObject:(SKSpriteNode *)node];
-//     }];
-    
     return result;
 }
 
 - (NSArray<GKPolygonObstacle *> *)polygonObstacles
 {
-    return [SKNode obstaclesFromNodeBounds:self.obstacleSpriteNodes];;
+    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
 }
 
 - (NSArray<GKEntity *> *)entities
