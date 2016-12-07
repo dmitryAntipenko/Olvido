@@ -14,7 +14,6 @@
 @interface OGEntityConfiguration : NSObject
 
 @property (nonatomic, copy) NSString *unitName;
-@property (nonatomic, assign) BOOL needsCastShadow;
 
 @property (nonatomic, strong, readonly) NSArray<OGTextureConfiguration *> *textures;
 @property (nonatomic, strong, readonly) NSArray<OGAudioConfiguration *> *audios;

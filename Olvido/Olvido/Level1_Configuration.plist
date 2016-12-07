@@ -592,6 +592,8 @@
 	<key>Weapon</key>
 	<array>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_01</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>
@@ -626,6 +628,8 @@
 			<string>weapon_01</string>
 		</dict>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_02</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>

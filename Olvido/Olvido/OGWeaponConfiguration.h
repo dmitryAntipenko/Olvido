@@ -17,6 +17,7 @@
 @property (nonatomic, assign, readonly) CGFloat reloadSpeed;
 @property (nonatomic, assign, readonly) NSUInteger charge;
 @property (nonatomic, assign, readonly) NSUInteger maxCharge;
+@property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, strong, readonly) OGShellConfiguration *shellConfiguration;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;

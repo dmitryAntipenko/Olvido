@@ -9,14 +9,19 @@
 #import "GKScene+OGFactory.h"
 #import "OGSceneMetadata.h"
 #import "OGGameScene.h"
+#import "OGConstants.h"
 
 NSString *const kGKSceneGraphsKey = @"Graphs";
 
 @implementation GKScene (OGFactory)
 
-+ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata
++ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata userDeviceIdion:(UIUserInterfaceIdiom)idiom;
 {
-    GKScene *gkScene = [self sceneWithFileNamed:metadata.fileName];
+    NSString *fileName = [[NSString alloc] initWithFormat:@"%@%@",
+                          metadata.fileName,
+                          [OGConstants sceneSuffixForInterfaceIdiom:idiom]];
+    
+    GKScene *gkScene = [self sceneWithFileNamed:fileName];
     
     SKScene *skScene = (SKScene *)gkScene.rootNode;
     
@@ -28,6 +33,11 @@ NSString *const kGKSceneGraphsKey = @"Graphs";
     [skScene.userData setObject:gkScene.graphs forKey:kGKSceneGraphsKey];
     
     return gkScene;
+}
+
++ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata
+{
+    return [self sceneWithMetadata:metadata userDeviceIdion:UIUserInterfaceIdiomUnspecified];
 }
 
 @end

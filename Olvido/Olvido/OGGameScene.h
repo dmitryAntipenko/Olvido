@@ -34,6 +34,7 @@
 - (void)pauseWithoutPauseScreen;
 - (void)showGameOverScreen;
 - (void)runStoryConclusion;
+- (void)showCompletionScreen;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity;
 

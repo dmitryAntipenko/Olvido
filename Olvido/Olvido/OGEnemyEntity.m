@@ -37,7 +37,6 @@
 #import "OGPlayerNearRule.h"
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
-
 #import "OGZPositionEnum.h"
 
 #import "OGColliderType.h"
@@ -108,7 +107,6 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
         _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
-        _shadowComponent.needsCastShadow = configuration.needsCastShadow;
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];

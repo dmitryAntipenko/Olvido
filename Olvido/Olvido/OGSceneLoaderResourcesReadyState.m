@@ -16,8 +16,8 @@
 {
     BOOL result = NO;
     
-    result = (stateClass == [OGSceneLoaderPrepearingSceneState class]);
-    result = result || (stateClass == [OGSceneLoaderInitialState class]);
+    result = (stateClass == [OGSceneLoaderPrepearingSceneState class])
+          || (stateClass == [OGSceneLoaderInitialState class]);
     
     return result;
 }

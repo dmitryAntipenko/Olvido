@@ -90,16 +90,20 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
 
 - (void)buyWithShopItemConfiguration:(OGShopItemConfiguration *)shopItemConfiguration
 {
-    SKSpriteNode *spriteNode = [SKSpriteNode spriteNodeWithTexture:shopItemConfiguration.texture];
-    spriteNode.name = @"111";
+    OGSceneItemEntity *buyItem = nil;
     
-    CGFloat physicsBodyRadius = spriteNode.size.width / 2.0;
-    spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
-
-    OGSceneItemEntity *buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
-                                                                               configuration:(OGWeaponConfiguration *)shopItemConfiguration.unitConfiguration];
-    buyItem.delegate = self.delegate;
-    
+    if (shopItemConfiguration.unitClass == [OGShootingWeapon class])
+    {
+        SKSpriteNode *spriteNode = [SKSpriteNode spriteNodeWithTexture:shopItemConfiguration.texture];
+        
+        CGFloat physicsBodyRadius = spriteNode.size.width / 2.0;
+        spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
+        
+        buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
+                                                                configuration:(OGWeaponConfiguration *) shopItemConfiguration.unitConfiguration];
+        
+        buyItem.delegate = self.delegate;
+    }
         
     [self.visitor itemWillBeTaken:buyItem];
 }

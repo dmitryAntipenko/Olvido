@@ -42,6 +42,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
                        reloadSpeed:(CGFloat)reloadSpeed
                             charge:(NSInteger)charge
                          maxCharge:(NSInteger)maxCharge
+               inventoryIdentifier:(NSString *)inventoryIdentifier
 {
     if (sprite)
     {
@@ -49,6 +50,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
         if (self)
         {
+            _inventoryIdentifier = inventoryIdentifier;
             NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
             [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
             
@@ -115,7 +117,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 - (NSString *)identifier
 {
-    return self.renderComponent.node.name;
+    return self.inventoryIdentifier;
 }
 
 @end

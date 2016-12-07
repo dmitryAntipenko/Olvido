@@ -47,6 +47,12 @@ NSString *const OGConstantsDead = @"Dead";
 NSString *const OGConstantsLeft = @"Left";
 NSString *const OGConstantsRight = @"Right";
 
+NSString *const OGConstantsSceneConfigurationSuffix = @"_Configuration";
+
+NSString *const OGConstantsSceneSuffixForIpadIdiom = @"_iPad";
+NSString *const OGConstantsSceneSuffixForIphoneIdiom = @"_iPhone";
+NSString *const OGConstantsSceneSuffixForUnspecifiedIdiom = @"";
+
 @implementation OGConstants
 
 + (CGPoint)randomPointInRect:(CGRect)rect
@@ -84,6 +90,26 @@ NSString *const OGConstantsRight = @"Right";
 + (CGFloat)thumbStickNodeRadius
 {
     return [OGConstants thumbStickNodeSize].width / 2.0;
+}
+
++ (NSString *)sceneSuffixForInterfaceIdiom:(UIUserInterfaceIdiom)idiom
+{
+    NSString *result = nil;
+    
+    if (idiom == UIUserInterfaceIdiomPad)
+    {
+        result = OGConstantsSceneSuffixForIpadIdiom;
+    }
+    else if (idiom == UIUserInterfaceIdiomPhone)
+    {
+        result = OGConstantsSceneSuffixForIphoneIdiom;
+    }
+    else if (idiom == UIUserInterfaceIdiomUnspecified)
+    {
+        result = OGConstantsSceneSuffixForUnspecifiedIdiom;
+    }
+    
+    return result;
 }
 
 @end

@@ -13,6 +13,7 @@ NSString *const OGWeaponConfigurationAttackSpeedKey = @"AttackSpeed";
 NSString *const OGWeaponConfigurationReloadSpeedKey = @"ReloadSpeed";
 NSString *const OGWeaponConfigurationChargeKey = @"Charge";
 NSString *const OGWeaponConfigurationMaxChargeKey = @"MaxCharge";
+NSString *const OGWeaponConfigurationIdentifierKey = @"Identifier";
 NSString *const OGWeaponConfigurationShellKey = @"Shell";
 
 @interface OGWeaponConfiguration ()
@@ -44,6 +45,13 @@ NSString *const OGWeaponConfigurationShellKey = @"Shell";
         else
         {
             _maxCharge = [dictionary[OGWeaponConfigurationMaxChargeKey] integerValue];
+        }
+        
+        NSString *identifier = dictionary[OGWeaponConfigurationIdentifierKey];
+        
+        if (identifier)
+        {
+            _identifier = identifier;
         }
         
         NSDictionary *shellDictionary = dictionary[OGWeaponConfigurationShellKey];

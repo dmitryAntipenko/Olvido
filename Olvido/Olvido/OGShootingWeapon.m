@@ -36,7 +36,8 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
                          attackSpeed:configuration.attackSpeed
                          reloadSpeed:configuration.reloadSpeed
                               charge:configuration.charge
-                           maxCharge:configuration.maxCharge];
+                           maxCharge:configuration.maxCharge
+                 inventoryIdentifier:configuration.identifier];
     
     if (self)
     {

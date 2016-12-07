@@ -15,6 +15,7 @@
 
 #import "OGPauseLevelState.h"
 #import "OGGameLevelState.h"
+#import "OGCompleteLevelState.h"
 
 NSString *const OGLevelManagerGameSceneIdentifierKey = @"GameSceneIdentifier";
 NSString *const OGLevelManagerStorySceneIdentifierKey = @"StorySceneIdentifier";
@@ -55,7 +56,8 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 
 - (void)didCallFinish
 {
-    [self loadLevelWithIdentifier:@1];//will change to "Next level"
+    //TODO: change @1 -> nextLevel
+    [self loadLevelWithIdentifier:@1];
 }
 
 - (void)didCallPause
@@ -87,6 +89,11 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
 {
     [self clearCurrentScene];
     [self.menuManager loadMenuWithName:OGMapMenuName];
+}
+
+- (void)didCallComplete
+{
+    [self.currentGameScene.stateMachine enterState:[OGCompleteLevelState class]];
 }
 
 - (void)clearCurrentScene
