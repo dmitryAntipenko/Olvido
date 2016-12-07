@@ -26,6 +26,7 @@ extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 @property (nonatomic, assign) NSInteger charge;
 @property (nonatomic, assign) CGFloat spread;
 @property (nonatomic, assign) NSInteger maxCharge;
+@property (nonatomic, weak) SKNode *target;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
                        attackSpeed:(CGFloat)attackSpeed
