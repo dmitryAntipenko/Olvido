@@ -19,11 +19,21 @@ NSUInteger const OGLevel1CompletionEnemiesCount = 0;
 
 @implementation OGLevel1
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self)
+    {
+        _enemies = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
 - (void)didMoveToView:(SKView *)view
 {
     [super didMoveToView:view];
-    
-    self.enemies = [[NSMutableArray alloc] init];
     
     for (GKEntity *entity in self.entities)
     {
@@ -32,7 +42,6 @@ NSUInteger const OGLevel1CompletionEnemiesCount = 0;
             [self.enemies addObject:(OGEnemyEntity *)entity];
         }
     }
-    
 }
 
 - (void)removeEntity:(GKEntity *)entity

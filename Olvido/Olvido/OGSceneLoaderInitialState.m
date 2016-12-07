@@ -16,12 +16,8 @@
 @implementation OGSceneLoaderInitialState
 
 - (BOOL)isValidNextState:(Class)stateClass
-{
-    BOOL result = NO;
-    
-    result = (stateClass == [OGSceneLoaderPrepearingResourcesState class]);
-    
-    return result;
+{   
+    return stateClass == [OGSceneLoaderPrepearingResourcesState class];
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
