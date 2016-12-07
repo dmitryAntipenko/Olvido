@@ -654,8 +654,21 @@
 		<dict>
 			<key>Weapon</key>
 			<dict>
-				<key>Spread</key>
-				<integer>20</integer>
+				<key>Audio</key>
+				<array>
+					<dict>
+						<key>AudioName</key>
+						<string>shot</string>
+						<key>Key</key>
+						<string>weapon_attack</string>
+					</dict>
+					<dict>
+						<key>AudioName</key>
+						<string>weapon_reload</string>
+						<key>Key</key>
+						<string>weapon_recharge</string>
+					</dict>
+				</array>
 				<key>Textures</key>
 				<array>
 					<dict>
@@ -678,23 +691,10 @@
 				<integer>3</integer>
 				<key>AttackSpeed</key>
 				<integer>1</integer>
+				<key>Spread</key>
+				<integer>20</integer>
 				<key>Charge</key>
 				<integer>10</integer>
-				<key>Audio</key>
-				<array>
-					<dict>
-						<key>AudioName</key>
-						<string>shot</string>
-						<key>Key</key>
-						<string>weapon_attack</string>
-					</dict>
-					<dict>
-						<key>AudioName</key>
-						<string>weapon_reload</string>
-						<key>Key</key>
-						<string>weapon_recharge</string>
-					</dict>
-				</array>
 				<key>UnitName</key>
 				<string>boss_weapon</string>
 			</dict>
@@ -798,6 +798,8 @@
 	<key>Weapon</key>
 	<array>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_01</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>
@@ -832,6 +834,8 @@
 			<string>weapon_01</string>
 		</dict>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_02</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>
@@ -967,6 +971,18 @@
 			<string>Zone_0</string>
 			<key>ZoneClassName</key>
 			<string>OGHiddenZoneEntity</string>
+		</dict>
+	</array>
+	<key>Shops</key>
+	<array>
+		<dict>
+			<key>Id</key>
+			<string>shop_1</string>
+			<key>Items</key>
+			<array>
+				<string>weapon_01</string>
+				<string>weapon_01</string>
+			</array>
 		</dict>
 	</array>
 </dict>

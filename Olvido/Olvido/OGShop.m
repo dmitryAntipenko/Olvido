@@ -12,17 +12,45 @@
 #import "OGPlayerEntity.h"
 
 #import "OGContactNotifiableType.h"
+#import "OGShopConfiguration.h"
+#import "OGShopItemConfiguration.h"
 
-#import "OGRenderComponent.h"
-#import "OGPhysicsComponent.h"
+@interface OGShop ()
+
+@property (nonatomic, strong) NSArray<OGShopItemConfiguration *> *shopItemsConfiguration;
+@property (nonatomic, copy) NSString *identifier;
+
+@end
 
 @implementation OGShop
+
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+                 shopConfiguration:(OGShopConfiguration *)shopConfiguration
+{
+    if (sprite)
+    {
+        self = [super initWithSpriteNode:sprite];
+        
+        if (self)
+        {
+            _identifier = shopConfiguration.identifier;
+            _shopItemsConfiguration = shopConfiguration.shopItemsConfiguration;
+        }
+    }
+    else
+    {
+        self = nil;
+    }
+    
+    return self;
+}
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
-        [self.interactionDelegate showShop];
+        self.interactionDelegate.visitor = (id<OGSceneItemsDelegate>) entity;
+        [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration];
     }
 }
 

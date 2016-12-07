@@ -16,6 +16,7 @@ NSString *const OGSceneMetadataClassNameKey = @"ClassName";
 NSString *const OGSceneMetadataFileNameKey = @"FileName";
 NSString *const OGSceneMetadataTextureAtlasesKey = @"TextureAtlases";
 NSString *const OGSceneMetadataDefaultResourcesFileName = @"DefaultLevelResources";
+NSString *const OGSceneMetadataDeviceIdiomSensitive = @"DeviceIdiomSensitive";
 
 @implementation OGSceneMetadata
 
@@ -35,6 +36,8 @@ NSString *const OGSceneMetadataDefaultResourcesFileName = @"DefaultLevelResource
                 _sceneClass = NSClassFromString(className);
                 _fileName = fileName;
                 _identifier = identifier;
+                
+                _deviceIdiomSensitive = [[configuration objectForKey:OGSceneMetadataDeviceIdiomSensitive] boolValue];
                 
                 NSMutableDictionary *resources = [[NSMutableDictionary alloc] init];
                 

@@ -36,8 +36,9 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
                          attackSpeed:configuration.attackSpeed
                          reloadSpeed:configuration.reloadSpeed
                               charge:configuration.charge
-                              spread:configuration.spread
-                           maxCharge:configuration.maxCharge];
+                              spread:configuration.spread                        
+                           maxCharge:configuration.maxCharge
+                 inventoryIdentifier:configuration.inventoryIdentifier];
     
     if (self)
     {
@@ -138,6 +139,7 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     
     bullet.renderComponent.node.zRotation = -vectorAngle;
     bullet.delegate = self.delegate;
+    bullet.weapon = self;
     [self.delegate addEntity:bullet];
     
     [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];

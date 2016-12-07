@@ -17,7 +17,7 @@ extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 
 @interface OGWeaponEntity : OGSceneItemEntity <OGAttacking, OGInventoryItem>
 
-@property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
+@property (nonatomic, copy, readonly) NSString *inventoryIdentifier;
 
 @property (nonatomic, weak) GKEntity *owner;
 
@@ -33,6 +33,7 @@ extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
                        reloadSpeed:(CGFloat)reloadSpeed
                             charge:(NSInteger)charge
                             spread:(CGFloat)spread
-                         maxCharge:(NSInteger)maxCharge;
+                         maxCharge:(NSInteger)maxCharge
+               inventoryIdentifier:(NSString *)inventoryIdentifier;
 
 @end

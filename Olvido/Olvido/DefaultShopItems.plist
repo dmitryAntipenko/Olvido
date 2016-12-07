@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>weapon_01</key>
+	<dict>
+		<key>Price</key>
+		<integer>200</integer>
+		<key>TextureName</key>
+		<string>Blaster</string>
+		<key>UnitClassName</key>
+		<string>OGShootingWeapon</string>
+		<key>UnitConfigurationClassName</key>
+		<string>OGWeaponConfiguration</string>
+		<key>UnitConfiguration</key>
+		<dict>
+			<key>Identifier</key>
+			<string>weapon_01</string>
+			<key>Audio</key>
+			<array>
+				<dict>
+					<key>AudioName</key>
+					<string>shot</string>
+					<key>Key</key>
+					<string>weapon_attack</string>
+				</dict>
+				<dict>
+					<key>AudioName</key>
+					<string>weapon_reload</string>
+					<key>Key</key>
+					<string>weapon_recharge</string>
+				</dict>
+			</array>
+			<key>Charge</key>
+			<integer>20</integer>
+			<key>AttackSpeed</key>
+			<real>0.5</real>
+			<key>Shell</key>
+			<dict>
+				<key>Speed</key>
+				<integer>10</integer>
+				<key>Damage</key>
+				<integer>1</integer>
+				<key>Texture</key>
+				<string>Bullet</string>
+			</dict>
+			<key>ReloadSpeed</key>
+			<real>1.2</real>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -14,11 +14,7 @@
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    BOOL result = NO;
-    
-    result = (stateClass == [OGSceneLoaderResourcesReadyState class]);
-    
-    return result;
+    return stateClass == [OGSceneLoaderResourcesReadyState class];
 }
 
 - (void)didEnterWithPreviousState:(GKState *)previousState

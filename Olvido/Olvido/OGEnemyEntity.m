@@ -37,7 +37,6 @@
 #import "OGPlayerNearRule.h"
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
-
 #import "OGZPositionEnum.h"
 
 #import "OGColliderType.h"
@@ -48,8 +47,8 @@ static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
 NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
-CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 30.0;
-CGFloat const OGEnemyEntityPatrolPathRadius = 10.0;
+CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 10.0;
+CGFloat const OGEnemyEntityPatrolPathRadius = 40.0;
 
 CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
@@ -112,7 +111,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         [self addComponent:_physicsComponent];
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];
-        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];    
+        _shadowComponent = [[OGShadowComponent alloc] initWithTexture:shadowTexture offset:-configuration.physicsBodyRadius];
         [self addComponent:_shadowComponent];
         
         [_renderComponent.node addChild:_shadowComponent.node];

@@ -14,4 +14,6 @@ extern NSString *const OGButtonNodeUserDataSelectorKey;
 
 @interface OGButtonNode : SKSpriteNode
 
+@property (nonatomic, strong) id target;
+
 @end

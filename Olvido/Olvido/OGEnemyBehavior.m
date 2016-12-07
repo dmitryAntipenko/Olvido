@@ -142,7 +142,7 @@ NSString *const OGEnemyBehaviorPathPointsKey = @"pathPoints";
         
         if (polygonVertices.count > 0)
         {
-            for (NSUInteger i = 0; i < polygonVertices.count; i++)
+            for (NSUInteger i = 0; i < polygonVertices.count - 1; i++)
             {
                 if (i != polygonVertices.count)
                 {
@@ -181,7 +181,7 @@ NSString *const OGEnemyBehaviorPathPointsKey = @"pathPoints";
     GKGraphNode2D *pointNode = [GKGraphNode2D nodeWithPoint:(vector_float2){point.x, point.y}];
     
     [scene.obstaclesGraph connectNodeUsingObstacles:pointNode];
-    
+
     if (pointNode.connectedNodes.count == 0 && scene.obstaclesGraph.nodes.count > 1)
     {
         [scene.obstaclesGraph removeNodes:@[pointNode]];
@@ -228,6 +228,7 @@ NSString *const OGEnemyBehaviorPathPointsKey = @"pathPoints";
         
         [scene.obstaclesGraph removeNodes:@[startNode, endNode]];
     }
+    
     
     return result;
 }

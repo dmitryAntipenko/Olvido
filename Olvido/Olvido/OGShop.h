@@ -9,9 +9,16 @@
 #import <GameplayKit/GameplayKit.h>
 #import "OGInteractionsManaging.h"
 #import "OGSceneItemEntity.h"
+#import "OGInGameShopManager.h"
+
+@class OGShopConfiguration;
+
 
 @interface OGShop : OGSceneItemEntity
 
-@property (nonatomic, weak) id<OGInteractionsManaging> interactionDelegate;
+@property (nonatomic, weak) id<OGInGameShopManagerProtocol> interactionDelegate;
+
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+                 shopConfiguration:(OGShopConfiguration *)shopConfiguration;
 
 @end
