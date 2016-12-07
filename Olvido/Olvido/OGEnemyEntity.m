@@ -49,7 +49,7 @@ NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
 CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 10.0;
-CGFloat const OGEnemyEntityPatrolPathRadius = 20.0;
+CGFloat const OGEnemyEntityPatrolPathRadius = 40.0;
 
 CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
@@ -431,7 +431,6 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     
     if (renderComponent)
     {
-        //CGPoint point = CGPointMake(<#CGFloat x#>, <#CGFloat y#>)
         self.agent.position = (vector_float2){renderComponent.node.position.x, renderComponent.node.position.y};
     }
 }
