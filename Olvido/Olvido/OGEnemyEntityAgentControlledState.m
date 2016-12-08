@@ -61,12 +61,6 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 
     self.animationComponent.requestedAnimationState = OGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
-    
-#warning To use boss shooting
-    OGRenderComponent *huntTargetRenderComponent = (OGRenderComponent *) [self.enemyEntity.huntAgent.entity componentForClass:[OGRenderComponent class]];
-    self.weaponComponent.weapon.target = huntTargetRenderComponent.node;
-    self.weaponComponent.shouldAttack = YES;
-#warning
 }
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -75,6 +69,12 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
+    
+#warning To use boss shooting
+    OGRenderComponent *huntTargetRenderComponent = (OGRenderComponent *) [self.enemyEntity.huntAgent.entity componentForClass:[OGRenderComponent class]];
+    self.weaponComponent.weapon.target = huntTargetRenderComponent.node;
+    self.weaponComponent.shouldAttack = YES;
+#warning
     
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {

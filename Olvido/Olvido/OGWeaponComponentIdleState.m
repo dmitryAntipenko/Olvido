@@ -36,8 +36,8 @@
     [super updateWithDeltaTime:seconds];
     
     if (self.weaponComponent.shouldAttack
-        && self.weaponComponent.attackDirection.dx != 0.0
-        && self.weaponComponent.attackDirection.dy != 0.0
+        && ((self.weaponComponent.attackDirection.dx != 0.0 && self.weaponComponent.attackDirection.dy != 0.0)
+            || self.weaponComponent.weapon.target)
         && [self.stateMachine canEnterState:[OGWeaponComponentAttackState class]])
     {
         [self.stateMachine enterState:[OGWeaponComponentAttackState class]];
