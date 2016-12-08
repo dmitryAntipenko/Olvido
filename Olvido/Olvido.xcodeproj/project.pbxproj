@@ -62,6 +62,7 @@
 		210CC8051DD3532000824E84 /* OGOrientationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 210CC8041DD3532000824E84 /* OGOrientationComponent.m */; };
 		210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210CC8121DD5D7EE00824E84 /* Player.xcassets */; };
 		211A17C11DF87415000B1C58 /* OGShopConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C01DF87415000B1C58 /* OGShopConfiguration.m */; };
+		211A17C41DF99C62000B1C58 /* OGBossEntityAgentControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 215A8A671DD623B600C5C90D /* Enemy.xcassets */; };
@@ -272,6 +273,8 @@
 		210CC8121DD5D7EE00824E84 /* Player.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Player.xcassets; sourceTree = "<group>"; };
 		211A17BF1DF87415000B1C58 /* OGShopConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGShopConfiguration.h; sourceTree = "<group>"; };
 		211A17C01DF87415000B1C58 /* OGShopConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShopConfiguration.m; sourceTree = "<group>"; };
+		211A17C21DF99C62000B1C58 /* OGBossEntityAgentControlledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBossEntityAgentControlledState.h; sourceTree = "<group>"; };
+		211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBossEntityAgentControlledState.m; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
 		215A3C201DCFA12100D5C609 /* OGAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimation.h; sourceTree = "<group>"; };
@@ -726,6 +729,8 @@
 				2177AF0E1DDF405600A21B75 /* OGEnemyEntityAttackState.m */,
 				2177AF1B1DE5CE6B00A21B75 /* OGEnemyEntityDieState.h */,
 				2177AF1C1DE5CE6B00A21B75 /* OGEnemyEntityDieState.m */,
+				211A17C21DF99C62000B1C58 /* OGBossEntityAgentControlledState.h */,
+				211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */,
 			);
 			name = "IntelligenceComponent States (EnemyEntity)";
 			sourceTree = "<group>";
@@ -1336,7 +1341,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -1474,6 +1479,7 @@
 				1B0E44F01DDA1015008F0F7B /* OGInventoryComponent.m in Sources */,
 				1B7BCCE01DEF2ED40075DDAC /* OGParticlesZoneEntity.m in Sources */,
 				1B7F249E1DD5D074004918C8 /* OGLoadLoadableClassOperation.m in Sources */,
+				211A17C41DF99C62000B1C58 /* OGBossEntityAgentControlledState.m in Sources */,
 				215A8A7F1DDCC25400C5C90D /* OGPlayerNearRule.m in Sources */,
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
@@ -1652,11 +1658,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1670,11 +1676,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido1;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

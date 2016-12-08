@@ -8,8 +8,12 @@
 
 #import <GameplayKit/GameplayKit.h>
 @class OGEnemyEntity;
+@class OGWeaponComponent;
 
 @interface OGEnemyEntityAgentControlledState : GKState
+
+@property (nonatomic, weak, readonly) OGEnemyEntity *enemyEntity;
+@property (nonatomic, weak, readonly) OGWeaponComponent *weaponComponent;
 
 - (instancetype)initWithEnemyEntity:(OGEnemyEntity *)enemyEntity;
 
