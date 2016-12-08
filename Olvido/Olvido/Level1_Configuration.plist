@@ -759,8 +759,14 @@
 		<dict>
 			<key>ZoneNodeName</key>
 			<string>Zone_0</string>
-			<key>ZoneClassName</key>
-			<string>OGHiddenZoneEntity</string>
+			<key>ZoneType</key>
+			<string>Slowing</string>
+		</dict>
+		<dict>
+			<key>ZoneNodeName</key>
+			<string>Zone_1</string>
+			<key>ZoneType</key>
+			<string>Slowing</string>
 		</dict>
 	</array>
 	<key>Shops</key>
