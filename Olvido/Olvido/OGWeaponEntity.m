@@ -55,6 +55,13 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
             NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
             [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
             
+            self.physicsComponent.physicsBody.categoryBitMask = [OGColliderType weapon].categoryBitMask;
+            self.physicsComponent.physicsBody.collisionBitMask = [OGColliderType weapon].collisionBitMask;
+            self.physicsComponent.physicsBody.contactTestBitMask = [OGColliderType weapon].contactTestBitMask;
+            
+            self.renderComponent.node.physicsBody = self.physicsComponent.physicsBody;
+            self.renderComponent.node.physicsBody.allowsRotation = NO;;
+            
             _allowsAttacking = YES;
             
             _attackSpeed = attackSpeed;
@@ -102,7 +109,7 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
     
     weaponNode.position = ownerNode.position;
     
-    [ownerNode.scene addChild:weaponNode];
+    [self.delegate addEntity:self];
     
     CGVector dropVector = CGVectorMake(-ownerMovement.displacementVector.dx * OGWeaponEntityThrowingFactor,
                                        -ownerMovement.displacementVector.dy * OGWeaponEntityThrowingFactor);
