@@ -48,6 +48,7 @@ CGFloat const OGBulletEntityDefaultMass = 0.005;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
                                                                colliderType:configuration.colliderType];
+        [self addComponent:_physicsComponent];
         
         _speed = configuration.speed;
     }
