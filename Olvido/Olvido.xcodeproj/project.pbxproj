@@ -63,6 +63,7 @@
 		210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 210CC8121DD5D7EE00824E84 /* Player.xcassets */; };
 		211A17C11DF87415000B1C58 /* OGShopConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C01DF87415000B1C58 /* OGShopConfiguration.m */; };
 		211A17C41DF99C62000B1C58 /* OGBossEntityAgentControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */; };
+		211A17C81DF9C0A0000B1C58 /* OGObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C71DF9C0A0000B1C58 /* OGObstacle.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 215A8A671DD623B600C5C90D /* Enemy.xcassets */; };
@@ -275,6 +276,8 @@
 		211A17C01DF87415000B1C58 /* OGShopConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGShopConfiguration.m; sourceTree = "<group>"; };
 		211A17C21DF99C62000B1C58 /* OGBossEntityAgentControlledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGBossEntityAgentControlledState.h; sourceTree = "<group>"; };
 		211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBossEntityAgentControlledState.m; sourceTree = "<group>"; };
+		211A17C61DF9C0A0000B1C58 /* OGObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacle.h; sourceTree = "<group>"; };
+		211A17C71DF9C0A0000B1C58 /* OGObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacle.m; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
 		215A3C201DCFA12100D5C609 /* OGAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimation.h; sourceTree = "<group>"; };
@@ -716,6 +719,15 @@
 				2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */,
 			);
 			name = StoryLevelScenes;
+			sourceTree = "<group>";
+		};
+		211A17C51DF9BEE2000B1C58 /* Obstacles */ = {
+			isa = PBXGroup;
+			children = (
+				211A17C61DF9C0A0000B1C58 /* OGObstacle.h */,
+				211A17C71DF9C0A0000B1C58 /* OGObstacle.m */,
+			);
+			name = Obstacles;
 			sourceTree = "<group>";
 		};
 		215A8A691DD6465500C5C90D /* IntelligenceComponent States (EnemyEntity) */ = {
@@ -1200,6 +1212,7 @@
 		EA9EAAC41DCC9CE400E36855 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				211A17C51DF9BEE2000B1C58 /* Obstacles */,
 				21AD66D71DF1B8AC00E4BC93 /* Shop */,
 				1BF21BF01DEE1287009798F0 /* Zone */,
 				EA4982431DCFB12C00DCFE00 /* Player */,
@@ -1453,6 +1466,7 @@
 				1B7F24B01DD5D916004918C8 /* OGMenuBaseScene.m in Sources */,
 				215C4BE61DC269AC000DF29F /* OGSettingsMenuScene.m in Sources */,
 				1B27EAC31DC0F6FD00E9CA23 /* OGDeathLevelState.m in Sources */,
+				211A17C81DF9C0A0000B1C58 /* OGObstacle.m in Sources */,
 				21F6B5461DE8A25D0062AE16 /* OGTextureConfiguration.m in Sources */,
 				EAC89F3E1DEDB3C300E69A48 /* OGShootingWeapon.m in Sources */,
 				1B27EA9F1DC092DA00E9CA23 /* OGButtonNode.m in Sources */,
