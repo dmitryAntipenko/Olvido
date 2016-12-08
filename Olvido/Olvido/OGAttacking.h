@@ -11,6 +11,7 @@
 @optional
 - (void)attack;
 - (void)attackWithVector:(CGVector)vector;
+- (void)attackWithTargetPosition:(CGPoint)position;
 - (void)attackDidEnd;
 
 - (void)reload;

@@ -11,4 +11,6 @@
 
 @interface OGBoss : OGEnemyEntity <OGResourceLoadable>
 
+- (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration graph:(GKGraph *)graph;
+
 @end

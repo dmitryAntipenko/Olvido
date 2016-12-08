@@ -88,7 +88,7 @@ NSUInteger const OGInventoryComponentEmptyCount = 0;
     BOOL result = NO;
     
     if (item)
-    {
+    { 
         result = [self.mutableInventoryItems objectForKey:item.identifier] != nil;
     }
     

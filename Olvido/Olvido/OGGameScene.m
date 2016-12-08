@@ -104,7 +104,7 @@ NSString *const OGGameSceneLevelCompleteScreenNodeName = @"OGLevelCompleteScreen
 
 NSString *const OGGameScenePlayerInitialPoint = @"player_initial_point";
 NSString *const OGGameSceneEnemyInitialsPoints = @"enemy_initial_point";
-NSString *const OGGameSceneObstacleName = @"obstacle";
+NSString *const OGGameSceneObstaclesNameNode = @"obstacles";
 
 NSString *const OGGameSceneResumeButtonName = @"ResumeButton";
 NSString *const OGGameSceneRestartButtonName = @"RestartButton";
@@ -233,6 +233,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     [self createHUD];
     
+#warning temporary
     SKSpriteNode *backgroundNode = ((SKSpriteNode *) [self.currentRoom childNodeWithName:@"background"]);
     backgroundNode.texture = [SKTexture textureWithImageNamed:@"background"];
     backgroundNode.normalTexture = backgroundNode.texture.textureByGeneratingNormalMap;
@@ -403,6 +404,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     self.hudNode = [OGHUDNode node];
     self.hudNode.size = self.size;
+    self.hudNode.playerEntity = self.player;
     
     if (self.camera)
     {
@@ -495,6 +497,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                 shadowComponent.node.zPosition = OGZPositionCategoryShadows;
             }
         }
+    }
+    
+    OGWeaponComponent *weaponComponent = (OGWeaponComponent *) [entity componentForClass:[OGWeaponComponent class]];
+    
+    if (weaponComponent && weaponComponent.weapon)
+    {
+        weaponComponent.weapon.delegate = self;
     }
     
     OGIntelligenceComponent *intelligenceComponent = (OGIntelligenceComponent *) [entity componentForClass:[OGIntelligenceComponent class]];
@@ -668,11 +677,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [self.gameOverScreenNode removeFromParent];
     }
     
-    //    if (self.shopScreenNode.parent)
-    //    {
-    //        [self.shopScreenNode removeFromParent];
-    //    }
-    
     if (self.pausedTimeInterval != 0.0)
     {
         self.lastUpdateTimeInterval = NSTimeIntervalSince1970 - self.pausedTimeInterval;
@@ -784,10 +788,17 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     NSMutableArray<SKSpriteNode *> *result = nil;
     
-    [self enumerateChildNodesWithName:OGGameSceneObstacleName usingBlock:^(SKNode * node, BOOL * stop)
-     {
-         [result addObject:(SKSpriteNode *)node];
-     }];
+    SKNode *obstacles = [self childNodeWithName:OGGameSceneObstaclesNameNode];
+    
+    if (obstacles.children.count > 0)
+    {
+        result = [NSMutableArray array];
+    }
+    
+    for (SKSpriteNode *obstacle in obstacles.children)
+    {
+        [result addObject:obstacle];
+    }
     
     return result;
 }

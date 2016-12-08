@@ -135,13 +135,13 @@ NSString *const OGTouchControlInputNodePayseButtonName = @"PauseButton";;
         }
         
         NSSet *set = [NSSet setWithObject:touch];
-        if (touchPoint.x < 0.0)
+        if (touchPoint.x < 0.0 && self.leftControlTouches.count == 0)
         {
             [self.leftControlTouches unionSet:set];
             self.leftThumbStick.position = [self pointByCheckingControlOffset:touchPoint];
             [self.leftThumbStick touchesBegan:set withEvent:event];            
         }
-        else
+        else if (touchPoint.x > 0.0 && self.rightControlTouches.count == 0)
         {
             [self.rightControlTouches unionSet:set];
             self.rightThumbStick.position = [self pointByCheckingControlOffset:touchPoint];

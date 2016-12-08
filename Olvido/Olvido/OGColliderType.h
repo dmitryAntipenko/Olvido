@@ -22,6 +22,7 @@
 + (instancetype)doorTrigger;
 + (instancetype)weapon;
 + (instancetype)bullet;
++ (instancetype)enemyBullet;
 + (instancetype)sceneItem;
 + (instancetype)zone;
 

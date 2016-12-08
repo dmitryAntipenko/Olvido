@@ -14,6 +14,7 @@
 @class OGPhysicsComponent;
 @class OGRenderComponent;
 @class OGShellConfiguration;
+@class OGColliderType;
 
 @class OGWeaponEntity;
 

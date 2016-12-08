@@ -57,8 +57,6 @@
 	<key>Enemies</key>
 	<array>
 		<dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>Textures</key>
 			<array>
 				<dict>
@@ -144,8 +142,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>Textures</key>
 			<array>
 				<dict>
@@ -231,8 +227,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>Textures</key>
 			<array>
 				<dict>
@@ -318,8 +312,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>Textures</key>
 			<array>
 				<dict>
@@ -405,8 +397,6 @@
 			</array>
 		</dict>
 		<dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>Textures</key>
 			<array>
 				<dict>
@@ -492,12 +482,228 @@
 			</array>
 		</dict>
 		<dict>
+			<key>Textures</key>
+			<array>
+				<dict>
+					<key>Pair</key>
+					<string>Idle_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Idle_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Idle_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Idle_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Walk_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Walk_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Walk_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Walk_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Run_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Run_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Run_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Run_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Attack_Right</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Attack_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Attack_Left</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Attack_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Dead_Right</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Dead_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Dead_Left</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Dead_Right</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Textures</key>
+			<array>
+				<dict>
+					<key>Pair</key>
+					<string>Idle_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Idle_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Idle_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Idle_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Walk_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Walk_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Walk_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Walk_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Run_Left</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Run_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Run_Right</string>
+					<key>Repeat</key>
+					<true/>
+					<key>Name</key>
+					<string>Run_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Attack_Right</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Attack_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Attack_Left</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Attack_Right</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Dead_Right</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Dead_Left</string>
+				</dict>
+				<dict>
+					<key>Pair</key>
+					<string>Dead_Left</string>
+					<key>Repeat</key>
+					<false/>
+					<key>Name</key>
+					<string>Dead_Right</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Weapon</key>
+			<dict>
+				<key>Audio</key>
+				<array>
+					<dict>
+						<key>AudioName</key>
+						<string>shot</string>
+						<key>Key</key>
+						<string>weapon_attack</string>
+					</dict>
+					<dict>
+						<key>AudioName</key>
+						<string>weapon_reload</string>
+						<key>Key</key>
+						<string>weapon_recharge</string>
+					</dict>
+				</array>
+				<key>Textures</key>
+				<array>
+					<dict>
+						<key>Name</key>
+						<string>Blaster</string>
+					</dict>
+				</array>
+				<key>Shell</key>
+				<dict>
+					<key>BitMask</key>
+					<string>enemyBullet</string>
+					<key>Speed</key>
+					<integer>5</integer>
+					<key>Damage</key>
+					<integer>1</integer>
+					<key>Texture</key>
+					<string>RedLaserBullet</string>
+				</dict>
+				<key>ReloadSpeed</key>
+				<integer>3</integer>
+				<key>AttackSpeed</key>
+				<integer>1</integer>
+				<key>Spread</key>
+				<integer>20</integer>
+				<key>Charge</key>
+				<integer>10</integer>
+				<key>UnitName</key>
+				<string>boss_weapon</string>
+			</dict>
 			<key>NeedsShadow</key>
 			<true/>
 			<key>MaxHealth</key>
-			<string>100</string>
+			<string>50</string>
 			<key>CurrentHealth</key>
-			<string>100</string>
+			<string>50</string>
 			<key>UnitName</key>
 			<string>Boss</string>
 			<key>Type</key>
@@ -592,6 +798,8 @@
 	<key>Weapon</key>
 	<array>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_01</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>
@@ -626,6 +834,8 @@
 			<string>weapon_01</string>
 		</dict>
 		<dict>
+			<key>Identifier</key>
+			<string>weapon_02</string>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>

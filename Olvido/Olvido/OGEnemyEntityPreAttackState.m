@@ -20,14 +20,13 @@
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
-@property (nonatomic, assign) NSTimeInterval elapsedTime;
-@property (nonatomic, assign) NSTimeInterval elapsedTimeForAnimation;
-
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @end
 
 @implementation OGEnemyEntityPreAttackState
+
+#pragma mark - Initializing
 
 - (instancetype)initWithEnemyEntity:(OGEnemyEntity *)enemyEntity
 {
@@ -63,6 +62,8 @@
         [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
     }
 }
+
+#pragma mark - Getters
 
 - (OGAnimationComponent *)animationComponent
 {

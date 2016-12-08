@@ -12,6 +12,7 @@
 #import "OGButtonNode.h"
 #import "OGPlayerEntity.h"
 #import "OGShootingWeapon.h"
+#import "OGInventoryItem.h"
 
 NSString *const OGInGameShopManagerShopScreenNodeName = @"OGShopScreen.sks";
 NSString *const OGInGameShopManagerBuyItem = @"BuyItem";
@@ -27,8 +28,6 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
 @interface OGInGameShopManager ()
 
 @property (nonatomic, strong) SKReferenceNode *shopScreenNode;
-
-@property (nonatomic, weak) OGPlayerEntity *player;
 
 @end
 
@@ -52,7 +51,6 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
 
 
 - (void)showWithShopItems:(NSArray<OGShopItemConfiguration *> *)shopItems
-                   player:(OGPlayerEntity *)player
 {
     __block NSInteger counter = 0;
     
@@ -74,8 +72,7 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
             counter++;
         }
     }];
-    
-    self.player = player;
+
     [self.delegate showInteractionWithNode:self.shopScreenNode];
 }
 
@@ -93,13 +90,22 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
 
 - (void)buyWithShopItemConfiguration:(OGShopItemConfiguration *)shopItemConfiguration
 {
-    if (self.player)
+    OGSceneItemEntity *buyItem = nil;
+    
+    if (shopItemConfiguration.unitClass == [OGShootingWeapon class])
     {
         SKSpriteNode *spriteNode = [SKSpriteNode spriteNodeWithTexture:shopItemConfiguration.texture];
-
-        id buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
-                                                                   configuration:shopItemConfiguration.unitConfiguration];
+        
+        CGFloat physicsBodyRadius = spriteNode.size.width / 2.0;
+        spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
+        
+        buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
+                                                                configuration:(OGWeaponConfiguration *) shopItemConfiguration.unitConfiguration];
+        
+        buyItem.delegate = self.delegate;
     }
+        
+    [self.visitor itemWillBeTaken:buyItem];
 }
 
 @end
