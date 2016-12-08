@@ -26,7 +26,7 @@ CGFloat const OGContinuousSlowZoneDefaultSpeedAccelerationCoefficient = 2.0;
               didBeginContactBlock:(void (^)(GKEntity *entity))didBeginContactBlock
                 didEndContactBlock:(void (^)(GKEntity *entity))didEndContactBlock
 {
-    if (didBeginContactBlock && didBeginContactBlock)
+    if (didBeginContactBlock && didEndContactBlock)
     {
         self = [self initWithSpriteNode:spriteNode affectingColliderTypes:affectingColliderTypes];
         
@@ -48,7 +48,7 @@ CGFloat const OGContinuousSlowZoneDefaultSpeedAccelerationCoefficient = 2.0;
               didBeginContactBlock:(void (^)(GKEntity *entity))didBeginContactBlock
                 didEndContactBlock:(void (^)(GKEntity *entity))didEndContactBlock
 {
-    if (didBeginContactBlock && didBeginContactBlock)
+    if (didBeginContactBlock && didEndContactBlock)
     {
         self = [self initWithSpriteNode:spriteNode];
         
