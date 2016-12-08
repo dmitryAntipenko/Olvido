@@ -95,6 +95,11 @@ static dispatch_queue_t initQueue;
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskBullet];
 }
 
++ (instancetype)enemyBullet
+{
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskEnemyBullet];
+}
+
 + (instancetype)sceneItem
 {
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskSceneItem];

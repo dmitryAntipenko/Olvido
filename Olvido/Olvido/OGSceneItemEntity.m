@@ -34,6 +34,11 @@
             
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:spriteNode.physicsBody
                                                                    colliderType:[OGColliderType sceneItem]];
+            
+            _renderComponent.node.physicsBody.categoryBitMask = [OGColliderType sceneItem].categoryBitMask;
+            _renderComponent.node.physicsBody.collisionBitMask = [OGColliderType sceneItem].collisionBitMask;
+            _renderComponent.node.physicsBody.contactTestBitMask = [OGColliderType sceneItem].contactTestBitMask;
+            
             [self addComponent:_physicsComponent];
             
             NSArray *contactColliders = @[[OGColliderType player]];

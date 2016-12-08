@@ -18,6 +18,7 @@
 @class OGRulesComponent;
 @class OGRenderComponent;
 @class OGOrientationComponent;
+@class OGIntelligenceComponent;
 
 typedef NS_ENUM(NSUInteger, OGEnemyEntityMandate)
 {
@@ -39,9 +40,12 @@ extern NSUInteger const OGEnemyEntityDealDamage;
 
 @property (nonatomic, weak) id<OGEntityManaging> delegate;
 
+@property (nonatomic, strong, readonly) OGEnemyConfiguration *enemyConfiguration;
+
 @property (nonatomic, strong) OGRulesComponent *rulesComponent;
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, strong, readonly) OGOrientationComponent *orientationComponent;
+@property (nonatomic, strong, readonly) OGIntelligenceComponent *intelligenceComponent;
 @property (nonatomic, strong) GKAgent2D *agent;
 @property (nonatomic, weak, readonly) GKAgent2D *huntAgent;
 
@@ -52,7 +56,8 @@ extern NSUInteger const OGEnemyEntityDealDamage;
 @property (nonatomic, assign) CGPoint closestPointOnPath;
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
-                                graph:(GKGraph *)graph NS_DESIGNATED_INITIALIZER;
+                                graph:(GKGraph *)graph
+                               states:(NSArray<GKState *> *)states NS_DESIGNATED_INITIALIZER;
 
 - (GKBehavior *)behaviorForCurrentMandate;
 - (void)entityDidDie;

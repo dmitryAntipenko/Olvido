@@ -47,7 +47,16 @@ NSString *const OGWeaponComponentAttackSoundKey = @"weapon_attack";
 
 - (void)attack
 {
-    [self.weaponComponent.weapon attackWithVector:self.weaponComponent.attackDirection];
+    SKNode *weaponTarget = self.weaponComponent.weapon.target;
+    
+    if (weaponTarget)
+    {
+        [self.weaponComponent.weapon attackWithTargetPosition:weaponTarget.position];
+    }
+    else
+    {
+        [self.weaponComponent.weapon attackWithVector:self.weaponComponent.attackDirection];
+    }
     
     [self.soundComponent playSoundOnce:OGWeaponComponentAttackSoundKey];
     

@@ -7,6 +7,7 @@
 //
 
 #import "OGWeaponEntity.h"
+#import "OGCollisionBitMask.h"
 
 @class OGWeaponConfiguration;
 

@@ -9,7 +9,12 @@
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntity.h"
 
+#import "OGEnemyConfiguration.h"
+#import "OGWeaponConfiguration.h"
+
 #import "OGAnimationComponent.h"
+#import "OGWeaponComponent.h"
+#import "OGRenderComponent.h"
 
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
@@ -27,6 +32,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
 
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
+@property (nonatomic, weak) OGWeaponComponent *weaponComponent;
 
 @end
 
@@ -64,6 +70,12 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
     
+#warning To use boss shooting
+    OGRenderComponent *huntTargetRenderComponent = (OGRenderComponent *) [self.enemyEntity.huntAgent.entity componentForClass:[OGRenderComponent class]];
+    self.weaponComponent.weapon.target = huntTargetRenderComponent.node;
+    self.weaponComponent.shouldAttack = YES;
+#warning
+    
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {
         if (self.enemyEntity.mandate == OGEnemyEntityMandateReturnToPositionOnPath)
@@ -84,7 +96,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
         if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt)
         {
             self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
-            self.animationComponent.requestedAnimationState = OGConstantsRun;
+            self.animationComponent.requestedAnimationState = OGConstantsRun;            
         }
         else if (self.enemyEntity.mandate == OGEnemyEntityMandateCheckPoint)
         {
@@ -113,6 +125,8 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 
 #pragma mark - Getters
 
+
+
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)
@@ -123,5 +137,14 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     return _animationComponent;
 }
 
+- (OGWeaponComponent *)weaponComponent
+{
+    if (!_weaponComponent)
+    {
+        _weaponComponent = (OGWeaponComponent *) [self.enemyEntity componentForClass:[OGWeaponComponent class]];
+    }
+    
+    return _weaponComponent;
+}
 
 @end

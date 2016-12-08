@@ -13,6 +13,12 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGOrientationComponent.h"
+#import "OGWeaponComponent.h"
+#import "OGShootingWeapon.h"
+
+#import "OGEnemyConfiguration.h"
+#import "OGWeaponConfiguration.h"
+#import "OGTextureConfiguration.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -23,10 +29,11 @@ static BOOL sResourcesNeedLoading = YES;
 
 @interface OGBoss ()
 
-@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
-
 @property (nonatomic, assign) CGFloat lastPositionX;
 @property (nonatomic, weak) SKPhysicsBody *huntContactBody;
+
+@property (nonatomic, strong) OGWeaponComponent *weaponComponent;
+
 @end
 
 @implementation OGBoss
@@ -34,19 +41,30 @@ static BOOL sResourcesNeedLoading = YES;
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
-    self = [super initWithConfiguration:configuration graph:graph];
+    OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
+    OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
     
-    if (self)
+    if (agentControlledState && preAttackState && attackState && dieState)
     {
-        _lastPositionX = self.renderComponent.node.position.x;
+        self = [super initWithConfiguration:configuration graph:graph states:@[agentControlledState, preAttackState, attackState, dieState]];
         
-        OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
-        OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
-        
-        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[agentControlledState, preAttackState, attackState, dieState]];
-        [self addComponent:_intelligenceComponent];
+        if (self)
+        {
+            _lastPositionX = self.renderComponent.node.position.x;
+            
+            _weaponComponent = [[OGWeaponComponent alloc] init];
+            
+            SKTexture *weaponTexture = [SKTexture textureWithImageNamed:configuration.weaponConfiguration.textures.firstObject.textureName];
+            SKSpriteNode *weaponNode = [SKSpriteNode spriteNodeWithTexture:weaponTexture];
+            
+            OGShootingWeapon *bossWeapon = [[OGShootingWeapon alloc] initWithSpriteNode:weaponNode configuration:configuration.weaponConfiguration];
+            bossWeapon.owner = self;
+            _weaponComponent.weapon = bossWeapon;
+            
+            [self addComponent:_weaponComponent];
+        }
     }
     
     return self;

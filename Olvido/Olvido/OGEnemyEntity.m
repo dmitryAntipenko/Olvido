@@ -47,8 +47,8 @@ static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
 NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
-CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 30.0;
-CGFloat const OGEnemyEntityPatrolPathRadius = 10.0;
+CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 10.0;
+CGFloat const OGEnemyEntityPatrolPathRadius = 40.0;
 
 CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
@@ -61,6 +61,8 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 @interface OGEnemyEntity ()
 
+@property (nonatomic, strong) OGEnemyConfiguration *enemyConfiguration;
+
 @property (nonatomic, strong) GKBehavior *behaviorForCurrentMandate;
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
@@ -70,6 +72,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 @property (nonatomic, strong) OGOrientationComponent *orientationComponent;
 @property (nonatomic, strong) OGHealthBarComponent *healthBarComponent;
 @property (nonatomic, strong) OGShadowComponent *shadowComponent;
+@property (nonatomic, strong) OGIntelligenceComponent *intelligenceComponent;
 
 @property (nonatomic, strong) NSString *unitName;
 
@@ -85,22 +88,24 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 - (instancetype)init
 {
-    return [self initWithConfiguration:nil graph:nil];
+    return [self initWithConfiguration:nil graph:nil states:nil];
 }
 
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
+                               states:(NSArray<GKState *> *)states
 {
     self = [super init];
     
     if (self)
     {
         _graph = graph;
+        _enemyConfiguration = configuration;
         
         _renderComponent = [[OGRenderComponent alloc] init];
         [self addComponent:_renderComponent];
         
-        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
+        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_enemyConfiguration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
         
         [self addComponent:_physicsComponent];
@@ -111,9 +116,12 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         [_renderComponent.node addChild:_shadowComponent.node];
         
+        _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:states];
+        [self addComponent:_intelligenceComponent];
+        
         _healthComponent = [[OGHealthComponent alloc] init];
-        _healthComponent.maxHealth = configuration.maxHealth;
-        _healthComponent.currentHealth = configuration.currentHealth;
+        _healthComponent.maxHealth = _enemyConfiguration.maxHealth;
+        _healthComponent.currentHealth = _enemyConfiguration.currentHealth;
         _healthComponent.delegate = self;
         [self addComponent:_healthComponent];
         
@@ -129,9 +137,9 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         NSMutableDictionary *animations = [NSMutableDictionary dictionary];
         
-        _unitName = configuration.unitName;
+        _unitName = _enemyConfiguration.unitName;
         
-        for (OGTextureConfiguration *textureConfiguration in configuration.textures)
+        for (OGTextureConfiguration *textureConfiguration in _enemyConfiguration.textures)
         {
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration
@@ -142,7 +150,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         _animationComponent = [[OGAnimationComponent alloc] initWithAnimations:animations];
         _animationComponent.spriteNode.anchorPoint = CGPointMake(0.5, 0.0);
-        _animationComponent.spriteNode.position = CGPointMake(0.0, -configuration.physicsBodyRadius);
+        _animationComponent.spriteNode.position = CGPointMake(0.0, -_enemyConfiguration.physicsBodyRadius);
         [self addComponent:_animationComponent];
         
         
@@ -154,7 +162,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         _agent.delegate = self;
         _agent.maxAcceleration = OGEnemyEntityMaximumAcceleration;
         _agent.mass = OGEnemyEntityAgentMass;
-        _agent.radius = configuration.physicsBodyRadius;
+        _agent.radius = _enemyConfiguration.physicsBodyRadius;
         _agent.behavior = [[GKBehavior alloc] init];
         [self addComponent:_agent];
 

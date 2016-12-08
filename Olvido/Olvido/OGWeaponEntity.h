@@ -17,19 +17,23 @@ extern CGFloat const OGWeaponEntityDefaultReloadSpeed;
 
 @interface OGWeaponEntity : OGSceneItemEntity <OGAttacking, OGInventoryItem>
 
-@property (nonatomic, strong, readonly) NSString *inventoryIdentifier;
+@property (nonatomic, copy, readonly) NSString *inventoryIdentifier;
 
 @property (nonatomic, weak) GKEntity *owner;
 
 @property (nonatomic, assign, readonly) CGFloat attackSpeed;
 @property (nonatomic, assign, readonly) CGFloat reloadSpeed;
 @property (nonatomic, assign) NSInteger charge;
+@property (nonatomic, assign) CGFloat spread;
 @property (nonatomic, assign) NSInteger maxCharge;
+@property (nonatomic, weak) SKNode *target;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
                        attackSpeed:(CGFloat)attackSpeed
                        reloadSpeed:(CGFloat)reloadSpeed
                             charge:(NSInteger)charge
-                         maxCharge:(NSInteger)maxCharge;
+                            spread:(CGFloat)spread
+                         maxCharge:(NSInteger)maxCharge
+               inventoryIdentifier:(NSString *)inventoryIdentifier;
 
 @end

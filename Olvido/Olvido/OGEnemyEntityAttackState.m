@@ -29,6 +29,7 @@
 @property (nonatomic, assign) CGPoint targetPosition;
 
 @property (nonatomic, assign, getter=isHit) BOOL hit;
+
 @end
 
 @implementation OGEnemyEntityAttackState

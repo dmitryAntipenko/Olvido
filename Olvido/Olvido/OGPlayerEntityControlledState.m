@@ -58,23 +58,26 @@
 {
     [super updateWithDeltaTime:seconds];
     
+    CGVector displacementVector = self.movementComponent.displacementVector;
+    
     if (self.weaponComponent.weapon)
     {
-        CGVector vector = self.weaponComponent.attackDirection;
+        CGVector attackVector = self.weaponComponent.attackDirection;
         
-        if (vector.dx != 0 || vector.dy != 0)
+        if ((attackVector.dx != 0 || attackVector.dy != 0)
+            && (displacementVector.dx != 0 || displacementVector.dy != 0))
         {
             self.animationComponent.playBackwards = YES;
-            [self changeAnimationStateWithVector:vector];
+            [self changeAnimationStateWithVector:attackVector];
         }
         else
         {
-            [self changeAnimationStateWithVector:self.movementComponent.displacementVector];
+            [self changeAnimationStateWithVector:displacementVector];
         }
     }
     else
     {
-        [self changeAnimationStateWithVector:self.movementComponent.displacementVector];
+        [self changeAnimationStateWithVector:displacementVector];
     }
 }
 

@@ -13,6 +13,9 @@
 #import "OGPeriodicalZone.h"
 #import "OGContinuousZone.h"
 
+NSString *const OGZoneDamageType = @"Damage";
+NSString *const OGZoneSlowingType = @"Slowing";
+
 @implementation OGZone
 
 #pragma mark - Init
@@ -95,12 +98,12 @@
 {
     OGZone *result = nil;
     
-    if ([zoneType isEqualToString:@"Damage"])
+    if ([zoneType isEqualToString:OGZoneDamageType])
     {
         result = [OGPeriodicalZone damageZoneWithSpriteNode:spriteNode];
     }
     
-    if ([zoneType isEqualToString:@"Slowing"])
+    if ([zoneType isEqualToString:OGZoneSlowingType])
     {
         result = [OGContinuousZone slowZoneWithSpriteNode:spriteNode];
     }

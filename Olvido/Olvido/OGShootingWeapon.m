@@ -36,7 +36,9 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
                          attackSpeed:configuration.attackSpeed
                          reloadSpeed:configuration.reloadSpeed
                               charge:configuration.charge
-                           maxCharge:configuration.maxCharge];
+                              spread:configuration.spread                        
+                           maxCharge:configuration.maxCharge
+                 inventoryIdentifier:configuration.inventoryIdentifier];
     
     if (self)
     {
@@ -91,6 +93,26 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
 
 #pragma mark - OGAttacking
 
+- (void)attackWithTargetPosition:(CGPoint)targetPosition
+{
+    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
+    CGPoint ownerPosition = ownerNode.position;
+    
+    CGFloat randomOffset = -self.spread + arc4random() % (NSUInteger) (2.0 * self.spread);
+    
+    CGFloat vectorAngleRadians = atan2(targetPosition.x - ownerPosition.x, targetPosition.y - ownerPosition.y);
+    vectorAngleRadians += [self degreesToRadians:randomOffset];
+
+    CGVector shootingVector = CGVectorMake(sinf(vectorAngleRadians), cosf(vectorAngleRadians));
+    
+    [self attackWithVector:shootingVector];
+}
+
+- (CGFloat)degreesToRadians:(CGFloat)degrees
+{
+    return degrees * (M_PI / 180.0);
+}
+
 - (void)attackWithVector:(CGVector)vector
 {
     if (vector.dx != 0.0 && vector.dy != 0.0)
@@ -110,13 +132,14 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     
     bullet.renderComponent.node.position = point;
     
-    CGFloat vectorAngle = atan2(-vector.dx, vector.dy);
+    CGFloat vectorAngle = atan2(vector.dx, vector.dy);
     
-    CGVector bulletMovementVector = CGVectorMake(-sinf(vectorAngle) * bullet.speed,
+    CGVector bulletMovementVector = CGVectorMake(sinf(vectorAngle) * bullet.speed,
                                                  cosf(vectorAngle) * bullet.speed);
     
-    bullet.renderComponent.node.zRotation = vectorAngle;
+    bullet.renderComponent.node.zRotation = -vectorAngle;
     bullet.delegate = self.delegate;
+    bullet.weapon = self;
     [self.delegate addEntity:bullet];
     
     [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
