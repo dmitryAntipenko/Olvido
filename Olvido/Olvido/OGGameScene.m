@@ -59,6 +59,7 @@
 #import "OGKey.h"
 #import "OGAidKit.h"
 #import "OGShop.h"
+#import "OGObstacle.h"
 
 //MARK: Nodes
 
@@ -208,13 +209,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     return self;
 }
 
-#pragma mark - Scene contents
-
-- (void)didMoveToView:(SKView *)view
+- (void)configureScene
 {
-    [super didMoveToView:view];
-    
-    self.physicsWorld.contactDelegate = self;
+    [super configureScene];
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
@@ -224,19 +221,23 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createCameraNode];
     [self createTouchControlInputNode];
     
-    [self.stateMachine enterState:[OGGameLevelState class]];
+    [self createHUD];
+}
+
+#pragma mark - Scene contents
+
+- (void)didMoveToView:(SKView *)view
+{
+    [super didMoveToView:view];
+    
+    self.physicsWorld.contactDelegate = self;
     
     [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
     self.audioManager.musicPlayerDelegate = self;
     
+    [self.stateMachine enterState:[OGGameLevelState class]];
+    
     [self.cameraController moveCameraToNode:self.currentRoom];
-    
-    [self createHUD];
-    
-#warning temporary
-    SKSpriteNode *backgroundNode = ((SKSpriteNode *) [self.currentRoom childNodeWithName:@"background"]);
-    backgroundNode.texture = [SKTexture textureWithImageNamed:@"background"];
-    backgroundNode.normalTexture = backgroundNode.texture.textureByGeneratingNormalMap;
 }
 
 #pragma mark - Scene Contents Creation
@@ -249,6 +250,19 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createSceneItems];
     [self createSceneInteractions];
     [self createZones];
+    [self createObstacles];
+}
+
+- (void)createObstacles
+{
+    SKNode *obstacles = [self childNodeWithName:OGGameSceneObstaclesNameNode];
+    
+    for (SKSpriteNode *spriteNode in obstacles.children)
+    {
+        OGObstacle *obstacle = [[OGObstacle alloc] initWithSpriteNode:spriteNode];
+        
+        [self addEntity:obstacle];
+    }
 }
 
 - (void)createSceneInteractions
@@ -286,7 +300,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)createTouchControlInputNode
 {
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
     inputNode.size = self.size;
     self.controllInputNode = inputNode;
     self.controllInputNode.zPosition = OGZPositionCategoryTouchControl;
@@ -792,12 +806,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     if (obstacles.children.count > 0)
     {
-        result = [NSMutableArray array];
-    }
-    
-    for (SKSpriteNode *obstacle in obstacles.children)
-    {
-        [result addObject:obstacle];
+        result = [NSMutableArray arrayWithArray:obstacles.children];
     }
     
     return result;
@@ -822,6 +831,12 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
     
     return _obstaclesGraph;
+}
+
+- (CGSize)thumbStickNodeSize
+{
+    CGFloat thumbStickNodeDiameter = self.size.height / 5.0;    
+    return CGSizeMake(thumbStickNodeDiameter, thumbStickNodeDiameter);
 }
 
 #pragma mark - Button Click Handling

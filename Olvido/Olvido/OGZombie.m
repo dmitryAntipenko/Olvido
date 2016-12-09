@@ -87,8 +87,8 @@ static BOOL sResourcesNeedLoading = YES;
     [super contactWithEntityDidBegin:entity];
     
     if ([entity isMemberOfClass:[OGPlayerEntity class]] && !self.huntContactBody
-        && ![self.intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityPreAttackState class]]
-        && ![self.intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityAttackState class]])
+        && ![self.intelligenceComponent.stateMachine.currentState isKindOfClass:[OGEnemyEntityPreAttackState class]]
+        && ![self.intelligenceComponent.stateMachine.currentState isKindOfClass:[OGEnemyEntityAttackState class]])
     {
         OGPhysicsComponent *physicsComponent = (OGPhysicsComponent *) [entity componentForClass:[OGPhysicsComponent class]];
         self.huntContactBody = physicsComponent.physicsBody;
