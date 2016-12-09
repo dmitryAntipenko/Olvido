@@ -196,7 +196,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     
     if (intelligenceComponent && orientationComponent)
     {
-        if ([intelligenceComponent.stateMachine.currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]])
+        if ([intelligenceComponent.stateMachine.currentState isKindOfClass:[OGEnemyEntityAgentControlledState class]])
         {
             [self updateNodePositionToMatchAgentPosition];
         }

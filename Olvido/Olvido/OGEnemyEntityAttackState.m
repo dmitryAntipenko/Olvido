@@ -16,6 +16,7 @@
 #import "OGHealthComponent.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
+#import "OGBossEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
 
@@ -72,9 +73,13 @@
     }
     else
     {
-        if ([self.stateMachine canEnterState:[OGEnemyEntityAgentControlledState class]])
+        if ([self.stateMachine stateForClass:[OGEnemyEntityAgentControlledState class]])
         {
             [self.stateMachine enterState:[OGEnemyEntityAgentControlledState class]];
+        }
+        else if ([self.stateMachine stateForClass:[OGBossEntityAgentControlledState class]])
+        {
+            [self.stateMachine enterState:[OGBossEntityAgentControlledState class]];
         }
     }
 }
@@ -94,6 +99,7 @@
 - (BOOL)isValidNextState:(Class)stateClass
 {
     return stateClass == [OGEnemyEntityAgentControlledState class]
+    || stateClass == [OGBossEntityAgentControlledState class]
     || stateClass == [OGEnemyEntityPreAttackState class]
     || stateClass == [OGEnemyEntityDieState class];
 }

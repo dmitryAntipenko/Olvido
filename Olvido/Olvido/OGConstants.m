@@ -82,16 +82,6 @@ NSString *const OGConstantsSceneSuffixForUnspecifiedIdiom = @"";
     return CGVectorMake(cosf(angle), sinf(angle));
 }
 
-+ (CGSize)thumbStickNodeSize
-{
-    return CGSizeMake(200.0, 200.0);
-}
-
-+ (CGFloat)thumbStickNodeRadius
-{
-    return [OGConstants thumbStickNodeSize].width / 2.0;
-}
-
 + (NSString *)sceneSuffixForInterfaceIdiom:(UIUserInterfaceIdiom)idiom
 {
     NSString *result = nil;
