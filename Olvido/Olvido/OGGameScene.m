@@ -752,6 +752,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
     
     [self.hudNode updateHUD];
+    
+    [self.player updateWithDeltaTime:currentTime];
 }
 
 - (void)didFinishUpdate

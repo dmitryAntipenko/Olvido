@@ -12,6 +12,7 @@
 
 @protocol OGAnimationComponentDelegate <NSObject>
 
+- (void)animationDidStart;
 - (void)animationDidFinish;
 
 @end

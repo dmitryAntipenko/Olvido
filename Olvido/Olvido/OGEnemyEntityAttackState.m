@@ -20,7 +20,7 @@
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityDieState.h"
 
-@interface OGEnemyEntityAttackState ()
+@interface OGEnemyEntityAttackState () <OGAnimationComponentDelegate>
 
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
@@ -55,6 +55,8 @@
 {
     [super didEnterWithPreviousState:previousState];
     
+    self.animationComponent.delegate = self;
+    
     self.hit = NO;
     
     NSArray<SKPhysicsBody*> *contactedBodies = [self.physicsComponent.physicsBody allContactedBodies];
@@ -63,8 +65,37 @@
     {
         [self applyDamageToEntity:contactedBody.node.entity];
     }
-    
-    if (self.isHit)
+}
+
+- (void)applyDamageToEntity:(GKEntity *)entity
+{
+    if ([entity isMemberOfClass:[OGPlayerEntity class]])
+    {
+        OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
+        
+        if (healthComponent)
+        {
+            [healthComponent dealDamage:OGEnemyEntityDealDamage];
+            self.hit = YES;
+        }
+    }
+}
+
+- (BOOL)isValidNextState:(Class)stateClass
+{
+    return stateClass == [OGEnemyEntityAgentControlledState class]
+    || stateClass == [OGBossEntityAgentControlledState class]
+    || stateClass == [OGEnemyEntityPreAttackState class]
+    || stateClass == [OGEnemyEntityDieState class];
+}
+
+- (void)animationDidStart
+{
+}
+
+- (void)animationDidFinish
+{
+    if (self.isHit && self.enemyEntity.huntAgent)
     {
         if ([self.stateMachine canEnterState:[OGEnemyEntityPreAttackState class]])
         {
@@ -82,26 +113,6 @@
             [self.stateMachine enterState:[OGBossEntityAgentControlledState class]];
         }
     }
-}
-
-- (void)applyDamageToEntity:(GKEntity *)entity
-{
-    if ([entity isMemberOfClass:[OGPlayerEntity class]])
-    {
-        OGHealthComponent *healthComponent = (OGHealthComponent *) [entity componentForClass:[OGHealthComponent class]];
-        
-        [healthComponent dealDamage:OGEnemyEntityDealDamage];
-        
-        self.hit = YES;
-    }
-}
-
-- (BOOL)isValidNextState:(Class)stateClass
-{
-    return stateClass == [OGEnemyEntityAgentControlledState class]
-    || stateClass == [OGBossEntityAgentControlledState class]
-    || stateClass == [OGEnemyEntityPreAttackState class]
-    || stateClass == [OGEnemyEntityDieState class];
 }
 
 #pragma mark - Setters

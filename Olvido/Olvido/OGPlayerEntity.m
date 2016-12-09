@@ -72,6 +72,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
+@property (nonatomic, assign) BOOL shouldDie;
 @end
 
 @implementation OGPlayerEntity
@@ -82,6 +83,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
     
     if (self)
     {
+        _shouldDie = NO;
         _agent = [[GKAgent2D alloc] init];
         _agent.radius = configuration.physicsBodyRadius;
         [self addComponent:_agent];
@@ -172,6 +174,21 @@ NSString *OGPlayerEntityUnitName = @"Player";
     return self;
 }
 
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    [super updateWithDeltaTime:seconds];
+    
+    if (self.shouldDie)
+    {
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
+        {
+            [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
+        }
+        
+        self.shouldDie = NO;
+    }
+}
+
 #pragma mark - OGSceneItemsDelegate 
 
 - (void)itemWillBeTaken:(OGSceneItemEntity *)entity
@@ -247,10 +264,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 - (void)entityWillDie
 {
-    if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
-    {
-        [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
-    }
+    self.shouldDie = YES;
 }
 
 - (void)dealDamageToEntity:(NSInteger)damage
