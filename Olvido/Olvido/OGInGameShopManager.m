@@ -100,7 +100,7 @@ NSString *const OGInGameShopManagerBuyItemUserInfoUnitConfigurationClass = @"Uni
         spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
         
         buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
-                                                                configuration:(OGWeaponConfiguration *) shopItemConfiguration.unitConfiguration];
+                                                                configuration:shopItemConfiguration.unitConfiguration];
         
         buyItem.delegate = self.delegate;
     }
