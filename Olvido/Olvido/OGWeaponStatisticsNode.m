@@ -14,9 +14,6 @@
 CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
 
 @interface OGWeaponStatisticsNode ()
-{
-    OGHUDNode *_hudNode;
-}
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSValue *> *weaponProperties;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, SKLabelNode *> *labelNodes;
@@ -38,18 +35,6 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
     }
     
     return self;
-}
-
-#pragma mark - Getters & Setters
-
-- (void)setHudNode:(OGHUDNode *)hudNode
-{
-    _hudNode = hudNode;
-}
-
-- (OGHUDNode *)hudNode
-{
-    return _hudNode;
 }
 
 #pragma mark - OGWeaponComponentDelegate

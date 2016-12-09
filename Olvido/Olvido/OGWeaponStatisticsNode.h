@@ -14,4 +14,6 @@
 
 @interface OGWeaponStatisticsNode : SKSpriteNode <OGHUDElement, OGWeaponComponentObserving>
 
+@property (nonatomic, weak) OGHUDNode *hudNode;
+
 @end
