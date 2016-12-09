@@ -59,6 +59,7 @@
 #import "OGKey.h"
 #import "OGAidKit.h"
 #import "OGShop.h"
+#import "OGObstacle.h"
 
 //MARK: Nodes
 
@@ -249,6 +250,19 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createSceneItems];
     [self createSceneInteractions];
     [self createZones];
+    [self createObstacles];
+}
+
+- (void)createObstacles
+{
+    SKNode *obstacles = [self childNodeWithName:OGGameSceneObstaclesNameNode];
+    
+    for (SKSpriteNode *spriteNode in obstacles.children)
+    {
+        OGObstacle *obstacle = [[OGObstacle alloc] initWithSpriteNode:spriteNode];
+        
+        [self addEntity:obstacle];
+    }
 }
 
 - (void)createSceneInteractions
@@ -792,12 +806,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     if (obstacles.children.count > 0)
     {
-        result = [NSMutableArray array];
-    }
-    
-    for (SKSpriteNode *obstacle in obstacles.children)
-    {
-        [result addObject:obstacle];
+        result = [NSMutableArray arrayWithArray:obstacles.children];
     }
     
     return result;

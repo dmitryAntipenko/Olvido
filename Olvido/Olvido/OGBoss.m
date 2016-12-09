@@ -20,7 +20,7 @@
 #import "OGWeaponConfiguration.h"
 #import "OGTextureConfiguration.h"
 
-#import "OGEnemyEntityAgentControlledState.h"
+#import "OGBossEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGEnemyEntityAttackState.h"
 #import "OGEnemyEntityDieState.h"
@@ -41,7 +41,7 @@ static BOOL sResourcesNeedLoading = YES;
 - (instancetype)initWithConfiguration:(OGEnemyConfiguration *)configuration
                                 graph:(GKGraph *)graph
 {
-    OGEnemyEntityAgentControlledState *agentControlledState = [[OGEnemyEntityAgentControlledState alloc] initWithEnemyEntity:self];
+    OGBossEntityAgentControlledState *agentControlledState = [[OGBossEntityAgentControlledState alloc] initWithEnemyEntity:self];
     OGEnemyEntityPreAttackState *preAttackState = [[OGEnemyEntityPreAttackState alloc] initWithEnemyEntity:self];
     OGEnemyEntityAttackState *attackState = [[OGEnemyEntityAttackState alloc] initWithEnemyEntity:self];
     OGEnemyEntityDieState *dieState = [[OGEnemyEntityDieState alloc] initWithEnemyEntity:self];
@@ -99,7 +99,7 @@ static BOOL sResourcesNeedLoading = YES;
     
     GKState *currentState = self.intelligenceComponent.stateMachine.currentState;
     
-    if ([currentState isMemberOfClass:[OGEnemyEntityAgentControlledState class]]
+    if ([currentState isKindOfClass:[OGEnemyEntityAgentControlledState class]]
         && self.huntAgent && self.huntContactBody)
     {
         self.orientationComponent.currentOrientation = [OGOrientationComponent orientationWithVectorX:(self.huntAgent.position.x - self.agent.position.x)];
@@ -131,6 +131,11 @@ static BOOL sResourcesNeedLoading = YES;
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         self.huntContactBody = nil;
+        
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGBossEntityAgentControlledState class]])
+        {
+            [self.intelligenceComponent.stateMachine enterState:[OGBossEntityAgentControlledState class]];
+        }
     }
 }
 

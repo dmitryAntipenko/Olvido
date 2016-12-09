@@ -70,12 +70,6 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     self.timeSinceBehaviorUpdate += seconds;
     self.elapsedTime += seconds;
     
-#warning To use boss shooting
-    OGRenderComponent *huntTargetRenderComponent = (OGRenderComponent *) [self.enemyEntity.huntAgent.entity componentForClass:[OGRenderComponent class]];
-    self.weaponComponent.weapon.target = huntTargetRenderComponent.node;
-    self.weaponComponent.shouldAttack = YES;
-#warning
-    
     if (self.timeSinceBehaviorUpdate >= OGEnemyEntityBehaviorUpdateWaitDuration)
     {
         if (self.enemyEntity.mandate == OGEnemyEntityMandateReturnToPositionOnPath)
@@ -88,17 +82,8 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
                 self.enemyEntity.mandate = OGEnemyEntityMandateFollowPath;
             }
         }
-        
-        self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
-        
-        self.timeSinceBehaviorUpdate = 0.0;
-        
-        if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt)
-        {
-            self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
-            self.animationComponent.requestedAnimationState = OGConstantsRun;            
-        }
-        else if (self.enemyEntity.mandate == OGEnemyEntityMandateCheckPoint)
+        else if (self.enemyEntity.mandate == OGEnemyEntityMandateHunt
+                 || self.enemyEntity.mandate == OGEnemyEntityMandateCheckPoint)
         {
             self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateHuntMaxSpeed;
             self.animationComponent.requestedAnimationState = OGConstantsRun;
@@ -108,6 +93,9 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
             self.enemyEntity.agent.maxSpeed = OGEnemyEntityAgentControlledStateWalkMaxSpeed;
             self.animationComponent.requestedAnimationState = OGConstantsWalk;
         }
+        
+        self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
+        self.timeSinceBehaviorUpdate = 0.0;
     }
 }
 
