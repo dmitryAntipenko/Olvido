@@ -286,7 +286,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)createTouchControlInputNode
 {
-    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[OGConstants thumbStickNodeSize]];
+    OGTouchControlInputNode *inputNode = [[OGTouchControlInputNode alloc] initWithFrame:self.frame thumbStickNodeSize:[self thumbStickNodeSize]];
     inputNode.size = self.size;
     self.controllInputNode = inputNode;
     self.controllInputNode.zPosition = OGZPositionCategoryTouchControl;
@@ -822,6 +822,12 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
     
     return _obstaclesGraph;
+}
+
+- (CGSize)thumbStickNodeSize
+{
+    CGFloat thumbStickNodeDiameter = self.size.height / 5.0;    
+    return CGSizeMake(thumbStickNodeDiameter, thumbStickNodeDiameter);
 }
 
 #pragma mark - Button Click Handling

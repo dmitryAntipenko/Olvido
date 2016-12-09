@@ -51,9 +51,6 @@ extern NSString *const OGConstantsSceneConfigurationSuffix;
 + (CGVector)randomVectorWithLength:(CGFloat)length;
 + (CGVector)randomVector;
 
-+ (CGSize)thumbStickNodeSize;
-+ (CGFloat)thumbStickNodeRadius;
-
 + (NSString *)sceneSuffixForInterfaceIdiom:(UIUserInterfaceIdiom)idiom;
 
 @end
