@@ -209,13 +209,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     return self;
 }
 
-#pragma mark - Scene contents
-
-- (void)didMoveToView:(SKView *)view
+- (void)configureScene
 {
-    [super didMoveToView:view];
-    
-    self.physicsWorld.contactDelegate = self;
+    [super configureScene];
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
@@ -225,19 +221,23 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self createCameraNode];
     [self createTouchControlInputNode];
     
-    [self.stateMachine enterState:[OGGameLevelState class]];
+    [self createHUD];
+}
+
+#pragma mark - Scene contents
+
+- (void)didMoveToView:(SKView *)view
+{
+    [super didMoveToView:view];
+    
+    self.physicsWorld.contactDelegate = self;
     
     [self.audioManager playMusic:self.sceneConfiguration.backgroundMusic];
     self.audioManager.musicPlayerDelegate = self;
     
+    [self.stateMachine enterState:[OGGameLevelState class]];
+    
     [self.cameraController moveCameraToNode:self.currentRoom];
-    
-    [self createHUD];
-    
-#warning temporary
-    SKSpriteNode *backgroundNode = ((SKSpriteNode *) [self.currentRoom childNodeWithName:@"background"]);
-    backgroundNode.texture = [SKTexture textureWithImageNamed:@"background"];
-    backgroundNode.normalTexture = backgroundNode.texture.textureByGeneratingNormalMap;
 }
 
 #pragma mark - Scene Contents Creation
