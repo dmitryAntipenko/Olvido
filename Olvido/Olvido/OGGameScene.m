@@ -456,7 +456,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (void)showInteractionWithNode:(SKNode *)node
 {
-    [self pauseWithoutPauseScreen];
+    [self.sceneDelegate didCallPause];
     
     if (!node.parent && !self.currentInteraction)
     {
