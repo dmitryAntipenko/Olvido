@@ -50,7 +50,7 @@ NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 10.0;
 CGFloat const OGEnemyEntityPatrolPathRadius = 40.0;
 
-CGFloat const OGEnemyEntityMaximumAcceleration = 300.0;
+CGFloat const OGEnemyEntityMaximumAcceleration = 100.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
 CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
@@ -107,7 +107,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:_enemyConfiguration.physicsBodyRadius]
                                                                colliderType:[OGColliderType enemy]];
-        
+        _physicsComponent.physicsBody.mass = 10.0;
         [self addComponent:_physicsComponent];
         
         SKTexture *shadowTexture = [SKTexture textureWithImageNamed:OGEnemyEntityShadowTextureName];

@@ -96,7 +96,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType player]];
-        _physicsComponent.physicsBody.mass = 100.0;
+        _physicsComponent.physicsBody.mass = 5.0;
         [self addComponent:_physicsComponent];
         
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
