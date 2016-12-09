@@ -26,8 +26,8 @@ NSString *const OGZoneConfigurationZoneClassNameKey = @"ZoneType";
             
             if (nodeName && zoneType)
             {
-                _zoneNodeName = nodeName;
-                _zoneType = zoneType;
+                _zoneNodeName = [nodeName copy];
+                _zoneType = [zoneType copy];
             }
             else
             {
