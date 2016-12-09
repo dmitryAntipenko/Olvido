@@ -7,8 +7,13 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGContactNotifiableType.h"
 
-@interface OGObstacle : GKEntity
+@class OGPhysicsComponent;
+
+@interface OGObstacle : GKEntity <OGContactNotifiableType>
+
+@property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
 

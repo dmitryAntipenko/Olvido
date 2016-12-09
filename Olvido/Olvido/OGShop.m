@@ -11,7 +11,7 @@
 #import "OGShop.h"
 #import "OGPlayerEntity.h"
 
-#import "OGContactNotifiableType.h"
+#import "OGPhysicsComponent.h"
 #import "OGShopConfiguration.h"
 #import "OGShopItemConfiguration.h"
 
@@ -47,15 +47,13 @@
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
+    [super contactWithEntityDidBegin:entity];
+    
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         self.interactionDelegate.visitor = (id<OGSceneItemsDelegate>) entity;
         [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration];
     }
-}
-
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
 }
 
 @end

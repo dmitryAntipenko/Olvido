@@ -8,13 +8,13 @@
 
 #import <GameplayKit/GameplayKit.h>
 #import "OGInteractionsManaging.h"
-#import "OGSceneItemEntity.h"
+#import "OGObstacle.h"
 #import "OGInGameShopManager.h"
 
 @class OGShopConfiguration;
 
 
-@interface OGShop : OGSceneItemEntity
+@interface OGShop : OGObstacle
 
 @property (nonatomic, weak) id<OGInGameShopManagerProtocol> interactionDelegate;
 

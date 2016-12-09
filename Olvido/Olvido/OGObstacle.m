@@ -30,6 +30,9 @@
     {
         spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteNode.size];
         
+        NSArray *contactColliders = @[[OGColliderType player]];
+        [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType obstacle]];
+        
         _renderComponent = [[OGRenderComponent alloc] init];
         _renderComponent.node = spriteNode;
         
@@ -43,6 +46,16 @@
     }
     
     return self;
+}
+
+- (void)contactWithEntityDidBegin:(GKEntity *)entity
+{
+    
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    
 }
 
 @end
