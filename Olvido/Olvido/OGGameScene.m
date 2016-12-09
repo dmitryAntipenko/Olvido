@@ -428,7 +428,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 - (void)createInventoryBar
 {
     OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent];
     
     if (self.hudNode)
     {

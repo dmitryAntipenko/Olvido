@@ -25,14 +25,10 @@ NSString *const OGInventoryBarNodeShowingActionKey = @"ShowingAction";
 CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 @interface OGInventoryBarNode () <OGInventoryComponentDelegate>
-{
-    OGHUDNode *_hudNode;
-}
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
 @property (nonatomic, assign) CGFloat itemSizeLength;
 @property (nonatomic, assign) CGRect hideTrigger;
-@property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) BOOL customHidden;
 @property (nonatomic, assign) BOOL needsUpdate;
 
@@ -42,7 +38,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 #pragma mark - Initialising
 
-- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
+- (instancetype)initWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
 {
     if (inventoryComponent)
     {
@@ -54,7 +50,6 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
         {
             _inventoryComponent = inventoryComponent;
             _inventoryComponent.inventoryComponentDelegate = self;
-            _screenSize = screenSize;
         }
     }
     else
@@ -65,28 +60,16 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     return self;
 }
 
-+ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize
++ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent
 {
-    return [[self alloc] initWithInventoryComponent:inventoryComponent screenSize:screenSize];
-}
-
-#pragma mark - Getters & Setters
-
-- (void)setHudNode:(OGHUDNode *)hudNode
-{
-    _hudNode = hudNode;
-}
-
-- (OGHUDNode *)hudNode
-{
-    return _hudNode;
+    return [[self alloc] initWithInventoryComponent:inventoryComponent];
 }
 
 #pragma mark - OGHUDElement
 
 - (void)didAddToHUD
 {
-    
+    [self updateConstraints];
 }
 
 - (void)update
@@ -108,14 +91,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)updateInventoryBarSize
 {
-    CGSize frameSize = CGSizeZero;
-    
-    if (self.scene)
-    {
-        frameSize = self.scene.frame.size;
-    }
-    
-    CGFloat height = frameSize.height * OGInventoryBarNodeDesiredHeightFactor;
+    CGFloat height = self.hudNode.size.height * OGInventoryBarNodeDesiredHeightFactor;
     
     if (height > OGInventoryBarNodeMaxHeight)
     {
@@ -124,7 +100,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     
     CGFloat width = height * self.inventoryComponent.capacity;
     
-    CGFloat widthWithFactor = frameSize.width * OGInventoryBarNodeMaxWidthFactor;
+    CGFloat widthWithFactor = self.hudNode.size.width * OGInventoryBarNodeMaxWidthFactor;
     
     if (width > widthWithFactor)
     {
@@ -133,7 +109,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     }
     
     self.size = CGSizeMake(width, height);
-    self.position = CGPointMake(OGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);
+    self.position = CGPointMake(OGInventoryBarNodeDefaultXPosition, (height - self.hudNode.size.height) / 2);
     
     self.itemSizeLength = height;
     
@@ -188,7 +164,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     [self removeActionForKey:OGInventoryBarNodeShowingActionKey];
     
-    SKAction *hidingAction = [SKAction moveToY: -(self.screenSize.height + self.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
+    SKAction *hidingAction = [SKAction moveToY: -(self.hudNode.size.height + self.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
     [self runAction:hidingAction withKey:OGInventoryBarNodeHidingActionKey];
     
     self.customHidden = YES;
@@ -198,7 +174,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     [self removeActionForKey:OGInventoryBarNodeHidingActionKey];
 
-    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.screenSize.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
+    SKAction *showingAction = [SKAction moveToY:(self.size.height - self.hudNode.size.height) / 2 duration:OGInventoryBarNodeHidingTimeInterval];
     [self runAction:showingAction withKey:OGInventoryBarNodeShowingActionKey];
     
     self.customHidden = NO;
