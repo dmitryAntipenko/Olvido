@@ -16,9 +16,7 @@
 #import "OGWeaponConfiguration.h"
 #import "OGAudioConfiguration.h"
 
-static NSArray *sOGWeaponEntitySoundNodes = nil;
-
-@interface OGShootingWeapon () <OGResourceLoadable>
+@interface OGShootingWeapon ()
 
 @property (nonatomic, strong) OGWeaponConfiguration *weaponConfiguration;
 @property (nonatomic, strong) OGSoundComponent *soundComponent;
@@ -143,23 +141,6 @@ static NSArray *sOGWeaponEntitySoundNodes = nil;
     [self.delegate addEntity:bullet];
     
     [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
-}
-
-#pragma mark - Resources
-
-+ (void)loadResourcesWithCompletionHandler:(void (^)())handler
-{    
-    handler();
-}
-
-+ (BOOL)resourcesNeedLoading
-{
-    return sOGWeaponEntitySoundNodes == nil;
-}
-
-+ (void)purgeResources
-{
-    sOGWeaponEntitySoundNodes = nil;
 }
 
 @end

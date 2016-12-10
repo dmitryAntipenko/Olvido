@@ -21,6 +21,7 @@
 #import "OGInventoryComponent.h"
 #import "OGSoundComponent.h"
 #import "OGKeyComponent.h"
+#import "OGMessageComponent.h"
 
 #import "OGDoorEntityClosedState.h"
 #import "OGDoorEntityOpenedState.h"
@@ -28,6 +29,7 @@
 #import "OGDoorEntityUnlockedState.h"
 
 NSString *const OGDoorEntityTriggerNodeName = @"trigger";
+NSString *const OGDoorEntityKeyMessageFormat = @"I need %@ to open this door";
 
 static NSArray *sOGDoorEntitySoundNodes = nil;
 
@@ -66,9 +68,14 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             
             SKNode *trigger = [spriteNode childNodeWithName:OGDoorEntityTriggerNodeName];
             trigger.entity = self;
+            
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:trigger.physicsBody
-                                                                   colliderType:[OGColliderType doorTrigger]];
+                                                                   colliderType:[OGColliderType door]];
             [self addComponent:_physicsComponent];
+            
+            _renderComponent.node.physicsBody.categoryBitMask = _physicsComponent.physicsBody.categoryBitMask;
+            _renderComponent.node.physicsBody.collisionBitMask = _physicsComponent.physicsBody.collisionBitMask;
+            _renderComponent.node.physicsBody.contactTestBitMask = _physicsComponent.physicsBody.contactTestBitMask;
             
             _intelligenceComponent = [[OGIntelligenceComponent alloc] initWithStates:@[
                 [[OGDoorEntityClosedState alloc] initWithDoorEntity:self],
@@ -135,6 +142,8 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
     self.lockComponent.locked = NO;
 }
 
+#pragma mark - OGContactNotifiableType
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
     if ([entity isKindOfClass:self.lockComponent.target.entity.class])
@@ -152,22 +161,55 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
         }
         else
         {
-            OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:[OGInventoryComponent class]];
+            self.lockComponent.locked = [self shouldLockWithEntity:entity];
             
-            for (GKEntity *entity in inventory.inventoryItems)
+            if (self.lockComponent.locked)
             {
-                OGKeyComponent *keyComponent = (OGKeyComponent *) [entity componentForClass:[OGKeyComponent class]];
-                
-                if (keyComponent)
-                {
-                    if ([self.keyIdentifiers containsObject:keyComponent.keyIdentifier])
-                    {
-                        self.lockComponent.locked = NO;
-                        break;
-                    }
-                }
+                [self showKeyMessage];
             }
         }
+    }
+}
+
+- (BOOL)shouldLockWithEntity:(GKEntity *)entity
+{
+    OGInventoryComponent *inventory = (OGInventoryComponent *) [entity componentForClass:[OGInventoryComponent class]];
+    BOOL result = YES;
+    
+    for (GKEntity *entity in inventory.inventoryItems)
+    {
+        OGKeyComponent *keyComponent = (OGKeyComponent *) [entity componentForClass:[OGKeyComponent class]];
+        
+        if (keyComponent)
+        {
+            if ([self.keyIdentifiers containsObject:keyComponent.keyIdentifier])
+            {
+                result = NO;
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (void)showKeyMessage
+{
+    GKEntity *targetEntity = self.lockComponent.target.entity;
+    OGMessageComponent *messageComponent = (OGMessageComponent *) [targetEntity componentForClass:[OGMessageComponent class]];
+    
+    if (messageComponent)
+    {
+        NSMutableString *keys = [NSMutableString string];
+        
+        for (NSString *keyIdentifier in self.keyIdentifiers)
+        {
+            [keys appendString:keyIdentifier];
+        }
+        
+        NSString *keysMessage = [NSString stringWithFormat:OGDoorEntityKeyMessageFormat, keys];
+        
+        [messageComponent showMessage:keysMessage duration:2.0 shouldOverlay:YES];
     }
 }
 
@@ -184,6 +226,8 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
     SKAction *move = [SKAction moveTo:newTriggerPosition duration:0.0];
     [trigger runAction:move];
 }
+
+#pragma mark - OGResourceLoadable
 
 + (void)loadResourcesWithCompletionHandler:(void (^)())handler
 {

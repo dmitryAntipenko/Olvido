@@ -52,14 +52,14 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
         if (self)
         {
             _inventoryIdentifier = inventoryIdentifier;
-            NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], nil];
+            
+            NSMutableArray *collisionColliders = [NSMutableArray arrayWithObjects:[OGColliderType obstacle], [OGColliderType door], nil];
             [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType weapon]];
             
             self.physicsComponent.physicsBody.categoryBitMask = [OGColliderType weapon].categoryBitMask;
             self.physicsComponent.physicsBody.collisionBitMask = [OGColliderType weapon].collisionBitMask;
             self.physicsComponent.physicsBody.contactTestBitMask = [OGColliderType weapon].contactTestBitMask;
             
-            self.renderComponent.node.physicsBody = self.physicsComponent.physicsBody;
             self.renderComponent.node.physicsBody.allowsRotation = NO;;
             
             _allowsAttacking = YES;
