@@ -7,7 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGObstacle.h"
+#import "OGSceneItemEntity.h"
 
 #import "OGInGameShopManager.h"
 #import "OGInteractionsManaging.h"
