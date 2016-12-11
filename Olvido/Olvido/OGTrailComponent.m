@@ -68,7 +68,7 @@ CGFloat const OGTrailComponentParticleAlphaSpeed = -0.1;
     if (self.renderComponent)
     {
         [self.renderComponent.node addChild:self.emitter];
-        self.emitter.particleZPosition = OGZPositionCategoryUnderPhysicsWorld;
+        self.emitter.particleZPosition = OGZPositionCategoryBackground;
     }
 }
 

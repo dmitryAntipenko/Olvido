@@ -10,12 +10,20 @@
 
 typedef NS_ENUM(NSInteger, OGZPositionCategory)
 {
-    OGZPositionCategoryBackground = -2000,
-    OGZPositionCategoryUnderPhysicsWorld = -1000,
-    OGZPositionCategoryShadows = -100,
-    OGZPositionCategoryPhysicsWorld = 0,
-    OGZPositionCategoryAbovePhysicsWorld = 2000,
-    OGZPositionCategoryUnderForeground = 2500,
+    OGZPositionCategoryBackground = -200,
+    OGZPositionCategoryShadows = -150,
+    OGZPositionCategoryEntities = 0,
     OGZPositionCategoryForeground = 3000,
-    OGZPositionCategoryTouchControl = 3500,
+    OGZPositionCategoryHUD = 3500,
+    OGZPositionCategoryTouchControl = 3600,
+    OGZPositionCategoryInteractions = 3700,
+    OGZPositionCategoryScreens = 4000,
+//    OGZPositionCategoryBackground = -2000,
+//    OGZPositionCategoryUnderPhysicsWorld = -1000,
+//    OGZPositionCategoryShadows = -100,
+//    OGZPositionCategoryPhysicsWorld = 0,
+//    OGZPositionCategoryAbovePhysicsWorld = 2000,
+//    OGZPositionCategoryUnderForeground = 2500,
+//    OGZPositionCategoryForeground = 3000,
+//    OGZPositionCategoryTouchControl = 3500,
 };

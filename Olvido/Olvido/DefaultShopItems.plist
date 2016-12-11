@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>weapon_01</key>
+	<key>weapon_02</key>
 	<dict>
 		<key>Price</key>
-		<integer>200</integer>
+		<real>99.90000000000001</real>
 		<key>TextureName</key>
 		<string>Blaster</string>
 		<key>UnitClassName</key>
@@ -15,7 +15,7 @@
 		<key>UnitConfiguration</key>
 		<dict>
 			<key>Identifier</key>
-			<string>weapon_01</string>
+			<string>shop_item_01</string>
 			<key>Audio</key>
 			<array>
 				<dict>

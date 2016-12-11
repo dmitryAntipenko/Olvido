@@ -8,6 +8,7 @@
 
 #import "OGEnemyEntityPreAttackState.h"
 #import "OGAnimationComponent.h"
+#import "OGAnimation.h"
 #import "OGEnemyEntity.h"
 
 #import "OGEnemyEntityAttackState.h"
@@ -21,6 +22,9 @@
 @property (nonatomic, weak) OGEnemyEntity *enemyEntity;
 
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
+
+@property (nonatomic, assign) NSTimeInterval timeSinceAnimationStart;
+@property (nonatomic, assign, getter=animationIsStarted) BOOL animationStarted;
 
 @end
 
@@ -44,6 +48,8 @@
 {
     [super didEnterWithPreviousState:previousState];
     
+    self.timeSinceAnimationStart = 0.0;
+    self.animationStarted = NO;
     self.animationComponent.delegate = self;
     self.animationComponent.requestedAnimationState = OGConstantsAttack;
 }
@@ -53,14 +59,35 @@
     return stateClass == [OGEnemyEntityAttackState class] || stateClass == [OGEnemyEntityDieState class];
 }
 
-- (void)animationDidFinish
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
 {
-    self.animationComponent.delegate = nil;
+    [super updateWithDeltaTime:seconds];
     
-    if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
+    if (self.animationIsStarted)
     {
-        [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
+        self.timeSinceAnimationStart += seconds;
+        
+        OGAnimation *currentAnimation = self.animationComponent.currentAnimation;
+        
+        if (currentAnimation.textures.count / 2.0 * currentAnimation.timePerFrame < self.timeSinceAnimationStart)
+        {
+            if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
+            {
+                [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
+                self.animationStarted = NO;
+            }
+        }
     }
+}
+
+
+- (void)animationDidStart
+{
+    self.animationStarted = YES;
+}
+
+- (void) animationDidFinish
+{
 }
 
 #pragma mark - Getters

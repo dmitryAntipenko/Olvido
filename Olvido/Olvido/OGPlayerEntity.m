@@ -72,6 +72,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 @property (nonatomic, strong) NSTimer *weaponTakeDelayTimer;
 @property (nonatomic, assign) BOOL canTakeWeapon;
 
+@property (nonatomic, assign) BOOL shouldDie;
 @end
 
 @implementation OGPlayerEntity
@@ -82,6 +83,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
     
     if (self)
     {
+        _shouldDie = NO;
         _agent = [[GKAgent2D alloc] init];
         _agent.radius = configuration.physicsBodyRadius;
         [self addComponent:_agent];
@@ -94,7 +96,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         
         _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:[SKPhysicsBody bodyWithCircleOfRadius:configuration.physicsBodyRadius]
                                                                colliderType:[OGColliderType player]];
-        _physicsComponent.physicsBody.mass = 100.0;
+        _physicsComponent.physicsBody.mass = 5.0;
         [self addComponent:_physicsComponent];
         
         _renderComponent.node.physicsBody = _physicsComponent.physicsBody;
@@ -172,34 +174,37 @@ NSString *OGPlayerEntityUnitName = @"Player";
     return self;
 }
 
+- (void)updateWithDeltaTime:(NSTimeInterval)seconds
+{
+    [super updateWithDeltaTime:seconds];
+    
+    if (self.shouldDie)
+    {
+        if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
+        {
+            [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
+        }
+        
+        self.shouldDie = NO;
+    }
+}
+
 #pragma mark - OGSceneItemsDelegate 
 
 - (void)itemWillBeTaken:(OGSceneItemEntity *)entity
 {
-    if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
-    {
-        [self.inventoryComponent removeItem:(id<OGInventoryItem>) self.weaponComponent.weapon];
-        self.canTakeWeapon = NO;
-        
-        self.weaponComponent.weapon = (OGWeaponEntity *) entity;
-        self.weaponComponent.weapon.owner = self;
-        
-        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-        {
-            self.canTakeWeapon = YES;
-            [timer invalidate];
-            timer = nil;
-        }];
-        
-        [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
-    }
-    
-    if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
-        && ![entity conformsToProtocol:@protocol(OGAttacking)])
+    if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
+        
+        if ([entity conformsToProtocol:@protocol(OGAttacking)])
+        {
+            OGWeaponEntity *weaponEntity = (OGWeaponEntity *) entity;            
+            weaponEntity.owner = self;
+            self.weaponComponent.weapon = weaponEntity;
+        }
     }
 }
 
@@ -247,10 +252,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 - (void)entityWillDie
 {
-    if ([self.intelligenceComponent.stateMachine canEnterState:[OGPlayerEntityDieState class]])
-    {
-        [self.intelligenceComponent.stateMachine enterState:[OGPlayerEntityDieState class]];
-    }
+    self.shouldDie = YES;
 }
 
 - (void)dealDamageToEntity:(NSInteger)damage

@@ -115,11 +115,13 @@ NSString *const OGAnimationComponentTextureActionKey = @"textureActionKey";
             }
         }];
         
+        self.currentAnimation = animation;
+        self.currentTimePerFrame = animation.timePerFrame;
+        
         [self.spriteNode runAction:[SKAction sequence:@[texturesAction, complitionAction]]
                            withKey:OGAnimationComponentTextureActionKey];
         
-        self.currentAnimation = animation;
-        self.currentTimePerFrame = animation.timePerFrame;
+        [self.delegate animationDidStart];
         
         self.elapsedAnimationDuration = 0.0;
         self.playBackwards = NO;

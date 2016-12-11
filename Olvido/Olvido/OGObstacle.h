@@ -7,9 +7,8 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGSceneItemEntity.h"
 
-@interface OGObstacle : GKEntity
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+@interface OGObstacle : OGSceneItemEntity
 
 @end

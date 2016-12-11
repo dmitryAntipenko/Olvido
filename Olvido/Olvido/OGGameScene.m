@@ -194,13 +194,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                              nil];
         
         _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
-        _pauseScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        _pauseScreenNode.zPosition = OGZPositionCategoryScreens;
         
         _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
-        _gameOverScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        _gameOverScreenNode.zPosition = OGZPositionCategoryScreens;
         
         _levelCompleteScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneLevelCompleteScreenNodeName];
-        _levelCompleteScreenNode.zPosition = OGZPositionCategoryTouchControl;
+        _levelCompleteScreenNode.zPosition = OGZPositionCategoryScreens;
         
         _shopManager = [[OGInGameShopManager alloc] init];
         _shopManager.delegate = self;
@@ -315,7 +315,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     SKCameraNode *camera = [[SKCameraNode alloc] init];
     self.camera = camera;
-    self.camera.zPosition = OGZPositionCategoryForeground;
+    self.camera.zPosition = OGZPositionCategoryHUD;
     self.cameraController.camera = camera;
     [self addChild:camera];
     
@@ -455,6 +455,16 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 }
 
 #pragma mark - OGInteractionsManaging protocol methods
+
+- (void)showInteractionButtonWithNode:(SKNode *)node
+{
+    if (!node.parent)
+    {
+        node.position = CGPointMake(self.frame.size.width / 2.0 - 170,
+                                    self.frame.size.height / 2.0 - node.frame.size.height);
+        [self.camera addChild:node];
+    }
+}
 
 - (void)showInteractionWithNode:(SKNode *)node
 {
@@ -752,6 +762,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     }
     
     [self.hudNode updateHUD];
+    
+    [self.player updateWithDeltaTime:currentTime];
 }
 
 - (void)didFinishUpdate
@@ -786,7 +798,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
          return result;
      }];
     
-    NSUInteger characterZPosition = OGZPositionCategoryPhysicsWorld;
+    NSUInteger characterZPosition = OGZPositionCategoryEntities;
     
     for (GKEntity *entity in self.entitiesSortableByZ)
     {

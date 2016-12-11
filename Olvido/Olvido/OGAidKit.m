@@ -9,10 +9,11 @@
 #import "OGAidKit.h"
 #import "OGHealthComponentDelegate.h"
 #import "OGRenderComponent.h"
+#import "OGInventoryItem.h"
 
 NSString *const OGAidKitHealingPointsKey = @"healingPoints";
 
-@interface OGAidKit () <OGHealthComponentDelegate>
+@interface OGAidKit () <OGHealthComponentDelegate, OGInventoryItem>
 
 @property (nonatomic, assign) NSInteger healingPoints;
 
@@ -39,12 +40,21 @@ NSString *const OGAidKitHealingPointsKey = @"healingPoints";
     return self;
 }
 
-- (void)contactWithEntityDidBegin:(GKEntity *)entity
+#pragma mark - OGInventoryItem
+
+- (NSString *)identifier
 {
-    [super contactWithEntityDidBegin:entity];
-    
+    return self.renderComponent.node.name;
+}
+
+- (SKTexture *)texture
+{
+    return ((SKSpriteNode *) self.renderComponent.node).texture;
+}
+
+- (void)wasSelected
+{
     [self.healthComponentDelegate restoreEntityHealth:self.healingPoints];
-    [self.delegate removeEntity:self];
 }
 
 @end

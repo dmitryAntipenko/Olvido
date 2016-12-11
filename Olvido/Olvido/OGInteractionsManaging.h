@@ -8,6 +8,7 @@
 
 @protocol OGInteractionsManaging <NSObject>
 
+- (void)showInteractionButtonWithNode:(SKNode *)node;
 - (void)showInteractionWithNode:(SKNode *)node;
 - (void)closeCurrentInteraction;
 

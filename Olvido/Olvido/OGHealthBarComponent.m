@@ -73,13 +73,13 @@ NSString *const OGHealthBarComponentHiddingActionKey = @"hidingActionKey";
     self.barBackgroundNode.size = CGSizeMake(entityNodeWidth, OGHealthBarComponentBarHeight);
     self.barBackgroundNode.color = [SKColor gameBlack];
     self.barBackgroundNode.position = CGPointMake(0.0, entityNodeHeight / 2.0);
-    self.barBackgroundNode.zPosition = OGZPositionCategoryPhysicsWorld;
+    self.barBackgroundNode.zPosition = OGZPositionCategoryEntities;
     
     self.barProgressNode.size = CGSizeMake([self progressBarWidth], OGHealthBarComponentBarHeight);
     self.barProgressNode.color = [SKColor gameGreen];
     self.barProgressNode.anchorPoint = [self progressBarNodeAnchorPoint];
     self.barProgressNode.position = [self progressBarNodePosition];
-    self.barProgressNode.zPosition = OGZPositionCategoryPhysicsWorld;
+    self.barProgressNode.zPosition = OGZPositionCategoryEntities;
     
     self.barBackgroundNode.hidden = YES;
     

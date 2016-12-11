@@ -101,6 +101,11 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 #pragma mark - OGInventoryItem
 
+- (void)wasSelected
+{
+    self.weaponComponent.weapon = self;
+}
+
 - (void)wasTaken
 {
     [self.renderComponent.node removeFromParent];

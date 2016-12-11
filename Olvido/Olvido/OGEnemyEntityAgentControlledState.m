@@ -113,8 +113,6 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 
 #pragma mark - Getters
 
-
-
 - (OGAnimationComponent *)animationComponent
 {
     if (!_animationComponent)

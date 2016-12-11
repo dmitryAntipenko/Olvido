@@ -43,6 +43,11 @@
     self.animationComponent.requestedAnimationState = OGConstantsDead;
 }
 
+- (void)animationDidStart
+{
+    
+}
+
 - (void)animationDidFinish
 {
     self.animationComponent.delegate = nil;
