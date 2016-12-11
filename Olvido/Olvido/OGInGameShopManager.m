@@ -151,7 +151,7 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
         spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
         
         buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
-                                                                configuration:(OGWeaponConfiguration *) shopItemConfiguration.unitConfiguration];
+                                                                configuration:(OGWeaponConfiguration *)shopItemConfiguration.unitConfiguration];
         
         buyItem.delegate = self.delegate;
     }

@@ -6,9 +6,6 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#ifndef Header_h
-#define Header_h
-
 typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
 {
     OGCollisionBitMaskDefault      = 0x0,
@@ -23,5 +20,3 @@ typedef NS_ENUM(NSUInteger, OGCollisionBitMask)
     OGCollisionBitMaskSceneItem    = 0x01 << 9,    //512
     OGCollisionBitMaskZone         = 0x01 << 10    //1024
 };
-
-#endif /* Header_h */

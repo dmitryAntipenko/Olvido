@@ -698,8 +698,6 @@
 				<key>UnitName</key>
 				<string>boss_weapon</string>
 			</dict>
-			<key>NeedsShadow</key>
-			<true/>
 			<key>MaxHealth</key>
 			<string>50</string>
 			<key>CurrentHealth</key>

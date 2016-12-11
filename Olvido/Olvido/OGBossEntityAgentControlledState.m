@@ -12,6 +12,8 @@
 #import "OGRenderComponent.h"
 #import "OGWeaponComponent.h"
 
+CGFloat const OGBossEntityAgentControlledStateShootingDistance = 300.0;
+
 @implementation OGBossEntityAgentControlledState
 
 - (void)updateWithDeltaTime:(NSTimeInterval)seconds
@@ -20,7 +22,8 @@
     
     OGRenderComponent *huntTargetRenderComponent = (OGRenderComponent *) [self.enemyEntity.huntAgent.entity componentForClass:[OGRenderComponent class]];
     
-    if (huntTargetRenderComponent && [self.enemyEntity distanceToAgentWithOtherAgent:self.enemyEntity.huntAgent] >= 200)
+    if (huntTargetRenderComponent &&
+        [self.enemyEntity distanceToAgentWithOtherAgent:self.enemyEntity.huntAgent] >= OGBossEntityAgentControlledStateShootingDistance)
     {
         self.weaponComponent.weapon.target = huntTargetRenderComponent.node;
         self.weaponComponent.shouldAttack = YES;
