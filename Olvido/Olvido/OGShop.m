@@ -11,7 +11,7 @@
 #import "OGShop.h"
 #import "OGPlayerEntity.h"
 
-#import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 
 #import "OGShopConfiguration.h"
 #import "OGShopItemConfiguration.h"
@@ -25,24 +25,24 @@
 
 @implementation OGShop
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  shopConfiguration:(OGShopConfiguration *)shopConfiguration
 {
-    if (sprite)
-    {
-        self = [super initWithSpriteNode:sprite];
-        
-        if (self)
-        {
-            _identifier = shopConfiguration.identifier;
-            _shopItemsConfiguration = shopConfiguration.shopItemsConfiguration;
-        }
-    }
-    else
-    {
-        self = nil;
-    }
+    spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteNode.size];
+    self = [super initWithSpriteNode:spriteNode];
     
+    if (self)
+    {
+        self.physicsComponent.physicsBody.categoryBitMask = [OGColliderType obstacle].categoryBitMask;
+        self.physicsComponent.physicsBody.dynamic = NO;
+        
+        NSArray *contactColliders = @[[OGColliderType player]];
+        [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType obstacle]];
+        
+        _identifier = shopConfiguration.identifier;
+        _shopItemsConfiguration = shopConfiguration.shopItemsConfiguration;
+    }
+
     return self;
 }
 

@@ -7,16 +7,8 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGContactNotifiableType.h"
+#import "OGSceneItemEntity.h"
 
-@class OGPhysicsComponent;
-@class OGRenderComponent;
-
-@interface OGObstacle : GKEntity <OGContactNotifiableType>
-
-@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
-@property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
-
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;
+@interface OGObstacle : OGSceneItemEntity
 
 @end

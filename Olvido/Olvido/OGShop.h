@@ -7,18 +7,18 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
-#import "OGInteractionsManaging.h"
 #import "OGObstacle.h"
+
 #import "OGInGameShopManager.h"
+#import "OGInteractionsManaging.h"
 
 @class OGShopConfiguration;
 
-
-@interface OGShop : OGObstacle
+@interface OGShop : OGSceneItemEntity
 
 @property (nonatomic, weak) id<OGInGameShopManagerProtocol> interactionDelegate;
 
-- (instancetype)initWithSpriteNode:(SKSpriteNode *)sprite
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
                  shopConfiguration:(OGShopConfiguration *)shopConfiguration;
 
 @end

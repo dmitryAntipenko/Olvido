@@ -7,55 +7,28 @@
 //
 
 #import "OGObstacle.h"
-
 #import "OGColliderType.h"
 
-#import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
-
-@interface OGObstacle ()
-
-@property (nonatomic, strong) OGRenderComponent *renderComponent;
-@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
-
-@end
 
 @implementation OGObstacle
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
-    self = [super init];
+    spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteNode.size];
+    
+    self = [super initWithSpriteNode:spriteNode];
     
     if (self)
     {
-        spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteNode.size];
+        self.physicsComponent.physicsBody.categoryBitMask = [OGColliderType obstacle].categoryBitMask;
+        self.physicsComponent.physicsBody.collisionBitMask = [OGColliderType obstacle].collisionBitMask;
+        self.physicsComponent.physicsBody.contactTestBitMask = [OGColliderType obstacle].contactTestBitMask;
         
-        NSArray *contactColliders = @[[OGColliderType player]];
-        [[OGColliderType requestedContactNotifications] setObject:contactColliders forKey:[OGColliderType obstacle]];
-        
-        _renderComponent = [[OGRenderComponent alloc] init];
-        _renderComponent.node = spriteNode;
-        
-        [self addComponent:_renderComponent];
-        
-        _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:_renderComponent.node.physicsBody
-                                                               colliderType:[OGColliderType obstacle]];
-        _physicsComponent.physicsBody.dynamic = NO;
-        
-        [self addComponent:_physicsComponent];
+        self.physicsComponent.physicsBody.dynamic = NO;
     }
     
     return self;
-}
-
-- (void)contactWithEntityDidBegin:(GKEntity *)entity
-{
-    
-}
-
-- (void)contactWithEntityDidEnd:(GKEntity *)entity
-{
-    
 }
 
 @end

@@ -89,7 +89,7 @@
     || stateClass == [OGEnemyEntityDieState class];
 }
 
-- (void)animationDidStart
+- (void) animationDidStart
 {
 }
 

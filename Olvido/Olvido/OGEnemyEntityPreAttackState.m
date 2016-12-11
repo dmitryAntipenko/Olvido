@@ -24,7 +24,7 @@
 @property (nonatomic, weak) OGAnimationComponent *animationComponent;
 
 @property (nonatomic, assign) NSTimeInterval timeSinceAnimationStart;
-@property (nonatomic, assign, getter=isAnimationStart) BOOL animationStart;
+@property (nonatomic, assign, getter=animationIsStarted) BOOL animationStarted;
 
 @end
 
@@ -49,7 +49,7 @@
     [super didEnterWithPreviousState:previousState];
     
     self.timeSinceAnimationStart = 0.0;
-    self.animationStart = NO;
+    self.animationStarted = NO;
     self.animationComponent.delegate = self;
     self.animationComponent.requestedAnimationState = OGConstantsAttack;
 }
@@ -63,7 +63,7 @@
 {
     [super updateWithDeltaTime:seconds];
     
-    if (self.isAnimationStart)
+    if (self.animationIsStarted)
     {
         self.timeSinceAnimationStart += seconds;
         
@@ -74,7 +74,7 @@
             if ([self.stateMachine canEnterState:[OGEnemyEntityAttackState class]])
             {
                 [self.stateMachine enterState:[OGEnemyEntityAttackState class]];
-                self.animationStart = NO;
+                self.animationStarted = NO;
             }
         }
     }
@@ -83,10 +83,10 @@
 
 - (void)animationDidStart
 {
-    self.animationStart = YES;
+    self.animationStarted = YES;
 }
 
-- (void)animationDidFinish
+- (void) animationDidFinish
 {
 }
 
