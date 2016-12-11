@@ -60,6 +60,12 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
             self.physicsComponent.physicsBody.collisionBitMask = [OGColliderType weapon].collisionBitMask;
             self.physicsComponent.physicsBody.contactTestBitMask = [OGColliderType weapon].contactTestBitMask;
             
+            self.physicsComponent.physicsBody.friction = 0.0;
+            self.physicsComponent.physicsBody.restitution = 0.0;
+            self.physicsComponent.physicsBody.linearDamping = 1.0;
+            self.physicsComponent.physicsBody.angularDamping = 1.0;
+            self.physicsComponent.physicsBody.mass = 1.0;
+            
             self.renderComponent.node.physicsBody.allowsRotation = NO;;
             
             _allowsAttacking = YES;
