@@ -11,7 +11,7 @@
 #import "OGRenderComponent.h"
 
 NSString *const OGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
-NSUInteger const OGInventoryComponentDefaultCapacity = 5;
+NSUInteger const OGInventoryComponentDefaultCapacity = 7;
 NSUInteger const OGInventoryComponentEmptyCount = 0;
 
 @interface OGInventoryComponent ()

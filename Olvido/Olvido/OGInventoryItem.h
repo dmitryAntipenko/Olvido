@@ -18,4 +18,6 @@
 - (void)wasTaken;
 - (void)didThrown;
 
+- (void)wasSelected;
+
 @end

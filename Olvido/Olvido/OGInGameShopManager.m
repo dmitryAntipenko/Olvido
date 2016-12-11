@@ -38,6 +38,7 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
 @property (nonatomic, strong) SKReferenceNode *shopScreenNode;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, OGButtonNode *> *buttonNodes;
+@property (nonatomic, strong) NSMutableArray<OGShopItemConfiguration *> *shopItemConfigurations;
 
 @property (nonatomic, assign) CGFloat money;
 
@@ -93,32 +94,12 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
     [self.buttonNodes removeObjectForKey:identifier];
 }
 
-- (void)showShopScreenWithShopItems:(NSArray<OGShopItemConfiguration *> *)shopItems
+- (void)showShopScreenWithItems:(NSArray<OGShopItemConfiguration *> *)shopItems
 {
-    SKNode *shopNode = self.shopScreenNode.children.firstObject;
+    self.shopItemConfigurations = (NSMutableArray *)shopItems;
     
     [self updateMoneyLabelWithValue:self.money];
-    
-    __block NSInteger counter = 0;
-    
-    [shopNode enumerateChildNodesWithName:OGInGameShopManagerBuyItem usingBlock:^(SKNode *node, BOOL *stop)
-    {
-        if (shopItems.count > counter)
-        {
-            SKSpriteNode *textureNode = (SKSpriteNode *) [node childNodeWithName:OGInGameShopManagerTexture];
-            textureNode.texture = shopItems[counter].texture;
-            
-            SKLabelNode *priceNode = (SKLabelNode *) [node childNodeWithName:OGInGameShopManagerPrice];
-            priceNode.text = [NSString stringWithFormat:@"%.2f", [shopItems[counter].price floatValue]];;
-            
-            ((OGButtonNode *) node).target = self;
-            
-            node.userData = [NSMutableDictionary dictionary];
-            node.userData[OGInGameShopManagerBuyItemUserInfoUnitConfiguration] = shopItems[counter];
-            
-            counter++;
-        }
-    }];
+    [self updateItemsWithItems:self.shopItemConfigurations];
 
     [self.delegate showInteractionWithNode:self.shopScreenNode];
 }
@@ -135,7 +116,7 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
     }
     else if ([buttonNode.name isEqualToString:OGInGameShopManagerOpenShopButtonName])
     {
-        [self showShopScreenWithShopItems:buttonNode.userData[OGInGameShopManagerOpenShopButtonUserData]];
+        [self showShopScreenWithItems:buttonNode.userData[OGInGameShopManagerOpenShopButtonUserData]];
     }
 }
 
@@ -143,25 +124,24 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
 {
     OGSceneItemEntity *buyItem = nil;
     
-    if (shopItemConfiguration.unitClass == [OGShootingWeapon class])
-    {
-        SKSpriteNode *spriteNode = [SKSpriteNode spriteNodeWithTexture:shopItemConfiguration.texture];
-        
-        CGFloat physicsBodyRadius = spriteNode.size.width / 2.0;
-        spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
-        
-        buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
-                                                                configuration:(OGWeaponConfiguration *)shopItemConfiguration.unitConfiguration];
-        
-        buyItem.delegate = self.delegate;
-    }
+    SKSpriteNode *spriteNode = [SKSpriteNode spriteNodeWithTexture:shopItemConfiguration.texture];
+    
+    CGFloat physicsBodyRadius = spriteNode.size.width / 2.0;
+    spriteNode.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:physicsBodyRadius];
+    
+    buyItem = [[shopItemConfiguration.unitClass alloc] initWithSpriteNode:spriteNode
+                                                            configuration:(id)shopItemConfiguration.unitConfiguration];
+    
+    buyItem.delegate = self.delegate;
     
     if (buyItem && self.money >= shopItemConfiguration.price.floatValue)
     {
-        self.money -= shopItemConfiguration.price.floatValue;
-        [self updateMoneyLabelWithValue:self.money];
-        
         [self.visitor itemWillBeTaken:buyItem];
+        self.money -= shopItemConfiguration.price.floatValue;
+        
+        [self updateMoneyLabelWithValue:self.money];
+        [self.shopItemConfigurations removeObject:shopItemConfiguration];
+        [self updateItemsWithItems:self.shopItemConfigurations];
     }
 }
 
@@ -171,6 +151,45 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
     
     SKLabelNode *moneyLabel = (SKLabelNode *) [shopNode childNodeWithName:OGInGameShopManagerMoneyLabel];
     moneyLabel.text = [NSString stringWithFormat:@"%.2f", value];
+}
+
+- (void)updateItemsWithItems:(NSArray<OGShopItemConfiguration *> *)shopItems
+{
+    SKNode *shopNode = self.shopScreenNode.children.firstObject;
+    
+    __block NSInteger counter = 0;
+    
+    [shopNode enumerateChildNodesWithName:OGInGameShopManagerBuyItem usingBlock:^(SKNode *node, BOOL *stop)
+     {
+         if (shopItems.count > counter)
+         {
+             SKSpriteNode *textureNode = (SKSpriteNode *) [node childNodeWithName:OGInGameShopManagerTexture];
+             textureNode.texture = shopItems[counter].texture;
+             
+             SKLabelNode *priceNode = (SKLabelNode *) [node childNodeWithName:OGInGameShopManagerPrice];
+             priceNode.text = [NSString stringWithFormat:@"%.2f", [shopItems[counter].price floatValue]];
+             
+             ((OGButtonNode *) node).target = self;
+             
+             node.userData = [NSMutableDictionary dictionary];
+             node.userData[OGInGameShopManagerBuyItemUserInfoUnitConfiguration] = self.shopItemConfigurations[counter];
+             
+             counter++;
+         }
+         else
+         {
+             SKSpriteNode *textureNode = (SKSpriteNode *) [node childNodeWithName:OGInGameShopManagerTexture];
+             textureNode.texture = nil;
+             
+             SKLabelNode *priceNode = (SKLabelNode *) [node childNodeWithName:OGInGameShopManagerPrice];
+             priceNode.text = @"";
+             
+             ((OGButtonNode *) node).target = nil;
+             node.userData = nil;
+             
+             counter++;
+         }
+     }];
 }
 
 @end

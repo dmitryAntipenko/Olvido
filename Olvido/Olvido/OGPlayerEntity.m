@@ -193,30 +193,18 @@ NSString *OGPlayerEntityUnitName = @"Player";
 
 - (void)itemWillBeTaken:(OGSceneItemEntity *)entity
 {
-    if ([entity conformsToProtocol:@protocol(OGAttacking)] && self.canTakeWeapon)
-    {
-        [self.inventoryComponent removeItem:(id<OGInventoryItem>) self.weaponComponent.weapon];
-        self.canTakeWeapon = NO;
-        
-        self.weaponComponent.weapon = (OGWeaponEntity *) entity;
-        self.weaponComponent.weapon.owner = self;
-        
-        self.weaponTakeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:OGPlayerEntityWeaponDropDelay repeats:NO block:^(NSTimer *timer)
-        {
-            self.canTakeWeapon = YES;
-            [timer invalidate];
-            timer = nil;
-        }];
-        
-        [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
-    }
-    
-    if ([entity conformsToProtocol:@protocol(OGInventoryItem)]
-        && ![entity conformsToProtocol:@protocol(OGAttacking)])
+    if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
     {
         OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
         [renderComponent.node removeFromParent];
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
+        
+        if ([entity conformsToProtocol:@protocol(OGAttacking)])
+        {
+            OGWeaponEntity *weaponEntity = (OGWeaponEntity *) entity;            
+            weaponEntity.owner = self;
+            self.weaponComponent.weapon = weaponEntity;
+        }
     }
 }
 
