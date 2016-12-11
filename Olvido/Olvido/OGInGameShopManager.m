@@ -14,6 +14,7 @@
 #import "OGShootingWeapon.h"
 #import "OGInventoryItem.h"
 #import "OGZPositionEnum.h"
+#import "OGScreenNode.h"
 
 NSString *const OGInGameShopManagerShopScreenNodeName = @"OGShopScreen.sks";
 NSString *const OGInGameShopManagerBuyItem = @"BuyItem";
@@ -35,7 +36,7 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
 
 @interface OGInGameShopManager ()
 
-@property (nonatomic, strong) SKReferenceNode *shopScreenNode;
+@property (nonatomic, strong) OGScreenNode *shopScreenNode;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, OGButtonNode *> *buttonNodes;
 @property (nonatomic, strong) NSMutableArray<OGShopItemConfiguration *> *shopItemConfigurations;
@@ -52,7 +53,7 @@ CGFloat const OGInGameShopManagerStratMoney = 1000.0;
     
     if (self)
     {
-        _shopScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGInGameShopManagerShopScreenNodeName];
+        _shopScreenNode = [[OGScreenNode alloc] initWithFileNamed:OGInGameShopManagerShopScreenNodeName];
         _shopScreenNode.zPosition = OGZPositionCategoryScreens;
         
         OGButtonNode *resumeNode = (OGButtonNode *) [_shopScreenNode.children.firstObject childNodeWithName:OGInGameShopManagerResumeButtonName];

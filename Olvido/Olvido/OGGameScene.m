@@ -67,6 +67,7 @@
 #import "OGWeaponStatisticsNode.h"
 #import "OGButtonNode.h"
 #import "OGHUDNode.h"
+#import "OGScreenNode.h"
 
 //MARK: States
 
@@ -126,9 +127,9 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 @property (nonatomic, weak) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
 
-@property (nonatomic, strong) SKReferenceNode *pauseScreenNode;
-@property (nonatomic, strong) SKReferenceNode *gameOverScreenNode;
-@property (nonatomic, strong) SKReferenceNode *levelCompleteScreenNode;
+@property (nonatomic, strong) OGScreenNode *pauseScreenNode;
+@property (nonatomic, strong) OGScreenNode *gameOverScreenNode;
+@property (nonatomic, strong) OGScreenNode *levelCompleteScreenNode;
 
 @property (nonatomic, strong) OGHUDNode *hudNode;
 @property (nonatomic, strong) OGInventoryBarNode *inventoryBarNode;
@@ -193,13 +194,13 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                              [[GKComponentSystem alloc] initWithComponentClass:[OGHealthBarComponent class]],
                              nil];
         
-        _pauseScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
+        _pauseScreenNode = [[OGScreenNode alloc] initWithFileNamed:OGGameScenePauseScreenNodeName];
         _pauseScreenNode.zPosition = OGZPositionCategoryScreens;
         
-        _gameOverScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
+        _gameOverScreenNode = [[OGScreenNode alloc] initWithFileNamed:OGGameSceneGameOverScreenNodeName];
         _gameOverScreenNode.zPosition = OGZPositionCategoryScreens;
         
-        _levelCompleteScreenNode = [[SKReferenceNode alloc] initWithFileNamed:OGGameSceneLevelCompleteScreenNodeName];
+        _levelCompleteScreenNode = [[OGScreenNode alloc] initWithFileNamed:OGGameSceneLevelCompleteScreenNodeName];
         _levelCompleteScreenNode.zPosition = OGZPositionCategoryScreens;
         
         _shopManager = [[OGInGameShopManager alloc] init];
@@ -462,18 +463,20 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     {
         node.position = CGPointMake(self.frame.size.width / 2.0 - 170,
                                     self.frame.size.height / 2.0 - node.frame.size.height);
+        
         [self.camera addChild:node];
     }
 }
 
-- (void)showInteractionWithNode:(SKNode *)node
+- (void)showInteractionWithNode:(OGScreenNode *)screenNode
 {
     [self pauseWithoutPauseScreen];
     
-    if (!node.parent && !self.currentInteraction)
+    if (!screenNode.parent && !self.currentInteraction)
     {
-        self.currentInteraction = node;
-        [self.camera addChild:node];
+        self.currentInteraction = screenNode;
+        
+        [screenNode addToNode:self.camera];
     }
 }
 
@@ -669,7 +672,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     if (!self.pauseScreenNode.parent)
     {
-        [self.camera addChild:self.pauseScreenNode];
+        [self.pauseScreenNode addToNode:self.camera];
     }
 }
 
@@ -677,7 +680,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     if (!self.levelCompleteScreenNode.parent)
     {
-        [self.camera addChild:self.levelCompleteScreenNode];
+        [self.levelCompleteScreenNode addToNode:self.camera];
     }
 }
 
@@ -716,7 +719,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     if (!self.gameOverScreenNode.parent)
     {
-        [self.camera addChild:self.gameOverScreenNode];
+        [self.gameOverScreenNode addToNode:self.camera];
     }
 }
 

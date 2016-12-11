@@ -6,10 +6,12 @@
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
+@class OGScreenNode;
+
 @protocol OGInteractionsManaging <NSObject>
 
 - (void)showInteractionButtonWithNode:(SKNode *)node;
-- (void)showInteractionWithNode:(SKNode *)node;
+- (void)showInteractionWithNode:(OGScreenNode *)node;
 - (void)closeCurrentInteraction;
 
 @end
