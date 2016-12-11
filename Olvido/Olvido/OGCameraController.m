@@ -9,12 +9,6 @@
 #import "OGCameraController.h"
 #import "OGCollisionBitMask.h"
 
-@interface OGCameraController ()
-
-@property (nonatomic, weak) SKSpriteNode *rails;
-
-@end
-
 @implementation OGCameraController
 
 - (void)moveCameraToNode:(SKNode *)node

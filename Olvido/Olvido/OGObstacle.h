@@ -10,9 +10,11 @@
 #import "OGContactNotifiableType.h"
 
 @class OGPhysicsComponent;
+@class OGRenderComponent;
 
 @interface OGObstacle : GKEntity <OGContactNotifiableType>
 
+@property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode;

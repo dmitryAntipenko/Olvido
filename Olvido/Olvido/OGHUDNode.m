@@ -26,7 +26,7 @@
     if (self)
     {
         _mutableHudElements = [NSMutableArray array];
-        self.zPosition = OGZPositionCategoryForeground;
+        self.zPosition = OGZPositionCategoryHUD;
     }
     
     return self;

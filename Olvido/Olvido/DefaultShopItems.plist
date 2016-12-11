@@ -5,7 +5,7 @@
 	<key>weapon_01</key>
 	<dict>
 		<key>Price</key>
-		<integer>200</integer>
+		<real>110.6</real>
 		<key>TextureName</key>
 		<string>Blaster</string>
 		<key>UnitClassName</key>

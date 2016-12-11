@@ -15,7 +15,9 @@
 
 @protocol OGInGameShopManagerProtocol <NSObject>
 
-- (void)showWithShopItems:(NSArray<OGShopItemConfiguration *> *)shopItems;
+- (void)showShopButtonWithIdentifier:(NSString *)identifier
+                           shopItems:(NSArray<OGShopItemConfiguration *> *)shopItems;
+- (void)hideShopButtonWithIdentifier:(NSString *)identifier;
 
 @property (nonatomic, weak) id<OGSceneItemsDelegate> visitor;
 

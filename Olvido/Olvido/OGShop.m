@@ -11,7 +11,8 @@
 #import "OGShop.h"
 #import "OGPlayerEntity.h"
 
-#import "OGPhysicsComponent.h"
+#import "OGRenderComponent.h"
+
 #import "OGShopConfiguration.h"
 #import "OGShopItemConfiguration.h"
 
@@ -52,7 +53,20 @@
     if ([entity isMemberOfClass:[OGPlayerEntity class]])
     {
         self.interactionDelegate.visitor = (id<OGSceneItemsDelegate>) entity;
-        [self.interactionDelegate showWithShopItems:self.shopItemsConfiguration];
+        [self.interactionDelegate showShopButtonWithIdentifier:self.identifier
+                                                     shopItems:self.shopItemsConfiguration];
+    }
+}
+
+- (void)contactWithEntityDidEnd:(GKEntity *)entity
+{
+    [super contactWithEntityDidEnd:entity];
+    
+    if ([entity isMemberOfClass:[OGPlayerEntity class]])
+    {
+        self.interactionDelegate.visitor = nil;
+        
+        [self.interactionDelegate hideShopButtonWithIdentifier:self.identifier];
     }
 }
 
