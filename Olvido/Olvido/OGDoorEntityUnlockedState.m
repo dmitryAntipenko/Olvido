@@ -7,7 +7,7 @@
 //
 
 #import "OGDoorEntityUnlockedState.h"
-#import "OGDoorEntityClosedState.h"
+#import "OGDoorEntityOpenedState.h"
 
 #import "OGColliderType.h"
 
@@ -20,18 +20,18 @@
 {
     [super didEnterWithPreviousState:previousState];
     
-    self.lockComponent.closed = NO;
-    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+//    self.lockComponent.closed = NO;
+//    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
     
-    if ([self.stateMachine canEnterState:[OGDoorEntityClosedState class]])
+    if ([self.stateMachine canEnterState:[OGDoorEntityOpenedState class]])
     {
-        [self.stateMachine enterState:[OGDoorEntityClosedState class]];
+        [self.stateMachine enterState:[OGDoorEntityOpenedState class]];
     }
 }
 
 - (BOOL)isValidNextState:(Class)stateClass
 {
-    return stateClass == [OGDoorEntityClosedState class];
+    return stateClass == [OGDoorEntityOpenedState class];
 }
 
 @end
