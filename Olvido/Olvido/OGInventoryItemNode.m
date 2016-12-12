@@ -48,7 +48,10 @@
 
 - (void)doAction
 {
-    [self.item wasSelected];
+    if ([self.item respondsToSelector:@selector(wasSelected)])
+    {
+        [self.item wasSelected];
+    }
 }
 
 @end
