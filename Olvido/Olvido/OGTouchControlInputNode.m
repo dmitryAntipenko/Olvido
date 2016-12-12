@@ -132,7 +132,6 @@ NSString *const OGTouchControlInputNodePayseButtonName = @"PauseButton";;
         if (touchIsInCenter || self.shouldHideThumbStickNodes)
         {
             continue;
-//            [self]
         }
         
         NSSet *set = [NSSet setWithObject:touch];

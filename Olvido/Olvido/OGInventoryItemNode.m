@@ -7,6 +7,7 @@
 //
 
 #import "OGInventoryItemNode.h"
+#import "OGInventoryBarNode.h"
 #import "OGZPositionEnum.h"
 
 @interface OGInventoryItemNode ()
@@ -48,6 +49,8 @@
 
 - (void)doAction
 {
+    [super doAction];
+    
     if ([self.item respondsToSelector:@selector(wasSelected)])
     {
         [self.item wasSelected];

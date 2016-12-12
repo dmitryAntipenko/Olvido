@@ -17,13 +17,5 @@ typedef NS_ENUM(NSInteger, OGZPositionCategory)
     OGZPositionCategoryTouchControl = 3600,
     OGZPositionCategoryInteractions = 3700,
     OGZPositionCategoryHUD = 3800,
-    OGZPositionCategoryScreens = 4000,
-//    OGZPositionCategoryBackground = -2000,
-//    OGZPositionCategoryUnderPhysicsWorld = -1000,
-//    OGZPositionCategoryShadows = -100,
-//    OGZPositionCategoryPhysicsWorld = 0,
-//    OGZPositionCategoryAbovePhysicsWorld = 2000,
-//    OGZPositionCategoryUnderForeground = 2500,
-//    OGZPositionCategoryForeground = 3000,
-//    OGZPositionCategoryTouchControl = 3500,
+    OGZPositionCategoryScreens = 4000
 };

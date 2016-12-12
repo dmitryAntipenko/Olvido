@@ -12,7 +12,11 @@ extern NSString *const OGButtonNodeUserDataTouchedTextureKey;
 extern NSString *const OGButtonNodeUserDataTouchedColorKey;
 extern NSString *const OGButtonNodeUserDataSelectorKey;
 
+@class OGAudioManager;
+
 @interface OGButtonNode : SKSpriteNode
+
+@property (nonatomic, weak) OGAudioManager *audioManager;
 
 @property (nonatomic, strong) id target;
 

@@ -78,7 +78,7 @@
 
 - (void)stopMusic
 {
-    if (self.musicPlayer && self.musicPlayer.isPlaying)
+    if ([self isMusicPlaying])
     {
         [self.musicPlayer stop];
     }
@@ -86,7 +86,7 @@
 
 - (void)pauseMusic
 {
-    if (self.musicPlayer && self.musicPlayer.isPlaying)
+    if ([self isMusicPlaying])
     {
         [self.musicPlayer pause];
     }

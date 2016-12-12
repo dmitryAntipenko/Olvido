@@ -12,6 +12,7 @@
 #import "OGRenderComponent.h"
 #import "OGPlayerEntity.h"
 #import "OGHUDNode.h"
+#import "OGGameScene.h"
 #import "OGInventoryItemNode.h"
 
 CGFloat const OGInventoryBarNodeMaxHeight = 256;
@@ -162,6 +163,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     if (item.texture)
     {
         OGInventoryItemNode *itemNode = [OGInventoryItemNode itemNodeWithItem:item size:self.itemCellSize];
+        itemNode.audioManager = self.hudNode.gameScene.audioManager;
         
         CGFloat xPosition = (self.itemCellSize.width - self.size.width) / 2 + self.itemCellSize.width * index;
         

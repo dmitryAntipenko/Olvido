@@ -12,8 +12,11 @@
 
 @class OGRenderComponent;
 @class OGPhysicsComponent;
+@class OGGameScene;
 
 @interface OGSceneItemEntity : GKEntity <OGContactNotifiableType>
+
+@property (nonatomic, weak) OGGameScene *gameScene;
 
 @property (nonatomic, strong, readonly) OGRenderComponent *renderComponent;
 @property (nonatomic, strong, readonly) OGPhysicsComponent *physicsComponent;

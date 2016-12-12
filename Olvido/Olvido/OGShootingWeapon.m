@@ -12,6 +12,7 @@
 #import "OGPhysicsComponent.h"
 #import "OGSoundComponent.h"
 #import "OGWeaponComponent.h"
+#import "OGGameScene.h"
 
 #import "OGWeaponConfiguration.h"
 #import "OGAudioConfiguration.h"
@@ -136,9 +137,9 @@
                                                  cosf(vectorAngle) * bullet.speed);
     
     bullet.renderComponent.node.zRotation = -vectorAngle;
-    bullet.delegate = self.delegate;
+    bullet.delegate = self.gameScene;
     bullet.weapon = self;
-    [self.delegate addEntity:bullet];
+    [self.gameScene addEntity:bullet];
     
     [bullet.physicsComponent.physicsBody applyImpulse:bulletMovementVector];
 }

@@ -10,6 +10,7 @@
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGColliderType.h"
+#import "OGGameScene.h"
 
 @interface OGSceneItemEntity ()
 
@@ -28,6 +29,11 @@
         
         if (self)
         {
+            if ([spriteNode.scene isKindOfClass:[OGGameScene class]])
+            {
+                _gameScene = (OGGameScene *) spriteNode.scene;
+            }
+            
             _renderComponent = [[OGRenderComponent alloc] init];
             _renderComponent.node = spriteNode;
             [self addComponent:_renderComponent];

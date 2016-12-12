@@ -7,6 +7,7 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+#import "OGEntityManaging.h"
 #import "OGInventoryItem.h"
 
 @protocol OGInventoryComponentDelegate <NSObject>
@@ -17,7 +18,7 @@
 
 extern NSString *const OGInventoryComponentInventoryItemsKeyPath;
 
-@interface OGInventoryComponent : GKComponent
+@interface OGInventoryComponent : GKComponent <OGEntityManaging>
 
 @property (nonatomic, assign, readonly, getter=isFull) BOOL full;
 @property (nonatomic, assign, readonly, getter=isEmpty) BOOL empty;
@@ -28,8 +29,8 @@ extern NSString *const OGInventoryComponentInventoryItemsKeyPath;
 + (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity;
 + (instancetype)inventoryComponent;
 
-- (void)addItem:(id <OGInventoryItem>)item;
-- (void)removeItem:(id <OGInventoryItem>)item;
+- (void)addItem:(id<OGInventoryItem>)item;
+- (void)removeItem:(id<OGInventoryItem>)item;
 
 - (BOOL)containsItem:(id <OGInventoryItem>)item;
 - (BOOL)containsItemWithIdentifier:(NSString *)identifier;

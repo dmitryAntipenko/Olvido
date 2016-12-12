@@ -195,8 +195,8 @@ NSString *OGPlayerEntityUnitName = @"Player";
 {
     if ([entity conformsToProtocol:@protocol(OGInventoryItem)])
     {
-        OGRenderComponent *renderComponent = (OGRenderComponent *) [entity componentForClass:[OGRenderComponent class]];
-        [renderComponent.node removeFromParent];
+        [self.delegate removeEntity:entity];
+        
         [self.inventoryComponent addItem:(id<OGInventoryItem>) entity];
         
         if ([entity conformsToProtocol:@protocol(OGAttacking)])

@@ -82,7 +82,6 @@ CGFloat const OGWeaponStatisticsNodeOffset = 60.0;
 {
     self.anchorPoint = CGPointMake(0.0, 1.0);
     
-//    CGRect parentFrame = self.hudNode.size;
     self.position = CGPointMake(-self.hudNode.size.width / 2,
                                 self.hudNode.size.height / 2);
 }

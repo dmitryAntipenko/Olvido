@@ -11,6 +11,7 @@
 - (void)addEntity:(GKEntity *)entity;
 - (void)removeEntity:(GKEntity *)entity;
 
+@optional
 - (void)playerDidDie;
 
 @end

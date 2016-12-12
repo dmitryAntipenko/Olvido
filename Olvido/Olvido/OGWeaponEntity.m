@@ -7,6 +7,7 @@
 //
 
 #import "OGWeaponEntity.h"
+#import "OGGameScene.h"
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
 #import "OGBullet.h"
@@ -113,6 +114,8 @@ CGFloat const OGWeaponEntityDefaultReloadSpeed = 1.0;
 
 - (void)didThrown
 {
+    self.delegate = self.gameScene;
+    
     SKSpriteNode *weaponNode = (SKSpriteNode *) self.renderComponent.node;
     
     OGMovementComponent *ownerMovement = (OGMovementComponent *) [self.owner componentForClass:[OGMovementComponent class]];

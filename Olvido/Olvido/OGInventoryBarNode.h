@@ -10,7 +10,6 @@
 #import "OGHUDElement.h"
 
 @class OGInventoryComponent;
-@class OGPlayerEntity;
 
 @interface OGInventoryBarNode : SKSpriteNode <OGHUDElement>
 

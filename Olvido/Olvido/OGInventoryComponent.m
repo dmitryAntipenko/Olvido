@@ -9,6 +9,7 @@
 #import "OGInventoryComponent.h"
 #import "OGMessageComponent.h"
 #import "OGRenderComponent.h"
+#import "OGSceneItemEntity.h"
 
 NSString *const OGInventoryComponentInventoryItemsKeyPath = @"inventoryItems";
 NSUInteger const OGInventoryComponentDefaultCapacity = 7;
@@ -21,6 +22,8 @@ NSUInteger const OGInventoryComponentEmptyCount = 0;
 @end
 
 @implementation OGInventoryComponent
+
+#pragma mark - Initializing
 
 + (instancetype)inventoryComponentWithCapacity:(NSUInteger)capacity
 {
@@ -50,13 +53,20 @@ NSUInteger const OGInventoryComponentEmptyCount = 0;
     return [self initWithCapacity:OGInventoryComponentDefaultCapacity];
 }
 
-- (void)addItem:(id <OGInventoryItem>)item
+#pragma mark - Inventory Managing
+
+- (void)addItem:(id<OGInventoryItem>)item
 {
     if (item)
     {
         if (!self.isFull)
         {
             [self.mutableInventoryItems setObject:item forKey:item.identifier];
+            
+            if ([item isKindOfClass:[OGSceneItemEntity class]])
+            {
+                ((OGSceneItemEntity *) item).delegate = self;
+            }
             
             if ([item respondsToSelector:@selector(wasTaken)])
             {
@@ -68,7 +78,7 @@ NSUInteger const OGInventoryComponentEmptyCount = 0;
     }
 }
 
-- (void)removeItem:(id <OGInventoryItem>)item
+- (void)removeItem:(id<OGInventoryItem>)item
 {
     if (item && [self.mutableInventoryItems objectForKey:item.identifier])
     {
@@ -109,6 +119,20 @@ NSUInteger const OGInventoryComponentEmptyCount = 0;
 {
     return self.mutableInventoryItems.count == OGInventoryComponentEmptyCount;
 }
+
+#pragma mark - OGEntityManaging
+
+- (void)addEntity:(GKEntity *)entity
+{
+    [self addItem:(id<OGInventoryItem>) entity];
+}
+
+- (void)removeEntity:(GKEntity *)entity
+{
+    [self removeItem:(id<OGInventoryItem>) entity];
+}
+
+#pragma mark - Getters
 
 - (NSArray<id<OGInventoryItem>> *)inventoryItems
 {

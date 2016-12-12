@@ -7,6 +7,7 @@
 //
 
 #import "OGButtonNode.h"
+#import "OGAudioManager.h"
 #import "SKColor+OGConstantColors.h"
 #import "OGConstants.h"
 
@@ -114,8 +115,10 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
             [self.target performSelector:defaultSelector withObject:self];
         }
     }
-    
+
 #pragma clang diagnostic pop
+    
+    [self.audioManager playSoundEffect:@"button_touch"];
 }
 
 - (BOOL)isUserInteractionEnabled

@@ -55,6 +55,7 @@ NSString *const OGAidKitHealingPointsKey = @"healingPoints";
 - (void)wasSelected
 {
     [self.healthComponentDelegate restoreEntityHealth:self.healingPoints];
+    [self.delegate removeEntity:self];
 }
 
 @end
