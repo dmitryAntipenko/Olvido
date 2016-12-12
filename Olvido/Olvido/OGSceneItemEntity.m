@@ -55,6 +55,16 @@
     return self;
 }
 
+- (void)setDelegate:(id<OGEntityManaging>)delegate
+{
+    _delegate = delegate;
+    
+    if ([delegate isKindOfClass:[OGGameScene class]])
+    {
+        _gameScene = (OGGameScene *) delegate;
+    }
+}
+
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
 }

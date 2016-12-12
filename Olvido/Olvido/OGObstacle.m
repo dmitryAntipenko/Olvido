@@ -15,7 +15,8 @@
 
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
-    spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:spriteNode.size];
+    CGSize obstaclePhysicsBodySize = CGSizeMake(spriteNode.size.width, spriteNode.size.width);
+    spriteNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:obstaclePhysicsBodySize];    
     
     self = [super initWithSpriteNode:spriteNode];
     
