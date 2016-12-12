@@ -39,7 +39,6 @@
 		1B4C94621DEC692300EA5ED6 /* Level1_CustomResources.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B4C94611DEC692300EA5ED6 /* Level1_CustomResources.plist */; };
 		1B5E1DFC1DF80528003D0039 /* Level1_Story_iPhone.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B5E1DFB1DF80528003D0039 /* Level1_Story_iPhone.sks */; };
 		1B700AB21DDC88A500DC88F6 /* OGTrailComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */; };
-		1B7BCCD41DEF0E2C0075DDAC /* SlimeZoneParticleSystem.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1B7BCCD31DEF0E2C0075DDAC /* SlimeZoneParticleSystem.sks */; };
 		1B7BCCDA1DEF28500075DDAC /* OGSpriteZoneEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7BCCD91DEF28500075DDAC /* OGSpriteZoneEntity.m */; };
 		1B7BCCE01DEF2ED40075DDAC /* OGParticlesZoneEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7BCCDF1DEF2ED40075DDAC /* OGParticlesZoneEntity.m */; };
 		1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7F24771DD5D074004918C8 /* MenusMap.plist */; };
@@ -229,7 +228,6 @@
 		1B5E1DFB1DF80528003D0039 /* Level1_Story_iPhone.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1_Story_iPhone.sks; sourceTree = "<group>"; };
 		1B700AB01DDC88A400DC88F6 /* OGTrailComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGTrailComponent.h; sourceTree = "<group>"; };
 		1B700AB11DDC88A500DC88F6 /* OGTrailComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGTrailComponent.m; sourceTree = "<group>"; };
-		1B7BCCD31DEF0E2C0075DDAC /* SlimeZoneParticleSystem.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SlimeZoneParticleSystem.sks; sourceTree = "<group>"; };
 		1B7BCCD81DEF28500075DDAC /* OGSpriteZoneEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGSpriteZoneEntity.h; sourceTree = "<group>"; };
 		1B7BCCD91DEF28500075DDAC /* OGSpriteZoneEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGSpriteZoneEntity.m; sourceTree = "<group>"; };
 		1B7BCCDE1DEF2ED40075DDAC /* OGParticlesZoneEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGParticlesZoneEntity.h; sourceTree = "<group>"; };
@@ -718,7 +716,6 @@
 		1BF21BF01DEE1287009798F0 /* Zone */ = {
 			isa = PBXGroup;
 			children = (
-				1B7BCCD31DEF0E2C0075DDAC /* SlimeZoneParticleSystem.sks */,
 				1BF21BF21DEE12BF009798F0 /* OGHiddenZoneEntity.h */,
 				1BF21BF31DEE12BF009798F0 /* OGHiddenZoneEntity.m */,
 				1B7BCCD81DEF28500075DDAC /* OGSpriteZoneEntity.h */,
@@ -1416,7 +1413,6 @@
 				1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */,
 				EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */,
 				210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */,
-				1B7BCCD41DEF0E2C0075DDAC /* SlimeZoneParticleSystem.sks in Resources */,
 				EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */,
 				215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */,
 				EA976C911D9AAEE2003B77FC /* Assets.xcassets in Resources */,
