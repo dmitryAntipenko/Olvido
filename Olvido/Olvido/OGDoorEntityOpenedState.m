@@ -42,8 +42,7 @@ NSString *const OGDoorOpenSoundKey = @"door_open";
     [super didEnterWithPreviousState:previousState];
     
     self.lockComponent.closed = NO;
-    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor greenColor];
-    ((SKSpriteNode *) self.renderComponent.node).colorBlendFactor = 1.0;
+    ((SKSpriteNode *) self.renderComponent.node).alpha = 0.0;
     self.renderComponent.node.physicsBody.categoryBitMask = 0;
     
     [self.soundComponent playSoundOnce:OGDoorOpenSoundKey];
