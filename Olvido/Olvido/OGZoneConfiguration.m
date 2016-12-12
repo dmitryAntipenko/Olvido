@@ -9,7 +9,7 @@
 #import "OGZoneConfiguration.h"
 
 NSString *const OGZoneConfigurationZoneNodeNameKey = @"ZoneNodeName";
-NSString *const OGZoneConfigurationZoneClassNameKey = @"ZoneClassName";
+NSString *const OGZoneConfigurationZoneClassNameKey = @"ZoneType";
 
 @implementation OGZoneConfiguration
 
@@ -22,13 +22,12 @@ NSString *const OGZoneConfigurationZoneClassNameKey = @"ZoneClassName";
         if (self)
         {
             NSString *nodeName = [dictionary objectForKey:OGZoneConfigurationZoneNodeNameKey];
-            NSString *nodeClassName = [dictionary objectForKey:OGZoneConfigurationZoneClassNameKey];
-            Class zoneClass = NSClassFromString(nodeClassName);
+            NSString *zoneType = [dictionary objectForKey:OGZoneConfigurationZoneClassNameKey];
             
-            if (nodeName && zoneClass)
+            if (nodeName && zoneType)
             {
-                _zoneNodeName = nodeName;
-                _zoneClass = zoneClass;
+                _zoneNodeName = [nodeName copy];
+                _zoneType = [zoneType copy];
             }
             else
             {

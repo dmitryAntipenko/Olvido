@@ -12,7 +12,7 @@
 @interface OGZoneConfiguration : OGEntityConfiguration
 
 @property (nonatomic, copy, readonly) NSString *zoneNodeName;
-@property (nonatomic, assign, readonly) Class zoneClass;
+@property (nonatomic, copy, readonly) NSString *zoneType;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

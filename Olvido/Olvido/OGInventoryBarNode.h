@@ -13,7 +13,9 @@
 
 @interface OGInventoryBarNode : SKSpriteNode <OGHUDElement>
 
-+ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent screenSize:(CGSize)screenSize;
+@property (nonatomic, weak) OGHUDNode *hudNode;
+
++ (instancetype)inventoryBarNodeWithInventoryComponent:(OGInventoryComponent *)inventoryComponent;
 
 - (void)updateConstraints;
 

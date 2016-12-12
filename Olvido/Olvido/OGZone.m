@@ -1,51 +1,34 @@
 //
-//  OGAreaEntity.m
+//  OGZone.m
 //  Olvido
 //
-//  Created by Алексей Подолян on 11/29/16.
+//  Created by Алексей Подолян on 12/8/16.
 //  Copyright © 2016 Дмитрий Антипенко. All rights reserved.
 //
 
-#import "OGHiddenZoneEntity.h"
+#import "OGZone.h"
 #import "OGRenderComponent.h"
 #import "OGPhysicsComponent.h"
-#import "OGZPositionEnum.h"
 #import "OGColliderType.h"
-#import "OGCollisionBitMask.h"
+#import "OGPeriodicalZone.h"
+#import "OGContinuousZone.h"
 
-@interface OGHiddenZoneEntity ()
+NSString *const OGZoneDamageType = @"Damage";
+NSString *const OGZoneSlowingType = @"Slowing";
 
-@property (nonatomic, strong) void (^interactionBeginBlock)(GKEntity *entity);
-@property (nonatomic, strong) void (^interactionEndBlock)(GKEntity *entity);
-
-@end
-
-@implementation OGHiddenZoneEntity
+@implementation OGZone
 
 #pragma mark - Init
 
-+ (instancetype)emptyZoneWithSpriteNode:(SKSpriteNode *)spriteNode
-{
-    return [[self alloc] initWithSpriteNode:spriteNode
-                          affectedColliders:@[]
-                      interactionBeginBlock:^(GKEntity *entity){}
-                        interactionEndBlock:^(GKEntity *entity){}];
-}
-
 - (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
-                 affectedColliders:(NSArray<OGColliderType *> *)affectedColliders
-             interactionBeginBlock:(void (^)(GKEntity *entity))interactionBeginBlock
-               interactionEndBlock:(void (^)(GKEntity *entity))interactionEndBlock
+               affectingColliderTypes:(NSArray<OGColliderType *> *)affectingColliderTypes
 {
-    if (spriteNode && affectedColliders && interactionBeginBlock && interactionEndBlock)
+    if (spriteNode && affectingColliderTypes)
     {
         self = [super init];
         
         if (self)
         {
-            _interactionBeginBlock = interactionBeginBlock;
-            _interactionEndBlock = interactionEndBlock;
-            
             _renderComponent = [[OGRenderComponent alloc] init];
             _renderComponent.sortableByZ = NO;
             _renderComponent.node.position = spriteNode.position;
@@ -59,7 +42,7 @@
             physicsBody.usesPreciseCollisionDetection = YES;
             
             OGColliderType *colliderType = [OGColliderType zone];
-            [[OGColliderType requestedContactNotifications] setObject:affectedColliders forKey:colliderType];
+            [[OGColliderType requestedContactNotifications] setObject:affectingColliderTypes forKey:colliderType];
             
             _physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:physicsBody colliderType:colliderType];
             
@@ -76,21 +59,56 @@
     return self;
 }
 
-- (instancetype)init
+- (instancetype)initWithSpriteNode:(SKSpriteNode *)spriteNode
 {
-    return [self initWithSpriteNode:nil affectedColliders:nil interactionBeginBlock:nil interactionEndBlock:nil];
+    NSArray *colliderTypes = @[[OGColliderType player], [OGColliderType enemy]];
+    return [self initWithSpriteNode:spriteNode affectingColliderTypes:colliderTypes];
 }
 
-#pragma mark - OGContactNotifiableType
+- (instancetype)init
+{
+    return [self initWithSpriteNode:nil];
+}
+
+#pragma mark - Abstract Methods
 
 - (void)contactWithEntityDidBegin:(GKEntity *)entity
 {
-    self.interactionBeginBlock(entity);
+    
 }
 
 - (void)contactWithEntityDidEnd:(GKEntity *)entity
 {
-    self.interactionEndBlock(entity);
+    
+}
+
+- (void)pause
+{
+    
+}
+
+- (void)resume
+{
+    
+}
+
+#pragma mark - FactoryMethods
+
++ (instancetype)zoneWithSpriteNode:(SKSpriteNode *)spriteNode zoneType:(NSString *)zoneType
+{
+    OGZone *result = nil;
+    
+    if ([zoneType isEqualToString:OGZoneDamageType])
+    {
+        result = [OGPeriodicalZone damageZoneWithSpriteNode:spriteNode];
+    }
+    
+    if ([zoneType isEqualToString:OGZoneSlowingType])
+    {
+        result = [OGContinuousZone slowZoneWithSpriteNode:spriteNode];
+    }
+    
+    return result;
 }
 
 @end

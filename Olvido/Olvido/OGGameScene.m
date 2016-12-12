@@ -52,10 +52,8 @@
 #import "OGEnemyEntity.h"
 #import "OGDoorEntity.h"
 #import "OGWeaponEntity.h"
-#import "OGSpriteZoneEntity.h"
-#import "OGHiddenZoneEntity.h"
-#import "OGParticlesZoneEntity.h"
 #import "OGShootingWeapon.h"
+#import "OGPeriodicalZone.h"
 #import "OGKey.h"
 #import "OGAidKit.h"
 #import "OGShop.h"
@@ -293,7 +291,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         
         if (zoneNode)
         {
-            OGHiddenZoneEntity *zone = [zoneConfiguration.zoneClass emptyZoneWithSpriteNode:zoneNode];
+            OGZone *zone = [OGZone zoneWithSpriteNode:zoneNode zoneType:zoneConfiguration.zoneType];
             [self addEntity:zone];
         }
     }
@@ -446,7 +444,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 - (void)createInventoryBar
 {
     OGInventoryComponent *inventoryComponent = (OGInventoryComponent *) [self.player componentForClass:[OGInventoryComponent class]];
-    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent screenSize:self.camera.calculateAccumulatedFrame.size];
+    self.inventoryBarNode = [OGInventoryBarNode inventoryBarNodeWithInventoryComponent:inventoryComponent];
     
     if (self.hudNode)
     {
@@ -580,7 +578,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     OGFlashlightComponent *playerFlashlight = (OGFlashlightComponent *) [self.player componentForClass:[OGFlashlightComponent class]];
     
     if (playerFlashlight)
-    {        
+    {
         if (roomNeedsFlashlight)
         {
             [playerFlashlight turnOn];
