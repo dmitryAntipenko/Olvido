@@ -12,6 +12,7 @@
 #import "OGRenderComponent.h"
 #import "OGPlayerEntity.h"
 #import "OGHUDNode.h"
+#import "OGInventoryItemNode.h"
 
 CGFloat const OGInventoryBarNodeMaxHeight = 256;
 CGFloat const OGInventoryBarNodeMaxWidthFactor = 0.5;
@@ -30,7 +31,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 }
 
 @property (nonatomic, strong) OGInventoryComponent *inventoryComponent;
-@property (nonatomic, assign) CGFloat itemSizeLength;
+@property (nonatomic, assign) CGSize itemCellSize;
 @property (nonatomic, assign) CGRect hideTrigger;
 @property (nonatomic, assign) CGSize screenSize;
 @property (nonatomic, assign) BOOL customHidden;
@@ -110,9 +111,9 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 {
     CGSize frameSize = CGSizeZero;
     
-    if (self.scene)
+    if (self.hudNode)
     {
-        frameSize = self.scene.frame.size;
+        frameSize = self.hudNode.size;
     }
     
     CGFloat height = frameSize.height * OGInventoryBarNodeDesiredHeightFactor;
@@ -135,7 +136,7 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
     self.size = CGSizeMake(width, height);
     self.position = CGPointMake(OGInventoryBarNodeDefaultXPosition, (height - frameSize.height) / 2);
     
-    self.itemSizeLength = height;
+    self.itemCellSize = CGSizeMake(height, height);
     
     self.hideTrigger = CGRectMake(self.position.x - self.size.width / 2 - OGInventoryBarNodeHidingZoneWidth,
                                   self.position.y - self.size.height / 2,
@@ -158,25 +159,11 @@ CGFloat const OGInventoryBarNodeHidingZoneWidth = 50.0;
 
 - (void)updateCellWithItem:(id<OGInventoryItem>)item atIndex:(NSUInteger)index
 {
-    SKTexture *itemTexture = item.texture;
-    
-    CGSize itemSize = CGSizeZero;
-    
-    if (itemTexture && itemTexture.size.width > 0 && itemTexture.size.height > 0)
+    if (item.texture)
     {
-        CGFloat widthHeightFactor = itemTexture.size.width / itemTexture.size.height;
+        OGInventoryItemNode *itemNode = [OGInventoryItemNode itemNodeWithItem:item size:self.itemCellSize];
         
-        if (widthHeightFactor > 1)
-        {
-            itemSize = CGSizeMake(self.itemSizeLength, self.itemSizeLength / widthHeightFactor);
-        }
-        else
-        {
-            itemSize = CGSizeMake(self.itemSizeLength * widthHeightFactor, self.itemSizeLength);
-        }
-        
-        SKSpriteNode *itemNode = [SKSpriteNode spriteNodeWithTexture:itemTexture size:itemSize];
-        CGFloat xPosition = (self.itemSizeLength - self.size.width) / 2 + self.itemSizeLength * index;
+        CGFloat xPosition = (self.itemCellSize.width - self.size.width) / 2 + self.itemCellSize.width * index;
         
         itemNode.position = CGPointMake(xPosition, OGInventoryBarNodeDefaultItemNodeYPosition);
         

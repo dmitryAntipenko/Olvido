@@ -11,8 +11,9 @@
 
 @class OGPlayerEntity;
 
-@interface OGHUDNode : SKSpriteNode
+@interface OGHUDNode : SKNode
 
+@property (nonatomic, assign) CGSize size;
 @property (nonatomic, weak) OGPlayerEntity *playerEntity;
 @property (nonatomic, strong, readonly) NSArray<id<OGHUDElement>> *hudElements;
 

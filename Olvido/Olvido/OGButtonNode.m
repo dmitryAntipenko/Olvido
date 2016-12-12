@@ -24,7 +24,10 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 @property (nonatomic, strong) SKColor *preTouchedColor;
 
 @end
+
 @implementation OGButtonNode
+
+#pragma mark - Touches handling
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

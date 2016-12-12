@@ -16,4 +16,6 @@ extern NSString *const OGButtonNodeUserDataSelectorKey;
 
 @property (nonatomic, strong) id target;
 
+- (void)doAction;
+
 @end
