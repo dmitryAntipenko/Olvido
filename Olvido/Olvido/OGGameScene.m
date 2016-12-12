@@ -501,6 +501,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         [componentSystem addComponentWithEntity:entity];
     }
     
+    if ([entity isKindOfClass:[OGSceneItemEntity class]])
+    {
+        ((OGSceneItemEntity *) entity).gameScene = self;
+    }
+    
     OGRenderComponent *renderComponent = (OGRenderComponent *)[entity componentForClass:[OGRenderComponent class]];
     
     if(renderComponent)

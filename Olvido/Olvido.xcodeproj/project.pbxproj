@@ -159,7 +159,7 @@
 		EAC89F4B1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F4A1DEF1DF700E69A48 /* OGWeaponComponentIdleState.m */; };
 		EAC89F4E1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F4D1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m */; };
 		EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */; };
-		EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */; };
+		EACD739B1DE4C8890048D105 /* laser_shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shot.wav */; };
 		EADA97641DE745CC003D708B /* OGHealthBarComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA97631DE745CC003D708B /* OGHealthBarComponent.m */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
 		EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */; };
@@ -466,7 +466,7 @@
 		EAC89F4D1DEF1E0300E69A48 /* OGWeaponComponentAttackState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponentAttackState.m; sourceTree = "<group>"; };
 		EAC89F4F1DEF1E1100E69A48 /* OGWeaponComponentRechargeState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGWeaponComponentRechargeState.h; sourceTree = "<group>"; };
 		EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGWeaponComponentRechargeState.m; sourceTree = "<group>"; };
-		EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shooting_sfx.wav; sourceTree = "<group>"; };
+		EACD739A1DE4C8890048D105 /* laser_shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shot.wav; sourceTree = "<group>"; };
 		EADA97621DE745CC003D708B /* OGHealthBarComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthBarComponent.h; sourceTree = "<group>"; };
 		EADA97631DE745CC003D708B /* OGHealthBarComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthBarComponent.m; sourceTree = "<group>"; };
 		EAF7F1061DD515A30067D76D /* OGDoorEntityLockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityLockedState.h; sourceTree = "<group>"; };
@@ -1030,7 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				EA591B2E1DF0A2AF0034511F /* weapon_reload.wav */,
-				EACD739A1DE4C8890048D105 /* laser_shooting_sfx.wav */,
+				EACD739A1DE4C8890048D105 /* laser_shot.wav */,
 				EA84DBE01DE240740044B2EE /* door_open.mp3 */,
 				EA8EF71D1DDE4233008CF3A4 /* steps.m4a */,
 				EA8EF71B1DDE3F16008CF3A4 /* shot.wav */,
@@ -1419,7 +1419,7 @@
 				1B3D28F81DF6D9950007A38F /* OGLevelCompleteScreen.sks in Resources */,
 				EAAA9D011DC634060086E15B /* OGGameOverScreen.sks in Resources */,
 				1B7F24991DD5D074004918C8 /* MenusMap.plist in Resources */,
-				EACD739B1DE4C8890048D105 /* laser_shooting_sfx.wav in Resources */,
+				EACD739B1DE4C8890048D105 /* laser_shot.wav in Resources */,
 				210CC8131DD5D7EE00824E84 /* Player.xcassets in Resources */,
 				EA8CAF0E1DE2120700CDB848 /* MainMenuSmoke.sks in Resources */,
 				215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */,

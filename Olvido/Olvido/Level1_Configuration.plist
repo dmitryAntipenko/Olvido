@@ -573,7 +573,7 @@
 				<array>
 					<dict>
 						<key>AudioName</key>
-						<string>shot</string>
+						<string>laser_shot</string>
 						<key>Key</key>
 						<string>weapon_attack</string>
 					</dict>
@@ -768,7 +768,7 @@
 			<array>
 				<dict>
 					<key>AudioName</key>
-					<string>laser_shooting_sfx</string>
+					<string>laser_shot</string>
 					<key>Key</key>
 					<string>weapon_attack</string>
 				</dict>
