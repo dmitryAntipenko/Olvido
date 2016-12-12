@@ -115,6 +115,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         [self addComponent:_healthComponent];
         
         _movementComponent = [[OGMovementComponent alloc] init];
+        _movementComponent.speedFactor = 1.2;
         [self addComponent:_movementComponent];
         
         _inputComponent = [[OGInputComponent alloc] init];

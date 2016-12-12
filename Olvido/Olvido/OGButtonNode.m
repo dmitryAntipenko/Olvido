@@ -118,7 +118,7 @@ NSString *const OGButtonNodeDefaultSelectorName =  @"onButtonClick:";
 
 #pragma clang diagnostic pop
     
-    [self.audioManager playSoundEffect:@"button_touch"];
+//    [self.audioManager playSoundEffect:@"button_touch"];
 }
 
 - (BOOL)isUserInteractionEnabled
