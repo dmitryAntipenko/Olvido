@@ -12,6 +12,8 @@
 #import "OGDoorConfiguration.h"
 #import "OGAudioConfiguration.h"
 
+#import "OGGameScene.h"
+
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
@@ -119,9 +121,9 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             NSString *sourceNodeName = _doorConfiguration.source;
             NSString *destinationNodeName = _doorConfiguration.destination;
             
-            SKScene *scene = self.renderComponent.node.scene;
-            _transitionComponent.destination = destinationNodeName ? [scene childNodeWithName:destinationNodeName] : nil;
-            _transitionComponent.source = sourceNodeName ? [scene childNodeWithName:sourceNodeName] : nil;
+            SKNode *rooms = [self.renderComponent.node.scene childNodeWithName:OGGameSceneRoomsNodeName];
+            _transitionComponent.destination = destinationNodeName ? [rooms childNodeWithName:destinationNodeName] : nil;
+            _transitionComponent.source = sourceNodeName ? [rooms childNodeWithName:sourceNodeName] : nil;
         }
     }
     else

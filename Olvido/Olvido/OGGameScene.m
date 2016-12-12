@@ -77,10 +77,12 @@
 #import "OGDeathLevelState.h"
 
 #import "OGInGameShopManager.h"
+#import "SKTexture+Gradient.h"
 
 //MARK: Constants
 
 NSString *const OGGameSceneDoorsNodeName = @"doors";
+NSString *const OGGameSceneRoomsNodeName = @"rooms";
 NSString *const OGGameSceneItemsNodeName = @"items";
 NSString *const OGGameSceneInteractionsNodeName = @"interactions";
 NSString *const OGGameSceneShopNodeName = @"shop";
@@ -214,7 +216,23 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
-    self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
+    SKNode *rooms = [self childNodeWithName:OGGameSceneRoomsNodeName];
+    
+    for (SKNode *room in rooms.children)
+    {
+        CGSize roomSize = room.calculateAccumulatedFrame.size;
+        SKTexture *gradientTexture = [SKTexture textureWithVerticalGradientOfSize:roomSize
+                                                                    topRightColor:[CIColor clearColor]
+                                                                  bottomLeftColor:[CIColor blackColor]];
+        
+        SKSpriteNode *gradientNode = [SKSpriteNode spriteNodeWithTexture:gradientTexture
+                                                                    size:roomSize];
+        gradientNode.zPosition = OGZPositionCategoryForeground;
+        gradientNode.alpha = 0.5;
+        [room addChild:gradientNode];
+    }
+    
+    self.currentRoom = [rooms childNodeWithName:self.sceneConfiguration.startRoom];
     [self createSceneContents];
     
     [self createCameraNode];

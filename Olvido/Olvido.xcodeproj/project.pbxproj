@@ -66,6 +66,7 @@
 		211A17C11DF87415000B1C58 /* OGShopConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C01DF87415000B1C58 /* OGShopConfiguration.m */; };
 		211A17C41DF99C62000B1C58 /* OGBossEntityAgentControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */; };
 		211A17C81DF9C0A0000B1C58 /* OGObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C71DF9C0A0000B1C58 /* OGObstacle.m */; };
+		215053301DFF1940004B5747 /* SKTexture+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 215A8A671DD623B600C5C90D /* Enemy.xcassets */; };
@@ -107,7 +108,6 @@
 		EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA0D272D1DB149DA00CEFB8A /* LevelsMap.plist */; };
 		EA2389C11DBA63C600E5B01F /* OGHealthComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */; };
 		EA3CE3241DBA8E680087842D /* OGMessageComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3CE3231DBA8E680087842D /* OGMessageComponent.m */; };
-		EA3D69011DFEEDCF00DE93E1 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = EA3D69001DFEEDCF00DE93E1 /* MyTileSet.sks */; };
 		EA49823A1DCF70EB00DCFE00 /* OGTouchControlInputNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9EAAD81DCCC06800E36855 /* OGTouchControlInputNode.m */; };
 		EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */; };
 		EA4982411DCF980A00DCFE00 /* OGPhysicsComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4982401DCF980A00DCFE00 /* OGPhysicsComponent.m */; };
@@ -286,6 +286,8 @@
 		211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBossEntityAgentControlledState.m; sourceTree = "<group>"; };
 		211A17C61DF9C0A0000B1C58 /* OGObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacle.h; sourceTree = "<group>"; };
 		211A17C71DF9C0A0000B1C58 /* OGObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacle.m; sourceTree = "<group>"; };
+		2150532E1DFF1940004B5747 /* SKTexture+Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKTexture+Gradient.h"; sourceTree = "<group>"; };
+		2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKTexture+Gradient.m"; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
 		215A3C201DCFA12100D5C609 /* OGAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimation.h; sourceTree = "<group>"; };
@@ -359,7 +361,6 @@
 		EA2389C01DBA63C600E5B01F /* OGHealthComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthComponent.m; sourceTree = "<group>"; };
 		EA3CE3221DBA8E680087842D /* OGMessageComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGMessageComponent.h; sourceTree = "<group>"; };
 		EA3CE3231DBA8E680087842D /* OGMessageComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGMessageComponent.m; sourceTree = "<group>"; };
-		EA3D69001DFEEDCF00DE93E1 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		EA49823B1DCF77BB00DCFE00 /* OGThumbStickNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGThumbStickNode.h; sourceTree = "<group>"; };
 		EA49823C1DCF77BB00DCFE00 /* OGThumbStickNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGThumbStickNode.m; sourceTree = "<group>"; };
 		EA49823F1DCF980A00DCFE00 /* OGPhysicsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGPhysicsComponent.h; sourceTree = "<group>"; };
@@ -747,6 +748,15 @@
 				211A17C71DF9C0A0000B1C58 /* OGObstacle.m */,
 			);
 			name = Obstacles;
+			sourceTree = "<group>";
+		};
+		2150532D1DFF1918004B5747 /* SKTexture */ = {
+			isa = PBXGroup;
+			children = (
+				2150532E1DFF1940004B5747 /* SKTexture+Gradient.h */,
+				2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */,
+			);
+			name = SKTexture;
 			sourceTree = "<group>";
 		};
 		215A8A691DD6465500C5C90D /* IntelligenceComponent States (EnemyEntity) */ = {
@@ -1176,7 +1186,7 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
-				EA3D69001DFEEDCF00DE93E1 /* MyTileSet.sks */,
+				2150532D1DFF1918004B5747 /* SKTexture */,
 				21AD66EA1DF5D4D000E4BC93 /* ShopManager */,
 				1B4C32F91DE58717008E5339 /* TextureAtlasesManager */,
 				1B7F24AA1DD5D0C1004918C8 /* SceneManager */,
@@ -1428,7 +1438,6 @@
 				1B3D98B91DF02FB900AD577B /* Level2_iPad.sks in Resources */,
 				1B3D98BF1DF033A300AD577B /* Level2_CustomResources.plist in Resources */,
 				1B7F24A91DD5D074004918C8 /* ScenesConfiguration.plist in Resources */,
-				EA3D69011DFEEDCF00DE93E1 /* MyTileSet.sks in Resources */,
 				1B5E1DFC1DF80528003D0039 /* Level1_Story_iPhone.sks in Resources */,
 				EA0D272E1DB149DA00CEFB8A /* LevelsMap.plist in Resources */,
 				EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */,
@@ -1526,6 +1535,7 @@
 				EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
 				21AD66D21DEC595300E4BC93 /* OGBoss.m in Sources */,
+				215053301DFF1940004B5747 /* SKTexture+Gradient.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				21AD66DA1DF1B8D500E4BC93 /* OGShop.m in Sources */,
 				EAC89F441DEDC52800E69A48 /* OGWeaponStatisticsNode.m in Sources */,

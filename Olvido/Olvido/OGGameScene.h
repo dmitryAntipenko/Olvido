@@ -16,6 +16,8 @@
 @class OGEntitySnapshot;
 @class OGAudioManager;
 
+extern NSString *const OGGameSceneRoomsNodeName;
+
 @interface OGGameScene : OGBaseScene <SKPhysicsContactDelegate, OGTransitionComponentDelegate, OGEntityManaging, OGInteractionsManaging>
 
 @property (nonatomic, copy) NSNumber *identifier;
