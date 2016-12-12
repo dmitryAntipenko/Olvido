@@ -64,6 +64,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             
             _renderComponent = [[OGRenderComponent alloc] init];
             _renderComponent.node = spriteNode;
+            _renderComponent.sortableByZ = NO;
             [self addComponent:_renderComponent];
             
             SKNode *trigger = [spriteNode childNodeWithName:OGDoorEntityTriggerNodeName];

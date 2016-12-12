@@ -22,6 +22,7 @@
     
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).color = [SKColor redColor];
+    ((SKSpriteNode *) self.renderComponent.node).colorBlendFactor = 1.0;
     
     SKNode *doorNode = self.renderComponent.node;
     CGSize doorPhysicsBodySize = ((SKSpriteNode *) doorNode).size;
