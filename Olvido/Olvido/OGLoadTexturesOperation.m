@@ -9,11 +9,14 @@
 #import "OGLoadTexturesOperation.h"
 #import "OGTextureAtlasesManager.h"
 
+NSString *const OGLoadTexturesOperationIsFinishedKey = @"isFinished";
+
 @interface OGLoadTexturesOperation ()
 
 @property (nonatomic, strong) NSString *unitName;
 @property (nonatomic, strong) NSString *atlasName;
 @property (nonatomic, strong) NSString *atlasKey;
+@property (nonatomic, assign) BOOL customIsFinished;
 
 @end
 
@@ -56,10 +59,19 @@
             
             [atlas preloadWithCompletionHandler:^
              {
-                 //temporary
+                 [self willChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
+                 self.customIsFinished = YES;
+                 [self didChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
              }];
+            
+            [self waitUntilFinished];
         }
     }
+}
+
+- (BOOL)isFinished
+{
+    return self.customIsFinished;
 }
 
 - (BOOL)isAsynchronous
