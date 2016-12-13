@@ -16,7 +16,6 @@
 @property (nonatomic, assign, getter=isNeedsFlashlight) BOOL needsFlashlight;
 
 @property (nonatomic, strong, readonly) NSArray<GKGraph *> *enemiesGraphs;
-//@property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
 
 - (instancetype)initWithNode:(SKNode *)node;
 

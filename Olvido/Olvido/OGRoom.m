@@ -13,7 +13,6 @@
 @interface OGRoom ()
 
 @property (nonatomic, strong) NSMutableArray<GKGraph *> *mutableEnemiesGraphs;
-//@property (nonatomic, strong) NSMutableArray<GKEntity *> *mutableEntities;
 
 @end
 
