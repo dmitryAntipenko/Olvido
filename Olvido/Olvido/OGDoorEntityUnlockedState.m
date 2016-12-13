@@ -12,13 +12,17 @@
 #import "OGColliderType.h"
 
 #import "OGLockComponent.h"
+#import "OGPhysicsComponent.h"
 #import "OGRenderComponent.h"
 
 @implementation OGDoorEntityUnlockedState
 
 - (void)didEnterWithPreviousState:(GKState *)previousState
 {
-    [super didEnterWithPreviousState:previousState];    
+    [super didEnterWithPreviousState:previousState];
+    
+    SKNode *doorNode = self.renderComponent.node;
+    self.physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:doorNode.physicsBody colliderType:[OGColliderType defaultType]];
     
     if ([self.stateMachine canEnterState:[OGDoorEntityOpenedState class]])
     {

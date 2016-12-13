@@ -11,6 +11,7 @@
 @class OGDoorEntity;
 @class OGLockComponent;
 @class OGRenderComponent;
+@class OGPhysicsComponent;
 
 @interface OGDoorEntityState : GKState
 
@@ -18,6 +19,7 @@
 
 @property (nonatomic, strong) OGRenderComponent *renderComponent;
 @property (nonatomic, strong) OGLockComponent *lockComponent;
+@property (nonatomic, strong) OGPhysicsComponent *physicsComponent;
 
 - (instancetype)initWithDoorEntity:(OGDoorEntity *)entity;
 

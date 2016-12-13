@@ -30,6 +30,7 @@
 //    view.showsFPS = YES;
 //    view.showsNodeCount = YES;
 //    view.showsPhysics = YES;
+
     /* DEBUG OPTIONS */
     
     self.game = [[OGGame alloc] initWithView:view];    

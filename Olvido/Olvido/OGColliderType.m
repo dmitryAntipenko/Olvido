@@ -60,6 +60,11 @@ static dispatch_queue_t initQueue;
     return result;
 }
 
++ (instancetype)defaultType
+{
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskDefault];
+}
+
 + (instancetype)player
 {
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskPlayer];
@@ -80,9 +85,9 @@ static dispatch_queue_t initQueue;
     return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskDoor];
 }
 
-+ (instancetype)doorTrigger
++ (instancetype)lockedDoor
 {
-    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskDoorTrigger];
+    return [self colliderTypeWithCategoryBitMask:OGCollisionBitMaskLockedDoor];
 }
 
 + (instancetype)weapon
