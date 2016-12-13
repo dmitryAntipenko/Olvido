@@ -77,10 +77,12 @@
 #import "OGDeathLevelState.h"
 
 #import "OGInGameShopManager.h"
+#import "OGRoom.h"
 
 //MARK: Constants
 
 NSString *const OGGameSceneDoorsNodeName = @"doors";
+NSString *const OGGameSceneRoomsNodeName = @"rooms";
 NSString *const OGGameSceneItemsNodeName = @"items";
 NSString *const OGGameSceneInteractionsNodeName = @"interactions";
 NSString *const OGGameSceneShopNodeName = @"shop";
@@ -120,7 +122,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 @interface OGGameScene () <AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) NSMutableArray<GKEntity *> *entitiesSortableByZ;
-@property (nonatomic, strong) SKNode *currentRoom;
+@property (nonatomic, strong) OGRoom *currentRoom;
 @property (nonatomic, strong) OGCameraController *cameraController;
 @property (nonatomic, weak) OGPlayerEntity *player;
 @property (nonatomic, strong) OGGameSceneConfiguration *sceneConfiguration;
@@ -146,6 +148,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 @property (nonatomic, strong) OGInGameShopManager *shopManager;
 @property (nonatomic, strong) SKNode *currentInteraction;
 
+@property (nonatomic, strong) NSMutableArray<OGRoom *> *mutableRooms;
 @end
 
 @implementation OGGameScene
@@ -178,6 +181,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
                                                                  ]];
         
         _mutableEntities = [[NSMutableOrderedSet alloc] init];
+        _mutableRooms = [[NSMutableArray alloc] init];
         
         _componentSystems = [[NSMutableArray alloc] initWithObjects:
                              [[GKComponentSystem alloc] initWithComponentClass:[GKAgent2D class]],
@@ -214,7 +218,21 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
-    self.currentRoom = [self childNodeWithName:self.sceneConfiguration.startRoom];
+    SKNode *roomNodes = [self childNodeWithName:OGGameSceneRoomsNodeName];
+    
+    for (SKNode *roomNode in roomNodes.children)
+    {
+        OGRoom *room = [[OGRoom alloc] initWithNode:roomNode];
+        room.needsFlashlight = [roomNode.userData[OGGameSceneRoomNeedsFlashlightKey] boolValue];
+        [room addGradient];
+        
+        [self.mutableRooms addObject:room];
+        
+        if ([room.identifier isEqualToString:self.sceneConfiguration.startRoom])
+        {
+            self.currentRoom = room;
+        }
+    }
     [self createSceneContents];
     
     [self createCameraNode];
@@ -236,7 +254,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     
     [self.stateMachine enterState:[OGGameLevelState class]];
     
-    [self.cameraController moveCameraToNode:self.currentRoom];
+    [self.cameraController moveCameraToNode:self.currentRoom.roomNode];
 }
 
 #pragma mark - Scene Contents Creation
@@ -454,6 +472,24 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
     [self.inventoryBarNode updateConstraints];
 }
 
+#pragma mark - rooms methods
+
+- (OGRoom *)roomWithIdentifier:(NSString *)identifier
+{
+    OGRoom *result;
+    
+    for (OGRoom *room in self.mutableRooms)
+    {
+        if ([room.identifier isEqualToString:identifier])
+        {
+            result = room;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark - OGInteractionsManaging protocol methods
 
 - (void)showInteractionButtonWithNode:(SKNode *)node
@@ -579,12 +615,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     self.currentRoom = component.destination;
     
-    BOOL roomNeedsFlashlight = [self.currentRoom.userData[OGGameSceneRoomNeedsFlashlightKey] boolValue];
     OGFlashlightComponent *playerFlashlight = (OGFlashlightComponent *) [self.player componentForClass:[OGFlashlightComponent class]];
     
     if (playerFlashlight)
     {
-        if (roomNeedsFlashlight)
+        if (self.currentRoom.isNeedsFlashlight)
         {
             [playerFlashlight turnOn];
         }
@@ -594,7 +629,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         }
     }
     
-    [self.cameraController moveCameraToNode:self.currentRoom];
+    [self.cameraController moveCameraToNode:self.currentRoom.roomNode];
     
     completion();
 }
@@ -856,6 +891,11 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 {
     CGFloat thumbStickNodeDiameter = self.size.height / 5.0;    
     return CGSizeMake(thumbStickNodeDiameter, thumbStickNodeDiameter);
+}
+
+- (NSArray<OGRoom *> *)rooms
+{
+    return self.mutableRooms;
 }
 
 #pragma mark - Button Click Handling

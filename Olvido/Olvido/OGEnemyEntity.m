@@ -47,8 +47,8 @@ static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
 NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
-CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 10.0;
-CGFloat const OGEnemyEntityPatrolPathRadius = 40.0;
+CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 20.0;
+CGFloat const OGEnemyEntityPatrolPathRadius = 30.0;
 
 CGFloat const OGEnemyEntityMaximumAcceleration = 100.0;
 CGFloat const OGEnemyEntityAgentMass = 0.25;
@@ -146,7 +146,6 @@ NSInteger const OGEnemyEntityDeadTextureZPosition = OGZPositionCategoryEntities 
             OGAnimation *animation = [OGAnimation animationWithTextureConfiguration:textureConfiguration
                                                                defaultConfiguration:sOGEnemyEntityDefaultTextureConfiguration
                                                                            unitName:_unitName];
-            
             animations[animation.stateName] = animation;
         }
         

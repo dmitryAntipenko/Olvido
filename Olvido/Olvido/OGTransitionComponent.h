@@ -7,10 +7,11 @@
 //
 
 #import <GameplayKit/GameplayKit.h>
+@class OGRoom;
 
 @interface OGTransitionComponent : GKComponent
 
-@property (nonatomic, strong) SKNode *source;
-@property (nonatomic, strong) SKNode *destination;
+@property (nonatomic, weak) OGRoom *source;
+@property (nonatomic, weak) OGRoom *destination;
 
 @end

@@ -12,6 +12,8 @@
 #import "OGDoorConfiguration.h"
 #import "OGAudioConfiguration.h"
 
+#import "OGGameScene.h"
+
 #import "OGRenderComponent.h"
 #import "OGIntelligenceComponent.h"
 #import "OGAnimationComponent.h"
@@ -113,12 +115,12 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
             _lockComponent.openDistance = _doorConfiguration.openDistance;
             _lockComponent.locked = _doorConfiguration.isLocked;
             
-            NSString *sourceNodeName = _doorConfiguration.source;
-            NSString *destinationNodeName = _doorConfiguration.destination;
+            NSString *sourceRoomIdentifier = _doorConfiguration.source;
+            NSString *destinationRoomIdentifier = _doorConfiguration.destination;
             
-            SKScene *scene = self.renderComponent.node.scene;
-            _transitionComponent.destination = destinationNodeName ? [scene childNodeWithName:destinationNodeName] : nil;
-            _transitionComponent.source = sourceNodeName ? [scene childNodeWithName:sourceNodeName] : nil;
+            OGGameScene *scene = (OGGameScene *) self.renderComponent.node.scene;
+            _transitionComponent.source = sourceRoomIdentifier ? [scene roomWithIdentifier:sourceRoomIdentifier] : nil;
+            _transitionComponent.destination = destinationRoomIdentifier ? [scene roomWithIdentifier:destinationRoomIdentifier] : nil;
         }
     }
     else
@@ -151,7 +153,7 @@ static NSArray *sOGDoorEntitySoundNodes = nil;
              {
                 [self swapTriggerPosition];
                  
-                SKNode *temp = self.transitionComponent.destination;
+                OGRoom *temp = self.transitionComponent.destination;
                 self.transitionComponent.destination = self.transitionComponent.source;
                 self.transitionComponent.source = temp;
             }];

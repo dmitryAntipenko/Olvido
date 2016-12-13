@@ -78,8 +78,9 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
         {
             CGPoint enemyPosition = CGPointMake(self.enemyEntity.agent.position.x, self.enemyEntity.agent.position.y);
             
-            if ([self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath]
-                <= OGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+            CGFloat distanceToPath = [self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath];
+            
+            if (distanceToPath <= OGEnemyEntityThresholdProximityToPatrolPathStartPoint)
             {
                 self.enemyEntity.mandate = OGEnemyEntityMandateFollowPath;
             }

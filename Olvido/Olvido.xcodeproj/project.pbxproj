@@ -66,6 +66,8 @@
 		211A17C11DF87415000B1C58 /* OGShopConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C01DF87415000B1C58 /* OGShopConfiguration.m */; };
 		211A17C41DF99C62000B1C58 /* OGBossEntityAgentControlledState.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */; };
 		211A17C81DF9C0A0000B1C58 /* OGObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A17C71DF9C0A0000B1C58 /* OGObstacle.m */; };
+		215053301DFF1940004B5747 /* SKTexture+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */; };
+		215053341E006623004B5747 /* OGRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 215053331E006623004B5747 /* OGRoom.m */; };
 		2154A6061DBE5CAE00E414F3 /* OGStoryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */; };
 		215A3C221DCFA12100D5C609 /* OGAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 215A3C211DCFA12100D5C609 /* OGAnimation.m */; };
 		215A8A681DD623B600C5C90D /* Enemy.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 215A8A671DD623B600C5C90D /* Enemy.xcassets */; };
@@ -286,6 +288,10 @@
 		211A17C31DF99C62000B1C58 /* OGBossEntityAgentControlledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGBossEntityAgentControlledState.m; sourceTree = "<group>"; };
 		211A17C61DF9C0A0000B1C58 /* OGObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGObstacle.h; sourceTree = "<group>"; };
 		211A17C71DF9C0A0000B1C58 /* OGObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGObstacle.m; sourceTree = "<group>"; };
+		2150532E1DFF1940004B5747 /* SKTexture+Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKTexture+Gradient.h"; sourceTree = "<group>"; };
+		2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKTexture+Gradient.m"; sourceTree = "<group>"; };
+		215053321E006623004B5747 /* OGRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGRoom.h; sourceTree = "<group>"; };
+		215053331E006623004B5747 /* OGRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGRoom.m; sourceTree = "<group>"; };
 		2154A6041DBE5CAE00E414F3 /* OGStoryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGStoryScene.h; sourceTree = "<group>"; };
 		2154A6051DBE5CAE00E414F3 /* OGStoryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGStoryScene.m; sourceTree = "<group>"; };
 		215A3C201DCFA12100D5C609 /* OGAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGAnimation.h; sourceTree = "<group>"; };
@@ -749,6 +755,24 @@
 			name = Obstacles;
 			sourceTree = "<group>";
 		};
+		2150532D1DFF1918004B5747 /* SKTexture */ = {
+			isa = PBXGroup;
+			children = (
+				2150532E1DFF1940004B5747 /* SKTexture+Gradient.h */,
+				2150532F1DFF1940004B5747 /* SKTexture+Gradient.m */,
+			);
+			name = SKTexture;
+			sourceTree = "<group>";
+		};
+		215053311E006601004B5747 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				215053321E006623004B5747 /* OGRoom.h */,
+				215053331E006623004B5747 /* OGRoom.m */,
+			);
+			name = Room;
+			sourceTree = "<group>";
+		};
 		215A8A691DD6465500C5C90D /* IntelligenceComponent States (EnemyEntity) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1177,6 +1201,8 @@
 		EA976C7E1D9AAEE2003B77FC /* Olvido */ = {
 			isa = PBXGroup;
 			children = (
+				215053311E006601004B5747 /* Room */,
+				2150532D1DFF1918004B5747 /* SKTexture */,
 				21AD66EA1DF5D4D000E4BC93 /* ShopManager */,
 				1B4C32F91DE58717008E5339 /* TextureAtlasesManager */,
 				1B7F24AA1DD5D0C1004918C8 /* SceneManager */,
@@ -1377,7 +1403,7 @@
 				TargetAttributes = {
 					EA976C7B1D9AAEE2003B77FC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = Z8D3NJ2X9W;
+						DevelopmentTeam = 93L4B89BM9;
 					};
 				};
 			};
@@ -1524,8 +1550,10 @@
 				EA9EAAD01DCC9E3E00E36855 /* OGIntelligenceComponent.m in Sources */,
 				EA49823D1DCF77BB00DCFE00 /* OGThumbStickNode.m in Sources */,
 				EA8EF7021DDC9B4D008CF3A4 /* OGKey.m in Sources */,
+				215053341E006623004B5747 /* OGRoom.m in Sources */,
 				EAF7F1291DD800C30067D76D /* OGBullet.m in Sources */,
 				21AD66D21DEC595300E4BC93 /* OGBoss.m in Sources */,
+				215053301DFF1940004B5747 /* SKTexture+Gradient.m in Sources */,
 				EA9EAAC71DCC9CFE00E36855 /* OGPlayerEntity.m in Sources */,
 				21AD66DA1DF1B8D500E4BC93 /* OGShop.m in Sources */,
 				EAC89F441DEDC52800E69A48 /* OGWeaponStatisticsNode.m in Sources */,
@@ -1698,11 +1726,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido2;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1716,11 +1744,11 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z8D3NJ2X9W;
+				DEVELOPMENT_TEAM = 93L4B89BM9;
 				INFOPLIST_FILE = Olvido/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.Olvido2;
+				PRODUCT_BUNDLE_IDENTIFIER = ZEOUniversity.OlvidoTeam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
