@@ -57,7 +57,7 @@ NSString *const OGLoadSceneOperationGraphsKey = @"Graphs";
         if (self.sceneMetadata.isDeviceIdiomSensitive)
         {
             gkScene =[GKScene sceneWithMetadata:self.sceneMetadata
-                                userDeviceIdion:[[UIDevice currentDevice] userInterfaceIdiom]];
+                                userDeviceIdiom:[[UIDevice currentDevice] userInterfaceIdiom]];
         }
         else
         {
@@ -67,11 +67,6 @@ NSString *const OGLoadSceneOperationGraphsKey = @"Graphs";
         self.scene = (OGBaseScene *)gkScene.rootNode;
         [self.scene configureScene];
     }
-}
-
-- (BOOL)isAsynchronous
-{
-    return YES;
 }
 
 @end

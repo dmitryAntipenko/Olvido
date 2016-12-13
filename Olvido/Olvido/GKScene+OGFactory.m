@@ -15,7 +15,7 @@ NSString *const kGKSceneGraphsKey = @"Graphs";
 
 @implementation GKScene (OGFactory)
 
-+ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata userDeviceIdion:(UIUserInterfaceIdiom)idiom;
++ (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata userDeviceIdiom:(UIUserInterfaceIdiom)idiom;
 {
     NSString *fileName = [[NSString alloc] initWithFormat:@"%@%@",
                           metadata.fileName,
@@ -37,7 +37,7 @@ NSString *const kGKSceneGraphsKey = @"Graphs";
 
 + (instancetype)sceneWithMetadata:(OGSceneMetadata *)metadata
 {
-    return [self sceneWithMetadata:metadata userDeviceIdion:UIUserInterfaceIdiomUnspecified];
+    return [self sceneWithMetadata:metadata userDeviceIdiom:UIUserInterfaceIdiomUnspecified];
 }
 
 @end
