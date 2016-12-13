@@ -54,7 +54,6 @@
     NSOperation *completionOperation = [[NSOperation alloc] init];
     
     __weak typeof(self) weakSelf = self;
-    
     completionOperation.completionBlock = ^
     {     
         if (weakSelf)
@@ -76,7 +75,6 @@
                                                                                                               atlasName:unitAtlases[atlasKey]];
             
             [completionOperation addDependency:loadTexturesOperation];
-            
             [self.operationQueue addOperation:loadTexturesOperation];
         }
     }
@@ -86,7 +84,6 @@
         OGLoadLoadableClassOperation *loadLoadableClassOperation = [OGLoadLoadableClassOperation loadResourcesOperationWithLoadableClass:loadableClass];
         
         [completionOperation addDependency:loadLoadableClassOperation];
-        
         [self.operationQueue addOperation:loadLoadableClassOperation];
     }
     
