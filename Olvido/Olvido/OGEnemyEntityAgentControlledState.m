@@ -59,7 +59,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     self.timeSinceBehaviorUpdate = 0.0;
     self.elapsedTime = 0.0;
     
-    self.weaponComponent.weapon.gameScene = self.enemyEntity.renderComponent.node.scene;
+    self.weaponComponent.weapon.gameScene = (OGGameScene *)self.enemyEntity.renderComponent.node.scene;
 
     self.animationComponent.requestedAnimationState = OGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];

@@ -26,6 +26,7 @@
 #import "OGShadowComponent.h"
 
 #import "OGAnimation.h"
+#import "OGZPositionEnum.h"
 
 #import "OGEnemyEntityAgentControlledState.h"
 #import "OGEnemyEntityPreAttackState.h"
@@ -37,7 +38,6 @@
 #import "OGPlayerNearRule.h"
 #import "OGPlayerMediumRule.h"
 #import "OGPlayerFarRule.h"
-#import "OGZPositionEnum.h"
 
 #import "OGColliderType.h"
 #import "OGLightBitMask.h"
@@ -58,6 +58,8 @@ NSUInteger const OGEnemyEntityDealDamage = 1.0;
 
 NSString *const OGEnemyEntityShadowTextureName = @"PlayerShadow";
 CGFloat const OGEnemyEntityShadowYOffset = -70.0;
+
+NSInteger const OGEnemyEntityDeadTextureZPosition = OGZPositionCategoryEntities - 1;;
 
 @interface OGEnemyEntity ()
 
@@ -292,6 +294,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
     SKSpriteNode *node = [SKSpriteNode spriteNodeWithTexture:texture];
     node.lightingBitMask = OGLightBitMaskDefault;
     node.position = self.renderComponent.node.position;
+    node.zPosition = OGEnemyEntityDeadTextureZPosition;
 
     [self.renderComponent.node.scene addChild:node];
     
