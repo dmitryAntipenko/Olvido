@@ -11,7 +11,7 @@
 @interface OGRoom : NSObject
 
 @property (nonatomic, copy, readonly) NSString *identifier;
-@property (nonatomic, weak) SKNode *roomNode;
+@property (nonatomic, strong) SKNode *roomNode;
 
 @property (nonatomic, assign, getter=isNeedsFlashlight) BOOL needsFlashlight;
 

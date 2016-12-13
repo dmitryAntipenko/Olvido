@@ -711,6 +711,8 @@
 	<key>Weapon</key>
 	<array>
 		<dict>
+			<key>Spread</key>
+			<string>15</string>
 			<key>Identifier</key>
 			<string>weapon_01</string>
 			<key>Shell</key>

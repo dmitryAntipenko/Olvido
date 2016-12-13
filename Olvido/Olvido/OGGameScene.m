@@ -367,8 +367,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
         
         if ([enemy isMemberOfClass:[OGZombie class]])
         {
-            OGTrailComponent *trailComponent = (OGTrailComponent *) [enemy componentForClass:[OGTrailComponent class]];
-            trailComponent.targetNode = self;
+            //OGTrailComponent *trailComponent = (OGTrailComponent *) [enemy componentForClass:[OGTrailComponent class]];
+            //trailComponent.targetNode = self;
         }
         
         [self addEntity:enemy];

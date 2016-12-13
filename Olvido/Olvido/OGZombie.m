@@ -53,10 +53,10 @@ static BOOL sResourcesNeedLoading = YES;
             _lastPositionX = self.renderComponent.node.position.x;
             
             //TEMPORARY
-            _trailComponent = [OGTrailComponent trailComponent];
-            _trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
-            _trailComponent.textureSize = CGSizeMake(64.0, 64.0);
-            [self addComponent:_trailComponent];
+            //_trailComponent = [OGTrailComponent trailComponent];
+            //_trailComponent.texture = [SKTexture textureWithImageNamed:@"slime"];
+            //_trailComponent.textureSize = CGSizeMake(64.0, 64.0);
+            //[self addComponent:_trailComponent];
             //TEMPORARY
         }
     }
