@@ -59,7 +59,7 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
     self.timeSinceBehaviorUpdate = 0.0;
     self.elapsedTime = 0.0;
     
-    self.weaponComponent.weapon.gameScene = self.enemyEntity.renderComponent.node.scene;
+    self.weaponComponent.weapon.gameScene = (OGGameScene *)self.enemyEntity.renderComponent.node.scene;
 
     self.animationComponent.requestedAnimationState = OGConstantsWalk;
     self.enemyEntity.agent.behavior = [self.enemyEntity behaviorForCurrentMandate];
@@ -78,8 +78,9 @@ CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
         {
             CGPoint enemyPosition = CGPointMake(self.enemyEntity.agent.position.x, self.enemyEntity.agent.position.y);
             
-            if ([self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath]
-                <= OGEnemyEntityThresholdProximityToPatrolPathStartPoint)
+            CGFloat distanceToPath = [self.enemyEntity distanceBetweenStartPoint:enemyPosition endPoint:self.enemyEntity.closestPointOnPath];
+            
+            if (distanceToPath <= OGEnemyEntityThresholdProximityToPatrolPathStartPoint)
             {
                 self.enemyEntity.mandate = OGEnemyEntityMandateFollowPath;
             }

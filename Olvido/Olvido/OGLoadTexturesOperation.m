@@ -57,14 +57,19 @@ NSString *const OGLoadTexturesOperationIsFinishedKey = @"isFinished";
             
             [textureAtlasesManager addAtlasWithUnitName:self.unitName atlasKey:self.atlasKey atlas:atlas];
             
+            __weak typeof(self) weakSelf = self;
+            
             [atlas preloadWithCompletionHandler:^
              {
-                 [self willChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
-                 self.customIsFinished = YES;
-                 [self didChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
+                 if (weakSelf)
+                 {
+                     typeof(weakSelf) strongSelf = weakSelf;
+                     
+                     [strongSelf willChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
+                     strongSelf.customIsFinished = YES;
+                     [strongSelf didChangeValueForKey:OGLoadTexturesOperationIsFinishedKey];
+                 }
              }];
-            
-            [self waitUntilFinished];
         }
     }
 }

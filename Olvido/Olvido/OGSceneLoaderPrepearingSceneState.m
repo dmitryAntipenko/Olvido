@@ -24,6 +24,7 @@
     __weak typeof(self) weakSelf = self;
     __weak OGLoadSceneOperation *weakLoadSceneOperation = loadSceneOperation;
     
+    
     loadSceneOperation.completionBlock = ^
     {
         if (weakLoadSceneOperation)

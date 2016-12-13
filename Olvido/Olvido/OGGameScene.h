@@ -15,6 +15,7 @@
 
 @class OGEntitySnapshot;
 @class OGAudioManager;
+@class OGRoom;
 
 extern NSString *const OGGameSceneRoomsNodeName;
 
@@ -31,12 +32,15 @@ extern NSString *const OGGameSceneRoomsNodeName;
 @property (nonatomic, strong, readonly) NSArray<GKPolygonObstacle *> *polygonObstacles;
 
 @property (nonatomic, strong, readonly) NSArray<GKEntity *> *entities;
+@property (nonatomic, strong, readonly) NSArray<OGRoom *> *rooms;
 
 - (void)resume;
 - (void)pauseWithoutPauseScreen;
 - (void)showGameOverScreen;
 - (void)runStoryConclusion;
 - (void)showCompletionScreen;
+
+- (OGRoom *)roomWithIdentifier:(NSString *)identifier;
 
 - (OGEntitySnapshot *)entitySnapshotWithEntity:(GKEntity *)entity;
 
