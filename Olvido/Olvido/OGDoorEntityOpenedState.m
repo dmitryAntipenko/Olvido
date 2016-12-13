@@ -13,6 +13,7 @@
 #import "OGCollisionBitMask.h"
 
 #import "OGDoorEntity.h"
+#import "OGPhysicsComponent.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
 #import "OGSoundComponent.h"
@@ -42,8 +43,9 @@ NSString *const OGDoorOpenSoundKey = @"door_open";
     [super didEnterWithPreviousState:previousState];
     
     self.lockComponent.closed = NO;
-//    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor clearColor];
-    self.renderComponent.node.physicsBody.categoryBitMask = 0;
+    ((SKSpriteNode *) self.renderComponent.node).alpha = 0.0;    
+    
+    self.physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:self.renderComponent.node.physicsBody colliderType:[OGColliderType defaultType]];
     
     [self.soundComponent playSoundOnce:OGDoorOpenSoundKey];
 }

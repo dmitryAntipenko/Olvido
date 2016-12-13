@@ -12,6 +12,7 @@
 #import "OGColliderType.h"
 
 #import "OGLockComponent.h"
+#import "OGPhysicsComponent.h"
 #import "OGRenderComponent.h"
 
 @implementation OGDoorEntityUnlockedState
@@ -20,8 +21,8 @@
 {
     [super didEnterWithPreviousState:previousState];
     
-//    self.lockComponent.closed = NO;
-//    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor blueColor];
+    SKNode *doorNode = self.renderComponent.node;
+    self.physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:doorNode.physicsBody colliderType:[OGColliderType defaultType]];
     
     if ([self.stateMachine canEnterState:[OGDoorEntityOpenedState class]])
     {

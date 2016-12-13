@@ -15,11 +15,12 @@
 @property (nonatomic, assign, readonly) OGCollisionBitMask collisionBitMask;
 @property (nonatomic, assign, readonly) OGCollisionBitMask contactTestBitMask;
 
++ (instancetype)defaultType;
 + (instancetype)player;
 + (instancetype)enemy;
 + (instancetype)obstacle;
 + (instancetype)door;
-+ (instancetype)doorTrigger;
++ (instancetype)lockedDoor;
 + (instancetype)weapon;
 + (instancetype)bullet;
 + (instancetype)enemyBullet;

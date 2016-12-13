@@ -33,7 +33,7 @@ static BOOL sResourcesNeedLoading = YES;
 
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType enemy]];
+    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType lockedDoor], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType player]];
     
     NSArray *contactColliders = @[[OGColliderType weapon], [OGColliderType sceneItem]];

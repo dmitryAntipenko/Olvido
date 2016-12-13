@@ -15,4 +15,6 @@
 
 - (instancetype)initWithPhysicsBody:(SKPhysicsBody *)body colliderType:(OGColliderType *)type;
 
+- (void)updatePhysicsBodyWithColliderType:(OGColliderType *)colliderType;
+
 @end

@@ -13,6 +13,7 @@
 
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 
 @implementation OGDoorEntityLockedState
 
@@ -21,16 +22,11 @@
     [super didEnterWithPreviousState:previousState];
     
     self.lockComponent.closed = YES;
-    ((SKSpriteNode *) self.renderComponent.node).color = [SKColor redColor];
     
     SKNode *doorNode = self.renderComponent.node;
-    CGSize doorPhysicsBodySize = ((SKSpriteNode *) doorNode).size;
-    doorNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:doorPhysicsBodySize];
-    doorNode.physicsBody.dynamic = NO;
+    self.physicsComponent = [[OGPhysicsComponent alloc] initWithPhysicsBody:doorNode.physicsBody colliderType:[OGColliderType lockedDoor]];
     
-    OGColliderType *doorColliderType = [OGColliderType door];
-    doorNode.physicsBody.categoryBitMask = (uint32_t) doorColliderType.categoryBitMask;
-    doorNode.physicsBody.contactTestBitMask = (uint32_t) doorColliderType.contactTestBitMask;
+    doorNode.physicsBody.dynamic = NO;
 }
 
 - (BOOL)isValidNextState:(Class)stateClass

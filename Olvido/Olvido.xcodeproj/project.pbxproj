@@ -161,6 +161,7 @@
 		EAC89F511DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC89F501DEF1E1100E69A48 /* OGWeaponComponentRechargeState.m */; };
 		EACD739B1DE4C8890048D105 /* laser_shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = EACD739A1DE4C8890048D105 /* laser_shot.wav */; };
 		EADA97641DE745CC003D708B /* OGHealthBarComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = EADA97631DE745CC003D708B /* OGHealthBarComponent.m */; };
+		EAE196B31DFF29940092F5F3 /* Propeller.sks in Resources */ = {isa = PBXBuildFile; fileRef = EAE196B21DFF29940092F5F3 /* Propeller.sks */; };
 		EAE9E6821DC3778A00B65DFB /* OGStoryConclusionLevelState.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B27EAB31DC0F6B400E9CA23 /* OGStoryConclusionLevelState.m */; };
 		EAF7F1081DD515A30067D76D /* OGDoorEntityLockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */; };
 		EAF7F10B1DD515B10067D76D /* OGDoorEntityUnlockedState.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF7F10A1DD515B10067D76D /* OGDoorEntityUnlockedState.m */; };
@@ -470,6 +471,7 @@
 		EACD739A1DE4C8890048D105 /* laser_shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser_shot.wav; sourceTree = "<group>"; };
 		EADA97621DE745CC003D708B /* OGHealthBarComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGHealthBarComponent.h; sourceTree = "<group>"; };
 		EADA97631DE745CC003D708B /* OGHealthBarComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGHealthBarComponent.m; sourceTree = "<group>"; };
+		EAE196B21DFF29940092F5F3 /* Propeller.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Propeller.sks; sourceTree = "<group>"; };
 		EAF7F1061DD515A30067D76D /* OGDoorEntityLockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityLockedState.h; sourceTree = "<group>"; };
 		EAF7F1071DD515A30067D76D /* OGDoorEntityLockedState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OGDoorEntityLockedState.m; sourceTree = "<group>"; };
 		EAF7F1091DD515B10067D76D /* OGDoorEntityUnlockedState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OGDoorEntityUnlockedState.h; sourceTree = "<group>"; };
@@ -1004,6 +1006,7 @@
 				1B5E1DFB1DF80528003D0039 /* Level1_Story_iPhone.sks */,
 				215A8A8F1DDE232C00C5C90D /* Level1_Configuration.plist */,
 				1B4C94611DEC692300EA5ED6 /* Level1_CustomResources.plist */,
+				EAE196B21DFF29940092F5F3 /* Propeller.sks */,
 			);
 			name = Level1;
 			sourceTree = "<group>";
@@ -1443,6 +1446,7 @@
 				EA8CAF041DDF7E7200CDB848 /* Sounds.xcassets in Resources */,
 				1B4C94621DEC692300EA5ED6 /* Level1_CustomResources.plist in Resources */,
 				21AD66D61DEF35A700E4BC93 /* OGShopScreen.sks in Resources */,
+				EAE196B31DFF29940092F5F3 /* Propeller.sks in Resources */,
 				EA976CCF1D9C253B003B77FC /* LaunchScreen.storyboard in Resources */,
 				EA591B2F1DF0A2AF0034511F /* weapon_reload.wav in Resources */,
 				1B3D98BD1DF031E100AD577B /* Level2_Configuration.plist in Resources */,
