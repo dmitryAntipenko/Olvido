@@ -36,4 +36,11 @@
     return self;
 }
 
+- (void)updatePhysicsBodyWithColliderType:(OGColliderType *)colliderType
+{
+    self.physicsBody.categoryBitMask = (uint32_t) colliderType.categoryBitMask;
+    self.physicsBody.collisionBitMask = (uint32_t) colliderType.collisionBitMask;
+    self.physicsBody.contactTestBitMask = (uint32_t) colliderType.contactTestBitMask;
+}
+
 @end

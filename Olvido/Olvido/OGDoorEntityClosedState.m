@@ -14,10 +14,12 @@
 #import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 #import "OGSoundComponent.h"
 #import "OGColliderType.h"
 
 NSString *const OGDoorCloseSoundKey = @"door_close";
+NSString *const OGDoorEntityColsedStateTriggerNodeName = @"trigger";
 
 @interface OGDoorEntityClosedState ()
 
@@ -43,6 +45,7 @@ NSString *const OGDoorCloseSoundKey = @"door_close";
     
     self.lockComponent.closed = YES;
     ((SKSpriteNode *) self.renderComponent.node).alpha = 1.0;
+    
     self.renderComponent.node.physicsBody.categoryBitMask = (uint32_t) [OGColliderType door].categoryBitMask;
     
     if (previousState)

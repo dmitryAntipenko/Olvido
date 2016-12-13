@@ -457,7 +457,7 @@ CGFloat const OGEnemyEntityShadowYOffset = -70.0;
 
 + (void)loadMiscellaneousAssets
 {
-    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType player], [OGColliderType enemy]];
+    NSArray *collisionColliders = @[[OGColliderType obstacle], [OGColliderType door], [OGColliderType lockedDoor], [OGColliderType player], [OGColliderType enemy]];
     [[OGColliderType definedCollisions] setObject:collisionColliders forKey:[OGColliderType enemy]];
     
     NSArray *contactColliders = @[[OGColliderType player], [OGColliderType bullet]];

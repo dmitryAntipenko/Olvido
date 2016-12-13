@@ -10,6 +10,7 @@
 #import "OGDoorEntity.h"
 #import "OGLockComponent.h"
 #import "OGRenderComponent.h"
+#import "OGPhysicsComponent.h"
 
 @implementation OGDoorEntityState
 
@@ -43,6 +44,16 @@
     }
     
     return _renderComponent;
+}
+
+- (OGPhysicsComponent *)physicsComponent
+{
+    if (!_physicsComponent)
+    {
+        _physicsComponent = (OGPhysicsComponent *) [self.doorEntity componentForClass:[OGPhysicsComponent class]];
+    }
+    
+    return _physicsComponent;
 }
 
 - (BOOL)isTargetNearDoor
