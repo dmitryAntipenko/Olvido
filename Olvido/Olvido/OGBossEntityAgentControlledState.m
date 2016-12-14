@@ -12,7 +12,7 @@
 #import "OGRenderComponent.h"
 #import "OGWeaponComponent.h"
 
-CGFloat const OGBossEntityAgentControlledStateShootingDistance = 300.0;
+CGFloat const OGBossEntityAgentControlledStateShootingDistance = 100.0;
 
 @implementation OGBossEntityAgentControlledState
 
