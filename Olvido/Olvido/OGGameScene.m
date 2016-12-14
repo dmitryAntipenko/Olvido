@@ -215,7 +215,6 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 - (void)configureScene
 {
     [super configureScene];
-    
     [self.obstaclesGraph addObstacles:self.polygonObstacles];
     
     SKNode *roomNodes = [self childNodeWithName:OGGameSceneRoomsNodeName];
@@ -868,7 +867,7 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (NSArray<GKPolygonObstacle *> *)polygonObstacles
 {
-    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];
+    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];;
 }
 
 - (NSArray<GKEntity *> *)entities
