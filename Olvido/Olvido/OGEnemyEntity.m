@@ -47,11 +47,11 @@ static OGTextureConfiguration *sOGEnemyEntityDefaultTextureConfiguration = nil;
 NSTimeInterval const OGEnemyEntityMaxPredictionTimeForObstacleAvoidance = 1.0;
 NSTimeInterval const OGEnemyEntityBehaviorUpdateWaitDuration = 0.25;
 
-CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 20.0;
+CGFloat const OGEnemyEntityPathfindingGraphBufferRadius = 30.0;
 CGFloat const OGEnemyEntityPatrolPathRadius = 30.0;
 
-CGFloat const OGEnemyEntityMaximumAcceleration = 100.0;
-CGFloat const OGEnemyEntityAgentMass = 10.0;
+CGFloat const OGEnemyEntityMaximumAcceleration = 150.0;
+CGFloat const OGEnemyEntityAgentMass = 0.25;
 CGFloat const OGEnemyEntityThresholdProximityToPatrolPathStartPoint = 50.0;
 
 NSUInteger const OGEnemyEntityDealDamage = 1.0;

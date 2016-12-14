@@ -235,7 +235,7 @@ NSString *const OGEnemyBehaviorPathPointsKey = @"pathPoints";
 
 - (void)addTargetSpeedGoalWithSpeed:(CGFloat)speed
 {
-    [self setWeight:0.5 forGoal:[GKGoal goalToReachTargetSpeed:speed]];
+    [self setWeight:1.0 forGoal:[GKGoal goalToReachTargetSpeed:speed]];
 }
 
 - (void)addAvoidObstaclesGoalWithScene:(OGGameScene *)scene

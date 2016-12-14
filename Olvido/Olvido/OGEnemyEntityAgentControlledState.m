@@ -21,7 +21,7 @@
 
 #import "OGConstants.h"
 
-CGFloat const OGEnemyEntityAgentControlledStateWalkMaxSpeed = 50;
+CGFloat const OGEnemyEntityAgentControlledStateWalkMaxSpeed = 100;
 CGFloat const OGEnemyEntityAgentControlledStateHuntMaxSpeed = 500;
 
 @interface OGEnemyEntityAgentControlledState ()
