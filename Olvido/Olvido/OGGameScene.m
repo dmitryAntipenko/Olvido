@@ -868,7 +868,8 @@ NSUInteger const OGGameSceneZSpacePerCharacter = 30;
 
 - (NSArray<GKPolygonObstacle *> *)polygonObstacles
 {
-    return [SKNode obstaclesFromNodeBounds:self.obstacleSpriteNodes];;
+    return [SKNode obstaclesFromNodePhysicsBodies:self.obstacleSpriteNodes];
+//    return [SKNode obstaclesFromNodeBounds:self.obstacleSpriteNodes];;
 }
 
 - (NSArray<GKEntity *> *)entities
