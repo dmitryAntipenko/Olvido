@@ -27,9 +27,10 @@
     view.multipleTouchEnabled = YES;
     
     /* DEBUG OPTIONS */
-    view.showsFPS = YES;
-    view.showsNodeCount = YES;
-    view.showsPhysics = YES;
+    
+//    view.showsFPS = YES;
+//    view.showsNodeCount = YES;
+    //view.showsPhysics = YES;
 
     /* DEBUG OPTIONS */
     
