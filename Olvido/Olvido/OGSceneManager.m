@@ -21,7 +21,6 @@
 NSString *const OGSceneManagerLoadingSceneFileName = @"OGLoadingScene";
 NSString *const OGSceneManagerScenesConfigurationFileName = @"ScenesConfiguration";
 CGFloat const OGSceneManagerTransitionTimeInterval = 0.9;
-CGFloat const OGSceneManagerTransitionToLoadingSceneTimeInterval = 0.0;
 NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
 
 @interface OGSceneManager () <OGSceneLoaderDelegate>
@@ -132,8 +131,7 @@ NSUInteger const OGSceneManagerInitialSceneIdentifier = 0;
         self.loadingScene = [OGLoadingScene loadingSceneWithSceneLoader:sceneLoader];
         self.loadingScene.sceneManager = self;
         
-        SKTransition *transition = [SKTransition fadeWithDuration:OGSceneManagerTransitionToLoadingSceneTimeInterval];
-        [self.view presentScene:self.loadingScene transition:transition];
+        [self.view presentScene:self.loadingScene];
     }
 }
 
