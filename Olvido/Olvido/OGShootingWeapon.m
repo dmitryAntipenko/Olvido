@@ -92,19 +92,9 @@
 
 #pragma mark - OGAttacking
 
-- (void)attackWithTargetPosition:(CGPoint)targetPosition
+- (CGFloat)vectorToAngle:(CGVector)vector
 {
-    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
-    CGPoint ownerPosition = ownerNode.position;
-    
-    CGFloat randomOffset = -self.spread + arc4random() % (NSUInteger) (2.0 * self.spread);
-    
-    CGFloat vectorAngleRadians = atan2(targetPosition.x - ownerPosition.x, targetPosition.y - ownerPosition.y);
-    vectorAngleRadians += [self degreesToRadians:randomOffset];
-
-    CGVector shootingVector = CGVectorMake(sinf(vectorAngleRadians), cosf(vectorAngleRadians));
-    
-    [self attackWithVector:shootingVector];
+    return atan2(vector.dx, vector.dy);
 }
 
 - (CGFloat)degreesToRadians:(CGFloat)degrees
@@ -112,15 +102,39 @@
     return degrees * (M_PI / 180.0);
 }
 
+- (void)attackWithTargetPosition:(CGPoint)targetPosition
+{
+    SKNode *ownerNode = ((OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]]).node;
+    CGPoint ownerPosition = ownerNode.position;
+    
+    CGFloat vectorAngleRadians = atan2(targetPosition.x - ownerPosition.x, targetPosition.y - ownerPosition.y);
+    CGVector shootingVector = CGVectorMake(sinf(vectorAngleRadians), cosf(vectorAngleRadians));
+    
+    [self attackWithVector:shootingVector];
+}
+
 - (void)attackWithVector:(CGVector)vector
 {
-    if (vector.dx != 0.0 && vector.dy != 0.0)
+    if (vector.dx != 0.0 || vector.dy != 0.0)
     {
         OGRenderComponent *ownerRenderComponent = (OGRenderComponent *) [self.owner componentForClass:[OGRenderComponent class]];
         
         if (ownerRenderComponent)
         {
-            [self createBulletAtPoint:ownerRenderComponent.node.position withVector:vector];            
+            CGFloat randomOffset = 0.0;
+            
+            if (self.spread != 0.0)
+            {
+                randomOffset = -self.spread + arc4random() % (NSUInteger) (2.0 * self.spread);
+            }
+            
+            CGFloat vectorAngleRadians = [self vectorToAngle:vector];
+            
+            vectorAngleRadians += [self degreesToRadians:randomOffset];
+            
+            CGVector attackVector = CGVectorMake(sinf(vectorAngleRadians), cosf(vectorAngleRadians));
+            
+            [self createBulletAtPoint:ownerRenderComponent.node.position withVector:attackVector];
         }
     }
 }

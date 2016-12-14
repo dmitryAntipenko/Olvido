@@ -34,12 +34,13 @@ NSString *const OGZoneSlowingType = @"Slowing";
             _renderComponent.node.position = spriteNode.position;
             _renderComponent.node.zPosition = spriteNode.zPosition;
             
-            [spriteNode removeFromParent];
-            
             [self addComponent:_renderComponent];
             
-            SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithTexture:spriteNode.texture size:spriteNode.texture.size];
-            physicsBody.usesPreciseCollisionDetection = YES;
+            SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithPolygonFromPath:CGPathCreateWithEllipseInRect(CGRectMake(-spriteNode.texture.size.width / 2,
+                                                                                                                          -spriteNode.texture.size.height / 2,
+                                                                                                                          spriteNode.texture.size.width,
+                                                                                                                          spriteNode.texture.size.height),
+                                                                                                               nil)];
             
             OGColliderType *colliderType = [OGColliderType zone];
             [[OGColliderType requestedContactNotifications] setObject:affectingColliderTypes forKey:colliderType];

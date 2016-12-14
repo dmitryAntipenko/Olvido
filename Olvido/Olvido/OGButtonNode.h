@@ -18,7 +18,7 @@ extern NSString *const OGButtonNodeUserDataSelectorKey;
 
 @property (nonatomic, weak) OGAudioManager *audioManager;
 
-@property (nonatomic, strong) id target;
+@property (nonatomic, weak) id target;
 
 - (void)doAction;
 
