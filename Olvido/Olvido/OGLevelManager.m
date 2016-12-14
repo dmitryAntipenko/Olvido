@@ -176,7 +176,7 @@ NSString *const OGLevelManagerLevelMapName = @"LevelsMap";
     [self clearCurrentScene];
     
     self.currentGameSceneIdentifier = self.levelMap[identifier.integerValue][OGLevelManagerGameSceneIdentifierKey];
-    self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][OGLevelManagerStorySceneIdentifierKey];
+    //self.currentStorySceneIdentifier = self.levelMap[identifier.integerValue][OGLevelManagerStorySceneIdentifierKey];
 }
 
 @end
