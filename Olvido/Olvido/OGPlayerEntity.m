@@ -155,6 +155,7 @@ NSString *OGPlayerEntityUnitName = @"Player";
         SKSpriteNode *targetSprite = (SKSpriteNode *) _renderComponent.node;
         SKLabelNode *messageLabelNode = [SKLabelNode node];
         messageLabelNode.zPosition = OGZPositionCategoryForeground;
+        messageLabelNode.fontName = @"Helvetica-Bold";
         _messageComponent = [[OGMessageComponent alloc] initWithTarget:targetSprite
                                                        minShowDistance:configuration.messageShowDistance
                                                              labelNode:messageLabelNode];

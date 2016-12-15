@@ -22,7 +22,7 @@
 					<key>AudioName</key>
 					<string>shot</string>
 					<key>Key</key>
-					<string>weapon_attack</string>
+					<string>laser_shot</string>
 				</dict>
 				<dict>
 					<key>AudioName</key>
@@ -32,20 +32,20 @@
 				</dict>
 			</array>
 			<key>Charge</key>
-			<integer>20</integer>
+			<integer>25</integer>
 			<key>AttackSpeed</key>
 			<real>0.5</real>
 			<key>Shell</key>
 			<dict>
 				<key>Speed</key>
-				<integer>10</integer>
+				<integer>15</integer>
 				<key>Damage</key>
 				<integer>1</integer>
 				<key>Texture</key>
-				<string>Bullet</string>
+				<string>PlasmaBullet</string>
 			</dict>
 			<key>ReloadSpeed</key>
-			<real>1.2</real>
+			<real>0.8</real>
 		</dict>
 	</dict>
 </dict>

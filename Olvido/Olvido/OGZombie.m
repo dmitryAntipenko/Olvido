@@ -60,6 +60,10 @@ static BOOL sResourcesNeedLoading = YES;
             //TEMPORARY
         }
     }
+    else
+    {
+        self = nil;
+    }
     
     return self;
 }

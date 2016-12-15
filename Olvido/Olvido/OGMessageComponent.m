@@ -8,7 +8,7 @@
 
 #import "OGMessageComponent.h"
 
-CGFloat const OGMessageComponentYOffset = 40.0;
+CGFloat const OGMessageComponentYOffset = 60.0;
 CGFloat const OGMessageComponentLabelFontSize = 32.0;
 CGFloat const OGMessageComponentLabelColorBlendFactor = 1.0;
 NSString *const OGMessageComponentClearMessage = @"";
