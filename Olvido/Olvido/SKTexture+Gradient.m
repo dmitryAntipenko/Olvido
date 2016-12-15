@@ -39,7 +39,10 @@ NSString *const SKTextureBottomRightInputColor = @"inputColor1";
     CGImageRef cgimg = [coreImageContext createCGImage:[gradientFilter outputImage]
                                               fromRect:CGRectMake(0, 0, size.width, size.height)];
     
-    return [SKTexture textureWithImage:[UIImage imageWithCGImage:cgimg]];
+    UIImage *image = [UIImage imageWithCGImage:cgimg];
+    CGImageRelease(cgimg);
+    
+    return [SKTexture textureWithImage:image];
 }
 
 @end

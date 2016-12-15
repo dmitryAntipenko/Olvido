@@ -36,11 +36,16 @@ NSString *const OGZoneSlowingType = @"Slowing";
             
             [self addComponent:_renderComponent];
             
-            SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithPolygonFromPath:CGPathCreateWithEllipseInRect(CGRectMake(-spriteNode.texture.size.width / 2,
-                                                                                                                          -spriteNode.texture.size.height / 2,
-                                                                                                                          spriteNode.texture.size.width,
-                                                                                                                          spriteNode.texture.size.height),
-                                                                                                               nil)];
+            CGRect zoneRect = CGRectMake(-spriteNode.texture.size.width / 2,
+                                         -spriteNode.texture.size.height / 2,
+                                         spriteNode.texture.size.width,
+                                         spriteNode.texture.size.height);
+            
+            CGPathRef ellipseZonePath = CGPathCreateWithEllipseInRect(zoneRect, nil);
+            
+            SKPhysicsBody *physicsBody =  [SKPhysicsBody bodyWithPolygonFromPath:ellipseZonePath];
+            
+            CGPathRelease(ellipseZonePath);
             
             OGColliderType *colliderType = [OGColliderType zone];
             [[OGColliderType requestedContactNotifications] setObject:affectingColliderTypes forKey:colliderType];
